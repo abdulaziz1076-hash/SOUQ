@@ -2,8 +2,8 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>سوق البيوت | منصة الأسر المنتجة الإماراتية</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>سوق البيوت | الأسر المنتجة</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=El+Messiri:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -11,7 +11,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Almarai', sans-serif;
         }
 
         :root {
@@ -24,31 +23,28 @@
             --gray: #8A8A8A;
             --light-gray: #E8E4DD;
             --border: #D8D1C7;
-            --shadow: 0 10px 30px rgba(12, 59, 46, 0.08);
-            --gradient: linear-gradient(135deg, #0C3B2E 0%, #1D5C4A 100%);
+            --shadow: 0 4px 12px rgba(12, 59, 46, 0.08);
         }
 
         body {
             background: var(--light);
             color: var(--dark);
-            line-height: 1.6;
+            font-family: 'Almarai', sans-serif;
+            line-height: 1.5;
         }
 
-        /* ===== HEADER ===== */
+        /* ===== هيدر بسيط جداً ===== */
         .app-header {
-            background: var(--gradient);
+            background: var(--gradient, linear-gradient(135deg, #0C3B2E 0%, #1D5C4A 100%));
             color: white;
-            padding: 12px 0;
-            box-shadow: var(--shadow);
+            padding: 12px 16px;
             position: sticky;
             top: 0;
             z-index: 1000;
+            box-shadow: var(--shadow);
         }
 
         .header-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -57,20 +53,19 @@
         .logo-section {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             cursor: pointer;
         }
 
         .logo-icon {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             background: white;
-            border-radius: 12px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             border: 2px solid var(--secondary);
         }
 
@@ -78,95 +73,149 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
-            border-radius: 10px;
+            border-radius: 8px;
         }
 
         .logo-text h1 {
             font-family: 'El Messiri', serif;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
 
         .logo-text p {
-            font-size: 12px;
+            font-size: 11px;
             opacity: 0.9;
         }
 
-        /* ===== أزرار التنقل الجديدة ===== */
-        .nav-buttons {
-            display: flex;
-            gap: 15px;
-        }
-
-        .nav-btn {
+        /* ===== زر القائمة الرئيسي (Menu) ===== */
+        .menu-toggle {
+            width: 45px;
+            height: 45px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 10px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-size: 15px;
-            font-weight: 600;
+            justify-content: center;
+            font-size: 22px;
+            color: white;
             cursor: pointer;
-            transition: all 0.3s;
-            border: none;
         }
 
-        .nav-btn.home-btn {
+        /* ===== القائمة المنسدلة ===== */
+        .nav-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 16px;
+            left: 16px;
             background: white;
+            border-radius: 16px;
+            margin-top: 8px;
+            padding: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 2px solid var(--secondary);
+            z-index: 1001;
+        }
+
+        .nav-menu.active {
+            display: block;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            color: var(--dark);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 8px;
+        }
+
+        .nav-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .nav-item i {
+            width: 24px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .nav-item.home-item {
+            background: var(--light);
             color: var(--primary);
         }
 
-        .nav-btn.market-btn {
+        .nav-item.market-item {
             background: var(--secondary);
             color: var(--primary);
         }
 
-        .nav-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        .nav-item.register-item {
+            background: var(--primary);
+            color: white;
         }
 
-        /* ===== HERO SECTION ===== */
+        /* ===== زر العودة ===== */
+        .back-btn-wrapper {
+            padding: 12px 16px 0;
+        }
+
+        .back-btn {
+            background: white;
+            color: var(--primary);
+            border: 1px solid var(--light-gray);
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        /* ===== الصفحة الرئيسية ===== */
         .hero-section {
-            background: linear-gradient(rgba(12, 59, 46, 0.92), rgba(12, 59, 46, 0.85)), url('https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background: linear-gradient(rgba(12, 59, 46, 0.95), rgba(12, 59, 46, 0.9)), url('https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
             background-size: cover;
             background-position: center;
             color: white;
-            padding: 60px 20px;
+            padding: 40px 20px;
             text-align: center;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
         }
 
         .hero-title {
             font-family: 'El Messiri', serif;
-            font-size: 42px;
+            font-size: 32px;
             font-weight: 700;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .hero-subtitle {
-            font-size: 18px;
+            font-size: 16px;
             margin-bottom: 30px;
             opacity: 0.95;
         }
 
         .hero-search-box {
-            max-width: 600px;
-            margin: 0 auto 30px;
             position: relative;
+            max-width: 100%;
+            margin-bottom: 25px;
         }
 
         .hero-search-input {
             width: 100%;
-            padding: 18px 60px 18px 20px;
+            padding: 16px 55px 16px 20px;
             border: none;
             border-radius: 50px;
-            font-size: 16px;
+            font-size: 15px;
             background: white;
             box-shadow: 0 5px 20px rgba(0,0,0,0.2);
         }
@@ -178,324 +227,257 @@
             transform: translateY(-50%);
             background: var(--secondary);
             border: none;
-            width: 45px;
-            height: 45px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             color: var(--primary);
             font-size: 18px;
-            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
         }
 
         .market-big-btn {
             background: var(--secondary);
             color: var(--primary);
             border: none;
-            padding: 16px 35px;
+            padding: 14px 28px;
             border-radius: 50px;
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 700;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            transition: all 0.3s;
-            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
+            gap: 10px;
+            width: 100%;
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
         }
 
-        .market-big-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.5);
-        }
-
-        /* ===== ABOUT SECTION ===== */
+        /* ===== قسم من نحن ===== */
         .about-section {
             background: white;
-            padding: 60px 20px;
+            padding: 40px 20px;
         }
 
         .section-title {
             font-family: 'El Messiri', serif;
-            font-size: 32px;
+            font-size: 26px;
             color: var(--primary);
             text-align: center;
-            margin-bottom: 40px;
-            position: relative;
+            margin-bottom: 30px;
         }
 
         .section-title::after {
             content: '';
-            position: absolute;
-            bottom: -12px;
-            right: 50%;
-            transform: translateX(50%);
-            width: 80px;
+            display: block;
+            width: 70px;
             height: 3px;
             background: var(--secondary);
-        }
-
-        .about-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
+            margin: 12px auto 0;
         }
 
         .about-text {
-            font-size: 17px;
-            line-height: 1.8;
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 30px;
             color: var(--dark);
         }
 
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+            gap: 12px;
         }
 
         .stat-card {
             background: var(--light);
-            padding: 25px;
-            border-radius: 15px;
-            border: 2px solid var(--light-gray);
+            padding: 20px 12px;
+            border-radius: 14px;
+            border: 1px solid var(--light-gray);
             text-align: center;
         }
 
         .stat-number {
-            font-size: 38px;
+            font-size: 28px;
             font-weight: 800;
             color: var(--primary);
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .stat-label {
-            font-size: 16px;
+            font-size: 14px;
             color: var(--gray);
         }
 
-        /* ===== EMIRATES PAGE ===== */
-        .page-header {
-            background: var(--gradient);
+        .join-btn {
+            background: var(--primary);
             color: white;
-            padding: 50px 20px;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        /* ===== صفحة الإمارات ===== */
+        .page-header {
+            background: var(--gradient, linear-gradient(135deg, #0C3B2E 0%, #1D5C4A 100%));
+            color: white;
+            padding: 40px 20px;
             text-align: center;
         }
 
         .page-title {
             font-family: 'El Messiri', serif;
-            font-size: 38px;
-            margin-bottom: 15px;
+            font-size: 28px;
+            margin-bottom: 10px;
         }
 
         .page-subtitle {
-            font-size: 18px;
+            font-size: 16px;
             opacity: 0.95;
-            max-width: 600px;
-            margin: 0 auto;
         }
 
         .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px 20px;
+            padding: 24px 16px;
         }
 
         .emirates-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
         }
 
         .emirate-card {
             background: white;
-            border-radius: 20px;
+            border-radius: 16px;
             overflow: hidden;
             box-shadow: var(--shadow);
-            transition: all 0.3s;
-            border: 2px solid var(--light-gray);
+            border: 1px solid var(--light-gray);
             cursor: pointer;
-        }
-
-        .emirate-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--secondary);
         }
 
         .emirate-image {
             width: 100%;
-            height: 180px;
+            height: 100px;
             background-size: cover;
             background-position: center;
         }
 
         .emirate-content {
-            padding: 20px;
+            padding: 16px;
             text-align: center;
         }
 
         .emirate-name {
             font-family: 'El Messiri', serif;
-            font-size: 22px;
+            font-size: 18px;
             color: var(--primary);
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
 
         .emirate-count {
             color: var(--secondary);
             font-weight: 700;
-            font-size: 16px;
-            margin-bottom: 15px;
+            font-size: 13px;
+            margin-bottom: 12px;
         }
 
         .select-btn {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 12px 25px;
+            padding: 10px;
             border-radius: 30px;
-            font-size: 15px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            transition: all 0.3s;
+            gap: 6px;
         }
 
-        .select-btn:hover {
-            background: var(--accent);
-        }
-
-        /* ===== FAMILIES PAGE ===== */
+        /* ===== صفحة الأسر - بطاقات عمودين ===== */
         .filters-section {
             background: white;
-            padding: 25px;
-            border-radius: 20px;
-            margin-bottom: 30px;
-            border: 2px solid var(--light-gray);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+            border: 1px solid var(--light-gray);
         }
 
         .filter-title {
-            font-size: 18px;
+            font-size: 16px;
             color: var(--primary);
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .categories-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
         }
 
         .category-item {
             background: var(--light);
-            border-radius: 12px;
-            padding: 12px;
+            border-radius: 10px;
+            padding: 10px 5px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid transparent;
+            border: 1px solid transparent;
         }
 
-        .category-item:hover, .category-item.active {
+        .category-item.active {
             border-color: var(--secondary);
             background: white;
         }
 
         .category-icon {
-            font-size: 28px;
+            font-size: 22px;
             color: var(--primary);
-            margin-bottom: 8px;
+            margin-bottom: 5px;
         }
 
         .category-name {
             font-weight: 600;
             color: var(--primary);
-            font-size: 14px;
+            font-size: 11px;
         }
 
-        /* ✅ بطاقات العرض - عمودين في الجوال */
+        /* ✅ بطاقات الأسر - عمودين في الجوال */
         .families-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        @media (max-width: 640px) {
-            .families-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-            
-            .family-card {
-                margin-bottom: 0;
-            }
-            
-            .family-content {
-                padding: 15px;
-            }
-            
-            .family-name {
-                font-size: 18px;
-            }
-            
-            .family-location {
-                font-size: 12px;
-            }
-            
-            .family-description {
-                display: none;
-            }
-            
-            .family-stats {
-                display: none;
-            }
-            
-            .family-rating {
-                font-size: 12px;
-                padding: 3px 8px;
-            }
-            
-            .view-products-btn {
-                padding: 10px;
-                font-size: 13px;
-            }
-            
-            .family-badge {
-                padding: 3px 8px;
-                font-size: 10px;
-            }
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
         }
 
         .family-card {
             background: white;
-            border-radius: 18px;
+            border-radius: 16px;
             overflow: hidden;
             box-shadow: var(--shadow);
-            transition: all 0.3s;
-            border: 2px solid var(--light-gray);
+            border: 1px solid var(--light-gray);
             display: flex;
             flex-direction: column;
         }
 
-        .family-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--secondary);
-        }
-
         .family-image {
             width: 100%;
-            height: 180px;
+            height: 120px;
             background-size: cover;
             background-position: center;
             position: relative;
@@ -503,25 +485,24 @@
 
         .family-badges {
             position: absolute;
-            bottom: 10px;
-            right: 10px;
+            bottom: 8px;
+            right: 8px;
             display: flex;
-            gap: 6px;
+            gap: 5px;
             flex-wrap: wrap;
         }
 
         .family-badge {
             background: var(--secondary);
             color: var(--primary);
-            padding: 4px 10px;
+            padding: 3px 8px;
             border-radius: 20px;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 700;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
         .family-content {
-            padding: 20px;
+            padding: 14px;
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -531,12 +512,12 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .family-name {
             font-family: 'El Messiri', serif;
-            font-size: 20px;
+            font-size: 16px;
             font-weight: 700;
             color: var(--primary);
             line-height: 1.3;
@@ -544,157 +525,119 @@
 
         .family-rating {
             background: var(--light);
-            padding: 4px 10px;
+            padding: 3px 8px;
             border-radius: 20px;
             font-weight: 600;
             color: var(--primary);
             display: flex;
             align-items: center;
-            gap: 4px;
-            font-size: 13px;
+            gap: 3px;
+            font-size: 11px;
         }
 
         .family-location {
             color: var(--accent);
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 14px;
+            gap: 4px;
+            font-size: 11px;
         }
 
         .family-description {
-            color: var(--gray);
-            margin-bottom: 20px;
-            font-size: 14px;
-            line-height: 1.6;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            display: none;
         }
 
         .view-products-btn {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             background: var(--primary);
             color: white;
             border: none;
             border-radius: 30px;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            transition: all 0.3s;
+            gap: 6px;
             margin-top: auto;
         }
 
-        .view-products-btn:hover {
-            background: var(--accent);
-        }
-
-        /* ===== PRODUCTS PAGE ===== */
+        /* ===== صفحة المنتجات - عمودين ===== */
         .family-profile {
             background: white;
-            border-radius: 24px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: var(--shadow);
-            border: 2px solid var(--light-gray);
-            margin-bottom: 40px;
+            border: 1px solid var(--light-gray);
+            margin-bottom: 24px;
         }
 
         .profile-header {
-            background: var(--gradient);
+            background: var(--gradient, linear-gradient(135deg, #0C3B2E 0%, #1D5C4A 100%));
             color: white;
-            padding: 30px;
+            padding: 20px;
             display: flex;
             align-items: center;
-            gap: 25px;
+            gap: 16px;
         }
 
         .profile-avatar {
-            width: 100px;
-            height: 100px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             background-size: cover;
             background-position: center;
-            border: 4px solid white;
+            border: 3px solid white;
             flex-shrink: 0;
-        }
-
-        .profile-info {
-            flex: 1;
         }
 
         .profile-name {
             font-family: 'El Messiri', serif;
-            font-size: 30px;
-            margin-bottom: 8px;
+            font-size: 20px;
+            margin-bottom: 4px;
         }
 
         .profile-location {
-            font-size: 16px;
+            font-size: 13px;
             opacity: 0.9;
             display: flex;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .profile-badges {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .profile-badge {
-            background: rgba(255,255,255,0.2);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
+            gap: 5px;
         }
 
         .profile-body {
-            padding: 30px;
+            padding: 20px;
         }
 
         .social-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 16px;
         }
 
         .social-card {
             background: var(--light);
             border-radius: 12px;
-            padding: 15px;
+            padding: 12px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             text-decoration: none;
             color: var(--dark);
-            border: 2px solid var(--light-gray);
-            transition: all 0.3s;
-        }
-
-        .social-card:hover {
-            border-color: var(--secondary);
-            transform: translateY(-3px);
+            border: 1px solid var(--light-gray);
         }
 
         .social-icon {
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
+            font-size: 18px;
             color: white;
             flex-shrink: 0;
         }
@@ -705,15 +648,15 @@
         .phone-bg { background: var(--accent); }
 
         .social-label {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--gray);
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
 
         .social-value {
             font-weight: 600;
             color: var(--primary);
-            font-size: 14px;
+            font-size: 12px;
             word-break: break-word;
         }
 
@@ -721,82 +664,50 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 16px;
         }
 
         .products-title {
             font-family: 'El Messiri', serif;
-            font-size: 26px;
+            font-size: 20px;
             color: var(--primary);
         }
 
         .products-badge {
             background: var(--light);
-            padding: 8px 20px;
+            padding: 6px 16px;
             border-radius: 30px;
             font-weight: 700;
             color: var(--primary);
+            font-size: 13px;
         }
 
+        /* ✅ بطاقات المنتجات - عمودين */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        @media (max-width: 640px) {
-            .products-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-            
-            .product-content {
-                padding: 15px;
-            }
-            
-            .product-name {
-                font-size: 16px;
-            }
-            
-            .product-description {
-                display: none;
-            }
-            
-            .product-price {
-                font-size: 18px;
-            }
-            
-            .order-btn {
-                padding: 8px 15px;
-                font-size: 12px;
-            }
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
         }
 
         .product-card {
             background: white;
-            border-radius: 18px;
+            border-radius: 16px;
             overflow: hidden;
             box-shadow: var(--shadow);
-            border: 2px solid var(--light-gray);
-            transition: all 0.3s;
+            border: 1px solid var(--light-gray);
             display: flex;
             flex-direction: column;
         }
 
-        .product-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--secondary);
-        }
-
         .product-image {
             width: 100%;
-            height: 160px;
+            height: 110px;
             background-size: cover;
             background-position: center;
         }
 
         .product-content {
-            padding: 18px;
+            padding: 14px;
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -804,42 +715,36 @@
 
         .product-name {
             font-family: 'El Messiri', serif;
-            font-size: 18px;
+            font-size: 15px;
             color: var(--primary);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .product-description {
-            color: var(--gray);
-            font-size: 13px;
-            margin-bottom: 15px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            display: none;
         }
 
         .product-category {
             background: var(--light);
-            padding: 4px 12px;
+            padding: 3px 10px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 10px;
             color: var(--primary);
             width: fit-content;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .product-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 15px;
-            border-top: 2px solid var(--light-gray);
+            padding-top: 10px;
+            border-top: 1px solid var(--light-gray);
             margin-top: auto;
         }
 
         .product-price {
-            font-size: 22px;
+            font-size: 18px;
             font-weight: 800;
             color: var(--success);
         }
@@ -848,22 +753,17 @@
             background: var(--primary);
             color: white;
             border: none;
-            padding: 8px 18px;
+            padding: 6px 14px;
             border-radius: 30px;
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 6px;
-            transition: all 0.3s;
+            gap: 4px;
         }
 
-        .order-btn:hover {
-            background: var(--accent);
-        }
-
-        /* ===== FORM تسجيل الأسر الجديدة ===== */
+        /* ===== نموذج التسجيل ===== */
         .modal {
             display: none;
             position: fixed;
@@ -871,12 +771,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(12, 59, 46, 0.9);
+            background: rgba(12, 59, 46, 0.95);
             z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            backdrop-filter: blur(5px);
+            align-items: flex-end;
+            padding: 0;
+            backdrop-filter: blur(3px);
         }
 
         .modal.active {
@@ -885,20 +784,22 @@
 
         .modal-content {
             background: white;
-            border-radius: 30px;
             width: 100%;
-            max-width: 600px;
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
-            border: 3px solid var(--secondary);
+            border-radius: 30px 30px 0 0;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
         }
 
         .modal-header {
-            background: var(--gradient);
+            background: var(--gradient, linear-gradient(135deg, #0C3B2E 0%, #1D5C4A 100%));
             color: white;
-            padding: 30px;
-            border-radius: 27px 27px 0 0;
+            padding: 25px 20px;
             position: relative;
             text-align: center;
         }
@@ -918,49 +819,42 @@
             justify-content: center;
             cursor: pointer;
             font-size: 18px;
-            transition: all 0.3s;
-        }
-
-        .modal-close:hover {
-            background: rgba(255,255,255,0.3);
-            transform: rotate(90deg);
         }
 
         .modal-title {
             font-family: 'El Messiri', serif;
-            font-size: 28px;
-            margin-bottom: 10px;
+            font-size: 24px;
+            margin-bottom: 5px;
         }
 
         .modal-body {
-            padding: 30px;
+            padding: 24px 20px;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .form-label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 600;
             color: var(--primary);
-            font-size: 15px;
+            font-size: 14px;
         }
 
         .form-label i {
             color: var(--secondary);
-            margin-left: 8px;
+            margin-left: 6px;
         }
 
         .form-control {
             width: 100%;
-            padding: 15px 20px;
-            border: 2px solid var(--light-gray);
+            padding: 14px 16px;
+            border: 1px solid var(--light-gray);
             border-radius: 12px;
-            font-size: 16px;
+            font-size: 15px;
             background: var(--light);
-            transition: all 0.3s;
         }
 
         .form-control:focus {
@@ -969,137 +863,81 @@
             background: white;
         }
 
-        textarea.form-control {
-            min-height: 100px;
-            resize: vertical;
-        }
-
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 12px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--light);
+            padding: 8px 14px;
+            border-radius: 30px;
+            font-size: 13px;
         }
 
         .submit-btn {
             width: 100%;
-            padding: 18px;
-            background: var(--gradient);
+            padding: 16px;
+            background: var(--gradient, linear-gradient(135deg, #0C3B2E 0%, #1D5C4A 100%));
             color: white;
             border: none;
             border-radius: 12px;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            transition: all 0.3s;
+            gap: 10px;
             margin-top: 20px;
         }
 
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(12, 59, 46, 0.2);
-        }
-
-        /* ===== BACK BUTTON ===== */
-        .back-btn-container {
-            max-width: 1400px;
-            margin: 20px auto 0;
-            padding: 0 20px;
-        }
-
-        .back-btn {
-            background: white;
-            color: var(--primary);
-            border: 2px solid var(--light-gray);
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s;
-            margin-bottom: 20px;
-        }
-
-        .back-btn:hover {
-            border-color: var(--secondary);
-            background: var(--light);
-            transform: translateX(-5px);
-        }
-
-        /* ===== FOOTER ===== */
+        /* ===== فوتر بسيط ===== */
         .app-footer {
             background: var(--dark);
             color: white;
-            padding: 40px 0 20px;
-            margin-top: 60px;
+            padding: 30px 20px 20px;
+            margin-top: 40px;
         }
 
-        .footer-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
+        .footer-content {
+            text-align: center;
         }
 
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .footer-column h4 {
+        .footer-logo {
             font-family: 'El Messiri', serif;
-            font-size: 18px;
-            margin-bottom: 15px;
+            font-size: 20px;
             color: var(--secondary);
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
             margin-bottom: 10px;
         }
 
-        .footer-links a {
-            color: #ddd;
-            text-decoration: none;
-            transition: all 0.3s;
-            font-size: 14px;
-        }
-
-        .footer-links a:hover {
-            color: var(--secondary);
-            padding-right: 8px;
-        }
-
         .copyright {
-            text-align: center;
+            font-size: 12px;
+            opacity: 0.7;
+            margin-top: 20px;
             padding-top: 20px;
             border-top: 1px solid rgba(255,255,255,0.1);
-            font-size: 13px;
-            opacity: 0.7;
         }
 
-        /* ===== UTILITIES ===== */
-        .page {
-            display: block;
-        }
-        
+        /* ===== مخفي ===== */
         .hidden {
             display: none !important;
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
+    <!-- هيدر بسيط - بدون أزرار -->
     <header class="app-header">
         <div class="header-container">
             <div class="logo-section" onclick="goToHome()">
@@ -1108,47 +946,50 @@
                 </div>
                 <div class="logo-text">
                     <h1>سوق البيوت</h1>
-                    <p>منصة الأسر المنتجة</p>
+                    <p>الأسر المنتجة</p>
                 </div>
             </div>
-            
-            <!-- أزرار جديدة - بدون الأزرار الزائدة -->
-            <div class="nav-buttons">
-                <button class="nav-btn home-btn" onclick="showPage('home')">
-                    <i class="fas fa-home"></i>
-                    الرئيسية
-                </button>
-                <button class="nav-btn market-btn" onclick="showPage('emirates')">
-                    <i class="fas fa-store"></i>
-                    السوق
-                </button>
-                <button class="nav-btn" style="background: white; color: var(--primary);" onclick="showRegisterForm()">
-                    <i class="fas fa-user-plus"></i>
-                    تسجيل
-                </button>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+        
+        <!-- القائمة المنسدلة -->
+        <div class="nav-menu" id="navMenu">
+            <div class="nav-item home-item" onclick="goToHome(); toggleMenu();">
+                <i class="fas fa-home"></i>
+                الرئيسية
+            </div>
+            <div class="nav-item market-item" onclick="showPage('emirates'); toggleMenu();">
+                <i class="fas fa-store"></i>
+                السوق
+            </div>
+            <div class="nav-item register-item" onclick="showRegisterForm(); toggleMenu();">
+                <i class="fas fa-user-plus"></i>
+                تسجيل أسرة
             </div>
         </div>
     </header>
 
-    <!-- Back Button -->
-    <div class="back-btn-container" id="backButtonContainer" style="display: none;">
+    <!-- زر العودة -->
+    <div class="back-btn-wrapper" id="backButtonContainer" style="display: none;">
         <button class="back-btn" id="backButton">
             <i class="fas fa-arrow-right"></i>
             <span id="backButtonText">العودة</span>
         </button>
     </div>
 
-    <!-- Page Container -->
+    <!-- الصفحات -->
     <div class="page-container">
-        <!-- الصفحة الرئيسية -->
+        <!-- الرئيسية -->
         <div id="home-page" class="page">
             <section class="hero-section">
                 <div class="hero-content">
                     <h1 class="hero-title">سوق البيوت</h1>
-                    <p class="hero-subtitle">منصة الأسر المنتجة الإماراتية الأولى</p>
+                    <p class="hero-subtitle">منصة الأسر المنتجة الإماراتية</p>
                     
                     <div class="hero-search-box">
-                        <input type="text" class="hero-search-input" placeholder="ابحث عن منتج، أسرة، أو فئة..." id="homeSearch">
+                        <input type="text" class="hero-search-input" placeholder="ابحث عن منتج أو أسرة..." id="homeSearch">
                         <button class="hero-search-btn" onclick="performHomeSearch()">
                             <i class="fas fa-search"></i>
                         </button>
@@ -1163,58 +1004,53 @@
             
             <section class="about-section">
                 <h2 class="section-title">من نحن</h2>
-                <div class="about-content">
-                    <div class="about-text">
-                        <p>سوق البيوت منصة إماراتية لدعم وتمكين الأسر المنتجة في جميع إمارات الدولة. نربط بين الإنتاج المحلي الأصيل والجمهور المهتم بالمنتجات الإماراتية التقليدية والعصرية.</p>
-                        <br>
-                        <p>نعمل مع أكثر من 150 أسرة منتجة، نقدم منتجات متنوعة تشمل التمور، الحلويات، المنتجات اليدوية، المواد الغذائية، ومنتجات التجميل الطبيعية.</p>
-                        <br>
-                        <button onclick="showRegisterForm()" style="background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 30px; font-weight: 600; cursor: pointer;">
-                            <i class="fas fa-plus-circle"></i> انضم كأسرة منتجة
-                        </button>
+                <div class="about-text">
+                    <p>سوق البيوت منصة إماراتية لدعم الأسر المنتجة. نربط بين الإنتاج المحلي والجمهور المهتم بالمنتجات الإماراتية الأصيلة.</p>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">+150</div>
+                        <div class="stat-label">أسرة</div>
                     </div>
-                    
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-number">+150</div>
-                            <div class="stat-label">أسرة</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-number">7</div>
-                            <div class="stat-label">إمارات</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-number">98%</div>
-                            <div class="stat-label">رضا</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-number">+2.5k</div>
-                            <div class="stat-label">منتج</div>
-                        </div>
+                    <div class="stat-card">
+                        <div class="stat-number">7</div>
+                        <div class="stat-label">إمارات</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label">رضا</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">+2.5k</div>
+                        <div class="stat-label">منتج</div>
                     </div>
                 </div>
+                
+                <button class="join-btn" onclick="showRegisterForm()">
+                    <i class="fas fa-plus-circle"></i>
+                    انضم كأسرة منتجة
+                </button>
             </section>
         </div>
 
-        <!-- صفحة اختيار الإمارة -->
+        <!-- الإمارات -->
         <div id="emirates-page" class="page" style="display: none;">
             <div class="page-header">
                 <h1 class="page-title">اختر إمارتك</h1>
                 <p class="page-subtitle">اكتشف الأسر المنتجة في إمارتك</p>
             </div>
-            
             <div class="container">
                 <div class="emirates-grid" id="emiratesGrid"></div>
             </div>
         </div>
 
-        <!-- صفحة الأسر المنتجة -->
+        <!-- الأسر المنتجة -->
         <div id="families-page" class="page" style="display: none;">
             <div class="page-header">
                 <h1 class="page-title" id="familiesPageTitle">الأسر المنتجة</h1>
                 <p class="page-subtitle" id="familiesPageSubtitle">استعرض الأسر ومنتجاتها</p>
             </div>
-            
             <div class="container">
                 <div class="filters-section">
                     <h3 class="filter-title">
@@ -1223,32 +1059,28 @@
                     </h3>
                     <div class="categories-grid" id="categoriesGrid"></div>
                 </div>
-                
                 <div class="families-grid" id="familiesGrid"></div>
             </div>
         </div>
 
-        <!-- صفحة المنتجات -->
+        <!-- المنتجات -->
         <div id="products-page" class="page" style="display: none;">
             <div class="page-header">
-                <h1 class="page-title" id="productsPageTitle">منتجات الأسرة</h1>
-                <p class="page-subtitle" id="productsPageSubtitle">استعرض المنتجات وتواصل مع الأسرة</p>
+                <h1 class="page-title" id="productsPageTitle">المنتجات</h1>
+                <p class="page-subtitle" id="productsPageSubtitle"></p>
             </div>
-            
             <div class="container">
                 <div id="familyProfileContainer"></div>
-                
                 <div class="products-header">
                     <h2 class="products-title">المنتجات</h2>
-                    <div class="products-badge" id="productsCount">0 منتج</div>
+                    <div class="products-badge" id="productsCount">0</div>
                 </div>
-                
                 <div class="products-grid" id="productsGrid"></div>
             </div>
         </div>
     </div>
 
-    <!-- نموذج تسجيل الأسر الجديدة (Form بسيط) -->
+    <!-- نموذج تسجيل الأسر -->
     <div class="modal" id="registerModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1256,27 +1088,19 @@
                     <i class="fas fa-times"></i>
                 </button>
                 <h2 class="modal-title">تسجيل أسرة جديدة</h2>
-                <p style="opacity: 0.9;">انضم إلى منصة سوق البيوت</p>
+                <p style="font-size: 14px; opacity: 0.9;">انضم إلى منصة سوق البيوت</p>
             </div>
-            
             <div class="modal-body">
                 <form id="registerForm" onsubmit="submitFamilyRegistration(event)">
                     <div class="form-group">
-                        <label class="form-label">
-                            <i class="fas fa-users"></i>
-                            اسم الأسرة
-                        </label>
+                        <label class="form-label"><i class="fas fa-users"></i> اسم الأسرة</label>
                         <input type="text" class="form-control" placeholder="مثال: أسرة آل مبارك" required>
                     </div>
-                    
                     <div class="form-row">
                         <div class="form-group">
-                            <label class="form-label">
-                                <i class="fas fa-map-marker-alt"></i>
-                                الإمارة
-                            </label>
+                            <label class="form-label"><i class="fas fa-map-marker-alt"></i> الإمارة</label>
                             <select class="form-control" required>
-                                <option value="">اختر الإمارة</option>
+                                <option value="">اختر</option>
                                 <option value="دبي">دبي</option>
                                 <option value="أبوظبي">أبوظبي</option>
                                 <option value="الشارقة">الشارقة</option>
@@ -1286,127 +1110,63 @@
                                 <option value="أم القيوين">أم القيوين</option>
                             </select>
                         </div>
-                        
                         <div class="form-group">
-                            <label class="form-label">
-                                <i class="fas fa-city"></i>
-                                المنطقة
-                            </label>
-                            <input type="text" class="form-control" placeholder="مثال: البرشاء" required>
+                            <label class="form-label"><i class="fas fa-city"></i> المنطقة</label>
+                            <input type="text" class="form-control" placeholder="البرشاء" required>
                         </div>
                     </div>
-                    
                     <div class="form-group">
-                        <label class="form-label">
-                            <i class="fas fa-align-right"></i>
-                            نبذة عن الأسرة
-                        </label>
-                        <textarea class="form-control" placeholder="اكتب نبذة مختصرة عن منتجاتكم وتاريخكم..."></textarea>
+                        <label class="form-label"><i class="fas fa-align-right"></i> نبذة عن الأسرة</label>
+                        <textarea class="form-control" placeholder="اكتب نبذة مختصرة..." rows="3"></textarea>
                     </div>
-                    
                     <div class="form-row">
                         <div class="form-group">
-                            <label class="form-label">
-                                <i class="fas fa-phone"></i>
-                                رقم الهاتف
-                            </label>
+                            <label class="form-label"><i class="fas fa-phone"></i> الهاتف</label>
                             <input type="tel" class="form-control" placeholder="05x xxx xxxx" required>
                         </div>
-                        
                         <div class="form-group">
-                            <label class="form-label">
-                                <i class="fab fa-whatsapp"></i>
-                                واتساب
-                            </label>
+                            <label class="form-label"><i class="fab fa-whatsapp"></i> واتساب</label>
                             <input type="tel" class="form-control" placeholder="05x xxx xxxx">
                         </div>
                     </div>
-                    
                     <div class="form-row">
                         <div class="form-group">
-                            <label class="form-label">
-                                <i class="fas fa-envelope"></i>
-                                البريد الإلكتروني
-                            </label>
+                            <label class="form-label"><i class="fas fa-envelope"></i> البريد</label>
                             <input type="email" class="form-control" placeholder="info@example.com">
                         </div>
-                        
                         <div class="form-group">
-                            <label class="form-label">
-                                <i class="fab fa-instagram"></i>
-                                إنستجرام
-                            </label>
+                            <label class="form-label"><i class="fab fa-instagram"></i> إنستجرام</label>
                             <input type="text" class="form-control" placeholder="@account">
                         </div>
                     </div>
-                    
                     <div class="form-group">
-                        <label class="form-label">
-                            <i class="fas fa-tags"></i>
-                            التصنيفات
-                        </label>
-                        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;">
-                            <label style="display: flex; align-items: center; gap: 5px; background: var(--light); padding: 8px 15px; border-radius: 20px;">
-                                <input type="checkbox" value="غذائية"> غذائية
-                            </label>
-                            <label style="display: flex; align-items: center; gap: 5px; background: var(--light); padding: 8px 15px; border-radius: 20px;">
-                                <input type="checkbox" value="حلويات"> حلويات
-                            </label>
-                            <label style="display: flex; align-items: center; gap: 5px; background: var(--light); padding: 8px 15px; border-radius: 20px;">
-                                <input type="checkbox" value="يدوية"> يدوية
-                            </label>
-                            <label style="display: flex; align-items: center; gap: 5px; background: var(--light); padding: 8px 15px; border-radius: 20px;">
-                                <input type="checkbox" value="تجميل"> تجميل
-                            </label>
-                            <label style="display: flex; align-items: center; gap: 5px; background: var(--light); padding: 8px 15px; border-radius: 20px;">
-                                <input type="checkbox" value="ديكور"> ديكور
-                            </label>
-                            <label style="display: flex; align-items: center; gap: 5px; background: var(--light); padding: 8px 15px; border-radius: 20px;">
-                                <input type="checkbox" value="بحري"> بحري
-                            </label>
+                        <label class="form-label"><i class="fas fa-tags"></i> التصنيفات</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label"><input type="checkbox" value="غذائية"> غذائية</label>
+                            <label class="checkbox-label"><input type="checkbox" value="حلويات"> حلويات</label>
+                            <label class="checkbox-label"><input type="checkbox" value="يدوية"> يدوية</label>
+                            <label class="checkbox-label"><input type="checkbox" value="تجميل"> تجميل</label>
+                            <label class="checkbox-label"><input type="checkbox" value="ديكور"> ديكور</label>
+                            <label class="checkbox-label"><input type="checkbox" value="بحري"> بحري</label>
                         </div>
                     </div>
-                    
                     <button type="submit" class="submit-btn">
                         <i class="fas fa-paper-plane"></i>
                         إرسال طلب التسجيل
                     </button>
-                    
-                    <p style="margin-top: 20px; font-size: 13px; color: var(--gray); text-align: center;">
-                        سيتم التواصل معكم خلال 24 ساعة لتأكيد التسجيل
+                    <p style="margin-top: 16px; font-size: 12px; color: var(--gray); text-align: center;">
+                        سيتم التواصل معكم خلال 24 ساعة
                     </p>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
+    <!-- فوتر -->
     <footer class="app-footer">
-        <div class="footer-container">
-            <div class="footer-grid">
-                <div class="footer-column">
-                    <h4>سوق البيوت</h4>
-                    <p style="font-size: 14px; opacity: 0.9;">منصة الأسر المنتجة الإماراتية</p>
-                </div>
-                
-                <div class="footer-column">
-                    <h4>روابط</h4>
-                    <ul class="footer-links">
-                        <li><a href="#" onclick="showPage('home')">الرئيسية</a></li>
-                        <li><a href="#" onclick="showPage('emirates')">السوق</a></li>
-                        <li><a href="#" onclick="showRegisterForm()">تسجيل أسرة</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h4>تواصل</h4>
-                    <ul class="footer-links">
-                        <li><i class="fas fa-phone"></i> 800-BUYOUT</li>
-                        <li><i class="fas fa-envelope"></i> info@souq.ae</li>
-                    </ul>
-                </div>
-            </div>
-            
+        <div class="footer-content">
+            <div class="footer-logo">سوق البيوت</div>
+            <p style="font-size: 13px; opacity: 0.9;">منصة الأسر المنتجة الإماراتية</p>
             <div class="copyright">
                 © 2024 سوق البيوت - دعم الأسر المنتجة
             </div>
@@ -1414,7 +1174,7 @@
     </footer>
 
     <script>
-        // بيانات الأسر (مختصرة للعرض)
+        // بيانات الأسر
         const familiesData = [
             {
                 id: 1,
@@ -1430,31 +1190,12 @@
                 instagram: "@almubarak_family",
                 productsCount: 8,
                 rating: 4.8,
-                joinDate: "2019",
                 badges: ["تمور", "عسل"],
                 category: "غذائية",
                 products: [
-                    {
-                        name: "تمر خلاص إماراتي",
-                        description: "تمر خلاص فاخر من أجود الأنواع",
-                        price: "45 درهم",
-                        category: "تمور",
-                        image: "https://images.unsplash.com/photo-1597848212624-e519f8859c6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
-                    },
-                    {
-                        name: "سمن بلدي طبيعي",
-                        description: "سمن بلدي من حليب الإبل",
-                        price: "85 درهم",
-                        category: "ألبان",
-                        image: "https://images.unsplash.com/photo-1563636619-e9143da7973b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
-                    },
-                    {
-                        name: "عسل سدر طبيعي",
-                        description: "عسل سدر جبلي نقي 100%",
-                        price: "220 درهم",
-                        category: "عسل",
-                        image: "https://images.unsplash.com/photo-1587049352851-8d4e89133924?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
-                    }
+                    { name: "تمر خلاص", description: "تمر خلاص فاخر", price: "45", category: "تمور", image: "https://images.unsplash.com/photo-1597848212624-e519f8859c6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" },
+                    { name: "سمن بلدي", description: "سمن بلدي طبيعي", price: "85", category: "ألبان", image: "https://images.unsplash.com/photo-1563636619-e9143da7973b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" },
+                    { name: "عسل سدر", description: "عسل سدر جبلي", price: "220", category: "عسل", image: "https://images.unsplash.com/photo-1587049352851-8d4e89133924?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" }
                 ]
             },
             {
@@ -1462,8 +1203,8 @@
                 name: "أسرة الغفلي",
                 location: "الشارقة",
                 emirate: "الشارقة",
-                description: "ديكور ومنتجات يدوية تراثية",
-                longDescription: "متخصصون في صناعة السجاد والمفروشات اليدوية بتصاميم إماراتية أصيلة.",
+                description: "ديكور ومنتجات يدوية",
+                longDescription: "متخصصون في صناعة السجاد والمفروشات اليدوية.",
                 image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
                 phone: "+971 50 234 5678",
                 whatsapp: "+971502345678",
@@ -1471,24 +1212,11 @@
                 instagram: "@alghafili_home",
                 productsCount: 6,
                 rating: 4.7,
-                joinDate: "2018",
                 badges: ["ديكور", "يدوي"],
                 category: "يدوية",
                 products: [
-                    {
-                        name: "سجاد يدوي",
-                        description: "سجاد صوف طبيعي بتصميم إماراتي",
-                        price: "450 درهم",
-                        category: "ديكور",
-                        image: "https://images.unsplash.com/photo-1596199050105-6d5d4e4c4c1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
-                    },
-                    {
-                        name: "مفارش مطرزة",
-                        description: "مفارش حرير مطرزة يدوياً",
-                        price: "280 درهم",
-                        category: "ديكور",
-                        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
-                    }
+                    { name: "سجاد يدوي", description: "سجاد صوف طبيعي", price: "450", category: "ديكور", image: "https://images.unsplash.com/photo-1596199050105-6d5d4e4c4c1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" },
+                    { name: "مفارش مطرزة", description: "مفارش حرير", price: "280", category: "ديكور", image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" }
                 ]
             },
             {
@@ -1496,8 +1224,8 @@
                 name: "أسرة الظاهري",
                 location: "العين، أبوظبي",
                 emirate: "أبوظبي",
-                description: "تمور عضوية من مزارع العين",
-                longDescription: "ثلاثة أجيال من العناية بالنخيل وإنتاج أجود أنواع التمور.",
+                description: "تمور عضوية",
+                longDescription: "ثلاثة أجيال من إنتاج أجود أنواع التمور.",
                 image: "https://images.unsplash.com/photo-1505253668822-42074d58a7c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
                 phone: "+971 50 345 6789",
                 whatsapp: "+971503456789",
@@ -1505,33 +1233,20 @@
                 instagram: "@aldhahiri_dates",
                 productsCount: 5,
                 rating: 4.9,
-                joinDate: "2020",
                 badges: ["عضوي", "تمور"],
                 category: "زراعية",
                 products: [
-                    {
-                        name: "تمر مجدول",
-                        description: "تمر مجدول سكري فاخر",
-                        price: "95 درهم",
-                        category: "تمور",
-                        image: "https://images.unsplash.com/photo-1597872200969-3b65ba4aaade?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
-                    },
-                    {
-                        name: "رطب طازج",
-                        description: "رطب نخل طازج يومياً",
-                        price: "65 درهم",
-                        category: "تمور",
-                        image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
-                    }
+                    { name: "تمر مجدول", description: "تمر مجدول سكري", price: "95", category: "تمور", image: "https://images.unsplash.com/photo-1597872200969-3b65ba4aaade?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" },
+                    { name: "رطب طازج", description: "رطب نخل طازج", price: "65", category: "تمور", image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" }
                 ]
             },
             {
                 id: 4,
                 name: "أسرة الشامسي",
-                location: "دبي مارينا",
+                location: "دبي",
                 emirate: "دبي",
-                description: "حلويات إماراتية منزلية",
-                longDescription: "وصفات عائلية سرية للمعمول واللقيمات والكعك الإماراتي.",
+                description: "حلويات منزلية",
+                longDescription: "وصفات عائلية للمعمول واللقيمات.",
                 image: "https://images.unsplash.com/photo-1558326567-98ae2405596b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
                 phone: "+971 50 456 7890",
                 whatsapp: "+971504567890",
@@ -1539,92 +1254,11 @@
                 instagram: "@alshamsi_sweets",
                 productsCount: 7,
                 rating: 4.6,
-                joinDate: "2021",
                 badges: ["حلويات", "منزلي"],
                 category: "حلويات",
                 products: [
-                    {
-                        name: "معمول تمر",
-                        description: "معمول منزلي بالتمر واللوز",
-                        price: "75 درهم",
-                        category: "حلويات",
-                        image: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
-                    },
-                    {
-                        name: "لقيمات",
-                        description: "لقيمات إماراتية مقرمشة",
-                        price: "25 درهم",
-                        category: "حلويات",
-                        image: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
-                    }
-                ]
-            },
-            {
-                id: 5,
-                name: "أسرة القاسمي",
-                location: "الموالح، الشارقة",
-                emirate: "الشارقة",
-                description: "منتجات تجميل طبيعية",
-                longDescription: "حناء طبيعي، زيت أركان، صابون عضوي - 100% طبيعي.",
-                image: "https://images.unsplash.com/photo-1556228578-9c360e1d8d34?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
-                phone: "+971 50 567 8901",
-                whatsapp: "+971505678901",
-                email: "alqasimi@example.com",
-                instagram: "@alqasimi_beauty",
-                productsCount: 4,
-                rating: 4.5,
-                joinDate: "2022",
-                badges: ["طبيعي", "عضوي"],
-                category: "تجميل",
-                products: [
-                    {
-                        name: "حناء نباتي",
-                        description: "حناء نباتي نقي 100%",
-                        price: "25 درهم",
-                        category: "تجميل",
-                        image: "https://images.unsplash.com/photo-1596703923338-48f1c07e4f2e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
-                    },
-                    {
-                        name: "زيت أركان",
-                        description: "زيت أركان عضوي للبشرة والشعر",
-                        price: "150 درهم",
-                        category: "تجميل",
-                        image: "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
-                    }
-                ]
-            },
-            {
-                id: 6,
-                name: "أسرة البلوشي",
-                location: "عجمان",
-                emirate: "عجمان",
-                description: "منتجات بحرية تقليدية",
-                longDescription: "صيادون منذ 4 أجيال - أسماك مجففة ومدخنة بطرق تقليدية.",
-                image: "https://images.unsplash.com/photo-1592424737490-c2f13a9c6d10?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
-                phone: "+971 50 678 9012",
-                whatsapp: "+971506789012",
-                email: "albalushi@example.com",
-                instagram: "@albalushi_seafood",
-                productsCount: 4,
-                rating: 4.3,
-                joinDate: "2019",
-                badges: ["أسماك", "بحري"],
-                category: "بحري",
-                products: [
-                    {
-                        name: "سمك مجفف",
-                        description: "سمك مجفف بطرق تقليدية",
-                        price: "120 درهم",
-                        category: "أسماك",
-                        image: "https://images.unsplash.com/photo-1599599810769-bcde5a160d32?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
-                    },
-                    {
-                        name: "ربيان مجفف",
-                        description: "ربيان مجفف طبيعي",
-                        price: "95 درهم",
-                        category: "أسماك",
-                        image: "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
-                    }
+                    { name: "معمول تمر", description: "معمول بالتمر واللوز", price: "75", category: "حلويات", image: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" },
+                    { name: "لقيمات", description: "لقيمات مقرمشة", price: "25", category: "حلويات", image: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" }
                 ]
             }
         ];
@@ -1638,12 +1272,17 @@
             searchQuery: ''
         };
 
-        // تهيئة الصفحة
+        // تهيئة
         document.addEventListener('DOMContentLoaded', function() {
             initEmirates();
             initCategories();
             updateBackButton();
         });
+
+        // فتح/غلق القائمة
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
 
         // تهيئة الإمارات
         function initEmirates() {
@@ -1670,7 +1309,7 @@
                             <h3 class="emirate-name">${e.name}</h3>
                             <div class="emirate-count">${count} أسرة</div>
                             <button class="select-btn">
-                                <i class="fas fa-store"></i> عرض الأسر
+                                <i class="fas fa-store"></i> عرض
                             </button>
                         </div>
                     </div>
@@ -1684,19 +1323,19 @@
             if (!grid) return;
             
             const categories = [
-                { id: 'all', name: 'الكل', icon: 'fas fa-th-large', color: '#0C3B2E' },
-                { id: 'غذائية', name: 'غذائية', icon: 'fas fa-apple-alt', color: '#2E8B57' },
-                { id: 'يدوية', name: 'يدوية', icon: 'fas fa-hands', color: '#D4AF37' },
-                { id: 'زراعية', name: 'زراعية', icon: 'fas fa-seedling', color: '#8B7355' },
-                { id: 'حلويات', name: 'حلويات', icon: 'fas fa-cookie-bite', color: '#FF6B6B' },
-                { id: 'تجميل', name: 'تجميل', icon: 'fas fa-spa', color: '#9370DB' },
-                { id: 'بحري', name: 'بحري', icon: 'fas fa-fish', color: '#4682B4' },
-                { id: 'ديكور', name: 'ديكور', icon: 'fas fa-couch', color: '#DEB887' }
+                { id: 'all', name: 'الكل', icon: 'fas fa-th-large' },
+                { id: 'غذائية', name: 'غذائية', icon: 'fas fa-apple-alt' },
+                { id: 'يدوية', name: 'يدوية', icon: 'fas fa-hands' },
+                { id: 'زراعية', name: 'زراعية', icon: 'fas fa-seedling' },
+                { id: 'حلويات', name: 'حلويات', icon: 'fas fa-cookie-bite' },
+                { id: 'تجميل', name: 'تجميل', icon: 'fas fa-spa' },
+                { id: 'بحري', name: 'بحري', icon: 'fas fa-fish' },
+                { id: 'ديكور', name: 'ديكور', icon: 'fas fa-couch' }
             ];
 
             grid.innerHTML = categories.map(c => `
                 <div class="category-item ${c.id === 'all' ? 'active' : ''}" onclick="filterByCategory('${c.id}')">
-                    <div class="category-icon"><i class="${c.icon}" style="color: ${c.color}"></i></div>
+                    <div class="category-icon"><i class="${c.icon}"></i></div>
                     <div class="category-name">${c.name}</div>
                 </div>
             `).join('');
@@ -1734,11 +1373,9 @@
             if (appState.currentEmirate !== 'all') {
                 filtered = filtered.filter(f => f.emirate === appState.currentEmirate);
             }
-            
             if (appState.currentCategory !== 'all') {
                 filtered = filtered.filter(f => f.category === appState.currentCategory);
             }
-            
             if (appState.searchQuery) {
                 filtered = filtered.filter(f => 
                     f.name.includes(appState.searchQuery) || 
@@ -1749,13 +1386,7 @@
             const grid = document.getElementById('familiesGrid');
             
             if (filtered.length === 0) {
-                grid.innerHTML = `
-                    <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
-                        <i class="fas fa-search" style="font-size: 50px; color: var(--secondary); opacity: 0.5;"></i>
-                        <h3 style="margin-top: 20px; color: var(--primary);">لا توجد أسر</h3>
-                        <p style="color: var(--gray);">جرب تصنيف أو إمارة أخرى</p>
-                    </div>
-                `;
+                grid.innerHTML = '<div style="grid-column: span 2; text-align: center; padding: 40px;">لا توجد أسر</div>';
                 return;
             }
             
@@ -1776,7 +1407,6 @@
                         <div class="family-location">
                             <i class="fas fa-map-marker-alt"></i> ${family.location}
                         </div>
-                        <p class="family-description">${family.description}</p>
                         <button class="view-products-btn" onclick="showFamilyProducts(${family.id})">
                             <i class="fas fa-box-open"></i> ${family.products.length} منتج
                         </button>
@@ -1795,25 +1425,19 @@
             document.getElementById('productsPageTitle').textContent = family.name;
             document.getElementById('productsPageSubtitle').textContent = family.location;
             
-            // عرض معلومات الأسرة
             document.getElementById('familyProfileContainer').innerHTML = `
                 <div class="family-profile">
                     <div class="profile-header">
                         <div class="profile-avatar" style="background-image: url('${family.image}')"></div>
-                        <div class="profile-info">
+                        <div>
                             <h2 class="profile-name">${family.name}</h2>
                             <div class="profile-location">
                                 <i class="fas fa-map-marker-alt"></i> ${family.location}
                             </div>
-                            <div class="profile-badges">
-                                ${family.badges.map(b => `<span class="profile-badge">${b}</span>`).join('')}
-                            </div>
                         </div>
                     </div>
                     <div class="profile-body">
-                        <p style="margin-bottom: 20px; line-height: 1.8;">${family.longDescription || family.description}</p>
-                        
-                        <h4 style="margin-bottom: 15px; color: var(--primary);">معلومات التواصل</h4>
+                        <p style="font-size: 14px; margin-bottom: 16px;">${family.longDescription || family.description}</p>
                         <div class="social-grid">
                             <a href="https://wa.me/${family.whatsapp}" target="_blank" class="social-card">
                                 <div class="social-icon whatsapp-bg"><i class="fab fa-whatsapp"></i></div>
@@ -1848,7 +1472,6 @@
                 </div>
             `;
             
-            // عرض المنتجات
             document.getElementById('productsCount').textContent = `${family.products.length} منتج`;
             
             document.getElementById('productsGrid').innerHTML = family.products.map(p => `
@@ -1856,12 +1479,11 @@
                     <div class="product-image" style="background-image: url('${p.image}')"></div>
                     <div class="product-content">
                         <h3 class="product-name">${p.name}</h3>
-                        <p class="product-description">${p.description}</p>
                         <div class="product-category">${p.category}</div>
                         <div class="product-footer">
-                            <div class="product-price">${p.price}</div>
+                            <div class="product-price">${p.price} د.إ</div>
                             <button class="order-btn" onclick="orderProduct('${p.name}', '${family.name}')">
-                                <i class="fas fa-shopping-cart"></i> طلب
+                                طلب
                             </button>
                         </div>
                     </div>
@@ -1873,7 +1495,7 @@
 
         // طلب منتج
         function orderProduct(name, family) {
-            alert(`✅ تمت إضافة ${name} من ${family} إلى سلة المشتريات\nسيتم التواصل معك قريباً`);
+            alert(`✅ تمت إضافة ${name} من ${family}\nسيتم التواصل معكم قريباً`);
         }
 
         // البحث
@@ -1890,7 +1512,7 @@
             updateBackButton();
         }
 
-        // العودة للصفحة الرئيسية
+        // العودة للرئيسية
         function goToHome() {
             showPage('home');
         }
@@ -1948,6 +1570,7 @@
         }
 
         // جعل الدوال عامة
+        window.toggleMenu = toggleMenu;
         window.goToHome = goToHome;
         window.showPage = showPage;
         window.selectEmirate = selectEmirate;
