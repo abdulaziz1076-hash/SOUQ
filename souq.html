@@ -1,0 +1,2043 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سوق البيوت | منصة الأسر المنتجة الإماراتية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=El+Messiri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0C3B2E;
+            --secondary: #D4AF37;
+            --accent: #8B7355;
+            --light: #F8F5F0;
+            --dark: #1A1A1A;
+            --success: #2E8B57;
+            --gray: #8A8A8A;
+            --light-gray: #E8E4DD;
+            --border: #D8D1C7;
+            --shadow: 0 10px 30px rgba(12, 59, 46, 0.1);
+            --gradient: linear-gradient(135deg, #0C3B2E 0%, #1D5C4A 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Almarai', sans-serif;
+        }
+        
+        body {
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.8;
+        }
+        
+        /* Header */
+        .app-header {
+            background: var(--gradient);
+            color: white;
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+        }
+        
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 20px;
+            color: var(--primary);
+        }
+        
+        .logo-text h1 {
+            font-family: 'El Messiri', serif;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .logo-text p {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+        
+        /* Navigation */
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .market-nav-btn {
+            background: var(--secondary);
+            color: var(--primary);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        
+        .market-nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+        }
+        
+        /* Back Button - زر العودة في كل الصفحات */
+        .back-button-container {
+            max-width: 1400px;
+            margin: 20px auto 0;
+            padding: 0 30px;
+        }
+        
+        .back-btn {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--light-gray);
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+        
+        .back-btn:hover {
+            border-color: var(--secondary);
+            background: var(--light);
+            transform: translateX(-5px);
+        }
+        
+        /* Page Container */
+        .page-container {
+            min-height: calc(100vh - 150px);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+        
+        /* Page 1: Home - الترحيبية */
+        .hero-section {
+            background: linear-gradient(rgba(12, 59, 46, 0.9), rgba(12, 59, 46, 0.8)), url('https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 30px;
+            text-align: center;
+            border-bottom: 5px solid var(--secondary);
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero-title {
+            font-family: 'El Messiri', serif;
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .hero-subtitle {
+            font-size: 20px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        
+        .hero-search-box {
+            max-width: 600px;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+        
+        .hero-search-input {
+            width: 100%;
+            padding: 20px 60px 20px 25px;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            background: white;
+        }
+        
+        .hero-search-btn {
+            position: absolute;
+            left: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--secondary);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            color: var(--primary);
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+        .market-btn {
+            background: var(--secondary);
+            color: var(--primary);
+            border: none;
+            padding: 18px 40px;
+            border-radius: 12px;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s;
+        }
+        
+        .market-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.3);
+        }
+        
+        /* About Section */
+        .about-section {
+            background: white;
+            padding: 80px 30px;
+        }
+        
+        .section-title {
+            font-family: 'El Messiri', serif;
+            font-size: 36px;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            right: 50%;
+            transform: translateX(50%);
+            width: 100px;
+            height: 4px;
+            background: var(--secondary);
+        }
+        
+        .about-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .about-text {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--dark);
+        }
+        
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            text-align: center;
+        }
+        
+        .stat-item {
+            background: var(--light);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid var(--light-gray);
+        }
+        
+        .stat-number {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 18px;
+            color: var(--gray);
+        }
+        
+        /* Page 2: Emirates - اختيار الإمارة */
+        .emirates-page {
+            background: white;
+        }
+        
+        .page-header {
+            background: var(--gradient);
+            color: white;
+            padding: 60px 30px;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .page-title {
+            font-family: 'El Messiri', serif;
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+        
+        .page-subtitle {
+            font-size: 20px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .emirates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .emirate-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            border: 2px solid var(--light-gray);
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .emirate-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary);
+        }
+        
+        .emirate-image {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .emirate-content {
+            padding: 25px;
+        }
+        
+        .emirate-name {
+            font-family: 'El Messiri', serif;
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .emirate-count {
+            color: var(--secondary);
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        .select-emirate-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            width: 100%;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .select-emirate-btn:hover {
+            background: var(--accent);
+        }
+        
+        /* Page 3: Families - الأسر المنتجة */
+        .families-page {
+            background: white;
+        }
+        
+        .families-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .filters-section {
+            background: var(--light);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            border: 2px solid var(--light-gray);
+        }
+        
+        .filter-title {
+            font-size: 18px;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid var(--light-gray);
+        }
+        
+        .category-card:hover, .category-card.active {
+            border-color: var(--secondary);
+            background: var(--light);
+        }
+        
+        .category-icon {
+            font-size: 30px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .category-name {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .families-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+        }
+        
+        .families-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+        
+        .family-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            border: 2px solid var(--light-gray);
+        }
+        
+        .family-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary);
+        }
+        
+        .family-image {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .family-badges {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            display: flex;
+            gap: 8px;
+        }
+        
+        .family-badge {
+            background: var(--secondary);
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        
+        .family-content {
+            padding: 25px;
+        }
+        
+        .family-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .family-name {
+            font-family: 'El Messiri', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary);
+            flex: 1;
+        }
+        
+        .family-rating {
+            background: var(--light);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .family-location {
+            color: var(--accent);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .family-description {
+            color: var(--gray);
+            margin-bottom: 20px;
+            font-size: 15px;
+            line-height: 1.6;
+            height: 75px;
+            overflow: hidden;
+        }
+        
+        .view-products-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        
+        .view-products-btn:hover {
+            background: var(--accent);
+        }
+        
+        /* Page 4: Products - المنتجات (محسنة) */
+        .products-page {
+            background: white;
+        }
+        
+        .family-info-section {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 2px solid var(--light-gray);
+            margin-bottom: 40px;
+        }
+        
+        .family-info-header {
+            background: var(--gradient);
+            color: white;
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        .family-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            border: 4px solid white;
+            flex-shrink: 0;
+        }
+        
+        .family-basic-info {
+            flex: 1;
+        }
+        
+        .family-main-name {
+            font-family: 'El Messiri', serif;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        
+        .family-main-location {
+            font-size: 18px;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .family-rating-large {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+            width: fit-content;
+        }
+        
+        .family-info-body {
+            padding: 40px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .info-card {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid var(--light-gray);
+        }
+        
+        .info-card-title {
+            font-family: 'El Messiri', serif;
+            font-size: 20px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-card-content {
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--dark);
+        }
+        
+        .social-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-link-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: var(--dark);
+            border: 2px solid var(--light-gray);
+            transition: all 0.3s;
+        }
+        
+        .social-link-card:hover {
+            border-color: var(--secondary);
+            transform: translateY(-5px);
+        }
+        
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            flex-shrink: 0;
+        }
+        
+        .whatsapp-icon {
+            background: #25D366;
+        }
+        
+        .instagram-icon {
+            background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+        }
+        
+        .email-icon {
+            background: var(--primary);
+        }
+        
+        .phone-icon {
+            background: var(--accent);
+        }
+        
+        .social-text {
+            flex: 1;
+        }
+        
+        .social-platform {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 5px;
+        }
+        
+        .social-value {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .products-section {
+            margin-top: 50px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .section-title-small {
+            font-family: 'El Messiri', serif;
+            font-size: 28px;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .section-title-small::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 80px;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        .products-count {
+            background: var(--light);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            border: 2px solid var(--light-gray);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .product-content {
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-name {
+            font-family: 'El Messiri', serif;
+            font-size: 22px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .product-description {
+            color: var(--gray);
+            margin-bottom: 20px;
+            font-size: 15px;
+            line-height: 1.6;
+            flex: 1;
+        }
+        
+        .product-category {
+            background: var(--light);
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 14px;
+            color: var(--primary);
+            width: fit-content;
+            margin-bottom: 20px;
+        }
+        
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 2px solid var(--light-gray);
+        }
+        
+        .product-price {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--success);
+        }
+        
+        .order-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .order-btn:hover {
+            background: var(--accent);
+        }
+        
+        /* Footer */
+        .app-footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 80px;
+        }
+        
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h4 {
+            font-family: 'El Messiri', serif;
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+            padding-right: 10px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .families-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-title {
+                font-size: 36px;
+            }
+            
+            .emirates-grid, .families-grid, .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .family-info-header {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px;
+            }
+            
+            .family-avatar {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .family-rating-large {
+                margin: 0 auto;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 60px 20px;
+            }
+            
+            .about-section {
+                padding: 60px 20px;
+            }
+            
+            .categories-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            
+            .emirates-grid, .families-grid, .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .family-info-body {
+                padding: 30px 20px;
+            }
+            
+            .social-links-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .hero-title {
+                font-size: 28px;
+            }
+            
+            .hero-subtitle {
+                font-size: 16px;
+            }
+            
+            .about-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .page-title {
+                font-size: 32px;
+            }
+            
+            .family-main-name {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="logo-section" onclick="goToHome()">
+                <div class="logo-icon">س.ب</div>
+                <div class="logo-text">
+                    <h1>سوق البيوت</h1>
+                    <p>منصة الأسر المنتجة الإماراتية</p>
+                </div>
+            </div>
+            
+            <nav class="nav-links">
+                <a href="#" class="nav-link active" onclick="showPage('home')">
+                    <i class="fas fa-home"></i> الرئيسية
+                </a>
+                <a href="#" class="nav-link" onclick="showPage('about')">
+                    <i class="fas fa-info-circle"></i> من نحن
+                </a>
+                <button class="market-nav-btn" onclick="showPage('emirates')">
+                    <i class="fas fa-store"></i> السوق
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Back Button Container -->
+    <div class="back-button-container" id="backButtonContainer" style="display: none;">
+        <button class="back-btn" id="backButton">
+            <i class="fas fa-arrow-right"></i>
+            <span id="backButtonText">العودة</span>
+        </button>
+    </div>
+
+    <!-- Page Container -->
+    <div class="page-container">
+        <!-- Page 1: Home - الصفحة الترحيبية -->
+        <div id="home-page" class="page">
+            <section class="hero-section">
+                <div class="hero-content">
+                    <h1 class="hero-title">مرحباً بكم في سوق البيوت</h1>
+                    <p class="hero-subtitle">منصة الأسر المنتجة الإماراتية الأولى، حيث الجودة تلتقي بالأصالة</p>
+                    
+                    <div class="hero-search-box">
+                        <input type="text" class="hero-search-input" placeholder="ابحث عن منتج، أسرة، أو فئة..." id="homeSearch">
+                        <button class="hero-search-btn" onclick="performHomeSearch()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    
+                    <button class="market-btn" onclick="showPage('emirates')">
+                        <i class="fas fa-store"></i>
+                        دخول سوق الاسر المنتجة
+                    </button>
+                </div>
+            </section>
+            
+            <section class="about-section">
+                <h2 class="section-title">من نحن</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>سوق البيوت هو منصة إماراتية رائدة تهدف إلى دعم وتمكين الأسر المنتجة في جميع أنحاء دولة الإمارات العربية المتحدة. نحن جسر يربط بين الإنتاج المحلي الأصيل والجمهور المهتم بالمنتجات الإماراتية التقليدية والعصرية.</p>
+                        <br>
+                        <p>نؤمن بأن وراء كل منتج قصة، ووراء كل قصة أسرة تضع حبها وإتقانها في كل ما تقدمه. لذلك نسعى جاهدين لتقديم هذه القصص ومنتجاتها بأفضل صورة ممكنة.</p>
+                        <br>
+                        <p>نعمل مع أكثر من 150 أسرة منتجة في جميع الإمارات السبع، نقدم منتجات متنوعة تشمل التمور، الحلويات التقليدية، المنتجات اليدوية، المواد الغذائية، ومنتجات التجميل الطبيعية.</p>
+                    </div>
+                    
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">+150</div>
+                            <div class="stat-label">أسرة منتجة</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">7</div>
+                            <div class="stat-label">إمارات</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">98%</div>
+                            <div class="stat-label">رضا العملاء</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">+2,500</div>
+                            <div class="stat-label">منتج متنوع</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Page 2: Emirates - اختيار الإمارة -->
+        <div id="emirates-page" class="page" style="display: none;">
+            <div class="page-header">
+                <h1 class="page-title">اختر إمارتك</h1>
+                <p class="page-subtitle">اكتشف الأسر المنتجة في إمارتك واستمتع بمنتجات محلية أصيلة</p>
+            </div>
+            
+            <div class="container">
+                <div class="emirates-grid" id="emiratesGrid">
+                    <!-- Emirates will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 3: Families - الأسر المنتجة -->
+        <div id="families-page" class="page" style="display: none;">
+            <div class="page-header">
+                <h1 class="page-title" id="familiesPageTitle">الأسر المنتجة</h1>
+                <p class="page-subtitle" id="familiesPageSubtitle">اكتشف الأسر المنتجة واستعرض منتجاتها</p>
+            </div>
+            
+            <div class="container">
+                <div class="filters-section">
+                    <h3 class="filter-title">
+                        <i class="fas fa-filter"></i>
+                        التصنيفات
+                    </h3>
+                    <div class="categories-grid" id="categoriesGrid">
+                        <!-- Categories will be loaded here -->
+                    </div>
+                </div>
+                
+                <div class="families-container">
+                    <div class="families-grid" id="familiesGrid">
+                        <!-- Families will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 4: Products - المنتجات (محسنة) -->
+        <div id="products-page" class="page" style="display: none;">
+            <div class="page-header">
+                <h1 class="page-title" id="productsPageTitle">منتجات الأسرة</h1>
+                <p class="page-subtitle" id="productsPageSubtitle">استعرض جميع المنتجات وتواصل مع الأسرة</p>
+            </div>
+            
+            <div class="container">
+                <!-- Family Information Section -->
+                <div class="family-info-section" id="familyInfoSection">
+                    <!-- Family info will be loaded here -->
+                </div>
+                
+                <!-- Products Section -->
+                <div class="products-section">
+                    <div class="section-header">
+                        <h2 class="section-title-small">المنتجات المتاحة</h2>
+                        <div class="products-count" id="productsCount">12 منتج</div>
+                    </div>
+                    
+                    <div class="products-grid" id="productsGrid">
+                        <!-- Products will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>سوق البيوت</h4>
+                    <p>منصة إماراتية تعرض منتجات الأسر المنتجة في الإمارات العربية المتحدة.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>روابط سريعة</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="goToHome()">الرئيسية</a></li>
+                        <li><a href="#" onclick="showPage('about')">من نحن</a></li>
+                        <li><a href="#" onclick="showPage('emirates')">دخول السوق</a></li>
+                        <li><a href="#">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>التواصل</h4>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-phone"></i> +971 4 123 4567</li>
+                        <li><i class="fas fa-envelope"></i> info@souq-albuyoot.ae</li>
+                        <li><i class="fas fa-map-marker-alt"></i> دبي، الإمارات</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                © 2024 سوق البيوت. جميع الحقوق محفوظة.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // بيانات التطبيق
+        const appData = {
+            currentPage: 'home',
+            currentEmirate: 'all',
+            currentCategory: 'all',
+            currentFamilyId: null,
+            searchQuery: '',
+            previousPage: null
+        };
+
+        // بيانات الأسر
+        const familiesData = [
+            {
+                id: 1,
+                name: "أسرة آل مبارك",
+                location: "البرشاء، دبي",
+                emirate: "دبي",
+                description: "متخصصون في المنتجات الغذائية الإماراتية الأصيلة منذ أكثر من 20 عاماً. نحرص على الجودة والأصالة.",
+                longDescription: "تأسست أسرة آل مبارك في دبي عام 1999، وبدأت رحلتها مع التمور الإماراتية الأصيلة. اليوم، وبعد أكثر من عقدين من التميز، أصبحت الأسرة من أشهر المنتجين للتمور الفاخرة والعسل الطبيعي والسمن البلدي في الإمارات. نفخر بتقديم منتجاتنا التي تجمع بين الأصالة والجودة العالمية، ونحرص على أن تصل لكل بيت إماراتي بكل حب واعتزاز.",
+                image: "https://images.unsplash.com/photo-1579113800032-c38bd7635818?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                phone: "+971 50 123 4567",
+                whatsapp: "+971501234567",
+                email: "almubarak@example.com",
+                instagram: "@almubarak_family",
+                website: "www.almubarak.ae",
+                facebook: "almubarak.family",
+                twitter: "@almubarak_fam",
+                productsCount: 8,
+                rating: 4.8,
+                joinDate: "2019",
+                badges: ["تمور", "عسل", "سمن"],
+                category: "غذائية",
+                products: [
+                    {
+                        id: 101,
+                        name: "تمر خلاص إماراتي",
+                        description: "تمر خلاص إماراتي عالي الجودة، حاصل على شهادة الجودة المحلية، يتميز بحجمه الكبير وطعمه السكري الرائع",
+                        price: "45 درهم",
+                        category: "تمور",
+                        image: "https://images.unsplash.com/photo-1597848212624-e519f8859c6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                        inStock: true
+                    },
+                    {
+                        id: 102,
+                        name: "سمن بلدي طبيعي",
+                        description: "سمن بلدي طبيعي مصنوع من حليب الإبل، مخمر طبيعياً بدون إضافات، قوامه ذهبي ونكهته غنية",
+                        price: "85 درهم",
+                        category: "منتجات ألبان",
+                        image: "https://images.unsplash.com/photo-1563636619-e9143da7973b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                        inStock: true
+                    },
+                    {
+                        id: 103,
+                        name: "عسل سدر طبيعي",
+                        description: "عسل سدر طبيعي من جبال الإمارات، معتمد من وزارة التغير المناخي، عسل نقي 100% بدون مضافات",
+                        price: "220 درهم",
+                        category: "عسل",
+                        image: "https://images.unsplash.com/photo-1587049352851-8d4e89133924?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                        inStock: true
+                    },
+                    {
+                        id: 104,
+                        name: "قهوة إماراتية تقليدية",
+                        description: "قهوة إماراتية محمصة مع هيل وزعفران، بنكهة تقليدية أصيلة، تعبأ يومياً لضمان الطزاجة",
+                        price: "35 درهم",
+                        category: "مشروبات",
+                        image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                        inStock: true
+                    },
+                    {
+                        id: 105,
+                        name: "دبس تمر طبيعي",
+                        description: "دبس تمر طبيعي من أجود أنواع التمر، بدون سكر مضاف، مثالي للتحلية الصحية",
+                        price: "45 درهم",
+                        category: "تحلية",
+                        image: "https://images.unsplash.com/photo-1548902991-b3d898e2c4ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                        inStock: false
+                    }
+                ]
+            },
+            {
+                id: 2,
+                name: "أسرة الغفلي",
+                location: "الشارقة",
+                emirate: "الشارقة",
+                description: "متخصصون في المنتجات اليدوية والديكور المنزلي الإماراتي التقليدي. جميع منتجاتنا مصنوعة يدوياً.",
+                longDescription: "منذ عام 2018، تعمل أسرة الغفلي في الشارقة على إحياء فنون الديكور الإماراتي التقليدي. نستخدم أجود أنواع الصوف والحرير والخامات الطبيعية في صناعة سجادنا ومفارشنا ووسائدنا. كل قطعة تحمل توقيعاً فريداً للحرفي الذي صنعها، مما يجعل كل منتج قطعة فنية لا تتكرر.",
+                image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                phone: "+971 50 234 5678",
+                whatsapp: "+971502345678",
+                email: "alghafili@example.com",
+                instagram: "@alghafili_home",
+                website: "www.alghafili.ae",
+                facebook: "alghafili.home",
+                twitter: "@alghafili",
+                productsCount: 6,
+                rating: 4.7,
+                joinDate: "2018",
+                badges: ["ديكور", "يدوي", "تراثي"],
+                category: "يدوية",
+                products: [
+                    {
+                        id: 201,
+                        name: "سجاد يدوي تقليدي",
+                        description: "سجاد يدوي مصنوع من الصوف الطبيعي بتصميم إماراتي تقليدي، مقاس 2×3 متر",
+                        price: "450 درهم",
+                        category: "ديكور",
+                        image: "https://images.unsplash.com/photo-1596199050105-6d5d4e4c4c1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                        inStock: true
+                    },
+                    {
+                        id: 202,
+                        name: "مفارش مطرزة يدوياً",
+                        description: "مفارش مطرزة بتقليدية إماراتية بخيوط حرير طبيعية، تصميم النخيل والوطن",
+                        price: "280 درهم",
+                        category: "ديكور",
+                        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                        inStock: true
+                    },
+                    {
+                        id: 203,
+                        name: "وسائد يدوية مطرزة",
+                        description: "وسائد مطرزة بأشجار النخيل والزخارف الإماراتية، مقاس 50×50 سم",
+                        price: "120 درهم",
+                        category: "ديكور",
+                        image: "https://images.unsplash.com/photo-1579656592042-8b1a69d1184d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                        inStock: true
+                    }
+                ]
+            },
+            {
+                id: 3,
+                name: "أسرة الظاهري",
+                location: "الشامخة، أبوظبي",
+                emirate: "أبوظبي",
+                description: "عائلة تملك مزارع نخيل في العين منذ ثلاثة أجيال. نقدم منتجات تمور إماراتية مميزة من مزارعنا الخاصة.",
+                longDescription: "ثلاثة أجيال من العناية بالنخيل والعمل في مزارع العين جعلت أسرة الظاهري خبراء في إنتاج أجود أنواع التمور الإماراتية. نملك أكثر من 5000 نخلة في مزارعنا، نعتني بها طوال العام لنقدم لكم تمر المجدول والخلاّص والرطب بجودة استثنائية. جميع منتجاتنا عضوية 100% وخالية من المواد الكيميائية.",
+                image: "https://images.unsplash.com/photo-1505253668822-42074d58a7c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                phone: "+971 50 345 6789",
+                whatsapp: "+971503456789",
+                email: "aldhahiri@example.com",
+                instagram: "@aldhahiri_dates",
+                website: "www.aldhahiri.ae",
+                facebook: "aldhahiri.farm",
+                twitter: "@aldhahiri",
+                productsCount: 5,
+                rating: 4.9,
+                joinDate: "2020",
+                badges: ["عضوي", "تمور", "طبيعي"],
+                category: "زراعية",
+                products: [
+                    {
+                        id: 301,
+                        name: "تمر مجدول سكري",
+                        description: "تمر مجدول سكري من أجود أنواع النخيل الإماراتي، حجم كبير، طعم لا يقاوم",
+                        price: "95 درهم",
+                        category: "تمور",
+                        image: "https://images.unsplash.com/photo-1597872200969-3b65ba4aaade?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                        inStock: true
+                    },
+                    {
+                        id: 302,
+                        name: "رطب نخل طازج",
+                        description: "رطب نخل طازج من المزرعة، يتم قطفه يومياً وتوصيله في نفس اليوم",
+                        price: "65 درهم",
+                        category: "تمور",
+                        image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                        inStock: true
+                    },
+                    {
+                        id: 303,
+                        name: "دبس تمر طبيعي",
+                        description: "دبس تمر طبيعي بدون إضافات، معصور على البارد، مثالي للتحلية",
+                        price: "45 درهم",
+                        category: "تحلية",
+                        image: "https://images.unsplash.com/photo-1548902991-b3d898e2c4ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                        inStock: true
+                    }
+                ]
+            },
+            {
+                id: 4,
+                name: "أسرة الشامسي",
+                location: "دبي مارينا، دبي",
+                emirate: "دبي",
+                description: "متخصصون في الحلويات الإماراتية والأطباق الجاهزة المنزلية. نقدم تشكيلة واسعة من المعمول واللقيمات.",
+                longDescription: "بدأت أسرة الشامسي في دبي عام 2021 بوصفة معمول سرية توارثتها الأجيال. اليوم نقدم تشكيلة واسعة من الحلويات الإماراتية الأصيلة، جميعها تصنع يومياً في مطبخنا المنزلي بأيدي نساء العائلة. نحرص على استخدام أجود المكونات الطبيعية، ونقدم منتجاتنا طازجة كل صباح.",
+                image: "https://images.unsplash.com/photo-1558326567-98ae2405596b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                phone: "+971 50 456 7890",
+                whatsapp: "+971504567890",
+                email: "alshamsi@example.com",
+                instagram: "@alshamsi_sweets",
+                website: "www.alshamsi.ae",
+                facebook: "alshamsi.sweets",
+                twitter: "@alshamsi",
+                productsCount: 7,
+                rating: 4.6,
+                joinDate: "2021",
+                badges: ["حلويات", "تقليدي", "منزلي"],
+                category: "حلويات",
+                products: [
+                    {
+                        id: 401,
+                        name: "معمول تمر منزلي",
+                        description: "معمول تمر منزلي مصنوع يدوياً بزيت الزيتون واللوز، محشو بعجوة التمر الفاخر",
+                        price: "75 درهم",
+                        category: "حلويات",
+                        image: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                        inStock: true
+                    },
+                    {
+                        id: 402,
+                        name: "لقيمات إماراتية",
+                        description: "لقيمات إماراتية مقرمشة، مع رشة من دبس التمر والسمسم، طازجة يومياً",
+                        price: "25 درهم",
+                        category: "حلويات",
+                        image: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                        inStock: true
+                    },
+                    {
+                        id: 403,
+                        name: "كعك عادي محشي",
+                        description: "كعك عادي محشي بالتمر والمكسرات، وصفة جدتي السرية",
+                        price: "45 درهم",
+                        category: "حلويات",
+                        image: "https://images.unsplash.com/photo-1587314168485-3236d6710814?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                        inStock: true
+                    }
+                ]
+            },
+            {
+                id: 5,
+                name: "أسرة القاسمي",
+                location: "الموالح، الشارقة",
+                emirate: "الشارقة",
+                description: "متخصصون في منتجات التجميل والعلاج الطبيعية 100% من مصادر محلية. نقدم الحناء النباتي وزيت الأركان.",
+                longDescription: "في مزرعتنا بالشارقة، نزرع النباتات العطرية والأعشاب الطبيعية التي نستخدمها في منتجات التجميل. جميع منتجاتنا عضوية 100%، خالية من المواد الكيميائية والمواد الحافظة. نؤمن بأن الجمال الحقيقي يأتي من الطبيعة، لذلك نقدم منتجات تغذي بشرتك وشعرك بكل عناية.",
+                image: "https://images.unsplash.com/photo-1556228578-9c360e1d8d34?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                phone: "+971 50 567 8901",
+                whatsapp: "+971505678901",
+                email: "alqasimi@example.com",
+                instagram: "@alqasimi_beauty",
+                website: "www.alqasimi.ae",
+                facebook: "alqasimi.natural",
+                twitter: "@alqasimi",
+                productsCount: 4,
+                rating: 4.4,
+                joinDate: "2022",
+                badges: ["طبيعي", "تجميل", "عضوي"],
+                category: "تجميل",
+                products: [
+                    {
+                        id: 501,
+                        name: "حناء نباتي نقي",
+                        description: "حناء نباتي نقي 100% من مزارع محلية، بدون ألوان صناعية أو إضافات",
+                        price: "25 درهم",
+                        category: "تجميل",
+                        image: "https://images.unsplash.com/photo-1596703923338-48f1c07e4f2e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                        inStock: true
+                    },
+                    {
+                        id: 502,
+                        name: "زيت أركان مغربي",
+                        description: "زيت أركان عضوي معصور على البارد، للبشرة والشعر، معتمد دولياً",
+                        price: "150 درهم",
+                        category: "تجميل",
+                        image: "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                        inStock: true
+                    },
+                    {
+                        id: 503,
+                        name: "صابون طبيعي بالزيتون",
+                        description: "صابون طبيعي مصنوع من زيت الزيتون البكر، معطر بزيوت عطرية طبيعية",
+                        price: "35 درهم",
+                        category: "تجميل",
+                        image: "https://images.unsplash.com/photo-1526947425960-945c6e72858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                        inStock: true
+                    }
+                ]
+            },
+            {
+                id: 6,
+                name: "أسرة البلوشي",
+                location: "الرامة، عجمان",
+                emirate: "عجمان",
+                description: "عائلة من الصيادين التقليديين تمارس الصيد منذ أربعة أجيال. نقدم منتجات بحرية إماراتية مجففة ومدخنة.",
+                longDescription: "منذ عام 1920، وعائلة البلوشي تصطاد من بحر عجمان. نفتخر بأننا نحافظ على طرق الصيد التقليدية التي توارثناها عن أجدادنا. نصطاد أسماكنا يدوياً، ونقوم بتجفيفها وتدخينها بطرق تقليدية تحافظ على النكهة الأصيلة. كل سمكة نقدمها هي ثمرة حب وإتقان وعمل دؤوب.",
+                image: "https://images.unsplash.com/photo-1592424737490-c2f13a9c6d10?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                phone: "+971 50 678 9012",
+                whatsapp: "+971506789012",
+                email: "albalushi@example.com",
+                instagram: "@albalushi_seafood",
+                website: "www.albalushi.ae",
+                facebook: "albalushi.fish",
+                twitter: "@albalushi",
+                productsCount: 5,
+                rating: 4.3,
+                joinDate: "2019",
+                badges: ["أسماك", "مجفف", "بحرية"],
+                category: "بحري",
+                products: [
+                    {
+                        id: 601,
+                        name: "سمك مجفف تقليدي",
+                        description: "سمك مجفف بطرق تقليدية إماراتية، محفوظ بملح بحري طبيعي، جاهز للطبخ",
+                        price: "120 درهم",
+                        category: "أسماك",
+                        image: "https://images.unsplash.com/photo-1599599810769-bcde5a160d32?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                        inStock: true
+                    },
+                    {
+                        id: 602,
+                        name: "كبيري مملح تقليدي",
+                        description: "كبيري مملح بطرق تقليدية، مثالي للأطباق الإماراتية الأصيلة",
+                        price: "65 درهم",
+                        category: "أسماك",
+                        image: "https://images.unsplash.com/photo-1524704796725-9fc80a4a2519?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                        inStock: true
+                    },
+                    {
+                        id: 603,
+                        name: "ربيان مجفف",
+                        description: "ربيان مجفف طبيعي، غني بالبروتين، مثالي للرقاق والمجبوس",
+                        price: "95 درهم",
+                        category: "أسماك",
+                        image: "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                        inStock: true
+                    }
+                ]
+            }
+        ];
+
+        // تهيئة التطبيق
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeEmiratesPage();
+            initializeCategories();
+            updateBackButton();
+        });
+
+        // العودة للصفحة الرئيسية
+        function goToHome() {
+            showPage('home');
+        }
+
+        // إظهار الصفحة
+        function showPage(pageId) {
+            // حفظ الصفحة السابقة
+            appData.previousPage = appData.currentPage;
+            appData.currentPage = pageId;
+            
+            // إخفاء جميع الصفحات
+            document.querySelectorAll('.page').forEach(page => {
+                page.style.display = 'none';
+            });
+            
+            // إظهار الصفحة المطلوبة
+            document.getElementById(pageId + '-page').style.display = 'block';
+            
+            // تحديث زر العودة
+            updateBackButton();
+            
+            // تحديث التنقل
+            updateNavigation();
+            
+            // تحديث الصفحة إذا لزم
+            if (pageId === 'emirates') {
+                renderEmiratesPage();
+            } else if (pageId === 'families') {
+                renderFamiliesPage();
+            }
+        }
+
+        // تحديث زر العودة
+        function updateBackButton() {
+            const backButtonContainer = document.getElementById('backButtonContainer');
+            const backButton = document.getElementById('backButton');
+            const backButtonText = document.getElementById('backButtonText');
+            
+            // تحديد الصفحة الحالية وضبط زر العودة
+            switch(appData.currentPage) {
+                case 'emirates':
+                    backButtonContainer.style.display = 'block';
+                    backButtonText.textContent = 'العودة للرئيسية';
+                    backButton.onclick = function() { showPage('home'); };
+                    break;
+                case 'families':
+                    backButtonContainer.style.display = 'block';
+                    backButtonText.textContent = 'العودة لاختيار الإمارة';
+                    backButton.onclick = function() { showPage('emirates'); };
+                    break;
+                case 'products':
+                    backButtonContainer.style.display = 'block';
+                    backButtonText.textContent = 'العودة للأسر المنتجة';
+                    backButton.onclick = function() { goBackToFamilies(); };
+                    break;
+                default:
+                    backButtonContainer.style.display = 'none';
+            }
+        }
+
+        // تحديث التنقل
+        function updateNavigation() {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            const activeLink = document.querySelector(`.nav-link[onclick*="'${appData.currentPage}'"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+
+        // تهيئة صفحة الإمارات
+        function initializeEmiratesPage() {
+            const emiratesGrid = document.getElementById('emiratesGrid');
+            const emirates = [
+                { id: 'all', name: 'كل الإمارات', image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80' },
+                { id: 'دبي', name: 'دبي', image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80' },
+                { id: 'أبوظبي', name: 'أبوظبي', image: 'https://images.unsplash.com/photo-1528834342297-fdefb9a5a92b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80' },
+                { id: 'الشارقة', name: 'الشارقة', image: 'https://images.unsplash.com/photo-1600369672770-985154300ed0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80' },
+                { id: 'عجمان', name: 'عجمان', image: 'https://images.unsplash.com/photo-1592424737490-c2f13a9c6d10?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80' },
+                { id: 'رأس الخيمة', name: 'رأس الخيمة', image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80' },
+                { id: 'الفجيرة', name: 'الفجيرة', image: 'https://images.unsplash.com/photo-1580052614034-c55d4bf2b108?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80' },
+                { id: 'أم القيوين', name: 'أم القيوين', image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80' }
+            ];
+
+            emiratesGrid.innerHTML = emirates.map(emirate => {
+                const count = familiesData.filter(f => 
+                    emirate.id === 'all' ? true : f.emirate === emirate.id
+                ).length;
+                
+                return `
+                    <div class="emirate-card" onclick="selectEmirate('${emirate.id}', '${emirate.name}')">
+                        <div class="emirate-image" style="background-image: url('${emirate.image}')"></div>
+                        <div class="emirate-content">
+                            <h3 class="emirate-name">${emirate.name}</h3>
+                            <div class="emirate-count">${count} أسرة منتجة</div>
+                            <button class="select-emirate-btn">
+                                <i class="fas fa-store"></i>
+                                استعرض الأسر
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // تهيئة التصنيفات
+        function initializeCategories() {
+            const categoriesGrid = document.getElementById('categoriesGrid');
+            const categories = [
+                { id: 'all', name: 'الكل', icon: 'fas fa-th-large', color: '#0C3B2E' },
+                { id: 'غذائية', name: 'غذائية', icon: 'fas fa-apple-alt', color: '#2E8B57' },
+                { id: 'يدوية', name: 'يدوية', icon: 'fas fa-hands', color: '#D4AF37' },
+                { id: 'زراعية', name: 'زراعية', icon: 'fas fa-seedling', color: '#8B7355' },
+                { id: 'حلويات', name: 'حلويات', icon: 'fas fa-cookie-bite', color: '#FF6B6B' },
+                { id: 'تجميل', name: 'تجميل', icon: 'fas fa-spa', color: '#9370DB' },
+                { id: 'بحري', name: 'بحري', icon: 'fas fa-fish', color: '#4682B4' },
+                { id: 'ديكور', name: 'ديكور', icon: 'fas fa-couch', color: '#DEB887' }
+            ];
+
+            categoriesGrid.innerHTML = categories.map(category => `
+                <div class="category-card" onclick="filterByCategory('${category.id}')" 
+                     style="border-color: ${category.color}">
+                    <div class="category-icon">
+                        <i class="${category.icon}" style="color: ${category.color}"></i>
+                    </div>
+                    <div class="category-name">${category.name}</div>
+                </div>
+            `).join('');
+        }
+
+        // اختيار الإمارة
+        function selectEmirate(emirateId, emirateName) {
+            appData.currentEmirate = emirateId;
+            appData.currentCategory = 'all';
+            
+            document.getElementById('familiesPageTitle').textContent = 
+                emirateId === 'all' ? 'الأسر المنتجة' : `الأسر المنتجة في ${emirateName}`;
+            document.getElementById('familiesPageSubtitle').textContent = 
+                'استعرض الأسر المنتجة واستكشف منتجاتها';
+            
+            // إعادة تعيين التصنيفات
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            showPage('families');
+            renderFamiliesPage();
+        }
+
+        // التصفية حسب التصنيف
+        function filterByCategory(categoryId) {
+            appData.currentCategory = categoryId;
+            
+            // تحديث التصنيفات النشطة
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            renderFamiliesPage();
+        }
+
+        // عرض صفحة الأسر
+        function renderFamiliesPage() {
+            let filteredFamilies = [...familiesData];
+            
+            // تطبيق فلتر الإمارة
+            if (appData.currentEmirate !== 'all') {
+                filteredFamilies = filteredFamilies.filter(family => 
+                    family.emirate === appData.currentEmirate
+                );
+            }
+            
+            // تطبيق فلتر التصنيف
+            if (appData.currentCategory !== 'all') {
+                filteredFamilies = filteredFamilies.filter(family =>
+                    family.category === appData.currentCategory
+                );
+            }
+            
+            // تطبيق البحث
+            if (appData.searchQuery) {
+                filteredFamilies = filteredFamilies.filter(family =>
+                    family.name.toLowerCase().includes(appData.searchQuery) ||
+                    family.description.toLowerCase().includes(appData.searchQuery) ||
+                    family.badges.some(badge => badge.toLowerCase().includes(appData.searchQuery))
+                );
+            }
+            
+            // عرض الأسر
+            const familiesGrid = document.getElementById('familiesGrid');
+            
+            if (filteredFamilies.length === 0) {
+                familiesGrid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--gray);">
+                        <i class="fas fa-search" style="font-size: 60px; margin-bottom: 20px; opacity: 0.3; color: var(--secondary);"></i>
+                        <h3 style="color: var(--primary); margin-bottom: 15px; font-family: 'El Messiri';">لم نعثر على أسر</h3>
+                        <p style="font-size: 18px;">جرب اختيار تصنيف مختلف أو إمارة أخرى</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            familiesGrid.innerHTML = filteredFamilies.map(family => `
+                <div class="family-card">
+                    <div class="family-image" style="background-image: url('${family.image}')">
+                        <div class="family-badges">
+                            ${family.badges.map(badge => `
+                                <div class="family-badge">${badge}</div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="family-content">
+                        <div class="family-header">
+                            <h3 class="family-name">${family.name}</h3>
+                            <div class="family-rating">
+                                <i class="fas fa-star"></i>
+                                ${family.rating}
+                            </div>
+                        </div>
+                        
+                        <div class="family-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            ${family.location}
+                        </div>
+                        
+                        <p class="family-description">${family.description}</p>
+                        
+                        <button class="view-products-btn" onclick="showFamilyProducts(${family.id})">
+                            <i class="fas fa-box-open"></i>
+                            عرض المنتجات (${family.products.length})
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // عرض منتجات الأسرة
+        function showFamilyProducts(familyId) {
+            const family = familiesData.find(f => f.id === familyId);
+            if (!family) return;
+            
+            appData.currentFamilyId = familyId;
+            
+            // تحديث عنوان الصفحة
+            document.getElementById('productsPageTitle').textContent = `منتجات ${family.name}`;
+            document.getElementById('productsPageSubtitle').textContent = family.location;
+            
+            // عرض معلومات الأسرة في القسم الجديد
+            const familyInfoSection = document.getElementById('familyInfoSection');
+            
+            // تحديد المنتجات المتاحة
+            const availableProducts = family.products.filter(p => p.inStock);
+            const outOfStockProducts = family.products.filter(p => !p.inStock);
+            
+            familyInfoSection.innerHTML = `
+                <div class="family-info-header">
+                    <div class="family-avatar" style="background-image: url('${family.image}')"></div>
+                    <div class="family-basic-info">
+                        <h2 class="family-main-name">${family.name}</h2>
+                        <div class="family-main-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            ${family.location}
+                        </div>
+                        <div class="family-rating-large">
+                            <i class="fas fa-star" style="color: var(--secondary);"></i>
+                            <span style="font-size: 18px;">${family.rating}</span>
+                            <span style="font-size: 14px; opacity: 0.9;">(تقييم ممتاز)</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="family-info-body">
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <h3 class="info-card-title">
+                                <i class="fas fa-info-circle" style="color: var(--secondary);"></i>
+                                قصة الأسرة
+                            </h3>
+                            <div class="info-card-content">
+                                <p>${family.longDescription || family.description}</p>
+                                <p style="margin-top: 15px; color: var(--primary); font-weight: 600;">
+                                    <i class="fas fa-calendar-alt"></i> عضو منذ ${family.joinDate}
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="info-card">
+                            <h3 class="info-card-title">
+                                <i class="fas fa-share-alt" style="color: var(--secondary);"></i>
+                                تواصل مع الأسرة
+                            </h3>
+                            <div class="social-links-grid">
+                                <a href="https://wa.me/${family.whatsapp}" target="_blank" class="social-link-card">
+                                    <div class="social-icon whatsapp-icon">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </div>
+                                    <div class="social-text">
+                                        <div class="social-platform">واتساب</div>
+                                        <div class="social-value">${family.whatsapp}</div>
+                                    </div>
+                                </a>
+                                
+                                <a href="https://instagram.com/${family.instagram.replace('@', '')}" target="_blank" class="social-link-card">
+                                    <div class="social-icon instagram-icon">
+                                        <i class="fab fa-instagram"></i>
+                                    </div>
+                                    <div class="social-text">
+                                        <div class="social-platform">إنستجرام</div>
+                                        <div class="social-value">${family.instagram}</div>
+                                    </div>
+                                </a>
+                                
+                                <a href="mailto:${family.email}" class="social-link-card">
+                                    <div class="social-icon email-icon">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <div class="social-text">
+                                        <div class="social-platform">البريد الإلكتروني</div>
+                                        <div class="social-value">${family.email}</div>
+                                    </div>
+                                </a>
+                                
+                                <a href="tel:${family.phone}" class="social-link-card">
+                                    <div class="social-icon phone-icon">
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                    <div class="social-text">
+                                        <div class="social-platform">اتصال مباشر</div>
+                                        <div class="social-value">${family.phone}</div>
+                                    </div>
+                                </a>
+                                
+                                ${family.facebook ? `
+                                <a href="https://facebook.com/${family.facebook}" target="_blank" class="social-link-card">
+                                    <div class="social-icon" style="background: #1877F2;">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </div>
+                                    <div class="social-text">
+                                        <div class="social-platform">فيسبوك</div>
+                                        <div class="social-value">${family.facebook}</div>
+                                    </div>
+                                </a>
+                                ` : ''}
+                                
+                                ${family.twitter ? `
+                                <a href="https://twitter.com/${family.twitter.replace('@', '')}" target="_blank" class="social-link-card">
+                                    <div class="social-icon" style="background: #1DA1F2;">
+                                        <i class="fab fa-twitter"></i>
+                                    </div>
+                                    <div class="social-text">
+                                        <div class="social-platform">تويتر</div>
+                                        <div class="social-value">${family.twitter}</div>
+                                    </div>
+                                </a>
+                                ` : ''}
+                                
+                                ${family.website ? `
+                                <a href="https://${family.website}" target="_blank" class="social-link-card">
+                                    <div class="social-icon" style="background: var(--primary);">
+                                        <i class="fas fa-globe"></i>
+                                    </div>
+                                    <div class="social-text">
+                                        <div class="social-platform">الموقع الإلكتروني</div>
+                                        <div class="social-value">${family.website}</div>
+                                    </div>
+                                </a>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // تحديث عدد المنتجات
+            document.getElementById('productsCount').textContent = `${family.products.length} منتج`;
+            
+            // عرض المنتجات
+            const productsGrid = document.getElementById('productsGrid');
+            productsGrid.innerHTML = family.products.map(product => `
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('${product.image}')"></div>
+                    <div class="product-content">
+                        <h3 class="product-name">${product.name}</h3>
+                        <p class="product-description">${product.description}</p>
+                        <div class="product-category">${product.category}</div>
+                        <div class="product-footer">
+                            <div class="product-price">${product.price}</div>
+                            <button class="order-btn" onclick="orderProduct('${product.name}', '${family.name}')">
+                                <i class="fas fa-shopping-cart"></i>
+                                طلب
+                            </button>
+                        </div>
+                        ${!product.inStock ? `
+                        <div style="margin-top: 10px; color: #dc3545; font-size: 14px;">
+                            <i class="fas fa-exclamation-circle"></i> غير متوفر حالياً
+                        </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `).join('');
+            
+            showPage('products');
+        }
+
+        // طلب منتج
+        function orderProduct(productName, familyName) {
+            alert(`✅ تم إضافة المنتج إلى سلة المشتريات\n\nالمنتج: ${productName}\nالأسرة: ${familyName}\n\nسيتم التواصل معك قريباً لتأكيد الطلب`);
+        }
+
+        // العودة للأسر المنتجة
+        function goBackToFamilies() {
+            showPage('families');
+        }
+
+        // البحث في الصفحة الرئيسية
+        function performHomeSearch() {
+            appData.searchQuery = document.getElementById('homeSearch').value.trim().toLowerCase();
+            selectEmirate('all', 'كل الإمارات');
+        }
+
+        // جعل الدوال متاحة عالمياً
+        window.goToHome = goToHome;
+        window.showPage = showPage;
+        window.selectEmirate = selectEmirate;
+        window.filterByCategory = filterByCategory;
+        window.showFamilyProducts = showFamilyProducts;
+        window.goBackToFamilies = goBackToFamilies;
+        window.performHomeSearch = performHomeSearch;
+        window.orderProduct = orderProduct;
+    </script>
+</body>
+</html>
