@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>سوق البيوت | الأسر المنتجة</title>
+    <title>سوق البيوت | سوق الأسر المنتجة</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=El+Messiri:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -33,9 +33,9 @@
             line-height: 1.5;
         }
 
-        /* ===== هيدر بسيط جداً ===== */
+        /* ===== هيدر بسيط ===== */
         .app-header {
-            background: var(--gradient, linear-gradient(135deg, #0C3B2E 0%, #1D5C4A 100%));
+            background: linear-gradient(135deg, #0C3B2E 0%, #1D5C4A 100%);
             color: white;
             padding: 12px 16px;
             position: sticky;
@@ -58,8 +58,8 @@
         }
 
         .logo-icon {
-            width: 45px;
-            height: 45px;
+            width: 75px;
+            height: 75px;
             background: white;
             border-radius: 10px;
             display: flex;
@@ -88,7 +88,7 @@
             opacity: 0.9;
         }
 
-        /* ===== زر القائمة الرئيسي (Menu) ===== */
+        /* ===== زر القائمة ===== */
         .menu-toggle {
             width: 45px;
             height: 45px;
@@ -103,7 +103,6 @@
             cursor: pointer;
         }
 
-        /* ===== القائمة المنسدلة ===== */
         .nav-menu {
             display: none;
             position: absolute;
@@ -300,7 +299,7 @@
         }
 
         .stat-number {
-            font-size: 28px;
+            font-size: 21px;
             font-weight: 800;
             color: var(--primary);
             margin-bottom: 4px;
@@ -330,7 +329,7 @@
 
         /* ===== صفحة الإمارات ===== */
         .page-header {
-            background: var(--gradient, linear-gradient(135deg, #0C3B2E 0%, #1D5C4A 100%));
+            background: linear-gradient(135deg, #0C3B2E 0%, #1D5C4A 100%);
             color: white;
             padding: 40px 20px;
             text-align: center;
@@ -458,7 +457,6 @@
             font-size: 11px;
         }
 
-        /* ✅ بطاقات الأسر - عمودين في الجوال */
         .families-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -565,7 +563,7 @@
             margin-top: auto;
         }
 
-        /* ===== صفحة المنتجات - عمودين ===== */
+        /* ===== صفحة المنتجات ===== */
         .family-profile {
             background: white;
             border-radius: 20px;
@@ -575,7 +573,7 @@
         }
 
         .profile-header {
-            background: var(--gradient, linear-gradient(135deg, #0C3B2E 0%, #1D5C4A 100%));
+            background: linear-gradient(135deg, #0C3B2E 0%, #1D5C4A 100%);
             color: white;
             padding: 20px;
             display: flex;
@@ -611,35 +609,51 @@
             padding: 20px;
         }
 
+        /* ===== تصميم وسائل التواصل الاجتماعي العمودي الأنيق ===== */
         .social-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-top: 16px;
+            gap: 16px;
+            margin-top: 20px;
         }
 
         .social-card {
-            background: var(--light);
-            border-radius: 12px;
-            padding: 12px;
+            background: white;
+            border-radius: 20px;
+            padding: 20px 12px;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 10px;
+            text-align: center;
             text-decoration: none;
             color: var(--dark);
             border: 1px solid var(--light-gray);
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+        }
+
+        .social-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary);
+            box-shadow: 0 12px 20px rgba(212, 175, 55, 0.1);
         }
 
         .social-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 24px;
             color: white;
+            margin-bottom: 12px;
             flex-shrink: 0;
+            transition: all 0.25s;
+        }
+
+        .social-card:hover .social-icon {
+            transform: scale(1.05);
         }
 
         .whatsapp-bg { background: #25D366; }
@@ -648,16 +662,25 @@
         .phone-bg { background: var(--accent); }
 
         .social-label {
-            font-size: 11px;
+            font-size: 12px;
+            font-weight: 600;
             color: var(--gray);
-            margin-bottom: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
         }
 
         .social-value {
-            font-weight: 600;
+            font-weight: 700;
             color: var(--primary);
-            font-size: 12px;
+            font-size: 14px;
             word-break: break-word;
+            line-height: 1.4;
+            background: var(--light);
+            padding: 6px 12px;
+            border-radius: 30px;
+            width: 100%;
+            border: 1px solid var(--light-gray);
         }
 
         .products-header {
@@ -682,7 +705,6 @@
             font-size: 13px;
         }
 
-        /* ✅ بطاقات المنتجات - عمودين */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -736,7 +758,7 @@
 
         .product-footer {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             padding-top: 10px;
             border-top: 1px solid var(--light-gray);
@@ -744,23 +766,11 @@
         }
 
         .product-price {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 800;
             color: var(--success);
-        }
-
-        .order-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-size: 11px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 4px;
+            text-align: center;
+            width: 100%;
         }
 
         /* ===== نموذج التسجيل ===== */
@@ -797,7 +807,7 @@
         }
 
         .modal-header {
-            background: var(--gradient, linear-gradient(135deg, #0C3B2E 0%, #1D5C4A 100%));
+            background: linear-gradient(135deg, #0C3B2E 0%, #1D5C4A 100%);
             color: white;
             padding: 25px 20px;
             position: relative;
@@ -889,7 +899,7 @@
         .submit-btn {
             width: 100%;
             padding: 16px;
-            background: var(--gradient, linear-gradient(135deg, #0C3B2E 0%, #1D5C4A 100%));
+            background: linear-gradient(135deg, #0C3B2E 0%, #1D5C4A 100%);
             color: white;
             border: none;
             border-radius: 12px;
@@ -903,7 +913,6 @@
             margin-top: 20px;
         }
 
-        /* ===== فوتر بسيط ===== */
         .app-footer {
             background: var(--dark);
             color: white;
@@ -930,14 +939,13 @@
             border-top: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* ===== مخفي ===== */
         .hidden {
             display: none !important;
         }
     </style>
 </head>
 <body>
-    <!-- هيدر بسيط - بدون أزرار -->
+    <!-- هيدر بسيط -->
     <header class="app-header">
         <div class="header-container">
             <div class="logo-section" onclick="goToHome()">
@@ -986,7 +994,7 @@
             <section class="hero-section">
                 <div class="hero-content">
                     <h1 class="hero-title">سوق البيوت</h1>
-                    <p class="hero-subtitle">منصة الأسر المنتجة الإماراتية</p>
+                    <p class="hero-subtitle">منصة متخصصة لدعم الأسر المنتجة في الامارات</p>
                     
                     <div class="hero-search-box">
                         <input type="text" class="hero-search-input" placeholder="ابحث عن منتج أو أسرة..." id="homeSearch">
@@ -1010,20 +1018,20 @@
                 
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-number">+150</div>
-                        <div class="stat-label">أسرة</div>
+                        <div class="stat-number">أسر منتجة</div>
+                        <div class="stat-label">قيد الانضمام</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number">7</div>
-                        <div class="stat-label">إمارات</div>
+                        <div class="stat-number">دعم محلي</div>
+                        <div class="stat-label">منتج إماراتي 100%</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number">98%</div>
-                        <div class="stat-label">رضا</div>
+                        <div class="stat-number">مجتمع متنامي</div>
+                        <div class="stat-label">في طور التكوين</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number">+2.5k</div>
-                        <div class="stat-label">منتج</div>
+                        <div class="stat-number">منتجات مختارة</div>
+                        <div class="stat-label">جودة وحرفية</div>
                     </div>
                 </div>
                 
@@ -1080,7 +1088,7 @@
         </div>
     </div>
 
-    <!-- نموذج تسجيل الأسر -->
+    <!-- نموذج تسجيل الأسر - متصل بـ Formspree وبه تحقق كامل -->
     <div class="modal" id="registerModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1091,15 +1099,17 @@
                 <p style="font-size: 14px; opacity: 0.9;">انضم إلى منصة سوق البيوت</p>
             </div>
             <div class="modal-body">
-                <form id="registerForm" onsubmit="submitFamilyRegistration(event)">
+                <form id="registerForm" action="https://formspree.io/f/maqdewer" method="POST" onsubmit="return validateFamilyForm(event)">
+                    <!-- اسم الأسرة -->
                     <div class="form-group">
                         <label class="form-label"><i class="fas fa-users"></i> اسم الأسرة</label>
-                        <input type="text" class="form-control" placeholder="مثال: أسرة آل مبارك" required>
+                        <input type="text" class="form-control" name="family_name" placeholder="مثال: أسرة آل مبارك" required>
                     </div>
+                    <!-- الإمارة + المنطقة -->
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label"><i class="fas fa-map-marker-alt"></i> الإمارة</label>
-                            <select class="form-control" required>
+                            <select class="form-control" name="emirate" required>
                                 <option value="">اختر</option>
                                 <option value="دبي">دبي</option>
                                 <option value="أبوظبي">أبوظبي</option>
@@ -1112,42 +1122,51 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label"><i class="fas fa-city"></i> المنطقة</label>
-                            <input type="text" class="form-control" placeholder="البرشاء" required>
+                            <input type="text" class="form-control" name="area" placeholder="البرشاء" required>
                         </div>
                     </div>
+                    <!-- نبذة عن الأسرة -->
                     <div class="form-group">
                         <label class="form-label"><i class="fas fa-align-right"></i> نبذة عن الأسرة</label>
-                        <textarea class="form-control" placeholder="اكتب نبذة مختصرة..." rows="3"></textarea>
+                        <textarea class="form-control" name="description" placeholder="اكتب نبذة مختصرة..." rows="3" required></textarea>
                     </div>
+                    <!-- الهاتف + واتساب -->
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label"><i class="fas fa-phone"></i> الهاتف</label>
-                            <input type="tel" class="form-control" placeholder="05x xxx xxxx" required>
+                            <input type="tel" class="form-control" name="phone" placeholder="05x xxx xxxx" required>
                         </div>
                         <div class="form-group">
                             <label class="form-label"><i class="fab fa-whatsapp"></i> واتساب</label>
-                            <input type="tel" class="form-control" placeholder="05x xxx xxxx">
+                            <input type="tel" class="form-control" name="whatsapp" placeholder="05x xxx xxxx">
                         </div>
                     </div>
+                    <!-- البريد + إنستجرام -->
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label"><i class="fas fa-envelope"></i> البريد</label>
-                            <input type="email" class="form-control" placeholder="info@example.com">
+                            <input type="email" class="form-control" name="email" placeholder="info@example.com" required>
                         </div>
                         <div class="form-group">
                             <label class="form-label"><i class="fab fa-instagram"></i> إنستجرام</label>
-                            <input type="text" class="form-control" placeholder="@account">
+                            <input type="text" class="form-control" name="instagram" placeholder="@account">
                         </div>
                     </div>
+                    <!-- التصنيفات (مطوّرة) -->
                     <div class="form-group">
                         <label class="form-label"><i class="fas fa-tags"></i> التصنيفات</label>
                         <div class="checkbox-group">
-                            <label class="checkbox-label"><input type="checkbox" value="غذائية"> غذائية</label>
-                            <label class="checkbox-label"><input type="checkbox" value="حلويات"> حلويات</label>
-                            <label class="checkbox-label"><input type="checkbox" value="يدوية"> يدوية</label>
-                            <label class="checkbox-label"><input type="checkbox" value="تجميل"> تجميل</label>
-                            <label class="checkbox-label"><input type="checkbox" value="ديكور"> ديكور</label>
-                            <label class="checkbox-label"><input type="checkbox" value="بحري"> بحري</label>
+                            <label class="checkbox-label"><input type="checkbox" name="category[]" value="أطعمة"> أطعمة منزلية</label>
+                            <label class="checkbox-label"><input type="checkbox" name="category[]" value="عطور"> عطور وبخور</label>
+                            <label class="checkbox-label"><input type="checkbox" name="category[]" value="عناية"> عناية طبيعية</label>
+                            <label class="checkbox-label"><input type="checkbox" name="category[]" value="حلويات"> حلويات ومعجنات</label>
+                            <label class="checkbox-label"><input type="checkbox" name="category[]" value="تجميل"> تجميل وعناية</label>
+                            <label class="checkbox-label"><input type="checkbox" name="category[]" value="ملابس"> ملابس واكسسوارات</label>
+                            <label class="checkbox-label"><input type="checkbox" name="category[]" value="يدويات"> أشغال يدوية</label>
+                            <label class="checkbox-label"><input type="checkbox" name="category[]" value="هدايا"> هدايا وتغليف</label>
+                            <label class="checkbox-label"><input type="checkbox" name="category[]" value="شموع"> شموع وصناعات منزلية</label>
+                            <label class="checkbox-label"><input type="checkbox" name="category[]" value="فنون"> فنون ورسم</label>
+                            <label class="checkbox-label"><input type="checkbox" name="category[]" value="نباتات"> نباتات ومنتجات زراعية</label>
                         </div>
                     </div>
                     <button type="submit" class="submit-btn">
@@ -1174,7 +1193,9 @@
     </footer>
 
     <script>
-        // بيانات الأسر
+        // ------------------------------------------------------------
+        // بيانات الأسر (نموذجية)
+        // ------------------------------------------------------------
         const familiesData = [
             {
                 id: 1,
@@ -1191,7 +1212,7 @@
                 productsCount: 8,
                 rating: 4.8,
                 badges: ["تمور", "عسل"],
-                category: "غذائية",
+                category: "أطعمة",
                 products: [
                     { name: "تمر خلاص", description: "تمر خلاص فاخر", price: "45", category: "تمور", image: "https://images.unsplash.com/photo-1597848212624-e519f8859c6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" },
                     { name: "سمن بلدي", description: "سمن بلدي طبيعي", price: "85", category: "ألبان", image: "https://images.unsplash.com/photo-1563636619-e9143da7973b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" },
@@ -1213,7 +1234,7 @@
                 productsCount: 6,
                 rating: 4.7,
                 badges: ["ديكور", "يدوي"],
-                category: "يدوية",
+                category: "يدويات",
                 products: [
                     { name: "سجاد يدوي", description: "سجاد صوف طبيعي", price: "450", category: "ديكور", image: "https://images.unsplash.com/photo-1596199050105-6d5d4e4c4c1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" },
                     { name: "مفارش مطرزة", description: "مفارش حرير", price: "280", category: "ديكور", image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" }
@@ -1234,7 +1255,7 @@
                 productsCount: 5,
                 rating: 4.9,
                 badges: ["عضوي", "تمور"],
-                category: "زراعية",
+                category: "نباتات",
                 products: [
                     { name: "تمر مجدول", description: "تمر مجدول سكري", price: "95", category: "تمور", image: "https://images.unsplash.com/photo-1597872200969-3b65ba4aaade?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" },
                     { name: "رطب طازج", description: "رطب نخل طازج", price: "65", category: "تمور", image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" }
@@ -1263,7 +1284,9 @@
             }
         ];
 
+        // ------------------------------------------------------------
         // حالة التطبيق
+        // ------------------------------------------------------------
         const appState = {
             currentPage: 'home',
             currentEmirate: 'all',
@@ -1272,19 +1295,25 @@
             searchQuery: ''
         };
 
+        // ------------------------------------------------------------
         // تهيئة
+        // ------------------------------------------------------------
         document.addEventListener('DOMContentLoaded', function() {
             initEmirates();
             initCategories();
             updateBackButton();
         });
 
-        // فتح/غلق القائمة
+        // ------------------------------------------------------------
+        // القائمة
+        // ------------------------------------------------------------
         function toggleMenu() {
             document.getElementById('navMenu').classList.toggle('active');
         }
 
+        // ------------------------------------------------------------
         // تهيئة الإمارات
+        // ------------------------------------------------------------
         function initEmirates() {
             const grid = document.getElementById('emiratesGrid');
             if (!grid) return;
@@ -1317,20 +1346,26 @@
             }).join('');
         }
 
-        // تهيئة التصنيفات
+        // ------------------------------------------------------------
+        // تهيئة التصنيفات (المطوّرة)
+        // ------------------------------------------------------------
         function initCategories() {
             const grid = document.getElementById('categoriesGrid');
             if (!grid) return;
             
             const categories = [
                 { id: 'all', name: 'الكل', icon: 'fas fa-th-large' },
-                { id: 'غذائية', name: 'غذائية', icon: 'fas fa-apple-alt' },
-                { id: 'يدوية', name: 'يدوية', icon: 'fas fa-hands' },
-                { id: 'زراعية', name: 'زراعية', icon: 'fas fa-seedling' },
-                { id: 'حلويات', name: 'حلويات', icon: 'fas fa-cookie-bite' },
-                { id: 'تجميل', name: 'تجميل', icon: 'fas fa-spa' },
-                { id: 'بحري', name: 'بحري', icon: 'fas fa-fish' },
-                { id: 'ديكور', name: 'ديكور', icon: 'fas fa-couch' }
+                { id: 'أطعمة', name: 'الأطعمة المنزلية', icon: 'fas fa-utensils' },
+                { id: 'عطور', name: 'العطور والبخور', icon: 'fas fa-wind' },
+                { id: 'عناية', name: 'العناية الطبيعية', icon: 'fas fa-spa' },
+                { id: 'حلويات', name: 'حلويات ومعجنات', icon: 'fas fa-cookie-bite' },
+                { id: 'تجميل', name: 'التجميل والعناية', icon: 'fas fa-magic' },
+                { id: 'ملابس', name: 'ملابس واكسسوارات', icon: 'fas fa-tshirt' },
+                { id: 'يدويات', name: 'الأشغال اليدوية', icon: 'fas fa-cut' },
+                { id: 'هدايا', name: 'الهدايا والتغليف', icon: 'fas fa-gift' },
+                { id: 'شموع', name: 'الشموع والصناعات المنزلية', icon: 'fas fa-fire' },
+                { id: 'فنون', name: 'الفنون والرسم', icon: 'fas fa-paint-brush' },
+                { id: 'نباتات', name: 'النباتات والمنتجات الزراعية', icon: 'fas fa-seedling' }
             ];
 
             grid.innerHTML = categories.map(c => `
@@ -1341,7 +1376,9 @@
             `).join('');
         }
 
+        // ------------------------------------------------------------
         // اختيار إمارة
+        // ------------------------------------------------------------
         function selectEmirate(id, name) {
             appState.currentEmirate = id;
             appState.currentCategory = 'all';
@@ -1354,7 +1391,9 @@
             renderFamilies();
         }
 
+        // ------------------------------------------------------------
         // تصفية حسب التصنيف
+        // ------------------------------------------------------------
         function filterByCategory(id) {
             appState.currentCategory = id;
             
@@ -1366,7 +1405,9 @@
             renderFamilies();
         }
 
+        // ------------------------------------------------------------
         // عرض الأسر
+        // ------------------------------------------------------------
         function renderFamilies() {
             let filtered = [...familiesData];
             
@@ -1415,7 +1456,9 @@
             `).join('');
         }
 
+        // ------------------------------------------------------------
         // عرض منتجات الأسرة
+        // ------------------------------------------------------------
         function showFamilyProducts(id) {
             const family = familiesData.find(f => f.id === id);
             if (!family) return;
@@ -1482,9 +1525,6 @@
                         <div class="product-category">${p.category}</div>
                         <div class="product-footer">
                             <div class="product-price">${p.price} د.إ</div>
-                            <button class="order-btn" onclick="orderProduct('${p.name}', '${family.name}')">
-                                طلب
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -1493,18 +1533,17 @@
             showPage('products');
         }
 
-        // طلب منتج
-        function orderProduct(name, family) {
-            alert(`✅ تمت إضافة ${name} من ${family}\nسيتم التواصل معكم قريباً`);
-        }
-
-        // البحث
+        // ------------------------------------------------------------
+        // البحث في الصفحة الرئيسية
+        // ------------------------------------------------------------
         function performHomeSearch() {
             appState.searchQuery = document.getElementById('homeSearch').value.trim();
             selectEmirate('all', 'كل الإمارات');
         }
 
+        // ------------------------------------------------------------
         // التنقل بين الصفحات
+        // ------------------------------------------------------------
         function showPage(page) {
             document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
             document.getElementById(`${page}-page`).style.display = 'block';
@@ -1512,17 +1551,17 @@
             updateBackButton();
         }
 
-        // العودة للرئيسية
         function goToHome() {
             showPage('home');
         }
 
-        // العودة للأسر
         function goBackToFamilies() {
             showPage('families');
         }
 
+        // ------------------------------------------------------------
         // تحديث زر العودة
+        // ------------------------------------------------------------
         function updateBackButton() {
             const container = document.getElementById('backButtonContainer');
             const btn = document.getElementById('backButton');
@@ -1549,27 +1588,75 @@
             }
         }
 
-        // فتح نموذج التسجيل
+        // ------------------------------------------------------------
+        // فتح / إغلاق نموذج التسجيل
+        // ------------------------------------------------------------
         function showRegisterForm() {
             document.getElementById('registerModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
-        // إغلاق نموذج التسجيل
         function closeRegisterForm() {
             document.getElementById('registerModal').classList.remove('active');
             document.body.style.overflow = 'auto';
         }
 
-        // إرسال نموذج التسجيل
-        function submitFamilyRegistration(e) {
-            e.preventDefault();
-            alert('✅ تم إرسال طلب التسجيل بنجاح!\nسيتم التواصل معكم خلال 24 ساعة.');
-            closeRegisterForm();
-            e.target.reset();
+        // ------------------------------------------------------------
+        // ✅ دالة التحقق من صحة البيانات قبل الإرسال إلى Formspree
+        // ------------------------------------------------------------
+        function validateFamilyForm(event) {
+            // منع الإرسال الافتراضي لحين التحقق
+            event.preventDefault();
+
+            // الحصول على قيم الحقول
+            const familyName = document.querySelector("[name='family_name']").value.trim();
+            const emirate = document.querySelector("[name='emirate']").value;
+            const area = document.querySelector("[name='area']").value.trim();
+            const description = document.querySelector("[name='description']").value.trim();
+            const phone = document.querySelector("[name='phone']").value.trim();
+            const email = document.querySelector("[name='email']").value.trim();
+            
+            // التحقق من التصنيفات (واحد على الأقل)
+            const categories = document.querySelectorAll("[name='category[]']:checked");
+
+            // التحقق من الحقول الفارغة
+            if (familyName === "") {
+                alert("❌ يرجى إدخال اسم الأسرة");
+                return false;
+            }
+            if (emirate === "" || emirate === null) {
+                alert("❌ يرجى اختيار الإمارة");
+                return false;
+            }
+            if (area === "") {
+                alert("❌ يرجى إدخال المنطقة");
+                return false;
+            }
+            if (description === "") {
+                alert("❌ يرجى إدخال نبذة عن الأسرة");
+                return false;
+            }
+            if (phone === "") {
+                alert("❌ يرجى إدخال رقم الهاتف");
+                return false;
+            }
+            if (email === "") {
+                alert("❌ يرجى إدخال البريد الإلكتروني");
+                return false;
+            }
+            if (categories.length === 0) {
+                alert("❌ يرجى اختيار تصنيف واحد على الأقل");
+                return false;
+            }
+
+            // إذا كل شيء تمام، نرسل النموذج يدوياً
+            event.target.submit();
+            return true;
         }
 
-        // جعل الدوال عامة
+        // ------------------------------------------------------------
+        // جعل الدوال متاحة عالمياً
+        // ------------------------------------------------------------
         window.toggleMenu = toggleMenu;
         window.goToHome = goToHome;
         window.showPage = showPage;
@@ -1578,10 +1665,9 @@
         window.showFamilyProducts = showFamilyProducts;
         window.goBackToFamilies = goBackToFamilies;
         window.performHomeSearch = performHomeSearch;
-        window.orderProduct = orderProduct;
         window.showRegisterForm = showRegisterForm;
         window.closeRegisterForm = closeRegisterForm;
-        window.submitFamilyRegistration = submitFamilyRegistration;
+        window.validateFamilyForm = validateFamilyForm;
     </script>
 </body>
 </html>
