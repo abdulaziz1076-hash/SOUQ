@@ -1197,6 +1197,27 @@
         // بيانات الأسر (نموذجية)
         // ------------------------------------------------------------
         const familiesData = [
+            {
+             id: 1,
+             name: "cardsplayuae ",
+             location: "أبوظبي",
+             emirate: "أبوظبي",
+             description: "الترفية",
+             longDescription: " اوراق لعب فاخرة  تجربة احترافية في كل لغبة .",
+             image: "cardsplayuae.png",
+             phone: "+971 56 470 3284",
+             whatsapp: "+971504750753",
+             instagram: "@cardsplayuae",
+             productsCount: 7,
+             rating: 4.6,
+             badges: ["غير موثق"],
+             category: "الترفية",
+             products: [
+               { name: "بطاقات بيضاء", description: "بطاقات قوية وجوده عالية لا تنكسر ولا تتقطع", price: "35", category: "الترفية", image: "card1.png" },
+               { name: "بطاقات زرقاء", description: "بطاقات قوية وجوده عالية لا تنكسر ولا تتقطع", price: "35", category: "الترفية", image: "card2.png" },
+               { name: "بطاقات خضراء", description: "بطاقات قوية وجوده عالية لا تنكسر ولا تتقطع", price: "35", category: "الترفية", image: "card3.png" } 
+               ]
+            },
            
         ];
 
@@ -1281,7 +1302,8 @@
                 { id: 'هدايا', name: 'الهدايا والتغليف', icon: 'fas fa-gift' },
                 { id: 'شموع', name: 'الشموع والصناعات المنزلية', icon: 'fas fa-fire' },
                 { id: 'فنون', name: 'الفنون والرسم', icon: 'fas fa-paint-brush' },
-                { id: 'نباتات', name: 'النباتات والمنتجات الزراعية', icon: 'fas fa-seedling' }
+                { id: 'نباتات', name: 'النباتات والمنتجات الزراعية', icon: 'fas fa-seedling' },
+                { id: 'نباتات', name: 'الترفية', icon: 'fas fa-seedling' }
             ];
 
             grid.innerHTML = categories.map(c => `
@@ -1587,6 +1609,7 @@
     </script>
 </body>
 </html>
+
 
 
 
