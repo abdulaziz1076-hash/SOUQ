@@ -407,54 +407,68 @@
             gap: 6px;
         }
 
-        /* ===== صفحة الأسر - بطاقات عمودين ===== */
-        .filters-section {
-            background: white;
-            padding: 20px;
-            border-radius: 16px;
-            margin-bottom: 24px;
-            border: 1px solid var(--light-gray);
+        /* ===== صفحة الأسر - تصميم جديد خفيف ===== */
+        /* شريط التصنيفات الأفقي (سكول) */
+        .categories-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+            scrollbar-width: thin;
+            white-space: nowrap;
         }
 
-        .filter-title {
-            font-size: 16px;
-            color: var(--primary);
-            margin-bottom: 16px;
-            display: flex;
+        .category-chip {
+            flex: 0 0 auto;
+            background: white;
+            border: 1px solid var(--light-gray);
+            border-radius: 40px;
+            padding: 10px 20px;
+            display: inline-flex;
             align-items: center;
             gap: 8px;
-        }
-
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-        }
-
-        .category-item {
-            background: var(--light);
-            border-radius: 10px;
-            padding: 10px 5px;
-            text-align: center;
-            cursor: pointer;
-            border: 1px solid transparent;
-        }
-
-        .category-item.active {
-            border-color: var(--secondary);
-            background: white;
-        }
-
-        .category-icon {
-            font-size: 22px;
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
-
-        .category-name {
+            font-size: 14px;
             font-weight: 600;
             color: var(--primary);
-            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .category-chip i {
+            font-size: 16px;
+            color: var(--accent);
+        }
+
+        .category-chip.active {
+            background: var(--secondary);
+            border-color: var(--secondary);
+            color: var(--primary);
+        }
+
+        .category-chip.active i {
+            color: var(--primary);
+        }
+
+        /* شريط توعوي يوضح الفكرة */
+        .info-banner {
+            background: rgba(212, 175, 55, 0.12);
+            border-right: 6px solid var(--secondary);
+            padding: 14px 18px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .info-banner i {
+            font-size: 20px;
+            color: var(--secondary);
         }
 
         .families-grid {
@@ -542,28 +556,29 @@
             font-size: 11px;
         }
 
-        .family-description {
-            display: none;
-        }
-
         .view-products-btn {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             background: var(--primary);
             color: white;
             border: none;
             border-radius: 30px;
-            font-size: 12px;
-            font-weight: 600;
+            font-size: 13px;
+            font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 8px;
             margin-top: auto;
+            transition: 0.2s;
         }
 
-        /* ===== صفحة المنتجات ===== */
+        .view-products-btn:hover {
+            background: #1d5c4a;
+        }
+
+        /* ===== صفحة المنتجات (وسائل التواصل في الأسفل) ===== */
         .family-profile {
             background: white;
             border-radius: 20px;
@@ -609,51 +624,57 @@
             padding: 20px;
         }
 
-        /* ===== تصميم وسائل التواصل الاجتماعي العمودي الأنيق ===== */
-        .social-grid {
+        /* وسائل التواصل - تصميم بطاقات صغير في أسفل الصفحة */
+        .contact-section-bottom {
+            margin-top: 32px;
+            padding-top: 16px;
+            border-top: 1px solid var(--light-gray);
+        }
+
+        .contact-title {
+            font-family: 'El Messiri', serif;
+            font-size: 20px;
+            color: var(--primary);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contact-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            margin-top: 20px;
+            gap: 14px;
         }
 
-        .social-card {
+        .contact-item {
             background: white;
+            border: 1px solid var(--light-gray);
             border-radius: 20px;
-            padding: 20px 12px;
+            padding: 14px 12px;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            text-align: center;
+            gap: 12px;
             text-decoration: none;
             color: var(--dark);
-            border: 1px solid var(--light-gray);
-            transition: all 0.25s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            transition: all 0.2s;
         }
 
-        .social-card:hover {
-            transform: translateY(-5px);
+        .contact-item:hover {
             border-color: var(--secondary);
-            box-shadow: 0 12px 20px rgba(212, 175, 55, 0.1);
+            background: var(--light);
         }
 
-        .social-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 16px;
+        .contact-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 22px;
             color: white;
-            margin-bottom: 12px;
             flex-shrink: 0;
-            transition: all 0.25s;
-        }
-
-        .social-card:hover .social-icon {
-            transform: scale(1.05);
         }
 
         .whatsapp-bg { background: #25D366; }
@@ -661,26 +682,24 @@
         .email-bg { background: var(--primary); }
         .phone-bg { background: var(--accent); }
 
-        .social-label {
+        .contact-detail {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .contact-label {
             font-size: 12px;
-            font-weight: 600;
             color: var(--gray);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 6px;
         }
 
-        .social-value {
+        .contact-value {
             font-weight: 700;
             color: var(--primary);
             font-size: 14px;
             word-break: break-word;
-            line-height: 1.4;
-            background: var(--light);
-            padding: 6px 12px;
-            border-radius: 30px;
-            width: 100%;
-            border: 1px solid var(--light-gray);
         }
 
         .products-header {
@@ -1053,20 +1072,23 @@
             </div>
         </div>
 
-        <!-- الأسر المنتجة -->
+        <!-- الأسر المنتجة (بالتصميم الجديد) -->
         <div id="families-page" class="page" style="display: none;">
             <div class="page-header">
                 <h1 class="page-title" id="familiesPageTitle">الأسر المنتجة</h1>
                 <p class="page-subtitle" id="familiesPageSubtitle">استعرض الأسر ومنتجاتها</p>
             </div>
             <div class="container">
-                <div class="filters-section">
-                    <h3 class="filter-title">
-                        <i class="fas fa-filter"></i>
-                        التصنيفات
-                    </h3>
-                    <div class="categories-grid" id="categoriesGrid"></div>
+                <!-- شريط التصنيفات الأفقي (خفيف وسريع) -->
+                <div class="categories-scroll" id="categoriesScroll"></div>
+                
+                <!-- شريط توعوي يشرح الفكرة بوضوح -->
+                <div class="info-banner">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>اختر أسرة، استعرض منتجاتها، ثم تواصل معها عبر واتساب أو موقعها للطلب.</span>
                 </div>
+                
+                <!-- بطاقات الأسر -->
                 <div class="families-grid" id="familiesGrid"></div>
             </div>
         </div>
@@ -1078,17 +1100,25 @@
                 <p class="page-subtitle" id="productsPageSubtitle"></p>
             </div>
             <div class="container">
+                <!-- ملف الأسرة (بدون وسائل التواصل - نقلت للأسفل) -->
                 <div id="familyProfileContainer"></div>
+                
+                <!-- رأس المنتجات -->
                 <div class="products-header">
                     <h2 class="products-title">المنتجات</h2>
                     <div class="products-badge" id="productsCount">0</div>
                 </div>
+                
+                <!-- شبكة المنتجات -->
                 <div class="products-grid" id="productsGrid"></div>
+                
+                <!-- وسائل التواصل - تأتي هنا بعد المنتجات (غير مزعجة) -->
+                <div id="contactSectionBottom" class="contact-section-bottom"></div>
             </div>
         </div>
     </div>
 
-    <!-- نموذج تسجيل الأسر - متصل بـ Formspree وبه تحقق كامل -->
+    <!-- نموذج تسجيل الأسر -->
     <div class="modal" id="registerModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1148,11 +1178,11 @@
                             <input type="email" class="form-control" name="email" placeholder="info@example.com" required>
                         </div>
                         <div class="form-group">
-                            <label class="form-label"><i class="fa-sharp fa-solid fa-heart"></i> حسابات السوشيال ميدا </label>
+                            <label class="form-label"><i class="fa-brands fa-instagram"></i> إنستجرام</label>
                             <input type="text" class="form-control" name="instagram" placeholder="@account">
                         </div>
                     </div>
-                    <!-- التصنيفات (مطوّرة) -->
+                    <!-- التصنيفات -->
                     <div class="form-group">
                         <label class="form-label"><i class="fas fa-tags"></i> التصنيفات</label>
                         <div class="checkbox-group">
@@ -1200,15 +1230,15 @@
             {
              id: 1,
              name: "cardsplayuae ",
-             location: " مدينة أبوظبي",
+             location: "مدينة أبوظبي",
              emirate: "أبوظبي",
              description: "الترفية",
-             longDescription: "اوراق لعب فاخرة  تجربة احترافية في كل لعبة .",
+             longDescription: "اوراق لعب فاخرة - تجربة احترافية في كل لعبة.",
              image: "cardsplayuae.png",
              phone: "+971-56-470-3284",
              whatsapp: "+971-50-475-0753",
              instagram: "@cardsplayuae",
-             Email: "sempel@sempel.com",
+             email: "sempel@sempel.com",
              productsCount: 7,
              rating: 4.6,
              badges: ["الترفية"],
@@ -1219,7 +1249,6 @@
                { name: "بطاقات خضراء", description: "بطاقات قوية وجوده عالية لا تنكسر ولا تتقطع", price: "35", category: "الترفية", image: "card3.png" },
                ]
             },
-           
         ];
 
         // ------------------------------------------------------------
@@ -1238,7 +1267,7 @@
         // ------------------------------------------------------------
         document.addEventListener('DOMContentLoaded', function() {
             initEmirates();
-            initCategories();
+            initCategoriesChips(); // تهيئة التصنيفات على شكل شرائح أفقية
             updateBackButton();
         });
 
@@ -1285,32 +1314,32 @@
         }
 
         // ------------------------------------------------------------
-        // تهيئة التصنيفات (المطوّرة)
+        // تهيئة التصنيفات - شرائح أفقية (Chips)
         // ------------------------------------------------------------
-        function initCategories() {
-            const grid = document.getElementById('categoriesGrid');
-            if (!grid) return;
+        function initCategoriesChips() {
+            const container = document.getElementById('categoriesScroll');
+            if (!container) return;
             
             const categories = [
                 { id: 'all', name: 'الكل', icon: 'fas fa-th-large' },
-                { id: 'أطعمة', name: 'الأطعمة المنزلية', icon: 'fas fa-utensils' },
-                { id: 'عطور', name: 'العطور والبخور', icon: 'fas fa-wind' },
-                { id: 'عناية', name: 'العناية الطبيعية', icon: 'fas fa-spa' },
-                { id: 'حلويات', name: 'حلويات ومعجنات', icon: 'fas fa-cookie-bite' },
-                { id: 'تجميل', name: 'التجميل والعناية', icon: 'fas fa-magic' },
-                { id: 'ملابس', name: 'ملابس واكسسوارات', icon: 'fas fa-tshirt' },
-                { id: 'يدويات', name: 'الأشغال اليدوية', icon: 'fas fa-cut' },
-                { id: 'هدايا', name: 'الهدايا والتغليف', icon: 'fas fa-gift' },
-                { id: 'شموع', name: 'الشموع والصناعات المنزلية', icon: 'fas fa-fire' },
-                { id: 'فنون', name: 'الفنون والرسم', icon: 'fas fa-paint-brush' },
-                { id: 'نباتات', name: 'النباتات والمنتجات الزراعية', icon: 'fas fa-seedling' },
-                { id: 'نباتات', name: 'الترفية', icon: 'fas fa-seedling' }
+                { id: 'أطعمة', name: 'أطعمة', icon: 'fas fa-utensils' },
+                { id: 'عطور', name: 'عطور', icon: 'fas fa-wind' },
+                { id: 'عناية', name: 'عناية', icon: 'fas fa-spa' },
+                { id: 'حلويات', name: 'حلويات', icon: 'fas fa-cookie-bite' },
+                { id: 'تجميل', name: 'تجميل', icon: 'fas fa-magic' },
+                { id: 'ملابس', name: 'ملابس', icon: 'fas fa-tshirt' },
+                { id: 'يدويات', name: 'يدويات', icon: 'fas fa-cut' },
+                { id: 'هدايا', name: 'هدايا', icon: 'fas fa-gift' },
+                { id: 'شموع', name: 'شموع', icon: 'fas fa-fire' },
+                { id: 'فنون', name: 'فنون', icon: 'fas fa-paint-brush' },
+                { id: 'نباتات', name: 'نباتات', icon: 'fas fa-seedling' },
+                { id: 'الترفية', name: 'ترفية', icon: 'fas fa-gamepad' }
             ];
 
-            grid.innerHTML = categories.map(c => `
-                <div class="category-item ${c.id === 'all' ? 'active' : ''}" onclick="filterByCategory('${c.id}')">
-                    <div class="category-icon"><i class="${c.icon}"></i></div>
-                    <div class="category-name">${c.name}</div>
+            container.innerHTML = categories.map(c => `
+                <div class="category-chip ${c.id === 'all' ? 'active' : ''}" onclick="filterByCategory('${c.id}', this)">
+                    <i class="${c.icon}"></i>
+                    <span>${c.name}</span>
                 </div>
             `).join('');
         }
@@ -1326,20 +1355,27 @@
                 id === 'all' ? 'الأسر المنتجة' : `الأسر في ${name}`;
             document.getElementById('familiesPageSubtitle').textContent = 'استعرض الأسر ومنتجاتها';
             
+            // إعادة تعيين النشاط على شريط التصنيفات
+            document.querySelectorAll('.category-chip').forEach(chip => {
+                chip.classList.remove('active');
+                if (chip.innerText.includes('الكل')) chip.classList.add('active');
+            });
+            
             showPage('families');
             renderFamilies();
         }
 
         // ------------------------------------------------------------
-        // تصفية حسب التصنيف
+        // تصفية حسب التصنيف (للشرائح الأفقية)
         // ------------------------------------------------------------
-        function filterByCategory(id) {
+        function filterByCategory(id, element) {
             appState.currentCategory = id;
             
-            document.querySelectorAll('.category-item').forEach(el => {
-                el.classList.remove('active');
+            // تحديث الحالة البصرية
+            document.querySelectorAll('.category-chip').forEach(chip => {
+                chip.classList.remove('active');
             });
-            event.currentTarget.classList.add('active');
+            element.classList.add('active');
             
             renderFamilies();
         }
@@ -1388,7 +1424,7 @@
                             <i class="fas fa-map-marker-alt"></i> ${family.location}
                         </div>
                         <button class="view-products-btn" onclick="showFamilyProducts(${family.id})">
-                            <i class="fas fa-box-open"></i> ${family.products.length} منتج
+                            <i class="fas fa-box-open"></i> عرض المنتجات والطلب
                         </button>
                     </div>
                 </div>
@@ -1396,7 +1432,7 @@
         }
 
         // ------------------------------------------------------------
-        // عرض منتجات الأسرة
+        // عرض منتجات الأسرة (مع وسائل التواصل في الأسفل)
         // ------------------------------------------------------------
         function showFamilyProducts(id) {
             const family = familiesData.find(f => f.id === id);
@@ -1407,6 +1443,7 @@
             document.getElementById('productsPageTitle').textContent = family.name;
             document.getElementById('productsPageSubtitle').textContent = family.location;
             
+            // ملف الأسرة (بدون وسائل التواصل)
             document.getElementById('familyProfileContainer').innerHTML = `
                 <div class="family-profile">
                     <div class="profile-header">
@@ -1420,42 +1457,12 @@
                     </div>
                     <div class="profile-body">
                         <p style="font-size: 14px; margin-bottom: 16px;">${family.longDescription || family.description}</p>
-                        <div class="social-grid">
-                            <a href="https://wa.me/${family.whatsapp}" target="_blank" class="social-card">
-                                <div class="social-icon whatsapp-bg"><i class="fab fa-whatsapp"></i></div>
-                                <div>
-                                    <div class="social-label">واتساب</div>
-                                    <div class="social-value">${family.whatsapp}</div>
-                                </div>
-                            </a>
-                            <a href="https://instagram.com/${family.instagram.replace('@', '')}" target="_blank" class="social-card">
-                                <div class="social-icon instagram-bg"><i class="fab fa-instagram"></i></div>
-                                <div>
-                                    <div class="social-label">إنستجرام</div>
-                                    <div class="social-value">${family.instagram}</div>
-                                </div>
-                            </a>
-                            <a href="mailto:${family.email}" class="social-card">
-                                <div class="social-icon email-bg"><i class="fas fa-envelope"></i></div>
-                                <div>
-                                    <div class="social-label">البريد</div>
-                                    <div class="social-value">${family.email}</div>
-                                </div>
-                            </a>
-                            <a href="tel:${family.phone}" class="social-card">
-                                <div class="social-icon phone-bg"><i class="fas fa-phone"></i></div>
-                                <div>
-                                    <div class="social-label">اتصال</div>
-                                    <div class="social-value">${family.phone}</div>
-                                </div>
-                            </a>
-                        </div>
                     </div>
                 </div>
             `;
             
+            // المنتجات
             document.getElementById('productsCount').textContent = `${family.products.length} منتج`;
-            
             document.getElementById('productsGrid').innerHTML = family.products.map(p => `
                 <div class="product-card">
                     <div class="product-image" style="background-image: url('${p.image}')"></div>
@@ -1468,6 +1475,41 @@
                     </div>
                 </div>
             `).join('');
+            
+            // وسائل التواصل (تظهر بعد المنتجات)
+            document.getElementById('contactSectionBottom').innerHTML = `
+                <h3 class="contact-title"><i class="fas fa-phone-alt"></i> تواصل مع الأسرة</h3>
+                <div class="contact-grid">
+                    <a href="https://wa.me/${family.whatsapp}" target="_blank" class="contact-item">
+                        <div class="contact-icon whatsapp-bg"><i class="fab fa-whatsapp"></i></div>
+                        <div class="contact-detail">
+                            <span class="contact-label">واتساب</span>
+                            <span class="contact-value">${family.whatsapp}</span>
+                        </div>
+                    </a>
+                    <a href="https://instagram.com/${family.instagram.replace('@', '')}" target="_blank" class="contact-item">
+                        <div class="contact-icon instagram-bg"><i class="fab fa-instagram"></i></div>
+                        <div class="contact-detail">
+                            <span class="contact-label">إنستجرام</span>
+                            <span class="contact-value">${family.instagram}</span>
+                        </div>
+                    </a>
+                    <a href="mailto:${family.email}" class="contact-item">
+                        <div class="contact-icon email-bg"><i class="fas fa-envelope"></i></div>
+                        <div class="contact-detail">
+                            <span class="contact-label">البريد</span>
+                            <span class="contact-value">${family.email}</span>
+                        </div>
+                    </a>
+                    <a href="tel:${family.phone}" class="contact-item">
+                        <div class="contact-icon phone-bg"><i class="fas fa-phone"></i></div>
+                        <div class="contact-detail">
+                            <span class="contact-label">اتصال</span>
+                            <span class="contact-value">${family.phone}</span>
+                        </div>
+                    </a>
+                </div>
+            `;
             
             showPage('products');
         }
@@ -1541,24 +1583,19 @@
         }
 
         // ------------------------------------------------------------
-        // ✅ دالة التحقق من صحة البيانات قبل الإرسال إلى Formspree
+        // التحقق من صحة البيانات قبل الإرسال
         // ------------------------------------------------------------
         function validateFamilyForm(event) {
-            // منع الإرسال الافتراضي لحين التحقق
             event.preventDefault();
 
-            // الحصول على قيم الحقول
             const familyName = document.querySelector("[name='family_name']").value.trim();
             const emirate = document.querySelector("[name='emirate']").value;
             const area = document.querySelector("[name='area']").value.trim();
             const description = document.querySelector("[name='description']").value.trim();
             const phone = document.querySelector("[name='phone']").value.trim();
             const email = document.querySelector("[name='email']").value.trim();
-            
-            // التحقق من التصنيفات (واحد على الأقل)
             const categories = document.querySelectorAll("[name='category[]']:checked");
 
-            // التحقق من الحقول الفارغة
             if (familyName === "") {
                 alert("❌ يرجى إدخال اسم الأسرة");
                 return false;
@@ -1588,7 +1625,6 @@
                 return false;
             }
 
-            // إذا كل شيء تمام، نرسل النموذج يدوياً
             event.target.submit();
             return true;
         }
@@ -1610,13 +1646,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
