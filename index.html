@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta name="google-site-verification" content="UwEARwAkfxnW1CP0oDBEnlnKhHl2QuANOH1SF_8pvJg"/>
+    <meta name="google-site-verification" content="UwEARwAkfxnW1CP0oDBEnlnKhHl2QuANOH1SF_8pvJg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>سوق البيوت - المشاريع المنزلية في الإمارات</title>
@@ -26,7 +26,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=El+Messiri:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* جميع الأنماط السابقة مع إضافة تنسيقات جديدة للبحث في صفحة المشاريع */
         * {
             margin: 0;
             padding: 0;
@@ -422,57 +421,7 @@
         .families-search-btn:hover {
             background: #c9a227;
         }
-        /* البنر التوضيحي الجديد */
-        .explain-banner {
-            background: linear-gradient(135deg, #f5f0e8 0%, #fff 100%);
-            border: 2px solid var(--secondary);
-            border-radius: 24px;
-            padding: 22px 18px;
-            margin-bottom: 24px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: var(--shadow);
-            position: relative;
-            overflow: hidden;
-        }
-        .explain-banner::before {
-            content: "💡";
-            position: absolute;
-            left: -10px;
-            bottom: -10px;
-            font-size: 80px;
-            opacity: 0.1;
-            transform: rotate(-10deg);
-        }
-        .explain-icon {
-            width: 60px;
-            height: 60px;
-            background: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--secondary);
-            font-size: 30px;
-            flex-shrink: 0;
-            border: 2px solid var(--secondary);
-        }
-        .explain-text {
-            flex: 1;
-        }
-        .explain-text h3 {
-            font-family: 'El Messiri', serif;
-            color: var(--primary);
-            font-size: 18px;
-            margin-bottom: 6px;
-        }
-        .explain-text p {
-            color: var(--dark);
-            font-size: 14px;
-            line-height: 1.6;
-            opacity: 0.9;
-        }
+        /* البنر التوضيحي الجديد (تم إزالته واستبداله بالبوب أب) */
         .info-banner {
             background: rgba(212, 175, 55, 0.12);
             border-right: 6px solid var(--secondary);
@@ -923,9 +872,88 @@
         .hidden {
             display: none !important;
         }
+        /* البوب أب الترحيبي */
+        .welcome-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            backdrop-filter: blur(4px);
+        }
+        .welcome-popup.hidden {
+            display: none;
+        }
+        .popup-content {
+            background: white;
+            max-width: 85%;
+            width: 350px;
+            border-radius: 28px;
+            padding: 28px 24px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border: 2px solid var(--secondary);
+        }
+        .popup-close {
+            position: absolute;
+            top: 12px;
+            left: 16px;
+            background: var(--light-gray);
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 18px;
+            color: var(--primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .popup-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            color: var(--secondary);
+            font-size: 34px;
+            border: 3px solid var(--secondary);
+        }
+        .popup-title {
+            font-family: 'El Messiri', serif;
+            font-size: 22px;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+        .popup-message {
+            color: var(--dark);
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
+    <!-- البوب أب الترحيبي (يظهر تلقائياً) -->
+    <div id="welcomePopup" class="welcome-popup">
+        <div class="popup-content">
+            <button class="popup-close" onclick="closeWelcomePopup()"><i class="fas fa-times"></i></button>
+            <div class="popup-icon"><i class="fas fa-store-alt"></i></div>
+            <h2 class="popup-title">مرحباً بك في سوق البيوت</h2>
+            <p class="popup-message">سوق البيوت يجمع لك كل المشاريع المنزلية في الإمارات، اختر المشروع الذي يعجبك، تصفح منتجاته، ثم تواصل مباشرة مع صاحب المشروع عبر بيانات التواصل الخاصة به.</p>
+        </div>
+    </div>
+
     <!-- هيدر بسيط -->
     <header class="app-header">
         <div class="header-container">
@@ -970,7 +998,7 @@
                     <p class="hero-subtitle">منصة متخصصة لدعم المشاريع المنزلية في الامارات</p>
                     
                     <div class="hero-search-box">
-                        <input type="text" class="hero-search-input" placeholder="ابحث عن منتج أو مشروع..." id="homeSearch">
+                        <input type="text" class="hero-search-input" placeholder="ابحث عن منتج أو مشروع..." id="homeSearch" onkeyup="if(event.key==='Enter') performHomeSearch()">
                         <button class="hero-search-btn" onclick="performHomeSearch()">
                             <i class="fas fa-search"></i>
                         </button>
@@ -1034,18 +1062,7 @@
                 <!-- شريط التصنيفات -->
                 <div class="categories-scroll" id="categoriesScroll"></div>
                 
-
-                
-                <!-- البنر التوضيحي الجديد (احترافي) -->
-                <div class="explain-banner">
-                    <div class="explain-icon">
-                        <i class="fas fa-handshake"></i>
-                    </div>
-                    <div class="explain-text">
-                        <h3>كيف تطلب من المشاريع المنزلية؟</h3>
-                        <p>سوق البيوت يجمع لك كل المشاريع المنزلية في الإمارات. اختر المشروع الذي يعجبك، تصفح منتجاته، ثم تواصل مباشرة مع صاحب المشروع عبر الهاتف، واتساب، إنستجرام، أو الموقع الإلكتروني. جميع وسائل التواصل متاحة لطلب منتجك بكل سهولة.</p>
-                    </div>
-                </div>
+                <!-- تم حذف البانر القديم واستبداله بالبوب أب أعلاه -->
                 
                 <div class="families-grid" id="familiesGrid"></div>
             </div>
@@ -1224,6 +1241,9 @@
             // معالجة الهاش عند تحميل الصفحة
             handleHashChange();
             window.addEventListener('hashchange', handleHashChange);
+
+            // إظهار البوب أب الترحيبي
+            showWelcomePopup();
         });
 
         // ------------------------------------------------------------
@@ -1418,6 +1438,7 @@
                 filtered = filtered.filter(f => 
                     f.name.toLowerCase().includes(query) || 
                     f.description.toLowerCase().includes(query) ||
+                    f.location.toLowerCase().includes(query) || // إضافة المدينة
                     f.products.some(p => p.name.toLowerCase().includes(query))
                 );
             }
@@ -1456,7 +1477,7 @@
         }
 
         // ------------------------------------------------------------
-        // عرض منتجات المشروع (مع إضافة JSON-LD وعرض الموقع الإلكتروني)
+        // عرض منتجات المشروع (مع تعديل جهات الاتصال: فقط الهاتف ونقطة البيع)
         // ------------------------------------------------------------
         function showFamilyProducts(id, updateHash = true) {
             const family = familiesData.find(f => f.id === id);
@@ -1508,29 +1529,8 @@
                 </div>
             `).join('');
             
-            // وسائل التواصل (مع إضافة الموقع الإلكتروني إذا وجد)
+            // وسائل التواصل (معدلة: فقط الهاتف ونقطة البيع)
             let contactGridHtml = `
-                <a href="https://wa.me/${family.whatsapp}" target="_blank" class="contact-item">
-                    <div class="contact-icon whatsapp-bg"><i class="fab fa-whatsapp"></i></div>
-                    <div class="contact-detail">
-                        <span class="contact-label">واتساب</span>
-                        <span class="contact-value">${family.whatsapp}</span>
-                    </div>
-                </a>
-                <a href="https://instagram.com/${family.instagram.replace('@', '')}" target="_blank" class="contact-item">
-                    <div class="contact-icon instagram-bg"><i class="fab fa-instagram"></i></div>
-                    <div class="contact-detail">
-                        <span class="contact-label">إنستجرام</span>
-                        <span class="contact-value">${family.instagram}</span>
-                    </div>
-                </a>
-                <a href="mailto:${family.email}" class="contact-item">
-                    <div class="contact-icon email-bg"><i class="fas fa-envelope"></i></div>
-                    <div class="contact-detail">
-                        <span class="contact-label">البريد</span>
-                        <span class="contact-value">${family.email}</span>
-                    </div>
-                </a>
                 <a href="tel:${family.phone}" class="contact-item">
                     <div class="contact-icon phone-bg"><i class="fas fa-phone"></i></div>
                     <div class="contact-detail">
@@ -1540,12 +1540,23 @@
                 </a>
             `;
             
-            if (family.website) {
+            // نقطة البيع: إنستجرام إذا وُجد، وإلا الموقع الإلكتروني
+            if (family.instagram && family.instagram !== '') {
+                contactGridHtml += `
+                    <a href="https://instagram.com/${family.instagram.replace('@', '')}" target="_blank" class="contact-item">
+                        <div class="contact-icon instagram-bg"><i class="fab fa-instagram"></i></div>
+                        <div class="contact-detail">
+                            <span class="contact-label">نقطة البيع</span>
+                            <span class="contact-value">${family.instagram}</span>
+                        </div>
+                    </a>
+                `;
+            } else if (family.website && family.website !== '') {
                 contactGridHtml += `
                     <a href="${family.website}" target="_blank" class="contact-item">
                         <div class="contact-icon website-bg"><i class="fas fa-globe"></i></div>
                         <div class="contact-detail">
-                            <span class="contact-label">الموقع</span>
+                            <span class="contact-label">نقطة البيع</span>
                             <span class="contact-value">${family.website}</span>
                         </div>
                     </a>
@@ -1587,7 +1598,6 @@
                 "email": family.email,
                 "sameAs": [
                     `https://instagram.com/${family.instagram.replace('@', '')}`,
-                    `https://wa.me/${family.whatsapp}`,
                     family.website || ''
                 ].filter(url => url),
                 "image": family.image,
@@ -1697,6 +1707,17 @@
         }
 
         // ------------------------------------------------------------
+        // وظائف البوب أب الترحيبي
+        // ------------------------------------------------------------
+        function showWelcomePopup() {
+            document.getElementById('welcomePopup').classList.remove('hidden');
+        }
+
+        function closeWelcomePopup() {
+            document.getElementById('welcomePopup').classList.add('hidden');
+        }
+
+        // ------------------------------------------------------------
         // جعل الدوال متاحة عالمياً
         // ------------------------------------------------------------
         window.toggleMenu = toggleMenu;
@@ -1710,7 +1731,8 @@
         window.showRegisterForm = showRegisterForm;
         window.closeRegisterForm = closeRegisterForm;
         window.validateFamilyForm = validateFamilyForm;
+        window.closeWelcomePopup = closeWelcomePopup;
     </script>
-    <meta name="google-site-verification" content="UwEARwAkfxnW1CP0oDBEnlnKhHl2QuANOH1SF_8pvJg" />
+    <meta name="google-site-verification" content="UwEARwAkfxnW1CP0oDBEnlnKhHl2QuANOH1SF_8pvJg">
 </body>
 </html>
