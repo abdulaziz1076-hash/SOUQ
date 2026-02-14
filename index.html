@@ -4,29 +4,29 @@
     <meta name="google-site-verification" content="UwEARwAkfxnW1CP0oDBEnlnKhHl2QuANOH1SF_8pvJg"/>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>سوق البيوت - الأسر المنتجة في الإمارات</title>
+    <title>سوق البيوت - المشاريع المنزلية في الإمارات</title>
     
     <!-- تحسينات SEO -->
     <link rel="icon" type="image/png" href="logo.png">
-    <meta name="description" content="منصة الأسر المنتجة في الإمارات. اكتشف منتجات محلية أصيلة من أسر منتجة في دبي، أبوظبي، وجميع الإمارات. تواصل مباشرة واطلب منتجاتك المفضلة.">
-    <meta name="keywords" content="أسر منتجة, الإمارات, منتجات محلية, دبي, أبوظبي, سوق البيوت, أكل منزلي, عطور, هدايا">
+    <meta name="description" content="منصة المشاريع المنزلية في الإمارات. استعرض منتجات محلية أصيلة من مشاريع منزلية في دبي، أبوظبي، وجميع الإمارات. تواصل مباشرة واطلب منتجاتك المفضلة.">
+    <meta name="keywords" content="مشاريع منزلية, الإمارات, منتجات محلية, دبي, أبوظبي, سوق البيوت, أكل منزلي, عطور, هدايا">
     <meta name="author" content="سوق البيوت">
     <meta name="robots" content="index, follow">
     
     <!-- Open Graph للمشاركة في التواصل الاجتماعي -->
-    <meta property="og:title" content="سوق البيوت - الأسر المنتجة في الإمارات">
-    <meta property="og:description" content="منصة تجمع الأسر المنتجة في الإمارات. اكتشف منتجات محلية وتواصل مباشرة.">
+    <meta property="og:title" content="سوق البيوت - المشاريع المنزلية في الإمارات">
+    <meta property="og:description" content="منصة تجمع المشاريع المنزلية في الإمارات. استعرض منتجات محلية وتواصل مباشرة.">
     <meta property="og:image" content="https://yourdomain.com/logo.png">
     <meta property="og:url" content="https://yourdomain.com">
     <meta property="og:type" content="website">
     
-    <!-- أيقونة الموقع (ضع favicon.png في نفس المجلد) -->
+    <!-- أيقونة الموقع -->
     <link rel="icon" type="image/png" href="favicon.png">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=El+Messiri:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* جميع الأنماط السابقة كما هي - لم يتم تغيير أي شيء في CSS */
+        /* جميع الأنماط كما هي مع إزالة ما يخص زر العودة ومسار التنقل */
         * {
             margin: 0;
             padding: 0;
@@ -158,23 +158,6 @@
         .nav-item.register-item {
             background: var(--primary);
             color: white;
-        }
-        .back-btn-wrapper {
-            padding: 12px 16px 0;
-        }
-        .back-btn {
-            background: white;
-            color: var(--primary);
-            border: 1px solid var(--light-gray);
-            padding: 10px 18px;
-            border-radius: 30px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: var(--shadow);
         }
         .hero-section {
             background: linear-gradient(rgba(12, 59, 46, 0.95), rgba(12, 59, 46, 0.9)), url('الرئيسية.jpg');
@@ -323,56 +306,45 @@
         .container {
             padding: 24px 16px;
         }
-        .emirates-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-        }
-        .emirate-card {
-            background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--light-gray);
-            cursor: pointer;
-        }
-        .emirate-image {
-            width: 100%;
-            height: 100px;
-            background-size: cover;
-            background-position: center;
-        }
-        .emirate-content {
-            padding: 16px;
-            text-align: center;
-        }
-        .emirate-name {
-            font-family: 'El Messiri', serif;
-            font-size: 18px;
-            color: var(--primary);
-            margin-bottom: 4px;
-        }
-        .emirate-count {
-            color: var(--secondary);
-            font-weight: 700;
-            font-size: 13px;
-            margin-bottom: 12px;
-        }
-        .select-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 30px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
+        /* شريط الإمارات (أفقي) */
+        .emirates-scroll {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
+            overflow-x: auto;
+            gap: 10px;
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+            scrollbar-width: thin;
+            white-space: nowrap;
         }
+        .emirate-chip {
+            flex: 0 0 auto;
+            background: white;
+            border: 1px solid var(--light-gray);
+            border-radius: 40px;
+            padding: 10px 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+        .emirate-chip i {
+            font-size: 16px;
+            color: var(--accent);
+        }
+        .emirate-chip.active {
+            background: var(--secondary);
+            border-color: var(--secondary);
+            color: var(--primary);
+        }
+        .emirate-chip.active i {
+            color: var(--primary);
+        }
+        /* شريط التصنيفات */
         .categories-scroll {
             display: flex;
             overflow-x: auto;
@@ -526,26 +498,6 @@
         }
         .view-products-btn:hover {
             background: #1d5c4a;
-        }
-        .breadcrumbs {
-            background: white;
-            padding: 12px 20px;
-            border-radius: 12px;
-            margin: 0 16px 16px 16px;
-            border: 1px solid var(--light-gray);
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            flex-wrap: wrap;
-        }
-        .breadcrumbs a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .breadcrumbs a:hover {
-            text-decoration: underline;
         }
         .family-profile {
             background: white;
@@ -707,9 +659,6 @@
             font-size: 15px;
             color: var(--primary);
             margin-bottom: 6px;
-        }
-        .product-description {
-            display: none;
         }
         .product-category {
             background: var(--light);
@@ -894,7 +843,7 @@
                 </div>
                 <div class="logo-text">
                     <h1>سوق البيوت</h1>
-                    <p>سوق الأسر المنتجة في الامارات</p>
+                    <p>سوق المشاريع المنزلية في الامارات</p>
                 </div>
             </div>
             <div class="menu-toggle" onclick="toggleMenu()">
@@ -908,24 +857,16 @@
                 <i class="fas fa-home"></i>
                 الرئيسية
             </div>
-            <div class="nav-item market-item" onclick="navigateTo('/emirates'); toggleMenu();">
+            <div class="nav-item market-item" onclick="navigateTo('/families/emirate/all'); toggleMenu();">
                 <i class="fas fa-store"></i>
                 السوق
             </div>
             <div class="nav-item register-item" onclick="showRegisterForm(); toggleMenu();">
                 <i class="fas fa-user-plus"></i>
-                تسجيل أسرة
+                تسجيل مشروع
             </div>
         </div>
     </header>
-
-    <!-- زر العودة -->
-    <div class="back-btn-wrapper" id="backButtonContainer" style="display: none;">
-        <button class="back-btn" id="backButton">
-            <i class="fas fa-arrow-right"></i>
-            <span id="backButtonText">العودة</span>
-        </button>
-    </div>
 
     <!-- الصفحات -->
     <div class="page-container">
@@ -934,18 +875,18 @@
             <section class="hero-section">
                 <div class="hero-content">
                     <h1 class="hero-title">سوق البيوت</h1>
-                    <p class="hero-subtitle">منصة متخصصة لدعم الأسر المنتجة في الامارات</p>
+                    <p class="hero-subtitle">منصة متخصصة لدعم المشاريع المنزلية في الامارات</p>
                     
                     <div class="hero-search-box">
-                        <input type="text" class="hero-search-input" placeholder="ابحث عن منتج أو أسرة..." id="homeSearch">
+                        <input type="text" class="hero-search-input" placeholder="ابحث عن منتج أو مشروع..." id="homeSearch">
                         <button class="hero-search-btn" onclick="performHomeSearch()">
                             <i class="fas fa-search"></i>
                         </button>
                     </div>
                     
-                    <button class="market-big-btn" onclick="navigateTo('/emirates')">
+                    <button class="market-big-btn" onclick="navigateTo('/families/emirate/all')">
                         <i class="fas fa-store"></i>
-                        اكتشف منتجات الأسر في إمارتك
+                        استعرض منتجات المشاريع المنزلية
                     </button>
                 </div>
             </section>
@@ -953,12 +894,12 @@
             <section class="about-section">
                 <h2 class="section-title">من نحن</h2>
                 <div class="about-text">
-                    <p>سوق البيوت منصة إماراتية لدعم الأسر المنتجة. نربط بين الإنتاج المحلي والجمهور المهتم بالمنتجات الإماراتية الأصيلة.</p>
+                    <p>سوق البيوت منصة إماراتية لدعم المشاريع المنزلية. نربط بين الإنتاج المحلي والجمهور المهتم بالمنتجات الإماراتية الأصيلة.</p>
                 </div>
                 
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-number">أسر منتجة</div>
+                        <div class="stat-number">مشاريع منزلية</div>
                         <div class="stat-label">قيد الانضمام</div>
                     </div>
                     <div class="stat-card">
@@ -977,33 +918,26 @@
                 
                 <button class="join-btn" onclick="showRegisterForm()">
                     <i class="fas fa-plus-circle"></i>
-                    انضم كأسرة منتجة
+                    انضم كمشروع منزلي
                 </button>
             </section>
         </div>
 
-        <!-- الإمارات -->
-        <div id="emirates-page" class="page" style="display: none;">
-            <div class="page-header">
-                <h1 class="page-title">اختر إمارتك</h1>
-                <p class="page-subtitle">اكتشف الأسر المنتجة في إمارتك</p>
-            </div>
-            <div class="container">
-                <div class="emirates-grid" id="emiratesGrid"></div>
-            </div>
-        </div>
-
-        <!-- الأسر المنتجة -->
+        <!-- المشاريع المنزلية (بدلاً من الأسر المنتجة) -->
         <div id="families-page" class="page" style="display: none;">
             <div class="page-header">
-                <h1 class="page-title" id="familiesPageTitle">الأسر المنتجة</h1>
-                <p class="page-subtitle" id="familiesPageSubtitle">استعرض الأسر ومنتجاتها</p>
+                <h1 class="page-title" id="familiesPageTitle">المشاريع المنزلية</h1>
+                <p class="page-subtitle" id="familiesPageSubtitle">استعرض المشاريع ومنتجاتها</p>
             </div>
             <div class="container">
+                <!-- شريط اختيار الإمارة -->
+                <div class="emirates-scroll" id="emiratesScroll"></div>
+                <!-- شريط التصنيفات -->
                 <div class="categories-scroll" id="categoriesScroll"></div>
+                
                 <div class="info-banner">
                     <i class="fas fa-lightbulb"></i>
-                    <span>اختر أسرة، استعرض منتجاتها، ثم تواصل معها عبر واتساب أو موقعها للطلب.</span>
+                    <span>اختر مشروع، استعرض منتجاته، ثم تواصل معه عبر واتساب أو موقعه للطلب.</span>
                 </div>
                 <div class="families-grid" id="familiesGrid"></div>
             </div>
@@ -1015,8 +949,6 @@
                 <h1 class="page-title" id="productsPageTitle">المنتجات</h1>
                 <p class="page-subtitle" id="productsPageSubtitle"></p>
             </div>
-            <!-- مسار التنقل (Breadcrumbs) سيتم إدراجه هنا ديناميكياً -->
-            <div id="breadcrumbsContainer" class="breadcrumbs" style="display: none;"></div>
             <div class="container">
                 <div id="familyProfileContainer"></div>
                 <div class="products-header">
@@ -1029,21 +961,21 @@
         </div>
     </div>
 
-    <!-- نموذج تسجيل الأسر -->
+    <!-- نموذج تسجيل المشاريع -->
     <div class="modal" id="registerModal">
         <div class="modal-content">
             <div class="modal-header">
                 <button class="modal-close" onclick="closeRegisterForm()">
                     <i class="fas fa-times"></i>
                 </button>
-                <h2 class="modal-title">تسجيل أسرة جديدة</h2>
+                <h2 class="modal-title">تسجيل مشروع جديد</h2>
                 <p style="font-size: 14px; opacity: 0.9;">انضم إلى منصة سوق البيوت</p>
             </div>
             <div class="modal-body">
                 <form id="registerForm" action="https://formspree.io/f/maqdewer" method="POST" onsubmit="return validateFamilyForm(event)">
                     <div class="form-group">
-                        <label class="form-label"><i class="fas fa-users"></i> اسم الأسرة</label>
-                        <input type="text" class="form-control" name="family_name" placeholder="مثال: أسرة آل مبارك" required>
+                        <label class="form-label"><i class="fas fa-users"></i> اسم المشروع</label>
+                        <input type="text" class="form-control" name="family_name" placeholder="مثال: مشروع آل مبارك" required>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
@@ -1065,7 +997,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="form-label"><i class="fas fa-align-right"></i> نبذة عن الأسرة</label>
+                        <label class="form-label"><i class="fas fa-align-right"></i> نبذة عن المشروع</label>
                         <textarea class="form-control" name="description" placeholder="اكتب نبذة مختصرة..." rows="3" required></textarea>
                     </div>
                     <div class="form-row">
@@ -1120,16 +1052,16 @@
     <footer class="app-footer">
         <div class="footer-content">
             <div class="footer-logo">سوق البيوت</div>
-            <p style="font-size: 13px; opacity: 0.9;">منصة الأسر المنتجة الإماراتية</p>
+            <p style="font-size: 13px; opacity: 0.9;">منصة المشاريع المنزلية الإماراتية</p>
             <div class="copyright">
-                © 2025 سوق البيوت - دعم الأسر المنتجة
+                © 2025 سوق البيوت - دعم المشاريع المنزلية
             </div>
         </div>
     </footer>
 
     <script>
         // ------------------------------------------------------------
-        // بيانات الأسر (نموذجية مع إضافة بعض الأسر)
+        // بيانات المشاريع (نموذجية مع إضافة بعض المشاريع)
         // ------------------------------------------------------------
         const familiesData = [
             {
@@ -1154,7 +1086,7 @@
                { name: "بطاقات خضراء", description: "بطاقات قوية وجوده عالية لا تنكسر ولا تتقطع", price: "35", category: "الترفية", image: "card3.png" },
                ]
             },
-            // يمكنك إضافة المزيد من الأسر هنا بنفس البنية
+            // يمكنك إضافة المزيد من المشاريع هنا بنفس البنية
         ];
 
         // ------------------------------------------------------------
@@ -1172,9 +1104,8 @@
         // تهيئة
         // ------------------------------------------------------------
         document.addEventListener('DOMContentLoaded', function() {
-            initEmirates();
-            initCategoriesChips();
-            updateBackButton();
+            initEmiratesChips();      // شريط الإمارات
+            initCategoriesChips();    // شريط التصنيفات
             
             // معالجة الهاش عند تحميل الصفحة
             handleHashChange();
@@ -1190,22 +1121,19 @@
             
             if (parts.length === 0 || parts[0] === '') {
                 showPage('home');
-            } else if (parts[0] === 'emirates') {
-                showPage('emirates');
             } else if (parts[0] === 'families' && parts[1] === 'emirate' && parts[2]) {
                 const emirateId = decodeURIComponent(parts[2]);
-                const emirateName = emirateId === 'all' ? 'كل الإمارات' : emirateId;
                 appState.currentEmirate = emirateId;
                 appState.currentCategory = 'all';
                 
+                // تحديث العنوان
                 document.getElementById('familiesPageTitle').textContent = 
-                    emirateId === 'all' ? 'الأسر المنتجة' : `الأسر في ${emirateName}`;
-                document.getElementById('familiesPageSubtitle').textContent = 'استعرض الأسر ومنتجاتها';
+                    emirateId === 'all' ? 'المشاريع المنزلية' : `المشاريع في ${emirateId}`;
+                document.getElementById('familiesPageSubtitle').textContent = 'استعرض المشاريع ومنتجاتها';
                 
-                document.querySelectorAll('.category-chip').forEach(chip => {
-                    chip.classList.remove('active');
-                    if (chip.innerText.includes('الكل')) chip.classList.add('active');
-                });
+                // تحديث حالة الشريطين
+                updateActiveEmirateChip(emirateId);
+                updateActiveCategoryChip('all');
                 
                 showPage('families');
                 renderFamilies();
@@ -1235,42 +1163,56 @@
         }
 
         // ------------------------------------------------------------
-        // تهيئة الإمارات
+        // شريط الإمارات (Chips)
         // ------------------------------------------------------------
-        function initEmirates() {
-            const grid = document.getElementById('emiratesGrid');
-            if (!grid) return;
+        function initEmiratesChips() {
+            const container = document.getElementById('emiratesScroll');
+            if (!container) return;
             
             const emirates = [
-                { id: 'all', name: 'كل الإمارات', image: 'UAE_map_flag.png' },
-                { id: 'أبوظبي', name: 'أبوظبي', image: 'ABU.jpg' },
-                { id: 'دبي', name: 'دبي', image: 'DUB.jpg' },
-                { id: 'الشارقة', name: 'الشارقة', image: 'SHJ.jpg' },
-                { id: 'عجمان', name: 'عجمان', image: 'AJM.jpg' },
-                { id: 'رأس الخيمة', name: 'رأس الخيمة', image: 'RAS.jpg' },
-                { id: 'الفجيرة', name: 'الفجيرة', image: 'FJH.jpg' },
-                { id: 'أم القيوين', name: 'أم القيوين', image: 'UMQ.jpg' }
+                { id: 'all', name: 'كل الإمارات', icon: 'fas fa-flag' },
+                { id: 'أبوظبي', name: 'أبوظبي', icon: 'fas fa-city' },
+                { id: 'دبي', name: 'دبي', icon: 'fas fa-city' },
+                { id: 'الشارقة', name: 'الشارقة', icon: 'fas fa-city' },
+                { id: 'عجمان', name: 'عجمان', icon: 'fas fa-city' },
+                { id: 'رأس الخيمة', name: 'رأس الخيمة', icon: 'fas fa-city' },
+                { id: 'الفجيرة', name: 'الفجيرة', icon: 'fas fa-city' },
+                { id: 'أم القيوين', name: 'أم القيوين', icon: 'fas fa-city' }
             ];
 
-            grid.innerHTML = emirates.map(e => {
-                const count = familiesData.filter(f => e.id === 'all' ? true : f.emirate === e.id).length;
-                return `
-                    <div class="emirate-card" onclick="navigateTo('/families/emirate/${encodeURIComponent(e.id)}')">
-                        <div class="emirate-image" style="background-image: url('${e.image}')"></div>
-                        <div class="emirate-content">
-                            <h3 class="emirate-name">${e.name}</h3>
-                            <div class="emirate-count">${count} أسرة</div>
-                            <button class="select-btn">
-                                <i class="fas fa-store"></i> عرض
-                            </button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
+            container.innerHTML = emirates.map(e => `
+                <div class="emirate-chip ${e.id === appState.currentEmirate ? 'active' : ''}" onclick="filterByEmirate('${e.id}', this)">
+                    <i class="${e.icon}"></i>
+                    <span>${e.name}</span>
+                </div>
+            `).join('');
+        }
+
+        function filterByEmirate(emirateId, element) {
+            appState.currentEmirate = emirateId;
+            appState.currentCategory = 'all'; // reset category when emirate changes
+            
+            updateActiveEmirateChip(emirateId);
+            updateActiveCategoryChip('all');
+            
+            navigateTo(`/families/emirate/${encodeURIComponent(emirateId)}`);
+        }
+
+        function updateActiveEmirateChip(emirateId) {
+            document.querySelectorAll('.emirate-chip').forEach(chip => {
+                chip.classList.remove('active');
+            });
+            // نبحث عن الشريط الذي يساوي نصه الإمارة (تقريباً)
+            document.querySelectorAll('.emirate-chip').forEach(chip => {
+                const span = chip.querySelector('span');
+                if (span && (span.innerText === emirateId || (emirateId === 'all' && span.innerText === 'كل الإمارات'))) {
+                    chip.classList.add('active');
+                }
+            });
         }
 
         // ------------------------------------------------------------
-        // تهيئة التصنيفات - شرائح أفقية
+        // شريط التصنيفات
         // ------------------------------------------------------------
         function initCategoriesChips() {
             const container = document.getElementById('categoriesScroll');
@@ -1300,9 +1242,6 @@
             `).join('');
         }
 
-        // ------------------------------------------------------------
-        // تصفية حسب التصنيف
-        // ------------------------------------------------------------
         function filterByCategory(id, element) {
             appState.currentCategory = id;
             
@@ -1311,11 +1250,20 @@
             });
             element.classList.add('active');
             
-            renderFamilies();
+            renderFamilies(); // إعادة العرض مع الفلتر الجديد (دون تغيير الرابط)
+        }
+
+        function updateActiveCategoryChip(categoryId) {
+            document.querySelectorAll('.category-chip').forEach(chip => {
+                chip.classList.remove('active');
+                if (chip.querySelector('span')?.innerText === categoryId || (categoryId === 'all' && chip.querySelector('span')?.innerText === 'الكل')) {
+                    chip.classList.add('active');
+                }
+            });
         }
 
         // ------------------------------------------------------------
-        // عرض الأسر (مع صور <img>)
+        // عرض المشاريع (مع صور)
         // ------------------------------------------------------------
         function renderFamilies() {
             let filtered = [...familiesData];
@@ -1336,14 +1284,14 @@
             const grid = document.getElementById('familiesGrid');
             
             if (filtered.length === 0) {
-                grid.innerHTML = '<div style="grid-column: span 2; text-align: center; padding: 40px;">لا توجد أسر</div>';
+                grid.innerHTML = '<div style="grid-column: span 2; text-align: center; padding: 40px;">لا توجد مشاريع</div>';
                 return;
             }
             
             grid.innerHTML = filtered.map(family => `
                 <div class="family-card">
                     <div class="family-image">
-                        <img src="${family.image}" alt="صورة أسرة ${family.name}" loading="lazy">
+                        <img src="${family.image}" alt="صورة مشروع ${family.name}" loading="lazy">
                         <div class="family-badges">
                             ${family.badges.map(b => `<div class="family-badge">${b}</div>`).join('')}
                         </div>
@@ -1367,7 +1315,7 @@
         }
 
         // ------------------------------------------------------------
-        // عرض منتجات الأسرة (مع صور <img>، وإضافة JSON-LD، وBreadcrumbs)
+        // عرض منتجات المشروع (مع إضافة JSON-LD)
         // ------------------------------------------------------------
         function showFamilyProducts(id, updateHash = true) {
             const family = familiesData.find(f => f.id === id);
@@ -1384,17 +1332,7 @@
             document.getElementById('productsPageTitle').textContent = family.name;
             document.getElementById('productsPageSubtitle').textContent = family.location;
             
-            // مسار التنقل (Breadcrumbs)
-            const breadcrumbsDiv = document.getElementById('breadcrumbsContainer');
-            breadcrumbsDiv.style.display = 'flex';
-            breadcrumbsDiv.innerHTML = `
-                <a href="#" onclick="navigateTo('/'); return false;">الرئيسية</a> » 
-                <a href="#" onclick="navigateTo('/emirates'); return false;">الإمارات</a> » 
-                <a href="#" onclick="navigateTo('/families/emirate/${encodeURIComponent(family.emirate)}'); return false;">${family.emirate}</a> » 
-                <span>${family.name}</span>
-            `;
-            
-            // ملف الأسرة
+            // ملف المشروع
             document.getElementById('familyProfileContainer').innerHTML = `
                 <div class="family-profile">
                     <div class="profile-header">
@@ -1431,7 +1369,7 @@
             
             // وسائل التواصل
             document.getElementById('contactSectionBottom').innerHTML = `
-                <h3 class="contact-title"><i class="fas fa-phone-alt"></i> تواصل مع الأسرة</h3>
+                <h3 class="contact-title"><i class="fas fa-phone-alt"></i>للطلب تواصل مع الحسابات ادناه : </h3>
                 <div class="contact-grid">
                     <a href="https://wa.me/${family.whatsapp}" target="_blank" class="contact-item">
                         <div class="contact-icon whatsapp-bg"><i class="fab fa-whatsapp"></i></div>
@@ -1464,17 +1402,16 @@
                 </div>
             `;
             
-            // إضافة JSON-LD للأسرة (بيانات منظمة)
+            // إضافة JSON-LD للمشروع (بيانات منظمة)
             addJsonLd(family);
             
             showPage('products');
         }
 
         // ------------------------------------------------------------
-        // إضافة بيانات منظمة JSON-LD للأسرة
+        // إضافة بيانات منظمة JSON-LD للمشروع
         // ------------------------------------------------------------
         function addJsonLd(family) {
-            // إزالة أي script سابق لنفس الغرض
             const existingScript = document.getElementById('json-ld-family');
             if (existingScript) existingScript.remove();
             
@@ -1521,49 +1458,6 @@
             document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
             document.getElementById(`${page}-page`).style.display = 'block';
             appState.currentPage = page;
-            updateBackButton();
-            
-            // إخفاء مسار التنقل إذا لم نكن في صفحة المنتجات
-            if (page !== 'products') {
-                document.getElementById('breadcrumbsContainer').style.display = 'none';
-            }
-        }
-
-        function goToHome() {
-            navigateTo('/');
-        }
-
-        function goBackToFamilies() {
-            navigateTo(`/families/emirate/${appState.currentEmirate}`);
-        }
-
-        // ------------------------------------------------------------
-        // تحديث زر العودة
-        // ------------------------------------------------------------
-        function updateBackButton() {
-            const container = document.getElementById('backButtonContainer');
-            const btn = document.getElementById('backButton');
-            const text = document.getElementById('backButtonText');
-            
-            switch(appState.currentPage) {
-                case 'emirates':
-                    container.style.display = 'block';
-                    text.textContent = 'العودة للرئيسية';
-                    btn.onclick = () => navigateTo('/');
-                    break;
-                case 'families':
-                    container.style.display = 'block';
-                    text.textContent = 'العودة للإمارات';
-                    btn.onclick = () => navigateTo('/emirates');
-                    break;
-                case 'products':
-                    container.style.display = 'block';
-                    text.textContent = 'العودة للأسر';
-                    btn.onclick = goBackToFamilies;
-                    break;
-                default:
-                    container.style.display = 'none';
-            }
         }
 
         // ------------------------------------------------------------
@@ -1594,7 +1488,7 @@
             const categories = document.querySelectorAll("[name='category[]']:checked");
 
             if (familyName === "") {
-                alert("❌ يرجى إدخال اسم الأسرة");
+                alert("❌ يرجى إدخال اسم المشروع");
                 return false;
             }
             if (emirate === "" || emirate === null) {
@@ -1606,7 +1500,7 @@
                 return false;
             }
             if (description === "") {
-                alert("❌ يرجى إدخال نبذة عن الأسرة");
+                alert("❌ يرجى إدخال نبذة عن المشروع");
                 return false;
             }
             if (phone === "") {
@@ -1630,12 +1524,10 @@
         // جعل الدوال متاحة عالمياً
         // ------------------------------------------------------------
         window.toggleMenu = toggleMenu;
-        window.goToHome = goToHome;
-        window.showPage = showPage;
         window.navigateTo = navigateTo;
         window.filterByCategory = filterByCategory;
+        window.filterByEmirate = filterByEmirate;
         window.showFamilyProducts = showFamilyProducts;
-        window.goBackToFamilies = goBackToFamilies;
         window.performHomeSearch = performHomeSearch;
         window.showRegisterForm = showRegisterForm;
         window.closeRegisterForm = closeRegisterForm;
@@ -1644,5 +1536,3 @@
     <meta name="google-site-verification" content="UwEARwAkfxnW1CP0oDBEnlnKhHl2QuANOH1SF_8pvJg" />
 </body>
 </html>
-
-
