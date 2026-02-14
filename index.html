@@ -421,24 +421,6 @@
         .families-search-btn:hover {
             background: #c9a227;
         }
-        /* البنر التوضيحي الجديد (تم إزالته واستبداله بالبوب أب) */
-        .info-banner {
-            background: rgba(212, 175, 55, 0.12);
-            border-right: 6px solid var(--secondary);
-            padding: 14px 18px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 24px;
-            font-size: 14px;
-            color: var(--primary);
-            font-weight: 600;
-        }
-        .info-banner i {
-            font-size: 20px;
-            color: var(--secondary);
-        }
         .families-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -562,6 +544,11 @@
             background-position: center;
             border: 3px solid white;
             flex-shrink: 0;
+            background-color: var(--light-gray);
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%238A8A8A" width="40px" height="40px"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 40px 40px;
         }
         .profile-name {
             font-family: 'El Messiri', serif;
@@ -582,6 +569,7 @@
             margin-top: 32px;
             padding-top: 16px;
             border-top: 1px solid var(--light-gray);
+            scroll-margin-top: 20px;
         }
         .contact-title {
             font-family: 'El Messiri', serif;
@@ -678,10 +666,16 @@
             border: 1px solid var(--light-gray);
             display: flex;
             flex-direction: column;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .product-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(12, 59, 46, 0.15);
         }
         .product-image {
             width: 100%;
-            height: 110px;
+            height: 150px;
             overflow: hidden;
         }
         .product-image img {
@@ -710,20 +704,74 @@
             width: fit-content;
             margin-bottom: 12px;
         }
-        .product-footer {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding-top: 10px;
-            border-top: 1px solid var(--light-gray);
-            margin-top: auto;
-        }
-        .product-price {
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--success);
-            text-align: center;
+        /* البوب أب الترحيبي (نفس التصميم القديم) */
+        .welcome-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            backdrop-filter: blur(4px);
+        }
+        .welcome-popup.hidden {
+            display: none;
+        }
+        .popup-content {
+            background: white;
+            max-width: 85%;
+            width: 350px;
+            border-radius: 28px;
+            padding: 28px 24px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border: 2px solid var(--secondary);
+        }
+        .popup-close {
+            position: absolute;
+            top: 12px;
+            left: 16px;
+            background: var(--light-gray);
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 18px;
+            color: var(--primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .popup-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            color: var(--secondary);
+            font-size: 34px;
+            border: 3px solid var(--secondary);
+        }
+        .popup-title {
+            font-family: 'El Messiri', serif;
+            font-size: 22px;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+        .popup-message {
+            color: var(--dark);
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 20px;
         }
         .modal {
             display: none;
@@ -872,80 +920,16 @@
         .hidden {
             display: none !important;
         }
-        /* البوب أب الترحيبي */
-        .welcome-popup {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 3000;
-            backdrop-filter: blur(4px);
-        }
-        .welcome-popup.hidden {
-            display: none;
-        }
-        .popup-content {
-            background: white;
-            max-width: 85%;
-            width: 350px;
-            border-radius: 28px;
-            padding: 28px 24px;
-            text-align: center;
-            position: relative;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            border: 2px solid var(--secondary);
-        }
-        .popup-close {
-            position: absolute;
-            top: 12px;
-            left: 16px;
-            background: var(--light-gray);
-            border: none;
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            font-size: 18px;
-            color: var(--primary);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .popup-icon {
-            width: 70px;
-            height: 70px;
-            background: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 16px;
-            color: var(--secondary);
-            font-size: 34px;
-            border: 3px solid var(--secondary);
-        }
-        .popup-title {
-            font-family: 'El Messiri', serif;
-            font-size: 22px;
-            color: var(--primary);
-            margin-bottom: 12px;
-        }
-        .popup-message {
-            color: var(--dark);
-            font-size: 15px;
-            line-height: 1.7;
-            margin-bottom: 20px;
+        
+        /* تنسيق للتمرير السلس */
+        html {
+            scroll-behavior: smooth;
         }
     </style>
 </head>
 <body>
-    <!-- البوب أب الترحيبي (يظهر تلقائياً) -->
-    <div id="welcomePopup" class="welcome-popup">
+    <!-- البوب أب الترحيبي (يظهر فقط عند دخول السوق) -->
+    <div id="welcomePopup" class="welcome-popup hidden">
         <div class="popup-content">
             <button class="popup-close" onclick="closeWelcomePopup()"><i class="fas fa-times"></i></button>
             <div class="popup-icon"><i class="fas fa-store-alt"></i></div>
@@ -998,7 +982,7 @@
                     <p class="hero-subtitle">منصة متخصصة لدعم المشاريع المنزلية في الامارات</p>
                     
                     <div class="hero-search-box">
-                        <input type="text" class="hero-search-input" placeholder="ابحث عن منتج أو مشروع..." id="homeSearch" onkeyup="if(event.key==='Enter') performHomeSearch()">
+                        <input type="text" class="hero-search-input" placeholder="ابحث عن منتج أو مشروع..." id="homeSearch" onkeydown="if(event.key==='Enter') performHomeSearch()">
                         <button class="hero-search-btn" onclick="performHomeSearch()">
                             <i class="fas fa-search"></i>
                         </button>
@@ -1052,7 +1036,7 @@
             <div class="container">
                 <!-- مربع البحث في صفحة المشاريع -->
                 <div class="families-search-box">
-                    <input type="text" class="families-search-input" placeholder="ابحث عن مشروع أو منتج..." id="familiesSearch" onkeyup="handleFamiliesSearch(event)">
+                    <input type="text" class="families-search-input" placeholder="ابحث عن مشروع أو منتج..." id="familiesSearch" onkeydown="if(event.key==='Enter') performFamiliesSearch()">
                     <button class="families-search-btn" onclick="performFamiliesSearch()">
                         <i class="fas fa-search"></i>
                     </button>
@@ -1061,8 +1045,6 @@
                 <div class="emirates-scroll" id="emiratesScroll"></div>
                 <!-- شريط التصنيفات -->
                 <div class="categories-scroll" id="categoriesScroll"></div>
-                
-                <!-- تم حذف البانر القديم واستبداله بالبوب أب أعلاه -->
                 
                 <div class="families-grid" id="familiesGrid"></div>
             </div>
@@ -1164,6 +1146,7 @@
                             <label class="checkbox-label"><input type="checkbox" name="category[]" value="شموع"> شموع وصناعات منزلية</label>
                             <label class="checkbox-label"><input type="checkbox" name="category[]" value="فنون"> فنون ورسم</label>
                             <label class="checkbox-label"><input type="checkbox" name="category[]" value="نباتات"> نباتات ومنتجات زراعية</label>
+                            <label class="checkbox-label"><input type="checkbox" name="category[]" value="الترفية"> الترفية</label>
                         </div>
                     </div>
                     <button type="submit" class="submit-btn">
@@ -1212,9 +1195,9 @@
              badges: ["الترفية"],
              category: "الترفية",
              products: [
-               { name: "بطاقات بيضاء", description: "بطاقات قوية وجوده عالية لا تنكسر ولا تتقطع", price: "35", category: "الترفية", image: "card1.png" },
-               { name: "بطاقات زرقاء", description: "بطاقات قوية وجوده عالية لا تنكسر ولا تتقطع", price: "35", category: "الترفية", image: "card2.png" },
-               { name: "بطاقات خضراء", description: "بطاقات قوية وجوده عالية لا تنكسر ولا تتقطع", price: "35", category: "الترفية", image: "card3.png" },
+               { name: "بطاقات بيضاء", description: "بطاقات قوية وجوده عالية لا تنكسر ولا تتقطع", category: "الترفية", image: "card1.png" },
+               { name: "بطاقات زرقاء", description: "بطاقات قوية وجوده عالية لا تنكسر ولا تتقطع", category: "الترفية", image: "card2.png" },
+               { name: "بطاقات خضراء", description: "بطاقات قوية وجوده عالية لا تنكسر ولا تتقطع", category: "الترفية", image: "card3.png" },
                ]
             },
             // يمكنك إضافة المزيد من المشاريع هنا بنفس البنية
@@ -1241,9 +1224,6 @@
             // معالجة الهاش عند تحميل الصفحة
             handleHashChange();
             window.addEventListener('hashchange', handleHashChange);
-
-            // إظهار البوب أب الترحيبي
-            showWelcomePopup();
         });
 
         // ------------------------------------------------------------
@@ -1276,6 +1256,8 @@
                 
                 showPage('families');
                 renderFamilies();
+                // إظهار البوب أب عند دخول السوق
+                showWelcomePopup();
             } else if (parts[0] === 'family' && parts[1]) {
                 const familyId = parseInt(parts[1]);
                 const family = familiesData.find(f => f.id === familyId);
@@ -1408,12 +1390,6 @@
         // ------------------------------------------------------------
         // وظائف البحث في صفحة المشاريع
         // ------------------------------------------------------------
-        function handleFamiliesSearch(event) {
-            if (event.key === 'Enter') {
-                performFamiliesSearch();
-            }
-        }
-
         function performFamiliesSearch() {
             const input = document.getElementById('familiesSearch');
             if (!input) return;
@@ -1438,7 +1414,7 @@
                 filtered = filtered.filter(f => 
                     f.name.toLowerCase().includes(query) || 
                     f.description.toLowerCase().includes(query) ||
-                    f.location.toLowerCase().includes(query) || // إضافة المدينة
+                    f.location.toLowerCase().includes(query) ||
                     f.products.some(p => p.name.toLowerCase().includes(query))
                 );
             }
@@ -1477,7 +1453,20 @@
         }
 
         // ------------------------------------------------------------
-        // عرض منتجات المشروع (مع تعديل جهات الاتصال: فقط الهاتف ونقطة البيع)
+        // دالة التمرير إلى قسم التواصل
+        // ------------------------------------------------------------
+        function scrollToContact() {
+            const contactSection = document.getElementById('contactSectionBottom');
+            if (contactSection) {
+                contactSection.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
+        // ------------------------------------------------------------
+        // عرض منتجات المشروع (مع تعديل: إزالة السعر، وإضافة النقر على المنتج)
         // ------------------------------------------------------------
         function showFamilyProducts(id, updateHash = true) {
             const family = familiesData.find(f => f.id === id);
@@ -1494,11 +1483,11 @@
             document.getElementById('productsPageTitle').textContent = family.name;
             document.getElementById('productsPageSubtitle').textContent = family.location;
             
-            // ملف المشروع
+            // ملف المشروع (مع إضافة الشعار الافتراضي)
             document.getElementById('familyProfileContainer').innerHTML = `
                 <div class="family-profile">
                     <div class="profile-header">
-                        <div class="profile-avatar" style="background-image: url('${family.image}')"></div>
+                        <div class="profile-avatar" style="background-image: url('${family.image}'); background-size: cover; background-position: center; background-color: var(--light-gray);"></div>
                         <div>
                             <h2 class="profile-name">${family.name}</h2>
                             <div class="profile-location">
@@ -1512,19 +1501,17 @@
                 </div>
             `;
             
-            // المنتجات
+            // المنتجات (تم إزالة السعر وإضافة onclick للتمرير)
             document.getElementById('productsCount').textContent = `${family.products.length} منتج`;
             document.getElementById('productsGrid').innerHTML = family.products.map(p => `
-                <div class="product-card">
+                <div class="product-card" onclick="scrollToContact()">
                     <div class="product-image">
-                        <img src="${p.image}" alt="${p.name}" loading="lazy">
+                        <img src="${p.image}" alt="${p.name}" loading="lazy" style="width:100%; height:100%; object-fit:cover;">
                     </div>
                     <div class="product-content">
                         <h3 class="product-name">${p.name}</h3>
                         <div class="product-category">${p.category}</div>
-                        <div class="product-footer">
-                            <div class="product-price">${p.price} د.إ</div>
-                        </div>
+                        <!-- تم إزالة السعر -->
                     </div>
                 </div>
             `).join('');
@@ -1707,10 +1694,13 @@
         }
 
         // ------------------------------------------------------------
-        // وظائف البوب أب الترحيبي
+        // وظائف البوب أب الترحيبي (للصفحة الثانية)
         // ------------------------------------------------------------
         function showWelcomePopup() {
-            document.getElementById('welcomePopup').classList.remove('hidden');
+            const popup = document.getElementById('welcomePopup');
+            if (popup) {
+                popup.classList.remove('hidden');
+            }
         }
 
         function closeWelcomePopup() {
@@ -1727,11 +1717,11 @@
         window.showFamilyProducts = showFamilyProducts;
         window.performHomeSearch = performHomeSearch;
         window.performFamiliesSearch = performFamiliesSearch;
-        window.handleFamiliesSearch = handleFamiliesSearch;
         window.showRegisterForm = showRegisterForm;
         window.closeRegisterForm = closeRegisterForm;
         window.validateFamilyForm = validateFamilyForm;
         window.closeWelcomePopup = closeWelcomePopup;
+        window.scrollToContact = scrollToContact;
     </script>
     <meta name="google-site-verification" content="UwEARwAkfxnW1CP0oDBEnlnKhHl2QuANOH1SF_8pvJg">
 </body>
