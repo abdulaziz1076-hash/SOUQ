@@ -8,14 +8,14 @@
     
     <!-- تحسينات SEO -->
     <link rel="icon" type="image/png" href="logo.png">
-    <meta name="description" content="منصة المشاريع المنزلية في الإمارات. استعرض منتجات محلية أصيلة من مشاريع منزلية في دبي، أبوظبي، وجميع الإمارات. تواصل مباشرة واطلب منتجاتك المفضلة.">
+    <meta name="description" content="منصة المشاريع المنزلية في الإمارات. اكتشف منتجات محلية أصيلة من مشاريع منزلية في دبي، أبوظبي، وجميع الإمارات. تواصل مباشرة واطلب منتجاتك المفضلة.">
     <meta name="keywords" content="مشاريع منزلية, الإمارات, منتجات محلية, دبي, أبوظبي, سوق البيوت, أكل منزلي, عطور, هدايا">
     <meta name="author" content="سوق البيوت">
     <meta name="robots" content="index, follow">
     
     <!-- Open Graph للمشاركة في التواصل الاجتماعي -->
     <meta property="og:title" content="سوق البيوت - المشاريع المنزلية في الإمارات">
-    <meta property="og:description" content="منصة تجمع المشاريع المنزلية في الإمارات. استعرض منتجات محلية وتواصل مباشرة.">
+    <meta property="og:description" content="منصة تجمع المشاريع المنزلية في الإمارات. اكتشف منتجات محلية وتواصل مباشرة.">
     <meta property="og:image" content="https://yourdomain.com/logo.png">
     <meta property="og:url" content="https://yourdomain.com">
     <meta property="og:type" content="website">
@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=El+Messiri:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* جميع الأنماط كما هي مع إزالة ما يخص زر العودة ومسار التنقل */
+        /* جميع الأنماط السابقة مع إضافة تنسيقات جديدة للبحث في صفحة المشاريع */
         * {
             margin: 0;
             padding: 0;
@@ -382,6 +382,97 @@
         .category-chip.active i {
             color: var(--primary);
         }
+        /* مربع البحث في صفحة المشاريع */
+        .families-search-box {
+            position: relative;
+            max-width: 100%;
+            margin: 0 0 20px 0;
+        }
+        .families-search-input {
+            width: 100%;
+            padding: 14px 50px 14px 20px;
+            border: 2px solid var(--light-gray);
+            border-radius: 50px;
+            font-size: 15px;
+            background: white;
+            transition: border-color 0.2s;
+        }
+        .families-search-input:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+        .families-search-btn {
+            position: absolute;
+            left: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--secondary);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: var(--primary);
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .families-search-btn:hover {
+            background: #c9a227;
+        }
+        /* البنر التوضيحي الجديد */
+        .explain-banner {
+            background: linear-gradient(135deg, #f5f0e8 0%, #fff 100%);
+            border: 2px solid var(--secondary);
+            border-radius: 24px;
+            padding: 22px 18px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        .explain-banner::before {
+            content: "💡";
+            position: absolute;
+            left: -10px;
+            bottom: -10px;
+            font-size: 80px;
+            opacity: 0.1;
+            transform: rotate(-10deg);
+        }
+        .explain-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary);
+            font-size: 30px;
+            flex-shrink: 0;
+            border: 2px solid var(--secondary);
+        }
+        .explain-text {
+            flex: 1;
+        }
+        .explain-text h3 {
+            font-family: 'El Messiri', serif;
+            color: var(--primary);
+            font-size: 18px;
+            margin-bottom: 6px;
+        }
+        .explain-text p {
+            color: var(--dark);
+            font-size: 14px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
         .info-banner {
             background: rgba(212, 175, 55, 0.12);
             border-right: 6px solid var(--secondary);
@@ -588,6 +679,7 @@
         .instagram-bg { background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D); }
         .email-bg { background: var(--primary); }
         .phone-bg { background: var(--accent); }
+        .website-bg { background: var(--secondary); color: var(--primary); }
         .contact-detail {
             display: flex;
             flex-direction: column;
@@ -886,7 +978,7 @@
                     
                     <button class="market-big-btn" onclick="navigateTo('/families/emirate/all')">
                         <i class="fas fa-store"></i>
-                        استعرض منتجات المشاريع المنزلية
+                        اكتشف منتجات المشاريع المنزلية
                     </button>
                 </div>
             </section>
@@ -923,22 +1015,38 @@
             </section>
         </div>
 
-        <!-- المشاريع المنزلية (بدلاً من الأسر المنتجة) -->
+        <!-- المشاريع المنزلية -->
         <div id="families-page" class="page" style="display: none;">
             <div class="page-header">
                 <h1 class="page-title" id="familiesPageTitle">المشاريع المنزلية</h1>
                 <p class="page-subtitle" id="familiesPageSubtitle">استعرض المشاريع ومنتجاتها</p>
             </div>
             <div class="container">
+                <!-- مربع البحث في صفحة المشاريع -->
+                <div class="families-search-box">
+                    <input type="text" class="families-search-input" placeholder="ابحث عن مشروع أو منتج..." id="familiesSearch" onkeyup="handleFamiliesSearch(event)">
+                    <button class="families-search-btn" onclick="performFamiliesSearch()">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
                 <!-- شريط اختيار الإمارة -->
                 <div class="emirates-scroll" id="emiratesScroll"></div>
                 <!-- شريط التصنيفات -->
                 <div class="categories-scroll" id="categoriesScroll"></div>
                 
-                <div class="info-banner">
-                    <i class="fas fa-lightbulb"></i>
-                    <span>اختر مشروع، استعرض منتجاته، ثم تواصل معه عبر واتساب أو موقعه للطلب.</span>
+
+                
+                <!-- البنر التوضيحي الجديد (احترافي) -->
+                <div class="explain-banner">
+                    <div class="explain-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="explain-text">
+                        <h3>كيف تطلب من المشاريع المنزلية؟</h3>
+                        <p>سوق البيوت يجمع لك كل المشاريع المنزلية في الإمارات. اختر المشروع الذي يعجبك، تصفح منتجاته، ثم تواصل مباشرة مع صاحب المشروع عبر الهاتف، واتساب، إنستجرام، أو الموقع الإلكتروني. جميع وسائل التواصل متاحة لطلب منتجك بكل سهولة.</p>
+                    </div>
                 </div>
+                
                 <div class="families-grid" id="familiesGrid"></div>
             </div>
         </div>
@@ -1020,6 +1128,11 @@
                             <input type="text" class="form-control" name="instagram" placeholder="@account">
                         </div>
                     </div>
+                    <!-- حقل إضافي للموقع الإلكتروني -->
+                    <div class="form-group">
+                        <label class="form-label"><i class="fas fa-globe"></i> الموقع الإلكتروني</label>
+                        <input type="url" class="form-control" name="website" placeholder="https://example.com">
+                    </div>
                     <div class="form-group">
                         <label class="form-label"><i class="fas fa-tags"></i> التصنيفات</label>
                         <div class="checkbox-group">
@@ -1061,7 +1174,7 @@
 
     <script>
         // ------------------------------------------------------------
-        // بيانات المشاريع (نموذجية مع إضافة بعض المشاريع)
+        // بيانات المشاريع (نموذجية مع إضافة بعض المشاريع وحقل website)
         // ------------------------------------------------------------
         const familiesData = [
             {
@@ -1076,6 +1189,7 @@
              whatsapp: "+971-50-475-0753",
              instagram: "@cardsplayuae",
              email: "sempel@sempel.com",
+             website: "https://cardsplayuae.com",
              productsCount: 7,
              rating: 4.6,
              badges: ["الترفية"],
@@ -1125,6 +1239,7 @@
                 const emirateId = decodeURIComponent(parts[2]);
                 appState.currentEmirate = emirateId;
                 appState.currentCategory = 'all';
+                appState.searchQuery = ''; // إعادة تعيين البحث عند تغيير الإمارة
                 
                 // تحديث العنوان
                 document.getElementById('familiesPageTitle').textContent = 
@@ -1134,6 +1249,10 @@
                 // تحديث حالة الشريطين
                 updateActiveEmirateChip(emirateId);
                 updateActiveCategoryChip('all');
+                
+                // تفريغ حقل البحث
+                const searchInput = document.getElementById('familiesSearch');
+                if (searchInput) searchInput.value = '';
                 
                 showPage('families');
                 renderFamilies();
@@ -1190,10 +1309,15 @@
 
         function filterByEmirate(emirateId, element) {
             appState.currentEmirate = emirateId;
-            appState.currentCategory = 'all'; // reset category when emirate changes
+            appState.currentCategory = 'all';
+            appState.searchQuery = ''; // reset search
             
             updateActiveEmirateChip(emirateId);
             updateActiveCategoryChip('all');
+            
+            // تفريغ حقل البحث
+            const searchInput = document.getElementById('familiesSearch');
+            if (searchInput) searchInput.value = '';
             
             navigateTo(`/families/emirate/${encodeURIComponent(emirateId)}`);
         }
@@ -1202,7 +1326,6 @@
             document.querySelectorAll('.emirate-chip').forEach(chip => {
                 chip.classList.remove('active');
             });
-            // نبحث عن الشريط الذي يساوي نصه الإمارة (تقريباً)
             document.querySelectorAll('.emirate-chip').forEach(chip => {
                 const span = chip.querySelector('span');
                 if (span && (span.innerText === emirateId || (emirateId === 'all' && span.innerText === 'كل الإمارات'))) {
@@ -1250,7 +1373,7 @@
             });
             element.classList.add('active');
             
-            renderFamilies(); // إعادة العرض مع الفلتر الجديد (دون تغيير الرابط)
+            renderFamilies();
         }
 
         function updateActiveCategoryChip(categoryId) {
@@ -1260,6 +1383,22 @@
                     chip.classList.add('active');
                 }
             });
+        }
+
+        // ------------------------------------------------------------
+        // وظائف البحث في صفحة المشاريع
+        // ------------------------------------------------------------
+        function handleFamiliesSearch(event) {
+            if (event.key === 'Enter') {
+                performFamiliesSearch();
+            }
+        }
+
+        function performFamiliesSearch() {
+            const input = document.getElementById('familiesSearch');
+            if (!input) return;
+            appState.searchQuery = input.value.trim();
+            renderFamilies();
         }
 
         // ------------------------------------------------------------
@@ -1275,9 +1414,11 @@
                 filtered = filtered.filter(f => f.category === appState.currentCategory);
             }
             if (appState.searchQuery) {
+                const query = appState.searchQuery.toLowerCase();
                 filtered = filtered.filter(f => 
-                    f.name.includes(appState.searchQuery) || 
-                    f.description.includes(appState.searchQuery)
+                    f.name.toLowerCase().includes(query) || 
+                    f.description.toLowerCase().includes(query) ||
+                    f.products.some(p => p.name.toLowerCase().includes(query))
                 );
             }
             
@@ -1315,7 +1456,7 @@
         }
 
         // ------------------------------------------------------------
-        // عرض منتجات المشروع (مع إضافة JSON-LD)
+        // عرض منتجات المشروع (مع إضافة JSON-LD وعرض الموقع الإلكتروني)
         // ------------------------------------------------------------
         function showFamilyProducts(id, updateHash = true) {
             const family = familiesData.find(f => f.id === id);
@@ -1367,42 +1508,58 @@
                 </div>
             `).join('');
             
-            // وسائل التواصل
+            // وسائل التواصل (مع إضافة الموقع الإلكتروني إذا وجد)
+            let contactGridHtml = `
+                <a href="https://wa.me/${family.whatsapp}" target="_blank" class="contact-item">
+                    <div class="contact-icon whatsapp-bg"><i class="fab fa-whatsapp"></i></div>
+                    <div class="contact-detail">
+                        <span class="contact-label">واتساب</span>
+                        <span class="contact-value">${family.whatsapp}</span>
+                    </div>
+                </a>
+                <a href="https://instagram.com/${family.instagram.replace('@', '')}" target="_blank" class="contact-item">
+                    <div class="contact-icon instagram-bg"><i class="fab fa-instagram"></i></div>
+                    <div class="contact-detail">
+                        <span class="contact-label">إنستجرام</span>
+                        <span class="contact-value">${family.instagram}</span>
+                    </div>
+                </a>
+                <a href="mailto:${family.email}" class="contact-item">
+                    <div class="contact-icon email-bg"><i class="fas fa-envelope"></i></div>
+                    <div class="contact-detail">
+                        <span class="contact-label">البريد</span>
+                        <span class="contact-value">${family.email}</span>
+                    </div>
+                </a>
+                <a href="tel:${family.phone}" class="contact-item">
+                    <div class="contact-icon phone-bg"><i class="fas fa-phone"></i></div>
+                    <div class="contact-detail">
+                        <span class="contact-label">اتصال</span>
+                        <span class="contact-value">${family.phone}</span>
+                    </div>
+                </a>
+            `;
+            
+            if (family.website) {
+                contactGridHtml += `
+                    <a href="${family.website}" target="_blank" class="contact-item">
+                        <div class="contact-icon website-bg"><i class="fas fa-globe"></i></div>
+                        <div class="contact-detail">
+                            <span class="contact-label">الموقع</span>
+                            <span class="contact-value">${family.website}</span>
+                        </div>
+                    </a>
+                `;
+            }
+            
             document.getElementById('contactSectionBottom').innerHTML = `
-                <h3 class="contact-title"><i class="fas fa-phone-alt"></i>للطلب تواصل مع الحسابات ادناه : </h3>
+                <h3 class="contact-title"><i class="fas fa-phone-alt"></i> تواصل مع المشروع</h3>
                 <div class="contact-grid">
-                    <a href="https://wa.me/${family.whatsapp}" target="_blank" class="contact-item">
-                        <div class="contact-icon whatsapp-bg"><i class="fab fa-whatsapp"></i></div>
-                        <div class="contact-detail">
-                            <span class="contact-label">واتساب</span>
-                            <span class="contact-value">${family.whatsapp}</span>
-                        </div>
-                    </a>
-                    <a href="https://instagram.com/${family.instagram.replace('@', '')}" target="_blank" class="contact-item">
-                        <div class="contact-icon instagram-bg"><i class="fab fa-instagram"></i></div>
-                        <div class="contact-detail">
-                            <span class="contact-label">إنستجرام</span>
-                            <span class="contact-value">${family.instagram}</span>
-                        </div>
-                    </a>
-                    <a href="mailto:${family.email}" class="contact-item">
-                        <div class="contact-icon email-bg"><i class="fas fa-envelope"></i></div>
-                        <div class="contact-detail">
-                            <span class="contact-label">البريد</span>
-                            <span class="contact-value">${family.email}</span>
-                        </div>
-                    </a>
-                    <a href="tel:${family.phone}" class="contact-item">
-                        <div class="contact-icon phone-bg"><i class="fas fa-phone"></i></div>
-                        <div class="contact-detail">
-                            <span class="contact-label">اتصال</span>
-                            <span class="contact-value">${family.phone}</span>
-                        </div>
-                    </a>
+                    ${contactGridHtml}
                 </div>
             `;
             
-            // إضافة JSON-LD للمشروع (بيانات منظمة)
+            // إضافة JSON-LD للمشروع
             addJsonLd(family);
             
             showPage('products');
@@ -1430,8 +1587,9 @@
                 "email": family.email,
                 "sameAs": [
                     `https://instagram.com/${family.instagram.replace('@', '')}`,
-                    `https://wa.me/${family.whatsapp}`
-                ],
+                    `https://wa.me/${family.whatsapp}`,
+                    family.website || ''
+                ].filter(url => url),
                 "image": family.image,
                 "priceRange": "$$"
             };
@@ -1447,8 +1605,18 @@
         // البحث في الصفحة الرئيسية
         // ------------------------------------------------------------
         function performHomeSearch() {
-            appState.searchQuery = document.getElementById('homeSearch').value.trim();
+            const query = document.getElementById('homeSearch').value.trim();
+            appState.searchQuery = query;
+            // عند البحث من الرئيسية نذهب لصفحة المشاريع مع تمرير البحث عبر الحالة
             navigateTo('/families/emirate/all');
+            // بعد التوجيه، سنحتاج لتعبئة حقل البحث في صفحة المشاريع بالقيمة
+            setTimeout(() => {
+                const searchInput = document.getElementById('familiesSearch');
+                if (searchInput) {
+                    searchInput.value = query;
+                }
+                renderFamilies(); // إعادة التصفية
+            }, 100);
         }
 
         // ------------------------------------------------------------
@@ -1458,6 +1626,14 @@
             document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
             document.getElementById(`${page}-page`).style.display = 'block';
             appState.currentPage = page;
+            
+            // إذا كانت الصفحة هي المشاريع، نعيد ضبط حقل البحث بناءً على appState.searchQuery
+            if (page === 'families') {
+                const searchInput = document.getElementById('familiesSearch');
+                if (searchInput) {
+                    searchInput.value = appState.searchQuery || '';
+                }
+            }
         }
 
         // ------------------------------------------------------------
@@ -1529,6 +1705,8 @@
         window.filterByEmirate = filterByEmirate;
         window.showFamilyProducts = showFamilyProducts;
         window.performHomeSearch = performHomeSearch;
+        window.performFamiliesSearch = performFamiliesSearch;
+        window.handleFamiliesSearch = handleFamiliesSearch;
         window.showRegisterForm = showRegisterForm;
         window.closeRegisterForm = closeRegisterForm;
         window.validateFamilyForm = validateFamilyForm;
