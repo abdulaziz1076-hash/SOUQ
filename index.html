@@ -691,9 +691,19 @@
         }
         .product-name {
             font-family: 'El Messiri', serif;
-            font-size: 15px;
+            font-size: 16px;
             color: var(--primary);
-            margin-bottom: 6px;
+            margin-bottom: 4px;
+        }
+        .product-description {
+            font-size: 12px;
+            color: var(--gray);
+            line-height: 1.5;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
         .product-category {
             background: var(--light);
@@ -702,9 +712,9 @@
             font-size: 10px;
             color: var(--primary);
             width: fit-content;
-            margin-bottom: 12px;
+            margin-top: 4px;
         }
-        /* البوب أب الترحيبي (نفس التصميم القديم) */
+        /* البوب أب الترحيبي */
         .welcome-popup {
             position: fixed;
             top: 0;
@@ -928,7 +938,7 @@
     </style>
 </head>
 <body>
-    <!-- البوب أب الترحيبي (يظهر فقط عند دخول السوق) -->
+    <!-- البوب أب الترحيبي (يظهر مرة واحدة فقط عند دخول السوق) -->
     <div id="welcomePopup" class="welcome-popup hidden">
         <div class="popup-content">
             <button class="popup-close" onclick="closeWelcomePopup()"><i class="fas fa-times"></i></button>
@@ -1174,7 +1184,7 @@
 
     <script>
         // ------------------------------------------------------------
-        // بيانات المشاريع (نموذجية مع إضافة بعض المشاريع وحقل website)
+        // بيانات المشاريع (مع إضافة وصف لكل منتج)
         // ------------------------------------------------------------
         const familiesData = [
             {
@@ -1195,9 +1205,24 @@
              badges: ["الترفية"],
              category: "الترفية",
              products: [
-               { name: "بطاقات بيضاء", description: "بطاقات قوية وجوده عالية لا تنكسر ولا تتقطع", category: "الترفية", image: "card1.png" },
-               { name: "بطاقات زرقاء", description: "بطاقات قوية وجوده عالية لا تنكسر ولا تتقطع", category: "الترفية", image: "card2.png" },
-               { name: "بطاقات خضراء", description: "بطاقات قوية وجوده عالية لا تنكسر ولا تتقطع", category: "الترفية", image: "card3.png" },
+               { 
+                 name: "بطاقات بيضاء", 
+                 description: "بطاقات قوية وجوده عالية لا تنكسر ولا تتقطع - مناسبة لجميع الألعاب", 
+                 category: "الترفية", 
+                 image: "card1.png" 
+               },
+               { 
+                 name: "بطاقات زرقاء", 
+                 description: "بطاقات قوية وجوده عالية لا تنكسر ولا تتقطع - تصميم عصري وجذاب", 
+                 category: "الترفية", 
+                 image: "card2.png" 
+               },
+               { 
+                 name: "بطاقات خضراء", 
+                 description: "بطاقات قوية وجوده عالية لا تنكسر ولا تتقطع - مقاومة للماء والاستخدام اليومي", 
+                 category: "الترفية", 
+                 image: "card3.png" 
+               },
                ]
             },
             // يمكنك إضافة المزيد من المشاريع هنا بنفس البنية
@@ -1256,8 +1281,8 @@
                 
                 showPage('families');
                 renderFamilies();
-                // إظهار البوب أب عند دخول السوق
-                showWelcomePopup();
+                // إظهار البوب أب مرة واحدة فقط عند دخول السوق
+                showWelcomePopupOnce();
             } else if (parts[0] === 'family' && parts[1]) {
                 const familyId = parseInt(parts[1]);
                 const family = familiesData.find(f => f.id === familyId);
@@ -1388,7 +1413,7 @@
         }
 
         // ------------------------------------------------------------
-        // وظائف البحث في صفحة المشاريع
+        // وظائف البحث في صفحة المشاريع (بحث شامل)
         // ------------------------------------------------------------
         function performFamiliesSearch() {
             const input = document.getElementById('familiesSearch');
@@ -1411,12 +1436,22 @@
             }
             if (appState.searchQuery) {
                 const query = appState.searchQuery.toLowerCase();
-                filtered = filtered.filter(f => 
-                    f.name.toLowerCase().includes(query) || 
-                    f.description.toLowerCase().includes(query) ||
-                    f.location.toLowerCase().includes(query) ||
-                    f.products.some(p => p.name.toLowerCase().includes(query))
-                );
+                filtered = filtered.filter(family => {
+                    // البحث في اسم المتجر
+                    const nameMatch = family.name.toLowerCase().includes(query);
+                    
+                    // البحث في نبذة المتجر
+                    const descriptionMatch = family.description.toLowerCase().includes(query);
+                    const longDescriptionMatch = family.longDescription?.toLowerCase().includes(query) || false;
+                    
+                    // البحث في اسم المنتج ووصف المنتج
+                    const productMatch = family.products.some(p => 
+                        p.name.toLowerCase().includes(query) || 
+                        p.description.toLowerCase().includes(query)
+                    );
+                    
+                    return nameMatch || descriptionMatch || longDescriptionMatch || productMatch;
+                });
             }
             
             const grid = document.getElementById('familiesGrid');
@@ -1466,7 +1501,7 @@
         }
 
         // ------------------------------------------------------------
-        // عرض منتجات المشروع (مع تعديل: إزالة السعر، وإضافة النقر على المنتج)
+        // عرض منتجات المشروع (مع إضافة وصف المنتج)
         // ------------------------------------------------------------
         function showFamilyProducts(id, updateHash = true) {
             const family = familiesData.find(f => f.id === id);
@@ -1501,7 +1536,7 @@
                 </div>
             `;
             
-            // المنتجات (تم إزالة السعر وإضافة onclick للتمرير)
+            // المنتجات (مع إضافة الوصف)
             document.getElementById('productsCount').textContent = `${family.products.length} منتج`;
             document.getElementById('productsGrid').innerHTML = family.products.map(p => `
                 <div class="product-card" onclick="scrollToContact()">
@@ -1510,13 +1545,13 @@
                     </div>
                     <div class="product-content">
                         <h3 class="product-name">${p.name}</h3>
+                        <div class="product-description">${p.description}</div>
                         <div class="product-category">${p.category}</div>
-                        <!-- تم إزالة السعر -->
                     </div>
                 </div>
             `).join('');
             
-            // وسائل التواصل (معدلة: فقط الهاتف ونقطة البيع)
+            // وسائل التواصل
             let contactGridHtml = `
                 <a href="tel:${family.phone}" class="contact-item">
                     <div class="contact-icon phone-bg"><i class="fas fa-phone"></i></div>
@@ -1604,15 +1639,13 @@
         function performHomeSearch() {
             const query = document.getElementById('homeSearch').value.trim();
             appState.searchQuery = query;
-            // عند البحث من الرئيسية نذهب لصفحة المشاريع مع تمرير البحث عبر الحالة
             navigateTo('/families/emirate/all');
-            // بعد التوجيه، سنحتاج لتعبئة حقل البحث في صفحة المشاريع بالقيمة
             setTimeout(() => {
                 const searchInput = document.getElementById('familiesSearch');
                 if (searchInput) {
                     searchInput.value = query;
                 }
-                renderFamilies(); // إعادة التصفية
+                renderFamilies();
             }, 100);
         }
 
@@ -1624,7 +1657,6 @@
             document.getElementById(`${page}-page`).style.display = 'block';
             appState.currentPage = page;
             
-            // إذا كانت الصفحة هي المشاريع، نعيد ضبط حقل البحث بناءً على appState.searchQuery
             if (page === 'families') {
                 const searchInput = document.getElementById('familiesSearch');
                 if (searchInput) {
@@ -1694,12 +1726,14 @@
         }
 
         // ------------------------------------------------------------
-        // وظائف البوب أب الترحيبي (للصفحة الثانية)
+        // وظائف البوب أب الترحيبي (مرة واحدة فقط)
         // ------------------------------------------------------------
-        function showWelcomePopup() {
+        function showWelcomePopupOnce() {
             const popup = document.getElementById('welcomePopup');
-            if (popup) {
+            // نستخدم sessionStorage للتأكد من ظهوره مرة واحدة فقط في كل جلسة تصفح
+            if (!sessionStorage.getItem('welcomePopupShown')) {
                 popup.classList.remove('hidden');
+                sessionStorage.setItem('welcomePopupShown', 'true');
             }
         }
 
