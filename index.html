@@ -484,7 +484,7 @@
         }
         .family-image {
             width: 100%;
-            height: 160px;
+            height: 180px; /* تم التعديل هنا */
             position: relative;
             overflow: hidden;
         }
@@ -812,7 +812,7 @@
         }
         .product-image {
             width: 100%;
-            height: 90px;
+            height: 120px; /* تم التعديل هنا */
             overflow: hidden;
             background: var(--light-gray);
         }
@@ -1266,7 +1266,7 @@
                     
                     <button class="market-big-btn" onclick="navigateTo('/families/emirate/all')">
                         <i class="fas fa-store"></i>
-                        اكتشف المشاريع
+                        اكتشف المشاريع المنزلية
                     </button>
                 </div>
             </section>
@@ -1465,7 +1465,7 @@
             <div class="footer-logo">سوق المشاريع</div>
             <p style="font-size: 13px; opacity: 0.9;">منصة المشاريع المنزلية الإماراتية</p>
             <div class="copyright">
-                © 2025 سوق المشاريع - دعم المشاريع المنزلية
+                © 2026 سوق المشاريع - دعم المشاريع المنزلية
             </div>
         </div>
     </footer>
@@ -1484,9 +1484,10 @@
              whatsapp: "",
              email: "",
              sell_point: "instacardsplayuae",
-             adra_license: "لا", 
-             coverage: "الإمارات ",
+             adra_license: "", 
+             coverage: "الإمارات",
              productsCount: 7,
+             rating: 4.6,
              badges: ["الترفية"],
              category: "الترفية",
              products: [
@@ -1894,6 +1895,7 @@
                                     <i class="fas ${family.coverage === 'العالم' ? 'fa-earth-asia' : (family.coverage === 'دول الخليج' ? 'fa-flag' : 'fa-map-marker-alt')}"></i>
                                     ${family.coverage || 'الإمارات'}
                                 </div>
+                                ${family.adra_license === 'نعم' ? '<div class="coverage-tag license-tag"><i class="fas fa-check-circle"></i> مرخص من ADRA</div>' : ''}
                             </div>
                         </div>
                     </div>
