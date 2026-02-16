@@ -58,7 +58,6 @@
             line-height: 1.6;
         }
 
-        /* ===== الهيدر والقائمة ===== */
         .app-header {
             background: var(--primary-gradient);
             color: white;
@@ -211,7 +210,6 @@
             background: linear-gradient(135deg, #1A5F44, #0F3D2E);
         }
 
-        /* ===== الصفحة الرئيسية ===== */
         .hero-section {
             background: linear-gradient(rgba(15, 61, 46, 0.95), rgba(26, 95, 68, 0.9)), url('الرئيسية.jpg');
             background-size: cover;
@@ -421,7 +419,6 @@
             background: linear-gradient(135deg, #1A5F44, #0F3D2E);
         }
 
-        /* ===== رؤوس الصفحات ===== */
         .page-header {
             background: var(--primary-gradient);
             color: white;
@@ -468,7 +465,6 @@
             margin: 0 auto;
         }
 
-        /* ===== التصفية (الإمارات والتصنيفات) ===== */
         .emirates-scroll, .categories-scroll {
             display: flex;
             overflow-x: auto;
@@ -526,7 +522,6 @@
             box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
         }
 
-        /* ===== البحث ===== */
         .families-search-box {
             position: relative;
             max-width: 500px;
@@ -573,7 +568,6 @@
             transform: translateY(-50%) scale(1.05);
         }
 
-        /* ===== بطاقات المشاريع (معدلة ومنظمة) ===== */
         .families-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -752,7 +746,6 @@
             transform: scale(1.02);
         }
 
-        /* ===== بطاقات المنتجات (معدلة بشكل ذكي) ===== */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -846,7 +839,6 @@
             border: 1px solid var(--light-gray);
         }
 
-        /* ===== صفحة المشروع ===== */
         .family-profile {
             background: white;
             border-radius: 30px;
@@ -899,7 +891,6 @@
             padding: 30px;
         }
 
-        /* ===== قسم التغطية (تصميم أنيق) ===== */
         .coverage-section {
             margin-top: 20px;
             padding: 20px 25px;
@@ -982,7 +973,6 @@
             border: none !important;
         }
 
-        /* ===== أزرار التواصل (أيقونات فقط) ===== */
         .contact-section-bottom {
             margin-top: 45px;
             padding-top: 30px;
@@ -1054,7 +1044,6 @@
         .facebook-bg { background: #4267B2; }
         .youtube-bg { background: #FF0000; }
 
-        /* ===== رؤوس المنتجات ===== */
         .products-header {
             display: flex;
             justify-content: space-between;
@@ -1078,7 +1067,6 @@
             box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
         }
 
-        /* ===== البوب أب التعليمي ===== */
         .instruction-popup {
             position: fixed;
             top: 20px;
@@ -1174,7 +1162,6 @@
             background: var(--secondary);
         }
 
-        /* ===== نموذج التسجيل ===== */
         .modal {
             display: none;
             position: fixed;
@@ -1352,7 +1339,6 @@
             box-shadow: var(--hover-shadow);
         }
 
-        /* ===== الفوتر ===== */
         .app-footer {
             background: var(--dark);
             color: white;
@@ -1387,7 +1373,6 @@
             scroll-behavior: smooth;
         }
 
-        /* ===== تحسينات للأجهزة الصغيرة ===== */
         @media (max-width: 400px) {
             .families-grid {
                 gap: 15px;
@@ -1413,7 +1398,6 @@
     </style>
 </head>
 <body>
-    <!-- البوب أب التعليمي -->
     <div id="instructionPopup" class="instruction-popup">
         <div class="popup-header">
             <i class="fas fa-mouse-pointer"></i>
@@ -1436,7 +1420,6 @@
         <button class="close-btn" onclick="closeInstructionPopup()"><i class="fas fa-check"></i> فهمت</button>
     </div>
 
-    <!-- هيدر -->
     <header class="app-header">
         <div class="header-container">
             <div class="logo-section" onclick="navigateTo('/')">
@@ -1453,7 +1436,6 @@
             </div>
         </div>
         
-        <!-- القائمة المنسدلة -->
         <div class="nav-menu" id="navMenu">
             <div class="nav-item home-item" onclick="navigateTo('/'); toggleMenu();">
                 <i class="fas fa-home"></i>
@@ -1470,9 +1452,7 @@
         </div>
     </header>
 
-    <!-- الصفحات -->
     <div class="page-container">
-        <!-- الرئيسية -->
         <div id="home-page" class="page">
             <section class="hero-section">
                 <div class="hero-content">
@@ -1501,7 +1481,6 @@
                     <p> <strong>لأصحاب المشاريع المنزلية:</strong> نقدم لكم منصة تسويق مجانية للوصول إلى شريحة واسعة من المهتمين.</p>
                 </div>
                 
-                <!-- إحصائيات -->
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-icon"><i class="fas fa-store"></i></div>
@@ -1536,7 +1515,6 @@
             </section>
         </div>
 
-        <!-- المشاريع المنزلية -->
         <div id="families-page" class="page" style="display: none;">
             <div class="page-header">
                 <h1 class="page-title" id="familiesPageTitle">المشاريع المنزلية</h1>
@@ -1556,7 +1534,6 @@
             </div>
         </div>
 
-        <!-- المنتجات -->
         <div id="products-page" class="page" style="display: none;">
             <div class="page-header">
                 <h1 class="page-title" id="productsPageTitle">المنتجات</h1>
@@ -1574,7 +1551,6 @@
         </div>
     </div>
 
-    <!-- نموذج تسجيل المشاريع -->
     <div class="modal" id="registerModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1585,11 +1561,10 @@
                 <p style="font-size: 15px; opacity: 0.9;">انضم إلى منصة سوق المشاريع</p>
             </div>
             <div class="modal-body">
-                <form id="registerForm" action="https://formspree.io/f/maqdewer" method="POST" onsubmit="return validateFamilyForm(event)">
-                    <!-- حقول النموذج -->
+                <form id="registerForm" action="https://script.google.com/macros/s/AKfycbzmm8XF7-OdaE2mlmylblW-AIKBmpj9hHGao0MMOAb8myfyr6kG5sQvxrcZpVDdAzCW/exec" method="POST" onsubmit="return validateFamilyForm(event)">
                     <div class="form-group">
                         <label class="form-label"><i class="fas fa-users"></i> اسم المشروع</label>
-                        <input type="text" class="form-control" name="family_name" placeholder="مثال: مشروع آل مبارك" required>
+                        <input type="text" class="form-control" name="family_name" placeholder="مثال: مشروع البيت" required>
                     </div>
                     
                     <div class="form-group">
@@ -1612,7 +1587,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label"><i class="fas fa-check-circle"></i> ترخيص ADRA</label>
+                        <label class="form-label"><i class="fas fa-check-circle"></i> الترخيص</label>
                         <div class="radio-group">
                             <label class="radio-label"><input type="radio" name="adra_license" value="نعم" required> نعم</label>
                             <label class="radio-label"><input type="radio" name="adra_license" value="لا" required> لا</label>
@@ -1666,7 +1641,7 @@
                             <label class="checkbox-label"><input type="checkbox" name="category[]" value="شموع"> شموع</label>
                             <label class="checkbox-label"><input type="checkbox" name="category[]" value="فنون"> فنون</label>
                             <label class="checkbox-label"><input type="checkbox" name="category[]" value="نباتات"> نباتات</label>
-                            <label class="checkbox-label"><input type="checkbox" name="category[]" value="الترفية"> ترفية</label>
+                            <label class="checkbox-label"><input type="checkbox" name="category[]" value="ترفيه"> ترفيه</label>
                         </div>
                     </div>
 
@@ -1682,7 +1657,6 @@
         </div>
     </div>
 
-    <!-- فوتر -->
     <footer class="app-footer">
         <div class="footer-content">
             <div class="footer-logo">سوق المشاريع</div>
@@ -1694,13 +1668,12 @@
     </footer>
 
     <script>
-        // بيانات المشاريع
         const familiesData = [
             {
              id: 1,
              name: "cardsplayuae",
              emirate: "أبوظبي",
-             description: "الترفية",
+             description: "ترفيه",
              longDescription: "اوراق لعب فاخرة - تجربة احترافية في كل لعبة.",
              image: "cardsplayuae.png",
              phone: "",
@@ -1711,19 +1684,16 @@
              coverage: "الإمارات",
              productsCount: 3,
              rating: "...",
-             badges: ["الترفية"],
-             category: "الترفية",
+             badges: ["ترفيه"],
+             category: "ترفيه",
              products: [
-               { name: "بطاقات بيضاء", description: "بطاقات قوية وجودة عالية", category: "الترفية", image: "card1.png" },
-               { name: "بطاقات زرقاء", description: "تصميم عصري وجذاب", category: "الترفية", image: "card2.png" },
-               { name: "بطاقات خضراء", description: "مقاومة للماء والاستخدام اليومي", category: "الترفية", image: "card3.png" },
+               { name: "بطاقات بيضاء", description: "بطاقات قوية وجودة عالية", category: "ترفيه", image: "card1.png" },
+               { name: "بطاقات زرقاء", description: "تصميم عصري وجذاب", category: "ترفيه", image: "card2.png" },
+               { name: "بطاقات خضراء", description: "مقاومة للماء والاستخدام اليومي", category: "ترفيه", image: "card3.png" },
                ]
             },
-        
-            
         ];
 
-        // حالة التطبيق
         const appState = {
             currentPage: 'home',
             currentEmirate: 'all',
@@ -1732,7 +1702,6 @@
             searchQuery: ''
         };
 
-        // تهيئة
         document.addEventListener('DOMContentLoaded', function() {
             initEmiratesChips();
             initCategoriesChips();
@@ -1740,7 +1709,6 @@
             window.addEventListener('hashchange', handleHashChange);
         });
 
-        // نظام التنقل باستخدام الهاش
         function handleHashChange() {
             const hash = window.location.hash.slice(1) || '/';
             const parts = hash.split('/').filter(p => p !== '');
@@ -1854,7 +1822,7 @@
                 { id: 'شموع', name: 'شموع', icon: 'fas fa-fire' },
                 { id: 'فنون', name: 'فنون', icon: 'fas fa-paint-brush' },
                 { id: 'نباتات', name: 'نباتات', icon: 'fas fa-seedling' },
-                { id: 'الترفية', name: 'ترفية', icon: 'fas fa-gamepad' }
+                { id: 'ترفيه', name: 'ترفيه', icon: 'fas fa-gamepad' }
             ];
 
             container.innerHTML = categories.map(c => `
@@ -1959,7 +1927,6 @@
             }
         }
 
-        // دالة للتعرف على نوع منصة التواصل
         function detectSellPointType(value) {
             if (!value) return { type: 'unknown', icon: 'fa-link', bg: 'website-bg', url: null };
             
@@ -2076,7 +2043,6 @@
                 </div>
             `).join('');
             
-            // أزرار التواصل
             let contactGridHtml = '';
             
             if (family.phone && family.phone.trim() !== '') {
@@ -2188,30 +2154,35 @@
             document.body.style.overflow = 'auto';
         }
 
+        // دالة مبسطة للغاية - هذا هو الحل النهائي
         function validateFamilyForm(event) {
             event.preventDefault();
-
-            const familyName = document.querySelector("[name='family_name']").value.trim();
-            const emirate = document.querySelector("[name='emirate']").value;
-            const description = document.querySelector("[name='description']").value.trim();
-            const adraLicense = document.querySelector("[name='adra_license']:checked");
-            const coverage = document.querySelector("[name='coverage']").value;
-            const phone = document.querySelector("[name='phone']").value.trim();
-            const email = document.querySelector("[name='email']").value.trim();
-            const categories = document.querySelectorAll("[name='category[]']:checked");
-
-            if (!familyName || !emirate || !description || !adraLicense || !coverage || !phone || !email) {
-                alert("❌ يرجى تعبئة جميع الحقول المطلوبة");
+            
+            try {
+                // التحقق من اختيار الترخيص
+                const adraLicense = document.querySelector('input[name="adra_license"]:checked');
+                if (!adraLicense) {
+                    alert("❌ يرجى اختيار حالة الترخيص");
+                    return false;
+                }
+                
+                // التحقق من اختيار تصنيف واحد على الأقل
+                const categories = document.querySelectorAll('input[name="category[]"]:checked');
+                if (categories.length === 0) {
+                    alert("❌ يرجى اختيار تصنيف واحد على الأقل");
+                    return false;
+                }
+                
+                // إرسال النموذج مباشرة
+                event.target.submit();
+                
+            } catch (error) {
+                console.error('Error:', error);
+                alert("❌ حدث خطأ، يرجى المحاولة مرة أخرى");
                 return false;
             }
             
-            if (categories.length === 0) {
-                alert("❌ يرجى اختيار تصنيف واحد على الأقل");
-                return false;
-            }
-
-            event.target.submit();
-            return true;
+            return false;
         }
 
         function showInstructionPopupOnce() {
@@ -2230,7 +2201,6 @@
             document.getElementById('instructionPopup').classList.remove('show');
         }
 
-        // جعل الدوال متاحة عالمياً
         window.toggleMenu = toggleMenu;
         window.navigateTo = navigateTo;
         window.filterByCategory = filterByCategory;
