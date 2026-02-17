@@ -23,8 +23,14 @@
     <!-- أيقونة الموقع -->
     <link rel="icon" type="image/png" href="favicon.png">
     
+    <!-- Font Awesome - نسخة خفيفة -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- الخطوط - تحميل سريع -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=El+Messiri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         /* ===== المتغيرات الأساسية ===== */
         * {
@@ -45,9 +51,9 @@
             --gray: #8A8A8A;
             --light-gray: #E8E4DD;
             --border: #D8D1C7;
-            --shadow: 0 10px 30px rgba(15, 61, 46, 0.15);
-            --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            --hover-shadow: 0 15px 35px rgba(15, 61, 46, 0.2);
+            --shadow: 0 10px 30px rgba(15, 61, 46, 0.1);
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --hover-shadow: 0 8px 25px rgba(15, 61, 46, 0.15);
             --gradient-gold: linear-gradient(135deg, #D4AF37, #f5d06b);
         }
 
@@ -55,13 +61,13 @@
             background: var(--light);
             color: var(--dark);
             font-family: 'Almarai', sans-serif;
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
         .app-header {
             background: var(--primary-gradient);
             color: white;
-            padding: 12px 16px;
+            padding: 10px 16px;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -82,8 +88,8 @@
         }
 
         .logo-icon {
-            width: 75px;
-            height: 75px;
+            width: 70px;
+            height: 70px;
             background: white;
             border-radius: 12px;
             display: flex;
@@ -91,7 +97,7 @@
             justify-content: center;
             overflow: hidden;
             border: 2px solid var(--secondary);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
         .logo-icon img {
@@ -103,27 +109,26 @@
 
         .logo-text h1 {
             font-family: 'El Messiri', serif;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 700;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         .logo-text p {
-            font-size: 11px;
+            font-size: 10px;
             opacity: 0.9;
-            letter-spacing: 0.5px;
         }
 
         .menu-toggle {
-            width: 45px;
-            height: 45px;
+            width: 42px;
+            height: 42px;
             background: rgba(255,255,255,0.2);
             border: 1px solid rgba(255,255,255,0.3);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
+            font-size: 20px;
             color: white;
             cursor: pointer;
             transition: 0.2s;
@@ -141,21 +146,21 @@
             left: 16px;
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(10px);
-            border-radius: 20px;
+            border-radius: 18px;
             margin-top: 8px;
-            padding: 16px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            padding: 14px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
             border: 1px solid var(--secondary);
             z-index: 1001;
         }
 
         .nav-menu.active {
             display: block;
-            animation: slideDown 0.3s ease;
+            animation: slideDown 0.25s ease;
         }
 
         @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
+            from { opacity: 0; transform: translateY(-8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -163,13 +168,13 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 14px 16px;
-            border-radius: 14px;
+            padding: 12px 14px;
+            border-radius: 12px;
             color: var(--dark);
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .nav-item:last-child {
@@ -177,9 +182,9 @@
         }
 
         .nav-item i {
-            width: 24px;
+            width: 22px;
             text-align: center;
-            font-size: 18px;
+            font-size: 16px;
         }
 
         .nav-item.home-item {
@@ -215,41 +220,41 @@
             background-size: cover;
             background-position: center;
             color: white;
-            padding: 80px 20px;
+            padding: 70px 20px;
             text-align: center;
         }
 
         .hero-title {
             font-family: 'El Messiri', serif;
-            font-size: 42px;
+            font-size: 38px;
             font-weight: 700;
-            margin-bottom: 15px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            margin-bottom: 12px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
 
         .hero-subtitle {
-            font-size: 18px;
-            margin-bottom: 30px;
+            font-size: 16px;
+            margin-bottom: 25px;
             opacity: 0.95;
-            max-width: 600px;
+            max-width: 500px;
             margin-left: auto;
             margin-right: auto;
         }
 
         .hero-search-box {
             position: relative;
-            max-width: 500px;
-            margin: 0 auto 30px;
+            max-width: 450px;
+            margin: 0 auto 25px;
         }
 
         .hero-search-input {
             width: 100%;
-            padding: 16px 25px 16px 60px;
+            padding: 14px 20px 14px 55px;
             border: none;
-            border-radius: 50px;
-            font-size: 16px;
+            border-radius: 40px;
+            font-size: 15px;
             background: white;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             border: 2px solid transparent;
             transition: 0.2s;
         }
@@ -266,11 +271,11 @@
             transform: translateY(-50%);
             background: var(--secondary);
             border: none;
-            width: 48px;
-            height: 48px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             color: var(--primary-dark);
-            font-size: 18px;
+            font-size: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -287,56 +292,56 @@
             background: var(--gradient-gold);
             color: var(--primary-dark);
             border: none;
-            padding: 16px 40px;
-            border-radius: 50px;
-            font-size: 18px;
+            padding: 14px 35px;
+            border-radius: 40px;
+            font-size: 16px;
             font-weight: 700;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+            gap: 8px;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
             transition: 0.3s;
             border: 1px solid rgba(255,255,255,0.3);
         }
 
         .market-big-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 12px 30px rgba(212, 175, 55, 0.7);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.7);
         }
 
         .about-section {
             background: white;
-            padding: 60px 20px;
+            padding: 50px 20px;
         }
 
         .section-title {
             font-family: 'El Messiri', serif;
-            font-size: 36px;
+            font-size: 32px;
             color: var(--primary-dark);
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .section-title::after {
             content: '';
             display: block;
-            width: 100px;
-            height: 4px;
+            width: 80px;
+            height: 3px;
             background: var(--gradient-gold);
-            margin: 15px auto 0;
+            margin: 12px auto 0;
             border-radius: 2px;
         }
 
         .about-text {
-            font-size: 16px;
-            line-height: 1.9;
-            margin-bottom: 40px;
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 35px;
             color: var(--dark);
             background: var(--light);
-            padding: 35px;
-            border-radius: 25px;
+            padding: 30px;
+            border-radius: 22px;
             border: 1px solid var(--light-gray);
             box-shadow: var(--card-shadow);
         }
@@ -344,14 +349,14 @@
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin-top: 30px;
+            gap: 15px;
+            margin-top: 25px;
         }
 
         .stat-card {
             background: var(--light);
-            padding: 30px 15px;
-            border-radius: 25px;
+            padding: 25px 12px;
+            border-radius: 22px;
             border: 1px solid var(--light-gray);
             text-align: center;
             transition: 0.3s;
@@ -359,26 +364,26 @@
         }
 
         .stat-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-4px);
             box-shadow: var(--hover-shadow);
             border-color: var(--secondary);
         }
 
         .stat-icon {
-            font-size: 40px;
+            font-size: 35px;
             color: var(--secondary);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .stat-number {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 800;
             color: var(--primary-dark);
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
 
         .stat-label {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--gray);
             font-weight: 600;
         }
@@ -386,29 +391,29 @@
         .stat-badge {
             background: var(--gradient-gold);
             color: var(--primary-dark);
-            padding: 5px 15px;
-            border-radius: 30px;
-            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 25px;
+            font-size: 11px;
             font-weight: 700;
             display: inline-block;
-            margin-top: 10px;
+            margin-top: 8px;
         }
 
         .join-btn {
             background: var(--primary-gradient);
             color: white;
             border: none;
-            padding: 18px 25px;
-            border-radius: 50px;
-            font-size: 18px;
+            padding: 16px 22px;
+            border-radius: 40px;
+            font-size: 16px;
             font-weight: 700;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
             width: 100%;
-            margin-top: 30px;
+            margin-top: 25px;
             transition: 0.3s;
             border: 1px solid var(--secondary);
         }
@@ -422,10 +427,14 @@
         .page-header {
             background: var(--primary-gradient);
             color: white;
-            padding: 60px 20px;
+            padding: 35px 20px;
             text-align: center;
             position: relative;
             overflow: hidden;
+        }
+
+        .page-header.with-back {
+            padding-top: 55px;
         }
 
         .page-header::before {
@@ -446,21 +455,56 @@
 
         .page-title {
             font-family: 'El Messiri', serif;
-            font-size: 38px;
-            margin-bottom: 10px;
+            font-size: 28px;
+            margin-bottom: 6px;
             position: relative;
             z-index: 1;
         }
 
         .page-subtitle {
-            font-size: 18px;
+            font-size: 15px;
             opacity: 0.95;
             position: relative;
             z-index: 1;
         }
 
+        .back-button {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.25s ease;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .back-button:hover {
+            background: rgba(255,255,255,0.25);
+            transform: scale(1.05) translateX(-3px);
+            border-color: var(--secondary);
+        }
+
+        .back-button i {
+            transition: transform 0.25s ease;
+        }
+
+        .back-button:hover i {
+            transform: translateX(-3px);
+        }
+
         .container {
-            padding: 40px 16px;
+            padding: 25px 16px;
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -468,9 +512,9 @@
         .emirates-scroll, .categories-scroll {
             display: flex;
             overflow-x: auto;
-            gap: 12px;
-            padding: 5px 0 15px 0;
-            margin-bottom: 25px;
+            gap: 8px;
+            padding: 5px 0 12px 0;
+            margin-bottom: 18px;
             scrollbar-width: thin;
             scrollbar-color: var(--secondary) var(--light-gray);
             white-space: nowrap;
@@ -478,7 +522,7 @@
 
         .emirates-scroll::-webkit-scrollbar,
         .categories-scroll::-webkit-scrollbar {
-            height: 5px;
+            height: 3px;
         }
 
         .emirates-scroll::-webkit-scrollbar-track,
@@ -497,21 +541,21 @@
             flex: 0 0 auto;
             background: white;
             border: 1px solid var(--light-gray);
-            border-radius: 40px;
-            padding: 12px 28px;
+            border-radius: 30px;
+            padding: 8px 22px;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            font-size: 15px;
+            gap: 6px;
+            font-size: 13px;
             font-weight: 600;
             color: var(--primary-dark);
             cursor: pointer;
             transition: all 0.2s;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
         }
 
         .emirate-chip i, .category-chip i {
-            font-size: 16px;
+            font-size: 13px;
             color: var(--secondary);
         }
 
@@ -519,21 +563,21 @@
             background: var(--gradient-gold);
             border-color: var(--secondary);
             color: var(--primary-dark);
-            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 3px 10px rgba(212, 175, 55, 0.3);
         }
 
         .families-search-box {
             position: relative;
-            max-width: 500px;
-            margin: 0 0 25px 0;
+            max-width: 450px;
+            margin: 0 0 18px 0;
         }
 
         .families-search-input {
             width: 100%;
-            padding: 16px 20px 16px 55px;
+            padding: 12px 18px 12px 48px;
             border: 2px solid var(--light-gray);
-            border-radius: 50px;
-            font-size: 16px;
+            border-radius: 40px;
+            font-size: 14px;
             background: white;
             transition: all 0.2s;
         }
@@ -541,21 +585,21 @@
         .families-search-input:focus {
             outline: none;
             border-color: var(--secondary);
-            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
         }
 
         .families-search-btn {
             position: absolute;
-            left: 5px;
+            left: 4px;
             top: 50%;
             transform: translateY(-50%);
             background: var(--secondary);
             border: none;
-            width: 45px;
-            height: 45px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             color: var(--primary-dark);
-            font-size: 18px;
+            font-size: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -571,31 +615,31 @@
         .families-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+            gap: 12px;
         }
 
         .family-card {
             background: white;
-            border-radius: 25px;
+            border-radius: 20px;
             overflow: hidden;
             box-shadow: var(--card-shadow);
             border: 1px solid var(--light-gray);
             display: flex;
             flex-direction: column;
-            transition: 0.3s;
+            transition: 0.25s;
             position: relative;
             height: 100%;
         }
 
         .family-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-4px);
             box-shadow: var(--hover-shadow);
             border-color: var(--secondary);
         }
 
         .family-image {
             width: 100%;
-            height: 180px;
+            height: 150px;
             position: relative;
             overflow: hidden;
             background: linear-gradient(145deg, #f8f8f8, #ffffff);
@@ -603,7 +647,7 @@
             align-items: center;
             justify-content: center;
             border-bottom: 1px solid var(--light-gray);
-            padding: 15px;
+            padding: 12px;
         }
 
         .family-image img {
@@ -612,43 +656,43 @@
             width: auto;
             height: auto;
             object-fit: contain;
-            border-radius: 12px;
-            transition: transform 0.3s ease;
+            border-radius: 10px;
+            transition: transform 0.25s ease;
         }
 
         .family-card:hover .family-image img {
-            transform: scale(1.08);
+            transform: scale(1.06);
         }
 
         .license-badge-card {
             position: absolute;
-            top: 12px;
-            left: 12px;
+            top: 8px;
+            left: 8px;
             background: var(--primary-gradient);
             color: white;
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 10px;
             font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 3px;
             z-index: 10;
-            box-shadow: 0 4px 12px rgba(15, 61, 46, 0.3);
+            box-shadow: 0 3px 8px rgba(15, 61, 46, 0.3);
             border: 1px solid var(--secondary);
         }
 
         .license-badge-card i {
-            font-size: 12px;
+            font-size: 9px;
             color: var(--secondary);
         }
 
         .family-badges {
             position: absolute;
-            bottom: 12px;
-            right: 12px;
+            bottom: 8px;
+            right: 8px;
             display: flex;
-            gap: 5px;
+            gap: 4px;
             flex-wrap: wrap;
             z-index: 2;
         }
@@ -656,15 +700,15 @@
         .family-badge {
             background: var(--secondary);
             color: var(--primary-dark);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 15px;
+            font-size: 9px;
             font-weight: 700;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .family-content {
-            padding: 18px;
+            padding: 14px;
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -673,69 +717,56 @@
 
         .family-header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            gap: 4px;
+            margin-bottom: 6px;
         }
 
         .family-name {
             font-family: 'El Messiri', serif;
-            font-size: 18px;
+            font-size: 15px;
             font-weight: 700;
             color: var(--primary-dark);
             line-height: 1.3;
         }
 
-        .family-rating {
-            background: var(--light);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-weight: 600;
-            color: var(--primary-dark);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 12px;
-            border: 1px solid var(--light-gray);
-        }
-
-        .family-rating i {
+        .verified-icon {
             color: var(--secondary);
-            font-size: 11px;
+            font-size: 12px;
         }
 
         .family-location {
             color: var(--accent);
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
-            gap: 5px;
-            font-size: 13px;
+            gap: 4px;
+            font-size: 11px;
             background: var(--light);
-            padding: 6px 12px;
-            border-radius: 30px;
+            padding: 3px 8px;
+            border-radius: 20px;
             width: fit-content;
         }
 
         .family-location i {
             color: var(--secondary);
-            font-size: 12px;
+            font-size: 9px;
         }
 
         .view-products-btn {
             width: 100%;
-            padding: 14px;
+            padding: 10px;
             background: var(--primary-gradient);
             color: white;
             border: none;
-            border-radius: 30px;
-            font-size: 15px;
+            border-radius: 22px;
+            font-size: 13px;
             font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 6px;
             margin-top: auto;
             transition: 0.2s;
             border: 1px solid var(--secondary);
@@ -749,12 +780,12 @@
         .products-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
+            gap: 10px;
         }
 
         .product-card {
             background: white;
-            border-radius: 20px;
+            border-radius: 16px;
             overflow: hidden;
             box-shadow: var(--card-shadow);
             border: 1px solid var(--light-gray);
@@ -766,21 +797,21 @@
         }
 
         .product-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
             box-shadow: var(--hover-shadow);
             border-color: var(--secondary);
         }
 
         .product-image {
             width: 100%;
-            height: 140px;
+            height: 120px;
             overflow: hidden;
             background: white;
             display: flex;
             align-items: center;
             justify-content: center;
             border-bottom: 1px solid var(--light-gray);
-            padding: 12px;
+            padding: 8px;
         }
 
         .product-image img {
@@ -789,25 +820,25 @@
             width: auto;
             height: auto;
             object-fit: contain;
-            border-radius: 10px;
-            transition: transform 0.3s ease;
+            border-radius: 8px;
+            transition: transform 0.25s ease;
         }
 
         .product-card:hover .product-image img {
-            transform: scale(1.08);
+            transform: scale(1.06);
         }
 
         .product-content {
-            padding: 12px;
+            padding: 10px;
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 4px;
         }
 
         .product-name {
             font-family: 'El Messiri', serif;
-            font-size: 15px;
+            font-size: 13px;
             color: var(--primary-dark);
             margin: 0;
             white-space: nowrap;
@@ -817,7 +848,7 @@
         }
 
         .product-description {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--gray);
             line-height: 1.4;
             display: -webkit-box;
@@ -830,9 +861,9 @@
 
         .product-category {
             background: var(--light);
-            padding: 4px 8px;
-            border-radius: 20px;
-            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 12px;
+            font-size: 9px;
             color: var(--primary-dark);
             width: fit-content;
             font-weight: 600;
@@ -841,46 +872,54 @@
 
         .family-profile {
             background: white;
-            border-radius: 30px;
+            border-radius: 22px;
             overflow: hidden;
             border: 1px solid var(--light-gray);
-            margin-bottom: 35px;
+            margin-bottom: 25px;
             box-shadow: var(--card-shadow);
         }
 
         .profile-header {
             background: var(--primary-gradient);
             color: white;
-            padding: 30px;
+            padding: 22px;
             display: flex;
             align-items: center;
-            gap: 25px;
+            gap: 18px;
         }
 
         .profile-avatar {
-            width: 100px;
-            height: 100px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             background-size: cover;
             background-position: center;
-            border: 4px solid white;
+            border: 3px solid white;
             flex-shrink: 0;
             background-color: var(--light-gray);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
         .profile-name {
             font-family: 'El Messiri', serif;
-            font-size: 28px;
-            margin-bottom: 5px;
+            font-size: 22px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .profile-name i {
+            color: var(--secondary);
+            font-size: 16px;
         }
 
         .profile-location {
-            font-size: 16px;
+            font-size: 13px;
             opacity: 0.9;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 5px;
         }
 
         .profile-location i {
@@ -888,54 +927,54 @@
         }
 
         .profile-body {
-            padding: 30px;
+            padding: 22px;
         }
 
         .coverage-section {
-            margin-top: 20px;
-            padding: 20px 25px;
+            margin-top: 12px;
+            padding: 12px 18px;
             background: linear-gradient(145deg, rgba(15, 61, 46, 0.02), rgba(212, 175, 55, 0.02));
-            border-radius: 20px;
+            border-radius: 16px;
             border: 1px dashed var(--secondary);
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            gap: 20px;
+            gap: 12px;
         }
 
         .coverage-title {
-            font-size: 16px;
+            font-size: 13px;
             font-weight: 700;
             color: var(--primary-dark);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 5px;
             white-space: nowrap;
         }
 
         .coverage-title i {
             color: var(--secondary);
-            font-size: 18px;
+            font-size: 14px;
         }
 
         .coverage-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 8px;
         }
 
         .coverage-tag {
             background: white;
-            padding: 8px 20px;
-            border-radius: 40px;
-            font-size: 14px;
+            padding: 5px 14px;
+            border-radius: 25px;
+            font-size: 12px;
             font-weight: 600;
             color: var(--primary-dark);
             border: 1px solid var(--light-gray);
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            gap: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
             transition: 0.2s;
         }
 
@@ -946,7 +985,7 @@
 
         .coverage-tag i {
             color: var(--secondary);
-            font-size: 14px;
+            font-size: 11px;
         }
 
         .coverage-tag.global {
@@ -967,27 +1006,21 @@
             border: none;
         }
 
-        .license-tag {
-            background: var(--primary-gradient) !important;
-            color: white !important;
-            border: none !important;
-        }
-
         .contact-section-bottom {
-            margin-top: 45px;
-            padding-top: 30px;
+            margin-top: 30px;
+            padding-top: 22px;
             border-top: 2px solid var(--light-gray);
             scroll-margin-top: 20px;
         }
 
         .contact-title {
             font-family: 'El Messiri', serif;
-            font-size: 26px;
+            font-size: 22px;
             color: var(--primary-dark);
-            margin-bottom: 25px;
+            margin-bottom: 18px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
         }
 
         .contact-title i {
@@ -997,7 +1030,7 @@
         .contact-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 10px;
             justify-content: flex-start;
         }
 
@@ -1005,30 +1038,30 @@
             background: white;
             border: 1px solid var(--light-gray);
             border-radius: 50%;
-            width: 65px;
-            height: 65px;
+            width: 50px;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            transition: all 0.3s;
+            transition: all 0.25s;
             box-shadow: var(--card-shadow);
         }
 
         .contact-item:hover {
             border-color: var(--secondary);
-            transform: scale(1.15) rotate(5deg);
+            transform: scale(1.1) rotate(3deg);
             box-shadow: var(--hover-shadow);
         }
 
         .contact-icon {
-            width: 45px;
-            height: 45px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 18px;
             color: white;
         }
 
@@ -1048,37 +1081,37 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 18px;
         }
 
         .products-title {
             font-family: 'El Messiri', serif;
-            font-size: 26px;
+            font-size: 20px;
             color: var(--primary-dark);
         }
 
         .products-badge {
             background: var(--gradient-gold);
-            padding: 8px 20px;
-            border-radius: 40px;
+            padding: 5px 14px;
+            border-radius: 25px;
             font-weight: 700;
             color: var(--primary-dark);
-            font-size: 15px;
-            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+            font-size: 12px;
+            box-shadow: 0 2px 5px rgba(212, 175, 55, 0.3);
         }
 
         .instruction-popup {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 15px;
+            right: 15px;
             background: white;
-            border-radius: 25px;
-            padding: 25px;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+            border-radius: 18px;
+            padding: 18px;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.2);
             z-index: 2000;
-            max-width: 300px;
-            border-right: 6px solid var(--secondary);
-            animation: slideFromTop 0.5s ease;
+            max-width: 260px;
+            border-right: 4px solid var(--secondary);
+            animation: slideFromTop 0.35s ease;
             display: none;
         }
 
@@ -1094,38 +1127,38 @@
         .instruction-popup .popup-header {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
+            gap: 8px;
+            margin-bottom: 12px;
         }
 
         .instruction-popup .popup-header i {
-            font-size: 30px;
+            font-size: 24px;
             color: var(--secondary);
         }
 
         .instruction-popup .popup-header h3 {
             font-family: 'El Messiri', serif;
             color: var(--primary-dark);
-            font-size: 22px;
+            font-size: 18px;
         }
 
         .instruction-popup .steps {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin-bottom: 25px;
+            gap: 10px;
+            margin-bottom: 18px;
         }
 
         .instruction-popup .step {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 15px;
+            gap: 8px;
+            font-size: 13px;
         }
 
         .instruction-popup .step .step-icon {
-            width: 32px;
-            height: 32px;
+            width: 24px;
+            height: 24px;
             background: var(--secondary);
             color: var(--primary-dark);
             border-radius: 50%;
@@ -1134,6 +1167,7 @@
             justify-content: center;
             font-weight: 800;
             flex-shrink: 0;
+            font-size: 11px;
         }
 
         .instruction-popup .step span {
@@ -1144,8 +1178,8 @@
         .instruction-popup .close-btn {
             background: var(--light-gray);
             border: none;
-            padding: 12px;
-            border-radius: 40px;
+            padding: 9px;
+            border-radius: 25px;
             width: 100%;
             font-weight: 700;
             color: var(--primary-dark);
@@ -1154,8 +1188,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            font-size: 15px;
+            gap: 5px;
+            font-size: 13px;
         }
 
         .instruction-popup .close-btn:hover {
@@ -1185,8 +1219,8 @@
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
-            border-radius: 35px 35px 0 0;
-            animation: slideUp 0.4s ease;
+            border-radius: 25px 25px 0 0;
+            animation: slideUp 0.3s ease;
         }
 
         @keyframes slideUp {
@@ -1197,68 +1231,67 @@
         .modal-header {
             background: var(--primary-gradient);
             color: white;
-            padding: 35px 20px;
+            padding: 25px 20px;
             position: relative;
             text-align: center;
         }
 
         .modal-close {
             position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(255,255,255,0.2);
-            border: none;
+            top: 12px;
+            left: 12px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.2);
             color: white;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 20px;
+            font-size: 16px;
             transition: 0.2s;
-            border: 1px solid rgba(255,255,255,0.3);
         }
 
         .modal-close:hover {
-            background: rgba(255,255,255,0.3);
-            transform: scale(1.1);
+            background: rgba(255,255,255,0.25);
+            transform: scale(1.05);
         }
 
         .modal-title {
             font-family: 'El Messiri', serif;
-            font-size: 30px;
-            margin-bottom: 5px;
+            font-size: 24px;
+            margin-bottom: 4px;
         }
 
         .modal-body {
-            padding: 35px 25px;
+            padding: 25px 18px;
         }
 
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 18px;
         }
 
         .form-label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 6px;
             font-weight: 700;
             color: var(--primary-dark);
-            font-size: 15px;
+            font-size: 13px;
         }
 
         .form-label i {
             color: var(--secondary);
-            margin-left: 8px;
+            margin-left: 5px;
         }
 
         .form-control, .form-select {
             width: 100%;
-            padding: 15px 18px;
+            padding: 11px 14px;
             border: 2px solid var(--light-gray);
-            border-radius: 16px;
-            font-size: 15px;
+            border-radius: 12px;
+            font-size: 13px;
             background: var(--light);
             transition: 0.2s;
         }
@@ -1267,44 +1300,44 @@
             outline: none;
             border-color: var(--secondary);
             background: white;
-            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
         }
 
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 10px;
         }
 
         .radio-group {
             display: flex;
-            gap: 25px;
-            margin-top: 10px;
+            gap: 18px;
+            margin-top: 6px;
         }
 
         .radio-label {
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 15px;
+            gap: 5px;
+            font-size: 13px;
             cursor: pointer;
         }
 
         .checkbox-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 10px;
+            gap: 8px;
+            margin-top: 6px;
         }
 
         .checkbox-label {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             background: var(--light);
-            padding: 10px 18px;
-            border-radius: 40px;
-            font-size: 14px;
+            padding: 6px 12px;
+            border-radius: 25px;
+            font-size: 12px;
             cursor: pointer;
             border: 1px solid var(--light-gray);
             transition: 0.2s;
@@ -1317,19 +1350,19 @@
 
         .submit-btn {
             width: 100%;
-            padding: 18px;
+            padding: 14px;
             background: var(--primary-gradient);
             color: white;
             border: none;
-            border-radius: 20px;
-            font-size: 18px;
+            border-radius: 16px;
+            font-size: 15px;
             font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            margin-top: 25px;
+            gap: 8px;
+            margin-top: 18px;
             transition: 0.3s;
             border: 1px solid var(--secondary);
         }
@@ -1342,8 +1375,8 @@
         .app-footer {
             background: var(--dark);
             color: white;
-            padding: 50px 20px 25px;
-            margin-top: 60px;
+            padding: 35px 20px 18px;
+            margin-top: 45px;
         }
 
         .footer-content {
@@ -1352,16 +1385,16 @@
 
         .footer-logo {
             font-family: 'El Messiri', serif;
-            font-size: 28px;
+            font-size: 22px;
             color: var(--secondary);
-            margin-bottom: 15px;
+            margin-bottom: 8px;
         }
 
         .copyright {
-            font-size: 14px;
+            font-size: 11px;
             opacity: 0.7;
-            margin-top: 30px;
-            padding-top: 25px;
+            margin-top: 22px;
+            padding-top: 18px;
             border-top: 1px solid rgba(255,255,255,0.1);
         }
 
@@ -1375,15 +1408,15 @@
 
         @media (max-width: 400px) {
             .families-grid {
-                gap: 15px;
+                gap: 10px;
             }
             
             .family-image {
-                height: 150px;
+                height: 130px;
             }
             
             .product-image {
-                height: 120px;
+                height: 100px;
             }
             
             .profile-header {
@@ -1394,6 +1427,368 @@
             .contact-grid {
                 justify-content: center;
             }
+        }
+
+        /* أنماط صفحة تفاصيل المنتج */
+        .product-detail-page .page-header {
+            padding: 30px 20px;
+        }
+
+        .product-gallery {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 18px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--light-gray);
+        }
+
+        .product-main-image {
+            width: 100%;
+            height: 260px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(145deg, #f8f8f8, #ffffff);
+            padding: 18px;
+            border-bottom: 1px solid var(--light-gray);
+            cursor: pointer;
+        }
+
+        .product-main-image img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .thumbnail-slider {
+            display: flex;
+            gap: 6px;
+            padding: 10px;
+            overflow-x: auto;
+            background: #fafafa;
+        }
+
+        .thumbnail-item {
+            width: 65px;
+            height: 65px;
+            flex-shrink: 0;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: 0.2s;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+        }
+
+        .thumbnail-item.active {
+            border-color: var(--secondary);
+            transform: scale(1.05);
+        }
+
+        .thumbnail-item img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 5px;
+        }
+
+        .product-detail-info {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 18px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--light-gray);
+        }
+
+        .product-detail-category {
+            display: inline-block;
+            background: var(--light);
+            padding: 5px 13px;
+            border-radius: 22px;
+            font-size: 12px;
+            color: var(--primary-dark);
+            font-weight: 600;
+            margin-bottom: 10px;
+            border: 1px solid var(--light-gray);
+        }
+
+        .product-detail-name {
+            font-family: 'El Messiri', serif;
+            font-size: 24px;
+            color: var(--primary-dark);
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .product-detail-description {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--dark);
+            margin-bottom: 18px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .product-details-title {
+            font-family: 'El Messiri', serif;
+            font-size: 18px;
+            color: var(--primary-dark);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .product-details-title i {
+            color: var(--secondary);
+        }
+
+        .product-details-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .product-details-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--dark);
+        }
+
+        .product-details-list li:last-child {
+            border-bottom: none;
+        }
+
+        .product-details-list li i {
+            color: var(--secondary);
+            font-size: 13px;
+            width: 18px;
+        }
+
+        .seller-info-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 18px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--light-gray);
+        }
+
+        .seller-info-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .seller-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .seller-info h3 {
+            font-family: 'El Messiri', serif;
+            font-size: 16px;
+            color: var(--primary-dark);
+            margin-bottom: 3px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .seller-info h3 i {
+            color: var(--secondary);
+            font-size: 12px;
+        }
+
+        .seller-meta {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .seller-meta i {
+            color: var(--secondary);
+        }
+
+        .seller-contact-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: flex-start;
+        }
+
+        .seller-contact-item {
+            background: white;
+            border: 1px solid var(--light-gray);
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.25s;
+            box-shadow: var(--card-shadow);
+        }
+
+        .seller-contact-item:hover {
+            border-color: var(--secondary);
+            transform: scale(1.1) rotate(3deg);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .seller-contact-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: white;
+        }
+
+        .similar-products-section {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 18px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--light-gray);
+        }
+
+        .similar-products-title {
+            font-family: 'El Messiri', serif;
+            font-size: 18px;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .similar-products-title i {
+            color: var(--secondary);
+        }
+
+        .similar-products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .similar-product-card {
+            background: var(--light);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: 0.25s;
+            border: 1px solid var(--light-gray);
+        }
+
+        .similar-product-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--secondary);
+            box-shadow: var(--card-shadow);
+        }
+
+        .similar-product-image {
+            height: 90px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .similar-product-image img {
+            max-width: 90%;
+            max-height: 90%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .similar-product-info {
+            padding: 8px;
+            text-align: center;
+        }
+
+        .similar-product-info h4 {
+            font-family: 'El Messiri', serif;
+            font-size: 12px;
+            color: var(--primary-dark);
+            margin-bottom: 2px;
+        }
+
+        .zoom-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .zoom-modal.active {
+            display: flex;
+        }
+
+        .zoom-modal img {
+            max-width: 95%;
+            max-height: 95%;
+            border-radius: 8px;
+        }
+
+        .close-zoom {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .close-zoom:hover {
+            background: rgba(255,255,255,0.25);
         }
     </style>
 </head>
@@ -1422,9 +1817,9 @@
 
     <header class="app-header">
         <div class="header-container">
-            <div class="logo-section" onclick="navigateTo('/')">
+            <div class="logo-section" onclick="scrollToTopAndHome()">
                 <div class="logo-icon">
-                    <img src="logo.png" alt="سوق المشاريع">
+                    <img src="logo.png" alt="سوق المشاريع" loading="lazy">
                 </div>
                 <div class="logo-text">
                     <h1>سوق المشاريع</h1>
@@ -1453,6 +1848,7 @@
     </header>
 
     <div class="page-container">
+        <!-- الصفحة الرئيسية -->
         <div id="home-page" class="page">
             <section class="hero-section">
                 <div class="hero-content">
@@ -1515,8 +1911,12 @@
             </section>
         </div>
 
+        <!-- صفحة المشاريع -->
         <div id="families-page" class="page" style="display: none;">
-            <div class="page-header">
+            <div class="page-header with-back">
+                <div class="back-button" onclick="goBack()">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
                 <h1 class="page-title" id="familiesPageTitle">المشاريع المنزلية</h1>
                 <p class="page-subtitle" id="familiesPageSubtitle">استعرض المشاريع ومنتجاتها</p>
             </div>
@@ -1534,8 +1934,12 @@
             </div>
         </div>
 
+        <!-- صفحة منتجات المشروع -->
         <div id="products-page" class="page" style="display: none;">
-            <div class="page-header">
+            <div class="page-header with-back">
+                <div class="back-button" onclick="goBack()">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
                 <h1 class="page-title" id="productsPageTitle">المنتجات</h1>
                 <p class="page-subtitle" id="productsPageSubtitle"></p>
             </div>
@@ -1549,8 +1953,23 @@
                 <div id="contactSectionBottom" class="contact-section-bottom"></div>
             </div>
         </div>
+
+        <!-- صفحة تفاصيل المنتج -->
+        <div id="product-detail-page" class="page product-detail-page" style="display: none;">
+            <div class="page-header with-back">
+                <div class="back-button" onclick="goBack()">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                <h1 class="page-title" id="productDetailTitle">تفاصيل المنتج</h1>
+                <p class="page-subtitle" id="productDetailSubtitle"></p>
+            </div>
+            <div class="container" id="productDetailContainer">
+                <!-- المحتوى يتحط هنا بالجافاسكريبت -->
+            </div>
+        </div>
     </div>
 
+    <!-- مودال تسجيل مشروع -->
     <div class="modal" id="registerModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1558,10 +1977,11 @@
                     <i class="fas fa-times"></i>
                 </button>
                 <h2 class="modal-title">تسجيل مشروع جديد</h2>
-                <p style="font-size: 15px; opacity: 0.9;">انضم إلى منصة سوق المشاريع</p>
+                <p style="font-size: 13px; opacity: 0.9;">انضم إلى منصة سوق المشاريع</p>
             </div>
             <div class="modal-body">
-                <form id="registerForm" action="https://script.google.com/macros/s/AKfycbxTrcYJ-n3J-6mOxVYssamfpFho0GNMQdDr4TycrR7oiNDxuLVuOXYmk2jI4mzMTBEo/exec" method="POST" onsubmit="return validateFamilyForm(event)">
+                <form id="registerForm" action="https://script.google.com/macros/s/AKfycbxN1-rpGi-fPDQehz9ZAqoSJBvkEg1hSXNaCz3zIU0kOH2rQQl9StPS_ogTwm26BYMS/exec" method="POST" onsubmit="return validateFamilyForm(event)">
+                    <!-- نموذج التسجيل -->
                     <div class="form-group">
                         <label class="form-label"><i class="fas fa-users"></i> اسم المشروع</label>
                         <input type="text" class="form-control" name="family_name" placeholder="مثال: مشروع البيت" required>
@@ -1649,7 +2069,7 @@
                         <i class="fas fa-paper-plane"></i>
                         إرسال طلب التسجيل
                     </button>
-                    <p style="margin-top: 16px; font-size: 13px; color: var(--gray); text-align: center;">
+                    <p style="margin-top: 12px; font-size: 11px; color: var(--gray); text-align: center;">
                         سيتم التواصل معكم خلال 24 ساعة
                     </p>
                 </form>
@@ -1657,51 +2077,115 @@
         </div>
     </div>
 
+    <!-- مودال تكبير الصورة -->
+    <div class="zoom-modal" id="zoomModal" onclick="this.classList.remove('active')">
+        <div class="close-zoom"><i class="fas fa-times"></i></div>
+        <img id="zoomImage" src="" alt="">
+    </div>
+
     <footer class="app-footer">
         <div class="footer-content">
             <div class="footer-logo">سوق المشاريع</div>
-            <p style="font-size: 14px; opacity: 0.9;">منصة المشاريع المنزلية الإماراتية</p>
+            <p style="font-size: 12px; opacity: 0.9;">منصة المشاريع المنزلية الإماراتية</p>
             <div class="copyright">
-                © 2026 سوق المشاريع - جميع الحقوق محفوظة
+                © 2025 سوق المشاريع - جميع الحقوق محفوظة
             </div>
         </div>
     </footer>
 
     <script>
+        // ==================== البيانات ====================
         const familiesData = [
             {
-             id: 1,
-             name: "cardsplayuae",
-             emirate: "أبوظبي",
-             description: "ترفيه",
-             longDescription: "اوراق لعب فاخرة - تجربة احترافية في كل لعبة.",
-             image: "cardsplayuae.png",
-             phone: "",
-             whatsapp: "",
-             email: "",
-             sell_point: "instacardsplayuae",
-             adra_license: "",
-             coverage: "الإمارات",
-             productsCount: 3,
-             rating: "...",
-             badges: ["ترفيه"],
-             category: "ترفيه",
-             products: [
-               { name: "بطاقات بيضاء", description: "بطاقات قوية وجودة عالية", category: "ترفيه", image: "card1.png" },
-               { name: "بطاقات زرقاء", description: "تصميم عصري وجذاب", category: "ترفيه", image: "card2.png" },
-               { name: "بطاقات خضراء", description: "مقاومة للماء والاستخدام اليومي", category: "ترفيه", image: "card3.png" },
-               ]
-            },
+                id: 1,
+                name: "cardsplayuae",
+                emirate: "أبوظبي",
+                description: "ترفيه",
+                longDescription: "اوراق لعب فاخرة - تجربة احترافية في كل لعبة.",
+                image: "cardsplayuae.png",
+                phone: "+971501234567",
+                whatsapp: "+971501234567",
+                email: "info@cardsplayuae.com",
+                sell_point: "@cardsplayuae",
+                adra_license: "نعم",
+                coverage: "الإمارات",
+                badges: ["ترفيه", "جودة عالية"],
+                category: "ترفيه",
+                products: [
+                    {
+                        id: "p1",
+                        name: "بطاقات بيضاء كلاسيك",
+                        description: "بطاقات قوية وجودة عالية",
+                        longDescription: "بطاقات لعب احترافية فاخرة مصنوعة من أجود أنواع الورق المقوى، مقاومة للثني والتمزق. مناسبة للمحترفين والهواة على حد سواء. تصميم كلاسيكي أنيق مع لمسات عصرية. تأتي في علبة هدايا فاخرة.",
+                        category: "ترفيه",
+                        mainImage: "card1.png",
+                        images: [
+                            "card1.png",
+                            "card2.png",
+                            "card3.png",
+                            "cardsplayuae.png"
+                        ],
+                        details: [
+                            "مكونة من 52 بطاقة + 2 بطاقة جوكر",
+                            "ورق فاخر مقاوم للماء والانزلاق",
+                            "تغليف هدايا فاخر",
+                            "صناعة يدوية بجودة عالية",
+                            "ضمان لمدة سنة ضد عيوب الصناعة"
+                        ]
+                    },
+                    {
+                        id: "p2",
+                        name: "بطاقات زرقاء فاخرة",
+                        description: "تصميم عصري وجذاب",
+                        longDescription: "بطاقات زرقاء فاخرة بتصميم عصري جذاب، تناسب جميع الأعمار والمناسبات. خفيفة الوزن وسهلة الحمل مع علبة حفظ أنيقة.",
+                        category: "ترفيه",
+                        mainImage: "card2.png",
+                        images: [
+                            "card2.png",
+                            "card1.png",
+                            "card3.png"
+                        ],
+                        details: [
+                            "52 بطاقة + بطاقتين جوكر",
+                            "تصميم أزرق عصري",
+                            "علبة حفظ أنيقة مع مرآة صغيرة",
+                            "مقاومة للخدش"
+                        ]
+                    },
+                    {
+                        id: "p3",
+                        name: "بطاقات خضراء",
+                        description: "مقاومة للماء والاستخدام اليومي",
+                        longDescription: "بطاقات خضراء عملية مقاومة للماء والرطوبة، مثالية للاستخدام اليومي والرحلات. خامة قوية تتحمل الظروف الصعبة.",
+                        category: "ترفيه",
+                        mainImage: "card3.png",
+                        images: [
+                            "card3.png",
+                            "card1.png",
+                            "card2.png"
+                        ],
+                        details: [
+                            "52 بطاقة + جوكر",
+                            "مقاومة للماء",
+                            "خامة قوية",
+                            "علبة سفر محكمة"
+                        ]
+                    }
+                ]
+            }
         ];
 
+        // ==================== حالة التطبيق ====================
         const appState = {
             currentPage: 'home',
             currentEmirate: 'all',
             currentCategory: 'all',
             currentFamilyId: null,
+            currentProductId: null,
             searchQuery: ''
         };
 
+        // ==================== التهيئة ====================
         document.addEventListener('DOMContentLoaded', function() {
             initEmiratesChips();
             initCategoriesChips();
@@ -1709,6 +2193,7 @@
             window.addEventListener('hashchange', handleHashChange);
         });
 
+        // ==================== التنقل ====================
         function handleHashChange() {
             const hash = window.location.hash.slice(1) || '/';
             const parts = hash.split('/').filter(p => p !== '');
@@ -1743,6 +2228,10 @@
                 } else {
                     navigateTo('/');
                 }
+            } else if (parts[0] === 'product' && parts[1] && parts[2]) {
+                const familyId = parseInt(parts[1]);
+                const productId = parts[2];
+                showProductDetail(familyId, productId, false);
             } else {
                 navigateTo('/');
             }
@@ -1752,10 +2241,34 @@
             window.location.hash = path;
         }
 
+        function goBack() {
+            window.history.back();
+        }
+
+        function scrollToTopAndHome() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            navigateTo('/');
+        }
+
         function toggleMenu() {
             document.getElementById('navMenu').classList.toggle('active');
         }
 
+        // ==================== الصفحات ====================
+        function showPage(page) {
+            document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+            document.getElementById(`${page}-page`).style.display = 'block';
+            appState.currentPage = page;
+            
+            if (page === 'families') {
+                const searchInput = document.getElementById('familiesSearch');
+                if (searchInput) {
+                    searchInput.value = appState.searchQuery || '';
+                }
+            }
+        }
+
+        // ==================== فلاتر الإمارات ====================
         function initEmiratesChips() {
             const container = document.getElementById('emiratesScroll');
             if (!container) return;
@@ -1772,14 +2285,14 @@
             ];
 
             container.innerHTML = emirates.map(e => `
-                <div class="emirate-chip ${e.id === appState.currentEmirate ? 'active' : ''}" onclick="filterByEmirate('${e.id}', this)">
+                <div class="emirate-chip ${e.id === appState.currentEmirate ? 'active' : ''}" onclick="filterByEmirate('${e.id}')">
                     <i class="${e.icon}"></i>
                     <span>${e.name}</span>
                 </div>
             `).join('');
         }
 
-        function filterByEmirate(emirateId, element) {
+        function filterByEmirate(emirateId) {
             appState.currentEmirate = emirateId;
             appState.currentCategory = 'all';
             appState.searchQuery = '';
@@ -1805,6 +2318,7 @@
             });
         }
 
+        // ==================== فلاتر التصنيفات ====================
         function initCategoriesChips() {
             const container = document.getElementById('categoriesScroll');
             if (!container) return;
@@ -1853,6 +2367,20 @@
             });
         }
 
+        // ==================== البحث ====================
+        function performHomeSearch() {
+            const query = document.getElementById('homeSearch').value.trim();
+            appState.searchQuery = query;
+            navigateTo('/families/emirate/all');
+            setTimeout(() => {
+                const searchInput = document.getElementById('familiesSearch');
+                if (searchInput) {
+                    searchInput.value = query;
+                }
+                renderFamilies();
+            }, 50);
+        }
+
         function performFamiliesSearch() {
             const input = document.getElementById('familiesSearch');
             if (!input) return;
@@ -1860,6 +2388,7 @@
             renderFamilies();
         }
 
+        // ==================== عرض المشاريع ====================
         function renderFamilies() {
             let filtered = [...familiesData];
             
@@ -1886,7 +2415,7 @@
             const grid = document.getElementById('familiesGrid');
             
             if (filtered.length === 0) {
-                grid.innerHTML = '<div style="grid-column: span 2; text-align: center; padding: 50px; background: white; border-radius: 25px;">لا توجد مشاريع</div>';
+                grid.innerHTML = '<div style="grid-column: span 2; text-align: center; padding: 35px; background: white; border-radius: 18px;">لا توجد مشاريع</div>';
                 return;
             }
             
@@ -1902,9 +2431,7 @@
                     <div class="family-content">
                         <div class="family-header">
                             <h3 class="family-name">${family.name}</h3>
-                            <div class="family-rating">
-                                <i class="fas fa-star"></i> ${family.rating}
-                            </div>
+                            ${family.adra_license === 'نعم' ? '<i class="fas fa-check-circle verified-icon"></i>' : ''}
                         </div>
                         <div class="family-location">
                             <i class="fas fa-map-marker-alt"></i> ${family.emirate}
@@ -1917,68 +2444,7 @@
             `).join('');
         }
 
-        function scrollToContact() {
-            const contactSection = document.getElementById('contactSectionBottom');
-            if (contactSection) {
-                contactSection.scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        }
-
-        function detectSellPointType(value) {
-            if (!value) return { type: 'unknown', icon: 'fa-link', bg: 'website-bg', url: null };
-            
-            const cleanValue = value.toLowerCase().trim();
-            
-            const platforms = [
-                { keywords: ['instagram.com/', 'insta'], type: 'instagram', icon: 'fa-instagram', bg: 'instagram-bg', buildUrl: (val) => {
-                    if (val.startsWith('http')) return val;
-                    const username = val.replace(/^@/, '').replace(/instagram.com\/|insta/g, '').trim();
-                    return `https://instagram.com/${username}`;
-                }},
-                { keywords: ['tiktok.com/@', 'tiktok'], type: 'tiktok', icon: 'fa-tiktok', bg: 'tiktok-bg', buildUrl: (val) => {
-                    if (val.startsWith('http')) return val;
-                    const username = val.replace(/^@/, '').replace(/tiktok.com\/@|tiktok/g, '').trim();
-                    return `https://tiktok.com/@${username}`;
-                }},
-                { keywords: ['snapchat.com/add/', 'snapchat', 'سناب'], type: 'snapchat', icon: 'fa-snapchat', bg: 'snapchat-bg', buildUrl: (val) => {
-                    if (val.startsWith('http')) return val;
-                    const username = val.replace(/^@/, '').replace(/snapchat.com\/add\/|snapchat|سناب/g, '').trim();
-                    return `https://snapchat.com/add/${username}`;
-                }},
-                { keywords: ['twitter.com/', 'x.com', 'twitter'], type: 'twitter', icon: 'fa-twitter', bg: 'twitter-bg', buildUrl: (val) => {
-                    if (val.startsWith('http')) return val;
-                    const username = val.replace(/^@/, '').replace(/twitter.com\/|x.com\/|twitter/g, '').trim();
-                    return `https://twitter.com/${username}`;
-                }},
-                { keywords: ['t.me/', 'telegram'], type: 'telegram', icon: 'fa-telegram', bg: 'telegram-bg', buildUrl: (val) => {
-                    if (val.startsWith('http')) return val;
-                    const username = val.replace(/^@/, '').replace(/t.me\/|telegram/g, '').trim();
-                    return `https://t.me/${username}`;
-                }}
-            ];
-
-            for (const platform of platforms) {
-                if (platform.keywords.some(keyword => cleanValue.includes(keyword))) {
-                    return {
-                        type: platform.type,
-                        icon: platform.icon,
-                        bg: platform.bg,
-                        url: platform.buildUrl(cleanValue)
-                    };
-                }
-            }
-
-            return {
-                type: 'website',
-                icon: 'fa-globe',
-                bg: 'website-bg',
-                url: cleanValue.startsWith('http') ? cleanValue : `https://${cleanValue}`
-            };
-        }
-
+        // ==================== عرض منتجات المشروع ====================
         function showFamilyProducts(id, updateHash = true) {
             const family = familiesData.find(f => f.id === id);
             if (!family) return;
@@ -1993,24 +2459,22 @@
             document.getElementById('productsPageTitle').textContent = family.name;
             document.getElementById('productsPageSubtitle').textContent = family.emirate;
             
-            let coverageClass = '';
-            if (family.coverage === 'العالم') coverageClass = 'global';
-            else if (family.coverage === 'دول الخليج') coverageClass = 'gcc';
-            else if (family.coverage === 'الإمارات') coverageClass = 'uae';
-            
             document.getElementById('familyProfileContainer').innerHTML = `
                 <div class="family-profile">
                     <div class="profile-header">
                         <div class="profile-avatar" style="background-image: url('${family.image}'); background-size: cover; background-position: center;"></div>
                         <div>
-                            <h2 class="profile-name">${family.name}</h2>
+                            <h2 class="profile-name">
+                                ${family.name}
+                                ${family.adra_license === 'نعم' ? '<i class="fas fa-check-circle" title="مشروع مرخص"></i>' : ''}
+                            </h2>
                             <div class="profile-location">
                                 <i class="fas fa-map-marker-alt"></i> ${family.emirate}
                             </div>
                         </div>
                     </div>
                     <div class="profile-body">
-                        <p style="font-size: 15px; margin-bottom: 20px;">${family.longDescription || family.description}</p>
+                        <p style="font-size: 14px; margin-bottom: 15px;">${family.longDescription || family.description}</p>
                         
                         <div class="coverage-section">
                             <div class="coverage-title">
@@ -2018,11 +2482,10 @@
                                 التغطية
                             </div>
                             <div class="coverage-tags">
-                                <div class="coverage-tag ${coverageClass}">
-                                    <i class="fas ${family.coverage === 'العالم' ? 'fa-earth-asia' : (family.coverage === 'دول الخليج' ? 'fa-flag' : 'fa-map-marker-alt')}"></i>
+                                <div class="coverage-tag">
+                                    <i class="fas fa-map-marker-alt"></i>
                                     ${family.coverage || 'الإمارات'}
                                 </div>
-                                ${family.adra_license === 'نعم' ? '<div class="coverage-tag license-tag"><i class="fas fa-check-circle"></i> مرخص من ADRA</div>' : ''}
                             </div>
                         </div>
                     </div>
@@ -2031,9 +2494,9 @@
             
             document.getElementById('productsCount').textContent = `${family.products.length} منتج`;
             document.getElementById('productsGrid').innerHTML = family.products.map(p => `
-                <div class="product-card" onclick="scrollToContact()">
+                <div class="product-card" onclick="navigateTo('/product/${family.id}/${p.id}')">
                     <div class="product-image">
-                        <img src="${p.image}" alt="${p.name}" loading="lazy">
+                        <img src="${p.mainImage || p.image}" alt="${p.name}" loading="lazy">
                     </div>
                     <div class="product-content">
                         <h3 class="product-name">${p.name}</h3>
@@ -2092,6 +2555,229 @@
             showPage('products');
         }
 
+        // ==================== صفحة تفاصيل المنتج ====================
+        function showProductDetail(familyId, productId, updateHash = true) {
+            const family = familiesData.find(f => f.id === familyId);
+            if (!family) return;
+            
+            const product = family.products.find(p => p.id === productId);
+            if (!product) return;
+            
+            appState.currentFamilyId = familyId;
+            appState.currentProductId = productId;
+            
+            if (updateHash) {
+                navigateTo(`/product/${familyId}/${productId}`);
+                return;
+            }
+            
+            document.getElementById('productDetailTitle').textContent = product.name;
+            document.getElementById('productDetailSubtitle').textContent = family.name;
+            
+            // بناء معرض الصور
+            const images = product.images || [product.mainImage || product.image];
+            const thumbnailsHtml = images.map((img, index) => `
+                <div class="thumbnail-item ${index === 0 ? 'active' : ''}" onclick="changeProductMainImage('${img}', this)">
+                    <img src="${img}" alt="" loading="lazy">
+                </div>
+            `).join('');
+            
+            // بناء قائمة المواصفات
+            const detailsHtml = product.details ? product.details.map(detail => `
+                <li><i class="fas fa-check-circle"></i> ${detail}</li>
+            `).join('') : '';
+            
+            // بناء منتجات مشابهة
+            const similarProducts = family.products.filter(p => p.id !== productId).slice(0, 4);
+            const similarHtml = similarProducts.map(p => `
+                <div class="similar-product-card" onclick="showProductDetail(${familyId}, '${p.id}')">
+                    <div class="similar-product-image">
+                        <img src="${p.mainImage || p.image}" alt="${p.name}" loading="lazy">
+                    </div>
+                    <div class="similar-product-info">
+                        <h4>${p.name}</h4>
+                    </div>
+                </div>
+            `).join('');
+            
+            // بناء معلومات التواصل للبائع
+            let sellerContactHtml = '';
+            
+            if (family.phone && family.phone.trim() !== '') {
+                sellerContactHtml += `
+                    <a href="tel:${family.phone}" class="seller-contact-item" title="اتصال">
+                        <div class="seller-contact-icon phone-bg"><i class="fas fa-phone"></i></div>
+                    </a>
+                `;
+            }
+            
+            if (family.whatsapp && family.whatsapp.trim() !== '') {
+                sellerContactHtml += `
+                    <a href="https://wa.me/${family.whatsapp.replace(/[^0-9]/g, '')}" target="_blank" class="seller-contact-item" title="واتساب">
+                        <div class="seller-contact-icon whatsapp-bg"><i class="fab fa-whatsapp"></i></div>
+                    </a>
+                `;
+            }
+            
+            if (family.email && family.email.trim() !== '') {
+                sellerContactHtml += `
+                    <a href="mailto:${family.email}" class="seller-contact-item" title="البريد الإلكتروني">
+                        <div class="seller-contact-icon email-bg"><i class="fas fa-envelope"></i></div>
+                    </a>
+                `;
+            }
+            
+            if (family.sell_point && family.sell_point.trim() !== '') {
+                const sellPointInfo = detectSellPointType(family.sell_point);
+                if (sellPointInfo.url) {
+                    sellerContactHtml += `
+                        <a href="${sellPointInfo.url}" target="_blank" class="seller-contact-item" title="${sellPointInfo.type}">
+                            <div class="seller-contact-icon ${sellPointInfo.bg}"><i class="fab ${sellPointInfo.icon}"></i></div>
+                        </a>
+                    `;
+                }
+            }
+            
+            const html = `
+                <!-- معرض الصور -->
+                <div class="product-gallery">
+                    <div class="product-main-image" onclick="openZoom('${images[0]}')">
+                        <img src="${images[0]}" alt="${product.name}" id="productMainImage" loading="lazy">
+                    </div>
+                    <div class="thumbnail-slider">
+                        ${thumbnailsHtml}
+                    </div>
+                </div>
+
+                <!-- معلومات المنتج -->
+                <div class="product-detail-info">
+                    <span class="product-detail-category">
+                        <i class="fas fa-tag"></i> ${product.category}
+                    </span>
+                    <h1 class="product-detail-name">${product.name}</h1>
+                    <p class="product-detail-description">${product.longDescription || product.description}</p>
+                    
+                    <h3 class="product-details-title">
+                        <i class="fas fa-list-ul"></i>
+                        المواصفات والتفاصيل
+                    </h3>
+                    <ul class="product-details-list">
+                        ${detailsHtml}
+                    </ul>
+                </div>
+
+                <!-- معلومات البائع مع التواصل -->
+                <div class="seller-info-card">
+                    <div class="seller-info-header">
+                        <div class="seller-avatar">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <div class="seller-info">
+                            <h3>
+                                ${family.name}
+                                ${family.adra_license === 'نعم' ? '<i class="fas fa-check-circle" style="color: var(--secondary);" title="مشروع مرخص"></i>' : ''}
+                            </h3>
+                            <div class="seller-meta">
+                                <i class="fas fa-map-marker-alt"></i> ${family.emirate}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    ${sellerContactHtml ? `
+                        <div class="seller-contact-grid">
+                            ${sellerContactHtml}
+                        </div>
+                    ` : ''}
+                </div>
+
+                <!-- منتجات مشابهة -->
+                ${similarProducts.length > 0 ? `
+                    <div class="similar-products-section">
+                        <h3 class="similar-products-title">
+                            <i class="fas fa-boxes"></i>
+                            منتجات مشابهة
+                        </h3>
+                        <div class="similar-products-grid">
+                            ${similarHtml}
+                        </div>
+                    </div>
+                ` : ''}
+            `;
+            
+            document.getElementById('productDetailContainer').innerHTML = html;
+            showPage('product-detail');
+        }
+
+        // تغيير الصورة الرئيسية
+        function changeProductMainImage(src, element) {
+            document.getElementById('productMainImage').src = src;
+            
+            document.querySelectorAll('.thumbnail-item').forEach(thumb => {
+                thumb.classList.remove('active');
+            });
+            element.classList.add('active');
+        }
+
+        // تكبير الصورة
+        function openZoom(src) {
+            document.getElementById('zoomImage').src = src;
+            document.getElementById('zoomModal').classList.add('active');
+        }
+
+        // ==================== كشف نوع نقطة البيع ====================
+        function detectSellPointType(value) {
+            if (!value) return { type: 'unknown', icon: 'fa-link', bg: 'website-bg', url: null };
+            
+            const cleanValue = value.toLowerCase().trim();
+            
+            const platforms = [
+                { keywords: ['instagram.com/', 'insta'], type: 'instagram', icon: 'fa-instagram', bg: 'instagram-bg', buildUrl: (val) => {
+                    if (val.startsWith('http')) return val;
+                    const username = val.replace(/^@/, '').replace(/instagram.com\/|insta/g, '').trim();
+                    return `https://instagram.com/${username}`;
+                }},
+                { keywords: ['tiktok.com/@', 'tiktok'], type: 'tiktok', icon: 'fa-tiktok', bg: 'tiktok-bg', buildUrl: (val) => {
+                    if (val.startsWith('http')) return val;
+                    const username = val.replace(/^@/, '').replace(/tiktok.com\/@|tiktok/g, '').trim();
+                    return `https://tiktok.com/@${username}`;
+                }},
+                { keywords: ['snapchat.com/add/', 'snapchat', 'سناب'], type: 'snapchat', icon: 'fa-snapchat', bg: 'snapchat-bg', buildUrl: (val) => {
+                    if (val.startsWith('http')) return val;
+                    const username = val.replace(/^@/, '').replace(/snapchat.com\/add\/|snapchat|سناب/g, '').trim();
+                    return `https://snapchat.com/add/${username}`;
+                }},
+                { keywords: ['twitter.com/', 'x.com', 'twitter'], type: 'twitter', icon: 'fa-twitter', bg: 'twitter-bg', buildUrl: (val) => {
+                    if (val.startsWith('http')) return val;
+                    const username = val.replace(/^@/, '').replace(/twitter.com\/|x.com\/|twitter/g, '').trim();
+                    return `https://twitter.com/${username}`;
+                }},
+                { keywords: ['t.me/', 'telegram'], type: 'telegram', icon: 'fa-telegram', bg: 'telegram-bg', buildUrl: (val) => {
+                    if (val.startsWith('http')) return val;
+                    const username = val.replace(/^@/, '').replace(/t.me\/|telegram/g, '').trim();
+                    return `https://t.me/${username}`;
+                }}
+            ];
+
+            for (const platform of platforms) {
+                if (platform.keywords.some(keyword => cleanValue.includes(keyword))) {
+                    return {
+                        type: platform.type,
+                        icon: platform.icon,
+                        bg: platform.bg,
+                        url: platform.buildUrl(cleanValue)
+                    };
+                }
+            }
+
+            return {
+                type: 'website',
+                icon: 'fa-globe',
+                bg: 'website-bg',
+                url: cleanValue.startsWith('http') ? cleanValue : `https://${cleanValue}`
+            };
+        }
+
+        // ==================== SEO ====================
         function addJsonLd(family) {
             const existingScript = document.getElementById('json-ld-family');
             if (existingScript) existingScript.remove();
@@ -2118,32 +2804,24 @@
             document.head.appendChild(script);
         }
 
-        function performHomeSearch() {
-            const query = document.getElementById('homeSearch').value.trim();
-            appState.searchQuery = query;
-            navigateTo('/families/emirate/all');
-            setTimeout(() => {
-                const searchInput = document.getElementById('familiesSearch');
-                if (searchInput) {
-                    searchInput.value = query;
-                }
-                renderFamilies();
-            }, 100);
-        }
-
-        function showPage(page) {
-            document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-            document.getElementById(`${page}-page`).style.display = 'block';
-            appState.currentPage = page;
-            
-            if (page === 'families') {
-                const searchInput = document.getElementById('familiesSearch');
-                if (searchInput) {
-                    searchInput.value = appState.searchQuery || '';
-                }
+        // ==================== منبثقات ====================
+        function showInstructionPopupOnce() {
+            const popup = document.getElementById('instructionPopup');
+            if (!sessionStorage.getItem('instructionPopupShown')) {
+                popup.classList.add('show');
+                sessionStorage.setItem('instructionPopupShown', 'true');
+                
+                setTimeout(() => {
+                    popup.classList.remove('show');
+                }, 4000);
             }
         }
 
+        function closeInstructionPopup() {
+            document.getElementById('instructionPopup').classList.remove('show');
+        }
+
+        // ==================== نموذج التسجيل ====================
         function showRegisterForm() {
             document.getElementById('registerModal').classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -2154,26 +2832,22 @@
             document.body.style.overflow = 'auto';
         }
 
-        // دالة مبسطة للغاية - هذا هو الحل النهائي
         function validateFamilyForm(event) {
             event.preventDefault();
             
             try {
-                // التحقق من اختيار الترخيص
                 const adraLicense = document.querySelector('input[name="adra_license"]:checked');
                 if (!adraLicense) {
                     alert("❌ يرجى اختيار حالة الترخيص");
                     return false;
                 }
                 
-                // التحقق من اختيار تصنيف واحد على الأقل
                 const categories = document.querySelectorAll('input[name="category[]"]:checked');
                 if (categories.length === 0) {
                     alert("❌ يرجى اختيار تصنيف واحد على الأقل");
                     return false;
                 }
                 
-                // إرسال النموذج مباشرة
                 event.target.submit();
                 
             } catch (error) {
@@ -2185,27 +2859,26 @@
             return false;
         }
 
-        function showInstructionPopupOnce() {
-            const popup = document.getElementById('instructionPopup');
-            if (!sessionStorage.getItem('instructionPopupShown')) {
-                popup.classList.add('show');
-                sessionStorage.setItem('instructionPopupShown', 'true');
-                
-                setTimeout(() => {
-                    popup.classList.remove('show');
-                }, 5000);
+        // ==================== دوال مساعدة ====================
+        function scrollToContact() {
+            const contactSection = document.getElementById('contactSectionBottom');
+            if (contactSection) {
+                contactSection.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             }
         }
 
-        function closeInstructionPopup() {
-            document.getElementById('instructionPopup').classList.remove('show');
-        }
-
+        // ==================== تصدير الدوال ====================
         window.toggleMenu = toggleMenu;
         window.navigateTo = navigateTo;
+        window.goBack = goBack;
+        window.scrollToTopAndHome = scrollToTopAndHome;
         window.filterByCategory = filterByCategory;
         window.filterByEmirate = filterByEmirate;
         window.showFamilyProducts = showFamilyProducts;
+        window.showProductDetail = showProductDetail;
         window.performHomeSearch = performHomeSearch;
         window.performFamiliesSearch = performFamiliesSearch;
         window.showRegisterForm = showRegisterForm;
@@ -2213,11 +2886,9 @@
         window.validateFamilyForm = validateFamilyForm;
         window.closeInstructionPopup = closeInstructionPopup;
         window.scrollToContact = scrollToContact;
+        window.openZoom = openZoom;
+        window.changeProductMainImage = changeProductMainImage;
     </script>
     <meta name="google-site-verification" content="UwEARwAkfxnW1CP0oDBEnlnKhHl2QuANOH1SF_8pvJg">
 </body>
 </html>
-
-
-
-
