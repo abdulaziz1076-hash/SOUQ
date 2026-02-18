@@ -10,38 +10,36 @@
     <link rel="icon" type="image/png" href="logo.png">
     <meta name="description" content="منصة سوق المشاريع: دليلك للمشاريع المنزلية في الإمارات. اكتشف منتجات محلية من مشاريع منزلية في دبي، أبوظبي، وجميع الإمارات.">
     <meta name="keywords" content="
-<!-- كلمات أساسية -->
 مشاريع منزلية, مشاريع منزلية في الامارات, مشاريع منزلية ناجحة, افكار مشاريع منزلية,
 منتجات منزلية, منتجات محلية, منتجات إماراتية, سوق المشاريع, دعم المشاريع المنزلية,
-
-<!-- كلمات الأسر المنتجة (إضافية) -->
 الاسر المنتجة, دعم الاسر المنتجة, منتجات الاسر المنتجة, مشاريع الاسر المنتجة,
 اسر منتجة في الامارات, اسر منتجة في دبي, اسر منتجة في ابوظبي,
 منتجات يدوية للاسر المنتجة, اكل منزلي للاسر المنتجة, حلويات الاسر المنتجة,
 مشغولات يدوية للاسر المنتجة, تمكين الاسر المنتجة, مشاريع الاسر المنتجة الناجحة,
 قائمة الاسر المنتجة, ارقام الاسر المنتجة, الاسر المنتجة المعتمدة,
-
-<!-- كلمات إضافية حسب الموقع -->
 الامارات, دبي, ابوظبي, الشارقة, عجمان, رأس الخيمة, الفجيرة, ام القيوين,
 ديرة, بر دبي, الخوانيج, مردف, العين, مدينة محمد بن زايد, الشهامة,
-
-<!-- كلمات إضافية حسب المنتجات -->
 اكل منزلي, حلويات منزلية, اكل شعبي, معجنات, قهوة, كيك, عطور, بخور, هدايا,
 اعمال يدوية, مشغولات يدوية, تذكارات, عناية بالبشرة, زيوت طبيعية, صابون,
 العاب, ترفيه, بطاقات لعب, cardsplayuae,
-
-<!-- كلمات إضافية (الدعم والتمكين) -->
 مشروعي, مشروعي المنزلي, افكار مشاريع, مشاريع صغيرة, مشاريع ناجحة, مشروع ناجح,
 دعم مشاريع, تمكين الأسر المنتجة, الأسر المنتجة, مشاريع الأسر المنتجة,
-
-<!-- كلمات إضافية تسويقية -->
 تسوق اونلاين الامارات, هدايا الامارات, مشتريات, طلب منتجات منزلية,
 محلات محلية, دعم المنتج المحلي, صنع في الامارات, منتجات يدوية,
 توصيل منتجات منزلية, منتجات رمضانية, عيديات, هدايا عيد الفطر, هدايا عيد الاضحى,
-
-<!-- كلمات إضافية للمنصة نفسها -->
 منصة الاسر المنتجة, موقع مشاريع منزلية, تطبيق مشاريع منزلية,
-تسجيل مشروع منزلي, اضف مشروعك مجانا, سجل مشروعك في الامارات
+تسجيل مشروع منزلي, اضف مشروعك مجانا, سجل مشروعك في الامارات,
+مشاريع مربحة, مشاريع ناجحة في الامارات, مشاريع صغيرة ناجحة,
+مشاريع منزلية مربحة, مشاريع نسائية, مشاريع شبابية,
+منتجات عضوية, منتجات طبيعية, منتجات خالية من المواد الحافظة,
+هدايا تذكارية, هدايا فاخرة, هدايا مخصصة, تنسيق هدايا,
+مشاريع حرفية, مشاريع يدوية, مشاريع فنية,
+مشاريع اكل شعبي, مشاريع حلويات, مشاريع معجنات,
+مشاريع عطور, مشاريع بخور, مشاريع هدايا,
+مشاريع العاب, مشاريع ترفيهية,
+دعم المنتج الاماراتي, منتج اماراتي, صنع في الامارات,
+تسوق اونلاين دبي, توصيل مشاريع منزلية,
+مشروعك المنزلي, مشروع صغير من المنزل,
 ">
     <meta name="author" content="سوق المشاريع">
     <meta name="robots" content="index, follow">
@@ -542,17 +540,305 @@
             margin: 0 auto;
         }
 
+        /* تعديل المسافات بين عناصر البحث */
         .emirates-scroll, .categories-scroll {
             display: flex;
             overflow-x: auto;
             gap: 8px;
             padding: 5px 0 12px 0;
-            margin-bottom: 18px;
+            margin-bottom: 8px; /* تقليل المسافة السفلية */
             scrollbar-width: thin;
             scrollbar-color: var(--secondary) var(--light-gray);
             white-space: nowrap;
         }
 
+        .families-search-box {
+            position: relative;
+            max-width: 450px;
+            margin: 0 0 10px 0; /* تقليل المسافة السفلية */
+        }
+
+        /* أنماط البوب أب الجديدة */
+        .instruction-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            z-index: 2000;
+            max-width: 340px;
+            width: 90%;
+            border-right: 4px solid var(--secondary);
+            animation: fadeInScale 0.35s ease;
+            display: none;
+            text-align: center;
+        }
+
+        .instruction-popup.show {
+            display: block;
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .instruction-popup .popup-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .instruction-popup .popup-header i {
+            font-size: 48px;
+            color: var(--secondary);
+        }
+
+        .instruction-popup .popup-header h3 {
+            font-family: 'El Messiri', serif;
+            color: var(--primary-dark);
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .instruction-popup .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .instruction-popup .step {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            background: var(--light);
+            padding: 12px 16px;
+            border-radius: 16px;
+            border: 1px solid var(--light-gray);
+        }
+
+        .instruction-popup .step .step-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--secondary);
+            color: var(--primary-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            flex-shrink: 0;
+            font-size: 14px;
+        }
+
+        .instruction-popup .step span {
+            color: var(--dark);
+            line-height: 1.5;
+            text-align: right;
+            flex: 1;
+        }
+
+        .instruction-popup .close-btn {
+            background: var(--primary-gradient);
+            border: none;
+            padding: 14px;
+            border-radius: 40px;
+            width: 100%;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 16px;
+            border: 1px solid var(--secondary);
+        }
+
+        .instruction-popup .close-btn:hover {
+            background: linear-gradient(135deg, #1A5F44, #0F3D2E);
+            transform: scale(1.02);
+        }
+
+        /* تعديل الصور لعرضها كاملة مع فراغ بسيط */
+        .family-image {
+            width: 100%;
+            height: 150px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(145deg, #f8f8f8, #ffffff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid var(--light-gray);
+            padding: 8px; /* تقليل الحشو الداخلي */
+        }
+
+        .family-image img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain; /* عرض الصورة كاملة */
+            border-radius: 10px;
+            transition: transform 0.25s ease;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 120px;
+            overflow: hidden;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid var(--light-gray);
+            padding: 6px; /* تقليل الحشو الداخلي */
+        }
+
+        .product-image img {
+            max-width: 95%;
+            max-height: 95%;
+            width: auto;
+            height: auto;
+            object-fit: contain; /* عرض الصورة كاملة */
+            border-radius: 8px;
+            transition: transform 0.25s ease;
+        }
+
+        .product-main-image {
+            width: 100%;
+            height: 260px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(145deg, #f8f8f8, #ffffff);
+            border-bottom: 1px solid var(--light-gray);
+            cursor: pointer;
+            padding: 12px; /* تقليل الحشو الداخلي */
+        }
+
+        .product-main-image img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain; /* عرض الصورة كاملة */
+            border-radius: 8px;
+        }
+
+        .thumbnail-item {
+            width: 65px;
+            height: 65px;
+            flex-shrink: 0;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: 0.2s;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px; /* تقليل الحشو الداخلي */
+        }
+
+        .thumbnail-item img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain; /* عرض الصورة كاملة */
+            border-radius: 5px;
+        }
+
+        /* توحيد أيقونات التواصل */
+        .contact-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: flex-start;
+        }
+
+        .contact-item {
+            background: white;
+            border: 1px solid var(--light-gray);
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.25s;
+            box-shadow: var(--card-shadow);
+        }
+
+        .contact-item:hover {
+            border-color: var(--secondary);
+            transform: scale(1.1) rotate(3deg);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .contact-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: white;
+        }
+
+        .seller-contact-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 15px;
+            justify-content: flex-start;
+        }
+
+        .seller-contact-item {
+            background: white;
+            border: 1px solid var(--light-gray);
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.25s;
+            box-shadow: var(--card-shadow);
+        }
+
+        .seller-contact-item:hover {
+            border-color: var(--secondary);
+            transform: scale(1.1) rotate(3deg);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .seller-contact-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: white;
+        }
+
+        /* باقي الأنماط بدون تغيير */
         .emirates-scroll::-webkit-scrollbar,
         .categories-scroll::-webkit-scrollbar {
             height: 3px;
@@ -597,12 +883,6 @@
             border-color: var(--secondary);
             color: var(--primary-dark);
             box-shadow: 0 3px 10px rgba(212, 175, 55, 0.3);
-        }
-
-        .families-search-box {
-            position: relative;
-            max-width: 450px;
-            margin: 0 0 18px 0;
         }
 
         .families-search-input {
@@ -668,33 +948,6 @@
             transform: translateY(-4px);
             box-shadow: var(--hover-shadow);
             border-color: var(--secondary);
-        }
-
-        .family-image {
-            width: 100%;
-            height: 150px;
-            position: relative;
-            overflow: hidden;
-            background: linear-gradient(145deg, #f8f8f8, #ffffff);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-bottom: 1px solid var(--light-gray);
-            padding: 12px;
-        }
-
-        .family-image img {
-            max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            border-radius: 10px;
-            transition: transform 0.25s ease;
-        }
-
-        .family-card:hover .family-image img {
-            transform: scale(1.06);
         }
 
         .license-badge-card {
@@ -833,32 +1086,6 @@
             transform: translateY(-3px);
             box-shadow: var(--hover-shadow);
             border-color: var(--secondary);
-        }
-
-        .product-image {
-            width: 100%;
-            height: 120px;
-            overflow: hidden;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-bottom: 1px solid var(--light-gray);
-            padding: 8px;
-        }
-
-        .product-image img {
-            max-width: 95%;
-            max-height: 95%;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            border-radius: 8px;
-            transition: transform 0.25s ease;
-        }
-
-        .product-card:hover .product-image img {
-            transform: scale(1.06);
         }
 
         .product-content {
@@ -1060,44 +1287,6 @@
             color: var(--secondary);
         }
 
-        .contact-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: flex-start;
-        }
-
-        .contact-item {
-            background: white;
-            border: 1px solid var(--light-gray);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            transition: all 0.25s;
-            box-shadow: var(--card-shadow);
-        }
-
-        .contact-item:hover {
-            border-color: var(--secondary);
-            transform: scale(1.1) rotate(3deg);
-            box-shadow: var(--hover-shadow);
-        }
-
-        .contact-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            color: white;
-        }
-
         .whatsapp-bg { background: #25D366; }
         .instagram-bg { background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D); }
         .email-bg { background: var(--primary-dark); }
@@ -1131,102 +1320,6 @@
             color: var(--primary-dark);
             font-size: 12px;
             box-shadow: 0 2px 5px rgba(212, 175, 55, 0.3);
-        }
-
-        .instruction-popup {
-            position: fixed;
-            top: 15px;
-            right: 15px;
-            background: white;
-            border-radius: 18px;
-            padding: 18px;
-            box-shadow: 0 12px 35px rgba(0,0,0,0.2);
-            z-index: 2000;
-            max-width: 260px;
-            border-right: 4px solid var(--secondary);
-            animation: slideFromTop 0.35s ease;
-            display: none;
-        }
-
-        .instruction-popup.show {
-            display: block;
-        }
-
-        @keyframes slideFromTop {
-            from { transform: translateY(-100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .instruction-popup .popup-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .instruction-popup .popup-header i {
-            font-size: 24px;
-            color: var(--secondary);
-        }
-
-        .instruction-popup .popup-header h3 {
-            font-family: 'El Messiri', serif;
-            color: var(--primary-dark);
-            font-size: 18px;
-        }
-
-        .instruction-popup .steps {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 18px;
-        }
-
-        .instruction-popup .step {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-        }
-
-        .instruction-popup .step .step-icon {
-            width: 24px;
-            height: 24px;
-            background: var(--secondary);
-            color: var(--primary-dark);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            flex-shrink: 0;
-            font-size: 11px;
-        }
-
-        .instruction-popup .step span {
-            color: var(--dark);
-            line-height: 1.4;
-        }
-
-        .instruction-popup .close-btn {
-            background: var(--light-gray);
-            border: none;
-            padding: 9px;
-            border-radius: 25px;
-            width: 100%;
-            font-weight: 700;
-            color: var(--primary-dark);
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            font-size: 13px;
-        }
-
-        .instruction-popup .close-btn:hover {
-            background: var(--secondary);
         }
 
         .modal {
@@ -1476,27 +1569,6 @@
             border: 1px solid var(--light-gray);
         }
 
-        .product-main-image {
-            width: 100%;
-            height: 260px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(145deg, #f8f8f8, #ffffff);
-            padding: 18px;
-            border-bottom: 1px solid var(--light-gray);
-            cursor: pointer;
-        }
-
-        .product-main-image img {
-            max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            border-radius: 8px;
-        }
-
         .thumbnail-slider {
             display: flex;
             gap: 6px;
@@ -1505,34 +1577,9 @@
             background: #fafafa;
         }
 
-        .thumbnail-item {
-            width: 65px;
-            height: 65px;
-            flex-shrink: 0;
-            border: 2px solid transparent;
-            border-radius: 8px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: 0.2s;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 4px;
-        }
-
         .thumbnail-item.active {
             border-color: var(--secondary);
             transform: scale(1.05);
-        }
-
-        .thumbnail-item img {
-            max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            border-radius: 5px;
         }
 
         .product-detail-info {
@@ -1665,45 +1712,6 @@
 
         .seller-meta i {
             color: var(--secondary);
-        }
-
-        .seller-contact-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 15px;
-            justify-content: flex-start;
-        }
-
-        .seller-contact-item {
-            background: white;
-            border: 1px solid var(--light-gray);
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            transition: all 0.25s;
-            box-shadow: var(--card-shadow);
-        }
-
-        .seller-contact-item:hover {
-            border-color: var(--secondary);
-            transform: scale(1.1) rotate(3deg);
-            box-shadow: var(--hover-shadow);
-        }
-
-        .seller-contact-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            color: white;
         }
 
         .similar-products-section {
@@ -1847,24 +1855,24 @@
 <body>
     <div id="instructionPopup" class="instruction-popup">
         <div class="popup-header">
-            <i class="fas fa-mouse-pointer"></i>
+            <i class="fas fa-store-alt"></i>
             <h3>كيف تطلب؟</h3>
         </div>
         <div class="steps">
             <div class="step">
-                <div class="step-icon"><i class="fas fa-store"></i></div>
-                <span>تصفح المنتجات</span>
+                <div class="step-icon"><i class="fas fa-search"></i></div>
+                <span>تصفح المنتجات واختر ما يعجبك</span>
             </div>
             <div class="step">
-                <div class="step-icon"><i class="fas fa-comment"></i></div>
-                <span>اختر ما تريد</span>
+                <div class="step-icon"><i class="fas fa-comment-dots"></i></div>
+                <span>تواصل مباشرة مع البائع</span>
             </div>
             <div class="step">
                 <div class="step-icon"><i class="fab fa-whatsapp"></i></div>
-                <span>تواصل مع البائع</span>
+                <span>اتفق على الطلب والتوصيل</span>
             </div>
         </div>
-        <button class="close-btn" onclick="closeInstructionPopup()"><i class="fas fa-check"></i> فهمت</button>
+        <button class="close-btn" onclick="closeInstructionPopup()"><i class="fas fa-check-circle"></i> فهمت</button>
     </div>
 
     <header class="app-header">
@@ -1924,7 +1932,7 @@
             <section class="about-section">
                 <h2 class="section-title">من نحن</h2>
                 <div class="about-text">
-                    <p> <strong>سوق المشاريع</strong> هو أول منصة متخصصة تجمع بين العملاء الباحثين واصحاب المشاريع المنزلية..</p>
+                    <p> <strong>سوق المشاريع</strong> هو أول منصة متخصصة في دعم وتمكين المشاريع المنزلية المحلية.</p>
                     <p> <strong>للباحثين عن التميز:</strong> هنا ستجدون منتجات فريدة من أيدي أسر إماراتية ومقيمة موهوبة.</p>
                     <p> <strong>لأصحاب المشاريع المنزلية:</strong> نقدم لكم منصة تسويق مجانية للوصول إلى شريحة واسعة من المهتمين.</p>
                 </div>
@@ -2032,7 +2040,7 @@
                 <p style="font-size: 13px; opacity: 0.9;">انضم إلى منصة سوق المشاريع</p>
             </div>
             <div class="modal-body">
-                <form id="registerForm" action=https://script.google.com/macros/s/AKfycbyk2qMoK9HKdX110z7XgkQ_Ufidj9NFN3sS6_puOr8oAbjp5Y4-eKsjnCByWcroW_Dn/exec" method="POST" onsubmit="return validateFamilyForm(event)">
+                <form id="registerForm" action="https://script.google.com/macros/s/AKfycbzvln9W_ptSaA2V6ausHPg8kPXEhZeyJqrupB5qdVSbApAxE2zo3uwzGqQqxzB_SP1h/exec" method="POST" onsubmit="return validateFamilyForm(event)">
                     <!-- نموذج التسجيل -->
                     <div class="form-group">
                         <label class="form-label"><i class="fas fa-users"></i> اسم المشروع</label>
@@ -2104,7 +2112,7 @@
                         <div class="checkbox-group">
                             <label class="checkbox-label"><input type="checkbox" name="category[]" value="أطعمة"> أطعمة</label>
                             <label class="checkbox-label"><input type="checkbox" name="category[]" value="مشروبات"> مشروبات</label>
-                            <label class="checkbox-label"><input type="checkbox" name="category[]" value="الروائح والعطور"> الروائح والعطور</label>
+                            <label class="checkbox-label"><input type="checkbox" name="category[]" value="عطور"> عطور</label>
                             <label class="checkbox-label"><input type="checkbox" name="category[]" value="عناية"> عناية</label>
                             <label class="checkbox-label"><input type="checkbox" name="category[]" value="حلويات"> حلويات</label>
                             <label class="checkbox-label"><input type="checkbox" name="category[]" value="تجميل"> تجميل</label>
@@ -2137,20 +2145,13 @@
     </div>
 
     <footer class="app-footer">
-      <div class="footer-content">
-        <div class="footer-logo">سوق المشاريع</div>
-        <p style="font-size: 12px; opacity: 0.9;">منصة المشاريع المنزلية الإماراتية</p>
-          
-        <div style="margin: 15px 0;">
-            <a href="privacy.html" style="color: var(--secondary); text-decoration: none; font-size: 13px;">
-                <i class="fas fa-shield-alt"></i> سياسة الخصوصية
-            </a>
+        <div class="footer-content">
+            <div class="footer-logo">سوق المشاريع</div>
+            <p style="font-size: 12px; opacity: 0.9;">منصة المشاريع المنزلية الإماراتية</p>
+            <div class="copyright">
+                © 2025 سوق المشاريع - جميع الحقوق محفوظة
+            </div>
         </div>
-        
-        <div class="copyright">
-            © 2026 سوق المشاريع - جميع الحقوق محفوظة
-        </div>
-      </div>
     </footer>
 
     <script>
@@ -2162,7 +2163,7 @@
                 emirate: "أبوظبي",
                 description: "ترفيه",
                 longDescription: "اوراق لعب فاخرة - تجربة احترافية في كل لعبة.",
-                image: "cardsplayuae.png",
+                image: "P1-LOGO.png",
                 phone: "",
                 whatsapp: "",
                 email: "",
@@ -2174,15 +2175,15 @@
                 products: [
                     {
                         id: "p1",
-                        name: "بطاقات اللعب - قص",
+                        name: "بطاقات بيضاء كلاسيك",
                         description: "بطاقات قوية وجودة عالية",
                         longDescription: "بطاقات لعب احترافية فاخرة مصنوعة من أجود أنواع الورق المقوى، مقاومة للثني والتمزق. مناسبة للمحترفين والهواة على حد سواء. تصميم كلاسيكي أنيق مع لمسات عصرية. تأتي في علبة هدايا فاخرة.",
                         category: "ترفيه",
-                        mainImage: "card2.png",
+                        mainImage: "P1-P1.png",
                         images: [
-                            "card1.png",
-                            "card2.png",
-                            "card3.png",
+                            "P1-1.png",
+                            "P1-2.png",
+                            "P1-3.png",
                             "cardsplayuae.png"
                         ],
                         details: [
@@ -2194,6 +2195,43 @@
                     },
                     
                     
+                ]
+            },
+
+            {
+                id: 2,
+                name: "motcha.ae",
+                emirate: "دبي",
+                description: "ماتشا ",
+                longDescription: "- أول ماتشا صينية في الإمارات العربية المتحدة 🇦🇪 🇨🇳- عضوي، من أول حصاد 🌱- أعلى درجة 6A",
+                image: "P2-LOGO.jpg",
+                phone: "",
+                whatsapp: "",
+                email: "",
+                sell_point: "instamotcha.ae",
+                adra_license: "نعم",
+                coverage: "الإمارات",
+                badges: ["عضوي"],
+                category: "مشروبات",
+                products: [
+                    {
+                        id: "p1",
+                        name: "ماتشا ",
+                        description: "عضوي، من أول حصاد",
+                        longDescription: "ول ماتشا صينية في الإمارات العربية المتحدة، عضوي من أول حصاد",
+                        category: "مشروبات",
+                        mainImage: "P2-3.png",
+                        images: [
+                            "P2-1.png",
+                            "P2-2.png",
+                            "P2-3.png",
+                        ],
+                        details: [
+                            "أول ماتشا صينية في الإمارات العربية المتحدة",
+                            "عضوي، من أول حصاد",
+                            "A6",
+                        ]
+                    }
                 ]
             }
         ];
@@ -2352,7 +2390,7 @@
                 { id: 'all', name: 'الكل', icon: 'fas fa-th-large' },
                 { id: 'أطعمة', name: 'أطعمة', icon: 'fas fa-utensils' },
                 { id: 'مشروبات', name: 'مشروبات', icon: 'fas fa-wine-glass' }, 
-                { id: 'الروائح والعطور', name: 'الروائح والعطور', icon: 'fas fa-wind' },
+                { id: 'عطور', name: 'عطور', icon: 'fas fa-wind' },
                 { id: 'عناية', name: 'عناية', icon: 'fas fa-spa' },
                 { id: 'حلويات', name: 'حلويات', icon: 'fas fa-cookie-bite' },
                 { id: 'تجميل', name: 'تجميل', icon: 'fas fa-magic' },
@@ -2486,7 +2524,7 @@
             
             // إنشاء شارة الترخيص إذا كان المشروع مرخصاً
             const licenseBadgeHtml = family.adra_license === 'نعم' ? 
-                '<div class="license-badge-large"><i class="fas fa-check-circle"></i></div>' : '';
+                '<div class="license-badge-large"><i class="fas fa-check-circle"></i> مرخص</div>' : '';
             
             document.getElementById('familyProfileContainer').innerHTML = `
                 <div class="family-profile">
@@ -2631,9 +2669,9 @@
             
             // شارة الترخيص للبائع
             const licenseBadgeHtml = family.adra_license === 'نعم' ? 
-                '<div class="license-badge-large" style="margin-right: 0; margin-bottom: 5px;"><i class="fas fa-check-circle"></i></div>' : '';
+                '<div class="license-badge-large" style="margin-right: 0; margin-bottom: 5px;"><i class="fas fa-check-circle"></i> مرخص</div>' : '';
             
-            // بناء معلومات التواصل للبائع
+            // بناء معلومات التواصل للبائع (بنفس حجم الأيقونات)
             let sellerContactHtml = '';
             
             if (family.phone && family.phone.trim() !== '') {
@@ -2674,7 +2712,7 @@
             const html = `
                 <!-- معرض الصور -->
                 <div class="product-gallery">
-                    <div class="product-main-image" onclick="openZoom('${images[0]}')">
+                    <div class="product-main-image" onclick="openZoom(document.getElementById('productMainImage').src)">
                         <img src="${images[0]}" alt="${product.name}" id="productMainImage" loading="lazy">
                     </div>
                     <div class="thumbnail-slider">
@@ -2846,7 +2884,7 @@
                 
                 setTimeout(() => {
                     popup.classList.remove('show');
-                }, 4000);
+                }, 8000); // زيادة مدة الظهور إلى 8 ثوانٍ
             }
         }
 
