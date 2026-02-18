@@ -319,27 +319,56 @@
             transform: translateY(-50%) scale(1.05);
         }
 
+        /* ===== الأزرار المعدلة في الصفحة الرئيسية ===== */
         .market-big-btn {
-            background: var(--gradient-gold);
-            color: var(--primary-dark);
-            border: none;
+            background: var(--primary-dark);
+            color: white;
+            border: 2px solid var(--secondary);
             padding: 14px 35px;
-            border-radius: 40px;
-            font-size: 16px;
+            border-radius: 50px;
+            font-size: 18px;
             font-weight: 700;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
-            transition: 0.3s;
-            border: 1px solid rgba(255,255,255,0.3);
+            gap: 10px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            margin: 10px 5px;
         }
 
         .market-big-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.7);
+            background: var(--primary-light);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+            border-color: var(--secondary-light);
+        }
+
+        .join-hero-btn {
+            background: white;
+            color: var(--primary-dark);
+            border: 2px solid var(--primary-dark);
+            padding: 14px 35px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+        }
+
+        .join-hero-btn:hover {
+            background: var(--primary-dark);
+            color: white;
+            border-color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(15, 61, 46, 0.3);
         }
 
         .about-section {
@@ -430,31 +459,32 @@
             margin-top: 8px;
         }
 
-        .join-btn {
-            background: var(--primary-gradient);
-            color: white;
-            border: none;
-            padding: 16px 22px;
-            border-radius: 40px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            display: inline-flex;
+        /* ===== زر الرجوع العام ===== */
+        .back-button {
+            background: rgba(255,255,255,0.9);
+            border: 1px solid var(--light-gray);
+            color: var(--primary-dark);
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            width: 100%;
-            margin-top: 25px;
-            transition: 0.3s;
-            border: 1px solid var(--secondary);
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.25s ease;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
 
-        .join-btn:hover {
-            transform: scale(1.02);
-            box-shadow: var(--hover-shadow);
-            background: linear-gradient(135deg, #1A5F44, #0F3D2E);
+        .back-button:hover {
+            background: var(--secondary);
+            color: white;
+            transform: scale(1.05);
+            border-color: var(--secondary);
         }
 
+        /* ===== عنوان الصفحة (لصفحة المشاريع فقط) ===== */
         .page-header {
             background: var(--primary-gradient);
             color: white;
@@ -499,7 +529,7 @@
             z-index: 1;
         }
 
-        .back-button {
+        .page-header .back-button {
             position: absolute;
             top: 15px;
             right: 15px;
@@ -518,44 +548,49 @@
             z-index: 10;
             backdrop-filter: blur(5px);
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 0;
         }
 
-        .back-button:hover {
+        .page-header .back-button:hover {
             background: rgba(255,255,255,0.25);
             transform: scale(1.05) translateX(-3px);
             border-color: var(--secondary);
         }
 
-        .back-button i {
+        .page-header .back-button i {
             transition: transform 0.25s ease;
         }
 
-        .back-button:hover i {
+        .page-header .back-button:hover i {
             transform: translateX(-3px);
         }
 
-        .container {
-            padding: 25px 16px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* تعديل المسافات بين عناصر البحث */
-        .emirates-scroll, .categories-scroll {
-            display: flex;
-            overflow-x: auto;
-            gap: 8px;
-            padding: 5px 0 12px 0;
-            margin-bottom: 8px; /* تقليل المسافة السفلية */
-            scrollbar-width: thin;
-            scrollbar-color: var(--secondary) var(--light-gray);
-            white-space: nowrap;
+        /* ===== تعديل المسافات بين عناصر البحث ===== */
+        .families-page .container,
+        .products-page .container,
+        .product-detail-page .container {
+            padding-top: 10px; /* تقريب المحتوى من أعلى الصفحة */
         }
 
         .families-search-box {
             position: relative;
             max-width: 450px;
-            margin: 0 0 10px 0; /* تقليل المسافة السفلية */
+            margin: 0 0 0px 0; /* إزالة المسافة السفلية */
+        }
+
+        .emirates-scroll, .categories-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 8px;
+            padding: 5px 0 8px 0; /* تقليل padding السفلي */
+            margin-bottom: 0; /* إزالة margin */
+            scrollbar-width: thin;
+            scrollbar-color: var(--secondary) var(--light-gray);
+            white-space: nowrap;
+        }
+
+        .families-grid {
+            margin-top: 5px; /* مسافة بسيطة قبل البطاقات */
         }
 
         /* أنماط البوب أب الجديدة */
@@ -679,7 +714,7 @@
             align-items: center;
             justify-content: center;
             border-bottom: 1px solid var(--light-gray);
-            padding: 8px; /* تقليل الحشو الداخلي */
+            padding: 8px;
         }
 
         .family-image img {
@@ -687,7 +722,7 @@
             max-height: 100%;
             width: auto;
             height: auto;
-            object-fit: contain; /* عرض الصورة كاملة */
+            object-fit: contain;
             border-radius: 10px;
             transition: transform 0.25s ease;
         }
@@ -701,7 +736,7 @@
             align-items: center;
             justify-content: center;
             border-bottom: 1px solid var(--light-gray);
-            padding: 6px; /* تقليل الحشو الداخلي */
+            padding: 6px;
         }
 
         .product-image img {
@@ -709,7 +744,7 @@
             max-height: 95%;
             width: auto;
             height: auto;
-            object-fit: contain; /* عرض الصورة كاملة */
+            object-fit: contain;
             border-radius: 8px;
             transition: transform 0.25s ease;
         }
@@ -723,7 +758,7 @@
             background: linear-gradient(145deg, #f8f8f8, #ffffff);
             border-bottom: 1px solid var(--light-gray);
             cursor: pointer;
-            padding: 12px; /* تقليل الحشو الداخلي */
+            padding: 12px;
         }
 
         .product-main-image img {
@@ -731,7 +766,7 @@
             max-height: 100%;
             width: auto;
             height: auto;
-            object-fit: contain; /* عرض الصورة كاملة */
+            object-fit: contain;
             border-radius: 8px;
         }
 
@@ -748,7 +783,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 4px; /* تقليل الحشو الداخلي */
+            padding: 4px;
         }
 
         .thumbnail-item img {
@@ -756,7 +791,7 @@
             max-height: 100%;
             width: auto;
             height: auto;
-            object-fit: contain; /* عرض الصورة كاملة */
+            object-fit: contain;
             border-radius: 5px;
         }
 
@@ -838,7 +873,7 @@
             color: white;
         }
 
-        /* باقي الأنماط بدون تغيير */
+        /* باقي الأنماط */
         .emirates-scroll::-webkit-scrollbar,
         .categories-scroll::-webkit-scrollbar {
             height: 3px;
@@ -1556,10 +1591,6 @@
         }
 
         /* أنماط صفحة تفاصيل المنتج */
-        .product-detail-page .page-header {
-            padding: 30px 20px;
-        }
-
         .product-gallery {
             background: white;
             border-radius: 20px;
@@ -1926,6 +1957,12 @@
                         <i class="fas fa-store"></i>
                         اكتشف المنتجات
                     </button>
+
+                    <!-- الزر الجديد للانضمام -->
+                    <button class="join-hero-btn" onclick="showRegisterForm()">
+                        <i class="fas fa-plus-circle"></i>
+                        انضم كمشروع منزلي
+                    </button>
                 </div>
             </section>
             
@@ -1964,15 +2001,12 @@
                     </div>
                 </div>
                 
-                <button class="join-btn" onclick="showRegisterForm()">
-                    <i class="fas fa-plus-circle"></i>
-                    انضم كمشروع منزلي
-                </button>
+                <!-- تم إزالة الزر من هنا -->
             </section>
         </div>
 
-        <!-- صفحة المشاريع -->
-        <div id="families-page" class="page" style="display: none;">
+        <!-- صفحة المشاريع (مع العنوان وزر الرجوع) -->
+        <div id="families-page" class="page families-page" style="display: none;">
             <div class="page-header with-back">
                 <div class="back-button" onclick="goBack()">
                     <i class="fas fa-arrow-right"></i>
@@ -1994,16 +2028,12 @@
             </div>
         </div>
 
-        <!-- صفحة منتجات المشروع -->
-        <div id="products-page" class="page" style="display: none;">
-            <div class="page-header with-back">
-                <div class="back-button" onclick="goBack()">
+        <!-- صفحة منتجات المشروع (بدون عنوان، مع زر رجوع) -->
+        <div id="products-page" class="page products-page" style="display: none;">
+            <div class="container">
+                <div class="back-button" onclick="goBack()" style="margin-bottom: 15px;">
                     <i class="fas fa-arrow-right"></i>
                 </div>
-                <h1 class="page-title" id="productsPageTitle">المنتجات</h1>
-                <p class="page-subtitle" id="productsPageSubtitle"></p>
-            </div>
-            <div class="container">
                 <div id="familyProfileContainer"></div>
                 <div class="products-header">
                     <h2 class="products-title">المنتجات</h2>
@@ -2014,17 +2044,13 @@
             </div>
         </div>
 
-        <!-- صفحة تفاصيل المنتج -->
+        <!-- صفحة تفاصيل المنتج (بدون عنوان، مع زر رجوع) -->
         <div id="product-detail-page" class="page product-detail-page" style="display: none;">
-            <div class="page-header with-back">
-                <div class="back-button" onclick="goBack()">
+            <div class="container">
+                <div class="back-button" onclick="goBack()" style="margin-bottom: 15px;">
                     <i class="fas fa-arrow-right"></i>
                 </div>
-                <h1 class="page-title" id="productDetailTitle">تفاصيل المنتج</h1>
-                <p class="page-subtitle" id="productDetailSubtitle"></p>
-            </div>
-            <div class="container" id="productDetailContainer">
-                <!-- المحتوى يتحط هنا بالجافاسكريبت -->
+                <div id="productDetailContainer"></div>
             </div>
         </div>
     </div>
@@ -2163,28 +2189,27 @@
                 emirate: "أبوظبي",
                 description: "ترفيه",
                 longDescription: "اوراق لعب فاخرة - تجربة احترافية في كل لعبة.",
-                image: "P1-LOGO.png",
+                image: "p1-LOGO.png",
                 phone: "",
                 whatsapp: "",
                 email: "",
                 sell_point: "instacardsplayuae",
-                adra_license: "نعم",
+                adra_license: "",
                 coverage: "الإمارة فقط",
-                badges: [""],
+                badges: ["جديد"],
                 category: "ترفيه",
                 products: [
                     {
                         id: "p1",
-                        name: "بطاقات بيضاء كلاسيك",
+                        name: "بطاقات- قص",
                         description: "بطاقات قوية وجودة عالية",
                         longDescription: "بطاقات لعب احترافية فاخرة مصنوعة من أجود أنواع الورق المقوى، مقاومة للثني والتمزق. مناسبة للمحترفين والهواة على حد سواء. تصميم كلاسيكي أنيق مع لمسات عصرية. تأتي في علبة هدايا فاخرة.",
                         category: "ترفيه",
-                        mainImage: "P1-P1.png",
+                        mainImage: "p1-1.png",
                         images: [
-                            "P1-1.png",
-                            "P1-2.png",
-                            "P1-3.png",
-                            "cardsplayuae.png"
+                            "p1-1.png",
+                            "p1-2.png",
+                            "p1-3.png",
                         ],
                         details: [
                             "مكونة من 52 بطاقة + 2 بطاقة جوكر",
@@ -2283,7 +2308,6 @@
             document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
             document.getElementById(`${page}-page`).style.display = 'block';
             appState.currentPage = page;
-            // التمرير إلى أعلى الصفحة عند فتح صفحة جديدة
             window.scrollTo(0, 0);
             
             if (page === 'families') {
@@ -2482,10 +2506,7 @@
                 return;
             }
             
-            document.getElementById('productsPageTitle').textContent = family.name;
-            document.getElementById('productsPageSubtitle').textContent = family.emirate;
-            
-            // إنشاء شارة الترخيص إذا كان المشروع مرخصاً
+            // تم إزالة عنوان الصفحة (page-header) نهائياً
             const licenseBadgeHtml = family.adra_license === 'نعم' ? 
                 '<div class="license-badge-large"><i class="fas fa-check-circle"></i> مرخص</div>' : '';
             
@@ -2601,10 +2622,7 @@
                 return;
             }
             
-            document.getElementById('productDetailTitle').textContent = product.name;
-            document.getElementById('productDetailSubtitle').textContent = family.name;
-            
-            // بناء معرض الصور
+            // تم إزالة عنوان الصفحة (page-header) نهائياً
             const images = product.images || [product.mainImage || product.image];
             const thumbnailsHtml = images.map((img, index) => `
                 <div class="thumbnail-item ${index === 0 ? 'active' : ''}" onclick="changeProductMainImage('${img}', this)">
@@ -2612,12 +2630,10 @@
                 </div>
             `).join('');
             
-            // بناء قائمة المواصفات
             const detailsHtml = product.details ? product.details.map(detail => `
                 <li><i class="fas fa-check-circle"></i> ${detail}</li>
             `).join('') : '';
             
-            // بناء منتجات مشابهة
             const similarProducts = family.products.filter(p => p.id !== productId).slice(0, 4);
             const similarHtml = similarProducts.map(p => `
                 <div class="similar-product-card" onclick="showProductDetail(${familyId}, '${p.id}')">
@@ -2630,11 +2646,9 @@
                 </div>
             `).join('');
             
-            // شارة الترخيص للبائع
             const licenseBadgeHtml = family.adra_license === 'نعم' ? 
                 '<div class="license-badge-large" style="margin-right: 0; margin-bottom: 5px;"><i class="fas fa-check-circle"></i> مرخص</div>' : '';
             
-            // بناء معلومات التواصل للبائع (بنفس حجم الأيقونات)
             let sellerContactHtml = '';
             
             if (family.phone && family.phone.trim() !== '') {
@@ -2847,7 +2861,7 @@
                 
                 setTimeout(() => {
                     popup.classList.remove('show');
-                }, 8000); // زيادة مدة الظهور إلى 8 ثوانٍ
+                }, 8000);
             }
         }
 
@@ -2926,4 +2940,3 @@
     <meta name="google-site-verification" content="UwEARwAkfxnW1CP0oDBEnlnKhHl2QuANOH1SF_8pvJg">
 </body>
 </html>
-
