@@ -62,19 +62,19 @@
             color: var(--dark);
             font-family: 'Almarai', sans-serif;
             line-height: 1.5;
-            padding: 0 12px; /* تعديل المساحة الجانبية للصفحة بأكملها */
+            padding: 0 12px;
         }
 
         .app-header {
             background: var(--primary-gradient);
             color: white;
-            padding: 8px 16px; /* تصغير حجم الهيدر (كان 10px) */
+            padding: 8px 16px;
             position: sticky;
             top: 0;
             z-index: 1000;
             box-shadow: var(--shadow);
-            border-radius: 0 0 18px 18px; /* إضافة انسيابية بسيطة */
-            margin: 0 -12px; /* لتمديد الخلفية كاملة رغم padding الجسم */
+            border-radius: 0 0 18px 18px;
+            margin: 0 -12px;
         }
 
         .header-container {
@@ -86,12 +86,12 @@
         .logo-section {
             display: flex;
             align-items: center;
-            gap: 8px; /* تقليل المسافة قليلاً */
+            gap: 8px;
             cursor: pointer;
         }
 
         .logo-icon {
-            width: 60px; /* تصغير الشعار قليلاً */
+            width: 60px;
             height: 60px;
             background: white;
             border-radius: 12px;
@@ -112,18 +112,18 @@
 
         .logo-text h1 {
             font-family: 'El Messiri', serif;
-            font-size: 18px; /* تصغير الخط */
+            font-size: 18px;
             font-weight: 700;
             margin-bottom: 2px;
         }
 
         .logo-text p {
-            font-size: 9px; /* تصغير الخط */
+            font-size: 9px;
             opacity: 0.9;
         }
 
         .menu-toggle {
-            width: 38px; /* تصغير الزر */
+            width: 38px;
             height: 38px;
             background: rgba(255,255,255,0.2);
             border: 1px solid rgba(255,255,255,0.3);
@@ -131,7 +131,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px; /* تصغير الأيقونة */
+            font-size: 18px;
             color: white;
             cursor: pointer;
             transition: 0.2s;
@@ -223,15 +223,15 @@
             background-size: cover;
             background-position: center;
             color: white;
-            padding: 50px 20px; /* تقليل padding قليلاً */
+            padding: 50px 20px;
             text-align: center;
-            border-radius: 18px; /* إضافة انسيابية */
-            margin: 12px 0; /* هوامش صغيرة */
+            border-radius: 18px;
+            margin: 12px 0;
         }
 
         .hero-title {
             font-family: 'El Messiri', serif;
-            font-size: 34px; /* تصغير قليلاً */
+            font-size: 34px;
             font-weight: 700;
             margin-bottom: 12px;
             text-shadow: 0 2px 8px rgba(0,0,0,0.3);
@@ -293,7 +293,6 @@
             transform: translateY(-50%) scale(1.05);
         }
 
-        /* ===== الأزرار المعدلة في الصفحة الرئيسية (أكثر أناقة) ===== */
         .market-big-btn {
             background: transparent;
             color: white;
@@ -349,14 +348,14 @@
 
         .about-section {
             background: white;
-            padding: 40px 20px; /* تقليل padding */
-            border-radius: 18px; /* إضافة انسيابية */
+            padding: 40px 20px;
+            border-radius: 18px;
             margin: 12px 0;
         }
 
         .section-title {
             font-family: 'El Messiri', serif;
-            font-size: 30px; /* تصغير قليلاً */
+            font-size: 30px;
             color: var(--primary-dark);
             text-align: center;
             margin-bottom: 30px;
@@ -437,7 +436,6 @@
             margin-top: 8px;
         }
 
-        /* ===== زر الرجوع العام والمحسن ===== */
         .back-button {
             background: var(--light);
             border: 1px solid var(--light-gray);
@@ -471,51 +469,29 @@
             transform: translateX(-3px);
         }
 
-        /* ===== عنوان الصفحة (لصفحة المشاريع فقط) ===== */
+        /* تعديل 1: تنسيق page-header أبسط مع تقويس بسيط */
         .page-header {
             background: var(--primary-gradient);
             color: white;
-            padding: 50px 30px; /* تقليل padding */
+            padding: 20px 20px;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-            border-radius: 18px 18px 18px 18px;
-            margin: 5px 1px 1px 1px; /* لتمديد الخلفية */
+            border-radius: 18px;
+            margin: 5px 0 15px 0;
         }
 
         .page-header.with-back {
-            padding-top: 50px;
-        }
-
-        .page-header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: rotate 30s linear infinite;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            padding-top: 20px;
         }
 
         .page-title {
             font-family: 'El Messiri', serif;
-            font-size: 26px; /* تصغير */
+            font-size: 26px;
             margin-bottom: 6px;
-            position: relative;
-            z-index: 1;
         }
 
         .page-subtitle {
-            font-size: 14px; /* تصغير */
+            font-size: 14px;
             opacity: 0.95;
-            position: relative;
-            z-index: 1;
         }
 
         .page-header .back-button {
@@ -525,14 +501,14 @@
             background: rgba(255,255,255,0.15);
             border: 1px solid rgba(255,255,255,0.2);
             color: white;
-            width: 38px; /* تصغير */
+            width: 38px;
             height: 38px;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 16px; /* تصغير */
+            font-size: 16px;
             transition: all 0.25s ease;
             z-index: 10;
             backdrop-filter: blur(5px);
@@ -554,35 +530,33 @@
             transform: translateX(-3px);
         }
 
-        /* ===== تعديل المسافات بين عناصر البحث ===== */
         .families-page .container,
         .products-page .container,
         .product-detail-page .container {
-            padding-top: 10px; /* تقريب المحتوى من أعلى الصفحة */
+            padding-top: 10px;
         }
 
         .families-search-box {
             position: relative;
             max-width: 450px;
-            margin: 0 0 0px 0; /* إزالة المسافة السفلية */
+            margin: 0 0 0px 0;
         }
 
         .emirates-scroll, .categories-scroll {
             display: flex;
             overflow-x: auto;
             gap: 8px;
-            padding: 5px 0 8px 0; /* تقليل padding السفلي */
-            margin-bottom: 0; /* إزالة margin */
+            padding: 5px 0 8px 0;
+            margin-bottom: 0;
             scrollbar-width: thin;
             scrollbar-color: var(--secondary) var(--light-gray);
             white-space: nowrap;
         }
 
         .families-grid {
-            margin-top: 5px; /* مسافة بسيطة قبل البطاقات */
+            margin-top: 5px;
         }
 
-        /* أنماط البوب أب الجديدة */
         .instruction-popup {
             position: fixed;
             top: 50%;
@@ -692,7 +666,6 @@
             transform: scale(1.02);
         }
 
-        /* تعديل الصور لعرضها كاملة مع فراغ بسيط */
         .family-image {
             width: 100%;
             height: 150px;
@@ -784,7 +757,6 @@
             border-radius: 5px;
         }
 
-        /* توحيد أيقونات التواصل */
         .contact-grid {
             display: flex;
             flex-wrap: wrap;
@@ -862,7 +834,6 @@
             color: white;
         }
 
-        /* باقي الأنماط */
         .emirates-scroll::-webkit-scrollbar,
         .categories-scroll::-webkit-scrollbar {
             height: 3px;
@@ -1154,7 +1125,7 @@
             border: 1px solid var(--light-gray);
         }
 
-        /* ===== التعديل الرئيسي: صفحة المشروع ===== */
+        /* تعديل 2: تنسيق البروفايل حسب الصورة */
         .family-profile {
             background: white;
             border-radius: 22px;
@@ -1167,14 +1138,14 @@
         .profile-header {
             background: var(--primary-gradient);
             color: white;
-            padding: 20px 18px; /* تقليل padding */
+            padding: 20px 18px;
             display: flex;
             align-items: center;
             gap: 15px;
         }
 
         .profile-avatar {
-            width: 80px; /* تكبير الصورة الرمزية */
+            width: 80px;
             height: 80px;
             border-radius: 50%;
             background-size: cover;
@@ -1187,7 +1158,7 @@
 
         .profile-name {
             font-family: 'El Messiri', serif;
-            font-size: 20px; /* تصغير قليلاً */
+            font-size: 20px;
             margin-bottom: 4px;
             display: flex;
             align-items: center;
@@ -1196,11 +1167,11 @@
 
         .profile-name i {
             color: var(--secondary);
-            font-size: 14px; /* تصغير الأيقونة */
+            font-size: 14px;
         }
 
         .profile-location {
-            font-size: 12px; /* تصغير */
+            font-size: 12px;
             opacity: 0.9;
             display: flex;
             align-items: center;
@@ -1211,12 +1182,10 @@
             color: var(--secondary);
         }
 
-        /* تعديل الجسم ليكون المحتوى على اليمين */
         .profile-body {
             padding: 20px 18px;
         }
 
-        /* معلومات المشروع في صفوف على اليمين */
         .profile-info-grid {
             display: flex;
             flex-direction: column;
@@ -1240,7 +1209,7 @@
         .profile-info-row strong {
             color: var(--primary-dark);
             font-weight: 700;
-            min-width: 70px; /* عرض ثابت للعنوان */
+            min-width: 70px;
         }
 
         .profile-info-row span {
@@ -1248,7 +1217,13 @@
             color: var(--gray);
         }
 
-        /* شارة الترخيص */
+        /* تعديل 3: إخفاء الواتساب ووسائل التواصل من الأعلى */
+        .profile-info-row:has(i.fa-phone),
+        .profile-info-row:has(i.fa-whatsapp),
+        .profile-info-row:has(i.fa-envelope) {
+            display: none;
+        }
+
         .license-badge-large {
             display: inline-flex;
             align-items: center;
@@ -1257,7 +1232,7 @@
             color: var(--primary-dark);
             padding: 3px 10px;
             border-radius: 25px;
-            font-size: 11px; /* تصغير */
+            font-size: 11px;
             font-weight: 700;
             border: 1px solid var(--secondary);
             box-shadow: 0 2px 8px rgba(212,175,55,0.3);
@@ -1267,7 +1242,6 @@
             font-size: 11px;
         }
 
-        /* قسم التغطية */
         .coverage-section {
             margin-top: 15px;
             padding: 12px 15px;
@@ -1275,8 +1249,8 @@
             border-radius: 16px;
             border: 1px dashed var(--secondary);
             display: flex;
-            flex-direction: column; /* تغيير الاتجاه */
-            align-items: flex-start; /* للمحاذاة لليمين */
+            flex-direction: column;
+            align-items: flex-start;
             gap: 10px;
         }
 
@@ -1580,7 +1554,7 @@
             background: var(--dark);
             color: white;
             padding: 35px 20px 18px;
-            margin: 45px -12px 0 -12px; /* لتمديد الخلفية */
+            margin: 45px -12px 0 -12px;
             border-radius: 18px 18px 0 0;
         }
 
@@ -1634,7 +1608,6 @@
             }
         }
 
-        /* أنماط صفحة تفاصيل المنتج */
         .product-gallery {
             background: white;
             border-radius: 20px;
@@ -1953,7 +1926,7 @@
                 <i class="fas fa-home"></i>
                 الرئيسية
             </div>
-            <div class="nav-item market-item" onclick="navigateTo('/families/emirate/all'); toggleMenu();">
+            <div class="nav-item market-item" onclick="navigateTo('/projects/emirate/all'); toggleMenu();">
                 <i class="fas fa-store"></i>
                 السوق
             </div>
@@ -1979,7 +1952,7 @@
                         </button>
                     </div>
                     
-                    <button class="market-big-btn" onclick="navigateTo('/families/emirate/all')">
+                    <button class="market-big-btn" onclick="navigateTo('/projects/emirate/all')">
                         <i class="fas fa-store"></i>
                         اكتشف المنتجات
                     </button>
@@ -2250,13 +2223,13 @@
             },
             {
                 id: 2,
-                name: " موتشا - Motcha ",
+                name: "موتشا - Motcha",
                 emirate: "دبي",
                 description: "نقدم نوع ممتاز جداً و نوفر كميات كبيرة للكوفيات.",
-                longDescription: " اول براند ماتشا صينية في الامارات ، نقدم نوع ممتاز جداً و نوفر كميات كبيرة للكوفيات.",
+                longDescription: "اول براند ماتشا صينية في الامارات، نقدم نوع ممتاز جداً و نوفر كميات كبيرة للكوفيات.",
                 image: "p2.jpg",
                 phone: "",
-                whatsapp: "+971555307912 ",
+                whatsapp: "+971555307912",
                 email: "",
                 sell_point: "instamotcha.ae",
                 adra_license: "نعم",
@@ -2312,7 +2285,7 @@
                     },
                     {
                         id: "p4",
-                        name: "كوب ماتشا ",
+                        name: "كوب ماتشا",
                         description: "كوب ماتشا مميز",
                         longDescription: "كوب ماتشا مميز",
                         category: "مشروبات",
@@ -2352,7 +2325,7 @@
             
             if (parts.length === 0 || parts[0] === '') {
                 showPage('home');
-            } else if (parts[0] === 'families' && parts[1] === 'emirate' && parts[2]) {
+            } else if (parts[0] === 'projects' && parts[1] === 'emirate' && parts[2]) {
                 const emirateId = decodeURIComponent(parts[2]);
                 appState.currentEmirate = emirateId;
                 appState.currentCategory = 'all';
@@ -2456,7 +2429,7 @@
             const searchInput = document.getElementById('familiesSearch');
             if (searchInput) searchInput.value = '';
             
-            navigateTo(`/families/emirate/${encodeURIComponent(emirateId)}`);
+            navigateTo(`/projects/emirate/${encodeURIComponent(emirateId)}`);
         }
 
         function updateActiveEmirateChip(emirateId) {
@@ -2525,7 +2498,7 @@
         function performHomeSearch() {
             const query = document.getElementById('homeSearch').value.trim();
             appState.searchQuery = query;
-            navigateTo('/families/emirate/all');
+            navigateTo('/projects/emirate/all');
             setTimeout(() => {
                 const searchInput = document.getElementById('familiesSearch');
                 if (searchInput) {
@@ -2609,11 +2582,10 @@
                 return;
             }
             
-            // تم إزالة عنوان الصفحة (page-header) نهائياً
+            // تنسيق البروفايل حسب الصورة مع إخفاء وسائل التواصل
             const licenseBadgeHtml = family.adra_license === 'نعم' ? 
                 '<div class="license-badge-large"><i class="fas fa-check-circle"></i> مرخص</div>' : '';
             
-            // تعديل محتوى الملف الشخصي ليكون على اليمين
             document.getElementById('familyProfileContainer').innerHTML = `
                 <div class="family-profile">
                     <div class="profile-header">
@@ -3071,4 +3043,3 @@
     <meta name="google-site-verification" content="UwEARwAkfxnW1CP0oDBEnlnKhHl2QuANOH1SF_8pvJg">
 </body>
 </html>
-
