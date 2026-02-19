@@ -2710,7 +2710,7 @@
             showPage('products');
         }
 
-        // ==================== صفحة تفاصيل المنتج ====================
+        // ==================== صفحة تفاصيل المنتج (معدلة حسب طلبك) ====================
         function showProductDetail(familyId, productId, updateHash = true) {
             const family = familiesData.find(f => f.id === familyId);
             if (!family) return;
@@ -2734,9 +2734,21 @@
                 </div>
             `).join('');
             
-            const detailsHtml = product.details ? product.details.map(detail => `
+            // المواصفات والتفاصيل - فقط إذا في بيانات
+            const detailsHtml = product.details && product.details.length > 0 ? product.details.map(detail => `
                 <li><i class="fas fa-check-circle"></i> ${detail}</li>
             `).join('') : '';
+            
+            // قسم المواصفات كامل - يظهر فقط إذا في تفاصيل
+            const specsSectionHtml = detailsHtml ? `
+                <h3 class="product-details-title">
+                    <i class="fas fa-list-ul"></i>
+                    المواصفات والتفاصيل
+                </h3>
+                <ul class="product-details-list">
+                    ${detailsHtml}
+                </ul>
+            ` : '';
             
             const similarProducts = family.products.filter(p => p.id !== productId).slice(0, 4);
             const similarHtml = similarProducts.map(p => `
@@ -2809,13 +2821,7 @@
                     <h1 class="product-detail-name">${product.name}</h1>
                     <p class="product-detail-description">${product.longDescription || product.description}</p>
                     
-                    <h3 class="product-details-title">
-                        <i class="fas fa-list-ul"></i>
-                        المواصفات والتفاصيل
-                    </h3>
-                    <ul class="product-details-list">
-                        ${detailsHtml}
-                    </ul>
+                    ${specsSectionHtml}
                 </div>
 
                 <!-- معلومات البائع مع التواصل -->
@@ -3044,8 +3050,3 @@
     <meta name="google-site-verification" content="UwEARwAkfxnW1CP0oDBEnlnKhHl2QuANOH1SF_8pvJg">
 </body>
 </html>
-
-
-
-
-
