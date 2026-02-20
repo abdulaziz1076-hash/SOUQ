@@ -789,35 +789,10 @@
             border-radius: 8px;
         }
 
-        .share-product-btn {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-dark);
-            border: 2px solid var(--secondary);
-            cursor: pointer;
-            transition: 0.2s;
-            z-index: 10;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        .share-product-btn:hover {
-            background: var(--secondary);
-            color: white;
-            transform: scale(1.1);
-        }
-
+        /* أنماط زر المشاركة مع دعم الاتجاه */
         .share-profile-btn {
             position: absolute;
             top: 15px;
-            left: 15px;
             background: rgba(255,255,255,0.2);
             width: 40px;
             height: 40px;
@@ -833,9 +808,53 @@
             z-index: 10;
         }
 
+        [dir="rtl"] .share-profile-btn {
+            left: 15px;
+            right: auto;
+        }
+
+        [dir="ltr"] .share-profile-btn {
+            right: 15px;
+            left: auto;
+        }
+
         .share-profile-btn:hover {
             background: var(--secondary);
             color: var(--primary-dark);
+            transform: scale(1.1);
+        }
+
+        .share-product-btn {
+            position: absolute;
+            top: 10px;
+            background: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-dark);
+            border: 2px solid var(--secondary);
+            cursor: pointer;
+            transition: 0.2s;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        [dir="rtl"] .share-product-btn {
+            left: 10px;
+            right: auto;
+        }
+
+        [dir="ltr"] .share-product-btn {
+            right: 10px;
+            left: auto;
+        }
+
+        .share-product-btn:hover {
+            background: var(--secondary);
+            color: white;
             transform: scale(1.1);
         }
 
@@ -2471,630 +2490,744 @@
         </div>
     </footer>
 
-<script>
-    // ==================== البيانات ====================
-    const familiesData = [
-        {
-            id: 1,
-            name: "cardsplayuae",
-            nameEn: "CardsPlayUAE",
-            emirate: "أبوظبي",
-            description: "ترفيه",
-            descriptionEn: "Entertainment",
-            longDescription: "اوراق لعب فاخرة - تجربة احترافية في كل لعبة.",
-            longDescriptionEn: "Premium playing cards - professional experience in every game.",
-            image: "P1.png",
-            phone: "",
-            whatsapp: "",
-            email: "",
-            sell_point: "instacardsplayuae",
-            adra_license: "نعم",
-            coverage: "الإمارة فقط",
-            badges: ["جديد"],
-            badgesEn: ["New"],
-            category: "ترفيه",
-            categoryEn: "Entertainment",
-            products: [
-                {
-                    id: "p1",
-                    name: "بطاقات- قص",
-                    nameEn: "Cut Cards",
-                    description: "بطاقات قوية وجودة عالية",
-                    descriptionEn: "Strong and high quality cards",
-                    longDescription: "بطاقات لعب احترافية فاخرة مصنوعة من أجود أنواع الورق المقوى، مقاومة للثني والتمزق. مناسبة للمحترفين والهواة على حد سواء. تصميم كلاسيكي أنيق مع لمسات عصرية. تأتي في علبة هدايا فاخرة.",
-                    longDescriptionEn: "Premium professional playing cards made from the finest cardboard, resistant to bending and tearing. Suitable for both professionals and amateurs. Classic elegant design with modern touches. Comes in a luxury gift box.",
-                    category: "ترفيه",
-                    categoryEn: "Entertainment",
-                    mainImage: "P1-1.png",
-                    images: [
-                        "P1-1.png",
-                        "P1-2.png",
-                        "P1-3.png",
-                    ],
-                    details: [
-                        "مكونة من 52 بطاقة + 2 بطاقة جوكر",
-                        "ورق فاخر مقاوم للماء",
-                        "تغليف جيد",
-                        "جودة عالية",
-                    ],
-                    detailsEn: [
-                        "52 cards + 2 joker cards",
-                        "Premium water-resistant paper",
-                        "Good packaging",
-                        "High quality",
-                    ]
+    <script>
+        // ==================== البيانات ====================
+        const familiesData = [
+            {
+                id: 1,
+                name: "cardsplayuae",
+                nameEn: "CardsPlayUAE",
+                emirate: "أبوظبي",
+                description: "ترفيه",
+                descriptionEn: "Entertainment",
+                longDescription: "اوراق لعب فاخرة - تجربة احترافية في كل لعبة.",
+                longDescriptionEn: "Premium playing cards - professional experience in every game.",
+                image: "P1.png",
+                phone: "",
+                whatsapp: "",
+                email: "",
+                sell_point: "instacardsplayuae",
+                adra_license: "نعم",
+                coverage: "الإمارة فقط",
+                badges: ["جديد"],
+                badgesEn: ["New"],
+                category: "ترفيه",
+                categoryEn: "Entertainment",
+                products: [
+                    {
+                        id: "p1",
+                        name: "بطاقات- قص",
+                        nameEn: "Cut Cards",
+                        description: "بطاقات قوية وجودة عالية",
+                        descriptionEn: "Strong and high quality cards",
+                        longDescription: "بطاقات لعب احترافية فاخرة مصنوعة من أجود أنواع الورق المقوى، مقاومة للثني والتمزق. مناسبة للمحترفين والهواة على حد سواء. تصميم كلاسيكي أنيق مع لمسات عصرية. تأتي في علبة هدايا فاخرة.",
+                        longDescriptionEn: "Premium professional playing cards made from the finest cardboard, resistant to bending and tearing. Suitable for both professionals and amateurs. Classic elegant design with modern touches. Comes in a luxury gift box.",
+                        category: "ترفيه",
+                        categoryEn: "Entertainment",
+                        mainImage: "P1-1.png",
+                        images: [
+                            "P1-1.png",
+                            "P1-2.png",
+                            "P1-3.png",
+                        ],
+                        details: [
+                            "مكونة من 52 بطاقة + 2 بطاقة جوكر",
+                            "ورق فاخر مقاوم للماء",
+                            "تغليف جيد",
+                            "جودة عالية",
+                        ],
+                        detailsEn: [
+                            "52 cards + 2 joker cards",
+                            "Premium water-resistant paper",
+                            "Good packaging",
+                            "High quality",
+                        ]
+                    },
+                ]
+            },
+            {
+                id: 2,
+                name: "موتشا - Motcha",
+                nameEn: "Motcha",
+                emirate: "دبي",
+                description: "نقدم نوع ممتاز جداً و نوفر كميات كبيرة للكوفيات.",
+                descriptionEn: "We offer excellent quality matcha and provide bulk quantities for cafes.",
+                longDescription: "اول براند ماتشا صينية في الامارات، نقدم نوع ممتاز جداً و نوفر كميات كبيرة للكوفيات.",
+                longDescriptionEn: "The first Chinese matcha brand in the UAE, offering excellent quality matcha and bulk quantities for cafes.",
+                image: "p2.jpg",
+                phone: "",
+                whatsapp: "+971555307912",
+                email: "",
+                sell_point: "instamotcha.ae",
+                adra_license: "نعم",
+                coverage: "الإمارات",
+                badges: ["مشروبات"],
+                badgesEn: ["Beverages"],
+                category: "مشروبات",
+                categoryEn: "Beverages",
+                products: [
+                    {
+                        id: "p1",
+                        name: "ماتشا",
+                        nameEn: "Matcha",
+                        description: "ماتشا احتفالية عضوية 50g",
+                        descriptionEn: "Ceremonial organic matcha 50g",
+                        longDescription: "تجربة النكهة والجودة الصينية الأصيلة مع ماتشا الدرجة الاحتفالية العضوية، يتم حصد أوراق الشاي بعناية من الظل للحفاظ على اللون الأخضر الزمردي والمذاق الغني والقوام الكريمي.",
+                        longDescriptionEn: "Experience authentic Chinese flavor and quality with organic ceremonial grade matcha, carefully shade-grown harvested to preserve the emerald green color, rich taste, and creamy texture.",
+                        category: "مشروبات",
+                        categoryEn: "Beverages",
+                        mainImage: "p2-5.jpg",
+                        images: [
+                            "p2-5.jpg",
+                            "p2-5-1.jpg",
+                            "p2-5-2.jpg",
+                            "p2-5-3.jpg",
+                        ],
+                        details: [
+                            "الوزن: 50 جرام (تكفي لتحضير 25-30 كوب)",
+                            "الجودة: عضوية 100%، خالية من الإضافات والمواد الحافظة.",
+                            "النكهة: تمتاز بحلاوة طبيعية خفيفة وبدون مرارة تماماً.",
+                        ],
+                        detailsEn: [
+                            "Weight: 50g (makes 25-30 cups)",
+                            "Quality: 100% organic, free from additives and preservatives.",
+                            "Flavor: Naturally sweet with no bitterness.",
+                        ]
+                    },
+                    {
+                        id: "p2",
+                        name: "عدة ماتشا",
+                        nameEn: "Matcha Set",
+                        description: "عدة ماتشا متكاملة",
+                        descriptionEn: "Complete matcha set",
+                        longDescription: "عدة الماتشا المتكاملة تجربة النكهة والجودة الصينية الأصيلة، لتحضير كوب مثالي من الماتشا في منزلك، صممت مجموعتنا بعناية فائقة لتأخذك في رحلة تبدأ من لحظة فتح العلبة وحتى آخر رشفة.",
+                        longDescriptionEn: "Complete matcha set for an authentic Chinese flavor experience. Our carefully designed set takes you on a journey from the moment you open the box to the last sip.",
+                        category: "مشروبات",
+                        categoryEn: "Beverages",
+                        mainImage: "p2-3.jpg",
+                        images: [
+                            "p2-3.jpg",
+                        ],
+                        details: [],
+                        detailsEn: [],
+                    },
+                    {
+                        id: "p3",
+                        name: "ملعقة ماتشا",
+                        nameEn: "Matcha Spoon",
+                        description: "ملعقة ماتشا حديد",
+                        descriptionEn: "Matcha spoon",
+                        longDescription: "ملعقة ماتشا حديد مقاوم للصدأ بلونين ذهبي و فضي",
+                        longDescriptionEn: "Stainless steel matcha spoon in gold and silver colors",
+                        category: "مشروبات",
+                        categoryEn: "Beverages",
+                        mainImage: "p2-1.jpg",
+                        images: [
+                            "p2-1.jpg",
+                            "p2-1-1.jpg",
+                        ],
+                        details: [],
+                        detailsEn: [],
+                    },
+                    {
+                        id: "p4",
+                        name: "كوب ماتشا",
+                        nameEn: "Matcha Cup",
+                        description: "كوب ماتشا مميز",
+                        descriptionEn: "Special matcha cup",
+                        longDescription: "كوب ماتشا مميز",
+                        longDescriptionEn: "Special matcha cup",
+                        category: "مشروبات",
+                        categoryEn: "Beverages",
+                        mainImage: "p2-2.jpg",
+                        images: [
+                            "p2-2.jpg",
+                        ],
+                        details: [],
+                        detailsEn: [],
+                    }
+                ]
+            }
+        ];
+
+        // ==================== حالة التطبيق ====================
+        const appState = {
+            currentPage: 'home',
+            currentEmirate: 'all',
+            currentCategory: 'all',
+            currentFamilyId: null,
+            currentProductId: null,
+            searchQuery: '',
+            currentLanguage: 'ar',
+            currentShareProduct: null,
+            currentShareProfile: null
+        };
+
+        // ==================== الترجمة الكاملة ====================
+        const translations = {
+            ar: {
+                siteTitle: "سوق المشاريع",
+                siteSubtitle: "المشاريع المنزلية في الامارات",
+                navHome: "الرئيسية",
+                navMarket: "السوق",
+                navRegister: "تسجيل مشروع",
+                footerLogo: "سوق المشاريع",
+                footerText: "منصة المشاريع المنزلية الإماراتية",
+                copyright: "© 2025 سوق المشاريع - جميع الحقوق محفوظة",
+                langBtn: "English",
+                
+                heroTitle: "سوق المشاريع",
+                heroSubtitle: "منصة متخصصة لدعم المشاريع المنزلية في الامارات",
+                discoverBtn: "اكتشف المنتجات",
+                joinBtn: "انضم كمشروع منزلي",
+                aboutTitle: "من نحن",
+                aboutText1: "<strong>سوق المشاريع</strong> هو أول منصة متخصصة في دعم وتمكين المشاريع المنزلية المحلية.",
+                aboutText2: "<strong>للباحثين عن التميز:</strong> هنا ستجدون منتجات فريدة من أيدي أسر إماراتية ومقيمة موهوبة.",
+                aboutText3: "<strong>لأصحاب المشاريع المنزلية:</strong> نقدم لكم منصة تسويق مجانية للوصول إلى شريحة واسعة من المهتمين.",
+                stat1: "مشاريع منزلية",
+                stat2: "منتجات متنوعة",
+                stat3: "طلبات تواصل",
+                stat4: "شركاء داعمين",
+                badge1: "قريباً",
+                badge2: "قريباً",
+                badge3: "قريباً",
+                badge4: "قريباً",
+                
+                homeSearchPlaceholder: "ابحث عن منتج أو مشروع...",
+                
+                familiesPageTitle: "المشاريع المنزلية",
+                familiesPageSubtitle: "استعرض المشاريع ومنتجاتها",
+                familiesSearchPlaceholder: "ابحث عن مشروع أو منتج...",
+                
+                productsTitle: "المنتجات",
+                
+                sellerInfo: "معلومات البائع",
+                similarProducts: "منتجات مشابهة",
+                contactSeller: "تواصل مع البائع",
+                shareProduct: "مشاركة المنتج",
+                shareProfile: "مشاركة المشروع",
+                specifications: "المواصفات والتفاصيل",
+                
+                popupTitle: "كيف تطلب؟",
+                step1: "تصفح المنتجات",
+                step2: "واختر ما يعجبك",
+                step3: "تواصل مع البائع",
+                gotItBtn: "فهمت",
+                
+                shareTitle: "مشاركة المنتج",
+                copyLinkText: "نسخ الرابط",
+                closeShareBtn: "إغلاق",
+                
+                modalTitle: "تسجيل مشروع جديد",
+                modalSubtitle: "انضم إلى منصة سوق المشاريع",
+                projectNameLabel: "اسم المشروع",
+                projectNamePlaceholder: "مثال: مشروع البيت",
+                emirateLabel: "الإمارة",
+                selectEmirate: "اختر الإمارة",
+                descriptionLabel: "نبذة عن المشروع",
+                descriptionPlaceholder: "اكتب نبذة مختصرة عن مشروعك...",
+                licenseLabel: "الترخيص",
+                yesLabel: "نعم",
+                noLabel: "لا",
+                coverageLabel: "مناطق التغطية",
+                selectCoverage: "اختر نطاق التغطية",
+                phoneLabel: "الهاتف",
+                phonePlaceholder: "05x xxx xxxx",
+                whatsappLabel: "واتساب",
+                whatsappPlaceholder: "05x xxx xxxx",
+                emailLabel: "البريد الإلكتروني",
+                emailPlaceholder: "info@example.com",
+                sellPointLabel: "نقطة البيع",
+                sellPointPlaceholder: "@instagram أو t.me/username",
+                sellPointHint: "إنستجرام، تليجرام، سناب شات، تيك توك...",
+                categoriesLabel: "التصنيفات",
+                catFood: "أطعمة",
+                catDrinks: "مشروبات",
+                catPerfumes: "عطور",
+                catCare: "عناية",
+                catSweets: "حلويات",
+                catBeauty: "تجميل",
+                catClothes: "ملابس",
+                catHandmade: "يدويات",
+                catGifts: "هدايا",
+                catCandles: "شموع",
+                catArts: "فنون",
+                catPlants: "نباتات",
+                catEntertainment: "ترفيه",
+                submitBtn: "إرسال طلب التسجيل",
+                submitHint: "سيتم التواصل معكم خلال 24 ساعة",
+                
+                emirates: {
+                    all: "كل الإمارات",
+                    أبوظبي: "أبوظبي",
+                    دبي: "دبي",
+                    الشارقة: "الشارقة",
+                    عجمان: "عجمان",
+                    "رأس الخيمة": "رأس الخيمة",
+                    الفجيرة: "الفجيرة",
+                    "أم القيوين": "أم القيوين"
                 },
-            ]
-        },
-        {
-            id: 2,
-            name: "موتشا - Motcha",
-            nameEn: "Motcha",
-            emirate: "دبي",
-            description: "نقدم نوع ممتاز جداً و نوفر كميات كبيرة للكوفيات.",
-            descriptionEn: "We offer excellent quality matcha and provide bulk quantities for cafes.",
-            longDescription: "اول براند ماتشا صينية في الامارات، نقدم نوع ممتاز جداً و نوفر كميات كبيرة للكوفيات.",
-            longDescriptionEn: "The first Chinese matcha brand in the UAE, offering excellent quality matcha and bulk quantities for cafes.",
-            image: "p2.jpg",
-            phone: "",
-            whatsapp: "+971555307912",
-            email: "",
-            sell_point: "instamotcha.ae",
-            adra_license: "نعم",
-            coverage: "الإمارات",
-            badges: ["مشروبات"],
-            badgesEn: ["Beverages"],
-            category: "مشروبات",
-            categoryEn: "Beverages",
-            products: [
-                {
-                    id: "p1",
-                    name: "ماتشا",
-                    nameEn: "Matcha",
-                    description: "ماتشا احتفالية عضوية 50g",
-                    descriptionEn: "Ceremonial organic matcha 50g",
-                    longDescription: "تجربة النكهة والجودة الصينية الأصيلة مع ماتشا الدرجة الاحتفالية العضوية، يتم حصد أوراق الشاي بعناية من الظل للحفاظ على اللون الأخضر الزمردي والمذاق الغني والقوام الكريمي.",
-                    longDescriptionEn: "Experience authentic Chinese flavor and quality with organic ceremonial grade matcha, carefully shade-grown harvested to preserve the emerald green color, rich taste, and creamy texture.",
-                    category: "مشروبات",
-                    categoryEn: "Beverages",
-                    mainImage: "p2-5.jpg",
-                    images: [
-                        "p2-5.jpg",
-                        "p2-5-1.jpg",
-                        "p2-5-2.jpg",
-                        "p2-5-3.jpg",
-                    ],
-                    details: [
-                        "الوزن: 50 جرام (تكفي لتحضير 25-30 كوب)",
-                        "الجودة: عضوية 100%، خالية من الإضافات والمواد الحافظة.",
-                        "النكهة: تمتاز بحلاوة طبيعية خفيفة وبدون مرارة تماماً.",
-                    ],
-                    detailsEn: [
-                        "Weight: 50g (makes 25-30 cups)",
-                        "Quality: 100% organic, free from additives and preservatives.",
-                        "Flavor: Naturally sweet with no bitterness.",
-                    ]
+                
+                categories: {
+                    all: "الكل",
+                    أطعمة: "أطعمة",
+                    مشروبات: "مشروبات",
+                    عطور: "عطور",
+                    عناية: "عناية",
+                    حلويات: "حلويات",
+                    تجميل: "تجميل",
+                    ملابس: "ملابس",
+                    يدويات: "يدويات",
+                    هدايا: "هدايا",
+                    شموع: "شموع",
+                    فنون: "فنون",
+                    نباتات: "نباتات",
+                    ترفيه: "ترفيه"
                 },
-                {
-                    id: "p2",
-                    name: "عدة ماتشا",
-                    nameEn: "Matcha Set",
-                    description: "عدة ماتشا متكاملة",
-                    descriptionEn: "Complete matcha set",
-                    longDescription: "عدة الماتشا المتكاملة تجربة النكهة والجودة الصينية الأصيلة، لتحضير كوب مثالي من الماتشا في منزلك، صممت مجموعتنا بعناية فائقة لتأخذك في رحلة تبدأ من لحظة فتح العلبة وحتى آخر رشفة.",
-                    longDescriptionEn: "Complete matcha set for an authentic Chinese flavor experience. Our carefully designed set takes you on a journey from the moment you open the box to the last sip.",
-                    category: "مشروبات",
-                    categoryEn: "Beverages",
-                    mainImage: "p2-3.jpg",
-                    images: [
-                        "p2-3.jpg",
-                    ],
-                    details: [],
-                    detailsEn: [],
+                
+                coverageOptions: {
+                    "الإمارة فقط": "الإمارة فقط",
+                    "الإمارات": "الإمارات",
+                    "دول الخليج": "دول الخليج",
+                    "العالم": "العالم"
                 },
-                {
-                    id: "p3",
-                    name: "ملعقة ماتشا",
-                    nameEn: "Matcha Spoon",
-                    description: "ملعقة ماتشا حديد",
-                    descriptionEn: "Matcha spoon",
-                    longDescription: "ملعقة ماتشا حديد مقاوم للصدأ بلونين ذهبي و فضي",
-                    longDescriptionEn: "Stainless steel matcha spoon in gold and silver colors",
-                    category: "مشروبات",
-                    categoryEn: "Beverages",
-                    mainImage: "p2-1.jpg",
-                    images: [
-                        "p2-1.jpg",
-                        "p2-1-1.jpg",
-                    ],
-                    details: [],
-                    detailsEn: [],
+                
+                viewProducts: "المنتجات",
+                noProjects: "لا مشاريع متاحة، أخبر أي مشروع تعرفه بالتسجيل",
+                noContact: "لا توجد معلومات تواصل",
+                licensed: "مرخص",
+                coverage: "التغطية",
+                call: "اتصال",
+                email: "البريد الإلكتروني"
+            },
+            en: {
+                siteTitle: "Project Souq",
+                siteSubtitle: "Home Projects in UAE",
+                navHome: "Home",
+                navMarket: "Market",
+                navRegister: "Register Project",
+                footerLogo: "Project Souq",
+                footerText: "UAE Home Projects Platform",
+                copyright: "© 2025 Project Souq - All Rights Reserved",
+                langBtn: "عربي",
+                
+                heroTitle: "Project Souq",
+                heroSubtitle: "A specialized platform supporting home-based projects in the UAE",
+                discoverBtn: "Discover Products",
+                joinBtn: "Join as Home Project",
+                aboutTitle: "About Us",
+                aboutText1: "<strong>Project Souq</strong> is the first platform specialized in supporting and empowering local home-based projects.",
+                aboutText2: "<strong>For those seeking excellence:</strong> Here you'll find unique products from talented Emirati and resident families.",
+                aboutText3: "<strong>For home project owners:</strong> We offer you a free marketing platform to reach a wide audience of interested customers.",
+                stat1: "Home Projects",
+                stat2: "Diverse Products",
+                stat3: "Contact Requests",
+                stat4: "Supporting Partners",
+                badge1: "Coming Soon",
+                badge2: "Coming Soon",
+                badge3: "Coming Soon",
+                badge4: "Coming Soon",
+                
+                homeSearchPlaceholder: "Search for product or project...",
+                
+                familiesPageTitle: "Home Projects",
+                familiesPageSubtitle: "Browse projects and their products",
+                familiesSearchPlaceholder: "Search for project or product...",
+                
+                productsTitle: "Products",
+                
+                sellerInfo: "Seller Info",
+                similarProducts: "Similar Products",
+                contactSeller: "Contact Seller",
+                shareProduct: "Share Product",
+                shareProfile: "Share Project",
+                specifications: "Specifications & Details",
+                
+                popupTitle: "How to Order?",
+                step1: "Browse Products",
+                step2: "Choose what you like",
+                step3: "Contact the Seller",
+                gotItBtn: "Got it",
+                
+                shareTitle: "Share Product",
+                copyLinkText: "Copy Link",
+                closeShareBtn: "Close",
+                
+                modalTitle: "Register New Project",
+                modalSubtitle: "Join Project Souq Platform",
+                projectNameLabel: "Project Name",
+                projectNamePlaceholder: "Example: Home Project",
+                emirateLabel: "Emirate",
+                selectEmirate: "Select Emirate",
+                descriptionLabel: "About the Project",
+                descriptionPlaceholder: "Write a brief description of your project...",
+                licenseLabel: "License",
+                yesLabel: "Yes",
+                noLabel: "No",
+                coverageLabel: "Coverage Areas",
+                selectCoverage: "Select Coverage",
+                phoneLabel: "Phone",
+                phonePlaceholder: "05x xxx xxxx",
+                whatsappLabel: "WhatsApp",
+                whatsappPlaceholder: "05x xxx xxxx",
+                emailLabel: "Email",
+                emailPlaceholder: "info@example.com",
+                sellPointLabel: "Sell Point",
+                sellPointPlaceholder: "@instagram or t.me/username",
+                sellPointHint: "Instagram, Telegram, Snapchat, TikTok...",
+                categoriesLabel: "Categories",
+                catFood: "Food",
+                catDrinks: "Beverages",
+                catPerfumes: "Perfumes",
+                catCare: "Care",
+                catSweets: "Sweets",
+                catBeauty: "Beauty",
+                catClothes: "Clothes",
+                catHandmade: "Handmade",
+                catGifts: "Gifts",
+                catCandles: "Candles",
+                catArts: "Arts",
+                catPlants: "Plants",
+                catEntertainment: "Entertainment",
+                submitBtn: "Submit Registration",
+                submitHint: "We will contact you within 24 hours",
+                
+                emirates: {
+                    all: "All Emirates",
+                    أبوظبي: "Abu Dhabi",
+                    دبي: "Dubai",
+                    الشارقة: "Sharjah",
+                    عجمان: "Ajman",
+                    "رأس الخيمة": "Ras Al Khaimah",
+                    الفجيرة: "Fujairah",
+                    "أم القيوين": "Umm Al Quwain"
                 },
-                {
-                    id: "p4",
-                    name: "كوب ماتشا",
-                    nameEn: "Matcha Cup",
-                    description: "كوب ماتشا مميز",
-                    descriptionEn: "Special matcha cup",
-                    longDescription: "كوب ماتشا مميز",
-                    longDescriptionEn: "Special matcha cup",
-                    category: "مشروبات",
-                    categoryEn: "Beverages",
-                    mainImage: "p2-2.jpg",
-                    images: [
-                        "p2-2.jpg",
-                    ],
-                    details: [],
-                    detailsEn: [],
+                
+                categories: {
+                    all: "All",
+                    أطعمة: "Food",
+                    مشروبات: "Beverages",
+                    عطور: "Perfumes",
+                    عناية: "Care",
+                    حلويات: "Sweets",
+                    تجميل: "Beauty",
+                    ملابس: "Clothes",
+                    يدويات: "Handmade",
+                    هدايا: "Gifts",
+                    شموع: "Candles",
+                    فنون: "Arts",
+                    نباتات: "Plants",
+                    ترفيه: "Entertainment"
+                },
+                
+                coverageOptions: {
+                    "الإمارة فقط": "Emirate only",
+                    "الإمارات": "UAE",
+                    "دول الخليج": "GCC",
+                    "العالم": "Worldwide"
+                },
+                
+                viewProducts: "Products",
+                noProjects: "No projects available. Tell any project you know to register.",
+                noContact: "No contact information",
+                licensed: "Licensed",
+                coverage: "Coverage",
+                call: "Call",
+                email: "Email"
+            }
+        };
+
+        // ==================== التهيئة ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('projectSouqLang');
+            if (savedLang && (savedLang === 'ar' || savedLang === 'en')) {
+                appState.currentLanguage = savedLang;
+                applyLanguage(savedLang);
+                
+                // تطبيق اتجاه الصفحة حسب اللغة المحفوظة
+                const htmlTag = document.getElementById('htmlTag');
+                if (savedLang === 'ar') {
+                    htmlTag.setAttribute('dir', 'rtl');
+                    htmlTag.setAttribute('lang', 'ar');
+                    document.body.classList.remove('en-mode');
+                } else {
+                    htmlTag.setAttribute('dir', 'ltr');
+                    htmlTag.setAttribute('lang', 'en');
+                    document.body.classList.add('en-mode');
                 }
-            ]
+            }
+            
+            initEmiratesChips();
+            initCategoriesChips();
+            handleHashChange();
+            window.addEventListener('hashchange', handleHashChange);
+            
+            updatePlaceholders();
+        });
+
+        // ==================== تبديل اللغة (معدل) ====================
+        function toggleLanguage() {
+            const newLang = appState.currentLanguage === 'ar' ? 'en' : 'ar';
+            appState.currentLanguage = newLang;
+            localStorage.setItem('projectSouqLang', newLang);
+            applyLanguage(newLang);
+            
+            const htmlTag = document.getElementById('htmlTag');
+            if (newLang === 'ar') {
+                htmlTag.setAttribute('dir', 'rtl');
+                htmlTag.setAttribute('lang', 'ar');
+                document.body.classList.remove('en-mode');
+            } else {
+                htmlTag.setAttribute('dir', 'ltr');
+                htmlTag.setAttribute('lang', 'en');
+                document.body.classList.add('en-mode');
+            }
+            
+            // إعادة بناء الفلاتر بالكامل
+            initEmiratesChips();
+            initCategoriesChips();
+            
+            // تحديث حالة الفلاتر النشطة
+            updateActiveEmirateChip(appState.currentEmirate);
+            updateActiveCategoryChip(appState.currentCategory);
+            
+            // تحديث الصفحة الحالية
+            const currentPage = appState.currentPage;
+            if (currentPage === 'families') {
+                renderFamilies();
+            } else if (currentPage === 'products' && appState.currentFamilyId) {
+                showFamilyProducts(appState.currentFamilyId, false);
+            } else if (currentPage === 'product-detail' && appState.currentFamilyId && appState.currentProductId) {
+                showProductDetail(appState.currentFamilyId, appState.currentProductId, false);
+            }
+            
+            updatePlaceholders();
         }
-    ];
 
-    // ==================== حالة التطبيق ====================
-    const appState = {
-        currentPage: 'home',
-        currentEmirate: 'all',
-        currentCategory: 'all',
-        currentFamilyId: null,
-        currentProductId: null,
-        searchQuery: '',
-        currentLanguage: 'ar',
-        currentShareProduct: null,
-        currentShareProfile: null
-    };
-
-    // ==================== الترجمة الكاملة ====================
-    const translations = {
-        ar: {
-            siteTitle: "سوق المشاريع",
-            siteSubtitle: "المشاريع المنزلية في الامارات",
-            navHome: "الرئيسية",
-            navMarket: "السوق",
-            navRegister: "تسجيل مشروع",
-            footerLogo: "سوق المشاريع",
-            footerText: "منصة المشاريع المنزلية الإماراتية",
-            copyright: "© 2025 سوق المشاريع - جميع الحقوق محفوظة",
-            langBtn: "English",
+        function applyLanguage(lang) {
+            const t = translations[lang];
             
-            heroTitle: "سوق المشاريع",
-            heroSubtitle: "منصة متخصصة لدعم المشاريع المنزلية في الامارات",
-            discoverBtn: "اكتشف المنتجات",
-            joinBtn: "انضم كمشروع منزلي",
-            aboutTitle: "من نحن",
-            aboutText1: "<strong>سوق المشاريع</strong> هو أول منصة متخصصة في دعم وتمكين المشاريع المنزلية المحلية.",
-            aboutText2: "<strong>للباحثين عن التميز:</strong> هنا ستجدون منتجات فريدة من أيدي أسر إماراتية ومقيمة موهوبة.",
-            aboutText3: "<strong>لأصحاب المشاريع المنزلية:</strong> نقدم لكم منصة تسويق مجانية للوصول إلى شريحة واسعة من المهتمين.",
-            stat1: "مشاريع منزلية",
-            stat2: "منتجات متنوعة",
-            stat3: "طلبات تواصل",
-            stat4: "شركاء داعمين",
-            badge1: "قريباً",
-            badge2: "قريباً",
-            badge3: "قريباً",
-            badge4: "قريباً",
+            document.getElementById('siteTitle').textContent = t.siteTitle;
+            document.getElementById('siteSubtitle').textContent = t.siteSubtitle;
+            document.getElementById('navHome').textContent = t.navHome;
+            document.getElementById('navMarket').textContent = t.navMarket;
+            document.getElementById('navRegister').textContent = t.navRegister;
+            document.getElementById('footerLogo').textContent = t.footerLogo;
+            document.getElementById('footerText').textContent = t.footerText;
+            document.getElementById('copyright').textContent = t.copyright;
+            document.getElementById('langBtn').textContent = t.langBtn;
             
-            homeSearchPlaceholder: "ابحث عن منتج أو مشروع...",
+            document.getElementById('heroTitle').textContent = t.heroTitle;
+            document.getElementById('heroSubtitle').textContent = t.heroSubtitle;
+            document.getElementById('discoverBtn').textContent = t.discoverBtn;
+            document.getElementById('joinBtn').textContent = t.joinBtn;
+            document.getElementById('aboutTitle').textContent = t.aboutTitle;
+            document.getElementById('aboutText1').innerHTML = t.aboutText1;
+            document.getElementById('aboutText2').innerHTML = t.aboutText2;
+            document.getElementById('aboutText3').innerHTML = t.aboutText3;
+            document.getElementById('stat1').textContent = t.stat1;
+            document.getElementById('stat2').textContent = t.stat2;
+            document.getElementById('stat3').textContent = t.stat3;
+            document.getElementById('stat4').textContent = t.stat4;
+            document.getElementById('badge1').textContent = t.badge1;
+            document.getElementById('badge2').textContent = t.badge2;
+            document.getElementById('badge3').textContent = t.badge3;
+            document.getElementById('badge4').textContent = t.badge4;
             
-            familiesPageTitle: "المشاريع المنزلية",
-            familiesPageSubtitle: "استعرض المشاريع ومنتجاتها",
-            familiesSearchPlaceholder: "ابحث عن مشروع أو منتج...",
+            document.getElementById('familiesPageTitle').textContent = t.familiesPageTitle;
+            document.getElementById('familiesPageSubtitle').textContent = t.familiesPageSubtitle;
             
-            productsTitle: "المنتجات",
+            document.getElementById('productsTitle').textContent = t.productsTitle;
             
-            sellerInfo: "معلومات البائع",
-            similarProducts: "منتجات مشابهة",
-            contactSeller: "تواصل مع البائع",
-            shareProduct: "مشاركة المنتج",
-            shareProfile: "مشاركة المشروع",
-            specifications: "المواصفات والتفاصيل",
+            document.getElementById('popupTitle').textContent = t.popupTitle;
+            document.getElementById('step1').textContent = t.step1;
+            document.getElementById('step2').textContent = t.step2;
+            document.getElementById('step3').textContent = t.step3;
+            document.getElementById('gotItBtn').textContent = t.gotItBtn;
             
-            popupTitle: "كيف تطلب؟",
-            step1: "تصفح المنتجات",
-            step2: "واختر ما يعجبك",
-            step3: "تواصل مع البائع",
-            gotItBtn: "فهمت",
+            document.getElementById('shareTitle').textContent = t.shareTitle;
+            document.getElementById('shareProfileTitle').textContent = t.shareProfile;
+            document.getElementById('copyLinkText').textContent = t.copyLinkText;
+            document.getElementById('copyProfileLinkText').textContent = t.copyLinkText;
+            document.getElementById('closeShareBtn').textContent = t.closeShareBtn;
+            document.getElementById('closeProfileShareBtn').textContent = t.closeShareBtn;
             
-            shareTitle: "مشاركة المنتج",
-            copyLinkText: "نسخ الرابط",
-            closeShareBtn: "إغلاق",
+            document.getElementById('modalTitle').textContent = t.modalTitle;
+            document.getElementById('modalSubtitle').textContent = t.modalSubtitle;
+            document.getElementById('projectNameLabel').textContent = t.projectNameLabel;
+            document.getElementById('emirateLabel').textContent = t.emirateLabel;
+            document.getElementById('descriptionLabel').textContent = t.descriptionLabel;
+            document.getElementById('licenseLabel').textContent = t.licenseLabel;
+            document.getElementById('yesLabel').textContent = t.yesLabel;
+            document.getElementById('noLabel').textContent = t.noLabel;
+            document.getElementById('coverageLabel').textContent = t.coverageLabel;
+            document.getElementById('phoneLabel').textContent = t.phoneLabel;
+            document.getElementById('whatsappLabel').textContent = t.whatsappLabel;
+            document.getElementById('emailLabel').textContent = t.emailLabel;
+            document.getElementById('sellPointLabel').textContent = t.sellPointLabel;
+            document.getElementById('sellPointHint').textContent = t.sellPointHint;
+            document.getElementById('categoriesLabel').textContent = t.categoriesLabel;
+            document.getElementById('catFood').textContent = t.catFood;
+            document.getElementById('catDrinks').textContent = t.catDrinks;
+            document.getElementById('catPerfumes').textContent = t.catPerfumes;
+            document.getElementById('catCare').textContent = t.catCare;
+            document.getElementById('catSweets').textContent = t.catSweets;
+            document.getElementById('catBeauty').textContent = t.catBeauty;
+            document.getElementById('catClothes').textContent = t.catClothes;
+            document.getElementById('catHandmade').textContent = t.catHandmade;
+            document.getElementById('catGifts').textContent = t.catGifts;
+            document.getElementById('catCandles').textContent = t.catCandles;
+            document.getElementById('catArts').textContent = t.catArts;
+            document.getElementById('catPlants').textContent = t.catPlants;
+            document.getElementById('catEntertainment').textContent = t.catEntertainment;
+            document.getElementById('submitBtn').textContent = t.submitBtn;
+            document.getElementById('submitHint').textContent = t.submitHint;
             
-            modalTitle: "تسجيل مشروع جديد",
-            modalSubtitle: "انضم إلى منصة سوق المشاريع",
-            projectNameLabel: "اسم المشروع",
-            projectNamePlaceholder: "مثال: مشروع البيت",
-            emirateLabel: "الإمارة",
-            selectEmirate: "اختر الإمارة",
-            descriptionLabel: "نبذة عن المشروع",
-            descriptionPlaceholder: "اكتب نبذة مختصرة عن مشروعك...",
-            licenseLabel: "الترخيص",
-            yesLabel: "نعم",
-            noLabel: "لا",
-            coverageLabel: "مناطق التغطية",
-            selectCoverage: "اختر نطاق التغطية",
-            phoneLabel: "الهاتف",
-            phonePlaceholder: "05x xxx xxxx",
-            whatsappLabel: "واتساب",
-            whatsappPlaceholder: "05x xxx xxxx",
-            emailLabel: "البريد الإلكتروني",
-            emailPlaceholder: "info@example.com",
-            sellPointLabel: "نقطة البيع",
-            sellPointPlaceholder: "@instagram أو t.me/username",
-            sellPointHint: "إنستجرام، تليجرام، سناب شات، تيك توك...",
-            categoriesLabel: "التصنيفات",
-            catFood: "أطعمة",
-            catDrinks: "مشروبات",
-            catPerfumes: "عطور",
-            catCare: "عناية",
-            catSweets: "حلويات",
-            catBeauty: "تجميل",
-            catClothes: "ملابس",
-            catHandmade: "يدويات",
-            catGifts: "هدايا",
-            catCandles: "شموع",
-            catArts: "فنون",
-            catPlants: "نباتات",
-            catEntertainment: "ترفيه",
-            submitBtn: "إرسال طلب التسجيل",
-            submitHint: "سيتم التواصل معكم خلال 24 ساعة",
+            document.title = t.siteTitle + ' - ' + t.siteSubtitle;
             
-            emirates: {
-                all: "كل الإمارات",
-                أبوظبي: "أبوظبي",
-                دبي: "دبي",
-                الشارقة: "الشارقة",
-                عجمان: "عجمان",
-                "رأس الخيمة": "رأس الخيمة",
-                الفجيرة: "الفجيرة",
-                "أم القيوين": "أم القيوين"
-            },
-            
-            categories: {
-                all: "الكل",
-                أطعمة: "أطعمة",
-                مشروبات: "مشروبات",
-                عطور: "عطور",
-                عناية: "عناية",
-                حلويات: "حلويات",
-                تجميل: "تجميل",
-                ملابس: "ملابس",
-                يدويات: "يدويات",
-                هدايا: "هدايا",
-                شموع: "شموع",
-                فنون: "فنون",
-                نباتات: "نباتات",
-                ترفيه: "ترفيه"
-            },
-            
-            coverageOptions: {
-                "الإمارة فقط": "الإمارة فقط",
-                "الإمارات": "الإمارات",
-                "دول الخليج": "دول الخليج",
-                "العالم": "العالم"
-            },
-            
-            viewProducts: "المنتجات",
-            noProjects: "لا مشاريع متاحة، أخبر أي مشروع تعرفه بالتسجيل",
-            noContact: "لا توجد معلومات تواصل",
-            licensed: "مرخص",
-            coverage: "التغطية",
-            call: "اتصال",
-            email: "البريد الإلكتروني"
-        },
-        en: {
-            siteTitle: "Project Souq",
-            siteSubtitle: "Home Projects in UAE",
-            navHome: "Home",
-            navMarket: "Market",
-            navRegister: "Register Project",
-            footerLogo: "Project Souq",
-            footerText: "UAE Home Projects Platform",
-            copyright: "© 2025 Project Souq - All Rights Reserved",
-            langBtn: "عربي",
-            
-            heroTitle: "Project Souq",
-            heroSubtitle: "A specialized platform supporting home-based projects in the UAE",
-            discoverBtn: "Discover Products",
-            joinBtn: "Join as Home Project",
-            aboutTitle: "About Us",
-            aboutText1: "<strong>Project Souq</strong> is the first platform specialized in supporting and empowering local home-based projects.",
-            aboutText2: "<strong>For those seeking excellence:</strong> Here you'll find unique products from talented Emirati and resident families.",
-            aboutText3: "<strong>For home project owners:</strong> We offer you a free marketing platform to reach a wide audience of interested customers.",
-            stat1: "Home Projects",
-            stat2: "Diverse Products",
-            stat3: "Contact Requests",
-            stat4: "Supporting Partners",
-            badge1: "Coming Soon",
-            badge2: "Coming Soon",
-            badge3: "Coming Soon",
-            badge4: "Coming Soon",
-            
-            homeSearchPlaceholder: "Search for product or project...",
-            
-            familiesPageTitle: "Home Projects",
-            familiesPageSubtitle: "Browse projects and their products",
-            familiesSearchPlaceholder: "Search for project or product...",
-            
-            productsTitle: "Products",
-            
-            sellerInfo: "Seller Info",
-            similarProducts: "Similar Products",
-            contactSeller: "Contact Seller",
-            shareProduct: "Share Product",
-            shareProfile: "Share Project",
-            specifications: "Specifications & Details",
-            
-            popupTitle: "How to Order?",
-            step1: "Browse Products",
-            step2: "Choose what you like",
-            step3: "Contact the Seller",
-            gotItBtn: "Got it",
-            
-            shareTitle: "Share Product",
-            copyLinkText: "Copy Link",
-            closeShareBtn: "Close",
-            
-            modalTitle: "Register New Project",
-            modalSubtitle: "Join Project Souq Platform",
-            projectNameLabel: "Project Name",
-            projectNamePlaceholder: "Example: Home Project",
-            emirateLabel: "Emirate",
-            selectEmirate: "Select Emirate",
-            descriptionLabel: "About the Project",
-            descriptionPlaceholder: "Write a brief description of your project...",
-            licenseLabel: "License",
-            yesLabel: "Yes",
-            noLabel: "No",
-            coverageLabel: "Coverage Areas",
-            selectCoverage: "Select Coverage",
-            phoneLabel: "Phone",
-            phonePlaceholder: "05x xxx xxxx",
-            whatsappLabel: "WhatsApp",
-            whatsappPlaceholder: "05x xxx xxxx",
-            emailLabel: "Email",
-            emailPlaceholder: "info@example.com",
-            sellPointLabel: "Sell Point",
-            sellPointPlaceholder: "@instagram or t.me/username",
-            sellPointHint: "Instagram, Telegram, Snapchat, TikTok...",
-            categoriesLabel: "Categories",
-            catFood: "Food",
-            catDrinks: "Beverages",
-            catPerfumes: "Perfumes",
-            catCare: "Care",
-            catSweets: "Sweets",
-            catBeauty: "Beauty",
-            catClothes: "Clothes",
-            catHandmade: "Handmade",
-            catGifts: "Gifts",
-            catCandles: "Candles",
-            catArts: "Arts",
-            catPlants: "Plants",
-            catEntertainment: "Entertainment",
-            submitBtn: "Submit Registration",
-            submitHint: "We will contact you within 24 hours",
-            
-            emirates: {
-                all: "All Emirates",
-                أبوظبي: "Abu Dhabi",
-                دبي: "Dubai",
-                الشارقة: "Sharjah",
-                عجمان: "Ajman",
-                "رأس الخيمة": "Ras Al Khaimah",
-                الفجيرة: "Fujairah",
-                "أم القيوين": "Umm Al Quwain"
-            },
-            
-            categories: {
-                all: "All",
-                أطعمة: "Food",
-                مشروبات: "Beverages",
-                عطور: "Perfumes",
-                عناية: "Care",
-                حلويات: "Sweets",
-                تجميل: "Beauty",
-                ملابس: "Clothes",
-                يدويات: "Handmade",
-                هدايا: "Gifts",
-                شموع: "Candles",
-                فنون: "Arts",
-                نباتات: "Plants",
-                ترفيه: "Entertainment"
-            },
-            
-            coverageOptions: {
-                "الإمارة فقط": "Emirate only",
-                "الإمارات": "UAE",
-                "دول الخليج": "GCC",
-                "العالم": "Worldwide"
-            },
-            
-            viewProducts: "Products",
-            noProjects: "No projects available. Tell any project you know to register.",
-            noContact: "No contact information",
-            licensed: "Licensed",
-            coverage: "Coverage",
-            call: "Call",
-            email: "Email"
+            document.getElementById('metaDescription').setAttribute('content', 
+                lang === 'ar' 
+                    ? 'منصة سوق المشاريع: دليلك للمشاريع المنزلية في الإمارات. اكتشف منتجات محلية من مشاريع منزلية في دبي، أبوظبي، وجميع الإمارات.'
+                    : 'Project Souq platform: Your guide to home projects in the UAE. Discover local products from home projects in Dubai, Abu Dhabi, and all emirates.'
+            );
         }
-    };
 
-    // ==================== التهيئة ====================
-    document.addEventListener('DOMContentLoaded', function() {
-        const savedLang = localStorage.getItem('projectSouqLang');
-        if (savedLang && (savedLang === 'ar' || savedLang === 'en')) {
-            appState.currentLanguage = savedLang;
-            applyLanguage(savedLang);
+        function updatePlaceholders() {
+            const t = translations[appState.currentLanguage];
+            document.getElementById('homeSearch').placeholder = t.homeSearchPlaceholder;
+            document.getElementById('familiesSearch').placeholder = t.familiesSearchPlaceholder;
+            
+            const projectNameInput = document.querySelector('input[name="family_name"]');
+            if (projectNameInput) projectNameInput.placeholder = t.projectNamePlaceholder;
+            
+            const descriptionTextarea = document.querySelector('textarea[name="description"]');
+            if (descriptionTextarea) descriptionTextarea.placeholder = t.descriptionPlaceholder;
+            
+            const phoneInput = document.querySelector('input[name="phone"]');
+            if (phoneInput) phoneInput.placeholder = t.phonePlaceholder;
+            
+            const whatsappInput = document.querySelector('input[name="whatsapp"]');
+            if (whatsappInput) whatsappInput.placeholder = t.whatsappPlaceholder;
+            
+            const emailInput = document.querySelector('input[name="email"]');
+            if (emailInput) emailInput.placeholder = t.emailPlaceholder;
+            
+            const sellPointInput = document.querySelector('input[name="sell_point"]');
+            if (sellPointInput) sellPointInput.placeholder = t.sellPointPlaceholder;
+            
+            const selectEmirate = document.getElementById('selectEmirate');
+            if (selectEmirate) selectEmirate.textContent = t.selectEmirate;
+            
+            const selectCoverage = document.getElementById('selectCoverage');
+            if (selectCoverage) selectCoverage.textContent = t.selectCoverage;
         }
-        
-        initEmiratesChips();
-        initCategoriesChips();
-        handleHashChange();
-        window.addEventListener('hashchange', handleHashChange);
-        
-        updatePlaceholders();
-    });
 
-    // ==================== تبديل اللغة (معدل) ====================
-    function toggleLanguage() {
-        const newLang = appState.currentLanguage === 'ar' ? 'en' : 'ar';
-        appState.currentLanguage = newLang;
-        localStorage.setItem('projectSouqLang', newLang);
-        applyLanguage(newLang);
-        
-        const htmlTag = document.getElementById('htmlTag');
-        if (newLang === 'ar') {
-            htmlTag.setAttribute('dir', 'rtl');
-            htmlTag.setAttribute('lang', 'ar');
-            document.body.classList.remove('en-mode');
-        } else {
-            htmlTag.setAttribute('dir', 'ltr');
-            htmlTag.setAttribute('lang', 'en');
-            document.body.classList.add('en-mode');
+        // ==================== التنقل ====================
+        function handleHashChange() {
+            const hash = window.location.hash.slice(1) || '/';
+            const parts = hash.split('/').filter(p => p !== '');
+            
+            if (parts.length === 0 || parts[0] === '') {
+                showPage('home');
+            } else if (parts[0] === 'projects' && parts[1] === 'emirate' && parts[2]) {
+                const emirateId = decodeURIComponent(parts[2]);
+                appState.currentEmirate = emirateId;
+                appState.currentCategory = 'all';
+                appState.searchQuery = '';
+                
+                const t = translations[appState.currentLanguage];
+                document.getElementById('familiesPageTitle').textContent = 
+                    emirateId === 'all' ? t.familiesPageTitle : 
+                    (appState.currentLanguage === 'ar' ? `المشاريع في ${emirateId}` : `Projects in ${t.emirates[emirateId] || emirateId}`);
+                document.getElementById('familiesPageSubtitle').textContent = t.familiesPageSubtitle;
+                
+                updateActiveEmirateChip(emirateId);
+                updateActiveCategoryChip('all');
+                
+                const searchInput = document.getElementById('familiesSearch');
+                if (searchInput) searchInput.value = '';
+                
+                showPage('families');
+                renderFamilies();
+            } else if (parts[0] === 'family' && parts[1]) {
+                const familyId = parseInt(parts[1]);
+                const family = familiesData.find(f => f.id === familyId);
+                if (family) {
+                    appState.currentFamilyId = familyId;
+                    showFamilyProducts(familyId, false);
+                    showInstructionPopupOnce();
+                } else {
+                    navigateTo('/');
+                }
+            } else if (parts[0] === 'product' && parts[1] && parts[2]) {
+                const familyId = parseInt(parts[1]);
+                const productId = parts[2];
+                showProductDetail(familyId, productId, false);
+            } else {
+                navigateTo('/');
+            }
         }
-        
-        // إعادة بناء الفلاتر بالكامل
-        initEmiratesChips();
-        initCategoriesChips();
-        
-        // تحديث حالة الفلاتر النشطة
-        updateActiveEmirateChip(appState.currentEmirate);
-        updateActiveCategoryChip(appState.currentCategory);
-        
-        // تحديث الصفحة الحالية
-        const currentPage = appState.currentPage;
-        if (currentPage === 'families') {
-            renderFamilies();
-        } else if (currentPage === 'products' && appState.currentFamilyId) {
-            showFamilyProducts(appState.currentFamilyId, false);
-        } else if (currentPage === 'product-detail' && appState.currentFamilyId && appState.currentProductId) {
-            showProductDetail(appState.currentFamilyId, appState.currentProductId, false);
+
+        function navigateTo(path) {
+            window.location.hash = path;
         }
-        
-        updatePlaceholders();
-    }
 
-    function applyLanguage(lang) {
-        const t = translations[lang];
-        
-        document.getElementById('siteTitle').textContent = t.siteTitle;
-        document.getElementById('siteSubtitle').textContent = t.siteSubtitle;
-        document.getElementById('navHome').textContent = t.navHome;
-        document.getElementById('navMarket').textContent = t.navMarket;
-        document.getElementById('navRegister').textContent = t.navRegister;
-        document.getElementById('footerLogo').textContent = t.footerLogo;
-        document.getElementById('footerText').textContent = t.footerText;
-        document.getElementById('copyright').textContent = t.copyright;
-        document.getElementById('langBtn').textContent = t.langBtn;
-        
-        document.getElementById('heroTitle').textContent = t.heroTitle;
-        document.getElementById('heroSubtitle').textContent = t.heroSubtitle;
-        document.getElementById('discoverBtn').textContent = t.discoverBtn;
-        document.getElementById('joinBtn').textContent = t.joinBtn;
-        document.getElementById('aboutTitle').textContent = t.aboutTitle;
-        document.getElementById('aboutText1').innerHTML = t.aboutText1;
-        document.getElementById('aboutText2').innerHTML = t.aboutText2;
-        document.getElementById('aboutText3').innerHTML = t.aboutText3;
-        document.getElementById('stat1').textContent = t.stat1;
-        document.getElementById('stat2').textContent = t.stat2;
-        document.getElementById('stat3').textContent = t.stat3;
-        document.getElementById('stat4').textContent = t.stat4;
-        document.getElementById('badge1').textContent = t.badge1;
-        document.getElementById('badge2').textContent = t.badge2;
-        document.getElementById('badge3').textContent = t.badge3;
-        document.getElementById('badge4').textContent = t.badge4;
-        
-        document.getElementById('familiesPageTitle').textContent = t.familiesPageTitle;
-        document.getElementById('familiesPageSubtitle').textContent = t.familiesPageSubtitle;
-        
-        document.getElementById('productsTitle').textContent = t.productsTitle;
-        
-        document.getElementById('popupTitle').textContent = t.popupTitle;
-        document.getElementById('step1').textContent = t.step1;
-        document.getElementById('step2').textContent = t.step2;
-        document.getElementById('step3').textContent = t.step3;
-        document.getElementById('gotItBtn').textContent = t.gotItBtn;
-        
-        document.getElementById('shareTitle').textContent = t.shareTitle;
-        document.getElementById('shareProfileTitle').textContent = t.shareProfile;
-        document.getElementById('copyLinkText').textContent = t.copyLinkText;
-        document.getElementById('copyProfileLinkText').textContent = t.copyLinkText;
-        document.getElementById('closeShareBtn').textContent = t.closeShareBtn;
-        document.getElementById('closeProfileShareBtn').textContent = t.closeShareBtn;
-        
-        document.getElementById('modalTitle').textContent = t.modalTitle;
-        document.getElementById('modalSubtitle').textContent = t.modalSubtitle;
-        document.getElementById('projectNameLabel').textContent = t.projectNameLabel;
-        document.getElementById('emirateLabel').textContent = t.emirateLabel;
-        document.getElementById('descriptionLabel').textContent = t.descriptionLabel;
-        document.getElementById('licenseLabel').textContent = t.licenseLabel;
-        document.getElementById('yesLabel').textContent = t.yesLabel;
-        document.getElementById('noLabel').textContent = t.noLabel;
-        document.getElementById('coverageLabel').textContent = t.coverageLabel;
-        document.getElementById('phoneLabel').textContent = t.phoneLabel;
-        document.getElementById('whatsappLabel').textContent = t.whatsappLabel;
-        document.getElementById('emailLabel').textContent = t.emailLabel;
-        document.getElementById('sellPointLabel').textContent = t.sellPointLabel;
-        document.getElementById('sellPointHint').textContent = t.sellPointHint;
-        document.getElementById('categoriesLabel').textContent = t.categoriesLabel;
-        document.getElementById('catFood').textContent = t.catFood;
-        document.getElementById('catDrinks').textContent = t.catDrinks;
-        document.getElementById('catPerfumes').textContent = t.catPerfumes;
-        document.getElementById('catCare').textContent = t.catCare;
-        document.getElementById('catSweets').textContent = t.catSweets;
-        document.getElementById('catBeauty').textContent = t.catBeauty;
-        document.getElementById('catClothes').textContent = t.catClothes;
-        document.getElementById('catHandmade').textContent = t.catHandmade;
-        document.getElementById('catGifts').textContent = t.catGifts;
-        document.getElementById('catCandles').textContent = t.catCandles;
-        document.getElementById('catArts').textContent = t.catArts;
-        document.getElementById('catPlants').textContent = t.catPlants;
-        document.getElementById('catEntertainment').textContent = t.catEntertainment;
-        document.getElementById('submitBtn').textContent = t.submitBtn;
-        document.getElementById('submitHint').textContent = t.submitHint;
-        
-        document.title = t.siteTitle + ' - ' + t.siteSubtitle;
-        
-        document.getElementById('metaDescription').setAttribute('content', 
-            lang === 'ar' 
-                ? 'منصة سوق المشاريع: دليلك للمشاريع المنزلية في الإمارات. اكتشف منتجات محلية من مشاريع منزلية في دبي، أبوظبي، وجميع الإمارات.'
-                : 'Project Souq platform: Your guide to home projects in the UAE. Discover local products from home projects in Dubai, Abu Dhabi, and all emirates.'
-        );
-    }
+        function goBack() {
+            window.history.back();
+        }
 
-    function updatePlaceholders() {
-        const t = translations[appState.currentLanguage];
-        document.getElementById('homeSearch').placeholder = t.homeSearchPlaceholder;
-        document.getElementById('familiesSearch').placeholder = t.familiesSearchPlaceholder;
-        
-        document.querySelector('input[name="family_name"]').placeholder = t.projectNamePlaceholder;
-        document.querySelector('textarea[name="description"]').placeholder = t.descriptionPlaceholder;
-        document.querySelector('input[name="phone"]').placeholder = t.phonePlaceholder;
-        document.querySelector('input[name="whatsapp"]').placeholder = t.whatsappPlaceholder;
-        document.querySelector('input[name="email"]').placeholder = t.emailPlaceholder;
-        document.querySelector('input[name="sell_point"]').placeholder = t.sellPointPlaceholder;
-        
-        document.getElementById('selectEmirate').textContent = t.selectEmirate;
-        document.getElementById('selectCoverage').textContent = t.selectCoverage;
-    }
+        function scrollToTopAndHome() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            navigateTo('/');
+        }
 
-    // ==================== التنقل ====================
-    function handleHashChange() {
-        const hash = window.location.hash.slice(1) || '/';
-        const parts = hash.split('/').filter(p => p !== '');
-        
-        if (parts.length === 0 || parts[0] === '') {
-            showPage('home');
-        } else if (parts[0] === 'projects' && parts[1] === 'emirate' && parts[2]) {
-            const emirateId = decodeURIComponent(parts[2]);
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+
+        function showPage(page) {
+            document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+            document.getElementById(`${page}-page`).style.display = 'block';
+            appState.currentPage = page;
+            window.scrollTo(0, 0);
+            
+            if (page === 'families') {
+                const searchInput = document.getElementById('familiesSearch');
+                if (searchInput) {
+                    searchInput.value = appState.searchQuery || '';
+                }
+            }
+        }
+
+        // ==================== فلاتر الإمارات ====================
+        function initEmiratesChips() {
+            const container = document.getElementById('emiratesScroll');
+            if (!container) return;
+            
+            const t = translations[appState.currentLanguage];
+            const emirates = [
+                { id: 'all', name: t.emirates.all, icon: 'fas fa-flag' },
+                { id: 'أبوظبي', name: t.emirates.أبوظبي, icon: 'fas fa-city' },
+                { id: 'دبي', name: t.emirates.دبي, icon: 'fas fa-city' },
+                { id: 'الشارقة', name: t.emirates.الشارقة, icon: 'fas fa-city' },
+                { id: 'عجمان', name: t.emirates.عجمان, icon: 'fas fa-city' },
+                { id: 'رأس الخيمة', name: t.emirates["رأس الخيمة"], icon: 'fas fa-city' },
+                { id: 'الفجيرة', name: t.emirates.الفجيرة, icon: 'fas fa-city' },
+                { id: 'أم القيوين', name: t.emirates["أم القيوين"], icon: 'fas fa-city' }
+            ];
+
+            container.innerHTML = emirates.map(e => `
+                <div class="emirate-chip ${e.id === appState.currentEmirate ? 'active' : ''}" onclick="filterByEmirate('${e.id}')">
+                    <i class="${e.icon}"></i>
+                    <span>${e.name}</span>
+                </div>
+            `).join('');
+        }
+
+        function filterByEmirate(emirateId) {
             appState.currentEmirate = emirateId;
             appState.currentCategory = 'all';
             appState.searchQuery = '';
-            
-            const t = translations[appState.currentLanguage];
-            document.getElementById('familiesPageTitle').textContent = 
-                emirateId === 'all' ? t.familiesPageTitle : 
-                (appState.currentLanguage === 'ar' ? `المشاريع في ${emirateId}` : `Projects in ${t.emirates[emirateId] || emirateId}`);
-            document.getElementById('familiesPageSubtitle').textContent = t.familiesPageSubtitle;
             
             updateActiveEmirateChip(emirateId);
             updateActiveCategoryChip('all');
@@ -3102,875 +3235,788 @@
             const searchInput = document.getElementById('familiesSearch');
             if (searchInput) searchInput.value = '';
             
-            showPage('families');
-            renderFamilies();
-        } else if (parts[0] === 'family' && parts[1]) {
-            const familyId = parseInt(parts[1]);
-            const family = familiesData.find(f => f.id === familyId);
-            if (family) {
-                appState.currentFamilyId = familyId;
-                showFamilyProducts(familyId, false);
-                showInstructionPopupOnce();
-            } else {
-                navigateTo('/');
-            }
-        } else if (parts[0] === 'product' && parts[1] && parts[2]) {
-            const familyId = parseInt(parts[1]);
-            const productId = parts[2];
-            showProductDetail(familyId, productId, false);
-        } else {
-            navigateTo('/');
+            navigateTo(`/projects/emirate/${encodeURIComponent(emirateId)}`);
         }
-    }
 
-    function navigateTo(path) {
-        window.location.hash = path;
-    }
-
-    function goBack() {
-        window.history.back();
-    }
-
-    function scrollToTopAndHome() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        navigateTo('/');
-    }
-
-    function toggleMenu() {
-        document.getElementById('navMenu').classList.toggle('active');
-    }
-
-    function showPage(page) {
-        document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-        document.getElementById(`${page}-page`).style.display = 'block';
-        appState.currentPage = page;
-        window.scrollTo(0, 0);
-        
-        if (page === 'families') {
-            const searchInput = document.getElementById('familiesSearch');
-            if (searchInput) {
-                searchInput.value = appState.searchQuery || '';
-            }
-        }
-    }
-
-    // ==================== فلاتر الإمارات (معدل) ====================
-    function initEmiratesChips() {
-        const container = document.getElementById('emiratesScroll');
-        if (!container) return;
-        
-        const t = translations[appState.currentLanguage];
-        const emirates = [
-            { id: 'all', name: t.emirates.all, icon: 'fas fa-flag' },
-            { id: 'أبوظبي', name: t.emirates.أبوظبي, icon: 'fas fa-city' },
-            { id: 'دبي', name: t.emirates.دبي, icon: 'fas fa-city' },
-            { id: 'الشارقة', name: t.emirates.الشارقة, icon: 'fas fa-city' },
-            { id: 'عجمان', name: t.emirates.عجمان, icon: 'fas fa-city' },
-            { id: 'رأس الخيمة', name: t.emirates["رأس الخيمة"], icon: 'fas fa-city' },
-            { id: 'الفجيرة', name: t.emirates.الفجيرة, icon: 'fas fa-city' },
-            { id: 'أم القيوين', name: t.emirates["أم القيوين"], icon: 'fas fa-city' }
-        ];
-
-        container.innerHTML = emirates.map(e => `
-            <div class="emirate-chip ${e.id === appState.currentEmirate ? 'active' : ''}" onclick="filterByEmirate('${e.id}')">
-                <i class="${e.icon}"></i>
-                <span>${e.name}</span>
-            </div>
-        `).join('');
-    }
-
-    function filterByEmirate(emirateId) {
-        appState.currentEmirate = emirateId;
-        appState.currentCategory = 'all';
-        appState.searchQuery = '';
-        
-        updateActiveEmirateChip(emirateId);
-        updateActiveCategoryChip('all');
-        
-        const searchInput = document.getElementById('familiesSearch');
-        if (searchInput) searchInput.value = '';
-        
-        navigateTo(`/projects/emirate/${encodeURIComponent(emirateId)}`);
-    }
-
-    function updateActiveEmirateChip(emirateId) {
-        document.querySelectorAll('.emirate-chip').forEach(chip => {
-            chip.classList.remove('active');
-        });
-        document.querySelectorAll('.emirate-chip').forEach(chip => {
-            const span = chip.querySelector('span');
-            if (span) {
-                const t = translations[appState.currentLanguage];
-                if (emirateId === 'all' && span.innerText === t.emirates.all) {
-                    chip.classList.add('active');
-                } else if (span.innerText === t.emirates[emirateId]) {
-                    chip.classList.add('active');
+        function updateActiveEmirateChip(emirateId) {
+            document.querySelectorAll('.emirate-chip').forEach(chip => {
+                chip.classList.remove('active');
+            });
+            document.querySelectorAll('.emirate-chip').forEach(chip => {
+                const span = chip.querySelector('span');
+                if (span) {
+                    const t = translations[appState.currentLanguage];
+                    if (emirateId === 'all' && span.innerText === t.emirates.all) {
+                        chip.classList.add('active');
+                    } else if (span.innerText === t.emirates[emirateId]) {
+                        chip.classList.add('active');
+                    }
                 }
-            }
-        });
-    }
-
-    // ==================== فلاتر التصنيفات (معدل) ====================
-    function initCategoriesChips() {
-        const container = document.getElementById('categoriesScroll');
-        if (!container) return;
-        
-        const t = translations[appState.currentLanguage];
-        const categories = [
-            { id: 'all', name: t.categories.all, icon: 'fas fa-th-large' },
-            { id: 'أطعمة', name: t.categories.أطعمة, icon: 'fas fa-utensils' },
-            { id: 'مشروبات', name: t.categories.مشروبات, icon: 'fas fa-wine-glass' }, 
-            { id: 'عطور', name: t.categories.عطور, icon: 'fas fa-wind' },
-            { id: 'عناية', name: t.categories.عناية, icon: 'fas fa-spa' },
-            { id: 'حلويات', name: t.categories.حلويات, icon: 'fas fa-cookie-bite' },
-            { id: 'تجميل', name: t.categories.تجميل, icon: 'fas fa-magic' },
-            { id: 'ملابس', name: t.categories.ملابس, icon: 'fas fa-tshirt' },
-            { id: 'يدويات', name: t.categories.يدويات, icon: 'fas fa-cut' },
-            { id: 'هدايا', name: t.categories.هدايا, icon: 'fas fa-gift' },
-            { id: 'شموع', name: t.categories.شموع, icon: 'fas fa-fire' },
-            { id: 'فنون', name: t.categories.فنون, icon: 'fas fa-paint-brush' },
-            { id: 'نباتات', name: t.categories.نباتات, icon: 'fas fa-seedling' },
-            { id: 'ترفيه', name: t.categories.ترفيه, icon: 'fas fa-gamepad' }
-        ];
-
-        container.innerHTML = categories.map(c => `
-            <div class="category-chip ${c.id === appState.currentCategory ? 'active' : ''}" onclick="filterByCategory('${c.id}', this)">
-                <i class="${c.icon}"></i>
-                <span>${c.name}</span>
-            </div>
-        `).join('');
-    }
-
-    function filterByCategory(id, element) {
-        appState.currentCategory = id;
-        
-        document.querySelectorAll('.category-chip').forEach(chip => {
-            chip.classList.remove('active');
-        });
-        element.classList.add('active');
-        
-        renderFamilies();
-    }
-
-    function updateActiveCategoryChip(categoryId) {
-        document.querySelectorAll('.category-chip').forEach(chip => {
-            chip.classList.remove('active');
-            const t = translations[appState.currentLanguage];
-            const span = chip.querySelector('span');
-            if (span) {
-                if (categoryId === 'all' && span.innerText === t.categories.all) {
-                    chip.classList.add('active');
-                } else if (span.innerText === t.categories[categoryId]) {
-                    chip.classList.add('active');
-                }
-            }
-        });
-    }
-
-    // ==================== البحث ====================
-    function performHomeSearch() {
-        const query = document.getElementById('homeSearch').value.trim();
-        appState.searchQuery = query;
-        navigateTo('/projects/emirate/all');
-        setTimeout(() => {
-            const searchInput = document.getElementById('familiesSearch');
-            if (searchInput) {
-                searchInput.value = query;
-            }
-            renderFamilies();
-        }, 50);
-    }
-
-    function performFamiliesSearch() {
-        const input = document.getElementById('familiesSearch');
-        if (!input) return;
-        appState.searchQuery = input.value.trim();
-        renderFamilies();
-    }
-
-    // ==================== عرض المشاريع ====================
-    function renderFamilies() {
-        let filtered = [...familiesData];
-        const t = translations[appState.currentLanguage];
-        
-        if (appState.currentEmirate !== 'all') {
-            filtered = filtered.filter(f => f.emirate === appState.currentEmirate);
-        }
-        if (appState.currentCategory !== 'all') {
-            filtered = filtered.filter(f => f.category === appState.currentCategory);
-        }
-        if (appState.searchQuery) {
-            const query = appState.searchQuery.toLowerCase();
-            filtered = filtered.filter(family => {
-                const nameMatch = (appState.currentLanguage === 'ar' ? family.name : family.nameEn).toLowerCase().includes(query);
-                const descriptionMatch = (appState.currentLanguage === 'ar' ? family.description : family.descriptionEn).toLowerCase().includes(query);
-                const longDescriptionMatch = (appState.currentLanguage === 'ar' ? family.longDescription : family.longDescriptionEn)?.toLowerCase().includes(query) || false;
-                const productMatch = family.products.some(p => 
-                    (appState.currentLanguage === 'ar' ? p.name : p.nameEn).toLowerCase().includes(query) || 
-                    (appState.currentLanguage === 'ar' ? p.description : p.descriptionEn).toLowerCase().includes(query)
-                );
-                return nameMatch || descriptionMatch || longDescriptionMatch || productMatch;
             });
         }
-        
-        const grid = document.getElementById('familiesGrid');
-        
-        if (filtered.length === 0) {
-            grid.innerHTML = `<div style="grid-column: span 2; text-align: center; padding: 30px; background: white; border-radius: 18px; font-size: 14px;"> ${t.noProjects}</div>`;
-            return;
-        }
-        
-        grid.innerHTML = filtered.map(family => {
-            const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
-            const familyBadges = appState.currentLanguage === 'ar' ? family.badges : family.badgesEn;
-            
-            return `
-            <div class="family-card">
-                ${family.adra_license === 'نعم' ? '<div class="license-badge-card"><i class="fas fa-check-circle"></i>' + t.licensed + '</div>' : ''}
-                <div class="family-image">
-                    <img src="${family.image}" alt="${familyName}" loading="lazy">
-                    <div class="family-badges">
-                        ${familyBadges.map(b => `<div class="family-badge">${b}</div>`).join('')}
-                    </div>
-                </div>
-                <div class="family-content">
-                    <div class="family-header">
-                        <h3 class="family-name">${familyName}</h3>
-                    </div>
-                    <div class="family-location">
-                        <i class="fas fa-map-marker-alt"></i> ${t.emirates[family.emirate] || family.emirate}
-                    </div>
-                    <button class="view-products-btn" onclick="navigateTo('/family/${family.id}')">
-                        <i class="fas fa-box-open"></i> ${t.viewProducts}
-                    </button>
-                </div>
-            </div>
-        `}).join('');
-    }
 
-    // ==================== عرض منتجات المشروع ====================
-    function showFamilyProducts(id, updateHash = true) {
-        const family = familiesData.find(f => f.id === id);
-        if (!family) return;
-        
-        appState.currentFamilyId = id;
-        
-        if (updateHash) {
-            navigateTo(`/family/${id}`);
-            return;
+        // ==================== فلاتر التصنيفات ====================
+        function initCategoriesChips() {
+            const container = document.getElementById('categoriesScroll');
+            if (!container) return;
+            
+            const t = translations[appState.currentLanguage];
+            const categories = [
+                { id: 'all', name: t.categories.all, icon: 'fas fa-th-large' },
+                { id: 'أطعمة', name: t.categories.أطعمة, icon: 'fas fa-utensils' },
+                { id: 'مشروبات', name: t.categories.مشروبات, icon: 'fas fa-wine-glass' }, 
+                { id: 'عطور', name: t.categories.عطور, icon: 'fas fa-wind' },
+                { id: 'عناية', name: t.categories.عناية, icon: 'fas fa-spa' },
+                { id: 'حلويات', name: t.categories.حلويات, icon: 'fas fa-cookie-bite' },
+                { id: 'تجميل', name: t.categories.تجميل, icon: 'fas fa-magic' },
+                { id: 'ملابس', name: t.categories.ملابس, icon: 'fas fa-tshirt' },
+                { id: 'يدويات', name: t.categories.يدويات, icon: 'fas fa-cut' },
+                { id: 'هدايا', name: t.categories.هدايا, icon: 'fas fa-gift' },
+                { id: 'شموع', name: t.categories.شموع, icon: 'fas fa-fire' },
+                { id: 'فنون', name: t.categories.فنون, icon: 'fas fa-paint-brush' },
+                { id: 'نباتات', name: t.categories.نباتات, icon: 'fas fa-seedling' },
+                { id: 'ترفيه', name: t.categories.ترفيه, icon: 'fas fa-gamepad' }
+            ];
+
+            container.innerHTML = categories.map(c => `
+                <div class="category-chip ${c.id === appState.currentCategory ? 'active' : ''}" onclick="filterByCategory('${c.id}', this)">
+                    <i class="${c.icon}"></i>
+                    <span>${c.name}</span>
+                </div>
+            `).join('');
         }
-        
-        const t = translations[appState.currentLanguage];
-        const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
-        const familyDescription = appState.currentLanguage === 'ar' ? (family.longDescription || family.description) : (family.longDescriptionEn || family.descriptionEn);
-        
-        const licenseBadgeHtml = family.adra_license === 'نعم' ? 
-            `<div class="license-badge-large"><i class="fas fa-check-circle"></i> ${t.licensed}</div>` : '';
-        
-        document.getElementById('familyProfileContainer').innerHTML = `
-            <div class="family-profile">
-                <div class="profile-header">
-                    <div class="share-profile-btn" onclick="showProfileSharePopup(${family.id})" title="${t.shareProfile}">
-                        <i class="fas fa-share-alt"></i>
+
+        function filterByCategory(id, element) {
+            appState.currentCategory = id;
+            
+            document.querySelectorAll('.category-chip').forEach(chip => {
+                chip.classList.remove('active');
+            });
+            element.classList.add('active');
+            
+            renderFamilies();
+        }
+
+        function updateActiveCategoryChip(categoryId) {
+            document.querySelectorAll('.category-chip').forEach(chip => {
+                chip.classList.remove('active');
+                const t = translations[appState.currentLanguage];
+                const span = chip.querySelector('span');
+                if (span) {
+                    if (categoryId === 'all' && span.innerText === t.categories.all) {
+                        chip.classList.add('active');
+                    } else if (span.innerText === t.categories[categoryId]) {
+                        chip.classList.add('active');
+                    }
+                }
+            });
+        }
+
+        // ==================== البحث ====================
+        function performHomeSearch() {
+            const query = document.getElementById('homeSearch').value.trim();
+            appState.searchQuery = query;
+            navigateTo('/projects/emirate/all');
+            setTimeout(() => {
+                const searchInput = document.getElementById('familiesSearch');
+                if (searchInput) {
+                    searchInput.value = query;
+                }
+                renderFamilies();
+            }, 50);
+        }
+
+        function performFamiliesSearch() {
+            const input = document.getElementById('familiesSearch');
+            if (!input) return;
+            appState.searchQuery = input.value.trim();
+            renderFamilies();
+        }
+
+        // ==================== عرض المشاريع ====================
+        function renderFamilies() {
+            let filtered = [...familiesData];
+            const t = translations[appState.currentLanguage];
+            
+            if (appState.currentEmirate !== 'all') {
+                filtered = filtered.filter(f => f.emirate === appState.currentEmirate);
+            }
+            if (appState.currentCategory !== 'all') {
+                filtered = filtered.filter(f => f.category === appState.currentCategory);
+            }
+            if (appState.searchQuery) {
+                const query = appState.searchQuery.toLowerCase();
+                filtered = filtered.filter(family => {
+                    const nameMatch = (appState.currentLanguage === 'ar' ? family.name : family.nameEn).toLowerCase().includes(query);
+                    const descriptionMatch = (appState.currentLanguage === 'ar' ? family.description : family.descriptionEn).toLowerCase().includes(query);
+                    const longDescriptionMatch = (appState.currentLanguage === 'ar' ? family.longDescription : family.longDescriptionEn)?.toLowerCase().includes(query) || false;
+                    const productMatch = family.products.some(p => 
+                        (appState.currentLanguage === 'ar' ? p.name : p.nameEn).toLowerCase().includes(query) || 
+                        (appState.currentLanguage === 'ar' ? p.description : p.descriptionEn).toLowerCase().includes(query)
+                    );
+                    return nameMatch || descriptionMatch || longDescriptionMatch || productMatch;
+                });
+            }
+            
+            const grid = document.getElementById('familiesGrid');
+            
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div style="grid-column: span 2; text-align: center; padding: 30px; background: white; border-radius: 18px; font-size: 14px;"> ${t.noProjects}</div>`;
+                return;
+            }
+            
+            grid.innerHTML = filtered.map(family => {
+                const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
+                const familyBadges = appState.currentLanguage === 'ar' ? family.badges : family.badgesEn;
+                
+                return `
+                <div class="family-card">
+                    ${family.adra_license === 'نعم' ? '<div class="license-badge-card"><i class="fas fa-check-circle"></i>' + t.licensed + '</div>' : ''}
+                    <div class="family-image">
+                        <img src="${family.image}" alt="${familyName}" loading="lazy">
+                        <div class="family-badges">
+                            ${familyBadges.map(b => `<div class="family-badge">${b}</div>`).join('')}
+                        </div>
                     </div>
-                    <div class="profile-avatar" style="background-image: url('${family.image}'); background-size: cover; background-position: center;"></div>
-                    <div>
-                        <h2 class="profile-name">
-                            ${familyName}
-                        </h2>
-                        ${licenseBadgeHtml}
-                        <div class="profile-location">
+                    <div class="family-content">
+                        <div class="family-header">
+                            <h3 class="family-name">${familyName}</h3>
+                        </div>
+                        <div class="family-location">
                             <i class="fas fa-map-marker-alt"></i> ${t.emirates[family.emirate] || family.emirate}
                         </div>
+                        <button class="view-products-btn" onclick="navigateTo('/family/${family.id}')">
+                            <i class="fas fa-box-open"></i> ${t.viewProducts}
+                        </button>
                     </div>
                 </div>
-                <div class="profile-body">
-                    <div class="profile-info-grid">
-                        <div class="profile-info-row">
-                            <i class="fas fa-align-right"></i>
-                            <strong>${t.descriptionLabel}:</strong>
-                            <span>${familyDescription}</span>
+            `}).join('');
+        }
+
+        // ==================== عرض منتجات المشروع ====================
+        function showFamilyProducts(id, updateHash = true) {
+            const family = familiesData.find(f => f.id === id);
+            if (!family) return;
+            
+            appState.currentFamilyId = id;
+            
+            if (updateHash) {
+                navigateTo(`/family/${id}`);
+                return;
+            }
+            
+            const t = translations[appState.currentLanguage];
+            const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
+            const familyDescription = appState.currentLanguage === 'ar' ? (family.longDescription || family.description) : (family.longDescriptionEn || family.descriptionEn);
+            
+            const licenseBadgeHtml = family.adra_license === 'نعم' ? 
+                `<div class="license-badge-large"><i class="fas fa-check-circle"></i> ${t.licensed}</div>` : '';
+            
+            const shareButtonHtml = `
+                <div class="share-profile-btn" onclick="showProfileSharePopup(${family.id})" title="${t.shareProfile}">
+                    <i class="fas fa-share-alt"></i>
+                </div>
+            `;
+            
+            document.getElementById('familyProfileContainer').innerHTML = `
+                <div class="family-profile">
+                    <div class="profile-header">
+                        ${shareButtonHtml}
+                        <div class="profile-avatar" style="background-image: url('${family.image}'); background-size: cover; background-position: center;"></div>
+                        <div>
+                            <h2 class="profile-name">
+                                ${familyName}
+                            </h2>
+                            ${licenseBadgeHtml}
+                            <div class="profile-location">
+                                <i class="fas fa-map-marker-alt"></i> ${t.emirates[family.emirate] || family.emirate}
+                            </div>
                         </div>
-                        ${family.phone ? `
-                        <div class="profile-info-row">
-                            <i class="fas fa-phone"></i>
-                            <strong>${t.phoneLabel}:</strong>
-                            <span dir="ltr">${family.phone}</span>
-                        </div>
-                        ` : ''}
-                        ${family.whatsapp ? `
-                        <div class="profile-info-row">
-                            <i class="fab fa-whatsapp"></i>
-                            <strong>${t.whatsappLabel}:</strong>
-                            <span dir="ltr">${family.whatsapp}</span>
-                        </div>
-                        ` : ''}
-                        ${family.email ? `
-                        <div class="profile-info-row">
-                            <i class="fas fa-envelope"></i>
-                            <strong>${t.emailLabel}:</strong>
-                            <span>${family.email}</span>
-                        </div>
-                        ` : ''}
                     </div>
-                    
-                    <div class="coverage-section">
-                        <div class="coverage-title">
-                            <i class="fas fa-globe-asia"></i> ${t.coverage}:
+                    <div class="profile-body">
+                        <div class="profile-info-grid">
+                            <div class="profile-info-row">
+                                <i class="fas fa-align-right"></i>
+                                <strong>${t.descriptionLabel}:</strong>
+                                <span>${familyDescription}</span>
+                            </div>
+                            ${family.phone ? `
+                            <div class="profile-info-row">
+                                <i class="fas fa-phone"></i>
+                                <strong>${t.phoneLabel}:</strong>
+                                <span dir="ltr">${family.phone}</span>
+                            </div>
+                            ` : ''}
+                            ${family.whatsapp ? `
+                            <div class="profile-info-row">
+                                <i class="fab fa-whatsapp"></i>
+                                <strong>${t.whatsappLabel}:</strong>
+                                <span dir="ltr">${family.whatsapp}</span>
+                            </div>
+                            ` : ''}
+                            ${family.email ? `
+                            <div class="profile-info-row">
+                                <i class="fas fa-envelope"></i>
+                                <strong>${t.emailLabel}:</strong>
+                                <span>${family.email}</span>
+                            </div>
+                            ` : ''}
                         </div>
-                        <div class="coverage-tags">
-                            <div class="coverage-tag">
-                                <i class="fas fa-map-marker-alt"></i>
-                                ${t.coverageOptions[family.coverage] || family.coverage}
+                        
+                        <div class="coverage-section">
+                            <div class="coverage-title">
+                                <i class="fas fa-globe-asia"></i> ${t.coverage}:
+                            </div>
+                            <div class="coverage-tags">
+                                <div class="coverage-tag">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    ${t.coverageOptions[family.coverage] || family.coverage}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        `;
-        
-        document.getElementById('productsCount').textContent = `${family.products.length} ${t.productsTitle}`;
-        document.getElementById('productsGrid').innerHTML = family.products.map(p => {
-            const productName = appState.currentLanguage === 'ar' ? p.name : p.nameEn;
-            const productDesc = appState.currentLanguage === 'ar' ? p.description : p.descriptionEn;
-            const productCategory = appState.currentLanguage === 'ar' ? p.category : p.categoryEn;
-            const tCat = translations[appState.currentLanguage].categories;
-            const categoryDisplay = tCat[p.category] || productCategory;
+            `;
             
-            return `
-            <div class="product-card" onclick="navigateTo('/product/${family.id}/${p.id}')">
-                <div class="product-image">
-                    <img src="${p.mainImage || p.image}" alt="${productName}" loading="lazy">
-                </div>
-                <div class="product-content">
-                    <h3 class="product-name">${productName}</h3>
-                    <div class="product-description">${productDesc}</div>
-                    <div class="product-category">${categoryDisplay}</div>
-                </div>
-            </div>
-        `}).join('');
-        
-        let contactGridHtml = '';
-        
-        if (family.phone && family.phone.trim() !== '') {
-            contactGridHtml += `
-                <a href="tel:${family.phone}" class="contact-item" title="${t.call}">
-                    <div class="contact-icon phone-bg"><i class="fas fa-phone"></i></div>
-                </a>
-            `;
-        }
-        
-        if (family.whatsapp && family.whatsapp.trim() !== '') {
-            contactGridHtml += `
-                <a href="https://wa.me/${family.whatsapp.replace(/[^0-9]/g, '')}" target="_blank" class="contact-item" title="WhatsApp">
-                    <div class="contact-icon whatsapp-bg"><i class="fab fa-whatsapp"></i></div>
-                </a>
-            `;
-        }
-        
-        if (family.email && family.email.trim() !== '') {
-            contactGridHtml += `
-                <a href="mailto:${family.email}" class="contact-item" title="${t.email}">
-                    <div class="contact-icon email-bg"><i class="fas fa-envelope"></i></div>
-                </a>
-            `;
-        }
-        
-        if (family.sell_point && family.sell_point.trim() !== '') {
-            const sellPointInfo = detectSellPointType(family.sell_point);
-            if (sellPointInfo.url) {
-                contactGridHtml += `
-                    <a href="${sellPointInfo.url}" target="_blank" class="contact-item" title="${sellPointInfo.type}">
-                        <div class="contact-icon ${sellPointInfo.bg}"><i class="fab ${sellPointInfo.icon}"></i></div>
-                    </a>
-                `;
-            }
-        }
-        
-        document.getElementById('contactSectionBottom').innerHTML = `
-            <h3 class="contact-title"><i class="fas fa-phone-alt"></i> ${t.contactSeller}</h3>
-            <div class="contact-grid">
-                ${contactGridHtml || `<p style="text-align: center;">${t.noContact}</p>`}
-            </div>
-        `;
-        
-        addJsonLd(family);
-        
-        showPage('products');
-    }
-
-    // ==================== صفحة تفاصيل المنتج ====================
-    function showProductDetail(familyId, productId, updateHash = true) {
-        const family = familiesData.find(f => f.id === familyId);
-        if (!family) return;
-        
-        const product = family.products.find(p => p.id === productId);
-        if (!product) return;
-        
-        appState.currentFamilyId = familyId;
-        appState.currentProductId = productId;
-        
-        if (updateHash) {
-            navigateTo(`/product/${familyId}/${productId}`);
-            return;
-        }
-        
-        const t = translations[appState.currentLanguage];
-        const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
-        const productName = appState.currentLanguage === 'ar' ? product.name : product.nameEn;
-        const productDesc = appState.currentLanguage === 'ar' ? (product.longDescription || product.description) : (product.longDescriptionEn || product.descriptionEn);
-        const productCategory = appState.currentLanguage === 'ar' ? product.category : product.categoryEn;
-        const tCat = translations[appState.currentLanguage].categories;
-        const categoryDisplay = tCat[product.category] || productCategory;
-        
-        const images = product.images || [product.mainImage || product.image];
-        const thumbnailsHtml = images.map((img, index) => `
-            <div class="thumbnail-item ${index === 0 ? 'active' : ''}" onclick="changeProductMainImage('${img}', this)">
-                <img src="${img}" alt="" loading="lazy">
-            </div>
-        `).join('');
-        
-        const details = appState.currentLanguage === 'ar' ? product.details : product.detailsEn;
-        const detailsHtml = details && details.length > 0 ? details.map(detail => `
-            <li><i class="fas fa-check-circle"></i> ${detail}</li>
-        `).join('') : '';
-        
-        const specsSectionHtml = detailsHtml ? `
-            <h3 class="product-details-title">
-                <i class="fas fa-list-ul"></i>
-                ${t.specifications}
-            </h3>
-            <ul class="product-details-list">
-                ${detailsHtml}
-            </ul>
-        ` : '';
-        
-        const similarProducts = family.products.filter(p => p.id !== productId).slice(0, 4);
-        const similarHtml = similarProducts.map(p => {
-            const similarName = appState.currentLanguage === 'ar' ? p.name : p.nameEn;
-            return `
-            <div class="similar-product-card" onclick="showProductDetail(${familyId}, '${p.id}')">
-                <div class="similar-product-image">
-                    <img src="${p.mainImage || p.image}" alt="${similarName}" loading="lazy">
-                </div>
-                <div class="similar-product-info">
-                    <h4>${similarName}</h4>
-                </div>
-            </div>
-        `}).join('');
-        
-        const licenseBadgeHtml = family.adra_license === 'نعم' ? 
-            `<div class="license-badge-large" style="margin-right: 0; margin-bottom: 5px;"><i class="fas fa-check-circle"></i> ${t.licensed}</div>` : '';
-        
-        let sellerContactHtml = '';
-        
-        if (family.phone && family.phone.trim() !== '') {
-            sellerContactHtml += `
-                <a href="tel:${family.phone}" class="seller-contact-item" title="${t.call}">
-                    <div class="seller-contact-icon phone-bg"><i class="fas fa-phone"></i></div>
-                </a>
-            `;
-        }
-        
-        if (family.whatsapp && family.whatsapp.trim() !== '') {
-            sellerContactHtml += `
-                <a href="https://wa.me/${family.whatsapp.replace(/[^0-9]/g, '')}" target="_blank" class="seller-contact-item" title="WhatsApp">
-                    <div class="seller-contact-icon whatsapp-bg"><i class="fab fa-whatsapp"></i></div>
-                </a>
-            `;
-        }
-        
-        if (family.email && family.email.trim() !== '') {
-            sellerContactHtml += `
-                <a href="mailto:${family.email}" class="seller-contact-item" title="${t.email}">
-                    <div class="seller-contact-icon email-bg"><i class="fas fa-envelope"></i></div>
-                </a>
-            `;
-        }
-        
-        if (family.sell_point && family.sell_point.trim() !== '') {
-            const sellPointInfo = detectSellPointType(family.sell_point);
-            if (sellPointInfo.url) {
-                sellerContactHtml += `
-                    <a href="${sellPointInfo.url}" target="_blank" class="seller-contact-item" title="${sellPointInfo.type}">
-                        <div class="seller-contact-icon ${sellPointInfo.bg}"><i class="fab ${sellPointInfo.icon}"></i></div>
-                    </a>
-                `;
-            }
-        }
-        
-        const shareButtonHtml = `
-            <div class="share-product-btn" onclick="showSharePopup('${familyId}', '${productId}')" title="${t.shareProduct}">
-                <i class="fas fa-share-alt"></i>
-            </div>
-        `;
-        
-        const html = `
-            <div class="product-gallery">
-                <div class="product-main-image" onclick="openZoom(document.getElementById('productMainImage').src)">
-                    ${shareButtonHtml}
-                    <img src="${images[0]}" alt="${productName}" id="productMainImage" loading="lazy">
-                </div>
-                <div class="thumbnail-slider">
-                    ${thumbnailsHtml}
-                </div>
-            </div>
-
-            <div class="product-detail-info">
-                <span class="product-detail-category">
-                    <i class="fas fa-tag"></i> ${categoryDisplay}
-                </span>
-                <h1 class="product-detail-name">${productName}</h1>
-                <p class="product-detail-description">${productDesc}</p>
+            document.getElementById('productsCount').textContent = `${family.products.length} ${t.productsTitle}`;
+            document.getElementById('productsGrid').innerHTML = family.products.map(p => {
+                const productName = appState.currentLanguage === 'ar' ? p.name : p.nameEn;
+                const productDesc = appState.currentLanguage === 'ar' ? p.description : p.descriptionEn;
+                const productCategory = appState.currentLanguage === 'ar' ? p.category : p.categoryEn;
+                const tCat = translations[appState.currentLanguage].categories;
+                const categoryDisplay = tCat[p.category] || productCategory;
                 
-                ${specsSectionHtml}
-            </div>
-
-            <div class="seller-info-card">
-                <div class="seller-info-header">
-                    <div class="seller-avatar">
-                        <i class="fas fa-store"></i>
+                return `
+                <div class="product-card" onclick="navigateTo('/product/${family.id}/${p.id}')">
+                    <div class="product-image">
+                        <img src="${p.mainImage || p.image}" alt="${productName}" loading="lazy">
                     </div>
-                    <div class="seller-info">
-                        <h3>
-                            ${familyName}
-                        </h3>
-                        ${licenseBadgeHtml}
-                        <div class="seller-meta">
-                            <i class="fas fa-map-marker-alt"></i> ${t.emirates[family.emirate] || family.emirate}
+                    <div class="product-content">
+                        <h3 class="product-name">${productName}</h3>
+                        <div class="product-description">${productDesc}</div>
+                        <div class="product-category">${categoryDisplay}</div>
+                    </div>
+                </div>
+            `}).join('');
+            
+            let contactGridHtml = '';
+            
+            if (family.phone && family.phone.trim() !== '') {
+                contactGridHtml += `
+                    <a href="tel:${family.phone}" class="contact-item" title="${t.call}">
+                        <div class="contact-icon phone-bg"><i class="fas fa-phone"></i></div>
+                    </a>
+                `;
+            }
+            
+            if (family.whatsapp && family.whatsapp.trim() !== '') {
+                contactGridHtml += `
+                    <a href="https://wa.me/${family.whatsapp.replace(/[^0-9]/g, '')}" target="_blank" class="contact-item" title="WhatsApp">
+                        <div class="contact-icon whatsapp-bg"><i class="fab fa-whatsapp"></i></div>
+                    </a>
+                `;
+            }
+            
+            if (family.email && family.email.trim() !== '') {
+                contactGridHtml += `
+                    <a href="mailto:${family.email}" class="contact-item" title="${t.email}">
+                        <div class="contact-icon email-bg"><i class="fas fa-envelope"></i></div>
+                    </a>
+                `;
+            }
+            
+            if (family.sell_point && family.sell_point.trim() !== '') {
+                const sellPointInfo = detectSellPointType(family.sell_point);
+                if (sellPointInfo.url) {
+                    contactGridHtml += `
+                        <a href="${sellPointInfo.url}" target="_blank" class="contact-item" title="${sellPointInfo.type}">
+                            <div class="contact-icon ${sellPointInfo.bg}"><i class="fab ${sellPointInfo.icon}"></i></div>
+                        </a>
+                    `;
+                }
+            }
+            
+            document.getElementById('contactSectionBottom').innerHTML = `
+                <h3 class="contact-title"><i class="fas fa-phone-alt"></i> ${t.contactSeller}</h3>
+                <div class="contact-grid">
+                    ${contactGridHtml || `<p style="text-align: center;">${t.noContact}</p>`}
+                </div>
+            `;
+            
+            addJsonLd(family);
+            
+            showPage('products');
+        }
+
+        // ==================== صفحة تفاصيل المنتج ====================
+        function showProductDetail(familyId, productId, updateHash = true) {
+            const family = familiesData.find(f => f.id === familyId);
+            if (!family) return;
+            
+            const product = family.products.find(p => p.id === productId);
+            if (!product) return;
+            
+            appState.currentFamilyId = familyId;
+            appState.currentProductId = productId;
+            
+            if (updateHash) {
+                navigateTo(`/product/${familyId}/${productId}`);
+                return;
+            }
+            
+            const t = translations[appState.currentLanguage];
+            const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
+            const productName = appState.currentLanguage === 'ar' ? product.name : product.nameEn;
+            const productDesc = appState.currentLanguage === 'ar' ? (product.longDescription || product.description) : (product.longDescriptionEn || product.descriptionEn);
+            const productCategory = appState.currentLanguage === 'ar' ? product.category : product.categoryEn;
+            const tCat = translations[appState.currentLanguage].categories;
+            const categoryDisplay = tCat[product.category] || productCategory;
+            
+            const images = product.images || [product.mainImage || product.image];
+            const thumbnailsHtml = images.map((img, index) => `
+                <div class="thumbnail-item ${index === 0 ? 'active' : ''}" onclick="changeProductMainImage('${img}', this)">
+                    <img src="${img}" alt="" loading="lazy">
+                </div>
+            `).join('');
+            
+            const details = appState.currentLanguage === 'ar' ? product.details : product.detailsEn;
+            const detailsHtml = details && details.length > 0 ? details.map(detail => `
+                <li><i class="fas fa-check-circle"></i> ${detail}</li>
+            `).join('') : '';
+            
+            const specsSectionHtml = detailsHtml ? `
+                <h3 class="product-details-title">
+                    <i class="fas fa-list-ul"></i>
+                    ${t.specifications}
+                </h3>
+                <ul class="product-details-list">
+                    ${detailsHtml}
+                </ul>
+            ` : '';
+            
+            const similarProducts = family.products.filter(p => p.id !== productId).slice(0, 4);
+            const similarHtml = similarProducts.map(p => {
+                const similarName = appState.currentLanguage === 'ar' ? p.name : p.nameEn;
+                return `
+                <div class="similar-product-card" onclick="showProductDetail(${familyId}, '${p.id}')">
+                    <div class="similar-product-image">
+                        <img src="${p.mainImage || p.image}" alt="${similarName}" loading="lazy">
+                    </div>
+                    <div class="similar-product-info">
+                        <h4>${similarName}</h4>
+                    </div>
+                </div>
+            `}).join('');
+            
+            const licenseBadgeHtml = family.adra_license === 'نعم' ? 
+                `<div class="license-badge-large" style="margin-right: 0; margin-bottom: 5px;"><i class="fas fa-check-circle"></i> ${t.licensed}</div>` : '';
+            
+            let sellerContactHtml = '';
+            
+            if (family.phone && family.phone.trim() !== '') {
+                sellerContactHtml += `
+                    <a href="tel:${family.phone}" class="seller-contact-item" title="${t.call}">
+                        <div class="seller-contact-icon phone-bg"><i class="fas fa-phone"></i></div>
+                    </a>
+                `;
+            }
+            
+            if (family.whatsapp && family.whatsapp.trim() !== '') {
+                sellerContactHtml += `
+                    <a href="https://wa.me/${family.whatsapp.replace(/[^0-9]/g, '')}" target="_blank" class="seller-contact-item" title="WhatsApp">
+                        <div class="seller-contact-icon whatsapp-bg"><i class="fab fa-whatsapp"></i></div>
+                    </a>
+                `;
+            }
+            
+            if (family.email && family.email.trim() !== '') {
+                sellerContactHtml += `
+                    <a href="mailto:${family.email}" class="seller-contact-item" title="${t.email}">
+                        <div class="seller-contact-icon email-bg"><i class="fas fa-envelope"></i></div>
+                    </a>
+                `;
+            }
+            
+            if (family.sell_point && family.sell_point.trim() !== '') {
+                const sellPointInfo = detectSellPointType(family.sell_point);
+                if (sellPointInfo.url) {
+                    sellerContactHtml += `
+                        <a href="${sellPointInfo.url}" target="_blank" class="seller-contact-item" title="${sellPointInfo.type}">
+                            <div class="seller-contact-icon ${sellPointInfo.bg}"><i class="fab ${sellPointInfo.icon}"></i></div>
+                        </a>
+                    `;
+                }
+            }
+            
+            const shareButtonHtml = `
+                <div class="share-product-btn" onclick="showSharePopup('${familyId}', '${productId}')" title="${t.shareProduct}">
+                    <i class="fas fa-share-alt"></i>
+                </div>
+            `;
+            
+            const html = `
+                <div class="product-gallery">
+                    <div class="product-main-image" onclick="openZoom(document.getElementById('productMainImage').src)">
+                        ${shareButtonHtml}
+                        <img src="${images[0]}" alt="${productName}" id="productMainImage" loading="lazy">
+                    </div>
+                    <div class="thumbnail-slider">
+                        ${thumbnailsHtml}
+                    </div>
+                </div>
+
+                <div class="product-detail-info">
+                    <span class="product-detail-category">
+                        <i class="fas fa-tag"></i> ${categoryDisplay}
+                    </span>
+                    <h1 class="product-detail-name">${productName}</h1>
+                    <p class="product-detail-description">${productDesc}</p>
+                    
+                    ${specsSectionHtml}
+                </div>
+
+                <div class="seller-info-card">
+                    <div class="seller-info-header">
+                        <div class="seller-avatar">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <div class="seller-info">
+                            <h3>
+                                ${familyName}
+                            </h3>
+                            ${licenseBadgeHtml}
+                            <div class="seller-meta">
+                                <i class="fas fa-map-marker-alt"></i> ${t.emirates[family.emirate] || family.emirate}
+                            </div>
                         </div>
                     </div>
+                    
+                    ${sellerContactHtml ? `
+                        <div class="seller-contact-grid">
+                            ${sellerContactHtml}
+                        </div>
+                    ` : ''}
                 </div>
-                
-                ${sellerContactHtml ? `
-                    <div class="seller-contact-grid">
-                        ${sellerContactHtml}
+
+                ${similarProducts.length > 0 ? `
+                    <div class="similar-products-section">
+                        <h3 class="similar-products-title">
+                            <i class="fas fa-boxes"></i>
+                            ${t.similarProducts}
+                        </h3>
+                        <div class="similar-products-grid">
+                            ${similarHtml}
+                        </div>
                     </div>
                 ` : ''}
-            </div>
-
-            ${similarProducts.length > 0 ? `
-                <div class="similar-products-section">
-                    <h3 class="similar-products-title">
-                        <i class="fas fa-boxes"></i>
-                        ${t.similarProducts}
-                    </h3>
-                    <div class="similar-products-grid">
-                        ${similarHtml}
-                    </div>
-                </div>
-            ` : ''}
-        `;
-        
-        document.getElementById('productDetailContainer').innerHTML = html;
-        showPage('product-detail');
-    }
-
-    // ==================== المشاركة ====================
-    function showSharePopup(familyId, productId) {
-        const family = familiesData.find(f => f.id == familyId);
-        if (!family) return;
-        
-        const product = family.products.find(p => p.id === productId);
-        if (!product) return;
-        
-        appState.currentShareProduct = { familyId, productId };
-        
-        const shareUrl = window.location.href;
-        document.getElementById('sharePopup').classList.add('show');
-    }
-
-    function showProfileSharePopup(familyId) {
-        appState.currentShareProfile = familyId;
-        document.getElementById('shareProfilePopup').classList.add('show');
-    }
-
-    function closeSharePopup() {
-        document.getElementById('sharePopup').classList.remove('show');
-    }
-
-    function closeShareProfilePopup() {
-        document.getElementById('shareProfilePopup').classList.remove('show');
-    }
-
-    function shareVia(platform) {
-        if (!appState.currentShareProduct) return;
-        
-        const family = familiesData.find(f => f.id == appState.currentShareProduct.familyId);
-        const product = family.products.find(p => p.id === appState.currentShareProduct.productId);
-        
-        const productName = appState.currentLanguage === 'ar' ? product.name : product.nameEn;
-        const url = window.location.href;
-        const t = translations[appState.currentLanguage];
-        
-        const text = appState.currentLanguage === 'ar' 
-            ? `شاهد هذا المنتج: ${productName} - من ${family.name} على سوق المشاريع`
-            : `Check out this product: ${productName} - from ${family.nameEn} on Project Souq`;
-        
-        let shareUrl = '';
-        
-        switch(platform) {
-            case 'whatsapp':
-                shareUrl = `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`;
-                break;
-            case 'facebook':
-                shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-                break;
-            case 'twitter':
-                shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
-                break;
-            case 'telegram':
-                shareUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
-                break;
+            `;
+            
+            document.getElementById('productDetailContainer').innerHTML = html;
+            showPage('product-detail');
         }
-        
-        if (shareUrl) {
-            window.open(shareUrl, '_blank', 'width=600,height=400');
-        }
-        
-        closeSharePopup();
-    }
 
-    function shareProfileVia(platform) {
-        if (!appState.currentShareProfile) return;
-        
-        const family = familiesData.find(f => f.id == appState.currentShareProfile);
-        const url = window.location.href;
-        const t = translations[appState.currentLanguage];
-        const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
-        
-        const text = appState.currentLanguage === 'ar' 
-            ? `اكتشف مشروع ${familyName} على سوق المشاريع - ${family.description}`
-            : `Discover ${familyName} on Project Souq - ${family.descriptionEn}`;
-        
-        let shareUrl = '';
-        
-        switch(platform) {
-            case 'whatsapp':
-                shareUrl = `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`;
-                break;
-            case 'facebook':
-                shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-                break;
-            case 'twitter':
-                shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
-                break;
-            case 'telegram':
-                shareUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
-                break;
+        // ==================== المشاركة ====================
+        function showSharePopup(familyId, productId) {
+            const family = familiesData.find(f => f.id == familyId);
+            if (!family) return;
+            
+            const product = family.products.find(p => p.id === productId);
+            if (!product) return;
+            
+            appState.currentShareProduct = { familyId, productId };
+            
+            document.getElementById('sharePopup').classList.add('show');
         }
-        
-        if (shareUrl) {
-            window.open(shareUrl, '_blank', 'width=600,height=400');
-        }
-        
-        closeShareProfilePopup();
-    }
 
-    function copyLink() {
-        const url = window.location.href;
-        navigator.clipboard.writeText(url).then(() => {
-            const t = translations[appState.currentLanguage];
-            alert(t.copyLinkText + ' ' + (appState.currentLanguage === 'ar' ? 'تم النسخ!' : 'copied!'));
+        function showProfileSharePopup(familyId) {
+            appState.currentShareProfile = familyId;
+            document.getElementById('shareProfilePopup').classList.add('show');
+        }
+
+        function closeSharePopup() {
+            document.getElementById('sharePopup').classList.remove('show');
+        }
+
+        function closeShareProfilePopup() {
+            document.getElementById('shareProfilePopup').classList.remove('show');
+        }
+
+        function shareVia(platform) {
+            if (!appState.currentShareProduct) return;
+            
+            const family = familiesData.find(f => f.id == appState.currentShareProduct.familyId);
+            const product = family.products.find(p => p.id === appState.currentShareProduct.productId);
+            
+            const productName = appState.currentLanguage === 'ar' ? product.name : product.nameEn;
+            const url = window.location.href;
+            
+            const text = appState.currentLanguage === 'ar' 
+                ? `شاهد هذا المنتج: ${productName} - من ${family.name} على سوق المشاريع`
+                : `Check out this product: ${productName} - from ${family.nameEn} on Project Souq`;
+            
+            let shareUrl = '';
+            
+            switch(platform) {
+                case 'whatsapp':
+                    shareUrl = `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`;
+                    break;
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+                    break;
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+                    break;
+                case 'telegram':
+                    shareUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
+                    break;
+            }
+            
+            if (shareUrl) {
+                window.open(shareUrl, '_blank', 'width=600,height=400');
+            }
+            
             closeSharePopup();
-        }).catch(() => {
-            alert(appState.currentLanguage === 'ar' ? 'فشل النسخ' : 'Copy failed');
-        });
-    }
+        }
 
-    function copyProfileLink() {
-        const url = window.location.href;
-        navigator.clipboard.writeText(url).then(() => {
-            const t = translations[appState.currentLanguage];
-            alert(t.copyLinkText + ' ' + (appState.currentLanguage === 'ar' ? 'تم النسخ!' : 'copied!'));
+        function shareProfileVia(platform) {
+            if (!appState.currentShareProfile) return;
+            
+            const family = familiesData.find(f => f.id == appState.currentShareProfile);
+            const url = window.location.href;
+            const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
+            
+            const text = appState.currentLanguage === 'ar' 
+                ? `اكتشف مشروع ${familyName} على سوق المشاريع - ${family.description}`
+                : `Discover ${familyName} on Project Souq - ${family.descriptionEn}`;
+            
+            let shareUrl = '';
+            
+            switch(platform) {
+                case 'whatsapp':
+                    shareUrl = `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`;
+                    break;
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+                    break;
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+                    break;
+                case 'telegram':
+                    shareUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
+                    break;
+            }
+            
+            if (shareUrl) {
+                window.open(shareUrl, '_blank', 'width=600,height=400');
+            }
+            
             closeShareProfilePopup();
-        }).catch(() => {
-            alert(appState.currentLanguage === 'ar' ? 'فشل النسخ' : 'Copy failed');
-        });
-    }
-
-    function changeProductMainImage(src, element) {
-        document.getElementById('productMainImage').src = src;
-        
-        document.querySelectorAll('.thumbnail-item').forEach(thumb => {
-            thumb.classList.remove('active');
-        });
-        element.classList.add('active');
-    }
-
-    function openZoom(src) {
-        document.getElementById('zoomImage').src = src;
-        document.getElementById('zoomModal').classList.add('active');
-    }
-
-    function detectSellPointType(value) {
-        if (!value) return { type: 'unknown', icon: 'fa-link', bg: 'website-bg', url: null };
-        
-        const cleanValue = value.toLowerCase().trim();
-        
-        const platforms = [
-            { keywords: ['instagram.com/', 'insta'], type: 'instagram', icon: 'fa-instagram', bg: 'instagram-bg', buildUrl: (val) => {
-                if (val.startsWith('http')) return val;
-                const username = val.replace(/^@/, '').replace(/instagram.com\/|insta/g, '').trim();
-                return `https://instagram.com/${username}`;
-            }},
-            { keywords: ['tiktok.com/@', 'tiktok'], type: 'tiktok', icon: 'fa-tiktok', bg: 'tiktok-bg', buildUrl: (val) => {
-                if (val.startsWith('http')) return val;
-                const username = val.replace(/^@/, '').replace(/tiktok.com\/@|tiktok/g, '').trim();
-                return `https://tiktok.com/@${username}`;
-            }},
-            { keywords: ['snapchat.com/add/', 'snapchat', 'سناب'], type: 'snapchat', icon: 'fa-snapchat', bg: 'snapchat-bg', buildUrl: (val) => {
-                if (val.startsWith('http')) return val;
-                const username = val.replace(/^@/, '').replace(/snapchat.com\/add\/|snapchat|سناب/g, '').trim();
-                return `https://snapchat.com/add/${username}`;
-            }},
-            { keywords: ['twitter.com/', 'x.com', 'twitter'], type: 'twitter', icon: 'fa-twitter', bg: 'twitter-bg', buildUrl: (val) => {
-                if (val.startsWith('http')) return val;
-                const username = val.replace(/^@/, '').replace(/twitter.com\/|x.com\/|twitter/g, '').trim();
-                return `https://twitter.com/${username}`;
-            }},
-            { keywords: ['t.me/', 'telegram'], type: 'telegram', icon: 'fa-telegram', bg: 'telegram-bg', buildUrl: (val) => {
-                if (val.startsWith('http')) return val;
-                const username = val.replace(/^@/, '').replace(/t.me\/|telegram/g, '').trim();
-                return `https://t.me/${username}`;
-            }}
-        ];
-
-        for (const platform of platforms) {
-            if (platform.keywords.some(keyword => cleanValue.includes(keyword))) {
-                return {
-                    type: platform.type,
-                    icon: platform.icon,
-                    bg: platform.bg,
-                    url: platform.buildUrl(cleanValue)
-                };
-            }
         }
 
-        return {
-            type: 'website',
-            icon: 'fa-globe',
-            bg: 'website-bg',
-            url: cleanValue.startsWith('http') ? cleanValue : `https://${cleanValue}`
-        };
-    }
-
-    function addJsonLd(family) {
-        const existingScript = document.getElementById('json-ld-family');
-        if (existingScript) existingScript.remove();
-        
-        const ldJson = {
-            "@context": "https://schema.org",
-            "@type": "LocalBusiness",
-            "name": family.name,
-            "description": family.longDescription || family.description,
-            "address": {
-                "@type": "PostalAddress",
-                "addressLocality": family.emirate,
-                "addressCountry": "AE"
-            },
-            "telephone": family.phone,
-            "email": family.email,
-            "image": family.image
-        };
-        
-        const script = document.createElement('script');
-        script.id = 'json-ld-family';
-        script.type = 'application/ld+json';
-        script.textContent = JSON.stringify(ldJson);
-        document.head.appendChild(script);
-    }
-
-    function showInstructionPopupOnce() {
-        const popup = document.getElementById('instructionPopup');
-        if (!sessionStorage.getItem('instructionPopupShown')) {
-            popup.classList.add('show');
-            sessionStorage.setItem('instructionPopupShown', 'true');
-            
-            setTimeout(() => {
-                popup.classList.remove('show');
-            }, 8000);
-        }
-    }
-
-    function closeInstructionPopup() {
-        document.getElementById('instructionPopup').classList.remove('show');
-    }
-
-    function showRegisterForm() {
-        document.getElementById('registerModal').classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeRegisterForm() {
-        document.getElementById('registerModal').classList.remove('active');
-        document.body.style.overflow = 'auto';
-    }
-
-    function validateFamilyForm(event) {
-        event.preventDefault();
-        
-        try {
-            const adraLicense = document.querySelector('input[name="adra_license"]:checked');
-            if (!adraLicense) {
-                alert(appState.currentLanguage === 'ar' ? "❌ يرجى اختيار حالة الترخيص" : "❌ Please select license status");
-                return false;
-            }
-            
-            const categories = document.querySelectorAll('input[name="category[]"]:checked');
-            if (categories.length === 0) {
-                alert(appState.currentLanguage === 'ar' ? "❌ يرجى اختيار تصنيف واحد على الأقل" : "❌ Please select at least one category");
-                return false;
-            }
-            
-            event.target.submit();
-            
-        } catch (error) {
-            console.error('Error:', error);
-            alert(appState.currentLanguage === 'ar' ? "❌ حدث خطأ، يرجى المحاولة مرة أخرى" : "❌ An error occurred, please try again");
-            return false;
-        }
-        
-        return false;
-    }
-
-    function scrollToContact() {
-        const contactSection = document.getElementById('contactSectionBottom');
-        if (contactSection) {
-            contactSection.scrollIntoView({ 
-                behavior: 'smooth',
-                block: 'start'
+        function copyLink() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                const t = translations[appState.currentLanguage];
+                alert(t.copyLinkText + ' ' + (appState.currentLanguage === 'ar' ? 'تم النسخ!' : 'copied!'));
+                closeSharePopup();
+            }).catch(() => {
+                alert(appState.currentLanguage === 'ar' ? 'فشل النسخ' : 'Copy failed');
             });
         }
-    }
 
-    window.toggleMenu = toggleMenu;
-    window.navigateTo = navigateTo;
-    window.goBack = goBack;
-    window.scrollToTopAndHome = scrollToTopAndHome;
-    window.filterByCategory = filterByCategory;
-    window.filterByEmirate = filterByEmirate;
-    window.showFamilyProducts = showFamilyProducts;
-    window.showProductDetail = showProductDetail;
-    window.performHomeSearch = performHomeSearch;
-    window.performFamiliesSearch = performFamiliesSearch;
-    window.showRegisterForm = showRegisterForm;
-    window.closeRegisterForm = closeRegisterForm;
-    window.validateFamilyForm = validateFamilyForm;
-    window.closeInstructionPopup = closeInstructionPopup;
-    window.scrollToContact = scrollToContact;
-    window.openZoom = openZoom;
-    window.changeProductMainImage = changeProductMainImage;
-    window.toggleLanguage = toggleLanguage;
-    window.showSharePopup = showSharePopup;
-    window.showProfileSharePopup = showProfileSharePopup;
-    window.closeSharePopup = closeSharePopup;
-    window.closeShareProfilePopup = closeShareProfilePopup;
-    window.shareVia = shareVia;
-    window.shareProfileVia = shareProfileVia;
-    window.copyLink = copyLink;
-    window.copyProfileLink = copyProfileLink;
-</script>
+        function copyProfileLink() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                const t = translations[appState.currentLanguage];
+                alert(t.copyLinkText + ' ' + (appState.currentLanguage === 'ar' ? 'تم النسخ!' : 'copied!'));
+                closeShareProfilePopup();
+            }).catch(() => {
+                alert(appState.currentLanguage === 'ar' ? 'فشل النسخ' : 'Copy failed');
+            });
+        }
+
+        function changeProductMainImage(src, element) {
+            document.getElementById('productMainImage').src = src;
+            
+            document.querySelectorAll('.thumbnail-item').forEach(thumb => {
+                thumb.classList.remove('active');
+            });
+            element.classList.add('active');
+        }
+
+        function openZoom(src) {
+            document.getElementById('zoomImage').src = src;
+            document.getElementById('zoomModal').classList.add('active');
+        }
+
+        function detectSellPointType(value) {
+            if (!value) return { type: 'unknown', icon: 'fa-link', bg: 'website-bg', url: null };
+            
+            const cleanValue = value.toLowerCase().trim();
+            
+            const platforms = [
+                { keywords: ['instagram.com/', 'insta'], type: 'instagram', icon: 'fa-instagram', bg: 'instagram-bg', buildUrl: (val) => {
+                    if (val.startsWith('http')) return val;
+                    const username = val.replace(/^@/, '').replace(/instagram.com\/|insta/g, '').trim();
+                    return `https://instagram.com/${username}`;
+                }},
+                { keywords: ['tiktok.com/@', 'tiktok'], type: 'tiktok', icon: 'fa-tiktok', bg: 'tiktok-bg', buildUrl: (val) => {
+                    if (val.startsWith('http')) return val;
+                    const username = val.replace(/^@/, '').replace(/tiktok.com\/@|tiktok/g, '').trim();
+                    return `https://tiktok.com/@${username}`;
+                }},
+                { keywords: ['snapchat.com/add/', 'snapchat', 'سناب'], type: 'snapchat', icon: 'fa-snapchat', bg: 'snapchat-bg', buildUrl: (val) => {
+                    if (val.startsWith('http')) return val;
+                    const username = val.replace(/^@/, '').replace(/snapchat.com\/add\/|snapchat|سناب/g, '').trim();
+                    return `https://snapchat.com/add/${username}`;
+                }},
+                { keywords: ['twitter.com/', 'x.com', 'twitter'], type: 'twitter', icon: 'fa-twitter', bg: 'twitter-bg', buildUrl: (val) => {
+                    if (val.startsWith('http')) return val;
+                    const username = val.replace(/^@/, '').replace(/twitter.com\/|x.com\/|twitter/g, '').trim();
+                    return `https://twitter.com/${username}`;
+                }},
+                { keywords: ['t.me/', 'telegram'], type: 'telegram', icon: 'fa-telegram', bg: 'telegram-bg', buildUrl: (val) => {
+                    if (val.startsWith('http')) return val;
+                    const username = val.replace(/^@/, '').replace(/t.me\/|telegram/g, '').trim();
+                    return `https://t.me/${username}`;
+                }}
+            ];
+
+            for (const platform of platforms) {
+                if (platform.keywords.some(keyword => cleanValue.includes(keyword))) {
+                    return {
+                        type: platform.type,
+                        icon: platform.icon,
+                        bg: platform.bg,
+                        url: platform.buildUrl(cleanValue)
+                    };
+                }
+            }
+
+            return {
+                type: 'website',
+                icon: 'fa-globe',
+                bg: 'website-bg',
+                url: cleanValue.startsWith('http') ? cleanValue : `https://${cleanValue}`
+            };
+        }
+
+        function addJsonLd(family) {
+            const existingScript = document.getElementById('json-ld-family');
+            if (existingScript) existingScript.remove();
+            
+            const ldJson = {
+                "@context": "https://schema.org",
+                "@type": "LocalBusiness",
+                "name": family.name,
+                "description": family.longDescription || family.description,
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": family.emirate,
+                    "addressCountry": "AE"
+                },
+                "telephone": family.phone,
+                "email": family.email,
+                "image": family.image
+            };
+            
+            const script = document.createElement('script');
+            script.id = 'json-ld-family';
+            script.type = 'application/ld+json';
+            script.textContent = JSON.stringify(ldJson);
+            document.head.appendChild(script);
+        }
+
+        function showInstructionPopupOnce() {
+            const popup = document.getElementById('instructionPopup');
+            if (!sessionStorage.getItem('instructionPopupShown')) {
+                popup.classList.add('show');
+                sessionStorage.setItem('instructionPopupShown', 'true');
+                
+                setTimeout(() => {
+                    popup.classList.remove('show');
+                }, 8000);
+            }
+        }
+
+        function closeInstructionPopup() {
+            document.getElementById('instructionPopup').classList.remove('show');
+        }
+
+        function showRegisterForm() {
+            document.getElementById('registerModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeRegisterForm() {
+            document.getElementById('registerModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function validateFamilyForm(event) {
+            event.preventDefault();
+            
+            try {
+                const adraLicense = document.querySelector('input[name="adra_license"]:checked');
+                if (!adraLicense) {
+                    alert(appState.currentLanguage === 'ar' ? "❌ يرجى اختيار حالة الترخيص" : "❌ Please select license status");
+                    return false;
+                }
+                
+                const categories = document.querySelectorAll('input[name="category[]"]:checked');
+                if (categories.length === 0) {
+                    alert(appState.currentLanguage === 'ar' ? "❌ يرجى اختيار تصنيف واحد على الأقل" : "❌ Please select at least one category");
+                    return false;
+                }
+                
+                event.target.submit();
+                
+            } catch (error) {
+                console.error('Error:', error);
+                alert(appState.currentLanguage === 'ar' ? "❌ حدث خطأ، يرجى المحاولة مرة أخرى" : "❌ An error occurred, please try again");
+                return false;
+            }
+            
+            return false;
+        }
+
+        function scrollToContact() {
+            const contactSection = document.getElementById('contactSectionBottom');
+            if (contactSection) {
+                contactSection.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
+        window.toggleMenu = toggleMenu;
+        window.navigateTo = navigateTo;
+        window.goBack = goBack;
+        window.scrollToTopAndHome = scrollToTopAndHome;
+        window.filterByCategory = filterByCategory;
+        window.filterByEmirate = filterByEmirate;
+        window.showFamilyProducts = showFamilyProducts;
+        window.showProductDetail = showProductDetail;
+        window.performHomeSearch = performHomeSearch;
+        window.performFamiliesSearch = performFamiliesSearch;
+        window.showRegisterForm = showRegisterForm;
+        window.closeRegisterForm = closeRegisterForm;
+        window.validateFamilyForm = validateFamilyForm;
+        window.closeInstructionPopup = closeInstructionPopup;
+        window.scrollToContact = scrollToContact;
+        window.openZoom = openZoom;
+        window.changeProductMainImage = changeProductMainImage;
+        window.toggleLanguage = toggleLanguage;
+        window.showSharePopup = showSharePopup;
+        window.showProfileSharePopup = showProfileSharePopup;
+        window.closeSharePopup = closeSharePopup;
+        window.closeShareProfilePopup = closeShareProfilePopup;
+        window.shareVia = shareVia;
+        window.shareProfileVia = shareProfileVia;
+        window.copyLink = copyLink;
+        window.copyProfileLink = copyProfileLink;
+    </script>
     <meta name="google-site-verification" content="UwEARwAkfxnW1CP0oDBEnlnKhHl2QuANOH1SF_8pvJg">
 </body>
 </html>
