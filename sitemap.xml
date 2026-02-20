@@ -1,75 +1,148 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <!-- ========== الصفحات الرئيسية ========== -->
+  
   <!-- الصفحة الرئيسية -->
   <url>
-    <loc>https://souqalmasharie.onrender.com//</loc>
+    <loc>https://souqalmasharie.onrender.com/</loc>
     <priority>1.0</priority>
     <changefreq>daily</changefreq>
+    <lastmod>2026-02-20</lastmod>
   </url>
 
   <!-- صفحة السوق / جميع المشاريع -->
   <url>
-    <loc>https://souqalmasharie.onrender.com/m/#/families/emirate/all</loc>
+    <loc>https://souqalmasharie.onrender.com/#/projects/emirate/all</loc>
     <priority>0.9</priority>
     <changefreq>hourly</changefreq>
+    <lastmod>2026-02-20</lastmod>
   </url>
 
-  <!-- صفحات الإمارات -->
+  <!-- ========== صفحات الإمارات ========== -->
+  
   <url>
-    <loc>https://souqalmasharie.onrender.com//#/families/emirate/%D8%AF%D8%A8%D9%8A</loc>
+    <loc>https://souqalmasharie.onrender.com/#/projects/emirate/%D8%AF%D8%A8%D9%8A</loc> <!-- دبي -->
     <priority>0.8</priority>
     <changefreq>daily</changefreq>
+    <lastmod>2026-02-20</lastmod>
   </url>
+  
   <url>
-    <loc>https://souqalmasharie.onrender.com//#/families/emirate/%D8%A3%D8%A8%D9%88%D8%B8%D8%A8%D9%8A</loc>
+    <loc>https://souqalmasharie.onrender.com/#/projects/emirate/%D8%A3%D8%A8%D9%88%D8%B8%D8%A8%D9%8A</loc> <!-- أبوظبي -->
     <priority>0.8</priority>
     <changefreq>daily</changefreq>
+    <lastmod>2026-02-20</lastmod>
   </url>
+  
   <url>
-    <loc>https://souqalmasharie.onrender.com//#/families/emirate/%D8%A7%D9%84%D8%B4%D8%A7%D8%B1%D9%82%D8%A9</loc>
+    <loc>https://souqalmasharie.onrender.com/#/projects/emirate/%D8%A7%D9%84%D8%B4%D8%A7%D8%B1%D9%82%D8%A9</loc> <!-- الشارقة -->
     <priority>0.8</priority>
     <changefreq>daily</changefreq>
+    <lastmod>2026-02-20</lastmod>
   </url>
+  
   <url>
-    <loc>https://souqalmasharie.onrender.com//#/families/emirate/%D8%B9%D8%AC%D9%85%D8%A7%D9%86</loc>
+    <loc>https://souqalmasharie.onrender.com/#/projects/emirate/%D8%B9%D8%AC%D9%85%D8%A7%D9%86</loc> <!-- عجمان -->
     <priority>0.7</priority>
     <changefreq>daily</changefreq>
+    <lastmod>2026-02-20</lastmod>
   </url>
+  
   <url>
-    <loc>https://souqalmasharie.onrender.com//#/families/emirate/%D8%B1%D8%A3%D8%B3%20%D8%A7%D9%84%D8%AE%D9%8A%D9%85%D8%A9</loc>
+    <loc>https://souqalmasharie.onrender.com/#/projects/emirate/%D8%B1%D8%A3%D8%B3%20%D8%A7%D9%84%D8%AE%D9%8A%D9%85%D8%A9</loc> <!-- رأس الخيمة -->
     <priority>0.7</priority>
     <changefreq>daily</changefreq>
+    <lastmod>2026-02-20</lastmod>
   </url>
+  
   <url>
-    <loc>https://souqalmasharie.onrender.com//#/families/emirate/%D8%A7%D9%84%D9%81%D8%AC%D9%8A%D8%B1%D8%A9</loc>
+    <loc>https://souqalmasharie.onrender.com/#/projects/emirate/%D8%A7%D9%84%D9%81%D8%AC%D9%8A%D8%B1%D8%A9</loc> <!-- الفجيرة -->
     <priority>0.7</priority>
     <changefreq>daily</changefreq>
+    <lastmod>2026-02-20</lastmod>
   </url>
+  
   <url>
-    <loc>https://souqalmasharie.onrender.com//#/families/emirate/%D8%A3%D9%85%20%D8%A7%D9%84%D9%82%D9%8A%D9%88%D9%8A%D9%86</loc>
+    <loc>https://souqalmasharie.onrender.com/#/projects/emirate/%D8%A3%D9%85%20%D8%A7%D9%84%D9%82%D9%8A%D9%88%D9%8A%D9%86</loc> <!-- أم القيوين -->
     <priority>0.7</priority>
     <changefreq>daily</changefreq>
+    <lastmod>2026-02-20</lastmod>
   </url>
 
-  <!-- ========== المشاريع الحالية ========== -->
+  <!-- ========== المشاريع ========== -->
   
   <!-- مشروع: cardsplayuae (ID: 1) -->
   <url>
-    <loc>https://souqalmasharie.onrender.com//#/family/1</loc>
+    <loc>https://souqalmasharie.onrender.com/#/family/1</loc>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
+    <lastmod>2026-02-20</lastmod>
   </url>
   
   <!-- منتجات cardsplayuae -->
   <url>
-    <loc>https://souqalmasharie.onrender.com//#/product/1/p1</loc> <!-- بطاقات بيضاء كلاسيك -->
+    <loc>https://souqalmasharie.onrender.com/#/product/1/p1</loc>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
+    <lastmod>2026-02-20</lastmod>
   </url>
 
-  <!-- ========== مساحة للمشاريع الجديدة ========== -->
-  <!-- انسخ والصق هذا القالب لكل مشروع جديد -->
+  <!-- مشروع: موتشا (ID: 2) -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/#/family/2</loc>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+    <lastmod>2026-02-20</lastmod>
+  </url>
   
+  <!-- منتجات موتشا -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/#/product/2/p1</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-02-20</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://souqalmasharie.onrender.com/#/product/2/p2</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-02-20</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://souqalmasharie.onrender.com/#/product/2/p3</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-02-20</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://souqalmasharie.onrender.com/#/product/2/p4</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-02-20</lastmod>
+  </url>
+
+  <!-- ========== قالب للإضافة المستقبلية ========== -->
+  <!-- انسخ هذا القالب عند إضافة مشروع جديد
+  
+  <!- مشروع جديد (ID: 3) ->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/#/family/3</loc>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+    <lastmod>2026-02-20</lastmod>
+  </url>
+  
+  <!- منتجات المشروع الجديد ->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/#/product/3/p1</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-02-20</lastmod>
+  </url>
+  -->
 
 </urlset>
-
