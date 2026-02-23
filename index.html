@@ -1021,50 +1021,199 @@
             border-color: var(--favorite-red);
         }
 
-        /* أزرار في صفحة التفاصيل */
-        .product-main-image {
+        /* تنسيق الصورة الرئيسية في صفحة التفاصيل */
+        .product-main-image-container {
+            position: relative;
             width: 100%;
-            height: 240px;
+            height: 280px;
+            background: linear-gradient(145deg, #f8f8f8, #ffffff);
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .main-image {
+            width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(145deg, #f8f8f8, #ffffff);
-            border-bottom: 1px solid var(--light-gray);
-            padding: 12px;
-            position: relative;
+            cursor: pointer;
         }
 
-        .product-main-image img {
-            max-width: 100%;
-            max-height: 100%;
+        .main-image img {
+            max-width: 90%;
+            max-height: 90%;
             width: auto;
             height: auto;
             object-fit: contain;
             border-radius: 8px;
+            transition: transform 0.3s ease;
         }
 
-        .product-main-image .action-btn {
-            bottom: 15px;
+        .main-image img:hover {
+            transform: scale(1.05);
         }
 
-        [dir="rtl"] .product-main-image .share-btn {
-            right: 15px;
+        /* أزرار الصورة في صفحة التفاصيل */
+        .product-main-image-container .action-btn {
+            position: absolute;
+            bottom: 16px;
+            width: 42px;
+            height: 42px;
+            font-size: 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        [dir="rtl"] .product-main-image-container .share-btn {
+            right: 16px;
             left: auto;
         }
 
-        [dir="ltr"] .product-main-image .share-btn {
-            left: 15px;
+        [dir="ltr"] .product-main-image-container .share-btn {
+            left: 16px;
             right: auto;
         }
 
-        [dir="rtl"] .product-main-image .favorite-btn {
-            left: 60px;
+        [dir="rtl"] .product-main-image-container .favorite-btn {
+            left: 70px;
             right: auto;
         }
 
-        [dir="ltr"] .product-main-image .favorite-btn {
-            right: 60px;
+        [dir="ltr"] .product-main-image-container .favorite-btn {
+            right: 70px;
             left: auto;
+        }
+
+        /* معرض الصور المصغر */
+        .product-thumbnails {
+            display: flex;
+            gap: 8px;
+            padding: 12px;
+            overflow-x: auto;
+            background: white;
+            scrollbar-width: thin;
+            scrollbar-color: var(--secondary) var(--light-gray);
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .product-thumbnail {
+            flex: 0 0 70px;
+            height: 70px;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: var(--transition);
+            background: var(--light);
+        }
+
+        .product-thumbnail.active {
+            border-color: var(--secondary);
+        }
+
+        .product-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* مودال تكبير الصورة مع التمرير */
+        .zoom-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .zoom-modal.active {
+            display: flex;
+        }
+
+        .zoom-image-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .zoom-image-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .zoom-slide {
+            flex: 0 0 100%;
+            scroll-snap-align: start;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .zoom-slide img {
+            max-width: 95%;
+            max-height: 95%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .close-zoom {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255,255,255,0.3);
+            z-index: 3010;
+            backdrop-filter: blur(5px);
+        }
+
+        .close-zoom:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .zoom-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 3010;
+            background: rgba(0,0,0,0.5);
+            padding: 8px 12px;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+        }
+
+        .zoom-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .zoom-dot.active {
+            background: var(--secondary);
+            transform: scale(1.2);
         }
 
         /* زر المشاركة في ملف المشروع */
@@ -1666,36 +1815,9 @@
             box-shadow: 0 2px 5px rgba(212, 175, 55, 0.3);
         }
 
-        /* ===== أنماط صفحة المفضلة - قائمة ===== */
+        /* ===== أنماط صفحة المفضلة - قائمة المنتجات فقط ===== */
         .favorites-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-            background: white;
-            padding: 8px;
-            border-radius: 40px;
-            border: 1px solid var(--light-gray);
-        }
-
-        .favorites-tab {
-            flex: 1;
-            text-align: center;
-            padding: 8px 0;
-            border-radius: 30px;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--gray);
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .favorites-tab.active {
-            background: var(--primary-gradient);
-            color: white;
-        }
-
-        .favorites-tab i {
-            margin-left: 5px;
+            display: none;
         }
 
         .favorites-content {
@@ -1774,9 +1896,14 @@
             font-size: 10px;
         }
 
-        .favorite-item-price {
+        .project-badge {
+            background: var(--light);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 9px;
             color: var(--primary-dark);
-            font-weight: 700;
+            font-weight: 600;
+            border: 1px solid var(--light-gray);
         }
 
         .empty-favorites {
@@ -2042,6 +2169,10 @@
             .profile-name {
                 font-size: 16px;
             }
+            
+            .product-main-image-container {
+                height: 220px;
+            }
         }
 
         .product-gallery {
@@ -2051,104 +2182,6 @@
             margin-bottom: 15px;
             box-shadow: var(--card-shadow);
             border: 1px solid var(--light-gray);
-        }
-
-        /* ===== معرض الصور المتحرك بالتمرير ===== */
-        .product-images-slider {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-        }
-
-        .images-container {
-            display: flex;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            scroll-behavior: smooth;
-        }
-
-        .images-container::-webkit-scrollbar {
-            display: none;
-        }
-
-        .slider-image {
-            flex: 0 0 100%;
-            scroll-snap-align: start;
-            height: 240px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(145deg, #f8f8f8, #ffffff);
-            padding: 12px;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .slider-image img {
-            max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            border-radius: 8px;
-        }
-
-        .slider-dots {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px;
-            background: white;
-        }
-
-        .slider-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--light-gray);
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .slider-dot.active {
-            background: var(--secondary);
-            transform: scale(1.2);
-        }
-
-        .slider-dot:hover {
-            background: var(--secondary-light);
-        }
-
-        .thumbnail-slider {
-            display: flex;
-            gap: 5px;
-            padding: 8px;
-            overflow-x: auto;
-            background: #fafafa;
-            scrollbar-width: thin;
-            scrollbar-color: var(--secondary) var(--light-gray);
-        }
-
-        .thumbnail-item {
-            flex: 0 0 60px;
-            height: 60px;
-            border-radius: 8px;
-            overflow: hidden;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: var(--transition);
-        }
-
-        .thumbnail-item.active {
-            border-color: var(--secondary);
-        }
-
-        .thumbnail-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
         }
 
         .product-detail-info {
@@ -2381,50 +2414,6 @@
             font-family: 'Poppins', serif;
         }
 
-        .zoom-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 3000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .zoom-modal.active {
-            display: flex;
-        }
-
-        .zoom-modal img {
-            max-width: 95%;
-            max-height: 95%;
-            border-radius: 8px;
-        }
-
-        .close-zoom {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            color: white;
-            font-size: 22px;
-            cursor: pointer;
-            width: 38px;
-            height: 38px;
-            background: rgba(255,255,255,0.15);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .close-zoom:hover {
-            background: rgba(255,255,255,0.25);
-        }
-
         .share-popup {
             position: fixed;
             top: 50%;
@@ -2508,12 +2497,6 @@
         .share-close:hover {
             background: var(--light-gray);
         }
-
-        .whatsapp-bg { background: #25D366; }
-        .facebook-bg { background: #4267B2; }
-        .twitter-bg { background: #1DA1F2; }
-        .telegram-bg { background: #0088cc; }
-        .copy-link-bg { background: var(--primary-dark); }
 
         /* رسالة تأكيد صغيرة */
         .toast-message {
@@ -2783,7 +2766,7 @@
             </div>
         </div>
 
-        <!-- صفحة المفضلة -->
+        <!-- صفحة المفضلة (المنتجات فقط) -->
         <div id="favorites-page" class="page favorites-page" style="display: none;">
             <div class="page-header with-back">
                 <div class="back-button" onclick="goBack()">
@@ -2793,14 +2776,6 @@
                 <p class="page-subtitle" id="favoritesPageSubtitle">المنتجات التي أضفتها</p>
             </div>
             <div class="container">
-                <div class="favorites-tabs">
-                    <div class="favorites-tab active" onclick="switchFavoritesTab('products')">
-                        <i class="fas fa-box"></i> <span id="favTabProducts">المنتجات</span>
-                    </div>
-                    <div class="favorites-tab" onclick="switchFavoritesTab('families')">
-                        <i class="fas fa-store"></i> <span id="favTabProjects">المشاريع</span>
-                    </div>
-                </div>
                 <div class="favorites-content" id="favoritesContent"></div>
             </div>
         </div>
@@ -2914,10 +2889,11 @@
         </div>
     </div>
 
-    <!-- مودال تكبير الصورة -->
-    <div class="zoom-modal" id="zoomModal" onclick="this.classList.remove('active')">
-        <div class="close-zoom"><i class="fas fa-times"></i></div>
-        <img id="zoomImage" src="" alt="">
+    <!-- مودال تكبير الصورة مع التمرير -->
+    <div class="zoom-modal" id="zoomModal">
+        <div class="close-zoom" onclick="closeZoomModal()"><i class="fas fa-times"></i></div>
+        <div class="zoom-image-container" id="zoomImageContainer"></div>
+        <div class="zoom-dots" id="zoomDots"></div>
     </div>
 
     <footer class="app-footer">
@@ -3102,7 +3078,8 @@
             currentShareProduct: null,
             currentShareProfile: null,
             favorites: JSON.parse(localStorage.getItem('projectSouqFavorites')) || [],
-            favoritesTab: 'products'
+            currentZoomImages: [],
+            currentZoomIndex: 0
         };
 
         // ==================== دوال مؤشر التحميل ====================
@@ -3157,10 +3134,7 @@
                 
                 favoritesPageTitle: "المفضلة",
                 favoritesPageSubtitle: "المنتجات التي أضفتها",
-                favTabProducts: "المنتجات",
-                favTabProjects: "المشاريع",
                 emptyFavoritesProducts: "لا توجد منتجات في المفضلة بعد",
-                emptyFavoritesFamilies: "لا توجد مشاريع في المفضلة بعد",
                 
                 sellerInfo: "معلومات البائع",
                 similarProducts: "منتجات مشابهة",
@@ -3303,10 +3277,7 @@
                 
                 favoritesPageTitle: "Favorites",
                 favoritesPageSubtitle: "Your favorite products",
-                favTabProducts: "Products",
-                favTabProjects: "Projects",
                 emptyFavoritesProducts: "No favorite products yet",
-                emptyFavoritesFamilies: "No favorite projects yet",
                 
                 sellerInfo: "Seller Info",
                 similarProducts: "Similar Products",
@@ -3426,8 +3397,6 @@
             localStorage.setItem('projectSouqFavorites', JSON.stringify(appState.favorites));
             
             updateFavoriteUI(id, type);
-            
-            // تحديث الكرت إذا كان في صفحة المنتجات
             updateProductCardFavoriteStatus(id, type);
             
             if (appState.currentPage === 'favorites') {
@@ -3472,7 +3441,7 @@
             }, 2000);
         }
 
-        // ==================== عرض المفضلة ====================
+        // ==================== عرض المفضلة (المنتجات فقط) ====================
         function showFavorites() {
             navigateTo('/favorites');
         }
@@ -3480,89 +3449,115 @@
         function renderFavorites() {
             const container = document.getElementById('favoritesContent');
             const t = translations[appState.currentLanguage];
-            const tab = appState.favoritesTab;
             
-            if (tab === 'products') {
-                const favoriteProducts = [];
-                familiesData.forEach(family => {
-                    family.products.forEach(product => {
-                        if (isFavorite(product.id, 'product')) {
-                            favoriteProducts.push({ family, product });
-                        }
-                    });
+            const favoriteProducts = [];
+            familiesData.forEach(family => {
+                family.products.forEach(product => {
+                    if (isFavorite(product.id, 'product')) {
+                        favoriteProducts.push({ family, product });
+                    }
                 });
-                
-                if (favoriteProducts.length === 0) {
-                    container.innerHTML = `<div class="empty-favorites"><i class="fas fa-heart"></i><p>${t.emptyFavoritesProducts}</p></div>`;
-                    return;
-                }
-                
-                // عرض كقائمة وليس كروت
-                let html = '<div class="favorites-list">';
-                favoriteProducts.forEach(({ family, product }) => {
-                    const productName = appState.currentLanguage === 'ar' ? product.name : product.nameEn;
-                    const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
-                    
-                    html += `
-                    <div class="favorite-list-item" onclick="navigateTo('/product/${family.id}/${product.id}')">
-                        <div class="favorite-item-image">
-                            <img src="${product.mainImage || product.image}" alt="${productName}" loading="lazy">
-                        </div>
-                        <div class="favorite-item-info">
-                            <div class="favorite-item-title">${productName}</div>
-                            <div class="favorite-item-meta">
-                                <i class="fas fa-store"></i>
-                                <span style="color: var(--secondary); font-weight: 600;">${familyName}</span>
-                                <span style="margin: 0 5px;">•</span>
-                                <i class="fas fa-heart" style="color: var(--favorite-red);"></i>
-                            </div>
-                        </div>
-                    </div>
-                    `;
-                });
-                html += '</div>';
-                container.innerHTML = html;
-                
-            } else {
-                const favoriteFamilies = familiesData.filter(family => isFavorite(family.id, 'family'));
-                
-                if (favoriteFamilies.length === 0) {
-                    container.innerHTML = `<div class="empty-favorites"><i class="fas fa-store"></i><p>${t.emptyFavoritesFamilies}</p></div>`;
-                    return;
-                }
-                
-                let html = '<div class="favorites-list">';
-                favoriteFamilies.forEach(family => {
-                    const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
-                    
-                    html += `
-                    <div class="favorite-list-item" onclick="navigateTo('/family/${family.id}')">
-                        <div class="favorite-item-image">
-                            <img src="${family.image}" alt="${familyName}" loading="lazy">
-                        </div>
-                        <div class="favorite-item-info">
-                            <div class="favorite-item-title">${familyName}</div>
-                            <div class="favorite-item-meta">
-                                <i class="fas fa-map-marker-alt"></i> ${t.emirates[family.emirate] || family.emirate}
-                            </div>
-                        </div>
-                    </div>
-                    `;
-                });
-                html += '</div>';
-                container.innerHTML = html;
+            });
+            
+            if (favoriteProducts.length === 0) {
+                container.innerHTML = `<div class="empty-favorites"><i class="fas fa-heart"></i><p>${t.emptyFavoritesProducts}</p></div>`;
+                return;
             }
+            
+            let html = '<div class="favorites-list">';
+            favoriteProducts.forEach(({ family, product }) => {
+                const productName = appState.currentLanguage === 'ar' ? product.name : product.nameEn;
+                const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
+                
+                html += `
+                <div class="favorite-list-item" onclick="navigateTo('/product/${family.id}/${product.id}')">
+                    <div class="favorite-item-image">
+                        <img src="${product.mainImage || product.image}" alt="${productName}" loading="lazy">
+                    </div>
+                    <div class="favorite-item-info">
+                        <div class="favorite-item-title">${productName}</div>
+                        <div class="favorite-item-meta">
+                            <i class="fas fa-store"></i>
+                            <span style="color: var(--secondary); font-weight: 600;">${familyName}</span>
+                            <span style="margin: 0 5px;">•</span>
+                            <span class="project-badge">${t.viewProducts}</span>
+                        </div>
+                    </div>
+                </div>
+                `;
+            });
+            html += '</div>';
+            container.innerHTML = html;
         }
 
-        function switchFavoritesTab(tab) {
-            appState.favoritesTab = tab;
-            document.querySelectorAll('.favorites-tab').forEach(t => t.classList.remove('active'));
-            if (tab === 'products') {
-                document.querySelector('.favorites-tab:first-child').classList.add('active');
-            } else {
-                document.querySelector('.favorites-tab:last-child').classList.add('active');
-            }
-            renderFavorites();
+        // ==================== دوال معرض الصور المكبر ====================
+        function openZoom(images, startIndex = 0) {
+            appState.currentZoomImages = images;
+            appState.currentZoomIndex = startIndex;
+            
+            const container = document.getElementById('zoomImageContainer');
+            const dotsContainer = document.getElementById('zoomDots');
+            
+            let slidesHtml = '';
+            let dotsHtml = '';
+            
+            images.forEach((img, index) => {
+                slidesHtml += `
+                    <div class="zoom-slide">
+                        <img src="${img}" alt="" loading="lazy">
+                    </div>
+                `;
+                dotsHtml += `
+                    <div class="zoom-dot ${index === startIndex ? 'active' : ''}" onclick="scrollToZoomImage(${index})"></div>
+                `;
+            });
+            
+            container.innerHTML = slidesHtml;
+            dotsContainer.innerHTML = dotsHtml;
+            
+            document.getElementById('zoomModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // التمرير إلى الصورة المحددة
+            setTimeout(() => {
+                const imageWidth = container.clientWidth;
+                container.scrollTo({
+                    left: startIndex * imageWidth,
+                    behavior: 'auto'
+                });
+            }, 50);
+            
+            // إضافة حدث التمرير لتحديث النقاط
+            container.addEventListener('scroll', updateZoomDots);
+        }
+
+        function updateZoomDots() {
+            const container = document.getElementById('zoomImageContainer');
+            const scrollPosition = container.scrollLeft;
+            const imageWidth = container.clientWidth;
+            const currentIndex = Math.round(scrollPosition / imageWidth);
+            
+            document.querySelectorAll('.zoom-dot').forEach((dot, index) => {
+                if (index === currentIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        function scrollToZoomImage(index) {
+            const container = document.getElementById('zoomImageContainer');
+            const imageWidth = container.clientWidth;
+            container.scrollTo({
+                left: index * imageWidth,
+                behavior: 'smooth'
+            });
+        }
+
+        function closeZoomModal() {
+            document.getElementById('zoomModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
         }
 
         // ==================== التهيئة ====================
@@ -3672,8 +3667,6 @@
             
             document.getElementById('favoritesPageTitle').textContent = t.favoritesPageTitle;
             document.getElementById('favoritesPageSubtitle').textContent = t.favoritesPageSubtitle;
-            document.getElementById('favTabProducts').textContent = t.favTabProducts;
-            document.getElementById('favTabProjects').textContent = t.favTabProjects;
             
             document.getElementById('popupTitle').textContent = t.popupTitle;
             document.getElementById('step1').textContent = t.step1;
@@ -4149,14 +4142,13 @@
               <div class="product-card ${isFav ? 'favorite-active' : ''}" data-product-id="${p.id}" onclick="navigateTo('/product/${family.id}/${p.id}')">
                  <div class="product-image">
                     <img src="${p.mainImage || p.image}" alt="${productName}" loading="lazy">
-                 <!-- تم إزالة أزرار المفضلة والمشاركة من هنا -->
+                 </div>
+                 <div class="product-content">
+                    <h3 class="product-name">${productName}</h3>
+                    <div class="product-description">${productDesc}</div>
+                    <div class="product-category">${categoryDisplay}</div>
+                 </div>
               </div>
-              <div class="product-content">
-                 <h3 class="product-name">${productName}</h3>
-                 <div class="product-description">${productDesc}</div>
-                 <div class="product-category">${categoryDisplay}</div>
-              </div>
-            </div>
         `}).join('');
             
             let contactGridHtml = '';
@@ -4234,18 +4226,10 @@
             
             const images = product.images || [product.mainImage || product.image];
             
-            const imagesSliderHtml = images.map((img, index) => `
-                <div class="slider-image" onclick="openZoom('${img}')">
-                    <img src="${img}" alt="${productName}" loading="lazy">
-                </div>
-            `).join('');
-            
-            const dotsHtml = images.map((_, index) => `
-                <div class="slider-dot ${index === 0 ? 'active' : ''}" onclick="scrollToImage(${index})"></div>
-            `).join('');
+            const mainImage = images[0];
             
             const thumbnailsHtml = images.map((img, index) => `
-                <div class="thumbnail-item ${index === 0 ? 'active' : ''}" onclick="changeProductImage(${index})">
+                <div class="product-thumbnail ${index === 0 ? 'active' : ''}" onclick="changeMainImage('${img}', this, ${index})">
                     <img src="${img}" alt="" loading="lazy">
                 </div>
             `).join('');
@@ -4323,16 +4307,10 @@
             
             const html = `
                 <div class="product-gallery">
-                    <div class="product-images-slider">
-                        <div class="images-container" id="productImagesSlider">
-                            ${imagesSliderHtml}
+                    <div class="product-main-image-container">
+                        <div class="main-image" onclick="openZoom(${JSON.stringify(images).replace(/"/g, '&quot;')}, 0)">
+                            <img src="${mainImage}" alt="${productName}" id="currentMainImage" loading="lazy">
                         </div>
-                        <div class="slider-dots" id="sliderDots">
-                            ${dotsHtml}
-                        </div>
-                    </div>
-                    
-                    <div class="product-main-image" style="display: flex;">
                         <div class="action-btn favorite-btn ${isFav ? 'active' : ''}"
                              data-id="${productId}" data-type="product"
                              onclick="event.stopPropagation(); toggleFavorite('${productId}', 'product')">
@@ -4343,7 +4321,8 @@
                             <i class="fas fa-share-alt"></i>
                         </div>
                     </div>
-                    <div class="thumbnail-slider">
+                    
+                    <div class="product-thumbnails">
                         ${thumbnailsHtml}
                     </div>
                 </div>
@@ -4393,59 +4372,18 @@
             
             document.getElementById('productDetailContainer').innerHTML = html;
             
-            // إضافة حدث التمرير للصور
-            const slider = document.getElementById('productImagesSlider');
-            if (slider) {
-                slider.addEventListener('scroll', updateSliderDots);
-            }
-            
             showPage('product-detail');
         }
 
-        // ==================== دوال معرض الصور ====================
-        function changeProductImage(index) {
-            const slider = document.getElementById('productImagesSlider');
-            if (slider) {
-                const imageWidth = slider.clientWidth;
-                slider.scrollTo({
-                    left: index * imageWidth,
-                    behavior: 'smooth'
-                });
-            }
+        function changeMainImage(imgSrc, element, index) {
+            document.getElementById('currentMainImage').src = imgSrc;
             
-            document.querySelectorAll('.thumbnail-item').forEach(thumb => {
+            document.querySelectorAll('.product-thumbnail').forEach(thumb => {
                 thumb.classList.remove('active');
             });
-            document.querySelectorAll('.thumbnail-item')[index]?.classList.add('active');
-        }
-
-        function scrollToImage(index) {
-            changeProductImage(index);
-        }
-
-        function updateSliderDots() {
-            const slider = document.getElementById('productImagesSlider');
-            if (!slider) return;
+            element.classList.add('active');
             
-            const scrollPosition = slider.scrollLeft;
-            const imageWidth = slider.clientWidth;
-            const currentIndex = Math.round(scrollPosition / imageWidth);
-            
-            document.querySelectorAll('.slider-dot').forEach((dot, index) => {
-                if (index === currentIndex) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
-                }
-            });
-            
-            document.querySelectorAll('.thumbnail-item').forEach((thumb, index) => {
-                if (index === currentIndex) {
-                    thumb.classList.add('active');
-                } else {
-                    thumb.classList.remove('active');
-                }
-            });
+            appState.currentZoomIndex = index;
         }
 
         // ==================== المشاركة ====================
@@ -4570,11 +4508,6 @@
             }).catch(() => {
                 alert(appState.currentLanguage === 'ar' ? 'فشل النسخ' : 'Copy failed');
             });
-        }
-
-        function openZoom(src) {
-            document.getElementById('zoomImage').src = src;
-            document.getElementById('zoomModal').classList.add('active');
         }
 
         function detectSellPointType(value) {
@@ -4735,8 +4668,9 @@
         window.closeInstructionPopup = closeInstructionPopup;
         window.scrollToContact = scrollToContact;
         window.openZoom = openZoom;
-        window.changeProductImage = changeProductImage;
-        window.scrollToImage = scrollToImage;
+        window.closeZoomModal = closeZoomModal;
+        window.scrollToZoomImage = scrollToZoomImage;
+        window.changeMainImage = changeMainImage;
         window.toggleLanguage = toggleLanguage;
         window.showSharePopup = showSharePopup;
         window.showProfileSharePopup = showProfileSharePopup;
@@ -4748,9 +4682,7 @@
         window.copyProfileLink = copyProfileLink;
         window.toggleFavorite = toggleFavorite;
         window.showFavorites = showFavorites;
-        window.switchFavoritesTab = switchFavoritesTab;
     </script>
     <meta name="google-site-verification" content="UwEARwAkfxnW1CP0oDBEnlnKhHl2QuANOH1SF_8pvJg">
 </body>
 </html>
-
