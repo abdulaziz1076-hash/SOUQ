@@ -2870,7 +2870,7 @@
                             <label class="checkbox-label"><input type="checkbox" name="category[]" value="ملابس"> <span id="catClothes">ملابس</span></label>
                             <label class="checkbox-label"><input type="checkbox" name="category[]" value="يدويات"> <span id="catHandmade">يدويات</span></label>
                             <label class="checkbox-label"><input type="checkbox" name="category[]" value="هدايا"> <span id="catGifts">هدايا</span></label>
-                            <label class="checkbox-label"><input type="checkbox" name="category[]" value="شموع"> <span id="catCandles">شموع</span></label>
+                            <label class="checkbox-label"><input type="checkbox" name="category[]" value="عطارة"> <span id="catApothecary">عطارة</span></label>
                             <label class="checkbox-label"><input type="checkbox" name="category[]" value="فنون"> <span id="catArts">فنون</span></label>
                             <label class="checkbox-label"><input type="checkbox" name="category[]" value="نباتات"> <span id="catPlants">نباتات</span></label>
                             <label class="checkbox-label"><input type="checkbox" name="category[]" value="ترفيه"> <span id="catEntertainment">ترفيه</span></label>
@@ -3063,7 +3063,29 @@
                         detailsEn: [],
                     }
                 ]
-            }
+            },
+            {
+                id: 3,
+                name: "spicy taste",
+                nameEn: "spicy taste",
+                emirate: "أبوظبي",
+                description: "عطارة",
+                descriptionEn: "Apothecary",
+                longDescription: "بهارات فاخرة بنكهة قوية وجودة مضمونة",
+                longDescriptionEn: "Premium spices with bold flavor & guaranteed quality",
+                image: "P3.png",
+                phone: "",
+                whatsapp: "971503334464+",
+                email: "",
+                sell_point: "instaspicy___taste",
+                adra_license: "نعم",
+                coverage: "الإمارة فقط",
+                badges: ["جديد"],
+                badgesEn: ["New"],
+                category: "عطارة",
+                categoryEn: "Apothecary",
+                products: []
+            },
         ];
 
         // ==================== حالة التطبيق ====================
@@ -3185,7 +3207,7 @@
                 catClothes: "ملابس",
                 catHandmade: "يدويات",
                 catGifts: "هدايا",
-                catCandles: "شموع",
+                catApothecary: "عطارة",
                 catArts: "فنون",
                 catPlants: "نباتات",
                 catEntertainment: "ترفيه",
@@ -3214,7 +3236,7 @@
                     ملابس: "ملابس",
                     يدويات: "يدويات",
                     هدايا: "هدايا",
-                    شموع: "شموع",
+                    عطارة: "عطارة",
                     فنون: "فنون",
                     نباتات: "نباتات",
                     ترفيه: "ترفيه"
@@ -3328,7 +3350,7 @@
                 catClothes: "Clothes",
                 catHandmade: "Handmade",
                 catGifts: "Gifts",
-                catCandles: "Candles",
+                catApothecary: "Apothecary",
                 catArts: "Arts",
                 catPlants: "Plants",
                 catEntertainment: "Entertainment",
@@ -3357,7 +3379,7 @@
                     ملابس: "Clothes",
                     يدويات: "Handmade",
                     هدايا: "Gifts",
-                    شموع: "Candles",
+                    عطارة: "Apothecary",
                     فنون: "Arts",
                     نباتات: "Plants",
                     ترفيه: "Entertainment"
@@ -3705,7 +3727,7 @@
             document.getElementById('catClothes').textContent = t.catClothes;
             document.getElementById('catHandmade').textContent = t.catHandmade;
             document.getElementById('catGifts').textContent = t.catGifts;
-            document.getElementById('catCandles').textContent = t.catCandles;
+            document.getElementById('catApothecary').textContent = t.catApothecary;
             document.getElementById('catArts').textContent = t.catArts;
             document.getElementById('catPlants').textContent = t.catPlants;
             document.getElementById('catEntertainment').textContent = t.catEntertainment;
@@ -3914,7 +3936,7 @@
                 { id: 'ملابس', name: t.categories.ملابس, icon: 'fas fa-tshirt' },
                 { id: 'يدويات', name: t.categories.يدويات, icon: 'fas fa-cut' },
                 { id: 'هدايا', name: t.categories.هدايا, icon: 'fas fa-gift' },
-                { id: 'شموع', name: t.categories.شموع, icon: 'fas fa-fire' },
+                { id: 'عطارة', name: t.categories.عطارة, icon: 'fas fa-fire' },
                 { id: 'فنون', name: t.categories.فنون, icon: 'fas fa-paint-brush' },
                 { id: 'نباتات', name: t.categories.نباتات, icon: 'fas fa-seedling' },
                 { id: 'ترفيه', name: t.categories.ترفيه, icon: 'fas fa-gamepad' }
@@ -4686,3 +4708,4 @@
     <meta name="google-site-verification" content="UwEARwAkfxnW1CP0oDBEnlnKhHl2QuANOH1SF_8pvJg">
 </body>
 </html>
+
