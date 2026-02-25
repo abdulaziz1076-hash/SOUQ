@@ -11,7 +11,7 @@
     </script>
     <meta name="google-site-verification" content="UwEARwAkfxnW1CP0oDBEnlnKhHl2QuANOH1SF_8pvJg">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
     <title id="pageTitle">سوق المشاريع - المشاريع في الإمارات</title>
     
     <!-- تحسينات SEO -->
@@ -38,6 +38,29 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=El+Messiri:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- كشف الجهاز للتوجيه (اختياري - معطل حالياً) -->
+    <script>
+        (function() {
+            // دالة للتحقق مما إذا كان الجهاز هاتفاً محمولاً
+            function isMobileDevice() {
+                const userAgents = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+                return userAgents.test(navigator.userAgent) || window.innerWidth <= 768;
+            }
+
+            // التحقق مما إذا كنا في الصفحة الرئيسية وليس لدينا هاش في الرابط
+            if (window.location.pathname === "/" && !window.location.hash) {
+                if (!isMobileDevice()) {
+                    // إذا كان الجهاز كمبيوتر، يمكن توجيه المستخدم إلى نسخة سطح المكتب
+                    // قم بإلغاء تعليق السطر التالي لتفعيل التوجيه
+                    // window.location.href = "https://yourdomain.com/desktop-version.html";
+                    console.log("هذا جهاز كمبيوتر، تم اكتشافه بنجاح");
+                } else {
+                    console.log("هذا جهاز محمول");
+                }
+            }
+        })();
+    </script>
     
     <style>
         /* ===== المتغيرات الأساسية ===== */
@@ -2524,6 +2547,372 @@
             from { opacity: 0; transform: translate(-50%, 10px); }
             to { opacity: 1; transform: translate(-50%, 0); }
         }
+
+        /* ===== تحسينات للأجهزة اللوحية وأجهزة الكمبيوتر ===== */
+        /* ===== تحسينات للأجهزة اللوحية (تابلت) ===== */
+        @media (min-width: 768px) and (max-width: 1199px) {
+           body {
+           padding: 0 20px;
+           max-width: 100%;
+           margin: 0 auto;
+        }
+
+        .app-header {
+          margin: 0 0 20px 0;
+        }
+
+    /* تكبير الشعار قليلاً */
+        .logo-icon {
+            width: 65px;
+            height: 65px;
+        }
+        .logo-text h1 {
+            font-size: 22px;
+        }
+
+    /* جعل شبكات المشاريع والمنتجات 3 أعمدة */
+        .families-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .products-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+    /* تكبير حجم البطاقات */
+        .family-image {
+           height: 160px;
+        }
+    
+        .product-image {
+        height: 130px;
+        }
+    
+        .family-name {
+            font-size: 15px;
+        }
+    
+        /* تحسين حجم الخطوط */
+        .hero-title {
+            font-size: 40px;
+        }
+    
+        .hero-subtitle {
+            font-size: 16px;
+        }
+    
+        /* عرض الإحصائيات في صف واحد */
+        .stats-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    
+        /* تحسين ملف المشروع */
+        .profile-avatar {
+            width: 90px;
+            height: 90px;
+        }
+    
+        .profile-name {
+            font-size: 22px;
+        }
+    
+        /* تحسين معرض المنتجات */
+        .product-main-image-container {
+            height: 350px;
+        }
+    
+        .product-thumbnail {
+            flex: 0 0 90px;
+            height: 90px;
+        }
+    
+        /* المنتجات المشابهة 3 أعمدة */
+        .similar-products-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    /* ===== تحسينات لأجهزة الكمبيوتر المتوسطة ===== */
+    @media (min-width: 1200px) and (max-width: 1599px) {
+        body {
+            padding: 0 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .app-header {
+            margin: 0 0 25px 0;
+            border-radius: 0 0 30px 30px;
+        }
+
+        /* شعار أكبر */
+        .logo-icon {
+            width: 80px;
+            height: 80px;
+        }
+        .logo-text h1 {
+            font-size: 26px;
+        }
+        .logo-text p {
+            font-size: 13px;
+        }
+
+        /* القائمة تظهر بشكل أفضل */
+        .nav-menu {
+            width: 380px;
+        }
+
+        /* 4 أعمدة للمشاريع والمنتجات */
+        .families-grid {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .products-grid {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        /* بطاقات أكبر */
+        .family-image {
+            height: 180px;
+        }
+    
+        .product-image {
+            height: 150px;
+        }
+    
+        .family-name {
+            font-size: 16px;
+        }
+    
+        .product-name {
+            font-size: 14px;
+        }
+    
+        .product-description {
+            font-size: 11px;
+        }
+
+        /* قسم البطل كبير وجذاب */
+        .hero-section {
+            padding: 80px 40px;
+        }
+        .hero-title {
+            font-size: 52px;
+        }
+        .hero-subtitle {
+            font-size: 18px;
+            max-width: 700px;
+        }
+        .hero-search-box {
+            max-width: 700px;
+        }
+
+        /* تحسين ملف المشروع */
+        .profile-header {
+            padding: 25px;
+        }
+        .profile-avatar {
+            width: 110px;
+            height: 110px;
+        }
+        .profile-name {
+            font-size: 26px;
+        }
+    
+        .profile-info-row {
+            font-size: 15px;
+        }
+    
+        /* معرض المنتج أكبر */
+        .product-main-image-container {
+            height: 450px;
+        }
+    
+        .product-thumbnail {
+            flex: 0 0 100px;
+            height: 100px;
+        }
+    
+        .product-detail-name {
+            font-size: 26px;
+        }
+    
+        /* المنتجات المشابهة 4 أعمدة */
+        .similar-products-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    
+        /* تحسين شبكة الإحصائيات */
+        .stats-grid {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+    
+        .stat-card {
+            padding: 25px 15px;
+        }
+    
+        .stat-number {
+            font-size: 24px;
+        }
+    }
+
+    /* ===== تحسينات للشاشات الكبيرة جداً (4K) ===== */
+    @media (min-width: 1600px) {
+        body {
+            padding: 0 40px;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+       .app-header {
+            margin: 0 0 30px 0;
+            border-radius: 0 0 35px 35px;
+            padding: 12px 25px;
+        }
+
+        /* شعار كبير */
+       .logo-icon {
+            width: 90px;
+            height: 90px;
+        }
+        .logo-text h1 {
+            font-size: 30px;
+        }
+        .logo-text p {
+            font-size: 14px;
+        }
+
+        /* 5 أعمدة للمشاريع والمنتجات */
+        .families-grid {
+            grid-template-columns: repeat(5, 1fr);
+            gap: 25px;
+        }
+
+        .products-grid {
+            grid-template-columns: repeat(5, 1fr);
+            gap: 25px;
+        }
+
+        /* بطاقات كبيرة جداً */
+        .family-image {
+           height: 200px;
+        }
+    
+        .product-image {
+            height: 170px;
+        }
+    
+        .family-name {
+            font-size: 18px;
+        }
+    
+        .product-name {
+            font-size: 16px;
+        }
+    
+        .product-description {
+            font-size: 12px;
+       }
+    
+        .product-category {
+            font-size: 10px;
+            padding: 3px 8px;
+        }
+
+        /* قسم البطل ضخم */
+        .hero-section {
+            padding: 100px 50px;
+        }
+        .hero-title {
+            font-size: 64px;
+        }
+        .hero-subtitle {
+            font-size: 22px;
+            max-width: 900px;
+        }
+        .hero-search-box {
+            max-width: 800px;
+        }
+        .hero-search-input {
+            padding: 18px 30px 18px 70px;
+            font-size: 18px;
+        }
+        .hero-search-btn {
+            width: 55px;
+            height: 55px;
+            font-size: 22px;
+        }
+    
+        /* ملف المشروع */
+        .profile-header {
+            padding: 30px;
+        }
+        .profile-avatar {
+            width: 130px;
+            height: 130px;
+        }
+        .profile-name {
+            font-size: 32px;
+        }
+        
+        .profile-info-row {
+            font-size: 17px;
+        }
+        
+        .profile-info-row i {
+            font-size: 18px;
+        }
+        
+        /* معرض المنتج كبير جداً */
+        .product-main-image-container {
+            height: 550px;
+        }
+        
+        .product-thumbnail {
+            flex: 0 0 120px;
+            height: 120px;
+        }
+        
+        .product-detail-name {
+            font-size: 32px;
+        }
+        
+        .product-detail-description {
+            font-size: 16px;
+        }
+        
+        /* المنتجات المشابهة 5 أعمدة */
+        .similar-products-grid {
+            grid-template-columns: repeat(5, 1fr);
+        }
+        
+        /* الإحصائيات */
+        .stats-grid {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+        
+        .stat-card {
+            padding: 30px 20px;
+        }
+        
+        .stat-icon {
+            font-size: 40px;
+        }
+        
+        .stat-number {
+            font-size: 28px;
+        }
+        
+        .stat-label {
+            font-size: 16px;
+        }
+    }
     </style>
 </head>
 <body>
@@ -4752,4 +5141,3 @@
     <meta name="google-site-verification" content="UwEARwAkfxnW1CP0oDBEnlnKhHl2QuANOH1SF_8pvJg">
 </body>
 </html>
-
