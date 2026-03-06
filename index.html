@@ -891,6 +891,19 @@
             border-radius: 10px;
             transition: transform 0.25s ease;
         }
+        .family-description {
+            font-size: 11px;
+            color: var(--gray);
+            margin-top: 6px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-height: 2.8em;
+        }
 
         .product-image {
             width: 100%;
@@ -1323,7 +1336,7 @@
 
         .family-location {
             color: var(--accent);
-            margin-bottom: 8px;
+            margin-bottom: 0px;
             display: flex;
             align-items: center;
             gap: 4px;
@@ -3396,8 +3409,8 @@
                 name: "spicy taste",
                 nameEn: "spicy taste",
                 emirate: "أبوظبي",
-                description: "عطارة",
-                descriptionEn: "Apothecary",
+                description: "بهارات عربية",
+                descriptionEn: "Arabic spices",
                 longDescription: "بهارات فاخرة بنكهة قوية وجودة مضمونة",
                 longDescriptionEn: "Premium spices with bold flavor & guaranteed quality",
                 image: "images/p3.jpg",
@@ -3826,7 +3839,7 @@
                 id: 9,
                 name: "اللقمة افينيو",
                 nameEn: "Bite avenue",
-                emirate: "رأس الخيمة",
+                emirate: "",
                 description: "أطعمة ومشروبات",
                 descriptionEn: "Food & Beverages",
                 longDescription: "نقدم أكلات منزلية طازجة تُحضّر يوميًا حسب الطلب، مع اهتمام خاص بالطعم الأصيل وجودة المكونات.",
@@ -4010,7 +4023,7 @@
                 id: 12,
                 name: "دخون ماركت",
                 nameEn: "Dkhoon Market",
-                emirate: "عجمان",
+                emirate: "",
                 description: "روائح وعطور",
                 descriptionEn: "Scents & Perfumes",
                 longDescription: "ختار لكم أجود أنواع الدخون والعود والعطور الشرقية بعناية تعكس الذوق الخليجي الأصيل. نهتم بالتفاصيل، بثبات الرائحة، وبأن تصل إليكم تجربة عطرية فاخرة تليق بمناسباتكم اليومية والخاصة.",
@@ -4182,7 +4195,7 @@
                 id: 19,
                 name: "أر.الورود",
                 nameEn: "R flowers",
-                emirate: "عجمان",
+                emirate: "",
                 description: "ورود يدوية",
                 descriptionEn: "Handmade Flowers",
                 longDescription: "نقدم لك لمسة جمال تدوم إلى الأبد مع تشكيلتنا الفريدة من ورود الساتان المصنوعة يدويًا بكل حب واهتمام. كل قطعة هي عمل فني يعكس الأناقة والرقي، مصمم خصيصًا ليكون هدية مثالية أو إضافة راقية لديكور منزلك.",
@@ -4206,7 +4219,7 @@
                 id:20,
                 name:"لا سيت للعبايات",
                 nameEn:"La Cette Abayas",
-                emirate:"أم القيوين",
+                emirate:"",
                 description:"عبايات",
                 descriptionEn:"Abayas",
                 longDescription:"نقدم لكم تشكيلة راقية من العبايات العصرية التي تجمع بين الأصالة والموضة مقرنا في الإمارات ونستقبل طلباتكم الخاصة عبر الرسائل المباشرة استعدوا لعيدكم مع مجموعتنا المميزة المصممة لإطلالة تجمع بين الأناقة والراحة",
@@ -4426,7 +4439,7 @@
                 id:29,
                 name:"دار الظبي",
                 nameEn:"Dar Al-Dhabi",
-                emirate:"أبوظبي",
+                emirate:"",
                 description:"دهن عود ومخلطات عربية وفرنسية",
                 descriptionEn:"Oud oil, Arabic & French perfume blends",
                 longDescription:"مشروع إماراتي مرخص رسميًا، متخصص في بيع دهن العود، المخلط العربي، والمخلط الفرنسي. للطلب عبر الرسائل المباشرة. نوصل لجميع إمارات الدولة.",
@@ -4524,7 +4537,7 @@
                 id:33,
                 name:"ABM عود",
                 nameEn:"ABM Oud",
-                emirate:"رأس الخيمة",
+                emirate:"",
                 description:"عود فاخر",
                 descriptionEn:"Premium Oud",
                 longDescription:"متخصصون في تقديم أفخر أنواع العود. مشروع مرخص رسمياً من الدائرة الاقتصادية. للطلب والتواصل عبر الخاص. نوصل لجميع إمارات الدولة.",
@@ -4548,7 +4561,7 @@
                 id:34,
                 name:"ميثاء المرزوقي",
                 nameEn:"Maitha Almarzooqi",
-                emirate:"عجمان",
+                emirate:"",
                 description:"فنانة تشكيلية - ألوان زيتية",
                 descriptionEn:"Fine Artist - Oil Colors",
                 longDescription:"فنانة إماراتية متخصصة في الرسم بالألوان الزيتية على القماش. للأعمال الفنية، يرجى زيارة الموقع الإلكتروني..",
@@ -5220,6 +5233,7 @@
             }
             grid.innerHTML = filtered.map(family => {
                 const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
+                const familyDesc = appState.currentLanguage === 'ar' ? family.description : family.descriptionEn;
                 return `
                 <div class="family-card" onclick="navigateTo('/family/${family.id}')">
                     ${family.adra_license === 'نعم' ? '<div class="license-badge-card"><i class="fas fa-check-circle"></i>' + t.licensed + '</div>' : ''}
@@ -5227,6 +5241,7 @@
                     <div class="family-content">
                         <h3 class="family-name">${familyName}</h3>
                         <div class="family-location"><i class="fas fa-map-marker-alt"></i> ${t.emirates[family.emirate] || family.emirate}</div>
+                        <div class="family-description">${familyDesc}</div>
                     </div>
                 </div>
             `}).join('');
@@ -5730,4 +5745,3 @@
     </script>
 </body>
 </html>
-
