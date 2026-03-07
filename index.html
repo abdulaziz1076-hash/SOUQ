@@ -2889,6 +2889,204 @@
             from { opacity: 0; transform: translate(-50%, 10px); }
             to { opacity: 1; transform: translate(-50%, 0); }
         }
+        /* ===== عروض المشروع بالصور ===== */
+        .deals-section {
+            background: linear-gradient(145deg, #ffffff, #fef9e7);
+            border-radius: 25px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid #D4AF37;
+        }
+
+        .deals-title {
+            font-family: 'El Messiri', serif;
+            font-size: 18px;
+            color: #0F3D2E;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .en-mode .deals-title {
+            font-family: 'Poppins', serif;
+        }
+
+        .deals-title i {
+            color: #D4AF37;
+            font-size: 22px;
+        }
+
+        .deals-scroll {
+    display: flex;
+    overflow-x: auto;
+    gap: 15px;
+    padding: 5px 2px 15px 2px;
+    scroll-snap-type: x mandatory;
+        }
+
+        .deals-scroll::-webkit-scrollbar {
+    height: 4px;
+        }
+
+        .deals-scroll::-webkit-scrollbar-track {
+            background: #E8E4DD;
+        }
+
+        .deals-scroll::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 10px;
+        }
+
+        .deal-card {
+            flex: 0 0 280px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid #D4AF37;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            transition: 0.3s;
+            scroll-snap-align: start;
+            position: relative;
+        }
+
+        .deal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .deal-image {
+            width: 100%;
+            height: 160px;
+            position: relative;
+            overflow: hidden;
+            background: #F8F5F0;
+        }
+
+        .deal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .deal-card:hover .deal-image img {
+    transform: scale(1.1);
+        }
+
+        .deal-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #C41E3A;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 25px;
+            font-size: 11px;
+            font-weight: 700;
+            z-index: 2;
+            box-shadow: 0 3px 8px rgba(196, 30, 58, 0.3);
+        }
+
+        [dir="ltr"] .deal-badge {
+            left: auto;
+            right: 10px;
+        }
+
+        .deal-icon-overlay {
+            position: absolute;
+           bottom: 10px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #D4AF37, #f5d06b);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0F3D2E;
+            font-size: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            border: 2px solid white;
+            z-index: 2;
+        }
+
+        [dir="ltr"] .deal-icon-overlay {
+            right: auto;
+            left: 10px;
+        }
+
+        .deal-content {
+            padding: 15px;
+            background: white;
+        }
+
+        .deal-card h4 {
+            font-family: 'El Messiri', serif;
+            font-size: 16px;
+            color: #0F3D2E;
+            margin: 0 0 5px 0;
+        }
+
+        .en-mode .deal-card h4 {
+            font-family: 'Poppins', serif;
+        }
+
+        .deal-description {
+            font-size: 12px;
+            color: #8A8A8A;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .deal-action {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px dashed #E8E4DD;
+            padding-top: 10px;
+        }
+
+        .deal-action-text {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #D4AF37;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .deal-action-text i {
+            font-size: 11px;
+            transition: transform 0.2s;
+        }
+
+        .deal-card:hover .deal-action-text i {
+            transform: translateX(3px);
+        }
+
+        [dir="ltr"] .deal-card:hover .deal-action-text i {
+            transform: translateX(-3px);
+        }
+
+        .deal-expiry {
+            font-size: 10px;
+            color: #8A8A8A;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .deal-expiry i {
+            color: #D4AF37;
+            font-size: 9px;
+        }
     </style>
 </head>
 <body>
@@ -4192,7 +4390,7 @@
                         },
                         {
                         id: "6_p2",
-                        name: "دخون ميرة",
+                        name: "دخون ميره",
                         nameEn: "Mairah Incense",
                         description: "دخون ميره - بخور فاخر برائحة زكية ومميزة.",
                         descriptionEn: "Mairah Incense - A luxurious incense with a pleasant and distinctive scent.",
@@ -4373,8 +4571,8 @@
                         longDescriptionEn: "Sheikh Mohammed Oud is a natural oud of the finest quality, characterized by a pure and strong woody scent. It fills the space with an authentic atmosphere befitting elegant gatherings.",
                         category: "عود",
                         categoryEn: "Oud",
-                        mainImage:  "images/p6.jpg",
-                        images: [ "images/p6.jpg"],
+                        mainImage:  "images/p6-8-1.jpg",
+                        images: [ "images/p6-8-2.jpg"],
                         details: [
                         "عود طبيعي فاخر",
                         "رائحة خشبية نقية",
@@ -4427,8 +4625,8 @@
                         longDescriptionEn: "Sheikh Mansour Oud is characterized by a soft woody scent with hints of amber, giving you a calm and relaxing aromatic experience. Suitable for relaxation and meditation.",
                         category: "عود",
                         categoryEn: "Oud",
-                        mainImage:  "images/p6.jpg",
-                        images: ["images/p6.jpg"],
+                        mainImage:  "images/p6-9-1.jpg",
+                        images: ["images/p6-9-2.jpg"],
                         details: [
                         "عود فاخر",
                         "رائحة خشبية ناعمة",
@@ -4454,8 +4652,8 @@
                         longDescriptionEn: "Al-Safwah Perfumed Frankincense is the finest Omani frankincense with added luxurious oud perfumes, giving you a unique fumigation experience. It refreshes the space and calms the soul.",
                         category: "لبان",
                         categoryEn: "Frankincense",
-                        mainImage:  "images/p6.jpg",
-                        images: ["images/p6.jpg"],
+                        mainImage:  "images/p6-910-1.jpg",
+                        images: ["images/p6-910-1.jpg"],
                         details: [
                         "لبان عماني فاخر",
                         "معطر بروائح العود",
@@ -4481,8 +4679,8 @@
                         longDescriptionEn: "Perfumed Frankincense with Oud combines the purity of Omani frankincense with luxurious oud oil, giving you a distinctive scent that blends authentic oriental perfumes. Ideal for daily fumigation.",
                         category: "لبان",
                         categoryEn: "Frankincense",
-                        mainImage:  "images/p6.jpg",
-                        images: ["images/p6.jpg"],
+                        mainImage:  "images/p6-910-1.jpg",
+                        images: ["images/p6-910-1.jpg"],
                         details: [
                         "لبان عماني طبيعي",
                         "ممزوج بدهن العود",
@@ -4500,6 +4698,30 @@
                         }
                     
                 ],
+                deals:[
+                    {
+                        id: "deal1",
+                        title: "باقة المحبة المصغرة",
+                        titleEn: "Mini love bouquet",
+                        description: "للهدايا وللي يحبون ينوعون",
+                        descriptionEn: "For gifts and for those who like variety",
+                        icon: "fas fa-gift",
+                        badge: "",
+                        image: "images/p6-d-1.jpg", // الصورة الرئيسية
+        
+                        // صور متعددة حسب اللغة
+                        images: {
+                            ar: [ // صور للعربي
+                                "images/p6-d-1.jpg",
+                                "images/p6-d-2.jpg",
+                            ],
+                            en: [ // صور للإنجليزي
+                            ]
+                        },
+                        expiry: ""
+                    },
+       
+                ]
             },
             {
                 id: 7,
@@ -6231,6 +6453,96 @@
             
             document.getElementById('contactSectionBottom').innerHTML = `<h3 class="contact-title"><i class="fas fa-phone-alt"></i> ${t.contactSeller}</h3><div class="contact-grid">${contactHtml || `<p>${t.noContact}</p>`}</div>`;
             
+            // ===== إضافة العروض =====
+            if (family.deals && family.deals.length > 0) {
+    
+                const dealsSection = document.createElement('div');
+                dealsSection.className = 'deals-section';
+                dealsSection.id = 'familyDealsSection';
+                
+                const dealsTitle = appState.currentLanguage === 'ar' ? 'العروض والباقات' : 'Offers and packages';
+                
+                let dealsHtml = `
+                    <h3 class="deals-title">
+                        <i class="fas fa-gift"></i> ${dealsTitle}
+                    </h3>
+                    <div class="deals-scroll" id="dealsScroll">
+                `;
+                
+                family.deals.forEach(deal => {
+                    const dealTitle = appState.currentLanguage === 'ar' ? deal.title : (deal.titleEn || deal.title);
+                    const dealDesc = appState.currentLanguage === 'ar' ? deal.description : (deal.descriptionEn || deal.description);
+                    const badgeHtml = deal.badge ? `<span class="deal-badge">${deal.badge}</span>` : '';
+                    
+                    // تحديد الصور حسب اللغة
+                    let dealImages = [];
+                    if (deal.images) {
+                        if (Array.isArray(deal.images)) {
+                            // الطريقة الأولى: مصفوفة عادية
+                            dealImages = deal.images;
+                        } else if (typeof deal.images === 'object') {
+                            // الطريقة الثانية: object حسب اللغة
+                            dealImages = appState.currentLanguage === 'ar' ? 
+                                (deal.images.ar || [deal.image]) : 
+                                (deal.images.en || deal.images.ar || [deal.image]);
+                        }
+                    } else {
+                        dealImages = [deal.image || 'images/default-deal.jpg'];
+                    }
+                    
+                    // الصورة الرئيسية للكرت (أول صورة)
+                    const mainImage = dealImages[0];
+                    
+                    // تحويل مصفوفة الصور لنص JSON للـ onclick
+                    const imagesJson = JSON.stringify(dealImages).replace(/"/g, '&quot;');
+                    
+                    // تاريخ الانتهاء
+                    const expiryHtml = deal.expiry ? `
+                        <div class="deal-expiry">
+                            <i class="fas fa-hourglass-half"></i>
+                            ${appState.currentLanguage === 'ar' ? 'ينتهي' : 'Ends'} ${deal.expiry}
+                        </div>
+                    ` : '';
+                    
+                    dealsHtml += `
+                        <div class="deal-card" onclick='openZoom(${imagesJson}, 0)'>
+                            <div class="deal-image">
+                                <img src="${mainImage}" alt="${dealTitle}" loading="lazy">
+                                ${badgeHtml}
+                                <div class="deal-icon-overlay">
+                                    <i class="${deal.icon || 'fas fa-tag'}"></i>
+                                </div>
+                            </div>
+                            <div class="deal-content">
+                                <h4>${dealTitle}</h4>
+                                <p class="deal-description">${dealDesc}</p>
+                                <div class="deal-action">
+                                    <div class="deal-action-text">
+                                        <span>${appState.currentLanguage === 'ar' ? 'عرض التفاصيل' : 'View Details'}</span>
+                                        <i class="fas fa-arrow-left"></i>
+                                    </div>
+                                    ${expiryHtml}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                dealsHtml += `</div>`;
+                dealsSection.innerHTML = dealsHtml;
+                
+                // حط العروض قبل المنتجات
+                const productsHeader = document.querySelector('.products-header');
+                if (productsHeader) {
+                    productsHeader.parentNode.insertBefore(dealsSection, productsHeader);
+                } else {
+                    const productsGrid = document.getElementById('productsGrid');
+                    if (productsGrid) {
+                        productsGrid.parentNode.insertBefore(dealsSection, productsGrid);
+                    }
+                }
+            }
+            
             showPage('products');
             showInstructionPopupOnce();
         }
@@ -6652,8 +6964,27 @@
                     closeInstructionPopup();
                 }, 8000);
             }
-        }        
+        }   
+        // ===== دالة العروض =====
+       function contactForDeal(familyId, dealId) {
+           const family = familiesData.find(f => f.id == familyId);
+           if (!family) return;
+    
+           const deal = family.deals?.find(d => d.id === dealId);
+           if (!deal) return;
+
+           // اختيار الصورة حسب اللغة
+           const dealImage = appState.currentLanguage === 'ar' ? 
+               (deal.image || 'images/default-deal.jpg') : 
+              (deal.imageEn || deal.image || 'images/default-deal.jpg');
+    
+           // إذا كان في أكثر من صورة للعرض
+           const images = deal.images || [dealImage];
+           
+           // افتح معرض الصور (نفس خاصية تكبير الصور اللي عندك)
+           openZoom(images, 0);
+       }
+        window.contactForDeal = contactForDeal;     
     </script>
 </body>
 </html>
-
