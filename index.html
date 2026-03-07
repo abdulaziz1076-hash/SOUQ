@@ -25,7 +25,7 @@
     <!-- Open Graph للمشاركة في التواصل الاجتماعي -->
     <meta property="og:title" content="سوق المشاريع - المشاريع في الإمارات">
     <meta property="og:description" content="منصة تجمع المشاريع في الإمارات. اكتشف منتجات محلية وتواصل مباشرة.">
-    <meta property="og:image" content="https://souqalmasharie.onrender.com/logo.jpg>
+    <meta property="og:image" content="https://souqalmasharie.onrender.com/logo.jpg">
     <meta property="og:url" content="https://souqalmasharie.onrender.com">
     <meta property="og:type" content="website">
     
@@ -1123,6 +1123,141 @@
             object-fit: cover;
         }
 
+        /* ===== قسم العروض الخاصة ===== */
+        .deals-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 18px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--light-gray);
+        }
+
+        .deals-title {
+            font-family: 'El Messiri', serif;
+            font-size: 18px;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .deals-title i {
+            color: var(--secondary);
+        }
+
+        .deals-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .deal-card {
+            background: var(--light);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--light-gray);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .deal-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--secondary);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .deal-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: var(--gradient-gold);
+            color: var(--primary-dark);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(212,175,55,0.3);
+        }
+
+        .deal-image {
+            height: 120px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .deal-image img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        .deal-content {
+            padding: 10px;
+        }
+
+        .deal-title {
+            font-family: 'El Messiri', serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 4px;
+        }
+
+        .deal-description {
+            font-size: 10px;
+            color: var(--gray);
+            margin-bottom: 8px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .deal-expiry {
+            font-size: 9px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: white;
+            padding: 3px 8px;
+            border-radius: 15px;
+            width: fit-content;
+        }
+
+        .deal-expiry i {
+            color: var(--secondary);
+            font-size: 8px;
+        }
+
+        @media (min-width: 768px) {
+            .deals-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .deal-image {
+                height: 150px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .deals-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .deal-image {
+                height: 170px;
+            }
+        }
+
         /* ===== مودال تكبير الصورة ===== */
         .zoom-modal {
             display: none;
@@ -1528,7 +1663,7 @@
             line-height: 1.5;
         }
 
-        /* إخفاء صفوف الاتصال النصية لأننا نعرضها كأيقونات - هذا هو التحسين الأفضل من index copy 2 */
+        /* إخفاء صفوف الاتصال النصية لأننا نعرضها كأيقونات */
         .profile-info-row:has(i.fa-phone),
         .profile-info-row:has(i.fa-whatsapp),
         .profile-info-row:has(i.fa-envelope) {
@@ -2108,6 +2243,357 @@
             box-shadow: var(--hover-shadow);
         }
 
+        /* ===== أنماط إضافية للمنتج ===== */
+        .product-gallery {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--light-gray);
+        }
+
+        .product-detail-info {
+            background: white;
+            border-radius: 18px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--light-gray);
+        }
+
+        .product-detail-category {
+            display: inline-block;
+            background: var(--light);
+            padding: 4px 12px;
+            border-radius: 22px;
+            font-size: 11px;
+            color: var(--primary-dark);
+            font-weight: 600;
+            margin-bottom: 8px;
+            border: 1px solid var(--light-gray);
+        }
+
+        .product-detail-name {
+            font-family: 'El Messiri', serif;
+            font-size: 22px;
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .en-mode .product-detail-name {
+            font-family: 'Poppins', serif;
+        }
+
+        .product-detail-description {
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--dark);
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .product-details-title {
+            font-family: 'El Messiri', serif;
+            font-size: 16px;
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .en-mode .product-details-title {
+            font-family: 'Poppins', serif;
+        }
+
+        .product-details-title i {
+            color: var(--secondary);
+        }
+
+        .product-details-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .product-details-list li {
+            padding: 6px 0;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--dark);
+        }
+
+        .product-details-list li:last-child {
+            border-bottom: none;
+        }
+
+        .product-details-list li i {
+            color: var(--secondary);
+            font-size: 12px;
+            width: 16px;
+        }
+
+        .seller-info-card {
+            background: white;
+            border-radius: 18px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .seller-avatar-large {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--secondary);
+            flex-shrink: 0;
+        }
+
+        .seller-avatar-large img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .seller-info {
+            flex: 1;
+        }
+
+        .seller-info h3 {
+            font-family: 'El Messiri', serif;
+            font-size: 16px;
+            color: var(--primary-dark);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .en-mode .seller-info h3 {
+            font-family: 'Poppins', serif;
+        }
+
+        .seller-info h3 i {
+            color: var(--secondary);
+            font-size: 12px;
+        }
+
+        .seller-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--gray);
+            margin-bottom: 8px;
+        }
+
+        .seller-meta i {
+            color: var(--secondary);
+        }
+
+        .similar-products-section {
+            background: white;
+            border-radius: 18px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--light-gray);
+        }
+
+        .similar-products-title {
+            font-family: 'El Messiri', serif;
+            font-size: 16px;
+            color: var(--primary-dark);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .en-mode .similar-products-title {
+            font-family: 'Poppins', serif;
+        }
+
+        .similar-products-title i {
+            color: var(--secondary);
+        }
+
+        .similar-products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .similar-product-card {
+            background: var(--light);
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: 0.25s;
+            border: 1px solid var(--light-gray);
+        }
+
+        .similar-product-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--secondary);
+            box-shadow: var(--card-shadow);
+        }
+
+        .similar-product-image {
+            height: 80px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .similar-product-image img {
+            max-width: 90%;
+            max-height: 90%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .similar-product-info {
+            padding: 6px;
+            text-align: center;
+        }
+
+        .similar-product-info h4 {
+            font-family: 'El Messiri', serif;
+            font-size: 11px;
+            color: var(--primary-dark);
+            margin-bottom: 2px;
+        }
+
+        .en-mode .similar-product-info h4 {
+            font-family: 'Poppins', serif;
+        }
+
+        /* ===== منبّه المشاركة ===== */
+        .share-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            z-index: 4000;
+            max-width: 300px;
+            width: 90%;
+            display: none;
+        }
+
+        .share-popup.show {
+            display: block;
+            animation: fadeInScale 0.35s ease;
+        }
+
+        .share-popup h3 {
+            font-family: 'El Messiri', serif;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .en-mode .share-popup h3 {
+            font-family: 'Poppins', serif;
+        }
+
+        .share-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .share-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .share-option i {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            transition: 0.2s;
+        }
+
+        .share-option:hover i {
+            transform: scale(1.1);
+        }
+
+        .share-option span {
+            font-size: 11px;
+            color: var(--dark);
+        }
+
+        .share-close {
+            width: 100%;
+            padding: 10px;
+            background: var(--light);
+            border: 1px solid var(--light-gray);
+            border-radius: 40px;
+            font-weight: 600;
+            color: var(--dark);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .share-close:hover {
+            background: var(--light-gray);
+        }
+
+        .toast-message {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-dark);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 12px;
+            z-index: 5000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            display: none;
+            text-align: center;
+        }
+
+        .toast-message.show {
+            display: block;
+            animation: fadeInUp 0.3s;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translate(-50%, 10px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
+
         /* ===== الفوتر ===== */
         .app-footer {
             background: var(--dark);
@@ -2184,7 +2670,6 @@
             }
         }
 
-        /* ===== تحسينات للأجهزة المتوسطة والكبيرة ===== */
         @media (min-width: 768px) and (max-width: 1199px) {
            body {
                padding: 0 20px;
@@ -2538,546 +3023,6 @@
                 font-size: 16px;
             }
         }
-
-        /* ===== أنماط إضافية للمنتج ===== */
-        .product-gallery {
-            background: white;
-            border-radius: 18px;
-            overflow: hidden;
-            margin-bottom: 15px;
-            box-shadow: var(--card-shadow);
-            border: 1px solid var(--light-gray);
-        }
-
-        .product-detail-info {
-            background: white;
-            border-radius: 18px;
-            padding: 15px;
-            margin-bottom: 15px;
-            box-shadow: var(--card-shadow);
-            border: 1px solid var(--light-gray);
-        }
-
-        .product-detail-category {
-            display: inline-block;
-            background: var(--light);
-            padding: 4px 12px;
-            border-radius: 22px;
-            font-size: 11px;
-            color: var(--primary-dark);
-            font-weight: 600;
-            margin-bottom: 8px;
-            border: 1px solid var(--light-gray);
-        }
-
-        .product-detail-name {
-            font-family: 'El Messiri', serif;
-            font-size: 22px;
-            color: var(--primary-dark);
-            margin-bottom: 10px;
-            line-height: 1.3;
-        }
-
-        .en-mode .product-detail-name {
-            font-family: 'Poppins', serif;
-        }
-
-        .product-detail-description {
-            font-size: 13px;
-            line-height: 1.6;
-            color: var(--dark);
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--light-gray);
-        }
-
-        .product-details-title {
-            font-family: 'El Messiri', serif;
-            font-size: 16px;
-            color: var(--primary-dark);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .en-mode .product-details-title {
-            font-family: 'Poppins', serif;
-        }
-
-        .product-details-title i {
-            color: var(--secondary);
-        }
-
-        .product-details-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .product-details-list li {
-            padding: 6px 0;
-            border-bottom: 1px solid var(--light-gray);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            color: var(--dark);
-        }
-
-        .product-details-list li:last-child {
-            border-bottom: none;
-        }
-
-        .product-details-list li i {
-            color: var(--secondary);
-            font-size: 12px;
-            width: 16px;
-        }
-
-        .seller-info-card {
-            background: white;
-            border-radius: 18px;
-            padding: 15px;
-            margin-bottom: 15px;
-            box-shadow: var(--card-shadow);
-            border: 1px solid var(--light-gray);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .seller-avatar-large {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 2px solid var(--secondary);
-            flex-shrink: 0;
-        }
-
-        .seller-avatar-large img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .seller-info {
-            flex: 1;
-        }
-
-        .seller-info h3 {
-            font-family: 'El Messiri', serif;
-            font-size: 16px;
-            color: var(--primary-dark);
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .en-mode .seller-info h3 {
-            font-family: 'Poppins', serif;
-        }
-
-        .seller-info h3 i {
-            color: var(--secondary);
-            font-size: 12px;
-        }
-
-        .seller-meta {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            color: var(--gray);
-            margin-bottom: 8px;
-        }
-
-        .seller-meta i {
-            color: var(--secondary);
-        }
-
-        .similar-products-section {
-            background: white;
-            border-radius: 18px;
-            padding: 15px;
-            margin-bottom: 15px;
-            box-shadow: var(--card-shadow);
-            border: 1px solid var(--light-gray);
-        }
-
-        .similar-products-title {
-            font-family: 'El Messiri', serif;
-            font-size: 16px;
-            color: var(--primary-dark);
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .en-mode .similar-products-title {
-            font-family: 'Poppins', serif;
-        }
-
-        .similar-products-title i {
-            color: var(--secondary);
-        }
-
-        .similar-products-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-        }
-
-        .similar-product-card {
-            background: var(--light);
-            border-radius: 10px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: 0.25s;
-            border: 1px solid var(--light-gray);
-        }
-
-        .similar-product-card:hover {
-            transform: translateY(-3px);
-            border-color: var(--secondary);
-            box-shadow: var(--card-shadow);
-        }
-
-        .similar-product-image {
-            height: 80px;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 5px;
-            border-bottom: 1px solid var(--light-gray);
-        }
-
-        .similar-product-image img {
-            max-width: 90%;
-            max-height: 90%;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-        }
-
-        .similar-product-info {
-            padding: 6px;
-            text-align: center;
-        }
-
-        .similar-product-info h4 {
-            font-family: 'El Messiri', serif;
-            font-size: 11px;
-            color: var(--primary-dark);
-            margin-bottom: 2px;
-        }
-
-        .en-mode .similar-product-info h4 {
-            font-family: 'Poppins', serif;
-        }
-
-        /* ===== منبّه المشاركة ===== */
-        .share-popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            border-radius: 24px;
-            padding: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            z-index: 4000;
-            max-width: 300px;
-            width: 90%;
-            display: none;
-        }
-
-        .share-popup.show {
-            display: block;
-            animation: fadeInScale 0.35s ease;
-        }
-
-        .share-popup h3 {
-            font-family: 'El Messiri', serif;
-            color: var(--primary-dark);
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .en-mode .share-popup h3 {
-            font-family: 'Poppins', serif;
-        }
-
-        .share-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .share-option {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-        }
-
-        .share-option i {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: white;
-            transition: 0.2s;
-        }
-
-        .share-option:hover i {
-            transform: scale(1.1);
-        }
-
-        .share-option span {
-            font-size: 11px;
-            color: var(--dark);
-        }
-
-        .share-close {
-            width: 100%;
-            padding: 10px;
-            background: var(--light);
-            border: 1px solid var(--light-gray);
-            border-radius: 40px;
-            font-weight: 600;
-            color: var(--dark);
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .share-close:hover {
-            background: var(--light-gray);
-        }
-
-        .toast-message {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--primary-dark);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-size: 12px;
-            z-index: 5000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            display: none;
-            text-align: center;
-        }
-
-        .toast-message.show {
-            display: block;
-            animation: fadeInUp 0.3s;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translate(-50%, 10px); }
-            to { opacity: 1; transform: translate(-50%, 0); }
-        }
-   /* ===== عروض المشروع (حجم صغير جداً ومستطيل) ===== */
-.deals-section {
-    background: linear-gradient(145deg, #ffffff, #fef9e7);
-    border-radius: 16px;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #D4AF37;
-}
-
-.deals-title {
-    font-family: 'El Messiri', serif;
-    font-size: 14px;
-    color: #0F3D2E;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.en-mode .deals-title {
-    font-family: 'Poppins', serif;
-}
-
-.deals-title i {
-    color: #D4AF37;
-    font-size: 16px;
-}
-
-.deals-scroll {
-    display: flex;
-    overflow-x: auto;
-    gap: 8px;
-    padding: 2px 2px 8px 2px;
-    scroll-snap-type: x mandatory;
-}
-
-.deals-scroll::-webkit-scrollbar {
-    height: 2px;
-}
-
-.deal-card {
-    flex: 0 0 140px; /* مستطيل صغير: عرض 140 */
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid #D4AF37;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    cursor: pointer;
-    transition: 0.2s;
-    scroll-snap-align: start;
-    position: relative;
-}
-
-.deal-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(212, 175, 55, 0.15);
-}
-
-.deal-image {
-    width: 100%;
-    height: 80px; /* مستطيل: ارتفاع قليل */
-    position: relative;
-    overflow: hidden;
-    background: #F8F5F0;
-}
-
-.deal-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.deal-badge {
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    background: #C41E3A;
-    color: white;
-    padding: 2px 6px;
-    border-radius: 12px;
-    font-size: 7px;
-    font-weight: 700;
-    z-index: 2;
-    box-shadow: 0 2px 4px rgba(196, 30, 58, 0.2);
-}
-
-[dir="ltr"] .deal-badge {
-    left: auto;
-    right: 4px;
-}
-
-.deal-icon-overlay {
-    position: absolute;
-    bottom: 4px;
-    right: 4px;
-    width: 22px;
-    height: 22px;
-    background: linear-gradient(135deg, #D4AF37, #f5d06b);
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #0F3D2E;
-    font-size: 11px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    border: 1px solid white;
-    z-index: 2;
-}
-
-[dir="ltr"] .deal-icon-overlay {
-    right: auto;
-    left: 4px;
-}
-
-.deal-content {
-    padding: 6px;
-    background: white;
-}
-
-.deal-card h4 {
-    font-family: 'El Messiri', serif;
-    font-size: 11px;
-    color: #0F3D2E;
-    margin: 0 0 2px 0;
-    line-height: 1.2;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.en-mode .deal-card h4 {
-    font-family: 'Poppins', serif;
-}
-
-.deal-description {
-    font-size: 8px;
-    color: #8A8A8A;
-    line-height: 1.3;
-    margin-bottom: 4px;
-    display: -webkit-box;
-    -webkit-line-clamp: 1; /* سطر واحد فقط */
-    line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    height: auto;
-}
-
-.deal-action {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-top: 1px dashed #E8E4DD;
-    padding-top: 4px;
-}
-
-.deal-action-text {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    color: #D4AF37;
-    font-size: 8px;
-    font-weight: 600;
-}
-
-.deal-action-text i {
-    font-size: 7px;
-    transition: transform 0.2s;
-}
-
-.deal-card:hover .deal-action-text i {
-    transform: translateX(2px);
-}
-
-[dir="ltr"] .deal-card:hover .deal-action-text i {
-    transform: translateX(-2px);
-}
-
-.deal-expiry {
-    font-size: 6px;
-    color: #8A8A8A;
-    display: flex;
-    align-items: center;
-    gap: 2px;
-}
-
-.deal-expiry i {
-    color: #D4AF37;
-    font-size: 5px;
-}
     </style>
 </head>
 <body>
@@ -3289,7 +3234,6 @@
                 </div>
                 <div class="emirates-scroll" id="emiratesScroll"></div>
                 <div class="categories-scroll" id="categoriesScroll"></div>
-                
                 <div class="families-grid" id="familiesGrid"></div>
             </div>
         </div>
@@ -3301,6 +3245,16 @@
                     <i class="fas fa-arrow-right"></i>
                 </div>
                 <div id="familyProfileContainer"></div>
+                
+                <!-- ✅ قسم العروض الخاصة هنا داخل المشروع -->
+                <div class="deals-section" id="dealsSection" style="display: none;">
+                    <h3 class="deals-title">
+                        <i class="fas fa-tags"></i>
+                        <span id="dealsTitle">عروض خاصة</span>
+                    </h3>
+                    <div class="deals-grid" id="dealsGrid"></div>
+                </div>
+                
                 <div class="products-header">
                     <h2 class="products-title" id="productsTitle">المنتجات</h2>
                     <div class="products-badge" id="productsCount">0</div>
@@ -3335,7 +3289,7 @@
         </div>
     </div>
 
-    <!-- مودال تسجيل مشروع (يدعم نقاط بيع متعددة) - هذا هو النموذج المحسن من index copy 2 -->
+    <!-- مودال تسجيل مشروع -->
     <div class="modal" id="registerModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -3406,7 +3360,7 @@
                         <input type="email" class="form-control" name="email" placeholder="" id="emailPlaceholder">
                     </div>
 
-                    <!-- حقول نقاط البيع المتعددة - محسنة من index copy 2 -->
+                    <!-- حقول نقاط البيع المتعددة -->
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label"><i class="fab fa-instagram"></i> <span id="instagramLabel">إنستغرام</span></label>
@@ -3488,9 +3442,9 @@
 
     <script>
         // ==================== البيانات ====================
-        // هنا نأخذ بيانات المشاريع من index copy.html لأنها كاملة
+        // ابدأ بإضافة بيانات مشاريعك هنا
         const familiesData = [
-            {
+             {
                 id: 1,
                 name: "موتشا - Motcha",
                 nameEn: "Motcha",
@@ -4689,29 +4643,22 @@
                         }
                     
                 ],
-                deals:[
+                deals: [
                     {
                         id: "deal1",
                         title: "باقة المحبة المصغرة",
-                        titleEn: "Mini love bouquet",
-                        description: "للهدايا وللي يحبون ينوعون",
-                        descriptionEn: "For gifts and for those who like variety",
-                        icon: "fas fa-gift",
-                        badge: "",
-                        image: "images/p6-d-1.jpg", // الصورة الرئيسية
-        
-                        // صور متعددة حسب اللغة
-                        images: {
-                            ar: [ // صور للعربي
-                                "images/p6-d-1.jpg",
-                                "images/p6-d-2.jpg",
-                            ],
-                            en: [ // صور للإنجليزي
-                            ]
-                        },
-                        expiry: ""
+                        titleEn: "Founding Offer - 20% Off",
+                        description: " للهدايا وللي يحبون ينوعون",
+                        descriptionEn: "20% off on first order for new customers",
+                        image: "images/p6-d-1.jpg",
+                        images: [
+                            "images/p6-d-1.jpg", 
+                            "images/p6-d-2.jpg"
+                        ],
+                        expiry: "",
+                        badge: "عرض",
+                        badgeEn: "Special Offer"
                     },
-       
                 ]
             },
             {
@@ -5741,10 +5688,12 @@
         }
 
         // ==================== الترجمة ====================
-        // (نأخذ الترجمة من index copy 2 لأنها تحتوي على مفاتيح إضافية)
         const translations = {
             ar: {
                 siteTitle: "سوق المشاريع",
+                dealsTitle: "عروض خاصة",
+                viewingDeal: "جاري عرض تفاصيل العرض...",
+                expiryUntil: "ينتهي",
                 siteSubtitle: "المشاريع في الامارات",
                 navHome: "الرئيسية",
                 navMarket: "السوق",
@@ -5811,7 +5760,6 @@
                 whatsappPlaceholder: "05x xxx xxxx",
                 emailLabel: "البريد الإلكتروني",
                 emailPlaceholder: "info@example.com",
-                // مفاتيح إضافية لحقول التواصل
                 instagramLabel: "إنستغرام",
                 telegramLabel: "تليجرام",
                 snapchatLabel: "سناب شات",
@@ -5878,8 +5826,10 @@
                 linkCopied: "تم نسخ الرابط!"
             },
             en: {
-                // ترجمة إنجليزية كاملة (يمكن نسخها من index copy 2)
                 siteTitle: "Project Souq",
+                dealsTitle: "Special Offers",
+                viewingDeal: "Viewing deal details...",
+                expiryUntil: "Expires",
                 siteSubtitle: "Projects in UAE",
                 navHome: "Home",
                 navMarket: "Market",
@@ -6013,7 +5963,7 @@
             }
         };
 
-        // ==================== دالة تحليل نقاط البيع المتعددة (محسنة من index copy 2) ====================
+        // ==================== دالة تحليل نقاط البيع المتعددة ====================
         function parseSellPoints(sellPoints) {
             if (!sellPoints || !Array.isArray(sellPoints)) return [];
             return sellPoints.map(sp => {
@@ -6031,8 +5981,8 @@
                         break;
                     case 'twitter':
                         url = `https://x.com/${cleanValue}`;
-                        icon = 'fa-light fa-x';     // أيقونة X في Font Awesome 6
-                        bg = 'twitter-bg';          // استخدم نفس لون تويتر
+                        icon = 'fa-twitter';
+                        bg = 'twitter-bg';
                         break;
                     case 'telegram':
                         url = `https://t.me/${cleanValue}`;
@@ -6056,12 +6006,12 @@
                         break;
                     case 'website':
                         url = value.startsWith('http') ? value : `https://${value}`;
-                        icon = 'fa-w';
+                        icon = 'fa-globe';
                         bg = 'website-bg';
                         break;
                     default:
                         url = value;
-                        icon = 'fa-web';
+                        icon = 'fa-globe';
                         bg = 'website-bg';
                 }
                 return {url, icon, bg};
@@ -6186,7 +6136,6 @@
         function navigateTo(path) {
             showLoader();
             window.location.hash = path;
-            
         }
 
         function goBack() {
@@ -6371,7 +6320,65 @@
             `}).join('');
         }
 
-        // ==================== عرض منتجات المشروع ====================
+        // ==================== دوال العروض الخاصة ====================
+        function renderFamilyDeals(family) {
+            const dealsSection = document.getElementById('dealsSection');
+            const dealsGrid = document.getElementById('dealsGrid');
+            
+            if (!family.deals || family.deals.length === 0) {
+                dealsSection.style.display = 'none';
+                return;
+            }
+            
+            dealsSection.style.display = 'block';
+            
+            const t = translations[appState.currentLanguage];
+            dealsGrid.innerHTML = family.deals.map(deal => {
+                const dealTitle = appState.currentLanguage === 'ar' ? deal.title : (deal.titleEn || deal.title);
+                const dealDesc = appState.currentLanguage === 'ar' ? deal.description : (deal.descriptionEn || deal.description);
+                const dealBadge = appState.currentLanguage === 'ar' ? (deal.badge || 'عرض خاص') : (deal.badgeEn || deal.badge || 'Special Offer');
+                const dealExpiry = deal.expiry ? formatExpiryDate(deal.expiry) : '';
+                
+                return `
+                <div class="deal-card" onclick="showDealDetails(${family.id}, '${deal.id}')">
+                    <div class="deal-badge">${dealBadge}</div>
+                    <div class="deal-image">
+                        <img src="${deal.image}" alt="${dealTitle}" loading="lazy">
+                    </div>
+                    <div class="deal-content">
+                        <h4 class="deal-title">${dealTitle}</h4>
+                        <p class="deal-description">${dealDesc}</p>
+                        ${dealExpiry ? `<div class="deal-expiry"><i class="far fa-clock"></i> ${t.expiryUntil || 'ينتهي'}: ${dealExpiry}</div>` : ''}
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        function formatExpiryDate(dateString) {
+            if (!dateString) return '';
+            const date = new Date(dateString);
+            if (appState.currentLanguage === 'ar') {
+                return date.toLocaleDateString('ar-AE', { year: 'numeric', month: 'short', day: 'numeric' });
+            } else {
+                return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+            }
+        }
+
+        function showDealDetails(familyId, dealId) {
+            const family = familiesData.find(f => f.id == familyId);
+            if (!family) return;
+            
+            const deal = family.deals?.find(d => d.id === dealId);
+            if (!deal) return;
+            
+            const images = deal.images && deal.images.length > 0 ? deal.images : [deal.image];
+            openZoom(images, 0);
+            
+            const t = translations[appState.currentLanguage];
+            showToast(t.viewingDeal || 'جاري عرض تفاصيل العرض...');
+        }
+
+        // ==================== عرض منتجات المشروع (محدث مع العروض) ====================
         function showFamilyProducts(id, updateHash = true) {
             const family = familiesData.find(f => f.id == id);
             if (!family) return;
@@ -6380,6 +6387,7 @@
                 navigateTo(`/family/${id}`);
                 return;
             }
+            
             const t = translations[appState.currentLanguage];
             const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
             const familyDescription = appState.currentLanguage === 'ar' ? (family.longDescription || family.description) : (family.longDescriptionEn || family.descriptionEn);
@@ -6408,6 +6416,9 @@
                     </div>
                 </div>
             `;
+            
+            // إضافة العروض الخاصة
+            renderFamilyDeals(family);
             
             document.getElementById('productsCount').textContent = `${family.products.length} ${t.productsTitle}`;
             document.getElementById('productsGrid').innerHTML = family.products.map(p => {
@@ -6443,96 +6454,6 @@
             }
             
             document.getElementById('contactSectionBottom').innerHTML = `<h3 class="contact-title"><i class="fas fa-phone-alt"></i> ${t.contactSeller}</h3><div class="contact-grid">${contactHtml || `<p>${t.noContact}</p>`}</div>`;
-            
-            // ===== إضافة العروض =====
-            if (family.deals && family.deals.length > 0) {
-    
-                const dealsSection = document.createElement('div');
-                dealsSection.className = 'deals-section';
-                dealsSection.id = 'familyDealsSection';
-                
-                const dealsTitle = appState.currentLanguage === 'ar' ? 'العروض والباقات' : 'Offers and packages';
-                
-                let dealsHtml = `
-                    <h3 class="deals-title">
-                        <i class="fas fa-gift"></i> ${dealsTitle}
-                    </h3>
-                    <div class="deals-scroll" id="dealsScroll">
-                `;
-                
-                family.deals.forEach(deal => {
-                    const dealTitle = appState.currentLanguage === 'ar' ? deal.title : (deal.titleEn || deal.title);
-                    const dealDesc = appState.currentLanguage === 'ar' ? deal.description : (deal.descriptionEn || deal.description);
-                    const badgeHtml = deal.badge ? `<span class="deal-badge">${deal.badge}</span>` : '';
-                    
-                    // تحديد الصور حسب اللغة
-                    let dealImages = [];
-                    if (deal.images) {
-                        if (Array.isArray(deal.images)) {
-                            // الطريقة الأولى: مصفوفة عادية
-                            dealImages = deal.images;
-                        } else if (typeof deal.images === 'object') {
-                            // الطريقة الثانية: object حسب اللغة
-                            dealImages = appState.currentLanguage === 'ar' ? 
-                                (deal.images.ar || [deal.image]) : 
-                                (deal.images.en || deal.images.ar || [deal.image]);
-                        }
-                    } else {
-                        dealImages = [deal.image || 'images/default-deal.jpg'];
-                    }
-                    
-                    // الصورة الرئيسية للكرت (أول صورة)
-                    const mainImage = dealImages[0];
-                    
-                    // تحويل مصفوفة الصور لنص JSON للـ onclick
-                    const imagesJson = JSON.stringify(dealImages).replace(/"/g, '&quot;');
-                    
-                    // تاريخ الانتهاء
-                    const expiryHtml = deal.expiry ? `
-                        <div class="deal-expiry">
-                            <i class="fas fa-hourglass-half"></i>
-                            ${appState.currentLanguage === 'ar' ? 'ينتهي' : 'Ends'} ${deal.expiry}
-                        </div>
-                    ` : '';
-                    
-                    dealsHtml += `
-                        <div class="deal-card" onclick='openZoom(${imagesJson}, 0)'>
-                            <div class="deal-image">
-                                <img src="${mainImage}" alt="${dealTitle}" loading="lazy">
-                                ${badgeHtml}
-                                <div class="deal-icon-overlay">
-                                    <i class="${deal.icon || 'fas fa-tag'}"></i>
-                                </div>
-                            </div>
-                            <div class="deal-content">
-                                <h4>${dealTitle}</h4>
-                                <p class="deal-description">${dealDesc}</p>
-                                <div class="deal-action">
-                                    <div class="deal-action-text">
-                                        <span>${appState.currentLanguage === 'ar' ? 'عرض التفاصيل' : 'View Details'}</span>
-                                        <i class="fas fa-arrow-left"></i>
-                                    </div>
-                                    ${expiryHtml}
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                dealsHtml += `</div>`;
-                dealsSection.innerHTML = dealsHtml;
-                
-                // حط العروض قبل المنتجات
-                const productsHeader = document.querySelector('.products-header');
-                if (productsHeader) {
-                    productsHeader.parentNode.insertBefore(dealsSection, productsHeader);
-                } else {
-                    const productsGrid = document.getElementById('productsGrid');
-                    if (productsGrid) {
-                        productsGrid.parentNode.insertBefore(dealsSection, productsGrid);
-                    }
-                }
-            }
             
             showPage('products');
             showInstructionPopupOnce();
@@ -6814,6 +6735,7 @@
             document.getElementById('submitHint').textContent = t.submitHint;
             document.getElementById('homeSearch').placeholder = t.homeSearchPlaceholder;
             document.getElementById('familiesSearch').placeholder = t.familiesSearchPlaceholder;
+            document.getElementById('dealsTitle').textContent = t.dealsTitle || 'عروض خاصة';
 
             // إعادة تهيئة الشرائح
             initEmiratesChips();
@@ -6894,6 +6816,16 @@
             document.getElementById('contactSectionBottom').scrollIntoView({ behavior: 'smooth' });
         }
 
+        function showInstructionPopupOnce() {
+            if (!sessionStorage.getItem('instructionPopupShown')) {
+                document.getElementById('instructionPopup').classList.add('show');
+                sessionStorage.setItem('instructionPopupShown', 'true');
+                setTimeout(() => {
+                    closeInstructionPopup();
+                }, 8000);
+            }
+        }
+
         // ==================== تهيئة الصفحة ====================
         window.addEventListener('load', function() {
             const savedLang = localStorage.getItem('projectSouqLang');
@@ -6947,35 +6879,9 @@
         window.copyProfileLink = copyProfileLink;
         window.toggleFavorite = toggleFavorite;
         window.showFavorites = showFavorites;
-        function showInstructionPopupOnce() {
-            if (!sessionStorage.getItem('instructionPopupShown')) {
-                document.getElementById('instructionPopup').classList.add('show');
-                sessionStorage.setItem('instructionPopupShown', 'true');
-                setTimeout(() => {
-                    closeInstructionPopup();
-                }, 8000);
-            }
-        }   
-        // ===== دالة العروض =====
-       function contactForDeal(familyId, dealId) {
-           const family = familiesData.find(f => f.id == familyId);
-           if (!family) return;
-    
-           const deal = family.deals?.find(d => d.id === dealId);
-           if (!deal) return;
-
-           // اختيار الصورة حسب اللغة
-           const dealImage = appState.currentLanguage === 'ar' ? 
-               (deal.image || 'images/default-deal.jpg') : 
-              (deal.imageEn || deal.image || 'images/default-deal.jpg');
-    
-           // إذا كان في أكثر من صورة للعرض
-           const images = deal.images || [dealImage];
-           
-           // افتح معرض الصور (نفس خاصية تكبير الصور اللي عندك)
-           openZoom(images, 0);
-       }
-        window.contactForDeal = contactForDeal;     
+        window.renderFamilyDeals = renderFamilyDeals;
+        window.showDealDetails = showDealDetails;
+        window.formatExpiryDate = formatExpiryDate;
     </script>
 </body>
 </html>
