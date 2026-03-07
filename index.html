@@ -1124,6 +1124,7 @@
         }
 
         /* ===== قسم العروض الخاصة ===== */
+        /* ===== قسم العروض الخاصة ===== */
         .deals-section {
             margin: 20px 0;
             padding: 15px;
@@ -1141,24 +1142,47 @@
             display: flex;
             align-items: center;
             gap: 8px;
+        
         }
 
         .deals-title i {
             color: var(--secondary);
         }
 
+        /* التعديل هنا - نخليها scroll أفقي */
         .deals-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            display: flex;
+            overflow-x: auto;
             gap: 12px;
+            padding: 5px 0 15px 0;
+                    scrollbar-width: thin;
+           scrollbar-color: var(--secondary) var(--light-gray);
+            -webkit-overflow-scrolling: touch;
+            white-space: nowrap;
         }
 
+        .deals-grid::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .deals-grid::-webkit-scrollbar-track {
+            background: var(--light-gray);
+            border-radius: 10px;
+        }
+
+        .deals-grid::-webkit-scrollbar-thumb {
+            background: var(--secondary);
+            border-radius: 10px;
+        }
+
+/* تعديل عرض البطاقة */
         .deal-card {
+            flex: 0 0 250px;  /* عرض ثابت 250px */
             background: var(--light);
             border-radius: 16px;
             overflow: hidden;
             border: 1px solid var(--light-gray);
-            transition: var(--transition);
+                    transition: var(--transition);
             cursor: pointer;
             position: relative;
         }
@@ -1173,8 +1197,8 @@
             position: absolute;
             top: 8px;
             right: 8px;
-            background: var(--gradient-gold);
-            color: var(--primary-dark);
+            background:  #B22222;
+            color: #ffffff;
             padding: 4px 10px;
             border-radius: 20px;
             font-size: 10px;
@@ -1188,7 +1212,7 @@
             background: white;
             display: flex;
             align-items: center;
-            justify-content: center;
+                    justify-content: center;
             padding: 10px;
             border-bottom: 1px solid var(--light-gray);
         }
@@ -1240,9 +1264,10 @@
             font-size: 8px;
         }
 
+        /* تعديلات responsive */
         @media (min-width: 768px) {
-            .deals-grid {
-                grid-template-columns: repeat(3, 1fr);
+            .deal-card {
+                flex: 0 0 280px;  /* عرض أكبر للشاشات الكبيرة */
             }
             .deal-image {
                 height: 150px;
@@ -1250,8 +1275,8 @@
         }
 
         @media (min-width: 1200px) {
-            .deals-grid {
-                grid-template-columns: repeat(4, 1fr);
+            .deal-card {
+                flex: 0 0 300px;  /* عرض أكبر للشاشات الكبيرة جداً */
             }
             .deal-image {
                 height: 170px;
@@ -3250,7 +3275,7 @@
                 <div class="deals-section" id="dealsSection" style="display: none;">
                     <h3 class="deals-title">
                         <i class="fas fa-tags"></i>
-                        <span id="dealsTitle">عروض خاصة</span>
+                        <span id="dealsTitle">العروض والباقات:</span>
                     </h3>
                     <div class="deals-grid" id="dealsGrid"></div>
                 </div>
@@ -4647,17 +4672,47 @@
                     {
                         id: "deal1",
                         title: "باقة المحبة المصغرة",
-                        titleEn: "Founding Offer - 20% Off",
+                        titleEn: "Mini love bouquet",
                         description: " للهدايا وللي يحبون ينوعون",
-                        descriptionEn: "20% off on first order for new customers",
+                        descriptionEn: "For gifts and for those who like variety",
                         image: "images/p6-d-1.jpg",
                         images: [
                             "images/p6-d-1.jpg", 
                             "images/p6-d-2.jpg"
                         ],
                         expiry: "",
-                        badge: "عرض",
-                        badgeEn: "Special Offer"
+                        badge: "باقة",
+                        badgeEn: "Package"
+                    },
+                    {
+                        id: "deal1",
+                        title: "باقة المحبة المصغرة",
+                        titleEn: "Mini love bouquet",
+                        description: " للهدايا وللي يحبون ينوعون",
+                        descriptionEn: "For gifts and for those who like variety",
+                        image: "images/p6-d-1.jpg",
+                        images: [
+                            "images/p6-d-1.jpg", 
+                            "images/p6-d-2.jpg"
+                        ],
+                        expiry: "",
+                        badge: "باقة",
+                        badgeEn: "Package"
+                    },
+                    {
+                        id: "deal1",
+                        title: "باقة المحبة المصغرة",
+                        titleEn: "Mini love bouquet",
+                        description: " للهدايا وللي يحبون ينوعون",
+                        descriptionEn: "For gifts and for those who like variety",
+                        image: "images/p6-d-1.jpg",
+                        images: [
+                            "images/p6-d-1.jpg", 
+                            "images/p6-d-2.jpg"
+                        ],
+                        expiry: "",
+                        badge: "باقة",
+                        badgeEn: "Package"
                     },
                 ]
             },
@@ -5691,7 +5746,7 @@
         const translations = {
             ar: {
                 siteTitle: "سوق المشاريع",
-                dealsTitle: "عروض خاصة",
+                dealsTitle: "العروض والباقات:",
                 viewingDeal: "جاري عرض تفاصيل العرض...",
                 expiryUntil: "ينتهي",
                 siteSubtitle: "المشاريع في الامارات",
@@ -5827,7 +5882,7 @@
             },
             en: {
                 siteTitle: "Project Souq",
-                dealsTitle: "Special Offers",
+                dealsTitle: "Offers & Packages",
                 viewingDeal: "Viewing deal details...",
                 expiryUntil: "Expires",
                 siteSubtitle: "Projects in UAE",
@@ -6336,7 +6391,7 @@
             dealsGrid.innerHTML = family.deals.map(deal => {
                 const dealTitle = appState.currentLanguage === 'ar' ? deal.title : (deal.titleEn || deal.title);
                 const dealDesc = appState.currentLanguage === 'ar' ? deal.description : (deal.descriptionEn || deal.description);
-                const dealBadge = appState.currentLanguage === 'ar' ? (deal.badge || 'عرض خاص') : (deal.badgeEn || deal.badge || 'Special Offer');
+                const dealBadge = appState.currentLanguage === 'ar' ? (deal.badge || 'ال') : (deal.badgeEn || deal.badge || '');
                 const dealExpiry = deal.expiry ? formatExpiryDate(deal.expiry) : '';
                 
                 return `
@@ -6735,7 +6790,7 @@
             document.getElementById('submitHint').textContent = t.submitHint;
             document.getElementById('homeSearch').placeholder = t.homeSearchPlaceholder;
             document.getElementById('familiesSearch').placeholder = t.familiesSearchPlaceholder;
-            document.getElementById('dealsTitle').textContent = t.dealsTitle || 'عروض خاصة';
+            document.getElementById('dealsTitle').textContent = t.dealsTitle || 'العروض الخاصة';
 
             // إعادة تهيئة الشرائح
             initEmiratesChips();
