@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl" id="htmlTag">
 <head>
+    <!-- أضف هذا في نهاية الـ head -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "سوق المشاريع",
+        "url": "https://souqalmasharie.onrender.com",
+        "potentialAction": {
+          "@type": "SearchAction",
+         "target": "https://souqalmasharie.onrender.com/?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+         }
+    }
+    </script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-P5YLDRQQGE"></script>
     <script>
@@ -37,6 +51,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- الخطوط -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="preload" href="logo.png" as="image">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=El+Messiri:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -615,9 +632,9 @@
 
         /* ===== أزرار الرجوع ===== */
         .back-button {
-            background: var(--light);
-            border: 1px solid var(--light-gray);
-            color: var(--primary-dark);
+            background: var(--primary-gradient);
+            border: 1px solid var(--secondary);
+            color: white; 
             width: 38px;
             height: 38px;
             border-radius: 12px;
@@ -2658,6 +2675,32 @@
         html {
             scroll-behavior: smooth;
         }
+       /* الزر للأعلى*/
+        .scroll-top {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: var(--primary-gradient);
+                color: white;
+                width: 45px;
+                height: 45px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                box-shadow: var(--shadow);
+                border: 2px solid var(--secondary);
+                z-index: 99;
+                transition: var(--transition);
+                opacity: 0;
+                visibility: hidden;
+            }
+
+            .scroll-top.show {
+                opacity: 1;
+                visibility: visible;
+            }
 
         @media (max-width: 380px) {
             .families-grid {
@@ -3047,7 +3090,145 @@
             .stat-label {
                 font-size: 16px;
             }
+
+    
         }
+        /* زر العروض الأحمر */
+.offers-header-btn {
+    background: #C41E3A;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 6px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(196, 30, 58, 0.3);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin-right: 10px;
+}
+
+[dir="ltr"] .offers-header-btn {
+    margin-right: 0;
+    margin-left: 10px;
+}
+
+.offers-header-btn:hover {
+    background: #a01830;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(196, 30, 58, 0.4);
+}
+
+.offers-header-btn i {
+    font-size: 14px;
+}
+
+/* بطاقة العرض في صفحة العروض */
+.offer-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--light-gray);
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+}
+
+.offer-card:hover {
+    transform: translateY(-4px);
+    border-color: #C41E3A;
+    box-shadow: 0 8px 20px rgba(196, 30, 58, 0.15);
+}
+
+.offer-image {
+    height: 150px;
+    background: var(--light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.offer-image img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+}
+
+.offer-content {
+    padding: 12px;
+}
+
+.offer-project {
+    font-size: 11px;
+    color: var(--gray);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.offer-project i {
+    color: #C41E3A;
+    font-size: 10px;
+}
+
+.offer-name {
+    font-family: 'El Messiri', serif;
+    font-size: 14px;
+    color: var(--primary-dark);
+    margin-bottom: 4px;
+    font-weight: 700;
+}
+
+.en-mode .offer-name {
+    font-family: 'Poppins', serif;
+}
+
+.offer-description {
+    font-size: 11px;
+    color: var(--gray);
+    line-height: 1.4;
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.offer-badge-small {
+    display: inline-block;
+    background: #C41E3A;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 15px;
+    font-size: 9px;
+    font-weight: 700;
+}
+/* حاوية زر العروض */
+.offers-button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin: -72px 0 25px 0;
+    padding: 0 15px;
+    position: relative;
+    z-index: 5;
+}
+
+@media (max-width: 480px) {
+    .offers-button-container {
+        margin: -10px 0 10px 0;
+        padding: 0 10px;
+    }
+}
     </style>
 </head>
 <body>
@@ -3241,31 +3422,37 @@
             </section>
         </div>
 
-        <!-- صفحة المشاريع -->
-        <div id="families-page" class="page families-page" style="display: none;">
-            <div class="page-header with-back">
-                <div class="back-button" onclick="goBack()">
-                    <i class="fas fa-arrow-right"></i>
-                </div>
-                <h1 class="page-title" id="familiesPageTitle">المشاريع</h1>
-                <p class="page-subtitle" id="familiesPageSubtitle">استعرض المشاريع ومنتجاتها</p>
-            </div>
-            <div class="container">
-                <div class="families-search-box">
-                    <input type="text" class="families-search-input" placeholder="" id="familiesSearch" onkeydown="if(event.key==='Enter') performFamiliesSearch()">
-                    <button class="families-search-btn" onclick="performFamiliesSearch()">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-                <div class="emirates-scroll" id="emiratesScroll"></div>
-                <div class="categories-scroll" id="categoriesScroll"></div>
-                <div class="families-grid" id="familiesGrid"></div>
-            </div>
+<!-- صفحة المشاريع -->
+<div id="families-page" class="page families-page" style="display: none;">
+    <div class="page-header with-back">
+        <div class="back-button" onclick="goBack()">
+            <i class="fas fa-arrow-right"></i>
         </div>
+        <h1 class="page-title" id="familiesPageTitle">المشاريع</h1>
+        <p class="page-subtitle" id="familiesPageSubtitle">استعرض المشاريع ومنتجاتها</p>
+    </div>
+    <div class="offers-button-container">
+        <div class="offers-header-btn" onclick="showOffersPage()">
+            <i class="fas fa-tags"></i>
+            <span id="offersBtnText">العروض</span>
+        </div>
+    </div>
+    <div class="container">
+        <div class="families-search-box">
+            <input type="text" class="families-search-input" placeholder="" id="familiesSearch" onkeydown="if(event.key==='Enter') performFamiliesSearch()">
+            <button class="families-search-btn" onclick="performFamiliesSearch()">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+        <div class="emirates-scroll" id="emiratesScroll"></div>
+        <div class="categories-scroll" id="categoriesScroll"></div>
+        <div class="families-grid" id="familiesGrid"></div>
+    </div>
+</div>
 
         <!-- صفحة منتجات المشروع -->
         <div id="products-page" class="page products-page" style="display: none;">
-            <div class="container">
+            <div class="container"style="padding-top: 12px;">
                 <div class="back-button" onclick="goBack()" style="margin-bottom: 12px;">
                     <i class="fas fa-arrow-right"></i>
                 </div>
@@ -3453,6 +3640,18 @@
         <div class="close-zoom" onclick="closeZoomModal()"><i class="fas fa-times"></i></div>
         <div class="zoom-image-container" id="zoomImageContainer"></div>
         <div class="zoom-dots" id="zoomDots"></div>
+    </div>
+    <div id="offers-page" class="page offers-page" style="display: none;">
+    <div class="page-header with-back">
+        <div class="back-button" onclick="goBack()">
+            <i class="fas fa-arrow-right"></i>
+        </div>
+        <h1 class="page-title" id="offersPageTitle">العروض الخاصة</h1>
+        <p class="page-subtitle" id="offersPageSubtitle">أحدث العروض والباقات</p>
+    </div>
+    <div class="container">
+        <div class="favorites-content" id="offersContent"></div>
+    </div>
     </div>
 
     <footer class="app-footer">
@@ -5749,6 +5948,30 @@
                 categoryEn:"Sweets",
                 products:[]
             },
+            {
+                id: 43,
+                name: "تاتش أوف تيست",
+                nameEn: "Touch of Taste",
+                emirate: "أبوظبي",
+                description: "مشروع طعام منزلي مرخص في الإمارات",
+                descriptionEn: "A licensed home-based food project in the UAE",
+                longDescription: "تجربة طهي منزلي فريدة بنكهة مميزة، حضرناها لكم بشغف. نسهل عليكم عملية الشراء من خلال خدمة الاستلام المباشر. لتذوق أفضل المأكولات، أرسلوا لنا طلبكم عبر الرسائل المباشرة.",
+                longDescriptionEn: "A unique home-cooked experience with a distinctive flavor, prepared for you with passion. We make your purchase easy with our direct pickup service. To savor the best dishes, send us your order via Direct Message.",
+                image: "images/p43.jpg",
+                phone: "",
+                whatsapp: "+971507738137",
+                email: "",
+                sell_points: [
+                    { type: "instagram", value: "touchof.taste" }
+                  ],
+                adra_license: "نعم",
+                coverage: "أبوظبي",
+                badges: ["جديد"],
+                badgesEn: ["NEW"],
+                category: "أطعمة ومشروبات",
+                categoryEn: "Food & Beverages",
+                products: []
+            },
         ];
 
         // ==================== حالة التطبيق ====================
@@ -5875,6 +6098,9 @@
                 catPlants: "نباتات",
                 catEntertainment: "ترفيه",
                 submitBtn: "إرسال طلب التسجيل",
+                offersBtnText: "العروض",
+                offersPageTitle: "العروض الخاصة",
+                offersPageSubtitle: "أحدث العروض والباقات",
                 submitHint: "سيتم التواصل معكم خلال 24 ساعة",
                 emirates: {
                     all: "كل الإمارات",
@@ -5959,6 +6185,9 @@
                 emptyFavoritesProducts: "No favorite products yet",
                 sellerInfo: "Seller Info",
                 similarProducts: "Similar Products",
+                offersBtnText: "Offers",
+                offersPageTitle: "Special Offers",
+                offersPageSubtitle: "Latest offers and packages",
                 contactSeller: "Contact Seller",
                 shareProduct: "Share Product",
                 shareProfile: "Share Project",
@@ -6056,7 +6285,30 @@
                 linkCopied: "Link copied!"
             }
         };
+        // تحسين أداء الـ JavaScript
+        function debounce(func, wait) {
+            let timeout;
+                return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+                };
+        }
 
+        function debounce(func, wait) {
+            let timeout;
+                return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+                };
+        }
         // ==================== دالة تحليل نقاط البيع المتعددة ====================
         function parseSellPoints(sellPoints) {
             if (!sellPoints || !Array.isArray(sellPoints)) return [];
@@ -6202,6 +6454,21 @@
                 container.scrollTo({ left: startIndex * imageWidth, behavior: 'auto' });
             }, 50);
             container.addEventListener('scroll', updateZoomDots);
+            let touchStartX = 0;
+            container.addEventListener('touchstart', (e) => {
+                touchStartX = e.touches[0].clientX;
+            });
+
+            container.addEventListener('touchend', (e) => {
+                const diff = touchStartX - e.changedTouches[0].clientX;
+                if (Math.abs(diff) > 50) {
+                    // انتقل للصورة التالية أو السابقة
+                    const newIndex = diff > 0 ? 
+                        Math.min(appState.currentZoomIndex + 1, images.length - 1) : 
+                        Math.max(appState.currentZoomIndex - 1, 0);
+                    scrollToZoomImage(newIndex);
+                }
+                });
         }
 
         function updateZoomDots() {
@@ -6352,8 +6619,12 @@
                 }
             });
         }
+        
 
         // ==================== البحث ====================
+        const debouncedSearch = debounce(() => {
+             performFamiliesSearch();
+        }, 300);
         function performHomeSearch() {
             showLoader();
             const query = document.getElementById('homeSearch').value.trim();
@@ -6375,6 +6646,7 @@
             renderFamilies();
             hideLoader();
         }
+        
 
         // ==================== عرض المشاريع ====================
         function renderFamilies() {
@@ -6413,6 +6685,61 @@
                 </div>
             `}).join('');
         }
+        // دالة عرض صفحة العروض
+function showOffersPage() {
+    navigateTo('/offers');
+}
+
+// دالة عرض العروض في الصفحة - نسخة محدثة
+function renderOffers() {
+    const container = document.getElementById('offersContent');
+    const t = translations[appState.currentLanguage];
+    
+    // نجمع كل العروض من كل المشاريع
+    let allOffers = [];
+    familiesData.forEach(family => {
+        if (family.deals && family.deals.length > 0) {
+            family.deals.forEach(deal => {
+                allOffers.push({
+                    ...deal,
+                    familyId: family.id,
+                    familyName: appState.currentLanguage === 'ar' ? family.name : family.nameEn,
+                    familyImage: family.image
+                });
+            });
+        }
+    });
+    
+    if (allOffers.length === 0) {
+        container.innerHTML = `<div class="empty-favorites"><i class="fas fa-tags"></i><p>${appState.currentLanguage === 'ar' ? 'لا توجد عروض حالياً' : 'No offers available'}</p></div>`;
+        return;
+    }
+    
+    // نعرض العروض في قائمة (نفس تصميم المفضلة)
+    let html = '<div class="favorites-list">';
+    allOffers.forEach(offer => {
+        const offerTitle = appState.currentLanguage === 'ar' ? offer.title : (offer.titleEn || offer.title);
+        const offerDesc = appState.currentLanguage === 'ar' ? offer.description : (offer.descriptionEn || offer.description);
+        const offerBadge = appState.currentLanguage === 'ar' ? (offer.badge || 'عرض') : (offer.badgeEn || offer.badge || 'Offer');
+        
+        html += `
+        <div class="favorite-list-item" onclick="navigateTo('/family/${offer.familyId}')">
+            <div class="favorite-item-image"><img src="${offer.image}" alt="${offerTitle}" loading="lazy"></div>
+            <div class="favorite-item-info">
+                <div class="favorite-item-title">${offerTitle}</div>
+                <div class="favorite-item-meta">
+                    <i class="fas fa-store"></i> <span>${offer.familyName}</span>
+                    <span class="project-badge" style="background: #C41E3A; color: white; border: none;">${offerBadge}</span>
+                </div>
+                <div style="font-size: 11px; color: var(--gray); margin-top: 5px;">${offerDesc}</div>
+            </div>
+        </div>
+        `;
+    });
+    html += '</div>';
+    
+    container.innerHTML = html;
+}
 
         // ==================== دوال العروض الخاصة ====================
         function renderFamilyDeals(family) {
@@ -6641,28 +6968,29 @@
             appState.currentZoomIndex = index;
         }
 
-        // ==================== معالجة تغيير الرابط ====================
-        function handleHashChange() {
-            const hash = window.location.hash.slice(1) || '/';
-            const parts = hash.split('/').filter(p => p !== '');
-            showLoader();
-            setTimeout(() => {
-                if (parts.length === 0 || parts[0] === '') showPage('home');
-                else if (parts[0] === 'projects' && parts[1] === 'emirate' && parts[2]) {
-                    appState.currentEmirate = decodeURIComponent(parts[2]);
-                    appState.currentCategory = 'all';
-                    appState.searchQuery = '';
-                    updateActiveEmirateChip(appState.currentEmirate);
-                    updateActiveCategoryChip('all');
-                    showPage('families');
-                    renderFamilies();
-                } else if (parts[0] === 'family' && parts[1]) showFamilyProducts(parseInt(parts[1]), false);
-                else if (parts[0] === 'product' && parts[1] && parts[2]) showProductDetail(parseInt(parts[1]), parts[2], false);
-                else if (parts[0] === 'favorites') { showPage('favorites'); renderFavorites(); }
-                else showPage('home');
-                hideLoader();
-            }, 50);
-        }
+// ==================== معالجة تغيير الرابط ====================
+function handleHashChange() {
+    const hash = window.location.hash.slice(1) || '/';
+    const parts = hash.split('/').filter(p => p !== '');
+    showLoader();
+    setTimeout(() => {
+        if (parts.length === 0 || parts[0] === '') showPage('home');
+        else if (parts[0] === 'projects' && parts[1] === 'emirate' && parts[2]) {
+            appState.currentEmirate = decodeURIComponent(parts[2]);
+            appState.currentCategory = 'all';
+            appState.searchQuery = '';
+            updateActiveEmirateChip(appState.currentEmirate);
+            updateActiveCategoryChip('all');
+            showPage('families');
+            renderFamilies();
+        } else if (parts[0] === 'family' && parts[1]) showFamilyProducts(parseInt(parts[1]), false);
+        else if (parts[0] === 'product' && parts[1] && parts[2]) showProductDetail(parseInt(parts[1]), parts[2], false);
+        else if (parts[0] === 'favorites') { showPage('favorites'); renderFavorites(); }
+        else if (parts[0] === 'offers') { showPage('offers'); renderOffers(); }  // <-- هذا السطر مهم
+        else showPage('home');
+        hideLoader();
+    }, 50);
+}
 
         // ==================== دوال المشاركة ====================
         function showSharePopup(familyId, productId) {
@@ -6944,6 +7272,8 @@
 
         // ربط الدوال بالكائن العام
         window.toggleMenu = toggleMenu;
+        window.showOffersPage = showOffersPage;
+        window.renderOffers = renderOffers;
         window.navigateTo = navigateTo;
         window.goBack = goBack;
         window.scrollToTopAndHome = scrollToTopAndHome;
@@ -6978,7 +7308,5 @@
         window.formatExpiryDate = formatExpiryDate;
     </script>
 </body>
+<input type="text" ... onkeyup="debouncedSearch()">
 </html>
-
-
-
