@@ -2701,6 +2701,26 @@
                 opacity: 1;
                 visibility: visible;
             }
+            /* تحسين أداء الصور */
+img {
+    content-visibility: auto;
+    contain-intrinsic-size: 200px;
+    aspect-ratio: attr(width) / attr(height);
+}
+
+.family-image img, .product-image img, .deal-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background-color: #f8f8f8;
+    will-change: transform;
+}
+
+/* منع flickering أثناء التمرير */
+.families-grid, .products-grid, .deals-grid {
+    contain: content;
+    content-visibility: auto;
+}
 
         @media (max-width: 380px) {
             .families-grid {
@@ -3232,19 +3252,22 @@
 /* زر العروض داخل الهيدر - باللون الأحمر */
 .offers-header-btn.inside-header {
     position: absolute;
-    left: 12px;  /* للعربية - يكون على اليسار */
+    left: 16px;
     top: 50%;
     transform: translateY(-50%);
     margin: 0;
-    background: #C41E3A;  /* الخلفية الحمراء */
+    background: #C41E3A;
     border: 1px solid rgba(255, 255, 255, 0.3);
     color: white;
-    box-shadow: 0 4px 10px rgba(196, 30, 58, 0.3);  /* ظل أحمر */
+    box-shadow: 0 4px 10px rgba(196, 30, 58, 0.3);
+    padding: 4px 10px;  /* أصغر من قبل */
+    font-size: 11px;    /* خط أصغر */
+    border-radius: 20px; /* أقل استدارة */
 }
 
 [dir="ltr"] .offers-header-btn.inside-header {
     left: auto;
-    right: 12px;  /* للإنجليزي - يكون على اليمين */
+    right: 16px;  /* للإنجليزي - يكون على اليمين */
 }
 
 .offers-header-btn.inside-header:hover {
@@ -6709,6 +6732,11 @@
                     </div>
                 </div>
             `}).join('');
+            requestAnimationFrame(() => {
+    document.querySelectorAll('.family-image img').forEach(img => {
+        if (img.complete) img.style.opacity = '1';
+    });
+});
         }
         // دالة عرض صفحة العروض
 function showOffersPage() {
