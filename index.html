@@ -3229,6 +3229,30 @@
         padding: 0 10px;
     }
 }
+/* زر العروض داخل الهيدر - باللون الأحمر */
+.offers-header-btn.inside-header {
+    position: absolute;
+    left: 12px;  /* للعربية - يكون على اليسار */
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
+    background: #C41E3A;  /* الخلفية الحمراء */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    box-shadow: 0 4px 10px rgba(196, 30, 58, 0.3);  /* ظل أحمر */
+}
+
+[dir="ltr"] .offers-header-btn.inside-header {
+    left: auto;
+    right: 12px;  /* للإنجليزي - يكون على اليمين */
+}
+
+.offers-header-btn.inside-header:hover {
+    background: #a01830;  /* أحمر أغمق قليلاً عند المرور */
+    border-color: var(--secondary);  /* حدود ذهبية عند المرور */
+    transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 6px 15px rgba(196, 30, 58, 0.4);
+}
     </style>
 </head>
 <body>
@@ -3430,13 +3454,14 @@
         </div>
         <h1 class="page-title" id="familiesPageTitle">المشاريع</h1>
         <p class="page-subtitle" id="familiesPageSubtitle">استعرض المشاريع ومنتجاتها</p>
-    </div>
-    <div class="offers-button-container">
-        <div class="offers-header-btn" onclick="showOffersPage()">
+        
+        <!-- زر العروض داخل الهيدر -->
+        <div class="offers-header-btn inside-header" onclick="showOffersPage()">
             <i class="fas fa-tags"></i>
             <span id="offersBtnText">العروض</span>
         </div>
     </div>
+    
     <div class="container">
         <div class="families-search-box">
             <input type="text" class="families-search-input" placeholder="" id="familiesSearch" onkeydown="if(event.key==='Enter') performFamiliesSearch()">
