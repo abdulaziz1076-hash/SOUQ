@@ -6502,21 +6502,7 @@ img {
                 container.scrollTo({ left: startIndex * imageWidth, behavior: 'auto' });
             }, 50);
             container.addEventListener('scroll', updateZoomDots);
-            let touchStartX = 0;
-            container.addEventListener('touchstart', (e) => {
-                touchStartX = e.touches[0].clientX;
-            });
 
-            container.addEventListener('touchend', (e) => {
-                const diff = touchStartX - e.changedTouches[0].clientX;
-                if (Math.abs(diff) > 50) {
-                    // انتقل للصورة التالية أو السابقة
-                    const newIndex = diff > 0 ? 
-                        Math.min(appState.currentZoomIndex + 1, images.length - 1) : 
-                        Math.max(appState.currentZoomIndex - 1, 0);
-                    scrollToZoomImage(newIndex);
-                }
-                });
         }
 
         function updateZoomDots() {
