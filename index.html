@@ -3365,7 +3365,7 @@ img {
 
     <header class="app-header">
         <div class="header-container">
-            <div class="logo-section" onclick="scrollToTopAndHome()">
+            <div class="logo-section" onclick="scrollToTop()">
                 <div class="logo-icon">
                     <img src="images/logo.png" alt="سوق المشاريع" loading="lazy">
                 </div>
@@ -3594,7 +3594,7 @@ img {
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label"><i class="fas fa-globe-asia"></i> <span id="coverageLabel">مناطق التغطية</span></label>
+                        <label class="form-label"><i class="fas fa-globe-asia"></i> <span id="coverageLabel">التغطية</span></label>
                         <select class="form-control" name="coverage" required id="coverageSelect">
                             <option value="" id="selectCoverage">اختر نطاق التغطية</option>
                             <option value="الإمارة فقط">Emirate only</option>
@@ -3727,16 +3727,16 @@ img {
         
         <!-- روابط السياسة والشروط - بشكل أنيق جنب بعض -->
         <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 15px; flex-wrap: wrap;">
-            <a href="privacy.html" style="color: var(--secondary); text-decoration: none; font-size: 12px; display: inline-flex; align-items: center; gap: 5px;">
-                <i class="fas fa-lock" style="font-size: 10px;"></i>
-                سياسة الخصوصية
-            </a>
-            <span style="color: var(--gray);">|</span>
-            <a href="terms.html" style="color: var(--secondary); text-decoration: none; font-size: 12px; display: inline-flex; align-items: center; gap: 5px;">
-                <i class="fas fa-file-contract" style="font-size: 10px;"></i>
-                شروط الاستخدام
-            </a>
-        </div>
+    <a href="javascript:void(0)" onclick="showPrivacyModal()" style="color: var(--secondary); text-decoration: none; font-size: 12px; display: inline-flex; align-items: center; gap: 5px;">
+        <i class="fas fa-lock" style="font-size: 10px;"></i>
+        <span id="privacyLink">سياسة الخصوصية</span>
+    </a>
+    <span style="color: var(--gray);">|</span>
+    <a href="javascript:void(0)" onclick="showTermsModal()" style="color: var(--secondary); text-decoration: none; font-size: 12px; display: inline-flex; align-items: center; gap: 5px;">
+        <i class="fas fa-file-contract" style="font-size: 10px;"></i>
+        <span id="termsLink">شروط الاستخدام</span>
+    </a>
+</div>
         
         <!-- حقوق النشر -->
         <div class="copyright" id="copyright">
@@ -3766,7 +3766,7 @@ img {
                     {type: "instagram" , value: "motcha.ae"},
                 ],
                 adra_license: "نعم",
-                coverage: "الإمارات",
+                coverage: "جميع إمارات الدولة",
                 badges: ["مميز"],
                 badgesEn: ["Distinct"],
                 category: "أطعمة ومشروبات",
@@ -3970,8 +3970,8 @@ img {
             },
             {
                 id: 11,
-                name: "Sushi Crava - رغبة السوشي",
-                nameEn: "Sushi Crava - رغبة السوشي",
+                name: "رغبة السوشي",
+                nameEn: "Sushi Crava",
                 emirate: "أبوظبي",
                 description: "أطعمة ومشروبات",
                 descriptionEn: "Food & Beverages",
@@ -5379,7 +5379,7 @@ img {
                     {type: "instagram" , value: "ildolcedesserts"},
                 ],
                 adra_license: "لا",
-                coverage: "الإمارات",
+                coverage: "جميع إمارات الدولة",
                 badges: ["جديد"],
                 badgesEn: ["New"],
                 category: "حلويات",
@@ -5405,7 +5405,7 @@ img {
                     {type: "instagram" , value: "joycraft.hub"},
                 ],
                 adra_license: "لا",
-                coverage: "الإمارات",
+                coverage: "جميع إمارات الدولة",
                 badges: ["جديد"],
                 badgesEn: ["New"],
                 category: "حلويات",
@@ -5431,7 +5431,7 @@ img {
                     {type: "instagram" , value: "warqa_enb.ae"},
                 ],
                 adra_license: "لا",
-                coverage: "دبي",
+                coverage: "جميع إمارات الدولة",
                 badges: [],
                 badgesEn: [],
                 category: "أطعمة ومشروبات",
@@ -5455,7 +5455,7 @@ img {
                     {type: "instagram" , value: "r.flowers.ae"},
                 ], 
                 adra_license: "لا",
-                coverage: "الإمارات",
+                coverage: "جميع إمارات الدولة",
                 badges: ["جديد"],
                 badgesEn: ["NEW"],
                 category: "يدويات",
@@ -5479,7 +5479,7 @@ img {
                     {type: "instagram" , value: "lacetteabayas.ae"},
                 ],
                 adra_license:"لا",
-                coverage:"الإمارات",
+                coverage:"جميع إمارات الدولة",
                 badges:["جديد"],
                 badgesEn:["NEW"],
                 category:"ملابس",
@@ -5503,7 +5503,7 @@ img {
                     {type: "instagram", value: "bdiamond.ae"},
                 ],
                 adra_license:"لا",
-                coverage:"جميع امارات الدولة",
+                coverage:"جميع إمارات الدولة",
                 badges:["جديد"],
                 badgesEn:["NEW"],
                 category:"روائح وعطور",
@@ -5527,7 +5527,7 @@ img {
                      { type: "instagram", value: "haytha.ae"},
                 ],
                 adra_license:"لا",
-                coverage:"جميع امارات الدولة",
+                coverage:"جميع إمارات الدولة",
                 badges:["جديد"],
                 badgesEn:["NEW"],
                 category:"ملابس",
@@ -5551,7 +5551,7 @@ img {
                     { type: "instagram", value: "sookie.ae" },
                 ],
                 adra_license:"لا",
-                coverage:"الإمارات",
+                coverage:"جميع إمارات الدولة",
                 badges:[""],
                 badgesEn:[""],
                 category:"حلويات",
@@ -5575,7 +5575,7 @@ img {
                     { type: "instagram", value: "sophiacandles.ae" }
                 ],
                 adra_license:"لا",
-                coverage:"جميع امارات الدولة",
+                coverage:"جميع إمارات الدولة",
                 badges:[""],
                 badgesEn:[""],
                 category:"يدويات",
@@ -5601,7 +5601,7 @@ img {
                     
                 ],
                 adra_license:"لا",
-                coverage:"جميع امارات الدولة",
+                coverage:"جميع إمارات الدولة",
                 badges:[""],
                 badgesEn:[""],
                 category:"نباتات",
@@ -5627,7 +5627,7 @@ img {
                     { type: "twitter", value: "3aks.ae" },
                 ],
                 adra_license:"لا",
-                coverage:"جميع امارات الدولة",
+                coverage:"جميع إمارات الدولة",
                 badges:[""],
                 badgesEn:[""],
                 category:"فنون",
@@ -5651,7 +5651,7 @@ img {
                     { type: "instagram", value: "fady_atef_art" }
                 ],
                 adra_license:"لا",
-                coverage:"جميع امارات الدولة",
+                coverage:"جميع إمارات الدولة",
                 badges:[""],
                 badgesEn:[""],
                 category:"فنون",
@@ -5675,7 +5675,7 @@ img {
                     { type: "instagram", value: "fekra_w_3mal" }
                 ],
                 adra_license:"لا",
-                coverage:"جميع امارات الدولة",
+                coverage:"جميع إمارات الدولة",
                 badges:[""],
                 badgesEn:[""],
                 category:"يدويات",
@@ -6046,7 +6046,7 @@ img {
                     { type: "instagram", value: "touchof.taste" }
                   ],
                 adra_license: "نعم",
-                coverage: "أبوظبي",
+                coverage: "جميع إمارات الدولة",
                 badges: ["جديد"],
                 badgesEn: ["NEW"],
                 category: "أطعمة ومشروبات",
@@ -6261,6 +6261,8 @@ img {
         const translations = {
             ar: {
                 siteTitle: "سوق المشاريع",
+                privacy: "سياسة الخصوصية",
+                terms: "شروط الاستخدام",
                 dealsTitle: "العروض والباقات:",
                 viewingDeal: "جاري عرض تفاصيل العرض...",
                 expiryUntil: "ينتهي",
@@ -6322,7 +6324,7 @@ img {
                 licenseLabel: "الترخيص",
                 yesLabel: "نعم",
                 noLabel: "لا",
-                coverageLabel: "مناطق التغطية",
+                coverageLabel: "التغطية",
                 selectCoverage: "اختر نطاق التغطية",
                 phoneLabel: "الهاتف",
                 phonePlaceholder: "05x xxx xxxx",
@@ -6383,7 +6385,7 @@ img {
                 },
                 coverageOptions: {
                     "الإمارة فقط": "الإمارة فقط",
-                    "جميع امارات الدولة": "جميع امارات الدولة",
+                    "جميع إمارات الدولة": "جميع إمارات الدولة",
                     "دول الخليج": "دول الخليج",
                     "العالم": "العالم"
                 },
@@ -6414,7 +6416,7 @@ img {
                 langBtn: "عربي",
                 heroTitle: "Project Souq",
                 heroSubtitle: "A specialized platform supporting projects in the UAE",
-                discoverBtn: "Discover Products",
+                discoverBtn: "Enter the market",
                 joinBtn: "Join as Project",
                 aboutTitle: "About Us",
                 aboutText1: "<strong>Project Souq</strong> ... A simple idea with a big goal: creating a platform that brings together all projects in the UAE. Because every project deserves support and the right audience.",
@@ -6440,6 +6442,8 @@ img {
                 similarProducts: "Similar Products",
                 offersBtnText: "Offers",
                 offersPageTitle: "Special Offers",
+                privacy: "Privacy Policy",
+                terms: "Terms of Use",
                 offersPageSubtitle: "Latest offers and packages",
                 contactSeller: "Contact Seller",
                 shareProduct: "Share Product",
@@ -6464,7 +6468,7 @@ img {
                 licenseLabel: "License",
                 yesLabel: "Yes",
                 noLabel: "No",
-                coverageLabel: "Coverage Areas",
+                coverageLabel: "Coverage",
                 selectCoverage: "Select Coverage",
                 phoneLabel: "Phone",
                 phonePlaceholder: "05x xxx xxxx",
@@ -6522,7 +6526,7 @@ img {
                 },
                 coverageOptions: {
                     "الإمارة فقط": "Emirate only",
-                    "جميع امارات الدولة": "All emirates",
+                    "جميع إمارات الدولة": "All emirates",
                     "دول الخليج": "GCC",
                     "العالم": "Worldwide"
                 },
@@ -6742,9 +6746,17 @@ img {
             window.history.back();
         }
 
-        function scrollToTopAndHome() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            navigateTo('/');
+        function scrollToTop() {
+    // نخفي القائمة الجانبية إذا كانت مفتوحة
+    const menu = document.getElementById('navMenu');
+    if (menu) menu.classList.remove('active');
+    
+    // نروح لفوق الصفحة الحالية بس
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // عشان يكون التمرير سلس
+    });
+        hideLoader();
         }
 
         function toggleMenu() {
@@ -6756,6 +6768,14 @@ img {
             document.getElementById(pageId + '-page').style.display = 'block';
             appState.currentPage = pageId;
             window.scrollTo(0, 0);
+
+            // إذا كانت الصفحة المعروضة هي صفحة المشاريع، حدث نص زر العروض
+            if (pageId === 'families') {
+                const offersBtn = document.getElementById('offersBtnText');
+                if (offersBtn) {
+                    offersBtn.textContent = translations[appState.currentLanguage].offersBtnText;
+                }
+            }
         }
 
         // ==================== فلاتر الإمارات والتصنيفات ====================
@@ -6889,46 +6909,92 @@ img {
 
         // ==================== عرض المشاريع ====================
         function renderFamilies() {
-            let filtered = [...familiesData];
-            const t = translations[appState.currentLanguage];
-            if (appState.currentEmirate !== 'all') filtered = filtered.filter(f => f.emirate === appState.currentEmirate);
-            if (appState.currentCategory !== 'all') filtered = filtered.filter(f => f.category === appState.currentCategory);
-            if (appState.searchQuery) {
-                const query = appState.searchQuery.toLowerCase();
-                filtered = filtered.filter(family => {
-                    const nameMatch = (appState.currentLanguage === 'ar' ? family.name : family.nameEn).toLowerCase().includes(query);
-                    const descMatch = (appState.currentLanguage === 'ar' ? family.description : family.descriptionEn).toLowerCase().includes(query);
-                    const productMatch = family.products.some(p => 
-                        (appState.currentLanguage === 'ar' ? p.name : p.nameEn).toLowerCase().includes(query)
-                    );
-                    return nameMatch || descMatch || productMatch;
+    let filtered = [...familiesData];
+    const t = translations[appState.currentLanguage];
+
+    // فلتر الإمارة
+    if (appState.currentEmirate !== 'all') {
+        filtered = filtered.filter(f => f.emirate === appState.currentEmirate);
+    }
+
+    // فلتر التصنيف
+    if (appState.currentCategory !== 'all') {
+        filtered = filtered.filter(f => f.category === appState.currentCategory);
+    }
+
+    // البحث النصي (محسّن)
+    if (appState.searchQuery) {
+        const query = appState.searchQuery.trim().toLowerCase();
+        if (query !== '') {
+            filtered = filtered.filter(family => {
+                // البحث في بيانات المشروع (عربي + إنجليزي)
+                const nameAr = (family.name || '').toLowerCase();
+                const nameEn = (family.nameEn || '').toLowerCase();
+                const descAr = (family.description || '').toLowerCase();
+                const descEn = (family.descriptionEn || '').toLowerCase();
+                const longDescAr = (family.longDescription || '').toLowerCase();
+                const longDescEn = (family.longDescriptionEn || '').toLowerCase();
+
+                // البحث في المنتجات
+                const productMatch = family.products.some(p => {
+                    const pNameAr = (p.name || '').toLowerCase();
+                    const pNameEn = (p.nameEn || '').toLowerCase();
+                    const pDescAr = (p.description || '').toLowerCase();
+                    const pDescEn = (p.descriptionEn || '').toLowerCase();
+                    const pLongDescAr = (p.longDescription || '').toLowerCase();
+                    const pLongDescEn = (p.longDescriptionEn || '').toLowerCase();
+                    const pDetails = (p.details || []).join(' ').toLowerCase();
+                    const pDetailsEn = (p.detailsEn || []).join(' ').toLowerCase();
+
+                    return pNameAr.includes(query) ||
+                           pNameEn.includes(query) ||
+                           pDescAr.includes(query) ||
+                           pDescEn.includes(query) ||
+                           pLongDescAr.includes(query) ||
+                           pLongDescEn.includes(query) ||
+                           pDetails.includes(query) ||
+                           pDetailsEn.includes(query);
                 });
-            }
-            const grid = document.getElementById('familiesGrid');
-            if (filtered.length === 0) {
-                grid.innerHTML = `<div style="grid-column: span 2; text-align: center; padding: 30px;">${t.noProjects}</div>`;
-                return;
-            }
-            grid.innerHTML = filtered.map(family => {
-                const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
-                const familyDesc = appState.currentLanguage === 'ar' ? family.description : family.descriptionEn;
-                return `
-                <div class="family-card" onclick="navigateTo('/family/${family.id}')">
-                    ${family.adra_license === 'نعم' ? '<div class="license-badge-card"><i class="fas fa-check-circle"></i>' + t.licensed + '</div>' : ''}
-                    <div class="family-image"><img src="${family.image}" alt="${familyName}" loading="lazy"></div>
-                    <div class="family-content">
-                        <h3 class="family-name">${familyName}</h3>
-                        <div class="family-location"><i class="fas fa-map-marker-alt"></i> ${t.emirates[family.emirate] || family.emirate}</div>
-                        <div class="family-description">${familyDesc}</div>
-                    </div>
-                </div>
-            `}).join('');
-            requestAnimationFrame(() => {
-    document.querySelectorAll('.family-image img').forEach(img => {
-        if (img.complete) img.style.opacity = '1';
-    });
-});
+
+                // البحث في المشروع نفسه
+                return nameAr.includes(query) ||
+                       nameEn.includes(query) ||
+                       descAr.includes(query) ||
+                       descEn.includes(query) ||
+                       longDescAr.includes(query) ||
+                       longDescEn.includes(query) ||
+                       productMatch;
+            });
         }
+    }
+
+    const grid = document.getElementById('familiesGrid');
+    if (filtered.length === 0) {
+        grid.innerHTML = `<div style="grid-column: span 2; text-align: center; padding: 30px;">${t.noProjects}</div>`;
+        return;
+    }
+
+    grid.innerHTML = filtered.map(family => {
+        const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
+        const familyDesc = appState.currentLanguage === 'ar' ? family.description : family.descriptionEn;
+        return `
+        <div class="family-card" onclick="navigateTo('/family/${family.id}')">
+            ${family.adra_license === 'نعم' ? '<div class="license-badge-card"><i class="fas fa-check-circle"></i>' + t.licensed + '</div>' : ''}
+            <div class="family-image"><img src="${family.image}" alt="${familyName}" loading="lazy"></div>
+            <div class="family-content">
+                <h3 class="family-name">${familyName}</h3>
+                <div class="family-location"><i class="fas fa-map-marker-alt"></i> ${t.emirates[family.emirate] || family.emirate}</div>
+                <div class="family-description">${familyDesc}</div>
+            </div>
+        </div>
+    `}).join('');
+
+    requestAnimationFrame(() => {
+        document.querySelectorAll('.family-image img').forEach(img => {
+            if (img.complete) img.style.opacity = '1';
+        });
+    });
+}
         // دالة عرض صفحة العروض
 function showOffersPage() {
     navigateTo('/offers');
@@ -7212,7 +7278,6 @@ function renderOffers() {
             appState.currentZoomIndex = index;
         }
 
-// ==================== معالجة تغيير الرابط ====================
 function handleHashChange() {
     const hash = window.location.hash.slice(1) || '/';
     const parts = hash.split('/').filter(p => p !== '');
@@ -7222,15 +7287,20 @@ function handleHashChange() {
         else if (parts[0] === 'projects' && parts[1] === 'emirate' && parts[2]) {
             appState.currentEmirate = decodeURIComponent(parts[2]);
             appState.currentCategory = 'all';
-            appState.searchQuery = '';
             updateActiveEmirateChip(appState.currentEmirate);
             updateActiveCategoryChip('all');
             showPage('families');
             renderFamilies();
-        } else if (parts[0] === 'family' && parts[1]) showFamilyProducts(parseInt(parts[1]), false);
+            // تعيين قيمة مربع البحث إذا كان هناك استعلام بحث
+            const searchInput = document.getElementById('familiesSearch');
+            if (searchInput && appState.searchQuery) {
+                searchInput.value = appState.searchQuery;
+            }
+        }
+        else if (parts[0] === 'family' && parts[1]) showFamilyProducts(parseInt(parts[1]), false);
         else if (parts[0] === 'product' && parts[1] && parts[2]) showProductDetail(parseInt(parts[1]), parts[2], false);
         else if (parts[0] === 'favorites') { showPage('favorites'); renderFavorites(); }
-        else if (parts[0] === 'offers') { showPage('offers'); renderOffers(); }  // <-- هذا السطر مهم
+        else if (parts[0] === 'offers') { showPage('offers'); renderOffers(); }
         else showPage('home');
         hideLoader();
     }, 50);
@@ -7324,6 +7394,11 @@ function handleHashChange() {
             // تحديث النصوص في الصفحة
             const t = translations[newLang];
             document.getElementById('siteTitle').textContent = t.siteTitle;
+            document.getElementById('privacyLink').textContent = t.privacy;
+            document.getElementById('offersPageTitle').textContent = t.offersPageTitle;
+            document.getElementById('offersPageSubtitle').textContent = t.offersPageSubtitle;
+            document.getElementById('termsLink').textContent = t.terms;
+            document.getElementById('offersBtnText').textContent = t.offersBtnText;
             document.getElementById('siteSubtitle').textContent = t.siteSubtitle;
             document.getElementById('navHome').textContent = t.navHome;
             document.getElementById('navMarket').textContent = t.navMarket;
@@ -7492,25 +7567,57 @@ function handleHashChange() {
             }
         }
 
-        // ==================== تهيئة الصفحة ====================
-        window.addEventListener('load', function() {
-            const savedLang = localStorage.getItem('projectSouqLang');
-            if (savedLang && (savedLang === 'ar' || savedLang === 'en')) {
-                appState.currentLanguage = savedLang;
-                if (savedLang === 'en') {
-                    document.getElementById('htmlTag').setAttribute('dir', 'ltr');
-                    document.getElementById('htmlTag').setAttribute('lang', 'en');
-                    document.body.classList.add('en-mode');
-                } else {
-                    document.getElementById('htmlTag').setAttribute('dir', 'rtl');
-                    document.getElementById('htmlTag').setAttribute('lang', 'ar');
-                    document.body.classList.remove('en-mode');
-                }
-            }
-            initEmiratesChips();
-            initCategoriesChips();
-            handleHashChange();
-        });
+window.addEventListener('load', function() {
+    // قراءة اللغة المحفوظة
+    const savedLang = localStorage.getItem('projectSouqLang');
+    
+    // إذا كان هناك لغة محفوظة، استخدمها، وإلا استخدم العربية كلغة افتراضية
+    if (savedLang === 'en') {
+        appState.currentLanguage = 'en';
+        document.getElementById('htmlTag').setAttribute('dir', 'ltr');
+        document.getElementById('htmlTag').setAttribute('lang', 'en');
+        document.body.classList.add('en-mode');
+    } else {
+        // القيمة الافتراضية (عربي)
+        appState.currentLanguage = 'ar';
+        document.getElementById('htmlTag').setAttribute('dir', 'rtl');
+        document.getElementById('htmlTag').setAttribute('lang', 'ar');
+        document.body.classList.remove('en-mode');
+    }
+    
+    // تحديث جميع النصوص حسب اللغة الحالية
+    toggleLanguage(); 
+    
+    // تهيئة الشرائح وعرض الصفحة المناسبة
+    initEmiratesChips();
+    initCategoriesChips();
+    handleHashChange();
+});
+
+window.addEventListener('load', function() {
+    toggleLanguage(); 
+    initEmiratesChips();
+    initCategoriesChips();
+    handleHashChange();
+});
+        // ==================== دوال سياسة الخصوصية والشروط ====================
+function showPrivacyModal() {
+    const lang = appState.currentLanguage; // 'ar' or 'en'
+    if (lang === 'ar') {
+        window.open('privacy.html', '_blank');
+    } else {
+        window.open('privacyen.html', '_blank');
+    }
+}
+
+function showTermsModal() {
+    const lang = appState.currentLanguage;
+    if (lang === 'ar') {
+        window.open('terms.html', '_blank');
+    } else {
+        window.open('termsen.html', '_blank');
+    }
+}
 
         window.addEventListener('hashchange', handleHashChange);
 
@@ -7520,7 +7627,9 @@ function handleHashChange() {
         window.renderOffers = renderOffers;
         window.navigateTo = navigateTo;
         window.goBack = goBack;
-        window.scrollToTopAndHome = scrollToTopAndHome;
+        window.scrollToTop = scrollToTop;
+        window.showPrivacyModal = showPrivacyModal; 
+        window.showTermsModal = showTermsModal; 
         window.filterByCategory = filterByCategory;
         window.filterByEmirate = filterByEmirate;
         window.showFamilyProducts = showFamilyProducts;
