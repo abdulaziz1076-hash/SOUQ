@@ -8769,8 +8769,8 @@ longDescription: "ورق عنب محشي بالأرز والبهارات، يق�
 longDescriptionEn: "Vine leaves stuffed with rice and spices, served with yogurt. Available in different sizes.",
 category: "محاشي",
 categoryEn: "Stuffed Vegetables",
-mainImage: "images/p67.jpg",
-images: ["images/p67.jpg"],
+mainImage: "images/p67-1-1.jpg",
+images: ["images/p67-1-1.jpg"],
 details: ["نصف كيلو", "كيلو", "كيلو ونصف"],
 detailsEn: ["Half kilo", "1 kilo", "1.5 kilos"]
 },
