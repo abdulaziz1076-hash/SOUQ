@@ -9295,8 +9295,11 @@ longDescription: "فتة شهية تتكون من طبقات من الخبز و�
 longDescriptionEn: "Delicious fattah consisting of layers of bread, rice, meat, and yogurt, available in four flavors: vine leaves fattah, potato fattah, Cheetos fattah, and toasted bread fattah. Each type comes in 12 pieces.",
 category: "أطباق رئيسية",
 categoryEn: "Main Dishes",
-mainImage: "images/p73.jpg",
-images: ["images/p73.jpg"],
+mainImage: "images/p73-2-1.jpg",
+images: ["images/p73-2-1.jpg"
+        "images/p73-2-2.jpg",
+        "images/p73-2-3.jpg",
+],
 details: [
 "فته ورق عنب",
 "فته بالبطاط",
