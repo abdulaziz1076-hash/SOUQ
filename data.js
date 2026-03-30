@@ -9296,10 +9296,9 @@ longDescriptionEn: "Delicious fattah consisting of layers of bread, rice, meat, 
 category: "أطباق رئيسية",
 categoryEn: "Main Dishes",
 mainImage: "images/p73-2-1.jpg",
-images: ["images/p73-2-1.jpg"
+images: ["images/p73-2-1.jpg",
         "images/p73-2-2.jpg",
-        "images/p73-2-3.jpg",
-],
+        "images/p73-2-3.jpg"],
 details: [
 "فته ورق عنب",
 "فته بالبطاط",
