@@ -1,0 +1,10489 @@
+const familiesData = [
+             {
+                id: 1,
+                name: "موتشا - Motcha",
+                nameEn: "Motcha",
+                is_paid: true,
+                emirate: "دبي",
+                description: "نقدم نوع ممتاز جداً و نوفر كميات كبيرة للكوفيات.",
+                descriptionEn: "We offer excellent quality matcha and provide bulk quantities for cafes.",
+                longDescription: "اول براند ماتشا صينية في الامارات، نقدم نوع ممتاز جداً و نوفر كميات كبيرة للكوفيات.",
+                longDescriptionEn: "The first Chinese matcha brand in the UAE, offering excellent quality matcha and bulk quantities for cafes.",
+                image: "images/p2.jpg",
+                phone: "",
+                whatsapp: "+971555307912",
+                email: "",
+                sell_points:[
+                    {type: "instagram" , value: "motcha.ae"},
+                ],
+                adra_license: "نعم",
+                coverage: "جميع إمارات الدولة",
+                badges: ["مميز"],
+                badgesEn: ["Distinct"],
+                category: "أطعمة ومشروبات",
+                categoryEn: "Food & Beverages",
+                products: [
+                    {
+                        id: "2_p1",
+                        name: "ماتشا",
+                        nameEn: "Matcha",
+                        description: "ماتشا احتفالية عضوية 50g",
+                        descriptionEn: "Ceremonial organic matcha 50g",
+                        longDescription: "تجربة النكهة والجودة الصينية الأصيلة مع ماتشا الدرجة الاحتفالية العضوية، يتم حصد أوراق الشاي بعناية من الظل للحفاظ على اللون الأخضر الزمردي والمذاق الغني والقوام الكريمي.",
+                        longDescriptionEn: "Experience authentic Chinese flavor and quality with organic ceremonial grade matcha, carefully shade-grown harvested to preserve the emerald green color, rich taste, and creamy texture.",
+                        category: "أطعمة ومشروبات",
+                        categoryEn: "Food & Beverages",
+                        mainImage: "images/p2-5.jpg",
+                        images: [
+                            "images/p2-5.jpg",
+                            "images/p2-5-1.jpg",
+                            "images/p2-5-2.jpg",
+                            "images/p2-5-3.jpg",
+                        ],
+                        details: [
+                            "الوزن: 50 جرام (تكفي لتحضير 25-30 كوب)",
+                            "الجودة: عضوية 100%، خالية من الإضافات والمواد الحافظة.",
+                            "النكهة: تمتاز بحلاوة طبيعية خفيفة وبدون مرارة تماماً.",
+                        ],
+                        detailsEn: [
+                            "Weight: 50g (makes 25-30 cups)",
+                            "Quality: 100% organic, free from additives and preservatives.",
+                            "Flavor: Naturally sweet with no bitterness.",
+                        ]
+                    },
+                    {
+                        id: "2_p2",
+                        name: "عدة ماتشا",
+                        nameEn: "Matcha Set",
+                        description: "عدة ماتشا متكاملة",
+                        descriptionEn: "Complete matcha set",
+                        longDescription: "عدة الماتشا المتكاملة تجربة النكهة والجودة الصينية الأصيلة، لتحضير كوب مثالي من الماتشا في منزلك، صممت مجموعتنا بعناية فائقة لتأخذك في رحلة تبدأ من لحظة فتح العلبة وحتى آخر رشفة.",
+                        longDescriptionEn: "Complete matcha set for an authentic Chinese flavor experience. Our carefully designed set takes you on a journey from the moment you open the box to the last sip.",
+                        category: "أطعمة ومشروبات",
+                        categoryEn: "Beverages",
+                        mainImage: "images/p2-3.jpg",
+                        images: [
+                            "images/p2-3.jpg",
+                        ],
+                        details: [],
+                        detailsEn: [],
+                    },
+                    {
+                        id: "2_p3",
+                        name: "ملعقة ماتشا",
+                        nameEn: "Matcha Spoon",
+                        description: "ملعقة ماتشا حديد",
+                        descriptionEn: "Matcha spoon",
+                        longDescription: "ملعقة ماتشا حديد مقاوم للصدأ بلونين ذهبي و فضي",
+                        longDescriptionEn: "Stainless steel matcha spoon in gold and silver colors",
+                        category: "مشروبات",
+                        categoryEn: "Food & Beverages",
+                        mainImage: "images/p2-1.jpg",
+                        images: [
+                            "images/p2-1.jpg",
+                            "images/p2-1-1.jpg",
+                        ],
+                        details: [],
+                        detailsEn: [],
+                    },
+                    {
+                        id: "2_p4",
+                        name: "كوب ماتشا",
+                        nameEn: "Matcha Cup",
+                        description: "كوب ماتشا مميز",
+                        descriptionEn: "Special matcha cup",
+                        longDescription: "كوب ماتشا مميز",
+                        longDescriptionEn: "Special matcha cup",
+                        category: "أطعمة ومشروبات",
+                        categoryEn: "Food & Beverages",
+                        mainImage: "images/p2-2.jpg",
+                        images: [
+                            "images/p2-2.jpg",
+                        ],
+                        details: [],
+                        detailsEn: [],
+                    }
+                ]
+            },
+            {
+                id: 2,
+                name: "ورقة قص",
+                nameEn: "cards play QS",
+                emirate: "أبوظبي",
+                description: "ترفيه",
+                descriptionEn: "Entertainment",
+                longDescription: "اوراق لعب فاخرة - تجربة احترافية في كل لعبة.",
+                longDescriptionEn: "Premium playing cards - professional experience in every game.",
+                image: "images/P1.png",
+                phone: "",
+                whatsapp: "",
+                email: "",
+                sell_points:[
+                    {type: "instagram" , value: "cardsplayuae"},
+                ],
+                adra_license: "نعم",
+                coverage: "الإمارة فقط",
+                badges: [""],
+                badgesEn: [""],
+                category: "ترفيه",
+                categoryEn: "Entertainment",
+                products: [
+                    {
+                        id: "1_p1",
+                        name: "بطاقات- قص",
+                        nameEn: "Cut Cards",
+                        description: "بطاقات قوية وجودة عالية",
+                        descriptionEn: "Strong and high quality cards",
+                        longDescription: "بطاقات لعب احترافية فاخرة مصنوعة من أجود أنواع الورق المقوى، مقاومة للثني والتمزق. مناسبة للمحترفين والهواة على حد سواء. تصميم كلاسيكي أنيق مع لمسات عصرية. تأتي في علبة هدايا فاخرة.",
+                        longDescriptionEn: "Premium professional playing cards made from the finest cardboard, resistant to bending and tearing. Suitable for both professionals and amateurs. Classic elegant design with modern touches. Comes in a luxury gift box.",
+                        category: "ترفيه",
+                        categoryEn: "Entertainment",
+                        mainImage: "images/P1-1.png",
+                        images: [
+                            "images/P1-1.png",
+                            "images/P1-2.png",
+                            "images/P1-3.png",
+                        ],
+                        details: [
+                            "مكونة من 52 بطاقة + 2 بطاقة جوكر",
+                            "ورق فاخر مقاوم للماء",
+                            "تغليف جيد",
+                            "جودة عالية",
+                        ],
+                        detailsEn: [
+                            "52 cards + 2 joker cards",
+                            "Premium water-resistant paper",
+                            "Good packaging",
+                            "High quality",
+                        ]
+                    },
+                ]
+            },            
+            {
+                id: 3,
+                name: "spicy taste",
+                nameEn: "spicy taste",
+                emirate: "أبوظبي",
+                description: "بهارات عربية",
+                descriptionEn: "Arabic spices",
+                longDescription: "بهارات فاخرة بنكهة قوية وجودة مضمونة",
+                longDescriptionEn: "Premium spices with bold flavor & guaranteed quality",
+                image: "images/p3.jpg",
+                phone: "",
+                whatsapp: "971503334464+",
+                email: "",
+                sell_points:[
+                    {type: "instagram" , value: "spicy___taste"},
+                ],
+                adra_license: "نعم",
+                coverage: "الإمارة فقط",
+                badges: ["جديد"],
+                badgesEn: ["New"],
+                category: "عطارة",
+                categoryEn: "Apothecary",
+                products: [
+                    {
+                        id: "3_p1",
+                        name: "بهارات عربية حار/عادي",
+                        nameEn: "Arabic Spice Blend – Spicy / Regular",
+                        description: "خلطة بهارات عربية متكاملة لكل الطبخات اليومية، متوفرة بنوعين: حار وعادي.",
+                        descriptionEn: "",
+                        longDescription: "خلطة بهارات عربية متوازنة تجمع بين النكهة العميقة والريحة الأصيلة لتناسب جميع الأطباق من الأرز، اللحوم، الدجاج، الشوربات والمشاوي. نطحن مكوناتنا بعناية ونمزجها بنسب مدروسة لتعطي طعم ثابت وجودة عالية في كل مرة. متوفرة بنوعين لتناسب جميع الأذواق: الحار لعشاق النكهة القوية، والعادي لمن يفضل الطعم المتوازن.",
+                        longDescriptionEn: "A carefully balanced Arabic spice blend crafted to enhance rice dishes, meats, chicken, soups, and grills. Our spices are finely ground and blended in precise ratios to ensure consistent flavor and premium quality in every use. Available in two options: Spicy for bold flavor lovers and Regular for a well-balanced taste.",
+                        category: "عطارة",
+                        categoryEn: "Apothecary",
+                        mainImage: "images/p3-1.jpg",
+                        images: [
+                             "images/p3-1.jpg",
+                             "images/p3-1-1.png",
+                             "images/p3-1-2.png",
+                             "images/p3-1-3.png",
+                        ],
+                        details: [
+                            "النوع: حار / عادي",
+                             "الحجم: علبة وسط",
+                             "مناسبة لجميع الطبخات العربية",
+                             "معبأة في عبوة محكمة الإغلاق للحفاظ على النكهة"
+                        ],
+                        detailsEn: [
+                             "Type: Spicy / Regular",
+                             "Size: Medium Jar",
+                             "Suitable for all Arabic dishes",
+                             "Sealed packaging to preserve freshness"
+                        ],
+                    },
+                    {
+                      id: "3_p2",
+                      name: "كركديه ناشف",
+                      nameEn: "Dried Hibiscus",
+                      description: "كركديه ناشف علبة كبيرة وعلبة صغيرة",
+                      descriptionEn: "Dried Hibiscus, large box, small box",
+                      longDescription: "كركديه ناشف طبيعي 100%، متوفر بحجم كبير وحجم صغير مشروب مثالي ومنعش.",
+                      longDescriptionEn: "100% natural dried hibiscus, available in a large box and a small box. A perfect and refreshing drink.",
+                      category: "عطارة",
+                      categoryEn: "Apothecary",
+                      mainImage: "images/p3-2.jpg",
+                      images: [
+                          "images/p3-2.jpg",
+                      ],
+                      details: [
+                          "النوع: كركديه طبيعي 100%",
+                          "الحجم: علبة كبيرة وصغيرة",
+                         "مشروب بارد منعش في الصيف، ومشروب ساخن مدفئ في الشتاء",
+                          "مصدر طبيعي لمضادات الأكسدة وفيتامين سي",
+                          "معبأ في علبة محكمة الإغلاق للحفاظ على النكهة والجودة"
+                      ],
+                      detailsEn: [
+                          "Type: 100% Natural Hibiscus",
+                          "Size: Large and Small Box",
+                          "A refreshing cold drink in summer and a warm comforting drink in winter",
+                          "Natural source of antioxidants and Vitamin C",
+                          "Sealed in an airtight box to preserve flavor and quality"
+                      ],
+                  },
+                  {
+                      id: "3_p3",
+                      name: "ليمون مجفف أصفر وأسود",
+                      nameEn: "Yellow & Black Dried Lemon",
+                      description: "ليمون أصفر وأسود علبة كبيرة",
+                      descriptionEn: "Large box of yellow & black lemon",
+                      longDescription: "ليمون أصفر طبيعي مجفف وليمون أسود (لومي) معبأ في علب كبيرة، مثالي لإضافة نكهة حمضية مميزة للطبخات العربية والمشروبات الساخنة. منتج طبيعي 100%.",
+                      longDescriptionEn: "Natural dried yellow lemon and black lemon (loomi) packed in large boxes, perfect for adding a distinct citrus flavor to Arabic dishes and hot drinks. 100% natural product.",
+                      category: "عطارة",
+                      categoryEn: "Apothecary",
+                      mainImage: "images/p3-3.jpg",
+                      images: [
+                          "images/p3-3.jpg",
+                      ],
+                      details: [
+                          "النوع: ليمون أصفر مجفف / ليمون أسود مجفف (لومي)",
+                          "الحجم: علبة كبيرة لكل نوع",
+                          "الاستخدام: يضاف للطبخات والمشروبات لإكسابها نكهة حمضية لذيذة",
+                          "الفوائد: غني بفيتامين سي ومضادات الأكسدة",
+                          "التعبئة: علبة محكمة الإغلاق تحافظ على النكهة والجودة"
+                      ],
+                      detailsEn: [
+                          "Type: Dried Yellow Lemon / Dried Black Lemon (Loomi)",
+                          "Size: Large box for each type",
+                          "Usage: Adds a tangy flavor to dishes and beverages",
+                          "Benefits: Rich in Vitamin C and antioxidants",
+                          "Packaging: Airtight box preserves freshness and quality"
+                      ]
+                  },
+
+                ]
+            },
+            {
+                id: 11,
+                name: "رغبة السوشي",
+                nameEn: "Sushi Crava",
+                emirate: "أبوظبي",
+                description: "أطعمة ومشروبات",
+                descriptionEn: "Food & Beverages",
+                longDescription: "أطباق يابانية مبتكرة بطابع عصري ونكهات غنية. نهتم بأدق التفاصيل في التحضير، ونستخدم مكونات مختارة بعناية لنقدم تجربة طعام مختلفة تجمع بين الجودة والطعم المميز.",
+                longDescriptionEn: "modern Japanese-inspired dishes crafted with rich flavors and premium ingredients. We focus on quality, presentation, and taste to deliver a unique dining experience.",
+                image: "images/p11.jpg",
+                phone: "",
+                whatsapp: "+971 50 765 7056",
+                email: "",
+                sell_points:[
+                    {type: "instagram" , value: "scrave.ae"},
+                ],
+                adra_license: "نعم",
+                coverage: "جميع إمارات الدولة",
+                badges: ["جديد"],
+                badgesEn: ["New"],
+                category: "أطعمة ومشروبات",
+                categoryEn: "Food & Beverages",
+                products: [
+                    
+                {
+                    id: "11_p1",
+                    name: "كريزي كراب باك",
+                    nameEn: "Crazy Crab bake",
+                    description: "باك الكابوريا الكريمي بصوص غني وطبقة مقرمشة.",
+                    descriptionEn: "Creamy crab bake with rich sauce and crispy topping.",
+                    longDescription: "باك شهي بحشوة كابوريا طازجة مع صوص كريمي وجبنة ذائبة، يقدم ساخناً مع طبقة مقرمشة. طبق غني ومثالي لمحبي الكابوريا.",
+                    longDescriptionEn: "A delicious bake with fresh crab filling, creamy sauce, and melted cheese, served hot with a crispy topping. A rich dish perfect for crab lovers.",
+                    category: "أطعمة ومشروبات",
+                    categoryEn: "Food & Beverages",
+                    mainImage: "images/p11-1-2.png",
+                    images: [
+                        "images/p11-1-2.png",
+                        "images/p11-1-1.png",
+                    ],
+                    details: [
+                      "باك كابوريا",
+                      "صوص كريمي",
+                      "جبنة ذائبة",
+                      "طبقة مقرمشة"
+                    ],
+                    detailsEn: [
+                      "Crab bake",
+                      "Creamy sauce",
+                      "Melted cheese",
+                      "Crispy topping"
+                    ]
+                },
+                {
+                    id: "11_p2",
+                    name: "تيمبورا باك",
+                    nameEn: "Tempura bake",
+                    description: "باك التيمبورا المقرمش بالصوص الحار والجبن/ والعادي.",
+                    descriptionEn: "Crispy tempura pak with spicy sauce and cheese.",
+                    longDescription: "باك يجمع بين قطع التيمبورا المقرمشة والصوص الكريمي، مغطى بطبقة من الجبن المحمر. وجبة مشبعة بنكهة مدخنة.",
+                    longDescriptionEn: "A bake combining crispy tempura pieces with a creamy sauce, topped with browned cheese. A filling meal with a smoky and flavor.",
+                    category: "أطعمة ومشروبات",
+                    categoryEn: "Food & Beverages",
+                    mainImage: "images/p11-2-1.jpg",
+                    images: [
+                        "images/p11-2-1.jpg",
+                        "images/p11-2-2.png"
+                    ],
+                    details: [
+                      "تيمبورا مقرمش",
+                      "صوص كريمي حار/عادي",
+                      "جبنة محمرة",
+                      "حجم كبير"
+                    ],
+                    detailsEn: [
+                      "Crispy tempura",
+                      "Spicy creamy sauce",
+                      "Browned cheese",
+                      "Large size"
+                    ]
+                },
+                {
+                    id: "11_p3",
+                    name: "تونة باك - Tuna bake",
+                    nameEn: "Tuna bake",
+                    description: "باك بالتونة الطازجة والمايونيز والجبن الذائب.",
+                    descriptionEn: "bake with fresh tuna, mayonnaise, and melted cheese.",
+                    longDescription: "باك لذيذ بحشوة التونة الطازجة الممزوجة بالمايونيز والخضروات، مغطاة بطبقة من الجبن الذائب ومخبوزة حتى تصبح ذهبية.",
+                    longDescriptionEn: "A delicious bake with fresh tuna filling mixed with mayonnaise and vegetables, topped with melted cheese and cocked  until golden.",
+                    category: "أطعمة ومشروبات",
+                    categoryEn: "Food & Beverages",
+                    mainImage: "images/p11-3-1.jpg",
+                    images: [
+                        "images/p11-3-1.jpg",
+                        "images/p11-3-2.png"
+                    ],
+                    details: [
+                      "تونة طازجة",
+                      "مايونيز",
+                      "خضروات",
+                      "جبنة ذائبة"
+                    ],
+                    detailsEn: [
+                      "Fresh tuna",
+                      "Mayonnaise",
+                      "Vegetables",
+                      "Melted cheese"
+                    ]
+                },
+                {
+                    id: "11_p4",
+                    name: "هاف آند هاف باك",
+                    nameEn: "Half & Half Bak",
+                    description: "مزيج نصف تيمبور ونصف كابوريا بالجبن.",
+                    descriptionEn: "Half tempura & half crab with cheese.",
+                    longDescription: "أفضل خيار لمحبي التنوع! نصف باك بالتيمبورا الحار/العادي ونصف بكرياب الكابوريا الكريمي، مغطى بالجبن. يجمع بين النكهتين في طبق واحد.",
+                    longDescriptionEn: "The best choice for variety lovers! Half spicy/normal tempura bake and half creamy crab bake, topped with cheese. Combines two flavors in one dish.",
+                    category: "أطعمة ومشروبات",
+                    categoryEn: "Food & Beverages",
+                    mainImage: "images/p11-4-1.png",
+                    images: [
+                        "images/p11-4-1.png",
+                        "images/p11-4-2.jpg",
+                    ],
+                    details: [
+                      "نصف تيمبورا حار/عادي",
+                      "نصف كابوريا",
+                      "صوص كريمي",
+                      "جبنة ذائبة"
+                    ],
+                    detailsEn: [
+                      "Half spicy tempura",
+                      "Half crab",
+                      "Creamy sauce",
+                      "Melted cheese",
+                    ],
+                },
+                {
+                    id: "11_p5",
+                    name: "فيج نودلز",
+                    nameEn: "Veg Noodles",
+                    description: "نودلز بالخضروات الطازجة والنكهة الآسيوية.",
+                    descriptionEn: "Noodles with fresh vegetables and Asian flavor.",
+                    longDescription: "نودلز مقلية مع تشكيلة من الخضروات الطازجة والصلصة الآسيوية المميزة. طبق نباتي شهي ومشبع.",
+                    longDescriptionEn: "Stir-fried noodles with a mix of fresh vegetables and a distinctive Asian sauce. A delicious and filling vegetarian dish.",
+                    category: "أطعمة ومشروبات",
+                    categoryEn: "Food & Beverages",
+                    mainImage: "images/p11-5-1.jpg",
+                    images: [
+                        "images/p11-5-1.jpg",
+                        "images/p11-5-2.PNG",
+                    ],
+                    details: [
+                      "نودلز مقلية",
+                      "خضروات طازجة",
+                      "صلصة آسيوية",
+                      "طبق نباتي"
+                    ],
+                    detailsEn: [
+                      "Stir-fried noodles",
+                      "Fresh vegetables",
+                      "Asian sauce",
+                      "Vegetarian dish"
+                    ],
+                },
+                {
+                    id: "11_p6",
+                    name: "سوب رامن",
+                    nameEn: "Soup Ramen",
+                    description: "شوربة رامن تقليدية بنكهة غنية.",
+                    descriptionEn: "Traditional ramen soup with rich flavor.",
+                    longDescription: "شوربة رامن دافئة ولذيذة، تحتوي على نودلز طازجة في مرق غني ومتبل. وجبة خفيفة ومريحة في أي وقت.",
+                    longDescriptionEn: "A warm and delicious ramen soup, containing fresh noodles in a rich and seasoned broth. A light and comforting meal anytime.",
+                    category: "أطعمة ومشروبات",
+                    categoryEn: "Food & Beverages",
+                    mainImage: "images/p11-6-1.jpg",
+                    images: [
+                        "images/p11-6-1.jpg",
+                        "images/p11-6-2.jpg",
+                    ],
+                    details: [
+                      "نودلز طازجة",
+                      "مرق غني",
+                      "طعم تقليدي"
+                    ],
+                    detailsEn: [
+                      "Fresh noodles",
+                      "Rich broth",
+                      "Light meal",
+                      "Traditional taste"
+                    ]
+                },
+                {
+                    id: "11_p9",
+                    name: "تشيزي رامن - Cheesy Ramen",
+                    nameEn: "Cheesy Ramen",
+                    description: "رامن كريمي بالجبن الذائب.",
+                    descriptionEn: "Creamy ramen with melted cheese.",
+                    longDescription: "تجربة فريدة لمحبي الجبن! رامن كريمي غني يقدم مع طبقة من الجبن الذائب، يخلق مزيجاً لا يقاوم بين النكهات الآسيوية والجبن.",
+                    longDescriptionEn: "A unique experience for cheese lovers! A rich creamy ramen served with a layer of melted cheese, creating an irresistible blend of Asian flavors and cheese.",
+                    category: "أطعمة ومشروبات",
+                    categoryEn: "Food & Beverages",
+                    mainImage: "images/p11-9-2.jpg",
+                    images: ["images/p11-9-2.jpg",
+                        "images/p11-9-1.png",
+                    ],
+                    details: [
+                      "رامن كريمي",
+                      "جبن ذائب",
+                      "نكهة غنية",
+                      "لمحبي الجبن"
+                    ],
+                    detailsEn: [
+                      "Creamy ramen",
+                      "Melted cheese",
+                      "Rich flavor",
+                      "For cheese lovers"
+                    ]
+                },
+                {
+            
+                    id: "11_p7",
+                    name: "إدامامي حار وعادي",
+                    nameEn: "Normal/Spicy Edamame",
+                    description: "إدامامي حار وعادي بلمسة من التوابل.",
+                    descriptionEn: "Spicy edamame with a touch of seasoning.",
+                    longDescription: "فول الصويا الأخضر (الإدامامي) مسلوق ومتبل بخلطة حارة مميزة. مقبلات صحية ولذيذة تفتح الشهية.",
+                    longDescriptionEn: "Green soybeans (edamame) boiled and seasoned with a special spicy/normal blend. A healthy and delicious appetizer.",
+                    category: "أطعمة ومشروبات",
+                    categoryEn: "Food & Beverages",
+                    mainImage: "images/p11-7-1.jpg",
+                    images: [
+                        "images/p11-7-1.jpg",
+                        "images/p11-7-2.jpg",
+                    ],
+                    details: [
+                      "إدامامي",
+                      "بارد/حار",
+                      "مقبلات صحية",
+                      "يفتح الشهية"
+                    ],
+                    detailsEn: [
+                      "Edamame",
+                      "Spicy blend",
+                      "Healthy appetizer",
+                      "Great starter"
+                    ]
+                },
+                {
+                    id: "11_p8",
+                    name: "سلطة خيار",
+                    nameEn: "Cucumber Salad",
+                    description: "سلطة خيار منعشة.",
+                    descriptionEn: "Fresh cucumber salad.",
+                    longDescription: "سلطة خيار مقطعة مع صلصة منعشة وحامضة قليلاً. طبق جانبي خفيف يقدم مع الوجبات الرئيسية، حجم كبير وصغير.",
+                    longDescriptionEn: "Sliced cucumber salad with a refreshing, slightly tangy dressing. A light side dish served with main meals.",
+                    category: "أطعمة ومشروبات",
+                    categoryEn: "Food & Beverages",
+                    mainImage: "images/p11-8-1.jpg",
+                    images: [
+                        "images/p11-8-1.jpg",
+                        "images/p11-8-2.jpg"
+
+                    ],
+                    details: [
+                      "خيار طازج",
+                      "صلصة منعشة",
+                      "حجم كبير/حجم صغير",
+                      "طبق جانبي"
+                    ],
+                    detailsEn: [
+                      "Fresh cucumber",
+                      "Refreshing dressing",
+                      "Small size",
+                      "Side dish"
+                    ]
+                },
+                {
+                    id: "11_p15",
+                    name: "تيمبورا بول - Tempura Bowl",
+                    nameEn: "Tempura Bowl",
+                   description: "وعاء تيزاوا الخاص بمكونات متنوعة.",
+                    descriptionEn: "Special Tezawa bowl with assorted ingredients.",
+                    longDescription: "وعاء مميز يجمع بين الأرز الياباني الطري وشرائح اللحم أو الدجاج مع الخضروات والصلصة الخاصة. وجبة متكاملة ومشبعة.",
+                    longDescriptionEn: "A distinctive bowl combining soft Japanese rice, sliced meat or chicken, vegetables, and a special sauce. A complete and satisfying meal.",
+                    category: "أطعمة ومشروبات",
+                    categoryEn: "Food & Beverages",
+                    mainImage: "images/p11-15-1.jpg",
+                    images: ["images/p11-15-1.jpg"],
+                    details: [
+                      "أرز ياباني",
+                      "شرائح لحم أو دجاج",
+                      "خضروات طازجة",
+                      "صلصة خاصة",
+                      "وجبة متكاملة"
+                    ],
+                    detailsEn: [
+                      "Japanese rice",
+                      "Sliced meat or chicken",
+                      "Fresh vegetables",
+                      "Special sauce",
+                      "Complete meal"
+                    ]
+                },
+                {
+                    id: "11_p14",
+                    name: "كيكة سوشي",
+                    nameEn: "Sushi Cake",
+                    description: "كيكة سوشي مبتكرة تجمع بين نكهات السوشي بشكل جديد.",
+                    descriptionEn: "An innovative sushi cake combining sushi flavors in a new way.",
+                    longDescription: "استمتع بتجربة فريدة مع كيكة السوشي، حيث يتم ترتيب طبقات من الأرز الياباني بالخل، وشرائح السمك الطازج، والأفوكادو، والخيار، مع صوص المايونيز الحار وصلصة الصويا. تقدم باردة ومقطعة مثل الكيكة.",
+                    longDescriptionEn: "Enjoy a unique experience with sushi cake, where layers of vinegared Japanese rice, fresh fish slices, avocado, cucumber, spicy mayo, and soy sauce are arranged. Served chilled and sliced like a cake.",
+                    category: "أطعمة ومشروبات",
+                    categoryEn: "Food & Beverages",
+                    mainImage: "images/p11-14-1.png",
+                    images: [
+                        "images/p11-14-1.png",
+                        "images/p11-14-2.png",
+                    ],
+                    details: [
+                      "أرز سوشي",
+                      "سمك سلمون طازج",
+                      "أفوكادو",
+                                            "خيار",
+                      "مايونيز حار",
+                      "صلصة صويا",
+                      "طحينة سمسم",
+                      "أعشاب بحرية"
+                      ],
+                    detailsEn: [
+                      "Sushi rice",
+                      "Fresh salmon",
+                      "Avocado",
+                      "Cucumber",
+                      "Spicy mayo",
+                      "Soy sauce",
+                      "Sesame paste",
+                      "Seaweed"
+                      ]
+                },
+                
+                { 
+                    id: "11_p16",
+                    name: "ماتشا",
+                    nameEn: "Matcha",
+                    description: "مشروب ماتشا ياباني أخضر بارد أو ساخن.",
+                    descriptionEn: "Cold or hot Japanese green matcha tea.",
+                    longDescription: "ماتشا هو شاي أخضر ياباني ناعم ومطحون، يُخفق مع الماء الساخن حتى يصبح رغويًا. يتميز بنكهته الغنية ومضادات الأكسدة العالية. يقدم باردًا أو ساخنًا حسب الرغبة.",
+                    longDescriptionEn: "Matcha is a finely ground Japanese green tea powder, whisked with hot water until frothy. It has a rich flavor and is high in antioxidants. Served cold or hot as desired.",
+                    category: "أطعمة ومشروبات",
+                    categoryEn: "Food & Beverages",
+                    mainImage: "images/p11-16-1.jpg",
+                    images: [
+                       "images/p11-16-1.jpg",
+                       "images/p11-16-2.jpg",
+                       "images/p11-16-2.jpg",
+                       "images/p11-16-2.jpg",
+                    ],
+                    details: [
+                       "شاي أخضر ياباني",
+                       "غني بمضادات الأكسدة",
+                       "يقدم بارد أو ساخن",
+                       "قليل السكر",
+                       "طعم غني وكريمي"
+                     ],
+                    detailsEn: [
+                       "Japanese green tea",
+                       "Rich in antioxidants",
+                       "Served cold or hot",
+                       "Low sugar",
+                       "Rich and creamy taste"
+                     ]
+                },
+                {
+                    id: "11_p10",
+                    name: "كوكاكولا - Coke",
+                    nameEn: "Coke",
+                    description: "مشروب غازي كوكاكولا بارد ومنعش.",
+                    descriptionEn: "Cold and refreshing Coca-Cola.",
+                    longDescription: "مشروب الكوكاكولا الكلاسيكي، بارد ومنعش، الرفيق المثالي لوجبتك.",
+                    longDescriptionEn: "Classic Coca-Cola, cold and refreshing, the perfect companion to your meal.",
+                    category: "أطعمة ومشروبات",
+                    categoryEn: "Food & Beverages",
+                    mainImage: "images/p11-10-1.jpg",
+                    images: ["images/p11-10-1.jpg"],
+                    details: [
+                      "كوكاكولا",
+                      "مشروب غازي",
+                      "بارد ومنعش"
+                    ],
+                    detailsEn: [
+                      "Coca-Cola",
+                      "Soft drink",
+                      "Cold and refreshing"
+                    ]
+                },
+                {
+                    id: "11_p11",
+                    name: "جينجر أيل - Ginger Ale",
+                    nameEn: "Ginger Ale",
+                    description: "مشروب زنجبيل غازي منعش.",
+                    descriptionEn: "Refreshing ginger ale soda.",
+                    longDescription: "مشروب جينجر أيل الخفيف بنكهة الزنجبيل المميزة، مثالي لإنعاش الحلق بعد الوجبة.",
+                    longDescriptionEn: "Light ginger ale drink with a distinctive ginger flavor, perfect for refreshing the palate.",
+                    category: "أطعمة ومشروبات",
+                    categoryEn: "Food & Beverages",
+                    mainImage: "images/p11-11.jpg",
+                    images: ["images/p11.11jpg"],
+                    details: [
+                      "جينجر أيل",
+                      "نكهة زنجبيل",
+                      "منعش"
+                    ],
+                    detailsEn: [
+                      "Ginger Ale",
+                      "Ginger flavor",
+                      "Refreshing"
+                    ]
+                },
+                {
+                    id: "11_p12",
+                    name: "سبرايت - Sprite",
+                    nameEn: "Sprite",
+                    description: "مشروب غازي بنكهة الليمون والنعناع.",
+                    descriptionEn: "Lemon and mint flavored soft drink.",
+                    longDescription: "سبرايت المنعش بطعم الليمون الحامض والبارد، الخيار الأمثل ليوم دافئ.",
+                    longDescriptionEn: "Refreshing Sprite with a tangy lemon taste, the perfect choice for a warm day.",
+                    category: "أطعمة ومشروبات",
+                    categoryEn: "Food & Beverages",
+                    mainImage: "images/p11-12.jpg",
+                    images: ["images/p11-12.jpg"],
+                    details: [
+                      "سبرايت",
+                      "نكهة ليمون",
+                      "منعش"
+                    ],
+                    detailsEn: [
+                      "Sprite",
+                      "Lemon flavor",
+                      "Refreshing"
+                    ]
+                },
+                {
+                    id: "11_p13",
+                    name: "فانتا فراولة - Strawberry Fanta",
+                    nameEn: "Strawberry Fanta",
+                    description: "مشروب غازي بنكهة الفراولة الحلوة.",
+                    descriptionEn: "Sweet strawberry flavored soft drink.",
+                    longDescription: "فانتا بنكهة الفراولة الحلوة والمنعشة، لمحبي المشروبات الغازية بالفواكه.",
+                    longDescriptionEn: "Fanta with a sweet and refreshing strawberry flavor, for fans of fruity sodas.",
+                    category: "أطعمة ومشروبات ",
+                    categoryEn: "Food & Beverages",
+                    mainImage: "images/p11-13.jpg",
+                    images: ["images/p11-13.jpg"],
+                    details: [
+                      "فانتا فراولة",
+                      "نكهة فراولة",
+                      "حلو ومنعش"
+                    ],
+                    detailsEn: [
+                      "Strawberry Fanta",
+                      "Strawberry flavor",
+                      "Sweet and refreshing"
+                    ]
+                }
+              ],
+            },
+            
+            {
+                id: 4,
+                name: "m_.dresses",
+                nameEn: "m_.dresses",
+                emirate: "الشارقة",
+                description: "ملابس",
+                descriptionEn: "Clothes",
+                longDescription: "أزياء نسائية راقية بتفاصيل تبرز أناقتك",
+                longDescriptionEn: "Elegant women's fashion with details that highlight your elegance",
+                image: "images/p4.jpg",
+                phone: "",
+                whatsapp: "971551515072+",
+                email: "",
+                sell_points:[
+                    {type: "instagram" , value: "m_.dresses"},
+                ],
+                adra_license: "لا",
+                coverage: "جميع امارات الدولة",
+                badges: ["جديد"],
+                badgesEn: ["New"],
+                category: "ملابس",
+                categoryEn: "Clothes",
+                products: [
+                    {
+                        id: "4_p1",
+                        name: "روب حرير هندي",
+                        nameEn: "Indian Silk Dress",
+                        description: "فستان أنيق من الحرير الهندي الفاخر.",
+                        descriptionEn: "Elegant dress made of luxurious Indian silk.",
+                        longDescription: "فستان مصمم من أجود أنواع الحرير الهندي الطبيعي، يتميز بملمسه الناعم و لمعانه الطبيعي الجذاب. يأتي بتفصيل دقيق يبرز الأناقة، مناسب للمناسبات الخاصة والسهرات.",
+                        longDescriptionEn: "A dress crafted from the finest natural Indian silk, characterized by its soft texture and attractive natural sheen. It features precise tailoring that highlights elegance, suitable for special occasions and evening parties.",
+                        category: "ملابس",
+                        categoryEn: "Clothes",
+                        mainImage: "images/p4-4.jpg",
+                        images: [
+                            "images/p4-4.jpg",
+                        ],
+                        details: [
+                            "القماش: حرير هندي 100%",
+                            "المقاسات المتوفرة: S, M, L, XL",
+                            "تعليمات العناية: تنظيف جاف فقط"
+                        ],
+                        detailsEn: [
+                            "Fabric: 100% Indian Silk",
+                            "Available Sizes: S, M, L, XL",
+                            "Care Instructions: Dry clean only"
+                        ]
+                    },
+                    {
+                        id: "4_p2",
+                        name: "روب هندي أحمر",
+                        nameEn: "Red Indian Silk Dress",
+                        description: "فستان سهرة أنيق من الحرير الهندي الفاخر باللون الأحمر",
+                        descriptionEn: "Elegant evening dress made of luxurious Indian silk in red",
+                        longDescription: "فستان سهرة فاخر مصنوع من أجود أنواع الحرير الهندي الطبيعي. يتميز بقصة الأميرات الكلاسيكية التي تبرز أناقة القوام، مع تطريز ذهبي ناعم عند الأكمام والياقة. مناسب للمناسبات الخاصة وحفلات الزفاف. القماش خفيف وناعم على البشرة مع لمعان طبيعي جذاب.",
+                        longDescriptionEn: "A luxurious evening dress made of the finest natural Indian silk. It features a classic A-line cut that accentuates the elegance of the figure, with delicate gold embroidery on the sleeves and collar. Suitable for special occasions and weddings. The fabric is light and soft on the skin with an attractive natural sheen.",
+                        category: "ملابس",
+                        categoryEn: "Clothes",
+                        mainImage: "images/p4-1.jpg",
+                        images: [
+                          "images/p4-1.jpg",
+                        ],
+                        details: [
+                          "الخامة: حرير هندي طبيعي 100%",
+                          "اللون: أحمر مع تطريز ذهبي",
+                          "المقاسات: S, M, L, XL",
+                          "العناية: تنظيف جاف فقط",
+                        ],
+                        detailsEn: [
+                          "Material: 100% Natural Indian Silk",
+                          "Color: Red with gold embroidery",
+                          "Sizes: S, M, L, XL",
+                          "Length: 140 cm",
+                          "Care: Dry clean only",
+                        ],
+                    },
+                    {
+                            id: "4_p3",
+                            name: "روب أزرق ملكي",
+                            nameEn: "Royal Blue Indian Silk Robe",
+                            description: "روب منزلي فاخر من الحرير الهندي الطبيعي باللون الأزرق الملكي",
+                            descriptionEn: "Luxurious home robe made of natural Indian silk in royal blue",
+                           longDescription: "روب منزلي أنيق مصنوع من أجود أنواع الحرير الهندي الطبيعي، يتميز بنعومته الفائقة وخفة وزنه. تصميم واسع ومريح مع أكمام طويلة وحزام عريض من نفس القماش لإغلاق محكم. مناسب للاسترخاء في المنزل، أو كرداء بعد الاستحمام، أو للتحضير للمناسبات في أجواء من الفخامة. يضفي لمسة ملكية على أوقاتك الخاصة.",
+                            longDescriptionEn: "An elegant home robe made of the finest natural Indian silk, characterized by its extreme softness and light weight. Loose and comfortable design with long sleeves and a wide matching belt for a secure closure. Suitable for relaxing at home, as a bathrobe, or for getting ready for occasions in a luxurious atmosphere. Adds a royal touch to your private moments.",
+                            category: "ملابس",
+                            categoryEn: "Clothes",
+                            mainImage: "images/p4-3.jpg",
+                            images: [
+                                "images/p4-3.jpg",
+                            ],
+                            details: [
+                                "الخامة: حرير هندي طبيعي 100%",
+                                "اللون: أزرق ملكي",
+                                "المقاسات: S, M, L, XL",
+                                "الحزام: حزام عريض من نفس القماش",
+                                "جيوب: جيبان جانبيان",
+                                "العناية: غسيل يدوي بالماء البارد",
+                            ],
+                             detailsEn: [
+                                "Material: 100% Natural Indian Silk",
+                                "Color: Royal Blue",
+                                "Sizes: S, M, L, XL",
+                                "Belt: Wide matching fabric belt",
+                                "Pockets: Two side pockets",
+                                "Care: Hand wash in cold water",
+                                "Price: 680 SAR"
+                            ]
+                        },
+                        {
+                            id: "4_p4",
+                            name: " روب هندي مطرز فاخر",
+                            nameEn: "Luxury Embroidered Indian Silk Dress",
+                            description: "فستان سهرة فاخر من الحرير الهندي مع تطريزات يدوية غنية",
+                            descriptionEn: "Luxurious evening dress made of Indian silk with rich hand embroidery",
+                            longDescription: "فستان سهرة استثنائي مصنوع من أفخر أنواع الحرير الهندي الطبيعي، مزين بتطريزات يدوية دقيقة تمتد على الصدر والأكمام. يتميز بقصّة كلاسيكية ناعمة تبرز جمال القوام، مع ذيل طويل يضفي فخامة ملكية. القماش خفيف الوزن وناعم كالنسيم، مناسب للمناسبات الكبرى وحفلات الزفاف. يأتي مع شال حريري مطابق يكمّل الإطلالة.",
+                            longDescriptionEn: "An exceptional evening dress made of the finest natural Indian silk, adorned with delicate hand embroidery extending over the bodice and sleeves. It features a soft classic cut that accentuates the figure, with a long train adding royal luxury. The fabric is lightweight and soft as a breeze, suitable for grand occasions and weddings. Comes with a matching silk shawl to complete the look.",
+                            category: "ملابس",
+                            categoryEn: "Clothes",
+                            mainImage: "images/p4-2.jpg",
+                            images: [
+                                     "images/p4-2.jpg",
+                                 ],
+                                 details: [
+                                     "الخامة: حرير هندي طبيعي 100% مع تطريز يدوي",
+                                     "اللون: عاجي مع تطريز ذهبي (كما في الصور)",
+                                     "المقاسات: S, M, L, XL (متوفر بمقاسات أخرى عند الطلب)",
+                                     "الطول: 150 سم (قصّة طويلة)",
+                                     "التطريز: يدوي 100% بخيوط الذهب",
+                                     "الملحقات: شال حريري مطابق",
+                                     "العناية: تنظيف جاف فقط",
+                                 ],
+                                 detailsEn: [
+                                     "Material: 100% Natural Indian Silk with hand embroidery",
+                                     "Color: Ivory with gold embroidery (as pictured)",
+                                     "Sizes: S, M, L, XL (other sizes available on request)",
+                                     "Length: 150 cm (long cut)",
+                                     "Embroidery: 100% handmade with gold threads",
+                                     "Accessories: Matching silk shawl",
+                                     "Care: Dry clean only",
+                                 ]
+                        }
+                ]
+            },
+            {
+                id: 5,
+                name: "maisonde_noa",
+                nameEn: "maisonde_noa",
+                emirate: "الشارقة",
+                description: "روائح وعطور",
+                descriptionEn: "Scents & Perfumes",
+                longDescription: "براند إماراتي لتجاره العود والعطور و الملابس الجاهزه",
+                longDescriptionEn: "An Emirati brand offering oud, fragrances, and ready-to-wear fashion",
+                image: "images/p5.jpg",
+                phone: "",
+                whatsapp: "971508860040+",
+                email: "",
+                sell_points:[
+                    {type: "instagram" , value: "maisonde_noa"},
+                ],
+                adra_license: "لا",
+                coverage: "جميع إمارات الدولة",
+                badges: ["جديد"],
+                badgesEn: ["New"],
+                category: "روائح وعطور",
+                categoryEn: "Scents & Perfumes",
+                products: [
+                ]
+            },
+            {
+                id: 6,
+                name: "dukhon.hajar",
+                nameEn: "dukhon.hajar",
+                emirate: "الشارقة",
+                description: "روائح وعطور",
+                descriptionEn: "Scents & Perfumes",
+                longDescription: "دخون هاجر مشروع إماراتي متخصص في تقديم أجود أنواع البخور والعطور الشرقية الفاخرة. نوفر لعملائنا تشكيلة راقية من دهن العود، البخور المعمول، والعطور التقليدية التي تمزج بين الأصالة والجودة العالية",
+                longDescriptionEn: "Dukhun Hajar is an Emirati project specializing in premium incense and oriental perfumes. We offer a luxurious selection of Oud oil, traditional Bakhoor, and classic fragrances that blend authenticity with high quality",
+                image: "images/p6.jpg",
+                phone: "",
+                whatsapp: "+971569066061",
+                email: "",
+                sell_points:[
+                    {type: "instagram" , value: "dukhon.hajar"},
+                ],
+                adra_license: "نعم",
+                coverage: "جميع إمارات الدولة",
+                badges: ["جديد"],
+                badgesEn: ["New"],
+                category: "روائح وعطور",
+                categoryEn: "Scents & Perfumes",
+                products: [
+
+                    {
+                        id: "6_p1",
+                        name: "دخون شوق",
+                        nameEn: "Shouq Incense",
+                        description: "دخون شوق - بخور عربي فاخر برائحة دافئة وجذابة.",
+                        descriptionEn: "Shouq Incense - A luxurious Arabic incense with a warm and captivating scent.",
+                        longDescription: "دخون شوق هو بخور تقليدي مميز يجمع بين العود والعنبر ليمنحك تجربة عطرية غنية. مصنوع بعناية من أجود المكونات الطبيعية، ليدوم طويلاً وينشر أجواء من الفخامة والدفء في المكان.",
+                        longDescriptionEn: "Shouq Incense is a distinctive traditional incense that combines oud and amber to give you a rich aromatic experience. Carefully crafted from the finest natural ingredients, it lasts long and spreads an atmosphere of luxury and warmth.",
+                        category: "بخور",
+                        categoryEn: "Incense",
+                        mainImage:  "images/p6-1-1.jpg",
+                        images: [ "images/p6-1-2.jpg"],
+                        details: [
+                        "بخور عربي فاخر",
+                        "مزيج العود والعنبر",
+                        "رائحة دافئة وجذابة",
+                        "يدوم طويلاً",
+                        "مكونات طبيعية 100%"
+                        ],
+                        detailsEn: [
+                        "Luxurious Arabic incense",
+                        "Blend of oud and amber",
+                        "Warm and captivating scent",
+                        "Long-lasting",
+                        "100% natural ingredients"
+                        ]
+                        },
+                        {
+                        id: "6_p2",
+                        name: "دخون ميره",
+                        nameEn: "Mairah Incense",
+                        description: "دخون ميره - بخور فاخر برائحة زكية ومميزة.",
+                        descriptionEn: "Mairah Incense - A luxurious incense with a pleasant and distinctive scent.",
+                        longDescription: "دخون ميره يجمع بين نفحات العود والورد ليمنحك تجربة عطرية راقية. يتميز بتركيز عالٍ يدوم طويلاً، ويضفي لمسة من الأناقة على المجالس.",
+                        longDescriptionEn: "Mairah Incense combines the scents of oud and rose to give you a refined aromatic experience. It features a high concentration that lasts long, adding a touch of elegance to gatherings.",
+                        category: "بخور",
+                        categoryEn: "Incense",
+                        mainImage:  "images/p6-2-1.jpg",
+                        images: [ "images/p6-2-2.jpg"],
+                        details: [
+                        "بخور فاخر",
+                        "مزيج العود والورد",
+                        "رائحة زكية",
+                        "تركيز عالٍ",
+                        "يدوم طويلاً"
+                        ],
+                        detailsEn: [
+                        "Luxurious incense",
+                        "Blend of oud and rose",
+                        "Pleasant scent",
+                        "High concentration",
+                        "Long-lasting"
+                        ]
+                        },
+                        {
+                        id: "6_p3",
+                        name: "دخون العنود",
+                        nameEn: "Al-Anoud Incense",
+                        description: "دخون العنود - بخور عربي تقليدي بنفحات شرقية.",
+                        descriptionEn: "Al-Anoud Incense - Traditional Arabic incense with oriental notes.",
+                        longDescription: "دخون العنود هو بخور عربي أصيل يعبق برائحة العود والعنبر والمسك. يمنح المكان جوًا من الدفء والروحانية، مثالي للمناسبات الخاصة والاسترخاء.",
+                        longDescriptionEn: "Al-Anoud Incense is an authentic Arabic incense fragrant with oud, amber, and musk. It gives the space an atmosphere of warmth and spirituality, perfect for special occasions and relaxation.",
+                        category: "بخور",
+                        categoryEn: "Incense",
+                        mainImage:  "images/p6-3-1.jpg",
+                        images: [ 
+                            "images/p6-3-2.jpg"
+                        ],
+                        details: [
+                        "بخور عربي أصيل",
+                        "مزيج العود والعنبر والمسك",
+                        "رائحة شرقية",
+                        "يدوم طويلاً",
+                        "مناسب للمجالس"
+                        ],
+                        detailsEn: [
+                        "Authentic Arabic incense",
+                        "Blend of oud, amber, and musk",
+                        "Oriental scent",
+                        "Long-lasting",
+                        "Suitable for gatherings"
+                        ]
+                        },
+                        {
+                        id: "6_p4",
+                        name: "دخون العين",
+                        nameEn: "Al-Ain Incense",
+                        description: "دخون العين - بخور مستوحى من تراث مدينة العين.",
+                        descriptionEn: "Al-Ain Incense - Incense inspired by the heritage of Al-Ain city.",
+                        longDescription: "دخون العين يجمع بين العود الفاخر ولمسات من الزعفران والعنبر ليقدم تجربة عطرية فريدة تعبق بالأصالة. مثالي لإضفاء أجواء تراثية عربية.",
+                        longDescriptionEn: "Al-Ain Incense combines luxurious oud with hints of saffron and amber to offer a unique aromatic experience redolent with authenticity. Ideal for creating a traditional Arabic atmosphere.",
+                        category: "بخور",
+                        categoryEn: "Incense",
+                        mainImage: "images/p6-4-1.jpg",
+                        images: [
+                            "images/p6-4-3.jpg",
+                            "images/p6-4-4.jpg"
+                        ],
+                        details: [
+                        "بخور فاخر",
+                        "مزيج العود والزعفران والعنبر",
+                        "رائحة تراثية",
+                        "يدوم طويلاً",
+                        "إطلالة عربية أصيلة"
+                        ],
+                        detailsEn: [
+                        "Luxurious incense",
+                        "Blend of oud, saffron, and amber",
+                        "Heritage scent",
+                        "Long-lasting",
+                        "Authentic Arabic flair"
+                        ]
+                        },
+                        {
+                        id: "6_p5",
+                        name: "دخون سوسن",
+                        nameEn: "Sawsan Incense",
+                        description: "دخون سوسن - بخور ناعم برائحة الأزهار والعود.",
+                        descriptionEn: "Sawsan Incense - A soft incense with floral and oud scents.",
+                        longDescription: "دخون سوسن يمزج بين العود الدافئ وزهور الياسمين ليمنحك رائحة منعشة وجذابة. مناسب للاستخدام اليومي ولمن يحب العطور الخفيفة.",
+                        longDescriptionEn: "Sawsan Incense blends warm oud with jasmine flowers to give you a refreshing and attractive scent. Suitable for daily use and for those who prefer light perfumes.",
+                        category: "بخور",
+                        categoryEn: "Incense",
+                        mainImage:  "images/p6-5-1.jpg",
+                        images: [ 
+                            "images/p6-5-2.jpg"
+                        ],
+                        details: [
+                        "بخور ناعم",
+                        "مزيج العود والياسمين",
+                        "رائحة منعشة",
+                        "مناسب للاستخدام اليومي",
+                        "عطر خفيف وجذاب"
+                        ],
+                        detailsEn: [
+                        "Soft incense",
+                        "Blend of oud and jasmine",
+                        "Refreshing scent",
+                        "Suitable for daily use",
+                        "Light and attractive fragrance"
+                        ]
+                        },
+                        {
+                        id: "6_p6",
+                        name: "دخون مارية",
+                        nameEn: "Mariyah Incense",
+                        description: "دخون مارية - بخور فاخر بنفحات العود الفاخر.",
+                        descriptionEn: "Mariyah Incense - A luxurious incense with premium oud notes.",
+                                                longDescription: "دخون مارية هو بخور مميز يجمع بين العود الهندي والعنبر الفاخر ليمنحك تجربة عطرية غامرة. يدوم طويلاً وينشر الفخامة في المكان.",
+                        longDescriptionEn: "Mariyah Incense is a distinctive incense combining Indian oud and luxurious amber to give you an immersive aromatic experience. It lasts long and spreads luxury in the space.",
+                        category: "بخور",
+                        categoryEn: "Incense",
+                        mainImage:  "images/p6-6-1.jpg",
+                        images: [ 
+                            "images/p6-6-2.jpg"
+                        ],
+                        details: [
+                        "بخور فاخر",
+                        "عود هندي وعنبر",
+                        "رائحة غامرة",
+                        "يدوم طويلاً",
+                        "فخامة عالية"
+                        ],
+                        detailsEn: [
+                        "Luxurious incense",
+                        "Indian oud and amber",
+                        "Immersive scent",
+                        "Long-lasting",
+                        "High luxury"
+                        ]
+                        },
+                        {
+                        id: "6_p7",
+                        name: "عود شمس المعطر",
+                        nameEn: "Shams Al-Mu'attar Oud",
+                        description: "عود شمس المعطر - عود طبيعي فاخر برائحة خشبية دافئة.",
+                        descriptionEn: "Shams Al-Mu'attar Oud - A luxurious natural oud with a warm woody scent.",
+                        longDescription: "عود شمس المعطر هو عود طبيعي ممتاز يتميز برائحة خشبية عميقة مع لمسات حلوة. يحضر بعناية فائقة ليمنحك تجربة عطرية أصيلة تعبق بالفخامة.",
+                        longDescriptionEn: "Shams Al-Mu'attar Oud is an excellent natural oud characterized by a deep woody scent with sweet notes. Carefully prepared to give you an authentic aromatic experience that exudes luxury.",
+                        category: "عود",
+                        categoryEn: "Oud",
+                        mainImage:  "images/p6-7-1.jpg",
+                        images: [
+                            "images/p6-7-2.jpg"
+                        ],
+                        details: [
+                        "عود طبيعي فاخر",
+                        "رائحة خشبية دافئة",
+                        "يدوم طويلاً",
+                        "مناسب للمناسبات",
+                        "فخامة وأصالة"
+                        ],
+                        detailsEn: [
+                        "Luxurious natural oud",
+                        "Warm woody scent",
+                        "Long-lasting",
+                        "Perfect for occasions",
+                        "Luxury and authenticity"
+                        ]
+                        },
+                        {
+                        id: "6_p8",
+                        name: "عود الشيخ محمد",
+                        nameEn: "Sheikh Mohammed Oud",
+                        description: "عود الشيخ محمد - عود فاخر برائحة خشبية كلاسيكية.",
+                        descriptionEn: "Sheikh Mohammed Oud - A luxurious oud with a classic woody scent.",
+                        longDescription: "عود الشيخ محمد هو عود طبيعي من أجود الأنواع، يتميز برائحة خشبية نقية وقوية. يعبق المكان بأجواء أصيلة تليق بالمجالس الراقية.",
+                        longDescriptionEn: "Sheikh Mohammed Oud is a natural oud of the finest quality, characterized by a pure and strong woody scent. It fills the space with an authentic atmosphere befitting elegant gatherings.",
+                        category: "عود",
+                        categoryEn: "Oud",
+                        mainImage:  "images/p6-8-1.jpg",
+                        images: [ "images/p6-8-2.jpg"],
+                        details: [
+                        "عود طبيعي فاخر",
+                        "رائحة خشبية نقية",
+                        "قوي ويدوم طويلاً",
+                        "مناسب للمجالس الراقية",
+                        "أصالة عربية"
+                        ],
+                        detailsEn: [
+                        "Luxurious natural oud",
+                        "Pure woody scent",
+                        "Strong and long-lasting",
+                        "Suitable for elegant gatherings",
+                        "Arabic authenticity"
+                        ]
+                        },
+                        {
+                        id: "6_p9",
+                        name: "عود سيف الامارات",
+                        nameEn: "Saif Al Emarat Oud",
+                        description: "عود سيف الامارات - عود إماراتي فاخر برائحة مميزة.",
+                        descriptionEn: "Saif Al Emarat Oud - A luxurious Emirati oud with a distinctive scent.",
+                        longDescription: "عود سيف الامارات هو عود طبيعي يجمع بين الفخامة والقوة، برائحة خشبية غنية تعكس روح الأصالة الإماراتية. مثالي للمناسبات الوطنية والخاصة.",
+                        longDescriptionEn: "Saif Al Emarat Oud is a natural oud combining luxury and strength, with a rich woody scent reflecting the spirit of Emirati authenticity. Ideal for national and special occasions.",
+                        category: "عود",
+                        categoryEn: "Oud",
+                        mainImage:  "images/p6.jpg",
+                        images: ["images/p6.jpg"],
+                        details: [
+                        "عود إماراتي فاخر",
+                        "رائحة خشبية غنية",
+                        "قوي وفخم",
+                        "يدوم طويلاً",
+                        "روح الأصالة"
+                        ],
+                        detailsEn: [
+                        "Luxurious Emirati oud",
+                        "Rich woody scent",
+                        "Strong and luxurious",
+                        "Long-lasting",
+                        "Spirit of authenticity"
+                        ]
+                        },
+                        {
+                        id: "6_p10",
+                        name: "عود الشيخ منصور",
+                        nameEn: "Sheikh Mansour Oud",
+                        description: "عود الشيخ منصور - عود فاخر برائحة خشبية ناعمة.",
+                        descriptionEn: "Sheikh Mansour Oud - A luxurious oud with a soft woody scent.",
+                        longDescription: "عود الشيخ منصور يتميز برائحة خشبية ناعمة مع لمسات من العنبر، ليمنحك تجربة عطرية هادئة ومريحة. مناسب للاسترخاء والتأمل.",
+                        longDescriptionEn: "Sheikh Mansour Oud is characterized by a soft woody scent with hints of amber, giving you a calm and relaxing aromatic experience. Suitable for relaxation and meditation.",
+                        category: "عود",
+                        categoryEn: "Oud",
+                        mainImage:  "images/p6-9-1.jpg",
+                        images: ["images/p6-9-2.jpg"],
+                        details: [
+                        "عود فاخر",
+                        "رائحة خشبية ناعمة",
+                        "لمسات عنبر",
+                        "يدوم طويلاً",
+                        "مناسب للاسترخاء"
+                        ],
+                        detailsEn: [
+                        "Luxurious oud",
+                        "Soft woody scent",
+                        "Hints of amber",
+                        "Long-lasting",
+                        "Suitable for relaxation"
+                        ]
+                        },
+                        {
+                        id: "6_p11",
+                        name: "لبان الصفوة المعطر",
+                        nameEn: "Al-Safwah Perfumed Frankincense",
+                        description: "لبان الصفوة المعطر - لبان عماني فاخر معطر بروائح العود.",
+                        descriptionEn: "Al-Safwah Perfumed Frankincense - Luxurious Omani frankincense perfumed with oud scents.",
+                        longDescription: "لبان الصفوة المعطر هو أجود أنواع اللبان العماني المضاف إليه عطور العود الفاخرة، ليمنحك تجربة تبخير فريدة. ينعش المكان ويهدئ النفس.",
+                        longDescriptionEn: "Al-Safwah Perfumed Frankincense is the finest Omani frankincense with added luxurious oud perfumes, giving you a unique fumigation experience. It refreshes the space and calms the soul.",
+                        category: "لبان",
+                        categoryEn: "Frankincense",
+                        mainImage:  "images/p6-910-1.jpg",
+                        images: ["images/p6-910-1.jpg"],
+                        details: [
+                        "لبان عماني فاخر",
+                        "معطر بروائح العود",
+                        "ينعش المكان",
+                        "يهدئ النفس",
+                        "جودة عالية"
+                        ],
+                        detailsEn: [
+                        "Luxurious Omani frankincense",
+                        "Perfumed with oud scents",
+                        "Refreshes the space",
+                        "Calms the soul",
+                        "High quality"
+                        ]
+                        },
+                        {
+                        id: "6_p12",
+                        name: "لبان بالعود المعطر",
+                        nameEn: "Perfumed Frankincense with Oud",
+                        description: "لبان بالعود المعطر - لبان طبيعي ممزوج بدهن العود.",
+                        descriptionEn: "Perfumed Frankincense with Oud - Natural frankincense blended with oud oil.",
+                        longDescription: "لبان بالعود المعطر يجمع بين نقاء اللبان العماني ودهن العود الفاخر، ليمنحك رائحة مميزة تجمع بين العطور الشرقية الأصيلة. مثالي للتبخير اليومي.",
+                        longDescriptionEn: "Perfumed Frankincense with Oud combines the purity of Omani frankincense with luxurious oud oil, giving you a distinctive scent that blends authentic oriental perfumes. Ideal for daily fumigation.",
+                        category: "لبان",
+                        categoryEn: "Frankincense",
+                        mainImage:  "images/p6-910-1.jpg",
+                        images: ["images/p6-910-1.jpg"],
+                        details: [
+                        "لبان عماني طبيعي",
+                        "ممزوج بدهن العود",
+                        "رائحة شرقية أصيلة",
+                        "مناسب للاستخدام اليومي",
+                        "ينعش الأجواء"
+                        ],
+                        detailsEn: [
+                        "Natural Omani frankincense",
+                        "Blended with oud oil",
+                        "Authentic oriental scent",
+                        "Suitable for daily use",
+                        "Refreshes the atmosphere"
+                        ]
+                        }
+                    
+                ],
+                deals: [
+                    {
+                        id: "deal1",
+                        title: "باقة المحبة المصغرة",
+                        titleEn: "Mini love bouquet",
+                        description: " للهدايا وللي يحبون ينوعون",
+                        descriptionEn: "For gifts and for those who like variety",
+                        image: "images/p6-d-1.jpg",
+                        images: [
+                            "images/p6-d-1.jpg", 
+                            "images/p6-d-2.jpg"
+                        ],
+                        expiry: "",
+                        badge: "باقة",
+                        badgeEn: "Package"
+                    },
+                ]
+            },
+            {
+                id: 7,
+                name: "Whisk & Bloom",
+                nameEn: "Whisk & Bloom",
+                emirate: "أبوظبي",
+                description: "حلويات",
+                descriptionEn: "seweets",
+                longDescription: "لحظاتك الحلوة تستحق الطعم الاحلى، كيك وماكرون بطابع منزلي فاخر",
+                longDescriptionEn: "Your sweet moments deserve the sweetest taste: cakes and macarons with a luxurious homemade flair.",
+                image: "images/p7.jpg",
+                phone: "",
+                whatsapp: "",
+                email: "",
+                sell_points:[
+                    {type: "instagram" , value: "whiskandbloom.ae"},
+                ],
+                adra_license: "لا",
+                coverage: "جميع إمارات الدولة",
+                badges: ["جديد"],
+                badgesEn: ["New"],
+                category: "حلويات",
+                categoryEn: "Sweets",
+                products: []
+            },
+      {
+    id: 8,
+    name: "قلو تان",
+    nameEn: "Glow Tan",
+    emirate: "أبوظبي",
+    description: "عناية",
+    descriptionEn: "Care",
+    longDescription: "نقدم خدمات التان الاحترافية للحصول على بشرة برونزية طبيعية وآمنة بدون التعرض للشمس، باستخدام منتجات عالية الجودة تناسب جميع ألوان البشرة مع نتائج تدوم لفترة طويلة.",
+    longDescriptionEn: "We provide professional tanning services for a natural sun-kissed glow without sun exposure, using high-quality products suitable for all skin tones with long-lasting results.",
+    image: "images/p8.jpeg",
+    phone: "",
+    whatsapp: "",
+    email: "",
+    sell_points:[
+        {type: "instagram" , value: "glowtan.ae"}
+    ],
+    adra_license: "نعم",
+    coverage: "جميع إمارات الدولة",
+    badges: ["جديد"],
+    badgesEn: ["New"],
+    category: "عناية",
+    categoryEn: "Care",
+    products:[
+        {
+            id: "1_p8",
+            name: "قلو تان",
+            nameEn: "Glow Tan",
+            description: "تان طبيعي بدون شمس",
+            descriptionEn: "Sunless tanning",
+            longDescription: "جلسة تان احترافية تمنحك لون برونزي متناسق وطبيعي باستخدام منتجات آمنة تدوم نتائجها لعدة أيام، مثالية للمناسبات والإطلالات اليومية.",
+            longDescriptionEn: "A professional tanning session that delivers a natural bronzed glow using safe products with long-lasting results, perfect for events and daily looks.",
+            category: "عناية",
+            categoryEn: "Care",
+            mainImage: "images/p8-1.jpeg",
+            images: [
+                "images/p8-1.jpeg"
+            ],
+            details: [
+                "نتيجة طبيعية",
+                "مناسب لجميع البشرة",
+                "يدوم 5-10 أيام"
+            ],
+            detailsEn: [
+                "Sunless",
+                "Natural result",
+                "All skin types",
+                "Lasts 5–10 days"
+            ]
+        }
+    ]
+},
+            {
+                id: 9,
+                name: "اللقمة افينيو",
+                nameEn: "Bite avenue",
+                emirate: "",
+                description: "أطعمة ومشروبات",
+                descriptionEn: "Food & Beverages",
+                longDescription: "نقدم أكلات منزلية طازجة تُحضّر يوميًا حسب الطلب، مع اهتمام خاص بالطعم الأصيل وجودة المكونات.",
+                longDescriptionEn: "we prepare fresh homemade dishes made to order, focusing on authentic flavors and quality ingredients.",
+                image: "images/p9.jpg",
+                phone: "",
+                whatsapp: "",
+                email: "",
+                sell_points:[
+                    {type: "instagram" , value: "bite_avenue"},
+                ],
+                adra_license: "نعم",
+                coverage: "جميع إمارات الدولة",
+                badges: ["جديد"],
+                badgesEn: ["New"],
+                category: "أطعمة ومشروبات",
+                categoryEn: "Food & Beverages",
+                products: []
+            },
+            {
+                id: 10,
+                name: "أدورا بول",
+                nameEn: "ADORA BOWL",
+                emirate: "أبوظبي",
+                description: "أطعمة ومشروبات",
+                descriptionEn: "Food & Beverages",
+                longDescription: "نقدم أطباق الأساي والبولز الصحية الطازجة في الإمارات، محضّرة يوميًا بمكونات طبيعية مختارة بعناية. نؤمن بأن الأكل الصحي لازم يكون لذيذ،",
+                longDescriptionEn: "We offer fresh, healthy acai bowls across the UAE, prepared daily using carefully selected natural ingredients. We believe that healthy food should always be delicious, satisfying, and full of energy.",
+                image: "images/p10.jpg",
+                phone: "",
+                whatsapp: "",
+                email: "",
+                sell_points:[
+                    {type: "instagram" , value: "adorabowl.ae"},
+                ],
+                adra_license: "نعم",
+                coverage: "جميع إمارات الدولة",
+                badges: ["5 المنتجات"],
+                badgesEn: ["5 "],
+                category: "أطعمة ومشروبات",
+                categoryEn: "Food & Beverages",
+                products: [
+                    {
+                        id: "10_p1",
+                        name: "تونا أونيغيري - Tuna Onigiri",
+                        nameEn: "Tuna Onigiri",
+                        description: "أرز ياباني محشو بتونا متبلة بطابع خفيف ولذيذ.",
+                        descriptionEn: "Japanese rice stuffed with tuna, seasoned with a light and delicious flavor.",
+                        longDescription: "أونيغيري ياباني كلاسيكي مصنوع من أرز سوشي طازج ومضغوط بعناية، محشو بخليط تونا متبل بتوازن مثالي بين النكهة والملمس. خيار عملي ومشبع يناسب الوجبات الخفيفة أو السريعة.",
+                        longDescriptionEn: "Classic Japanese onigiri made with fresh, carefully pressed sushi rice, filled with a spiced tuna mixture that perfectly balances flavor and texture. A practical and satisfying option for light meals or quick snacks.",
+                        category: "مميز",
+                        categoryEn: "Distinct",
+                        mainImage: "images/p10.jpg",
+                        images: ["images/p10.jpg"],
+                        details: [
+                            "🍙 أرز سوشي ياباني",
+                            "🍙 حشوة تونا متبلة",
+                            "🍙 يقدم جاهز للأكل",
+                            "🍙 الحجم الفردي",
+                        ],
+                        detailsEn: [                            
+                            "🍙 Japanese Sushi Rice",
+                            "🍙 Seasoned Tuna Filling",
+                            "🍙 Served Ready to Eat",
+                            "🍙 Individual Size"
+                        ]
+                    },
+                    {
+                        id: "10_p2",
+                        name: "تشيكن أونيغيري - Chicken Onigiri",
+                        nameEn: "Chicken Onigiri",
+                        description: "أرز ياباني محشو بدجاج متبل بطابع بنكهة غنية.",
+                        descriptionEn: "Stuffed sushi rice with flavor-rich seasoned chicken.",
+                        longDescription: "كرة أرز يابانية محشوة بدجاج طري متبل بتتبيلة خاصة تمنحه طعماً متوازناً وشهياً. مناسب لمن يفضل البروتين الأبيض بنكهة خفيفة ومشبعة.",
+                        longDescriptionEn: "A Japanese rice ball stuffed with tender chicken marinated in a special seasoning, giving it a balanced and delicious flavor. Ideal for those who prefer white meat with a light yet satisfying taste.",
+                        category: "جديد",
+                        categoryEn: "NEW",
+                        mainImage: "images/p10.jpg",
+                        images: ["images/p10.jpg"],
+                        details: [
+                            "دجاج متبل",
+                            "أرز سوشي طازج",
+                            "حجم فردي",
+                            "وجبة خفيفة مشبعة",
+                        ],
+                        detailsEn: [                            
+                            "Marinated chicken",
+                            "Fresh sushi rice",
+                            "Individual size",
+                            "Satisfying light meal",
+                        ]
+                    },
+                    {
+                        id: "10_p4",
+                        name: "كراب أونيغيري - Crab Onigiri",
+                        nameEn: "كراب أونيغيري - Crab Onigiri",
+                        description: "أونيغيري بحشوة كراب كريمية بنكهة بحرية مميزة.",
+                        descriptionEn: "Onigiri with a creamy crab filling, featuring a distinct seafood flavor.",
+                        longDescription: "مزيج من أرز السوشي الطازج مع حشوة كراب ناعمة ومتوازنة، يقدم تجربة بحرية خفيفة بطابع ياباني أصيل.",
+                        longDescriptionEn: "A blend of fresh sushi rice with a smooth and balanced crab filling, delivering a light seafood experience with an authentic Japanese touch.",
+                        category: "جديد",
+                        categoryEn: "NEW",
+                        mainImage: "images/p10.jpg",
+                        images: ["images/p10.jpg"],
+                        details: [
+                            "حشوة كراب",
+                            "قوام كريمي خفيف",
+                            "حجم فردي",
+                            "مناسب كسناك سريع",
+                        ],
+                        detailsEn: [                            
+                            "Crab filling",
+                            "Light, creamy texture",
+                            "Individual size",
+                            "Ideal as a quick snack",
+                        ]
+                    },
+                    {
+                        id: "10_p5",
+                        name: "شريمب أونيغيري - Shrimp Onigiri",
+                        nameEn: "شريمب أونيغيري - Shrimp Onigiri",
+                        description: "أرز ياباني محشو بجمبري متبل بطعم غني.",
+                        descriptionEn: "Japanese rice stuffed with richly seasoned shrimp.",
+                        longDescription: "أونيغيري محشو بجمبري متبل بعناية ليقدم طعماً بحرياً واضحاً مع قوام متوازن بين الأرز الطري والحشوة اللذيذة.",
+                        longDescriptionEn: "Onigiri stuffed with meticulously seasoned shrimp, offering a distinct seafood flavor and a balanced texture between the soft rice and the savory filling.",
+                        category: "جديد",
+                        categoryEn: "NEW",
+                        mainImage: "images/p10.jpg",
+                        images: ["images/p10.jpg"],
+                        details: [
+                            "جمبري متبل",
+                            "أرز سوشي طازج",
+                            "خيار بحري مميز",
+                            "حجم فردي",
+                        ],
+                        detailsEn: [                            
+                            "Seasoned shrimp",
+                            "Fresh sushi rice",
+                            "Distinct seafood option",
+                            "Individual size",
+                        ]
+                    },
+               ]
+         },
+         {
+                id: 12,
+                name: "دخون ماركت",
+                nameEn: "Dkhoon Market",
+                emirate: "",
+                description: "روائح وعطور",
+                descriptionEn: "Scents & Perfumes",
+                longDescription: "ختار لكم أجود أنواع الدخون والعود والعطور الشرقية بعناية تعكس الذوق الخليجي الأصيل. نهتم بالتفاصيل، بثبات الرائحة، وبأن تصل إليكم تجربة عطرية فاخرة تليق بمناسباتكم اليومية والخاصة.",
+                longDescriptionEn: "we carefully curate premium bukhoor, oud, and oriental fragrances that embody authentic Gulf elegance. We focus on quality, long-lasting scents, and delivering a refined fragrance experience for your everyday moments and special occasions.",
+                image: "images/p12.jpg",
+                phone: "",
+                whatsapp: "+971 50 454 1955",
+                email: "",
+                sell_points:[
+                    {type: "instagram" , value: "dkhoon565"},
+                ],
+                adra_license: "لا",
+                coverage: "جميع إمارات الدولة",
+                badges: ["جديد"],
+                badgesEn: ["New"],
+                category: "روائح وعطور",
+                categoryEn: "Scents & Perfumes",
+                products: []
+          },
+          {
+                id: 13,
+                name: "السلة",
+                nameEn: "baskete",
+                emirate: "دبي",
+                description: "حلويات",
+                descriptionEn: "sweets",
+                longDescription: "في Baskete.ae نؤمن أن الإهداء فن. نصمم سلال هدايا فاخرة وشوكولاتة حرفية بعناية تجمع بين الذوق الرفيع والتفاصيل الراقية، لنحوّل كل مناسبة إلى لحظة لا تُنسى. من دبي، نصنع هدايا تعبّر عن المشاعر بأناقة وجودة استثنائية.",
+                longDescriptionEn: "At Baskete.ae, we believe gifting is an art. We craft elegant gourmet baskets and artisanal chocolates with refined detail, turning meaningful moments into unforgettable experiences. Based in Dubai, we create gifts that speak with sophistication and exceptional quality.",
+                image: "images/p13.jpg",
+                phone: "",
+                whatsapp: "",
+                email: "",
+                sell_points:[
+                    {type: "instagram" , value: "baskete.ae"},
+                ],
+                adra_license: "لا",
+                coverage: "جميع إمارات الدولة",
+                badges: ["جديد"],
+                badgesEn: ["New"],
+                category: "حلويات",
+                categoryEn: "sweets",
+                products: []
+          },
+            {
+                id: 14,
+                name: "سوب ڤالي",
+                nameEn: "Soap Valley",
+                emirate: "عجمان",
+                description: "عناية",
+                descriptionEn: "Care",
+                longDescription: "في Baskete.ae نؤمن أن الإهداء فن. نصمم سلال هدايا فاخرة وشوكولاتة حرفية بعناية تجمع بين الذوق الرفيع والتفاصيل الراقية، لنحوّل كل مناسبة إلى لحظة لا تُنسى. من دبي، نصنع هدايا تعبّر عن المشاعر بأناقة وجودة استثنائية.",
+                longDescriptionEn: "At Baskete.ae, we believe gifting is an art. We craft elegant gourmet baskets and artisanal chocolates with refined detail, turning meaningful moments into unforgettable experiences. Based in Dubai, we create gifts that speak with sophistication and exceptional quality.",
+                image: "images/p14.jpg",
+                phone: "",
+                whatsapp: "",
+                email: "",
+                sell_points:[
+                    {type: "instagram" , value: "soap.valley"},
+                ],
+                adra_license: "نعم",
+                coverage: "العالم",
+                badges: ["جديد"],
+                badgesEn: ["New"],
+                category: "عناية",
+                categoryEn: "Care",
+                products: []
+          },
+            {
+                id: 15,
+                name: "حلويات البيت",
+                nameEn: "Sweet house",
+                emirate: "الشارقة",
+                description: "حلويات",
+                descriptionEn: "Sweets",
+                longDescription: "في Sweet House UAE نعدّ الحلويات المنزلية بحب وشغف، ونجهز بوكسات أنيقة تناسب كل مناسبة. نهتم بالطعم الأصيل والتفاصيل الجميلة لنوصل لكم تجربة حلوة بكل معنى الكلمة، مع خدمة توصيل إلى الشارقة وعجمان ودبي.",
+                longDescriptionEn: "At Sweet House UAE, we craft homemade desserts with love and prepare elegant sweet boxes for every occasion. We focus on authentic flavors and beautiful details to deliver a truly delightful experience, with delivery across Sharjah, Ajman, and Dubai.",
+                image: "images/p15.jpg",
+                phone: "",
+                whatsapp: "",
+                email: "",
+                sell_points:[
+                    {type: "instagram" , value: "sweet.house.uae_"},
+                ],
+                adra_license: "لا",
+                coverage: "الإمارة فقط",
+                badges: ["جديد"],
+                badgesEn: ["New"],
+                category: "حلويات",
+                categoryEn: "Sweets",
+                products: []
+          },
+            {
+                id: 16,
+                name: "إل دولتشي ديزرتس",
+                nameEn: "Il Dolce Desserts",
+                is_paid: true,
+                emirate: "عجمان",
+                description: "حلويات",
+                descriptionEn: "Sweets",
+                longDescription: "في إل دولتشي ديزرتس نخبز حلوياتنا طازجة يوميًا لنقدم لكم جودة وطعمًا لا يُقاوم. نوفر خدمة توصيل في اليوم التالي إلى جميع أنحاء الإمارات، مع إمكانية الاستلام اليومي من المتجر، لنضمن لكم تجربة حلوة وسهلة في كل طلب.",
+                longDescriptionEn: "At Il Dolce Desserts, we freshly bake our desserts every day to deliver irresistible taste and quality. We offer next-day delivery across the UAE, along with daily pick-up availability, ensuring a smooth and delightful ordering experience.",
+                image: "images/p16.jpg",
+                phone: "",
+                whatsapp: "+971 50 883 0593",
+                email: "",
+                sell_points:[
+                    {type: "instagram" , value: "ildolcedesserts"},
+                ],
+                adra_license: "لا",
+                coverage: "جميع إمارات الدولة",
+                badges: ["جديد"],
+                badgesEn: ["New"],
+                category: "حلويات",
+                categoryEn: "Sweets",
+                products: [
+                    {
+
+                        id: "16_p1",
+                        name: "علبة 4 حبات كوكيز",
+                        nameEn: "Box of 4 Cookies",
+                        description: "علبة صغيرة من الكوكيز الطازج، 4 قطع لذيذة.",
+                        descriptionEn: "Small box of fresh cookies, 4 delicious pieces.",
+                        longDescription: "استمتع بأربع حبات من الكوكيز الطازج المخبوز يومياً، بمكونات عالية الجودة ونكهات متعددة تختارها. مثالية للمشاركة أو كهدية بسيطة.",
+                        longDescriptionEn: "Enjoy four pieces of freshly baked cookies daily, made with high-quality ingredients and multiple flavors to choose from. Perfect for sharing or as a simple gift.",
+                        category: "كوكيز",
+                        categoryEn: "Cookies",
+                        mainImage: "images/p16-1.png",
+                        images: ["images/p16-1.png"],
+                        details: [
+                        "4 حبات كوكيز طازج",
+                        "خبز يومي",
+                        "مكونات فاخرة",
+                        "متوفر بعدة نكهات: كيندر، سْمورز، نوتيلا، لوتر رد فيلفت بيسكوف"
+                        ],
+                        detailsEn: [
+                        "4 pieces of fresh cookies",
+                        "Baked daily",
+                        "Premium ingredients",
+                        "Available in flavors: Kinder, S'mores, Nutella, Lotus, Red Velvet Biscoff"
+                        ]
+                        },
+                        {
+                        id: "16_p2",
+                        name: "علبة 6 حبات كوكيز",
+                        nameEn: "Box of 6 Cookies",
+                        description: "علبة متوسطة من الكوكيز الطازج، 6 قطع شهية.",
+                        descriptionEn: "Medium box of fresh cookies, 6 tasty pieces.",
+                        longDescription: "ست حبات من الكوكيز المخبوز طازجاً بنكهات متعددة. تقدمة رائعة للعائلة أو الأصدقاء، أو استمتع بها وحدك.",
+                        longDescriptionEn: "Six pieces of freshly baked cookies in multiple flavors. A great treat for family or friends, or enjoy them yourself.",
+                        category: "كوكيز",
+                        categoryEn: "Cookies",
+                        mainImage: "images/p16-2.png",
+                        images: ["images/p16-2.png"],
+                        details: [
+                            "6 حبات كوكيز طازج",
+                            "خبز يومي",
+                            "مكونات فاخرة",
+                            "متوفر بعدة نكهات: كيندر، سْمورز، نوتيلا، لوتر رد فيلفت بيسكوف"
+                            ],
+                        detailsEn: [
+                            "6 pieces of fresh cookies",
+                            "Baked daily",
+                            "Premium ingredients",
+                            "Available in flavors: Kinder, S'mores, Nutella, Lotus, Red Velvet Biscoff"
+                            ]
+                        },
+                        {
+                        id: "16_p3",
+                        name: "علبة 12 حبة كوكيز",
+                        nameEn: "Box of 12 Cookies",
+                        description: "علبة كبيرة من الكوكيز الطازج، 12 قطعة.",
+                        descriptionEn: "Large box of fresh cookies, 12 pieces.",
+                        longDescription: "اثنتا عشرة قطعة من الكوكيز الطازج المحضر بعناية. مناسبة للمناسبات والتجمعات، وبخيارات نكهات متعددة ترضي الجميع.",
+                        longDescriptionEn: "Twelve pieces of freshly prepared cookies. Suitable for occasions and gatherings, with multiple flavor options to please everyone.",
+                        category: "كوكيز",
+                        categoryEn: "Cookies",
+                        mainImage: "images/p16-3.png",
+                        images: ["images/p16-3.png"],
+                        details: [
+                            "مكونات فاخرة",
+                            "12 حبة كوكيز طازج",
+                            "خبز يومي",
+                            "مكونات فاخرة",
+                            "متوفر بعدة نكهات: كيندر، سْمورز، نوتيلا، لوتر رد فيلفت بيسكوف"
+                            ],
+                        detailsEn: [
+                            "12 pieces of fresh cookies",
+                            "Baked daily",
+                            "Premium ingredients",
+                            "Available in flavors: Kinder, S'mores, Nutella, Lotus, Red Velvet Biscoff"
+                            ]
+                        },
+                        {
+                        id: "16_p4",
+                        name: "كوكيز ميني 1 كيلو",
+                        nameEn: "Mini Cookies 1 Kilo",
+                        description: "كيس كبير من الكوكيز الصغير بوزن 1 كيلو.",
+                        descriptionEn: "Large bag of mini cookies, 1 kg.",
+                        longDescription: "لمحبي الكوكيز بكمية وفيرة، نقدم لك كيلو كامل من قطع الكوكيز الصغيرة المقرمشة. مثالية للمشاركة في الحفلات والمناسبات الكبيرة.",
+                        longDescriptionEn: "For cookie lovers who want a generous amount, we offer a full kilo of crispy mini cookie bites. Perfect for sharing at parties and large events.",
+                        category: "كوكيز",
+                        categoryEn: "Cookies",
+                        mainImage: "images/p16-4.png",
+                        images: ["images/p16-4.png"],
+                        details: [
+                            "وزن 1 كيلو",
+                            "قطع صغيرة مقرمشة",
+                            "مكونات فاخرة",
+                            "متوفر بعدة نكهات: كيندر، سْمورز، نوتيلا، لوتر رد فيلفت بيسكوف"
+                            ],
+                        detailsEn: [
+                            "1 kg weight",
+                            "Crispy mini bites",
+                            "Premium ingredients",
+                            "Available in flavors: Kinder, S'mores, Nutella, Lotus, Red Velvet Biscoff"
+                            ]
+                        },
+                        {
+                        id: "16_p5",
+                        name: "كوكيز ميني 1/2 كيلو",
+                        nameEn: "Mini Cookies 1/2 Kilo",
+                        description: "كيس متوسط من الكوكيز الصغير بوزن نصف كيلو.",
+                        descriptionEn: "Medium bag of mini cookies, 1/2 kg.",
+                        longDescription: "نصف كيلو من قطع الكوكيز الصغيرة المقرمشة بنكهات متعددة. خيار مثالي للاستمتاع بكمية مناسبة دون زيادة.",
+                        longDescriptionEn: "Half a kilo of crispy mini cookie bites in multiple flavors. An ideal choice to enjoy a suitable amount without excess.",
+                        category: "كوكيز",
+                        categoryEn: "Cookies",
+                        mainImage: "images/p16-5.png",
+                        images: ["images/p16-5.png"],
+                        details: [
+                            "وزن نصف كيلو",
+                            "قطع صغيرة مقرمشة",
+                            "مكونات فاخرة",
+                            "متوفر بعدة نكهات: كيندر، سْمورز، نوتيلا، لوتر رد فيلفت بيسكوف"
+                            ],    
+                        detailsEn: [
+                            "1/2 kg weight",
+                            "Crispy mini bites",
+                            "Premium ingredients",
+                            "Available in flavors: Kinder, S'mores, Nutella, Lotus, Red Velvet Biscoff"
+                            ]
+                        },
+                        {
+                        id: "16_p6",
+                        name: "علبة 16 كب كيك كوكيز",
+                        nameEn: "Box of 16 Cookie Cups",
+                        description: "علبة متوسطة من كب كيك الكوكيز، 16 حبة.",
+                        descriptionEn: "Medium box of cookie cups, 16 pieces.",
+                        longDescription: "كب كيك الكوكيز هي حلى مبتكر عبارة عن قاعدة كوكيز مقرمشة على شكل كوب محشوة بكريمة لذيذة. تأتي هذه العلبة بـ 16 حبة بنكهات متعددة.",
+                        longDescriptionEn: "Cookie cups are an innovative dessert: a crispy cookie base shaped like a cup filled with delicious cream. This box contains 16 pieces in multiple flavors.",
+                        category: "كب كيك",
+                        categoryEn: "Cupcakes",
+                        mainImage: "images/p16-6.png",
+                        images: ["images/p16-6.png",],
+                        details: [
+                            "16 حبة كب كيك كوكيز",
+                            "قاعدة كوكيز مقرمشة",
+                            "حشوة كريمية",
+                            "نكهات متعددة: كيندر، سْمورز، نوتيلا، لوتر رد فيلفت بيسكوف"
+                            ],
+                        detailsEn: [
+                            "16 cookie cups",
+                            "Crispy cookie base",
+                            "Creamy filling",
+                            "Multiple flavors: Kinder, S'mores, Nutella, Lotus, Red Velvet Biscoff"
+                            ]
+                        },
+                        {
+                        id: "16_p7",
+                        name: "علبة 32 كب كيك كوكيز",
+                        nameEn: "Box of 32 Cookie Cups",
+                        description: "علبة كبيرة من كب كيك الكوكيز، 32 حبة.",
+                        descriptionEn: "Large box of cookie cups, 32 pieces.",
+                        longDescription: "للمناسبات الكبيرة، نقدم علبة ضخمة تحتوي على 32 حبة من كب كيك الكوكيز الشهية. مثالية للحفلات والاحتفالات.",
+                        longDescriptionEn: "For big events, we offer a huge box containing 32 delicious cookie cups. Perfect for parties and celebrations.",
+                        category: "كب كيك",
+                        categoryEn: "Cupcakes",
+                        mainImage: "images/p16-7.png",
+                        images: ["images/p16-7.png",],
+                        details: [
+                            "32 حبة كب كيك كوكيز",
+                            "قاعدة كوكيز مقرمشة",
+                            "حشوة كريمية",
+                            "نكهات متعددة: كيندر، سْمورز، نوتيلا، لوتر رد فيلفت بيسكوف"
+                            ],
+                            detailsEn: [
+                            "32 cookie cups",
+                            "Crispy cookie base",
+                            "Creamy filling",
+                            "Multiple flavors: Kinder, S'mores, Nutella, Lotus, Red Velvet Biscoff"
+                            ]
+                        }
+                    ]
+          },
+          {
+                id: 17,
+                name: "جوي كرافت هَب",
+                nameEn: "Joy Craft Hub",
+                emirate: "رأس الخيمة",
+                description: "روائح وعطور",
+                descriptionEn: "Scents & Perfumes",
+                longDescription: "متخصصون في تجهيز الهدايا والتوزيعات بأناقة وجودة عالية تناسب مختلف المناسبات، نختار أجود أنواع الأعواد والدخون والمرشّات بعناية، ونحرص أن تكون كل قطعة جاهزة للتقديم بذوق مميز يعكس فخامة التفاصيل.",
+                longDescriptionEn: "specializing in premium gift arrangements and customized giveaways for all occasions، We carefully select high-quality oud, incense (dukhoon), and perfume sprays, ensuring every piece is beautifully prepared and elegantly presented.",
+                image: "images/p17.jpg",
+                phone: "",
+                whatsapp: "+971 50 128 7731",
+                email: "",
+                sell_points:[
+                    {type: "instagram" , value: "joycraft.hub"},
+                ],
+                adra_license: "نعم",
+                coverage: "جميع إمارات الدولة",
+                badges: ["جديد"],
+                badgesEn: ["New"],
+                category: "حلويات",
+                categoryEn: "Sweets",
+                products: [
+                    
+                ]
+          },
+          {
+                id: 18,
+                name: "مطبخ ورقة عنب",
+                nameEn: "Kitchen Warqa Enb",
+                emirate: "دبي",
+                description: "أكلات بيوت",
+                descriptionEn: "Homemade Food",
+                longDescription: "مطبخ ورقة عنب وجهتك المثالية لتجربة الأكلات البيتية الشهية في دبي. نحرص على انتقاء أجود المكونات وإعداد الأطباق بحب لإيصال مذاق المنزل الأصيل إليكم. نضمن لكم خدمة توصيل سريعة وموثوقة تصل إلى باب منزلكم. يرجى تقديم طلبكم قبل ساعة من الوقت المطلوب للاستمتاع بوجبتكم في الوقت المناسب.",
+                longDescriptionEn: "Warqa Enb is your ideal destination for delicious homemade dishes in Dubai. We carefully select the finest ingredients and prepare our meals with love to deliver an authentic home-cooked taste to you. We guarantee fast and reliable delivery straight to your doorstep. Please place your order one hour in advance to enjoy your meal on time.",
+                image: "images/p18.jpg",
+                phone: "",
+                whatsapp: "+971 50 630 1247",
+                email: "",
+                sell_points:[
+                    {type: "instagram" , value: "warqa_enb.ae"},
+                ],
+                adra_license: "لا",
+                coverage: "جميع إمارات الدولة",
+                badges: [],
+                badgesEn: [],
+                category: "أطعمة ومشروبات",
+                categoryEn: "Food & Beverages",
+                products: [
+                        {
+                        id: "18_p1",
+                        name: "صحن ورق عنب",
+                        nameEn: "Grape Leaves Plate",
+                        description: "صحن ورق عنب محشو بالأرز والبهارات، 10 حبات.",
+                        descriptionEn: "Plate of stuffed grape leaves with rice and spices, 10 pieces.",
+                        longDescription: "ورق عنب محشو بخليط الأرز والبهارات الشرقية، مطهي بعناية ليقدم طبقاً تقليدياً لذيذاً. يقدم في صحن بـ 10 حبات.",
+                        longDescriptionEn: "Grape leaves stuffed with a mixture of rice and oriental spices, cooked carefully to serve a delicious traditional dish. Served in a plate of 10 pieces.",
+                        category: "مقبلات",
+                        categoryEn: "Appetizers",
+                        mainImage: "images/p18-1.jpg",
+                        images: [
+                            "images/p18-1.jpg",
+                            "images/p18-5.png",
+                            "images/p18-6.jpg"
+                        ],
+                        details: [
+                        "10 حبات ورق عنب",
+                        "محشو بالأرز والبهارات",
+                        "طبق تقليدي",
+                        "مطهي بعناية"
+                        ],
+                        detailsEn: [
+                        "10 grape leaves",
+                        "Stuffed with rice and spices",
+                        "Traditional dish",
+                        "Carefully cooked"
+                        ]
+                        },
+                        {
+                        id: "18_p2",
+                        name: "صحن مسخن رول",
+                        nameEn: "Musakhan Rolls Plate",
+                        description: "صحن مسخن رول محشي بالدجاج والبصل، 8 حبات.",
+                        descriptionEn: "Plate of musakhan rolls stuffed with chicken and onions, 8 pieces.",
+                        longDescription: "لفائف المسخن المحشوة بخليط الدجاج والبصل والسماق، مغطاة بزيت الزيتون والصنوبر. طبق فلسطيني أصيل يقدم في صحن بـ 8 حبات.",
+                        longDescriptionEn: "Musakhan rolls stuffed with chicken, onions, and sumac, topped with olive oil and pine nuts. An authentic Palestinian dish served in a plate of 8 pieces.",
+                        category: "مقبلات",
+                        categoryEn: "Appetizers",
+                        mainImage: "images/p18-5.png",
+                        images: ["images/p18-5.png"],
+                        details: [
+                        "8 حبات مسخن رول",
+                        "محشو بالدجاج والبصل والسماق",
+                        "مغطى بزيت الزيتون والصنوبر",
+                        "طبق فلسطيني أصيل"
+                        ],
+                        detailsEn: [
+                        "8 musakhan rolls",
+                        "Stuffed with chicken, onions, and sumac",
+                        "Topped with olive oil and pine nuts",
+                        "Authentic Palestinian dish"
+                        ]
+                        },
+                        {
+                        id: "18_p3",
+                        name: "صحن كبة لحم",
+                        nameEn: "Meat Kibbeh Plate",
+                        description: "صحن كبة لحم مقلية، 8 حبات.",
+                        longDescription: "كبة لحم مقلية حتى الذهبية، محشوة باللحم المفروم والبرغل والبهارات. مقرمشة من الخارج ولذيذة من الداخل. تقدم في صحن بـ 8 حبات.",
+                        longDescriptionEn: "Fried meat kibbeh until golden, stuffed with minced meat, bulgur, and spices. Crispy on the outside and delicious on the inside. Served in a plate of 8 pieces.",
+                        category: "مقبلات",
+                        categoryEn: "Appetizers",
+                        mainImage: "images/p18-2.jpg",
+                        images: ["images/p18-2.jpg",
+                            "images/p18-5.jpg"
+                        ],
+                        details: [
+                        "8 حبات كبة لحم",
+                        "محشوة باللحم المفروم والبرغل",
+                        "مقلية ومقرمشة",
+                        "طبق تقليدي"
+                        ],
+                        detailsEn: [
+                        "8 meat kibbeh",
+                        "Stuffed with minced meat and bulgur",
+                        "Fried and crispy",
+                        "Traditional dish"
+                        ]
+                        },
+                        {
+                        id: "18_p4",
+                        name: "بوكس ورق عنب",
+                        nameEn: "Grape Leaves Box",
+                        description: "بوكس ورق عنب محشو، حجم عائلي.",
+                        descriptionEn: "Box of stuffed grape leaves, family size.",
+                        longDescription: "بوكس كبير من ورق العنب المحشو بالأرز والبهارات، مناسب للعائلة أو المناسبات. كمية وفيرة وجودة عالية.",
+                        longDescriptionEn: "Large box of grape leaves stuffed with rice and spices, suitable for family or gatherings. Generous quantity and high quality.",
+                        category: "بوكسات",
+                        categoryEn: "Boxes",
+                        mainImage: "images/p18-6.jpg",
+                        images: [""],
+                        details: [
+                        "حجم عائلي",
+                        "ورق عنب محشو بالأرز والبهارات",
+                        "مناسب للمناسبات",
+                        "كمية وفيرة"
+                        ],
+                        detailsEn: [
+                        "Family size",
+                        "Grape leaves stuffed with rice and spices",
+                        "Suitable for occasions",
+                        "Generous quantity"
+                        ]
+                        },
+                        {
+                        id: "18_p5",
+                        name: "بوكس مسخن رول",
+                        nameEn: "Musakhan Rolls Box",
+                        description: "بوكس مسخن رول محشي بالدجاج، حجم عائلي.",
+                        descriptionEn: "Box of musakhan rolls stuffed with chicken, family size.",
+                        longDescription: "بوكس كبير من لفائف المسخن المحشوة بالدجاج والبصل والسماق، مغطاة بالصنوبر. وجبة متكاملة تناسب التجمعات.",
+                        longDescriptionEn: "Large box of musakhan rolls stuffed with chicken, onions, and sumac, topped with pine nuts. A complete meal suitable for gatherings.",
+                        category: "بوكسات",
+                        categoryEn: "Boxes",
+                        mainImage: "images/p18-5.png",
+                        images: ["images/p18-5.png"],
+                        details: [
+                        "حجم عائلي",
+                        "مسخن رول بالدجاج والبصل",
+                        "مغطى بالصنوبر",
+                        "وجبة متكاملة"
+                        ],
+                        detailsEn: [
+                        "Family size",
+                        "Musakhan rolls with chicken and onions",
+                        "Topped with pine nuts",
+                        "Complete meal"
+                        ]
+                        },
+                        {
+                        id: "18_p6",
+                        name: "بوكس كبة لحم",
+                        nameEn: "Meat Kibbeh Box",
+                        description: "بوكس كبة لحم مقلية، حجم عائلي.",
+                        descriptionEn: "Box of fried meat kibbeh, family size.",
+                        longDescription: "بوكس كبير من كبة اللحم المقلية المقرمشة، محشوة باللحم المفروم والبرغل. خيار مثالي للعزائم.",
+                        longDescriptionEn: "Large box of crispy fried meat kibbeh, stuffed with minced meat and bulgur. An ideal choice for banquets.",
+                        category: "بوكسات",
+                        categoryEn: "Boxes",
+                        mainImage: "images/p18-2.jpg",
+                        images: ["images/p18-2.jpg"],
+                        details: [
+                        "حجم عائلي",
+                        "كبة لحم مقلية",
+                        "محشوة باللحم والبرغل",
+                        "مقرمشة ولذيذة"
+                        ],
+                        detailsEn: [
+                        "Family size",
+                        "Fried meat kibbeh",
+                        "Stuffed with meat and bulgur",
+                        "Crispy and delicious"
+                        ]
+                        },
+                        {
+                        id: "18_p7",
+                        name: "بوكس ميني كباب",
+                        nameEn: "Mini Kebab Box",
+                        description: "بوكس ميني كباب مشوي، 12 حبة.",
+                        descriptionEn: "Box of grilled mini kebabs, 12 pieces.",
+                        longDescription: "بوكس يحتوي على 12 حبة من الكباب الصغير المشوي على الفحم، متبل بالبهارات الشرقية. مثالي للمقبلات أو السناك.",
+                        longDescriptionEn: "Box containing 12 pieces of grilled mini kebabs over charcoal, seasoned with oriental spices. Perfect for appetizers or snacks.",
+                        category: "بوكسات",
+                        categoryEn: "Boxes",
+                        mainImage: "images/p18.jpg",
+                        images: ["images/p18.jpg"],
+                        details: [
+                        "12 حبة كباب صغير",
+                        "مشوي على الفحم",
+                        "متبل بالبهارات الشرقية",
+                        "مقبلات لذيذة"
+                        ],
+                                                detailsEn: [
+                        "12 mini kebabs",
+                        "Grilled over charcoal",
+                        "Seasoned with oriental spices",
+                        "Delicious appetizer"
+                        ]
+                        },
+                        {
+                        id: "18_p8",
+                        name: "بوكسات اللمة",
+                        nameEn: "Al-Lamma Boxes",
+                        description: "بوكس اللمة 30 حبة مشكل.",
+                        descriptionEn: "Al-Lamma box of 30 assorted pieces.",
+                        longDescription: "بوكس اللمة يجمع تشكيلة رائعة من المقبلات الشرقية، 30 حبة مشكلة تناسب التجمعات العائلية والمناسبات.",
+                        longDescriptionEn: "Al-Lamma box brings a wonderful assortment of oriental appetizers, 30 assorted pieces suitable for family gatherings and occasions.",
+                                                category: "بوكسات",
+                        categoryEn: "Boxes",
+                        mainImage: "images/p18-3.png",
+                        images: ["images/p18-3.png"],
+                        details: [
+                        "30 حبة مشكلة",
+                                                "تشكيلة من المقبلات الشرقية",
+                        "مناسب للمناسبات",
+                        "مثالي للتجمعات"
+                        ],
+                        detailsEn: [
+                        "30 assorted pieces",
+                        "Variety of oriental appetizers",
+                        "Suitable for occasions",
+                        "Ideal for gatherings"
+                        ]
+                        },
+                        {
+                                                id: "18_p9",
+                        name: "صينية مقلوبة",
+                        ameEn: "Maqluba Tray",
+                        description: "صينية مقلوبة بخضار ودجاج، تكفي 6-8 أشخاص.",
+                        descriptionEn: "Maqluba tray with vegetables and chicken, serves 6-8 persons.",
+                        longDescription: "صينية مقلوبة تقليدية تتكون من طبقات الأرز والدجاج والخضار المقلية، تُقلب رأساً على صحن التقديم. طبق رئيسي فاخر يكفي العائلة.",
+                        longDescriptionEn: "Traditional maqluba tray consisting of layers of rice, chicken, and fried vegetables, flipped upside down on the serving plate. A luxurious main dish serving the family.",
+                        category: "صواني رئيسية",
+                        categoryEn: "Main Dishes Trays",
+                        mainImage: "images/p18-4.jpg",
+                        images: ["images/p18-4.jpg",
+                            "images/p18-4-1.png"
+                        ],
+                        details: [
+                        "تكفي 6-8 أشخاص",
+                        "أرز، دجاج، خضار مقلية",
+                        "طبق رئيسي فاخر",
+                        "مقلوبة تقليدية"
+                        ],
+                        detailsEn: [
+                        "Serves 6-8 persons",
+                        "Rice, chicken, fried vegetables",
+                        "Luxurious main dish",
+                        "Traditional maqluba"
+                        ]
+                        },
+                        {
+                        id: "18_p10",
+                        name: "صينية مسخن",
+                        nameEn: "Musakhan Tray",
+                        description: "صينية مسخن بدجاج وبصل وسماق، تكفي 6-8 أشخاص.",
+                        descriptionEn: "Musakhan tray with chicken, onions, and sumac, serves 6-8 persons.",
+                        longDescription: "صينية المسخن الفلسطيني الأصيل: خبز طابون مغطى بخليط الدجاج والبصل والسماق، مزين بالصنوبر وزيت الزيتون. طبق رئيسي غني بالنكهات.",
+                        longDescriptionEn: "Authentic Palestinian musakhan tray: taboon bread topped with a mixture of chicken, onions, and sumac, garnished with pine nuts and olive oil. A main dish rich in flavors.",
+                        category: "صواني رئيسية",
+                        categoryEn: "Main Dishes Trays",
+                        mainImage: "images/p18.jpg",
+                        images: ["images/p18.jpg"],
+                        details: [
+                        "تكفي 6-8 أشخاص",
+                        "دجاج، بصل، سماق، صنوبر",
+                        "خبز طابون",
+                        "طبق فلسطيني أصيل"
+                        ],
+                        detailsEn: [
+                        "Serves 6-8 persons",
+                        "Chicken, onions, sumac, pine nuts",
+                        "Taboon bread",
+                        "Authentic Palestinian dish"
+                        ]
+                        },
+                        {
+                        id: "18_p11",
+                        name: "صينية منسف",
+                        nameEn: "Mansaf Tray",
+                        description: "صينية منسف لحم مع جميد ولبن، تكفي 6-8 أشخاص.",
+                        descriptionEn: "Mansaf tray with meat, jameed, and yogurt, serves 6-8 persons.",
+                        longDescription: "صينية المنسف الأردني الشهير: أرز مغطى بقطع اللحم الطري وصلصة اللبن والجميد، مزين باللوز والصنوبر. الطبق الأهم في المناسبات.",
+                        longDescriptionEn: "The famous Jordanian mansaf tray: rice topped with tender meat pieces and jameed yogurt sauce, garnished with almonds and pine nuts. The most important dish for occasions.",
+                        category: "صواني رئيسية",
+                        categoryEn: "Main Dishes Trays",
+                        mainImage: "images/p18.jpg",
+                        images: ["images/p18.jpg"],
+                        details: [
+                        "تكفي 6-8 أشخاص",
+                        "لحم طري، أرز",
+                        "صلصة جميد ولبن",
+                        "مزين باللوز والصنوبر",
+                        "طبق المناسبات"
+                        ],
+                        detailsEn: [
+                        "Serves 6-8 persons",
+                        "Tender meat, rice",
+                        "Jameed and yogurt sauce",
+                        "Garnished with almonds and pine nuts",
+                        "Dish for occasions"
+                        ]
+                   }
+                ]
+                    
+            },
+            {
+                id: 19,
+                name: "أر.الورود",
+                nameEn: "R flowers",
+                emirate: "",
+                description: "ورود يدوية",
+                descriptionEn: "Handmade Flowers",
+                longDescription: "نقدم لك لمسة جمال تدوم إلى الأبد مع تشكيلتنا الفريدة من ورود الساتان المصنوعة يدويًا بكل حب واهتمام. كل قطعة هي عمل فني يعكس الأناقة والرقي، مصمم خصيصًا ليكون هدية مثالية أو إضافة راقية لديكور منزلك.",
+                longDescriptionEn: "We offer you a touch of beauty that lasts forever with our unique collection of handmade satin flowers, crafted with love and attention to detail. Each piece is a work of art reflecting elegance and sophistication, specially designed to be a perfect gift or a refined addition to your home decor.",
+                image: "images/p19.jpg",
+                phone: "",
+                whatsapp: "",
+                email: "",
+                sell_points:[
+                    {type: "instagram" , value: "r.flowers.ae"},
+                ], 
+                adra_license: "لا",
+                coverage: "جميع إمارات الدولة",
+                badges: ["جديد"],
+                badgesEn: ["NEW"],
+                category: "يدويات",
+                categoryEn: "Handmade",
+                products: []
+            },
+            {
+                id:20,
+                name:"لا سيت للعبايات",
+                nameEn:"La Cette Abayas",
+                emirate:"",
+                description:"عبايات",
+                descriptionEn:"Abayas",
+                longDescription:"نقدم لكم تشكيلة راقية من العبايات العصرية التي تجمع بين الأصالة والموضة مقرنا في الإمارات ونستقبل طلباتكم الخاصة عبر الرسائل المباشرة استعدوا لعيدكم مع مجموعتنا المميزة المصممة لإطلالة تجمع بين الأناقة والراحة",
+                longDescriptionEn:"We offer you an elegant collection of modern abayas that combine authenticity and fashion Based in the UAE we receive your special orders via direct messages Get ready for your Eid with our distinctive collection designed for a look that combines elegance and comfort",
+                image:"images/p20.png",
+                phone:"",
+                whatsapp:"",
+                email:"",
+                sell_points:[
+                    {type: "instagram" , value: "lacetteabayas.ae"},
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:["جديد"],
+                badgesEn:["NEW"],
+                category:"ملابس",
+                categoryEn:"Clothes",
+                products:[]
+            },
+            {
+                id:21,
+                name:"بي دياموند",
+                nameEn:"B Diamond",
+                emirate:"أبوظبي",
+                description: "روائح وعطور",
+                descriptionEn:"Oud & Sprays",
+                longDescription:"بيع دخون ومرشات. نتواجد في أبوظبي (زاهب ومهرجان زايد) وفي دبي (قرية العالمين - الجناح البحريني). الطلب لا يسترجع..",
+                longDescriptionEn:"Selling Oud and sprays. Located in Abu Dhabi (Zaheb & Zayed Festival) and Dubai (Global Village - Bahrain Pavilion). All sales are final.",
+                image:"images/p21.jpg",
+                phone:"",
+                whatsapp:"+971 56 666 5717 ",
+                email:"",
+                sell_points:[
+                    {type: "instagram", value: "bdiamond.ae"},
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:["جديد"],
+                badgesEn:["NEW"],
+                category:"روائح وعطور",
+                categoryEn:"Scents & Perfumes",
+                products:[]
+            },
+            {
+                id:22,
+                name:"حيثة",
+                nameEn:"Haytha",
+                emirate:"الفجيرة",
+                description:"ملابس",
+                descriptionEn:"Clothes",
+                longDescription:"بيع عبايات. موجودين في الإمارات. الطلب يستغرق من أسبوع إلى أسبوعين. للطلب خاص.",
+                longDescriptionEn:"Selling abayas. Based in UAE. Orders take 1-2 weeks. To order DM.",
+                image:"images/p22.jpg",
+                phone:"",
+                whatsapp:"",
+                email:"",
+                sell_points:[
+                    { type: "instagram", value: "haytha.ae"},
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:["جديد"],
+                badgesEn:["NEW"],
+                category:"ملابس",
+                categoryEn:"Clothes",
+                products:[]
+            },
+            {
+                id:23,
+                name:"سوكي",
+                nameEn:"Sookie",
+                emirate:"دبي",
+                description:"حلويات",
+                descriptionEn:"Sweets",
+                longDescription:"بيع كوكيز. متوفر استلام شخصي من البرشاء جنوب 2. توصيل خلال 24 ساعة داخل الإمارات. للطلب عبر الموقع الإلكتروني أو عبر طلبات.",
+                longDescriptionEn:"Selling cookies. Pickup available in Al Barsha South 2. Next-day delivery within UAE. Order via website or Talabat.",
+                image:"images/p23.jpg",
+                phone:"",
+                whatsapp:"",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "sookie.ae" },
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"حلويات",
+                categoryEn:"Sweets",
+                products:[
+                        {
+                    id: "23_p1",
+                    name: "كوكيز - عدة الخبز",
+                    nameEn: "Bake Your Sookie Kit",
+                    description: "عدة خبز الكوكيز المنزلية، تحضر بها كوكيز طازج في مطبخك.",
+                    descriptionEn: "DIY cookie baking kit to make fresh cookies in your kitchen.",
+                    longDescription: "عدة خبز الكوكيز المنزلية تأتي بمكونات محددة مسبقاً وتعليمات خطوة بخطوة لخبز كوكيز طازج في منزلك. لا فوضى ولا تخمين، مجرد متعة الخبز. متوفرة بثلاث نكهات: رقائق الشوكولاتة، الشوكولاتة المزدوجة، الريد فيلفت.",
+                    longDescriptionEn: "The Bake Your Sookie Kit comes with pre-measured ingredients and step-by-step instructions to bake fresh cookies at home. No mess, no guesswork — just pure baking joy. Available in three flavors: Chocolate Chip, Double Chocolate, Red Velvet.",
+                    category: "كوكيز",
+                    categoryEn: "Cookies",
+                    mainImage: "images/p23-1.jpg",
+                    images: ["images/p23-1.jpg"],
+                    details: [
+                    "عدة خبز منزلية",
+                    "مكونات محددة مسبقاً",
+                    "تعليمات خطوة بخطوة",
+                    "النكهات: رقائق شوكولاتة، شوكولاتة مزدوجة، ريد فيلفت"
+                    ],
+                    detailsEn: [
+                    "DIY baking kit",
+                    "Pre-measured ingredients",
+                    "Step-by-step instructions",
+                    "Flavors: Chocolate Chip, Double Chocolate, Red Velvet"
+                    ]
+                    },
+                    {
+                    id: "23_p2",
+                    name: "علبة كوكيز كلاسيك 6 حبات",
+                    nameEn: "Classic Sookie Box (6 pcs)",
+                    description: "علبة كلاسيك مكونة من 6 حبات كوكيز بنكهات متعددة.",
+                    descriptionEn: "Classic box of 6 cookies in multiple flavors.",
+                    longDescription: "استمتع بالطعم الكلاسيكي لكوكيز صوفي مع هذه العلبة المكونة من 6 حبات. تشمل 2 كوكيز برقائق الشوكولاتة، 2 كوكيز بالشوكولاتة المزدوجة، و2 كوكيز ريد فيلفت. مثالية للهدايا والمشاركة.",
+                    longDescriptionEn: "Indulge in the timeless taste of Sookie Classics with this 6-piece box. Includes 2 Chocolate Chip, 2 Double Chocolate, and 2 Red Velvet cookies. Perfect for gifting and sharing.",
+                    category: "كوكيز",
+                    categoryEn: "Cookies",
+                    mainImage: "images/p23-2.jpg",
+                    images: ["images/p23-2.jpg",
+                        "images/p23-2-1.jpg"
+                    ],
+                    details: [
+                    "6 حبات كوكيز",
+                    "2 رقائق شوكولاتة، 2 شوكولاتة مزدوجة، 2 ريد فيلفت",
+                    "مثالية للهدايا",
+                    "مكونات: قمح، ألبان، بيض، صويا، قد تحتوي على مكسرات"
+                    ],
+                    detailsEn: [
+                    "6 cookies",
+                    "2 Chocolate Chip, 2 Double Chocolate, 2 Red Velvet",
+                    "Perfect for gifting",
+                    "Ingredients: wheat, dairy, eggs, soy, may contain nuts"
+                    ]
+                    },
+                    {
+                    id: "23_p3",
+                    nameEn: "Mini Ramadan Sookie Box (30 Pieces)",
+                    description: "علبة مصغرة 30 حبة بنكهات رمضانية محدودة: تمر دهني وقهوة حلاوة.",
+                    descriptionEn: "Mini box of 30 pieces with limited Ramadan flavors: Sticky Date and Gahwa Halwa.",
+                    longDescription: "علبة رمضانية محدودة تحتوي على 30 كوكيز مصغر: 15 كوكيز تمر دهني و15 كوكيز قهوة حلاوة. بنكهات مستوحاة من الحلويات العربية التقليدية. مثالية للمجالس والهدايا في رمضان.",
+                    longDescriptionEn: "Limited edition Ramadan box containing 30 mini cookies: 15 Sticky Date and 15 Gahwa Halwa cookies. Flavors inspired by traditional Arabic sweets. Perfect for gatherings and gifting during Ramadan.",
+                    category: "كوكيز",
+                    categoryEn: "Cookies",
+                    mainImage: "images/p23-3.jpg",
+                    images: ["images/p23-3.jpg"],
+                    details: [
+                    "30 حبة كوكيز مصغر",
+                    "15 كوكيز تمر دهني",
+                    "15 كوكيز قهوة حلاوة",
+                                        "إصدار رمضان محدود",
+                    "تحتوي على مكسرات، قمح، ألبان، بيض، صويا"
+                    ],
+                    detailsEn: [
+                    "30 mini cookies",
+                    "15 Sticky Date cookies",
+                    "15 Gahwa Halwa cookies",
+                    "Limited Ramadan edition",
+                    "Contains nuts, wheat, dairy, eggs, soy"
+                    ]
+                    },
+                    {
+                    id: "23_p4",
+                    name: "علبة كوكيز مصغرة 30 حبة",
+                    nameEn: "Mini Sookie Box – 30 Pieces",
+                    description: "علبة كوكيز مصغرة 30 حبة بالنكهات الكلاسيكية.",
+                    descriptionEn: "Mini cookie box of 30 pieces with classic flavors.",
+                    longDescription: "نكهة كبيرة بحجم مصغر! علبة الكوكيز المصغرة الجديدة تحتوي على 30 كوكيز بحجم صغير من النكهات الكلاسيكية: 10 كوكيز رقائق شوكولاتة، 10 كوكيز شوكولاتة مزدوجة، 10 كوكيز ريد فيلفت. مثالية للمشاركة والهدايا.",
+                    longDescriptionEn: "Big flavor in mini size! The new Mini Sookie Box contains 30 bite-size cookies in classic flavors: 10 Chocolate Chip, 10 Double Chocolate, and 10 Red Velvet. Perfect for sharing and gifting.",
+                    category: "كوكيز",
+                    categoryEn: "Cookies",
+                    mainImage: "images/p23-4.jpg",
+                    images: ["images/p23-4.jpg",
+                        "images/p23-4-1.jpg",
+                        "images/p23-4-2.jpg"
+                    ],
+                    details: [
+                    "30 كوكيز مصغر",
+                    "10 رقائق شوكولاتة",
+                    "10 شوكولاتة مزدوجة",
+                    "10 ريد فيلفت",
+                    "مكونات: قمح، ألبان، بيض، صويا، قد تحتوي على مكسرات"
+                    ],
+                    detailsEn: [
+                    "30 mini cookies",
+                    "10 Chocolate Chip",
+                    "10 Double Chocolate",
+                    "10 Red Velvet",
+                    "Ingredients: wheat, dairy, eggs, soy, may contain nuts"
+                    ]
+                    },
+                    {
+                    id: "23_p5",
+                    name: "علبة كوكيز رمضانية 6 حبات",
+                    nameEn: "Ramadan Sookie Box (6 Pieces)",
+                    description: "علبة رمضانية محدودة 6 حبات بنكهات تمر دهني وقهوة حلاوة.",
+                    descriptionEn: "Limited Ramadan box of 6 pieces with Sticky Date and Gahwa Halwa flavors.",
+                    longDescription: "إصدار رمضان المحدود: 6 كوكيز بحجم كبير بنكهات عربية تقليدية: 3 كوكيز تمر دهني محشوة بصوص التوفي الدافئ، و3 كوكيز قهوة حلاوة محشوة بالحلاوة العمانية والبهارات. مثالية للإفطار والهدايا.",
+                    longDescriptionEn: "Limited Ramadan edition: 6 full-size cookies with traditional Arabic flavors: 3 Sticky Date cookies filled with warm toffee sauce, and 3 Gahwa Halwa cookies stuffed with Omani halwa and spices. Perfect for iftar and gifting.",
+                    category: "كوكيز",
+                    categoryEn: "Cookies",
+                    mainImage: "images/p23-5.jpg",
+                    images: ["images/p23-5.jpg",
+                        "images/p23-5-1.png"
+                    ],
+                    details: [
+                    "6 كوكيز كبير",
+                    "3 كوكيز تمر دهني",
+                    "3 كوكيز قهوة حلاوة",
+                    "إصدار رمضان محدود",
+                    "تحتوي على مكسرات، قمح، ألبان، بيض، صويا"
+                    ],
+                    detailsEn: [
+                    "6 full-size cookies",
+                    "3 Sticky Date cookies",
+                    "3 Gahwa Halwa cookies",
+                    "Limited Ramadan edition",
+                    "Contains nuts, wheat, dairy, eggs, soy"
+                    ]
+                    },
+                    {
+                    id: "23_p6",
+                    name: "علبة كوكيز محشوة 6 حبات",
+                    nameEn: "Stuffed Sookie Box (6 pcs)",
+                    description: "علبة كوكيز محشوة بحشوات غنية: نوتيلا، لوتر، فستق.",
+                    descriptionEn: "Box of stuffed cookies with rich fillings: Nutella, Lotus, Pistachio.",
+                    longDescription: "كوكيز محشوة بقلب غني ولذيذ: 2 كوكيز بنوتيلا، 2 كوكيز بلوتر، 2 كوكيز بفستق. كل قضمة دافئة ولا تقاوم. تحذير: تسبب الإدمان!",
+                    longDescriptionEn: "Stuffed cookies with a deliciously gooey center: 2 Nutella, 2 Lotus, and 2 Pistachio cookies. Every bite is warm and irresistible. Warning: Highly Addictive!",
+                    category: "كوكيز",
+                    categoryEn: "Cookies",
+                    mainImage: "images/p23-6.jpg",
+                    images: ["images/p23-6.jpg",
+                        "images/p23-6-1.jpg"
+                    ],
+                    details: [
+                    "6 كوكيز محشوة",
+                    "2 نوتيلا (بندق)",
+                    "2 لوتر (بسكويت)",
+                    "2 فستق",
+                    "تحتوي على مكسرات، قمح، ألبان، بيض، صويا"
+                    ],
+                    detailsEn: [
+                    "6 stuffed cookies",
+                    "2 Nutella (hazelnut)",
+                    "2 Lotus (Biscoff)",
+                    "2 Pistachio",
+                    "Contains nuts, wheat, dairy, eggs, soy"
+                    ]
+                    },
+                ], 
+            },
+            {
+                id:24,
+                name:"صوفيا كاندلز",
+                nameEn:"Sophia Candles",
+                emirate:"دبي",
+                description:"شموع فاخرة",
+                descriptionEn:"Luxury Candles",
+                longDescription:"شموع فاخرة تُصب يدويًا في الإمارات. توفر تجربة عطرية فاخرة. للطلب عبر الرسائل المباشرة.",
+                longDescriptionEn:"Hand-poured luxury candles made in the UAE. Offering a premium aromatic experience. Order via WhatsApp or DM. UAE-wide delivery available.",
+                image:"images/p24.jpg",
+                phone:"",
+                whatsapp:"",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "sophiacandles.ae" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"يدويات",
+                categoryEn:"handmade",
+                products:[]
+            },
+            {
+                id:25,
+                name:"جو جرين",
+                nameEn:"Go Green",
+                emirate:"دبي",
+                description:"نباتات زينة منزلية",
+                descriptionEn:"Home Ornamental Plants",
+                longDescription:"بيع نباتات زينة منزلية طبيعية في دبي. نوفر تشكيلة من النباتات الداخلية لتغذية بصرية وجمالية لمنزلك..",
+                longDescriptionEn:"Selling natural home ornamental plants in Dubai. We offer a variety of indoor plants for visual and aesthetic nourishment for your home.",
+                image:"images/p25.jpg",
+                phone:"",
+                whatsapp:"+971 55 879 0358",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "gogreen_fedaa" },
+                    { type: "facebook", value: "go.green.595820" }
+                    
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"نباتات",
+                categoryEn:"Plants",
+                products:[]
+            },
+            {
+                id:26,
+                name:"عكس",
+                nameEn:"3aks",
+                emirate:"أبوظبي",
+                description:"لوحات زيتية حسب الطلب",
+                descriptionEn:"Custom Oil Paintings",
+                longDescription:"رسم لوحات زيتية حسب الطلب داخل الإمارات. مهتمة بالتفاصيل الدقيقة وألوان زيتية فقط. للطلب عبر الرسائل المباشرة.",
+                longDescriptionEn:"Custom oil paintings made to order in the UAE. Focused on fine details and only oil colors. To order via DM.",
+                image:"images/p26.jpg",
+                phone:"",
+                whatsapp:"",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "3aks.ae" },
+                    { type: "tiktok", value: "3aks.ae" },
+                    { type: "twitter", value: "3aks.ae" },
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"فنون",
+                categoryEn:"Arts",
+                products:[
+                    {
+                        id: "26_p1",
+                        name: "لوحة الشيخ زايد",
+                        nameEn: "Sheikh Zayed Painting",
+                        description: "لوحة فنية لزايد بن سلطان آل نهيان",
+                        descriptionEn: "Artwork of Zayed bin Sultan Al Nahyan",
+                        longDescription: "لوحة فنية لـ Zayed bin Sultan Al Nahyan تُظهره واقفًا بهيبة وهو ينظر إلى الأفق. يرتدي الزي الإماراتي التقليدي مع بشت أسود مطرز بالذهب، ويظهر الخنجر العربي على صدره كرمز للتراث والأصالة. الخلفية بلون صحراوي هادئ يبرز وقار الشخصية ومكانتها.",
+                        longDescriptionEn: "Artwork of Zayed bin Sultan Al Nahyan showing him standing with majesty, gazing at the horizon. He wears traditional Emirati attire with a black bisht embroidered in gold, and the Arabic khanjar appears on his chest as a symbol of heritage and authenticity. The background is a calm desert color that highlights the dignity and stature of the figure.",
+                        category: "فنون",
+                        categoryEn: "Arts",
+                        mainImage: "images/p26-1.jpg",
+                        images: ["images/p26-1.jpg"],
+                        details: [
+                            "المقاس: 60×80 سم",
+                            "التقنية: ألوان زيتية",
+                            "الإطار: إطار ذهبي فاخر",
+                            "النوع: رسم يدوي أصلي"
+                          ],
+                        detailsEn: [
+                            "Size: 60×80 cm",
+                            "Technique: Oil colors",
+                            "Frame: Luxurious golden frame",
+                            "Type: Original hand-painted artwork"
+                          ]
+                    },
+                    {
+                        id: "26_p2",
+                        name: "لوحة الشيوخ هزاع وحمدان - الصقارة",
+                        nameEn: "Painting of Princes Hazza & Hamdan - Falconry",
+                        description: "لوحة تجمع الشيخ هزاع والشيخ حمدان في الصحراء خلال لحظة صقارة",
+                        descriptionEn: "Painting of Sheikh Hazza and Sheikh Hamdan in the desert during a falconry moment",
+                        longDescription: "لوحة فنية تُظهر Hazza bin Zayed Al Nahyan و Hamdan bin Zayed Al Nahyan جالسين في الصحراء خلال لحظة من الصقارة. يظهر أحدهما مرتديًا قفاز الصقارة بينما يقف الصقر أمامهما، في مشهد يعكس التراث الإماراتي وعلاقة القادة بالطبيعة وثقافة الصيد بالصقور في United Arab Emirates.",
+                        longDescriptionEn: "Artwork showing Hazza bin Zayed Al Nahyan and Hamdan bin Zayed Al Nahyan sitting in the desert during a falconry moment. One of them appears wearing a falconry glove while the falcon stands before them, in a scene reflecting Emirati heritage and the leaders' connection to nature and the culture of falconry in the United Arab Emirates.",
+                        category: "فنون",
+                        categoryEn: "Arts",
+                        mainImage: "images/p26-2.jpg",
+                        images: ["images/p26-2.jpg"],
+                        details: [
+                            "المقاس:  60×100 سم",
+                            "التقنية: ألوان زيتية",
+                            "الإطار: إطار فاخر ",
+                            "النوع: رسم يدوي أصلي"
+                        ],
+                        detailsEn: [
+                            "Size: made to order",
+                            "Technique: Oil colors",
+                            "Frame: Luxurious frame (optional)",
+                            "Type: Original hand-painted artwork"
+                          ]
+                    },
+                    {
+  id: "26_p3",
+  name: "لوحة الصقارة - زايد بن حمدان",
+  nameEn: "Falconry Painting - Zayed bin Hamdan",
+  description: "لوحة فنية تجسد تراث الصقارة الإماراتي",
+  descriptionEn: "Artwork embodying Emirati falconry heritage",
+  longDescription: "لوحة فنية تُظهر Zayed bin Hamdan bin Zayed Al Nahyan خلال لحظة من الصقارة في الصحراء، حيث يجلس أمام صقره وهو يضع قفاز الصقارة. في الخلفية يظهر شخص آخر يقف خلفه، لكن هويته غير معروفة. يعكس المشهد ارتباط القادة بتراث الصقارة والطبيعة في United Arab Emirates.",
+  longDescriptionEn: "An artwork depicting Zayed bin Hamdan bin Zayed Al Nahyan during a moment of falconry in the desert, sitting in front of his falcon while wearing a falconry glove. In the background, another person is standing behind him, but his identity is unknown. The scene reflects the leaders' connection to the heritage of falconry and nature in the United Arab Emirates.",
+  category: "فنون",
+  categoryEn: "Arts",
+  mainImage: "images/p26-3.jpg",
+  images: ["images/p26-3.jpg"],
+  details: [
+    "المقاس: 150×80 سم",
+    "التقنية: ألوان زيتية",
+    "الإطار: إطار فاخر (مرفق)",
+    "النوع: رسم يدوي أصلي"
+  ],
+  detailsEn: [
+    "Size: 150×80 cm",
+    "Technique: Oil colors",
+    "Frame: Luxurious frame (included)",
+    "Type: Original hand-painted artwork"
+  ]
+},
+{
+  id: "26_p4",
+  name: "لوحة الشيخ هزاع بن زايد",
+  nameEn: "Sheikh Hazza bin Zayed Painting",
+  description: "لوحة تجمع بين الحداثة والتراث الإماراتي",
+  descriptionEn: "Painting combining modernity and Emirati heritage",
+  longDescription: "لوحة فنية تُظهر سمو الشيخ هزاع بن زايد آل نهيان بملامحه الواثقة وهيبته المعهودة، مرتدياً نظارته السوداء العصرية و'الحمدانية' الإماراتية الأصيلة. يظهر سموه وهو يحمل صقراً مهيباً يستقر بزهو على يده المحمية بـ 'المنقله'، في مشهد يجمع بين الحداثة والتمسك بالجذور.",
+  longDescriptionEn: "An artwork depicting His Highness Sheikh Hazza bin Zayed Al Nahyan with his confident features and customary majesty, wearing his modern black sunglasses and the authentic Emirati 'Hamdania' headwear. He is shown holding a majestic falcon resting proudly on his hand protected by the 'Al-Minqalah', in a scene that combines modernity and adherence to roots.",
+  category: "فنون",
+  categoryEn: "Arts",
+  mainImage: "images/p26-4.jpg",
+  images: ["images/p26-4.jpg"],
+  details: [
+    "المقاس: 100×80 سم",
+    "التقنية: ألوان زيتية",
+    "الإطار: إطار فاخر (مرفق)",
+    "النوع: رسم يدوي أصلي"
+  ],
+  detailsEn: [
+    "Size: 100×80 cm",
+    "Technique: Oil colors",
+    "Frame: Luxurious frame (included)",
+    "Type: Original hand-painted artwork"
+  ]
+},
+{
+  id: "26_p5",
+  name: "لوحة الشيخ زايد - رحلة الصحراء",
+  nameEn: "Sheikh Zayed Painting - Desert Journey",
+  description: "لوحة تاريخية تجمع بين القيادة والتراث",
+  descriptionEn: "Historical painting combining leadership and heritage",
+  longDescription: "لوحة فنية تاريخية تُظهر مؤسس الدولة المغفور له الشيخ زايد بن سلطان آل نهيان خلال إحدى رحلاته في قلب الصحراء، حيث يجلس خلف مقود سيارته بابتسامته الحكيمة ونظرته الاستشرافية. تبرز اللوحة الشيخ زايد وهو يحمل على يده صقراً أصيلاً، في مشهد يجسد بساطة القائد وارتباطه الوثيق ببيئته وتراث أجداده.",
+  longDescriptionEn: "A historical artwork depicting the founding father, the late Sheikh Zayed bin Sultan Al Nahyan, during one of his journeys in the heart of the desert, sitting behind the wheel of his car with his wise smile and forward-looking gaze. The painting highlights Sheikh Zayed holding a purebred falcon on his hand, a scene that embodies the leader's simplicity and his deep connection to his environment and ancestral heritage.",
+  category: "فنون",
+  categoryEn: "Arts",
+  mainImage: "images/p26-5.jpg",
+  images: ["images/p26-5.jpg"],
+  details: [
+    "المقاس: 80×60 سم",
+    "التقنية: ألوان زيتية",
+    "الإطار: إطار فاخر (مرفق)",
+    "النوع: رسم يدوي أصلي"
+  ],
+  detailsEn: [
+    "Size: 80×60 cm",
+    "Technique: Oil colors",
+    "Frame: Luxurious frame (included)",
+    "Type: Original hand-painted artwork"
+  ]
+},
+{
+  id: "26_p6",
+  name: "لوحة تراثية - العبّارة القديمة",
+  nameEn: "Heritage Painting - The Old Abra",
+  description: "مشهد تراثي نادر يوثق عبّارة كلاسيكية",
+  descriptionEn: "A rare heritage scene documenting a classic Abra",
+  longDescription: "لوحة فنية تاريخية توثق مشهداً نادراً من تراث دولة الإمارات العربية المتحدة، حيث تظهر سيارة كلاسيكية بيضاء تعبر طريقاً رملياً ضيقاً وسط المياه، متجهة نحو حصن أو بيت قديم يقع في قلب البحر. يبرز في خلفية اللوحة برج مراقبة تراثي (مربعة) شامخ فوق جزيرة صغيرة، مما يعكس الأهمية الاستراتيجية والمعمارية للدفاع الساحلي قديماً.",
+  longDescriptionEn: "A historical artwork documenting a rare scene from the heritage of the United Arab Emirates, showing a white classic car crossing a narrow sandy path amidst the water, heading towards an old fort or house located in the heart of the sea. In the background of the painting, a traditional watchtower (square) stands tall over a small island, reflecting the strategic and architectural importance of coastal defense in the past.",
+  category: "فنون",
+  categoryEn: "Arts",
+  mainImage: "images/p26-6.jpg",
+  images: ["images/p26-6.jpg"],
+  details: [
+    "المقاس: 80×60 سم",
+    "التقنية: ألوان زيتية",
+    "الإطار: إطار فاخر (مرفق)",
+    "النوع: رسم يدوي أصلي"
+  ],
+  detailsEn: [
+    "Size: 80×60 cm",
+    "Technique: Oil colors",
+    "Frame: Luxurious frame (included)",
+    "Type: Original hand-painted artwork"
+  ]
+},
+{
+  id: "26_p7",
+  name: "لوحة الخيل ربدان",
+  nameEn: "Rabdan Horse Painting",
+  description: "لوحة فنية للخيل الأصيل ربدان",
+  descriptionEn: "Artwork of the purebred horse Rabdan",
+  longDescription: "لوحة فنية فاخرة تخلّد ذكرى الخيل 'ربدان'، وهو أحد أشهر وأعز الخيول الأصيلة لدى المغفور له الشيخ زايد بن سلطان آل نهيان. يجسد العمل ملامح 'ربدان' الأسطورية، بلونه الأشهب الوضّاح الذي يعكس النقاء والأصالة، مرتدياً لجاماً مزخرفاً يليق بمكانته في تاريخ دولة الإمارات العربية المتحدة.",
+  longDescriptionEn: "A luxurious artwork commemorating the horse 'Rabdan', one of the most famous and cherished purebred horses of the late Sheikh Zayed bin Sultan Al Nahyan. The piece embodies the legendary features of 'Rabdan', with its bright grey color reflecting purity and authenticity, adorned with a decorated bridle befitting its stature in the history of the United Arab Emirates.",
+  category: "فنون",
+  categoryEn: "Arts",
+  mainImage: "images/p26-7.jpg",
+  images: ["images/p26-7.jpg"],
+  details: [
+    "المقاس: 80×60 سم",
+    "التقنية: ألوان زيتية",
+    "الإطار: إطار فاخر (مرفق)",
+    "النوع: رسم يدوي أصلي"
+  ],
+  detailsEn: [
+    "Size: 80×60 cm",
+    "Technique: Oil colors",
+    "Frame: Luxurious frame (included)",
+    "Type: Original hand-painted artwork"
+  ]
+},
+{
+  id: "26_p8",
+  name: "لوحة قلعة الجاهلي",
+  nameEn: "Al Jahili Fort Painting",
+  description: "مشهد تراثي أمام قلعة الجاهلي",
+  descriptionEn: "Heritage scene in front of Al Jahili Fort",
+  longDescription: "لوحة فنية تاريخية مهيبة توثق مشهداً من الماضي أمام قلعة الجاهلي التاريخية في مدينة العين. يظهر في العمل مجموعة من الرجال بالزي التقليدي الإماراتي بجانب سيارات 'اللاند روفر' الكلاسيكية، في لحظة لقاء تعكس قيم الضيافة والترابط الاجتماعي.",
+  longDescriptionEn: "A majestic historical artwork documenting a scene from the past in front of the historic Al Jahili Fort in Al Ain city. The work shows a group of men in traditional Emirati attire beside classic Land Rover vehicles, in a meeting moment reflecting the values of hospitality and social cohesion.",
+  category: "فنون",
+  categoryEn: "Arts",
+  mainImage: "images/p26-8.jpg",
+  images: ["images/p26-8.jpg"],
+  details: [
+    "المقاس: 80×60 سم",
+    "التقنية: ألوان زيتية",
+    "الإطار: إطار فاخر (مرفق)",
+    "النوع: رسم يدوي أصلي"
+  ],
+  detailsEn: [
+    "Size: 80×60 cm",
+    "Technique: Oil colors",
+    "Frame: Luxurious frame (included)",
+    "Type: Original hand-painted artwork"
+  ]
+}
+
+                ]
+            },
+            {
+                id:27,
+                name:"فادي عاطف آرت",
+                nameEn:"Fady Atef Art",
+                emirate:"دبي",
+                description:"رسم بورتريه، رسم على الجلد، لوحات زيتية",
+                descriptionEn:"Portrait drawing, skin painting, oil paintings",
+                longDescription:"فنان متخصص في رسم البورتريه بالفحم والألوان، رسم على الجلد، رسم على الحوائط، ولوحات زيتية. متاح للرسم في الأحداث والفعاليات داخل دبي..",
+                longDescriptionEn:"Artist specializing in charcoal and color portrait drawing, skin painting, wall murals, and oil paintings. Available for live drawing at events in Dubai.",
+                image:"images/p27.jpg",
+                phone:"",
+                whatsapp:"+971588406057",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "fady_atef_art" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"فنون",
+                categoryEn:"Arts",
+                products:[
+                    {
+                        id: "27_p1",
+                        name: "لوحة فنية ملونة - متعددة المقاسات",
+                        nameEn: "Colored Art Painting - Multiple Sizes",
+                        description: "لوحة فنية ملونة بألوان زاهية على قماش كانفس عالي الجودة.",
+                        descriptionEn: "Colored art painting with vibrant colors on high-quality canvas.",
+                        longDescription: "لوحة فنية ملونة تناسب جميع الأذواق، مرسومة بألوان أكريليك زاهية على قماش كانفس ممتاز. تضفي لمسة جمالية على أي مكان في المنزل أو المكتب. متوفرة بمقاسات مختلفة تناسب احتياجك.",
+                        longDescriptionEn: "A colored art painting that suits all tastes, painted with vibrant acrylic colors on excellent canvas. Adds an aesthetic touch to any place in the home or office. Available in different sizes to suit your needs.",
+                        category: "لوحات فنية",
+                        categoryEn: "Art Paintings",
+                        mainImage: "images/p27-1-1-1.png",
+                        images: [
+                            "images/p27-1.jpg",
+                             "images/p27-1-1-1.png",
+                             "images/p27-1-1.png",
+                             "images/p27-1-2.png",
+                             "images/p27-1-3.png",
+                             "images/p27-1-4.png",
+                             "images/p27-1-5.png",
+                             "images/p27-1-6.png",
+                             "images/p27-1-7.png",
+                             "images/p27-1-8.png",
+                        ],
+                        details: [
+                          "ألوان أكريليك زاهية",
+                          "قماش كانفس فاخر",
+                          "متوفرة بمقاسات متعددة",
+                          "إطار خشبي متين",
+                          "مناسبة للديكور المنزلي والمكتبي"
+                         ],
+                        detailsEn: [
+                          "Vibrant acrylic colors",
+                          "Premium canvas",
+                          "Available in multiple sizes",
+                          "Sturdy wooden frame",
+                          "Suitable for home and office decor"
+                        ]
+                    },
+                    {
+    id: "27_p2",
+    name: "لوحة فنية ثلاثية الأبعاد - متعددة المقاسات",
+    nameEn: "3D Art Painting - Multiple Sizes",
+    description: "لوحة فنية بارزة بتصميم ثلاثي الأبعاد لإحساس واقعي.",
+    descriptionEn: "Embossed art painting with a 3D design for a realistic feel.",
+    longDescription: "لوحة فنية ثلاثية الأبعاد مبتكرة، تجمع بين الرسم والنحت البارز لتخلق تأثيراً بصرياً فريداً. مصنوعة يدوياً بجودة عالية، وتضفي عمقاً وحركة على الحائط. متوفرة بمقاسات متعددة.",
+    longDescriptionEn: "An innovative 3D art painting combining painting and relief sculpture to create a unique visual effect. Handcrafted with high quality, adding depth and movement to the wall. Available in multiple sizes.",
+    category: "لوحات فنية",
+    categoryEn: "Art Paintings",
+    mainImage: "images/p27-2-1.png",
+    images: [
+        "images/p27-2-1.png",
+        "images/p27-2-2.png",
+        "images/p27-2-3.png",
+    ],
+    details: [
+      "تصميم ثلاثي الأبعاد بارز",
+      "مصنوعة يدوياً",
+      "تأثير بصري فريد",
+      "متوفرة بمقاسات متعددة",
+      "إطار فاخر"
+    ],
+    detailsEn: [
+      "3D embossed design",
+      "Handcrafted",
+      "Unique visual effect",
+      "Available in multiple sizes",
+      "Luxury frame"
+    ]
+  },
+  {
+    id: "27_p3",
+    name: "لوحة فنية بقلم رصاص - متعددة المقاسات",
+    nameEn: "Pencil Drawing Art - Multiple Sizes",
+    description: "لوحة فنية مرسومة بدقة بقلم الرصاص بتدرجات رمادية.",
+    descriptionEn: "Art painting precisely drawn with pencil in gray shades.",
+    longDescription: "لوحة فنية بقلم الرصاص تعكس مهارة عالية في التظليل والتفاصيل الدقيقة. مرسومة على ورق فاخر أو كانفس، وتتميز بالبساطة والأناقة. متوفرة بمقاسات متعددة، مثالية لعشاق الرسم الكلاسيكي.",
+    longDescriptionEn: "A pencil art painting reflecting high skill in shading and fine details. Drawn on premium paper or canvas, characterized by simplicity and elegance. Available in multiple sizes, ideal for classic drawing lovers.",
+    category: "لوحات فنية",
+    categoryEn: "Art Paintings",
+    mainImage: "images/p27-3-1.png",
+    images: [
+        "images/p27-3-1.png",
+        "images/p27-3-2.png",
+        "images/p27-3-9.png",
+        "images/p27-3-3.png",
+        "images/p27-3-4.png",
+        "images/p27-3-5.png",
+        "images/p27-3-6.png",
+        "images/p27-3-7.png",
+        "images/p27-3-8.png",
+        
+    ],
+    details: [
+      "رسم بقلم الرصاص",
+      "تظليل احترافي",
+      "تفاصيل دقيقة",
+      "متوفرة بمقاسات متعددة",
+      "ورق فاخر / كانفس"
+    ],
+    detailsEn: [
+      "Pencil drawing",
+      "Professional shading",
+      "Fine details",
+      "Available in multiple sizes",
+      "Premium paper / canvas"
+    ]
+  }
+                    
+                   ]
+                },
+                {
+                id:28,
+                name:"فكرة و عمل",
+                nameEn:"Fekra w 3mal",
+                emirate:"الفجيرة",
+                description:"مشغولات يدوية وتوزيعات مناسبات",
+                descriptionEn:"Handmade crafts and event giveaways",
+                longDescription:"مشغولات يدوية متنوعة، توزيعات لكل المناسبات، وبنياتا للطلب عبر الرسائل المباشرة.",
+                longDescriptionEn:"Various handmade crafts, giveaways for all occasions, and piñatas. To order via DM.",
+                image:"images/p28.jpg",
+                phone:"",
+                whatsapp:"971508189208+",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "fekra_w_3mal" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"يدويات",
+                categoryEn:"Handmade",
+                products:[]
+            },
+            {
+                id:29,
+                name:"دار الظبي",
+                nameEn:"Dar Al-Dhabi",
+                emirate:"",
+                description:"دهن عود ومخلطات عربية وفرنسية",
+                descriptionEn:"Oud oil, Arabic & French perfume blends",
+                longDescription:"مشروع إماراتي مرخص رسميًا، متخصص في بيع دهن العود، المخلط العربي، والمخلط الفرنسي. للطلب عبر الرسائل المباشرة. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"An officially licensed Emirati project, specialized in selling Oud oil, Arabic blends, and French blends. Order via DM. Delivery to all Emirates of the UAE.",
+                image:"images/p29.jpg",
+                phone:"",
+                whatsapp:"",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "dar_aldaby2" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"روائح وعطور",
+                categoryEn:"Scents & Perfumes",
+                products:[]
+            },
+            {
+                id:30,
+                name:"سويتاتي",
+                nameEn:"Sweetati",
+                emirate:"",
+                description:"حلويات",
+                descriptionEn:"Sweets",
+                longDescription:"مشروع مرخص من الدائرة الاقتصادية، متخصص في الحلويات. توصيل فقط، دفع مسبق فقط، الأسعار ثابتة. للطلب عبر الخاص أو الواتساب. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"A project licensed by the Economic Department, specializing in sweets. Delivery only, prepayment only, fixed prices. Order via DM or WhatsApp. Delivery to all Emirates of the UAE.",
+                image:"images/p30.jpg",
+                phone:"",
+                whatsapp:"971502555423",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "sweetati.ae" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"حلويات",
+                categoryEn:"Sweets",
+                products:[]
+            },
+            {
+                id:31,
+                name:"كسرة عود فابريك",
+                nameEn:"Kasrat Oud Fabric",
+                emirate:"أم القيوين",
+                description:"توزيعات وقطع",
+                descriptionEn:"Giveaways & Pieces",
+                longDescription:"مشروع مرخص من دائرة التنمية الاقتصادية، متخصص في التوزيعات والقطع. للطلب عبر الواتساب أو الرسائل المباشرة. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"A project licensed by the Department of Economic Development, specialized in giveaways and pieces. Order via WhatsApp or direct message. Delivery to all Emirates of the UAE.",
+                image:"images/p31.png",
+                phone:"971557071008+",
+                whatsapp:"971557071008+",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "kasratoudfabric" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"هدايا",
+                categoryEn:"Gifts",
+                products:[]
+            },
+            {
+                id:32,
+                name:"مذاق أمي",
+                nameEn:"Mom's Goodiez",
+                emirate:"أبوظبي",
+                description:"معجنات منزلية طازجة - كعك ومعمول",
+                descriptionEn:"Fresh homemade pastries - Ka'ak & Ma'moul",
+                longDescription:"معجنات منزلية طازجة مخبوزة بحب في أبوظبي، متخصصين في الكعك والمعمول. الرجاء الطلب قبل يومين.",
+                longDescriptionEn:"Freshly baked authentic homemade pastries in Abu Dhabi, specializing in Ka'ak & Ma'moul. Please order 2 days in advance. Order via WhatsApp. Delivery to all Emirates of the UAE.",
+                image:"images/p32.jpg",
+                phone:"+971566602772",
+                whatsapp:"+971566602772",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "momsgoodiez" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:["جديد"],
+                badgesEn:["New"],
+                category:"أطعمة ومشروبات",
+                categoryEn:"Food & Beverages",
+                products:[
+                    {
+                        id: "32_p1",
+                        name: "معمول مشكل بالفستق والجوز والتمر",
+                        nameEn: "Mixed Maamoul with Pistachio, Walnut & Date",
+                        description: "معمول تقليدي مشكل بحشوات الفستق والجوز والتمر، وزن كيلو.",
+                        descriptionEn: "Traditional mixed maamoul with pistachio, walnut, and date fillings, 1 kg.",
+                        longDescription: "معمول مشكل يجمع بين أشهى الحشوات التقليدية: الفستق الحلبي، الجوز، والتمر. محضر بمكونات طبيعية وبسكويت هش وخفيف. وزن كيلو كامل يكفي للعائلة والمناسبات.",
+                        longDescriptionEn: "Mixed maamoul combining the most delicious traditional fillings: pistachio, walnut, and date. Made with natural ingredients and light, crumbly pastry. Full 1 kg weight enough for family and occasions.",
+                        category: "حلويات",
+                        categoryEn: "Sweets",
+                        mainImage: "images/p32-1.jpg",
+                        images: ["images/p32-1.jpg",
+                            "images/p32-1-1.png"
+                        ],
+                        details: [
+                        "وزن كيلو",
+                        "مشكل: فستق، جوز، تمر",
+                        "بسكويت هش",
+                        "مكونات طبيعية",
+                        "مناسب للمناسبات"
+                        ],
+                        detailsEn: [
+                        "1 kg weight",
+                        "Assorted: pistachio, walnut, date",
+                        "Crumbly pastry",
+                        "Natural ingredients",
+                        "Suitable for occasions"
+                        ]
+                    },
+                    {
+                        id: "32_p2",
+                        name: "رنجية التمر بالفستق",
+                        nameEn: "Rangina Date with Pistachio",
+                        description: "رنجية التمر المحشوة بالفستق، وزن كيلو.",
+                        descriptionEn: "Date rangina stuffed with pistachio, 1 kg.",
+                        longDescription: "رنجية التمر بالفستق هي حلوى تقليدية تجمع بين حلاوة التمر وقرمشة الفستق. محضرة بعناية على الطريقة البلدي. وزن كيلو مناسب للعائلة.",
+                        longDescriptionEn: "Date rangina with pistachio is a traditional sweet combining the sweetness of dates with the crunch of pistachios. Carefully prepared in the traditional way. 1 kg weight suitable for family.",
+                        category: "حلويات",
+                        categoryEn: "Sweets",
+                        mainImage: "images/p32-2.jpg",
+                        images: ["images/p32-2.jpg",
+                            "images/p32-2-1.png",
+                            "images/p32-2-2.png",
+                            "images/p32-2-3.jpg"
+                        ],
+                        details: [
+                        "وزن كيلو",
+                        "تمر محشو بالفستق",
+                        "حلوى تقليدية",
+                        "مكونات طبيعية"
+                        ],
+                        detailsEn: [
+                        "1 kg weight",
+                        "Dates stuffed with pistachio",
+                        "Traditional sweet",
+                        "Natural ingredients"
+                        ]
+                    },
+                        {
+                        id: "32_p3",
+                        name: "بثيثة المكسرات",
+                        nameEn: "Bathitha with Nuts",
+                        description: "يثيثة المكسرات، حلوى تقليدية بمكسرات متنوعة، وزن كيلو.",
+                        descriptionEn: "Bathitha with mixed nuts, traditional sweet, 1 kg.",
+                        longDescription: "بثيثة المكسرات هي حلوى شرقية شهيرة تجمع بين الطحينة والدبس مع تشكيلة من المكسرات. غنية بالطاقة ومثالية مع القهوة. وزن كيلو.",
+                        longDescriptionEn: "Bathitha with nuts is a famous oriental sweet combining tahini and molasses with a mix of nuts. Rich in energy and perfect with coffee. 1 kg.",
+                        category: "حلويات",
+                        categoryEn: "Sweets",
+                        mainImage: "images/p32-3-2.jpg",
+                        images: ["images/p32-3-2.jpg",
+                            "images/p32-3-1.jpg",
+                            "images/p32-3.jpg"
+                        ],
+                        details: [
+                        "وزن كيلو",
+                        "طحينة ودبس",
+                        "تشكيلة مكسرات",
+                        "حلوى شرقية"
+                        ],
+                        detailsEn: [
+                        "1 kg weight",
+                        "Tahini and molasses",
+                        "Mixed nuts",
+                        "Oriental sweet"
+                        ]
+                    },
+                    {
+                        id: "32_p4",
+                        name: "خلية النحل",
+                        nameEn: "Khalifat Al-Nahl (Honeycomb)",
+                        description: "خلية النحل، حلوى شبيهة بقرص العسل بالعسل، وزن كيلو.",
+                        descriptionEn: "Honeycomb dessert, similar to bee's nest with honey, 1 kg.",
+                        longDescription: "خلية النحل هي حلوى هشة تشبه قرص العسل، مغموسة بالعسل أو القطر ومحشوة بالمكسرات. تذوب في الفم. وزن كيلو.",
+                        longDescriptionEn: "Khaliat Al-Nahl is a crispy dessert resembling a honeycomb, soaked in honey or syrup and stuffed with nuts. Melts in the mouth. 1 kg.",
+                        category: "حلويات",
+                        categoryEn: "Sweets",
+                        mainImage: "images/p32-4.jpg",
+                        images: ["images/p32-4.jpg",
+                            "images/p32-4-1.jpg",
+                            "images/p32-4-2.jpg"
+                        ],
+                        details: [
+                            "وزن كيلو",
+                            "هشة مثل قرص العسل",
+                            "مغموسة بالعسل",
+                            "محشوة بالمكسرات"
+                        ],
+                        detailsEn: [
+                            "1 kg weight",
+                            "Crispy like a honeycomb",
+                            "Soaked in honey",
+                            "Stuffed with nuts"
+                        ]
+                    },
+                    {
+                        id: "32_p5",
+                        name: "صفيحة يافاوية بالسبانخ أو بالجبن",
+                        nameEn: "Yafawi Spinach or Cheese Fatayer",
+                        description: "صفيحة يافاوية بالسبانخ أو الجبن، واحد كيلو.",
+                        descriptionEn: "Yafawi fatayer with spinach or cheese, 1 kg.",
+                        longDescription: "صفيحة يافاوية تقليدية، متوفرة بحشوة السبانخ أو الجبن. عجينة هشة وحشوة غنية بالنكهات. وزن كيلو مناسب للعائلة.",
+                        longDescriptionEn: "Traditional Yafawi fatayer, available with spinach or cheese filling. Crispy dough and rich flavors. 1 kg suitable for family.",
+                        category: "معجنات",
+                        categoryEn: "Pastries",
+                        mainImage: "images/p32-6.png",
+                        images: ["images/p32-6.png",
+                            "images/p32-5-1.jpg",
+                            "images/p32-5-2.jpg",
+                        ],
+                        details: [
+                            "وزن كيلو",
+                            "خياران: سبانخ أو جبن",
+                            "عجينة هشة",
+                            "معجنات تقليدية"
+                        ],
+                        detailsEn: [
+                            "1 kg weight",
+                            "Options: spinach or cheese",
+                            "Crispy dough",
+                            "Traditional pastries"
+                        ]
+                    },
+                    {
+                        id: "32_p6",
+                        name: "صفيحة يافاوية باللحم",
+                        nameEn: "Yafawi Meat Fatayer",
+                        description: "صفيحة يافاوية باللحم المفروم والبهارات، وزن كيلو.",
+                        descriptionEn: "Yafawi fatayer with minced meat and spices, 1 kg.",
+                        longDescription: "صفيحة يافاوية باللحم، محضرة من لحم مفروم طازج وبهارات شرقية، على عجينة هشة. وزن كيلو يفي بالغرض للعزائم.",
+                        longDescriptionEn: "Yafawi meat fatayer, made with fresh minced meat and oriental spices on crispy dough. 1 kg serves well for gatherings.",
+                        category: "معجنات",
+                        categoryEn: "Pastries",
+                        mainImage: "images/p32-6.png",
+                        images: ["images/p32-6.png",
+                            "images/p32-5-1.jpg",
+                            "images/p32-5-2.jpg",
+                        ],
+                        details: [
+                            "وزن كيلو",
+                            "لحم مفروم طازج",
+                            "بهارات شرقية",
+                            "عجينة هشة"
+                        ],
+                        detailsEn: [
+                            "1 kg weight",
+                            "Fresh minced meat",
+                            "Oriental spices",
+                            "Crispy dough"
+                        ]
+                    },
+                    {
+                        id: "32_p7",
+                        name: "مطبق السبانخ",
+                        nameEn: "Spinach Fatayer (Matbakh)",
+                        description: "مطبق السبانخ، معجنات بحشوة السبانخ، وزن كيلو.",
+                        descriptionEn: "Spinach fatayer (Matbakh style), 1 kg.",
+                        longDescription: "مطبق السبانخ هو نوع من المعجنات المحشوة بالسبانخ الطازجة والبصل والبهارات. خفيف ولذيذ، وزن كيلو.",
+                        longDescriptionEn: "Matbakh spinach is a type of pastry stuffed with fresh spinach, onions, and spices. Light and delicious, 1 kg.",
+                        category: "معجنات",
+                        categoryEn: "Pastries",
+                        mainImage: "images/p32-7.jpg",
+                        images: ["images/p32-7.jpg",
+                            "images/p32-7-1.jpg",
+                            "images/p32-7-2.jpg"
+                        ],
+                        details: [
+                        "وزن كيلو",
+                        "سبانخ طازجة",
+                        "بصل وبهارات",
+                        "معجنات خفيفة"
+                        ],
+                        detailsEn: [
+                        "1 kg weight",
+                        "Fresh spinach",
+                        "Onions and spices",
+                        "Light pastries"
+                        ]
+                    },
+                        {
+                        id: "32_p8",
+                        name: "مسخن رول",
+                        nameEn: "Musakhan Rolls",
+                        description: "مسخن رول، لفائف الدجاج بالبصل والسماق، وزن كيلو.",
+                        descriptionEn: "Musakhan rolls, chicken rolls with onions and sumac, 1 kg.",
+                        longDescription: "مسخن رول هو طبق فلسطيني شهير: لفائف محشوة بخليط الدجاج والبصل والسماق والصنوبر. وزن كيلو مناسب للعائلة.",
+                        longDescriptionEn: "Musakhan rolls is a famous Palestinian dish: rolls stuffed with chicken, onions, sumac, and pine nuts. 1 kg suitable for family.",
+                        category: "معجنات",
+                        categoryEn: "Pastries",
+                        mainImage: "images/p32-8.png",
+                        images: ["images/p32-8.png",
+                            "images/p32-8-1.jpg",
+                        ],
+                        details: [
+                            "وزن كيلو",
+                            "دجاج، بصل، سماق",
+                            "صنوبر",
+                            "طبق فلسطيني"
+                        ],
+                        detailsEn: [
+                            "1 kg weight",
+                            "Chicken, onions, sumac",
+                            "Pine nuts",
+                            "Palestinian dish"
+                        ]
+                    },
+                    {
+                        id: "32_p9",
+                        name: "معمول الزعتر الخضر البلدي بزيت الزيتون والسميد",
+                        nameEn: "Green Za'atar Maamoul with Olive Oil & Semolina",
+                        description: "معمول بالزعتر الأخضر البلدي مع زيت الزيتون والسميد، وزن كيلو.",
+                        descriptionEn: "Maamoul with green wild za'atar, olive oil, and semolina, 1 kg.",
+                        longDescription: "عمول الزعتر الأخضر البلدي هو معجنات تقليدية تحضر بالزعتر الطازج وزيت الزيتون والسميد. عجينة هشة ونكهة زعتر مميزة. وزن كيلو.",
+                        longDescriptionEn: "Green za'atar maamoul is a traditional pastry made with fresh za'atar, olive oil, and semolina. Crumbly dough and distinctive za'atar flavor. 1 kg.",
+                        category: "معجنات",
+                        categoryEn: "Pastries",
+                        mainImage: "images/p32-9.jpg",
+                        images: ["images/p32-9.jpg",
+                            "images/p32-9-1.jpg"
+                        ],
+                        details: [
+                            "وزن كيلو",
+                            "زعتر أخضر بلدي",
+                            "زيت زيتون",
+                            "سميد",
+                            "معجنات تقليدية"
+                        ],
+                        detailsEn: [
+                            "1 kg weight",
+                            "Wild green za'atar",
+                            "Olive oil",
+                            "Semolina",
+                            "Traditional pastries"
+                        ]
+                    },
+                    {
+                        id: "32_p10",
+                        name: "مطبق الزعتر الاخضر البلدي",
+                        nameEn: "Green Za'atar Fatayer (Matbakh)",
+                        description: "مطبخ الزعتر الأخضر البلدي، معجنات بحشوة الزعتر، وزن كيلو.",
+                        descriptionEn: "Green za'atar fatayer (Matbakh style), 1 kg.",
+                        longDescription: "مطبخ الزعتر الأخضر هو معجنات محشوة بالزعتر الطازج والبصل والبهارات. نكهة قوية ولذيذة. وزن كيلو.",
+                        longDescriptionEn: "Green za'atar matbakh is pastry stuffed with fresh za'atar, onions, and spices. Strong and delicious flavor. 1 kg.",
+                        category: "معجنات",
+                        categoryEn: "Pastries",
+                        mainImage: "images/p32-7.jpg",
+                        images: ["images/p32-7.jpg",
+                            "images/p32-7-1.jpg",
+                            "images/p32-7-2.jpg"
+                        ],
+                        details: [
+                            "وزن كيلو",
+                            "زعتر أخضر بلدي",
+                            "بصل وبهارات",
+                            "معجنات لذيذة"
+                        ],
+                        detailsEn: [
+                            "1 kg weight",
+                            "Wild green za'atar",
+                            "Onions and spices",
+                            "Delicious pastries"
+                        ]
+                    },
+                    {
+                        id: "32_p11",
+                        name: "اقراص الزعتر الاخضر البلدي بالجبن",
+                        nameEn: "Green Za'atar Discs with Cheese",
+                        description: "أقراص الزعتر الأخضر البلدي المحشوة بالجبن، وزن كيلو.",
+                        descriptionEn: "Green za'atar discs stuffed with cheese, 1 kg.",
+                        longDescription: "أقراص الزعتر الأخضر البلدي بالجبن تجمع بين نكهة الزعتر الطازج والجبن الذائب. عجينة هشة ومذاق لا يقاوم. وزن كيلو.",
+                        longDescriptionEn: "Green za'atar discs with cheese combine the flavor of fresh za'atar and melted cheese. Crumbly dough and irresistible taste. 1 kg.",
+                        category: "معجنات",
+                        categoryEn: "Pastries",
+                        mainImage: "images/p32-10.jpg",
+                        images: ["images/p32-10.jpg",
+                            "images/p32-10-1.jpg",
+                        ],
+                        details: [
+                            "وزن كيلو",
+                            "زعتر أخضر بلدي",
+                            "حشوة جبن",
+                            "عجينة هشة"
+                        ],
+                        detailsEn: [
+                            "1 kg weight",
+                            "Wild green za'atar",
+                            "Cheese filling",
+                            "Crumbly dough"
+                        ]
+                    }
+                ]
+            },
+            {
+                id:33,
+                name:"ABM عود",
+                nameEn:"ABM Oud",
+                emirate:"",
+                description:"عود فاخر",
+                descriptionEn:"Premium Oud",
+                longDescription:"متخصصون في تقديم أفخر أنواع العود. مشروع مرخص رسمياً من الدائرة الاقتصادية. للطلب والتواصل عبر الخاص. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"Specialized in offering the finest types of Oud. An officially licensed project by the Economic Department. To order and communicate via DM. Delivery to all Emirates of the UAE.",
+                image:"images/p33.png",
+                phone:"",
+                whatsapp:"",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "abm_oud" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"روائح وعطور",
+                categoryEn:"Scents & Perfumes",
+                products:[]
+            },
+            {
+                id:34,
+                name:"ميثاء المرزوقي",
+                nameEn:"Maitha Almarzooqi",
+                emirate:"الفجيرة",
+                description:"فنانة تشكيلية - ألوان زيتية",
+                descriptionEn:"Fine Artist - Oil Colors",
+                longDescription:"فنانة إماراتية متخصصة في الرسم بالألوان الزيتية على القماش. للأعمال الفنية، يرجى زيارة الموقع الإلكتروني..",
+                longDescriptionEn:"Emirati artist specializing in oil painting on canvas. To purchase artwork, please visit the website.",
+                image:"images/p34.jpg",
+                phone:"",
+                whatsapp:"",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "maitha.mzq" },
+                    { type: "website", value: "maithamzqarts.com" },
+                    { type: "tiktok", value: "maitha.mzq"},
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"فنون",
+                categoryEn:"Arts",
+                products:[]
+            },
+            {
+                id:35,
+                name:"معمول",
+                nameEn:"Mamool",
+                emirate:"رأس الخيمة",
+                description:"معمول، رنجينة، سويتات بالتمر",
+                descriptionEn:"Mamoul, Rangina, Date Sweets",
+                longDescription:"صناعة منزلية يومية لمخلوطات المعمول والرنجينة والسويتات بالتمر. مكونات طبيعية خالية من السكر. نكهة تراثنا في كل لقمة. للطلب عبر الخاص أو الواتساب. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"Daily homemade Mamoul, Rangina, and date sweets. Natural ingredients, sugar-free. The taste of our heritage in every bite. To order via DM or WhatsApp. Delivery to all Emirates of the UAE.",
+                image:"images/p35.jpg",
+                phone:"",
+                whatsapp:"",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "mamool_ae" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"حلويات",
+                categoryEn:"Sweets",
+                products:[]
+            },
+            {
+                id:36,
+                name:"بلوسوم آند بليس",
+                nameEn:"Blossom & Bliss",
+                emirate:"الفجيرة",
+                description:"عطور فاخرة",
+                descriptionEn:"Luxury Scents",
+                longDescription:"عطور فاخرة ترتقي بيومك.. للطلب عبر الواتساب أو الموقع الإلكتروني.",
+                longDescriptionEn:"Indulge in luxurious scents that elevate your everyday. Order via WhatsApp or our website.",
+                image:"images/p36.jpg",
+                phone:"",
+                whatsapp:"971556068989+",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "blossom.bliss.ae" },
+                    { type: "website", value: "https://blossomanbliss.com/ar/" },
+                    { type: "snapchat", value: "@blossom.blissae" },
+                    { type: "tiktok", value: "@blossom.bliss.ae" },
+                ],
+                adra_license:"لا",
+                coverage:"دول الخليج",
+                badges:[""],
+                badgesEn:[""],
+                category:"روائح وعطور",
+                categoryEn:"Scents & Perfumes",
+                products:[]
+            },
+            {
+                id:37,
+                name:"رويال عود",
+                nameEn:"Royal Oud UAE",
+                emirate:"عجمان",
+                description:"مباخر وأعواد ذكية",
+                descriptionEn:"Incense Burners & Smart Oud Sticks",
+                longDescription:"بيع مباخر وأعواد ذكية، سعر خاص للتوزيعات. الحساب مرخص. للطلب عبر الواتساب.",
+                longDescriptionEn:"Selling incense burners and smart oud sticks. Special prices for giveaways, licensed account. Order via WhatsApp.",
+                image:"images/p37.jpg",
+                phone:"971581361541",
+                whatsapp:"971581361541",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "royal_oud_uae" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"روائح وعطور",
+                categoryEn:"Scents & Perfumes",
+                products:[]
+            },
+            {
+                id:38,
+                name:"كاندلير",
+                nameEn:"Candleier",
+                emirate:"أم القيوين",
+                description:"شموع صويا فاخرة",
+                descriptionEn:"Luxury Soy Candles",
+                longDescription:"شموع صويا فاخرة، صديقة للبيئة وغير سامة. هدايا فاخرة بأسعار معقولة مع تغليف جميل. تصفحوا مجموعتنا.",
+                longDescriptionEn:"Hand-poured soy wax candles, eco-friendly & non-toxic. Affordable luxury, beautifully packaged for gifting. Delivery across the UAE. Browse our collection.",
+                image:"images/p38.jpg",
+                phone:"",
+                whatsapp:"971528816388",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "candleier11.11" },
+                    { type: "facebook", value: "Candleierstudio" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"هدايا",
+                categoryEn:"Gifts",
+                products:[]
+            },
+            {
+                id:39,
+                name:"آيلاند برفيوم",
+                nameEn:"Island Perfume",
+                emirate:"الشارقة",
+                description:"عطور فاخرة",
+                descriptionEn:"Luxury Perfumes",
+                longDescription:"عطور فاخرة تجمع بين نسمات الجزر والأناقة. عطور ناعمة، راقية، وثابتة طويلاً. مقرنا في الإمارات. للطلب عبر الخاص.",
+                longDescriptionEn:"Luxury perfumes where islands meet luxury scents. Soft, elegant, and long-lasting. Based in the UAE. Order via DM.",
+                image:"images/p39.jpg",
+                phone:"",
+                whatsapp:"",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "islandperfume.ae" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"روائح وعطور",
+                categoryEn:"Scents & Perfumes",
+                products:[]
+            },
+            {
+                id:40,
+                name:"ذا اورجانيك واي",
+                nameEn:"The Organic Way",
+                emirate:"رأس الخيمة",
+                description:"منتجات عضوية فاخرة",
+                descriptionEn:"Luxury Organic Products",
+                longDescription:"متجر عضوي فاخر يجمع بين الطبيعة والجمال. نقدم منتجات طبيعية بلمسة فاخرة، اكتشف عالمنا عبر إنستغرام وتيك توك.",
+                longDescriptionEn:"A luxury organic store that combines nature and beauty. We offer natural products with a luxurious touch. Discover our world on Instagram and TikTok.",
+                image:"images/p40.jpg",
+                phone:"",
+                whatsapp:"971505473398",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "theorganicway.ae" },
+                    { type: "tiktok", value: "theorganicway.ae" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"عناية",
+                categoryEn:"Care",
+                products:[
+                    {
+id: "40_p1",
+name: "حناء حضرمي",
+nameEn: "Henna Hadhrami",
+description: "حناء طبيعية من حضرموت، لتلوين وتقوية الشعر.",
+descriptionEn: "Natural Hadhrami henna for coloring and strengthening hair.",
+longDescription: "حناء حضرمي طبيعية 100%، مستخلصة من أجود أوراق الحناء في حضرموت. تمنح الشعر لوناً طبيعياً وبريقاً صحياً، وتقوي بصيلات الشعر وتغذي فروة الرأس. خالية من المواد الكيميائية الضارة، مناسبة لجميع أنواع الشعر.",
+longDescriptionEn: "100% natural Hadhrami henna, extracted from the finest henna leaves in Hadhramaut. Gives hair a natural color and healthy shine, strengthens hair follicles, and nourishes the scalp. Free from harmful chemicals, suitable for all hair types.",
+category: "عناية بالشعر",
+categoryEn: "Hair Care",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"حناء طبيعية",
+"من حضرموت",
+"تقوي وتغذي الشعر",
+"خالية من المواد الكيميائية"
+],
+detailsEn: [
+"Natural henna",
+"From Hadhramaut",
+"Strengthens and nourishes hair",
+"Chemical-free"
+]
+},
+{
+id: "40_p2",
+name: "سدر حضرمي",
+nameEn: "Sidr Hadrami",
+description: "مسحوق أوراق السدر الطبيعي من حضرموت.",
+descriptionEn: "Natural sidr leaf powder from Hadhramaut.",
+longDescription: "سدر حضرمي نقي، مسحوق أوراق السدر البري المعروف بفوائده للشعر والبشرة. يستخدم كغسول طبيعي للشعر، ينظف بلطف ويقوي الجذور، ويعالج قشرة الرأس. كما يستخدم في الأقنعة الطبيعية للبشرة.",
+longDescriptionEn: "Pure Hadhrami sidr, powder of wild sidr leaves known for its benefits for hair and skin. Used as a natural hair wash, gently cleanses and strengthens roots, and treats dandruff. Also used in natural face masks.",
+category: "عناية بالشعر والبشرة",
+categoryEn: "Hair & Skin Care",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"مسحوق سدر طبيعي",
+"من حضرموت",
+"ينظف الشعر ويقويه",
+"مفيد للبشرة"
+],
+detailsEn: [
+"Natural sidr powder",
+"From Hadhramaut",
+"Cleanses and strengthens hair",
+"Beneficial for skin"
+]
+},
+{
+id: "40_p3",
+name: "مشاط بثلاثة انواع",
+nameEn: "Mishat Three Types",
+description: "خليط طبيعي من الريحان، الكركدية، والشمر المصبوغ.",
+descriptionEn: "Natural blend of basil, hibiscus, and dyed fennel.",
+longDescription: "مشاط بثلاثة انواع (ريحان، كركدية، الشمر المصبوغ) هو منتج طبيعي نادر يتميز بخصائصه الفريدة للعناية بالشعر. يمنح الشعر قوة ولمعاناً، ويغذي فروة الرأس. متوفر بكمية محدودة فقط، مناسب للاستخدامات التقليدية.",
+longDescriptionEn: "Mishat with three types (basil, hibiscus, dyed fennel) is a rare natural product with unique properties for hair care. Gives hair strength and shine, nourishes the scalp. Available in limited quantity only, suitable for traditional uses.",
+category: "منتجات طبيعية",
+categoryEn: "Natural Products",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"منتج نادر",
+"كمية محدودة",
+"طبيعي 100%",
+"استخدامات تقليدية"
+],
+detailsEn: [
+"Rare product",
+"Limited quantity",
+"100% natural",
+"Traditional uses"
+]
+},
+{
+id: "40_p4",
+name: "مشاط بالورد المحمدي",
+nameEn: "Mishat Damask Rose",
+description: "مشاط طبيعي من الورد المحمدي (الدمشقي).",
+descriptionEn: "Natural mishat from Damask rose.",
+longDescription: "مشاط بالورد المحمدي هو منتج طبيعي فاخر مستخلص من بتلات الورد الدمشقي، يستخدم للعناية بالشعر والبشرة. يمنح رائحة زكية وينعش البشرة ويرطب الشعر. مناسب للاستخدام اليومي.",
+longDescriptionEn: "Mishat with Damask rose is a luxurious natural product extracted from Damask rose petals, used for hair and skin care. Gives a pleasant scent, refreshes skin, and moisturizes hair. Suitable for daily use.",
+category: "منتجات طبيعية",
+categoryEn: "Natural Products",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"ورد دمشقي",
+"طبيعي",
+"جودة عالية",
+"فوائد متعددة"
+],
+detailsEn: [
+"Damask rose",
+"Natural",
+"High quality",
+"Multiple benefits"
+]
+},
+{
+id: "40_p5",
+name: "بودرة نوى التمر",
+nameEn: "Date Seed Powder",
+description: "بودرة طبيعية من نوى التمر للعناية بالبشرة والشعر.",
+descriptionEn: "Natural date seed powder for skin and hair care.",
+longDescription: "بودرة نوى التمر هي مسحوق طبيعي مستخلص من نوى التمر المحمص، غني بمضادات الأكسدة والمعادن. يستخدم كمقشر طبيعي للبشرة، ويدخل في خلطات العناية بالشعر لتقويته وتطويله. منتج طبيعي وآمن.",
+longDescriptionEn: "Date seed powder is a natural powder extracted from roasted date seeds, rich in antioxidants and minerals. Used as a natural skin exfoliant, and in hair care mixtures to strengthen and lengthen hair. Natural and safe product.",
+category: "منتجات طبيعية",
+categoryEn: "Natural Products",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"مسحوق نوى التمر",
+"طبيعي",
+"مقشر للبشرة",
+"يقوي الشعر"
+],
+detailsEn: [
+"Date seed powder",
+"Natural",
+"Skin exfoliant",
+"Strengthens hair"
+]
+},
+{
+id: "40_p6",
+name: "أعشاب هندية للشعر",
+nameEn: "Indian Herbs for Hair",
+description: "خليط أعشاب هندية طبيعية للعناية بالشعر.",
+descriptionEn: "Natural Indian herbal blend for hair care.",
+longDescription: "أعشاب هندية للشعر هي خلطة فريدة من الأعشاب الطبيعية المستخدمة في الطب الهندي التقليدي (الأيورفيدا) لتعزيز نمو الشعر وتقويته ومعالجة مشاكله مثل التساقط والقشرة. تغذي فروة الرأس وتمنح الشعر حيوية ولمعاناً.",
+longDescriptionEn: "Indian herbs for hair is a unique blend of natural herbs used in traditional Indian medicine (Ayurveda) to promote hair growth, strengthen it, and treat issues like hair loss and dandruff. Nourishes the scalp and gives hair vitality and shine.",
+category: "أعشاب",
+categoryEn: "Herbs",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"خلطة أعشاب هندية",
+"طبيعية",
+"تقوي الشعر",
+"تعالج التساقط والقشرة"
+],
+detailsEn: [
+"Indian herbal blend",
+"Natural",
+"Strengthens hair",
+"Treats hair loss and dandruff"
+]
+},
+{
+id: "40_p7",
+name: "كيس سحر الانثى",
+nameEn: "Female Magic Bag",
+description: "كيس عطري طبيعي للنساء.",
+descriptionEn: "Natural aromatic bag for women.",
+longDescription: "كيس سحر الانثى هو منتج عطري طبيعي مصمم خصيصاً للمرأة، يحتوي على مزيج من الأعشاب والزيوت العطرية التي تمنح إحساساً بالانتعاش والثقة. يمكن وضعه في الخزائن أو الحقائب أو الغرف لنشر رائحة زكية.",
+longDescriptionEn: "Female Magic Bag is a natural aromatic product specially designed for women, containing a blend of herbs and essential oils that give a feeling of freshness and confidence. Can be placed in closets, bags, or rooms to spread a pleasant scent.",
+category: "منتجات عطرية",
+categoryEn: "Aromatic Products",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"مزيج أعشاب وزيوت عطرية",
+"طبيعي",
+"ينعش الأجواء",
+"يمنح الثقة"
+],
+detailsEn: [
+"Blend of herbs and essential oils",
+"Natural",
+"Refreshes atmosphere",
+"Gives confidence"
+]
+},
+{
+id: "40_p8",
+name: "كيس التوازن",
+nameEn: "Balance Bag",
+description: "كيس عطري طبيعي للتوازن النفسي والجسدي.",
+descriptionEn: "Natural aromatic bag for mental and physical balance.",
+longDescription: "كيس التوازن هو منتج عطري طبيعي يجمع بين الأعشاب والزيوت الأساسية التي تساعد على تحقيق التوازن والاسترخاء. يستخدم في التأمل أو اليوغا أو بجانب السرير لتهدئة الأعصاب وتحسين النوم.",
+longDescriptionEn: "Balance Bag is a natural aromatic product combining herbs and essential oils that help achieve balance and relaxation. Used in meditation, yoga, or beside the bed to calm nerves and improve sleep.",
+category: "منتجات عطرية",
+categoryEn: "Aromatic Products",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"أعشاب وزيوت طبيعية",
+"يساعد على الاسترخاء",
+"يحسن النوم",
+"يهدئ الأعصاب"
+],
+detailsEn: [
+"Natural herbs and oils",
+"Helps relaxation",
+"Improves sleep",
+"Calms nerves"
+]
+},
+{
+id: "40_p9",
+name: "كيس الصفاء",
+nameEn: "Al-Safaa Bag",
+description: "كيس عطري طبيعي للصفاء الذهني والنقاء.",
+descriptionEn: "Natural aromatic bag for mental clarity and purity.",
+longDescription: "كيس الصفاء هو منتج عطري طبيعي يساعد على تصفية الذهن ورفع الروح المعنوية. يحتوي على خلطة من الأعشاب والزيوت العطرية المنعشة التي تخلق أجواء من الصفاء والطمأنينة.",
+longDescriptionEn: "Al-Safaa Bag is a natural aromatic product that helps clear the mind and uplift mood. Contains a blend of refreshing herbs and essential oils that create an atmosphere of clarity and tranquility.",
+category: "منتجات عطرية",
+categoryEn: "Aromatic Products",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"خلطة أعشاب منعشة",
+"زيوت عطرية",
+"لصفاء الذهن",
+"يطمئن النفس"
+],
+detailsEn: [
+"Refreshing herbal blend",
+"Essential oils",
+"For mental clarity",
+"Calms the soul"
+]
+},
+{
+id: "40_p10",
+name: "صابون لبان الذكر",
+nameEn: "Frankincense Soap",
+description: "صابون طبيعي بخلاصة لبان الذكر.",
+descriptionEn: "Natural soap with frankincense extract.",
+longDescription: "صابون لبان الذكر هو صابون طبيعي تقليدي، يتميز بخصائصه المنظفة والمرطبة والمضادة للأكسدة. مستخلص من لبان الذكر العماني الفاخر، يساعد على تجديد خلايا البشرة ويمنحها إشراقة. مصنوع من مكونات طبيعية 100%، مناسب لجميع أنواع البشرة.",
+longDescriptionEn: "Frankincense soap is a traditional natural soap, characterized by its cleansing, moisturizing, and antioxidant properties. Extracted from luxurious Omani frankincense, it helps regenerate skin cells and gives radiance. Made from 100% natural ingredients, suitable for all skin types.",
+category: "صابون طبيعي",
+categoryEn: "Natural Soap",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"صابون طبيعي",
+"مع لبان الذكر",
+"منظف ومرطب",
+"لجميع البشرة"
+],
+detailsEn: [
+"Natural soap",
+"With frankincense",
+"Cleansing and moisturizing",
+"For all skin types"
+]
+},
+{
+id: "40_p11",
+name: "صابون المسلك الأسود",
+nameEn: "Al-Maslak Al-Aswad Soap",
+description: "صابون أسود طبيعي تقليدي.",
+descriptionEn: "Traditional natural black soap.",
+longDescription: "صابون المسلك الأسود هو صابون طبيعي تقليدي باللون الأسود، معروف بفوائده للبشرة. ينقي البشرة ويزيل الشوائب بلطف، كما يساعد في علاج حب الشباب والتهابات الجلد. غني بمضادات الأكسدة.",
+longDescriptionEn: "Al-Maslak Al-Aswad soap is a traditional natural black soap, known for its skin benefits. It purifies the skin and gently removes impurities, also helps treat acne and skin inflammations. Rich in antioxidants.",
+category: "صابون طبيعي",
+categoryEn: "Natural Soap",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"صابون أسود طبيعي",
+"من المسلك الأسود",
+"ينقي البشرة",
+"يزيل الشوائب"
+],
+detailsEn: [
+"Natural black soap",
+"From Al-Maslak Al-Aswad",
+"Purifies the skin",
+"Removes impurities"
+]
+},
+{
+id: "40_p12",
+name: "صابون المره",
+nameEn: "Myrrh Soap",
+description: "صابون طبيعي بخلاصة المره.",
+descriptionEn: "Natural soap with myrrh extract.",
+longDescription: "صابون المره هو صابون طبيعي غني بخلاصة المره المعروفة بخصائصها المطهرة والمضادة للبكتيريا. يساعد في تنظيف البشرة بعمق وتعقيمها، ويسرع التئام الجروح والحبوب. مناسب للبشرة الدهنية والمعرضة لحب الشباب.",
+longDescriptionEn: "Myrrh soap is a natural soap rich in myrrh extract, known for its antiseptic and antibacterial properties. Helps deeply cleanse and disinfect the skin, accelerates healing of wounds and pimples. Suitable for oily and acne-prone skin.",
+category: "صابون طبيعي",
+categoryEn: "Natural Soap",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"صابون طبيعي",
+"بخلاصة المره",
+"مطهر للبشرة",
+"يعالج الحبوب"
+],
+detailsEn: [
+"Natural soap",
+"With myrrh extract",
+"Skin disinfectant",
+"Treats pimples"
+]
+},
+{
+id: "40_p13",
+name: "زيت سيركت سجنتشر الشعر",
+nameEn: "Circle Signature Hair Oil",
+description: "زيت عطري نقي مستخلص من الشمر.",
+descriptionEn: "Pure essential oil extracted from fennel.",
+longDescription: "زيت سيركت سجنتشر الشمر هو زيت عطري نقي مستخلص من بذور الشمر، يتميز برائحته المنعشة والفواحة. يستخدم في العلاج العطري لتهدئة الأعصاب وتحسين الهضم، كما يدخل في تركيبات العناية بالبشرة والشعر.",
+longDescriptionEn: "Circus Signature Fennel Oil is a pure essential oil extracted from fennel seeds, characterized by its refreshing and aromatic scent. Used in aromatherapy to calm nerves and improve digestion, and also in skin and hair care formulations.",
+category: "زيوت طبيعية",
+categoryEn: "Natural Oils",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"زيت عطري نقي",
+"مستخلص من الشمر",
+"للعلاج العطري",
+"رائحة منعشة"
+],
+detailsEn: [
+"Pure essential oil",
+"Extracted from fennel",
+"For aromatherapy",
+"Refreshing scent"
+]
+},
+{
+id: "40_p14",
+name: "زيت الورود",
+nameEn: "Rose Oil",
+description: "زيت طبيعي مستخلص من الورد الدمشقي.",
+descriptionEn: "Natural oil extracted from Damask rose.",
+longDescription: "زيت الورود الطبيعي المستخلص من بتلات الورد الدمشقي، يستخدم في العناية بالبشرة والشعر. يرطب البشرة ويغذيها ويؤخر ظهور التجاعيد، كما يمنح الشعر لمعاناً ورائحة زكية. مناسب لجميع أنواع البشرة.",
+longDescriptionEn: "Natural rose oil extracted from Damask rose petals, used in skin and hair care. Moisturizes and nourishes the skin, delays wrinkles, and gives hair shine and a pleasant scent. Suitable for all skin types.",
+category: "زيوت طبيعية",
+categoryEn: "Natural Oils",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"زيت ورد طبيعي",
+"من الورد الدمشقي",
+"للبشرة والشعر",
+"ترطيب وتغذية"
+],
+detailsEn: [
+"Natural rose oil",
+"From Damask rose",
+"For skin and hair",
+"Moisturizes and nourishes"
+]
+},
+{
+id: "40_p15",
+name: "زيت اللبان",
+nameEn: "Frankincense Oil",
+description: "زيت عطري طبيعي من لبان الذكر.",
+descriptionEn: "Natural essential oil from frankincense.",
+longDescription: "زيت اللبان هو زيت عطري نقي مستخلص من راتنج لبان الذكر، يتميز بفوائده العديدة للبشرة والصحة النفسية. يساعد في تجديد خلايا البشرة، ويخفف من ظهور التجاعيد، ويهدئ الأعصاب ويعزز التأمل. يدخل في صناعة العطور ومستحضرات التجميل.",
+longDescriptionEn: "Frankincense oil is a pure essential oil extracted from frankincense resin, known for its numerous benefits for skin and mental health. Helps regenerate skin cells, reduces wrinkles, calms nerves, and enhances meditation. Used in perfumery and cosmetics.",
+category: "زيوت طبيعية",
+categoryEn: "Natural Oils",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"زيت عطري طبيعي",
+"من لبان الذكر",
+"يجدد البشرة",
+"يهدئ الأعصاب"
+],
+detailsEn: [
+"Natural essential oil",
+"From frankincense",
+"Regenerates skin",
+"Calms nerves"
+]
+},
+{
+id: "40_p16",
+name: "زيت السعد",
+nameEn: "Cyperus Oil",
+description: "زيت طبيعي من نبات السعد.",
+descriptionEn: "Natural oil from Cyperus plant.",
+longDescription: "زيت السعد هو زيت طبيعي مستخلص من درنات نبات السعد، معروف بفوائده للشعر والبشرة. يستخدم لتطويل الشعر وتكثيفه، وعلاج مشاكل فروة الرأس. كما له خصائص مضادة للالتهابات ومطهرة للبشرة.",
+longDescriptionEn: "Cyperus oil is a natural oil extracted from Cyperus tubers, known for its benefits for hair and skin. Used to lengthen and thicken hair, treat scalp issues. Also has anti-inflammatory and antiseptic properties for skin.",
+category: "زيوت طبيعية",
+categoryEn: "Natural Oils",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"زيت طبيعي",
+"من نبات السعد",
+"يطول الشعر",
+"يعالج فروة الرأس"
+],
+detailsEn: [
+"Natural oil",
+"From Cyperus plant",
+"Lengthens hair",
+"Treats scalp"
+]
+},
+{
+id: "40_p17",
+name: "زيت اللوز الحلو",
+nameEn: "Sweet Almond Oil",
+description: "زيت طبيعي مرطب ومغذي للبشرة والشعر.",
+descriptionEn: "Natural moisturizing and nourishing oil for skin and hair.",
+longDescription: "زيت اللوز الحلو هو زيت طبيعي غني بالفيتامينات والأحماض الدهنية، يستخدم على نطاق واسع في العناية بالبشرة والشعر. يرطب البشرة بعمق، يخفف من الهالات السوداء، ويقوي الشعر ويزيد لمعانه. مناسب لجميع أنواع البشرة بما فيها الحساسة.",
+longDescriptionEn: "Sweet almond oil is a natural oil rich in vitamins and fatty acids, widely used in skin and hair care. Deeply moisturizes skin, reduces dark circles, strengthens hair and increases shine. Suitable for all skin types including sensitive.",
+category: "زيوت طبيعية",
+categoryEn: "Natural Oils",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"زيت لوز حلو",
+"طبيعي",
+"مرطب للبشرة",
+"مقوي للشعر"
+],
+detailsEn: [
+"Sweet almond oil",
+"Natural",
+"Skin moisturizer",
+"Hair strengthener"
+]
+},
+{
+id: "40_p18",
+name: "زيت الآرغان",
+nameEn: "Argan Oil",
+description: "زيت طبيعي مغذي للبشرة والشعر.",
+descriptionEn: "Natural nourishing oil for skin and hair.",
+longDescription: "زيت الآرغان هو زيت طبيعي ثمين مستخلص من حبوب شجر الأركان، غني بفيتامين E ومضادات الأكسدة. يرطب البشرة ويغذيها، يؤخر ظهور التجاعيد، ويمنح الشعر لمعاناً ونعومة. مناسب لجميع أنواع البشرة والشعر.",
+longDescriptionEn: "Argan oil is a precious natural oil extracted from argan tree kernels, rich in vitamin E and antioxidants. Moisturizes and nourishes skin, delays wrinkles, and gives hair shine and softness. Suitable for all skin and hair types.",
+category: "زيوت طبيعية",
+categoryEn: "Natural Oils",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"زيت آرغان طبيعي",
+"غني بفيتامين E",
+"مرطب للبشرة",
+"مغذي للشعر"
+],
+detailsEn: [
+"Natural argan oil",
+"Rich in vitamin E",
+"Skin moisturizer",
+"Hair nourisher"
+]
+},
+{
+id: "40_p19",
+name: "زيت اللافندر",
+nameEn: "Lavender Oil",
+description: "زيت عطري طبيعي مهدئ ومنعش.",
+descriptionEn: "Natural calming and refreshing essential oil.",
+longDescription: "زيت اللافندر هو زيت عطري نقي مستخلص من أزهار الخزامى، يتميز برائحته الهادئة والمنعشة. يستخدم في العلاج العطري لتخفيف التوتر وتحسين النوم، وله خصائص مطهرة للبشرة وملطفة للحروق والجروح. يدخل في مستحضرات العناية بالبشرة والشعر.",
+longDescriptionEn: "Lavender oil is a pure essential oil extracted from lavender flowers, characterized by its calm and refreshing scent. Used in aromatherapy to relieve stress and improve sleep, has antiseptic properties for skin and soothes burns and wounds. Used in skin and hair care products.",
+category: "زيوت طبيعية",
+categoryEn: "Natural Oils",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"زيت لافندر عطري",
+"طبيعي",
+"مهدئ للأعصاب",
+"مطهر للبشرة"
+],
+detailsEn: [
+"Lavender essential oil",
+"Natural",
+"Calms nerves",
+"Skin antiseptic"
+]
+},
+{
+id: "40_p27",
+name: "مِسك ابيض، عنبر الورد",
+nameEn: "White Musk, Rose Amber",
+description: "مزيج فاخر من المسك الأبيض وعنبر الورد.",
+descriptionEn: "Luxurious blend of white musk and rose amber.",
+longDescription: "مِسك ابيض، عنبر الورد هو عطر شرقي فاخر يجمع بين نفحات المسك الأبيض الناعمة وعنبر الورد الدافئ. يمنحك إحساساً بالانتعاش والأناقة، ويدوم طويلاً. مناسب للاستخدام اليومي والمناسبات.",
+longDescriptionEn: "White Musk, Rose Amber is a luxurious oriental perfume combining the soft notes of white musk and warm rose amber. Gives a feeling of freshness and elegance, long-lasting. Suitable for daily use and occasions.",
+category: "عطور",
+categoryEn: "Perfumes",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"عطر شرقي فاخر",
+"مسك أبيض وعنبر الورد",
+"ثبات طويل",
+"رائحة جذابة"
+],
+detailsEn: [
+"Luxurious oriental perfume",
+"White musk and rose amber",
+"Long-lasting",
+"Attractive scent"
+]
+},
+{
+id: "40_p28",
+name: "مسك زهور الفلفل الوردي",
+nameEn: "Musk of Pink Pepper Flowers",
+description: "عطر مسك بنفحات زهور الفلفل الوردي.",
+descriptionEn: "Musk perfume with notes of pink pepper flowers.",
+longDescription: "مسك زهور الفلفل الوردي هو عطر فريد يمزج بين المسك الدافئ وزهور الفلفل الوردي الحارة المنعشة. يمنحك إحساساً بالتميز والجاذبية، ويدوم طويلاً. مثالي لعشاق العطور غير التقليدية.",
+longDescriptionEn: "Musk of Pink Pepper Flowers is a unique perfume blending warm musk with spicy, refreshing pink pepper flowers. Gives a feeling of distinction and allure, long-lasting. Ideal for lovers of unconventional perfumes.",
+category: "عطور",
+categoryEn: "Perfumes",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"عطر مسك مميز",
+"نفحات الفلفل الوردي",
+"ثبات طويل",
+"جذاب وفريد"
+],
+detailsEn: [
+"Distinctive musk perfume",
+"Pink pepper notes",
+"Long-lasting",
+"Attractive and unique"
+]
+},
+{
+id: "40_p20",
+name: "حفاضات عضوية كومفي تابي (حديث الولادة)",
+nameEn: "Comfy Tappy Organic Diapers (Newborn)",
+description: "حفاضات عضوية ناعمة ومناسبة لحديثي الولادة.",
+descriptionEn: "Soft organic diapers suitable for newborns.",
+longDescription: "حفاضات عضوية فاخرة من Comfy Tappy، مصممة خصيصاً لبشرة حديثي الولادة الحساسة. توفر أقصى درجات النعومة والتهوية مع امتصاص عالي، وخالية من المواد الكيميائية الضارة.",
+longDescriptionEn: "Luxurious organic diapers from Comfy Tappy, specially designed for sensitive newborn skin. Provide maximum softness and breathability with high absorbency, free from harmful chemicals.",
+category: "حفاضات",
+categoryEn: "Diapers",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"مقاس حديث الولادة",
+"قطن عضوي 100%",
+"خالية من المواد الكيميائية",
+"ناعمة على البشرة",
+"امتصاص عالي"
+],
+detailsEn: [
+"Newborn size",
+"100% organic cotton",
+"Chemical-free",
+"Gentle on skin",
+"High absorbency"
+]
+},
+{
+id: "40_p21",
+name: "حفاضات عضوية كومفي تابي (مشب)",
+nameEn: "Comfy Tappy Organic Diapers (Size M)",
+description: "حفاضات عضوية مقاس مشب (وسط) للأطفال.",
+descriptionEn: "Organic diapers size M for babies.",
+longDescription: "حفاضات عضوية من Comfy Tappy للمرحلة المتوسطة، تجمع بين الراحة والحماية الفائقة. مصنوعة من القطن العضوي النقي لضمان تهوية البشرة ومنع التسلل.",
+longDescriptionEn: "Organic diapers from Comfy Tappy for the middle stage, combining comfort and superior protection. Made of pure organic cotton to ensure skin breathability and prevent leaks.",
+category: "حفاضات",
+categoryEn: "Diapers",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"مقاس وسط (M)",
+"قطن عضوي",
+"تهوية ممتازة",
+"مانعة للتسرب",
+"مناسبة للأطفال"
+],
+detailsEn: [
+"Medium size (M)",
+"Organic cotton",
+"Excellent breathability",
+"Leak-proof",
+"Suitable for babies"
+]
+},
+{
+id: "40_p22",
+name: "حفاضات عضوية كومفي تابي (وشط)",
+nameEn: "Comfy Tappy Organic Diapers (Size L)",
+description: "حفاضات عضوية مقاس وشط (كبير) للأطفال.",
+descriptionEn: "Organic diapers size L for toddlers.",
+longDescription: "حفاضات عضوية من Comfy Tappy للأطفال الأكبر حجماً، توفر الراحة والدعم مع الحفاظ على نعومة القطن العضوي. مثالية للاستخدام الطويل أثناء النوم أو اللعب.",
+longDescriptionEn: "Organic diapers from Comfy Tappy for larger children, providing comfort and support while maintaining the softness of organic cotton. Ideal for extended use during sleep or play.",
+category: "حفاضات",
+categoryEn: "Diapers",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"مقاس كبير (L)",
+"قطن عضوي",
+"امتصاص فائق",
+"مريحة للنوم",
+"حماية من التسلل"
+],
+detailsEn: [
+"Large size (L)",
+"Organic cotton",
+"Super absorbency",
+"Comfortable for sleep",
+"Leak protection"
+]
+},
+{
+id: "40_p23",
+name: "حفاضات عضوية كومفي تابي (كبير)",
+nameEn: "Comfy Tappy Organic Diapers (Extra Large)",
+description: "حفاضات عضوية مقاس كبير جداً للأطفال.",
+descriptionEn: "Extra large organic diapers for toddlers.",
+longDescription: "حفاضات عضوية من Comfy Tappy بالمقاس الكبير جداً، مناسبة للأطفال الأكبر سناً. توفر حرية الحركة مع الحفاظ على الجفاف والنعومة طوال اليوم.",
+longDescriptionEn: "Extra large organic diapers from Comfy Tappy, suitable for older children. Provide freedom of movement while maintaining dryness and softness throughout the day.",
+category: "حفاضات",
+categoryEn: "Diapers",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"مقاس كبير جداً (XL)",
+"قطن عضوي",
+"حرية حركة",
+"جفاف طويل الأمد",
+"ناعمة ومريحة"
+],
+detailsEn: [
+"Extra large size (XL)",
+"Organic cotton",
+"Freedom of movement",
+"Long-lasting dryness",
+"Soft and comfortable"
+]
+},
+{
+id: "40_p24",
+name: "ملابس داخلية قطنية للنساء (XL)",
+nameEn: "Women's Cotton Underwear (XL)",
+description: "ملابس داخلية نسائية قطنية مقاس كبير جداً.",
+descriptionEn: "Women's cotton underwear, extra large size.",
+longDescription: "ملابس داخلية قطنية للنساء مصنوعة من القطن الطبيعي الناعم، مريحة وقابلة للتنفس. مقاس XL يناسب الجسم براحة.",
+longDescriptionEn: "Women's cotton underwear made of soft natural cotton, comfortable and breathable. XL size fits comfortably.",
+category: "ملابس داخلية",
+categoryEn: "Underwear",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"مقاس XL",
+"قطن طبيعي ناعم",
+"قابلة للتنفس",
+"مريحة"
+],
+detailsEn: [
+"Size XL",
+"Soft natural cotton",
+"Breathable",
+"Comfortable"
+]
+},
+{
+id: "40_p25",
+name: "ملابس داخلية قطنية للنساء (L)",
+nameEn: "Women's Cotton Underwear (L)",
+description: "ملابس داخلية نسائية قطنية مقاس كبير.",
+descriptionEn: "Women's cotton underwear, large size.",
+longDescription: "ملابس داخلية قطنية للنساء مصنوعة من القطن الطبيعي الناعم، مريحة وقابلة للتنفس. مقاس L يناسب الجسم براحة.",
+longDescriptionEn: "Women's cotton underwear made of soft natural cotton, comfortable and breathable. L size fits comfortably.",
+category: "ملابس داخلية",
+categoryEn: "Underwear",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"مقاس L",
+"قطن طبيعي ناعم",
+"قابلة للتنفس",
+"مريحة"
+],
+detailsEn: [
+"Size L",
+"Soft natural cotton",
+"Breathable",
+"Comfortable"
+]
+},
+{
+id: "40_p26",
+name: "ملابس داخلية قطنية للنساء (M)",
+nameEn: "Women's Cotton Underwear (M)",
+description: "ملابس داخلية نسائية قطنية مقاس وسط.",
+descriptionEn: "Women's cotton underwear, medium size.",
+longDescription: "ملابس داخلية قطنية للنساء مصنوعة من القطن الطبيعي الناعم، مريحة وقابلة للتنفس. مقاس M يناسب الجسم براحة.",
+longDescriptionEn: "Women's cotton underwear made of soft natural cotton, comfortable and breathable. M size fits comfortably.",
+category: "ملابس داخلية",
+categoryEn: "Underwear",
+mainImage: "images/p40.jpg",
+images: ["images/p40.jpg"],
+details: [
+"مقاس M",
+"قطن طبيعي ناعم",
+"قابلة للتنفس",
+"مريحة"
+],
+detailsEn: [
+"Size M",
+"Soft natural cotton",
+"Breathable",
+"Comfortable"
+]
+},
+                ]
+            },
+            {
+                id:41,
+                name:"سوبريتي",
+                nameEn:"Soapretty",
+                emirate:"",
+                description:"منتجات عناية شخصية طبيعية",
+                descriptionEn:"Natural Personal Care Products",
+                longDescription:"منتجات عناية شخصية صديقة للبيئة. للطلب عبر الرابط الويب .",
+                longDescriptionEn:"Eco-friendly personal care products. Order via the web link.",
+                image:"images/p41.jpg",
+                phone:"",
+                whatsapp:"",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "soapretty.by.as" },
+                    { type: "website", value: "http://soapretty-by-asya-salimova.zbooni.com/products" },
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"عناية",
+                categoryEn:"Care",
+                products:[
+                    {
+id: "41_p1",
+name: "زيت الوجه بالأعشاب",
+nameEn: "Herbal Infused Face Oil",
+description: "زيت وجه طبيعي بخلاصة الأعشاب لجميع أنواع البشرة.",
+descriptionEn: "Natural herbal infused face oil for all skin types.",
+longDescription: "هذا الزيت العشبي للوجه مثالي لجميع أنواع البشرة. يمتص بسرعة ويمنح إشراقة. الأحماض الدهنية والبروتينات الموجودة في الزيوت تعزز تجدد الخلايا، وتشد البشرة، وتحارب التجاعيد والخطوط الدقيقة، وترطب بعمق دون أن تترك البشرة دهنية بعد الجفاف. مصنوع من زيوت طبيعية بالكامل ومناسبة للبشرة الحساسة. تساعد الأحماض الدهنية وفيتامين E والخصائص المضادة للفطريات والبكتيريا في شفاء وتهدئة البشرة المتعبة.",
+longDescriptionEn: "This facial herbal infused oil is perfect for all skin types. It absorbs quickly and leaves a glow. Fatty acids and proteins in the oils used promote cell regeneration, firms skin, combats wrinkles and fine lines, and intensely hydrates without leaving skin greasy once dry. Made with all natural oils perfect for sensitive skin. The fatty acids, vitamin E, antifungal, and antibacterial properties help heal and soothe troubled skin.",
+category: "عناية بالبشرة",
+categoryEn: "Skincare",
+mainImage: "images/p41-1.jpg",
+images: ["images/p41-1.jpg",
+    "images/p41-1-1.jpg",
+    "images/p41-1-2.jpg",
+    "images/p41-1-3.jpg"
+],
+details: [
+"زيت وجه طبيعي",
+"لجميع أنواع البشرة",
+"يمتص بسرعة",
+"يغذي ويجدد البشرة",
+"يحارب التجاعيد",
+"مناسب للبشرة الحساسة"
+],
+detailsEn: [
+"Natural face oil",
+"For all skin types",
+"Quick absorption",
+"Nourishes and regenerates skin",
+"Fights wrinkles",
+"Suitable for sensitive skin"
+]
+},
+{
+id: "41_p2",
+name: "صندوق رمضان لها",
+nameEn: "Ramadan Box for Her",
+description: "صندوق هدايا رمضاني فاخر للنساء بمستحضرات طبيعية.",
+descriptionEn: "Luxurious Ramadan gift box for women with natural products.",
+longDescription: "احتفل بالشهر المبارك مع صندوق هدايا رمضاني أنيق ومميز للعائلة والأصدقاء والزملاء. العبوة جميلة بطابع رمضاني ومليئة بمستلزمات العناية الذاتية الطبيعية الفاخرة. قد يتضمن الصندوق: شموع عطرية مصنوعة يدويًا، صابون طبيعي، زيت شعر مغذي، مشط خشبي طبيعي، مقشر طبيعي للجسم، زبدة أو لوشن للجسم، مبخرة شمع، وإمكانية إضافة رسالة شخصية. مثالي كهدية للعائلة والأصدقاء، هدايا الشركات، زيارات رمضانية، واستعدادات العيد.",
+longDescriptionEn: "Celebrate the blessed month with a thoughtful, elegant gift for family, friends, colleagues, or clients. Beautifully packed in a festive Ramadan theme and filled with natural, luxurious self-care essentials. Each gift box may include: handcrafted aromatic candles, natural handmade soaps, luxury nourishing hair oil, natural neem wooden hair comb, natural body scrub, body butter or lotion, wax melts burner, personalized message option, and elegant Ramadan-themed packaging. Perfect for family & friends gifts, corporate gifts, Ramadan visits, and Eid preparation gifts.",
+category: "هدايا",
+categoryEn: "Gifts",
+mainImage: "images/p41-2.jpg",
+images: ["images/p41-2.jpg",
+    "images/p41-2-1.jpg",
+    "images/p41-2-2.jpg",
+    "images/p41-2-3.jpg"
+],
+details: [
+"صندوق هدايا رمضاني",
+"مستحضرات طبيعية فاخرة",
+"شموع وصابون وزيت شعر",
+"مشط خشبي ومقشر",
+"تغليف جميل",
+"إمكانية إضافة رسالة"
+],
+detailsEn: [
+"Ramadan gift box",
+"Luxurious natural products",
+"Candles, soap, hair oil",
+"Wooden comb and scrub",
+"Beautiful packaging",
+"Personalized message option"
+]
+},
+{
+id: "41_p3",
+name: "شمع كريستال كبير",
+nameEn: "Big Crystal Candle",
+description: "شمع عطري كبير مع نباتات طبيعية وكريستال، 350 جرام.",
+descriptionEn: "Large aromatic candle with natural botanicals and crystal, 350g.",
+longDescription: "شموع عطرية مع نباتات طبيعية وكريستال لخلق لحظة من الهدوء والدفء والجمال. يتم صبها يدويًا في أوعية زجاجية أنيقة، وتُزين بشكل فريد بأعواد القرفة، وشرائح الليمون والبرتقال المجففة، وبراعم الورد والبابونج، وتُضاف إليها كريستالة شفافة لتعزيز الطاقة الإيجابية والصفاء. مصنوعة من شمع طبيعي، وتدوم حتى 60 ساعة. هدية مثالية أو قطعة ديكور منزلية.",
+longDescriptionEn: "Aroma candles with natural botanicals and crystals to create a moment of calm, warmth, and beauty. Hand-poured in elegant glass jars, uniquely decorated with cinnamon sticks, dried lemon & orange slices, rose buds, and chamomile buds, then delicately infused with a clear crystal to enhance positive energy and serenity. Made with natural wax, up to 60h burn time. Ideal as a gift or home décor piece.",
+category: "شموع",
+categoryEn: "Candles",
+mainImage: "images/p41-3.png",
+images: ["images/p41-3.png",
+"images/p41-3-1.jpg",
+"images/p41-3-2.jpg",
+"images/p41-3-3.jpg"
+],
+details: [
+"شمع عطري كبير 350 جرام",
+"مع نباتات طبيعية وكريستال",
+"شمع طبيعي",
+"يدوم حتى 60 ساعة",
+"ديكور أنيق",
+"هدية مميزة"
+],
+detailsEn: [
+"Large aromatic candle 350g",
+"With natural botanicals and crystal",
+"Natural wax",
+"Up to 60h burn time",
+"Elegant décor",
+"Special gift"
+]
+},
+{
+id: "41_p4",
+name: "ثنائي شموع رمضان",
+nameEn: "Ramadan Candle Duo",
+description: "مجموعة شموع رمضانية فاخرة من صنع يدوي في الإمارات.",
+descriptionEn: "Luxurious Ramadan candle collection, handmade in UAE.",
+longDescription: "مجموعة شموع رمضانية فاخرة لعام 2025، مزيج مثالي من الأناقة والهدوء لإضاءة موسم الاحتفال. كل شمعة في هذه المجموعة مصنوعة يدويًا في الإمارات، وتتميز بلمسة حرفية عالية. صممت بمواد طبيعية ومستدامة، وتقدم رائحة إلهية تجلب السلام والصفاء لمنزلك. مثالية للتجمعات العائلية أو لحظات التأمل الشخصي، تعزز هذه الشموع الأجواء الروحانية لرمضان.",
+longDescriptionEn: "Exquisite Ramadan Candle Collection for 2025, a perfect blend of elegance and tranquility to illuminate your festive season. Each candle is thoughtfully handmade in the UAE, ensuring a touch of artisanal craftsmanship. Designed with natural and sustainable materials, these candles offer a divine aroma that brings peace and serenity to your home. Perfect for family gatherings or personal reflection, they enhance the spiritual ambiance of Ramadan.",
+category: "شموع",
+categoryEn: "Candles",
+mainImage: "images/p41-4.jpg",
+images: ["images/p41-4.jpg",
+    "images/p41-4-1.jpg",
+    "images/p41-4-2.jpg",
+    "images/p41-4-3.jpg"
+],
+details: [
+"مجموعة شمعتين رمضان",
+"صناعة يدوية في الإمارات",
+"مواد طبيعية ومستدامة",
+"رائحة هادئة",
+"تضفي أجواء روحانية",
+"هدية مميزة"
+],
+detailsEn: [
+"Ramadan candle duo",
+"Handmade in UAE",
+"Natural and sustainable materials",
+"Calming scent",
+"Enhances spiritual ambiance",
+"Special gift"
+]
+},
+{
+id: "41_p5",
+name: "شمع الحب",
+nameEn: "Love Candles",
+description: "شمع صويا طبيعي بشكل أنيق، هدية مثالية للحبيب.",
+descriptionEn: "Natural soy candle in elegant shape, perfect gift for loved ones.",
+longDescription: "الورود حمراء، والبنفسج أزرق، دعنا نجتمع ونحقق الأحلام. قطعة مثالية لتكمل منزلك بأسلوب بسيط وأنيق أو كهدية لشخص مميز. مصنوع يدويًا من شمع الصويا الطبيعي وفتيل قطني 100%، ويتم صبه يدويًا في الإمارات. تعليمات العناية: ضع الشمع على سطح ثابت ومستوٍ ومقاوم للحرارة، قم بقص الفتيل إلى 6 مم قبل كل استخدام، تجنب إشعال الشمع لأكثر من 3 ساعات متواصلة، لا تترك الشمع المشتعل دون مراقبة، احفظه بعيدًا عن متناول الأطفال والحيوانات الأليفة.",
+longDescriptionEn: "Roses are red, violets are blue, let's get together, and make dreams come true. The perfect piece to complete your home in a minimal yet elegant style or as a gift to someone special. Handcrafted from natural soy wax and 100% cotton wick, hand-poured in UAE. Candle care: Place on a stable, leveled, heat-resistant surface, trim wick to 6mm before each use, avoid burning for more than 3 hours at a time, never leave unattended, keep out of reach of children and pets.",
+category: "شموع",
+categoryEn: "Candles",
+mainImage: "images/p41-5.jpg",
+images: ["images/p41-5.jpg",
+    "images/p41-5-1.jpg",
+    "images/p41-5-2.jpg",
+    "images/p41-5-3.png"
+],
+details: [
+"شمع صويا طبيعي",
+"فتيل قطني",
+"تصميم أنيق",
+"صناعة يدوية في الإمارات",
+"هدية للحبيب"
+],
+detailsEn: [
+"Natural soy wax candle",
+"Cotton wick",
+"Elegant design",
+"Handmade in UAE",
+"Gift for loved ones"
+]
+},
+{
+id: "41_p6",
+name: "شمع بجوز الهند الطبيعي",
+nameEn: "Natural Hand-Poured Coconut Shell Candle",
+description: "شمع طبيعي بوعاء جوز الهند مع فتيل خشبي ي crackle.",
+descriptionEn: "Natural candle in coconut shell with crackling wooden wick.",
+longDescription: "استمتع بصوت الخشب المتفرقع الهادئ أثناء احتراق شموع جوز الهند العطرية، مما يضيف طبقة إضافية من الهدوء إلى مساحتك. اختر الشموع المصنوعة يدويًا من أصداف جوز الهند الطبيعية لإضفاء أجواء استوائية على منزلك، مع مزج الرائحة الجميلة مع صوت الطبيعة المهدئ. هذه الشموع المستدامة مصممة لخلق جو مريح ودافئ. كل قطعة فريدة من حيث الحجم والشكل واللون.",
+longDescriptionEn: "Experience the soothing sound of crackling wood while these Coconut Shell Scented Candles burn, adding an extra layer of tranquility to your space. Choose Soapretty handcrafted candles made from natural coconut shells to infuse your home with a tropical ambiance, harmonizing the delightful fragrance with the calming sound of nature. These sustainable candles are designed to create a relaxing and cozy atmosphere. Each piece is unique in size, shape, and color.",
+category: "شموع",
+categoryEn: "Candles",
+mainImage: "images/p41-6.jpg",
+images: ["images/p41-6.jpg",
+    "images/p41-6-1.jpg",
+    "images/p41-6-2.jpg",
+    "images/p41-6-3.jpg"
+],
+details: [
+"شمع بوعاء جوز هند طبيعي",
+"فتيل خشبي متفرقع",
+"صناعة يدوية",
+"رائحة عطرية",
+"قطعة فريدة",
+"مستدام وصديق للبيئة"
+],
+detailsEn: [
+"Candle in natural coconut shell",
+"Crackling wooden wick",
+"Handcrafted",
+"Aromatic scent",
+"Unique piece",
+"Sustainable and eco-friendly"
+]
+},
+{
+id: "41_p7",
+name: "شمع كريستال",
+nameEn: "Crystal Candle",
+description: "شمع صويا طبيعي مع كريستال سيترين بداخله.",
+descriptionEn: "Natural soy wax candle with citrine crystal inside.",
+longDescription: "انغمس في جو هادئ ومريح مع شمع كريستال سيترين . مصنوع من شمع الصويا الطبيعي 100%، هذا الشمع هو الطريقة المثلى للاسترخاء بعد يوم طويل. يبرز الكريستال الجميل داخل الشمع، وعند احتراقه، يضيء التوهج الدافئ الكريستال، مما يخلق هالة مهدئة في أي مساحة. سواء كنت تتطلع إلى تعزيز ممارسة التأمل أو ترغب ببساطة في إضافة لمسة من الفخامة إلى منزلك، فإن شمع الكريستال هو الإضافة المثالية. استمتع بوقت احتراق يصل إلى 80 ساعة. كل شمع مصنوع يدويًا وفريد من نوعه.",
+longDescriptionEn: "Indulge in a peaceful and relaxing ambience with Soapretty Citrine Crystal Candle. Made with 100% natural soy wax, this candle is the perfect way to unwind. The beautiful Citrine nestled within the wax, as the candle burns, the warm glow illuminates the crystal, creating a soothing and calming aura. Whether you're looking to enhance your meditation practice or simply want to add a touch of luxury to your home, this candle is perfect. Enjoy up to 80 hours of burn time. Each candle is handmade and unique.",
+category: "شموع",
+categoryEn: "Candles",
+mainImage: "images/p41-7.jpg",
+images: ["images/p41-7.jpg",
+    "images/p41-7-1.jpg",
+    "images/p41-7-2.jpg",
+    "images/p41-7-3.jpg",
+],
+details: [
+"شمع صويا طبيعي",
+"مع كريستال سيترين",
+"وقت احتراق 80 ساعة",
+"يضيء الكريستال عند الاحتراق",
+"يهدئ الأجواء",
+"قطعة فريدة"
+],
+detailsEn: [
+"Natural soy wax candle",
+"With citrine crystal",
+"80h burn time",
+"Crystal glows when lit",
+"Calming aura",
+"Unique piece"
+]
+},
+{
+id: "41_p8",
+name: "شمع الحب",
+nameEn: "Love Candles",
+description: "شمع صويا طبيعي بشكل أنيق، هدية مثالية للحبيب.",
+descriptionEn: "Natural soy candle in elegant shape, perfect gift for loved ones.",
+longDescription: "الورود حمراء، والبنفسج أزرق، دعنا نجتمع ونحقق الأحلام. قطعة مثالية لتكمل منزلك بأسلوب بسيط وأنيق أو كهدية لشخص مميز. مصنوع يدويًا من شمع الصويا الطبيعي وفتيل قطني 100%، ويتم صبه يدويًا في الإمارات. تعليمات العناية: ضع الشمع على سطح ثابت ومستوٍ ومقاوم للحرارة، قم بقص الفتيل إلى 6 مم قبل كل استخدام، تجنب إشعال الشمع لأكثر من 3 ساعات متواصلة، لا تترك الشمع المشتعل دون مراقبة، احفظه بعيدًا عن متناول الأطفال والحيوانات الأليفة.",
+longDescriptionEn: "Roses are red, violets are blue, let's get together, and make dreams come true. The perfect piece to complete your home in a minimal yet elegant style or as a gift to someone special. Handcrafted from natural soy wax and 100% cotton wick, hand-poured in UAE. Candle care: Place on a stable, leveled, heat-resistant surface, trim wick to 6mm before each use, avoid burning for more than 3 hours at a time, never leave unattended, keep out of reach of children and pets.",
+category: "شموع",
+categoryEn: "Candles",
+mainImage: "images/p41-8.jpg",
+images: ["images/p41-8.jpg",
+    "images/p41-8-1.png",
+    "images/p41-8-2.jpg",
+    "images/p41-8-3.jpg",
+],
+details: [
+"شمع صويا طبيعي",
+"فتيل قطني",
+"تصميم أنيق",
+"صناعة يدوية في الإمارات",
+"هدية للحبيب"
+],
+detailsEn: [
+"Natural soy wax candle",
+"Cotton wick",
+"Elegant design",
+"Handmade in UAE",
+"Gift for loved ones"
+]
+},
+{
+id: "41_p9",
+name: "شمع الحب",
+nameEn: "Love Candles",
+description: "شمع صويا طبيعي بشكل أنيق، هدية مثالية للحبيب.",
+descriptionEn: "Natural soy candle in elegant shape, perfect gift for loved ones.",
+longDescription: "الورود حمراء، والبنفسج أزرق، دعنا نجتمع ونحقق الأحلام. قطعة مثالية لتكمل منزلك بأسلوب بسيط وأنيق أو كهدية لشخص مميز. مصنوع يدويًا من شمع الصويا الطبيعي وفتيل قطني 100%، ويتم صبه يدويًا في الإمارات. تعليمات العناية: ضع الشمع على سطح ثابت ومستوٍ ومقاوم للحرارة، قم بقص الفتيل إلى 6 مم قبل كل استخدام، تجنب إشعال الشمع لأكثر من 3 ساعات متواصلة، لا تترك الشمع المشتعل دون مراقبة، احفظه بعيدًا عن متناول الأطفال والحيوانات الأليفة. جميع منتجاتي مصنوعة يدويًا بواسطتي في الإمارات. شكرًا لدعمكم الأعمال المحلية الصغيرة.",
+longDescriptionEn: "Roses are red, violets are blue, let's get together, and make dreams come true. The perfect piece to complete your home in a minimal yet elegant style or as a gift to someone special. Handcrafted from natural soy wax and 100% cotton wick, hand-poured in UAE. Candle care: Place on a stable, leveled, heat-resistant surface, trim wick to 6mm before each use, avoid burning for more than 3 hours at a time, never leave unattended, keep out of reach of children and pets. All my products are handmade by me in UAE. Thank you for supporting small local business.",
+category: "شموع",
+categoryEn: "Candles",
+mainImage: "images/p41-9.jpg",
+images: ["images/p41-9.jpg",
+    "images/p41-9-1.jpg",
+    "images/p41-9-2.jpg",
+    "images/p41-9-3.jpg",
+],
+details: [
+"شمع صويا طبيعي",
+"فتيل قطني",
+"تصميم أنيق",
+"صناعة يدوية في الإمارات",
+"هدية للحبيب"
+],
+detailsEn: [
+"Natural soy wax candle",
+"Cotton wick",
+"Elegant design",
+"Handmade in UAE",
+"Gift for loved ones"
+]
+},
+{
+id: "41_p10",
+name: "صابون تنظيف متعدد الاستخدامات",
+nameEn: "Laundry Cleaner Soap Bar",
+description: "صابون صلب طبيعي متعدد الاستخدامات للتنظيف وإزالة البقع.",
+descriptionEn: "Natural solid multi-purpose soap bar for cleaning and stain removal.",
+longDescription: "صابون صلب طبيعي متعدد الاستخدامات، رائع للأطباق والفواكه والخضروات وفرش المكياج والأحذية البيضاء وكمطهر للمطبخ والحمام وحتى مزيل لبقع الغسيل. أنقى صابون على الإطلاق! بدون ألوان صناعية أو عطور أو مواد رغوية أو مواد حافظة أو منتجات بترولية أو حيوانية. صفر نفايات، ينظف كالسحر ويدوم طويلاً. استخدمه لتنظيف المنزل من الأساس إلى السقف، بما في ذلك السيارة. للاستخدام: افرك إسفنجة مبللة أو فرشاة بالصابون حتى تصبح رغوية، اغسل كالمعتاد، اشطف جيدًا. للحفاظ عليه، ضعه في طبق تصريف جيد.",
+longDescriptionEn: "A handcrafted solid soap bar that works great on dishes, fruits and vegetables, cosmetic brushes, white sneakers, as a kitchen and bathroom cleaner, and even as a laundry stain remover. The simplest and purest soap! NO artificial color, fragrance, foamer, preservatives, petroleum or animal products. Zero waste, cleans like magic, lasts long. Use to scrub your house from roof to foundations, along with the car. Directions: Rub wet sponge or brush against soap until soapy, wash as usual, rinse well. Keep in a well-draining soap dish.",
+category: "صابون",
+categoryEn: "Soap",
+mainImage: "images/p41-10.jpg",
+images: ["images/p41-10.jpg",
+    "images/p41-10-1.jpg",
+    "images/p41-10-2.jpg",
+    "images/p41-10-3.jpg",    
+],
+details: [
+"صابون صلب طبيعي",
+"متعدد الاستخدامات",
+"للغسيل والتنظيف",
+"يزيل البقع",
+"صفر نفايات",
+"يدوم طويلاً"
+],
+detailsEn: [
+"Natural solid soap bar",
+"Multi-purpose",
+"For laundry and cleaning",
+"Stain remover",
+"Zero waste",
+"Long-lasting"
+]
+},
+{
+id: "41_p11",
+name: "ملح استحمام عشبي",
+nameEn: "Soapretty Bath Soak",
+description: "خلطة أعشاب للاستحمام للاسترخاء وتنقية الروح.",
+descriptionEn: "Herbal bath blend for relaxation and spiritual cleansing.",
+longDescription: "هذه الخلطات العطرية تريح عضلاتك وتوفر تجربة استرخاء لروتين وقت الاستحمام. الحمامات العشبية مفيدة بطرق عديدة باستخدام العلاج العطري والتخلص من السموم لتهدئة عقلك وجسمك. يمكن استخدامها في وصفات الحمام الروحي. على عكس الحمام العادي بالصابون والشامبو والماء الذي ينظف الجسم، يعمل الحمام الروحي على تطهير العقل والروح، باستخدام مكونات قوية تشحن ماء الاستحمام باهتزازات علاجية تساعدك على إزالة العوائق والآلام والمواقف التي لم تعد تخدمك.",
+longDescriptionEn: "These aromatic blends will soothe your muscles as well as provide a relaxing experience to your bath time routine. Herbal baths are beneficial in so many ways by using Aromatherapy and Detox to soothe your mind & body. Can be used in a Spiritual Bath Recipe. Unlike a regular bath with soap, shampoo and water that cleanse the body, a spiritual bath works to cleanse the mind and spirit, using powerful ingredients that charge the bathwater with healing vibrations that help you remove blockages, hurts, pains and situations that are no longer serving you.",
+category: "عناية بالجسم",
+categoryEn: "Body Care",
+mainImage: "images/p41-11.jpg",
+images: ["images/p41-11.jpg",
+    "images/p41-11-1.jpg",
+    "images/p41-11-2.jpg",
+    "images/p41-11-3.jpg",    
+],
+details: [
+"خلطة أعشاب للاستحمام",
+"للاسترخاء وتنقية الروح",
+"علاج عطري",
+"يهدئ العضلات",
+"ينظف الطاقة السلبية"
+],
+detailsEn: [
+"Herbal bath soak",
+"For relaxation and spiritual cleansing",
+"Aromatherapy",
+"Soothes muscles",
+"Cleanses negative energy"
+]
+},
+{
+id: "41_p12",
+name: "قلب شمع عطري / ساشيه",
+nameEn: "Valentine's Wax Melt / Sachet",
+description: "قلب شمع صويا عطري مزين بأزهار مجففة.",
+descriptionEn: "Aromatic soy wax heart decorated with dried flowers.",
+longDescription: "قطعة صغيرة من شمع العطر تكفي لجلب رائحة جميلة إلى منزلك. قلوب الشمع الفريدة هذه معطرة بالزيوت الأساسية ومصممة بشكل جميل مع أزهار مجففة وأعشاب ومساحيق وتوت مجفف منتقاة يدويًا، معظمها من روسيا. يمكنك تعليق كيس الشمع على الحائط، أو وضعه في وعاء مفتوح أو على الرف في خزانة أو غرفة صغيرة أو درج. يمكن إذابة شمع العطر في مصباح عطري لملء الغرفة برائحة لطيفة. القلب معبأ بشكل جميل بعناية. هدية مثالية لجميع المناسبات. كل قطعة فريدة بسبب طبيعة اليدوية.",
+longDescriptionEn: "All it takes is a small piece of aroma wax to bring a lovely scent to your home. These unique soy wax hearts are scented with essential oils and beautifully designed with handpicked dried flowers, herbs, powders, dried berries etc., mostly from Russia. You can simply hang the wax sachet on the wall, or place it in an open container or on the shelf in a closet, a small room, or in a drawer. Aroma wax can be melted in an aroma lamp, thus filling the room with a pleasant scent. The soy wax heart is beautifully and carefully packaged. Perfect and ready for gifting for all occasions. Each piece is unique due to handmade nature.",
+category: "معطرات",
+categoryEn: "Fragrance",
+mainImage: "images/p41-12.jpg",
+images: ["images/p41-12.jpg",
+    "images/p41-12-1.jpg",
+    "images/p41-12-2.jpg",
+    "images/p41-12-3.jpg",
+],
+details: [
+"قلب شمع صويا عطري",
+"مع أزهار وأعشاب مجففة",
+"لتعطير الخزائن والغرف",
+"يمكن إذابته في المصباح",
+"قطعة فنية فريدة",
+"هدية مثالية"
+],
+detailsEn: [
+"Aromatic soy wax heart",
+"With dried flowers and herbs",
+"For scenting closets and rooms",
+"Can be melted in oil burner",
+"Unique art piece",
+"Perfect gift"
+]
+},
+{
+id: "41_p13",
+name: "صندوق سبا لها",
+nameEn: "SPA Box for Her",
+description: "صندوق هدايا سبا فاخر للنساء يحتوي على منتجات طبيعية.",
+descriptionEn: "Luxurious spa gift box for women with natural products.",
+longDescription: "صندوق هدايا سبا جميل لذلك الشخص المشرق في حياتك. اجعل شخصًا ما يشعر بالخصوصية اليوم، سترسم ابتسامة على وجه من يفتح الصندوق عندما يرى كل المفاجآت اللطيفة المخبأة بداخله. دلل نفسك أو اهدها لصديقة جميلة تحتاج إلى القليل من الإلهام لتحب نفسها. هذا الصندوق هدية رائعة لصديقتك المفضلة، زميلة العمل، أختك، خالتك، أمك، إلخ. لماذا تختارنا: منتجات عضوية عالية الجودة، عطور رائعة، كل شيء مصنوع يدويًا في الإمارات حتى أصغر التفاصيل، خالٍ من البارابين والفثالات، تصاميم صناديق جميلة، يمكنك إضافة بطاقة مخصصة، إيجابية ونور وحب مع كل صندوق. محتويات الصندوق: نوعان من الصابون، مقشر جسم بحليب جوز الهند أو الخزامى، زبدة جسم مخفوقة، زيت شعر فاخر، شمع عطري بجوز الهند الطبيعي.",
+longDescriptionEn: "A beautiful spa gift box set for that Sunshine in your life. Make somebody feel special today, you will draw a smile on the face of whoever opens up the box when they see all the cute surprises hidden within. Treat yourself or make it a gift to a beautiful friend who needs a little inspiration to love herself. This box would make a great gift for your best friend, coworker, sister, aunt, mom, etc. Why choose Soapretty: Organic high-quality products, fragrances to die for, everything entirely handmade in UAE to the smallest details, free of parabens & phthalates, beautiful box designs, you can add a personalized card, positivity, light and love made with every box. Box contains: 2 Types of Soap Bars, Coconut Milk or Lavender Body Polish, Whipped Shea Body Butter, Luxurious Hair Oil, Natural Coconut Shell Aroma Candle.",
+category: "هدايا",
+categoryEn: "Gifts",
+mainImage: "images/p41-13.jpg",
+images: ["images/p41-13.jpg",
+    "images/p41-13-1.jpg",
+    "images/p41-13-2.jpg",
+    "images/p41-13-3.jpg",
+],
+details: [
+"صندوق سبا فاخر للنساء",
+"منتجات طبيعية",
+"صابون، مقشر، زبدة جسم",
+"زيت شعر، شمع عطري",
+"صناعة يدوية في الإمارات",
+"هدية مثالية"
+],
+detailsEn: [
+"Luxurious spa box for her",
+"Natural products",
+"Soap, scrub, body butter",
+"Hair oil, aromatic candle",
+"Handmade in UAE",
+"Perfect gift"
+]
+},
+{
+id: "41_p14",
+name: "صندوق له",
+nameEn: "For Him Box",
+description: "صندوق هدايا للرجال بمنتجات طبيعية للعناية باللحية والبشرة.",
+descriptionEn: "Gift box for men with natural beard and skin care products.",
+longDescription: "لكسرك 🖤🧔🏻. صندوق الهدايا هذا طريقة رائعة لتخبر رجلك أنه 'نجم روك'. يرفع معنويات رجلك، مصنوع يدويًا باستخدام مكونات طبيعية فقط وزيوت أساسية عضوية، يهدئ البشرة الجافة أو المتهيجة بترطيب عميق، يخفف التوتر. يقدم بشكل جميل كهدية لوالدك أو زوجك أو صديقك. تتميز هذه المجموعة بروائح جريئة توقظ الحواس. هدية مثالية مصنوعة يدويًا للرجل المهندم الفاخر. باستخدام بعض من أفضل وأعلى جودة من الزيوت الناقلة والأساسية، زيت اللحية فريد وأعدك أنك ستحبه! فوائد زيت اللحية: يجعل اللحية ناعمة، يمنع حكة اللحية، يمنع قشرة اللحية. يمكنك اختيار أي منتج ليكون في الصندوق، سيتم حساب التكلفة وفقًا لذلك: صابون، مقشر جسم، لوشن جسم، زيت جسم، زيت لحية، مشط لحية خشبي، شمع صويا، شامبو صلب.",
+longDescriptionEn: "For your crush 🖤🧔🏻. This Gift Box is a great way to tell your man he is a 'rock star'. Uplifts your man's spirits, handmade using only natural ingredients & organic essential oils, soothes dry or irritated skin with deep hydration, eases tension. Presents beautifully as a gift for your Dad or Husband or friend. This collection features bold scents that awaken the senses. The perfect handcrafted gift for a luxurious bearded gentleman. Using some of the finest and highest quality carrier and essential oils, my Beard Oil is unique and I assure you will love it! Beard Oil Benefits: Leaves your beard feeling soft, prevents beard itch, prevents beardruff. You can choose any product to be included in the box: Soap bar, Body Scrub, Body Lotion, Body oil, Beard oil, Beard wooden comb, Soy Candle, Solid shampoo.",
+category: "هدايا",
+categoryEn: "Gifts",
+mainImage: "images/p41-14.jpg",
+images: ["images/p41-14.jpg",
+    "images/p41-14-1.jpg",
+    "images/p41-14-2.jpg",
+    "images/p41-14-3.jpg",
+],
+details: [
+"صندوق هدايا للرجال",
+"منتجات طبيعية",
+"زيت لحية، مشط، صابون",
+"مقشر، لوشن، شمع",
+"روائح جريئة",
+"هدية مثالية للأب أو الزوج"
+],
+detailsEn: [
+"Gift box for men",
+"Natural products",
+"Beard oil, comb, soap",
+"Scrub, lotion, candle",
+"Bold scents",
+"Perfect gift for dad or husband"
+]
+},
+{
+id: "41_p15",
+name: "صابون طبيعي يدوي",
+nameEn: "Natural Handmade Soap",
+description: "صابون طبيعي مصنوع يدويًا بزيوت وأعشاب عضوية معتمدة.",
+descriptionEn: "Natural handmade soap with certified organic oils and herbs.",
+longDescription: "يرجى التحقق من التوفر مع الإدارة قبل الطلب. أستخدم فقط الأعشاب والزيوت العضوية المعتمدة، لذلك لن تحصل فقط على أجود المكونات الممكنة، بل ستستثمر في صحة أفضل لك. مكونات عضوية معتمدة، مكونات طازجة عالية الجودة، العديد من المنتجات النباتية، خالية من الفثالات، الكبريتات، الغلوتين، البارابين، الفورمالديهايد، الكائنات المعدلة وراثيًا، خالية من القسوة، تجارة عادلة، صنع في بيئة نظيفة، معدات معقمة وتعقيم، عناية إضافية بالتفاصيل. ملاحظات مهمة: قد يختلف اللون والتصميم قليلاً من قطعة إلى أخرى. هذا الصابون غير موصى به للأشخاص الذين يعانون من حساسية تجاه الزيوت العطرية الطبيعية. يوصى بشدة باستخدام طبق صابون جيد التصريف يحافظ على نظافة الصابون وجفافه.",
+longDescriptionEn: "Please check availability with Admin before you order. I use ONLY certified organic herbs & oils, so not only will you be receiving the finest quality ingredients possible, you'll be making an investment towards a healthier YOU. Certified Organic Ingredients, Top Quality & Fresh Ingredients, Many Vegan Products, Phthalate-Free, Sulfate-Free, Gluten-Free, Paraben-Free, Formaldehyde-Free, GMO-Free, Cruelty-Free, Fair Trade, Made In a Clean Environment, Sterilized Equipment and Bottling, Extra Care and Attention To Detail. Important notices: Color and design may vary slightly from bar to bar. This soap is not recommended for people allergic to natural essential oils. Highly recommended to use a draining soap dish that allows soap to stay clean and dry.",
+category: "صابون",
+categoryEn: "Soap",
+mainImage: "images/p41-15.jpg",
+images: ["images/p41-15.jpg",
+    "images/p41-15-1.jpg",
+    "images/p41-15-2.jpg",
+    "images/p41-15-3.jpg",
+],
+details: [
+"صابون طبيعي يدوي",
+"مكونات عضوية معتمدة",
+"خالٍ من المواد الضارة",
+"نباتي (معظمه)",
+"صنع في بيئة نظيفة",
+"قطعة فريدة"
+],
+detailsEn: [
+"Natural handmade soap",
+"Certified organic ingredients",
+"Free from harmful chemicals",
+"Mostly vegan",
+"Made in clean environment",
+"Unique piece"
+]
+},
+{
+id: "41_p16",
+name: "زيت لحية",
+nameEn: "Beard Oil",
+description: "زيت لحية طبيعي فاخر لتغذية وترطيب اللحية.",
+descriptionEn: "Luxurious natural beard oil to nourish and moisturize beard.",
+longDescription: "لكسرك 🖤🧔🏻. باستخدام بعض من أفضل وأعلى جودة من الزيوت الناقلة والأساسية، زيت اللحية فريد وأعدك أنك ستحبه! تركيبة زيت اللحية تمتص بسرعة في الجلد حتى لا تشعر بهذا الشعور الدهني الثقيل. بدلاً من ذلك، ستستفيد من شعور ناعم ولين حيث يتم ترطيب وتكييف شعر الوجه، مما يمنع 'الحكة' مع تغذية شعر الوجه، ويترك لك لحية ذات رائحة رائعة! زيت اللحية مناسب لجميع أطوال اللحية ويأتي في زجاجة قطارة 50 مل، تسمح بجرعات سهلة وتمنع التلف. فوائد زيت اللحية: يجعل اللحية ناعمة، يمنع حكة اللحية، يمنع قشرة اللحية. نظرًا للطبيعة الحساسة لهذا المنتج، أقترح تخزينه في مكان بارد وجاف للحفاظ على سلامة التركيبة.",
+longDescriptionEn: "For your crush 🖤🧔🏻. Using some of the finest and highest quality carrier and essential oils, my Beard Oil is unique and I assure you will love it! My Beard Oil formula absorbs quickly into the skin so you don't get that greasy, heavy feeling. Instead, you will benefit from a soft supple feel as your facial hair is conditioned and moisturized, preventing that 'itch' while nourishing the facial hair, and leaving you with a great smelling beard! My beard oil is suitable for all lengths of beard and comes in a 50ml squeezable dropper bottle, allowing for easy dispense and preventing spoilage. Beard Oil Benefits: Leaves your beard feeling soft, prevents beard itch, prevents beardruff. Due to the delicate nature of this product, store in a cool, dry place.",
+category: "عناية باللحية",
+categoryEn: "Beard Care",
+mainImage: "images/p41-16.jpg",
+images: ["images/p41-16.jpg",
+    "images/p41-16-1.jpg",
+    "images/p41-16-2.jpg",
+    "images/p41-16-3.png",
+],
+details: [
+"زيت لحية طبيعي",
+"50 مل",
+"يمتص بسرعة",
+"يمنع الحكة والقشرة",
+"يجعل اللحية ناعمة",
+"رائحة رائعة"
+],
+detailsEn: [
+"Natural beard oil",
+"50ml",
+"Quick absorption",
+"Prevents itch and dandruff",
+"Softens beard",
+"Great scent"
+]
+},
+{
+id: "41_p17",
+name: "زيت جسم لامع",
+nameEn: "WOW Shimmer Body Oil",
+description: "زيت جسم لامع بخلاصات طبيعية يمنح البشرة إشراقة.",
+descriptionEn: "Shimmering body oil with natural extracts that gives skin a glow.",
+longDescription: "احصل على توهجك مع زيت الجسم اللامع ! زيوت الجسم تركز على الخصائص العلاجية الرائعة لزيت اللوز الحلو وزيت بذور العنب والزيوت الأساسية. زيت الجسم لا يرطب ويغذي ويرطب بشرتك فحسب، بل يمنحك توهجًا خفيفًا. يمنحك زيت WOW Shimmer ترطيبًا عميقًا وبشرة متوهجة ولامعة بشكل خفي. تركيبته مع أفضل الزيوت، غير دهنية، تمتص بسرعة كبيرة في بشرتك ولها خصائص ترطيب وتغذية ممتازة. معتق بمزيج عطري معقد من الزيوت الأساسية العضوية مع البرغموت والهيل والفلفل الوردي والإيلنغ وفول التونكا والياسمين. للاستخدام: ابدأ بضخة إلى اثنتين، دلكه في الجلد بأصابعك أو فرشاة كابوكي، أضف المزيد حسب الرغبة. رج جيدًا قبل الاستخدام، قد يحدث بعض الترسيب والانفصال.",
+longDescriptionEn: "Get your glow on with Soapretty shimmering body oil! Soapretty body oils focus on the amazing healing properties of sweet almond oil, grape-seed oil and essential oils. Soapretty body oil will not only moisturize, nourish, and hydrate your skin, but it will give you a subtle glow. WOW Shimmer Oil gives you deeply hydrated, glow-y, and subtly luminous skin. Formulated with the very best oils, not greasy, absorbs very fast, excellent hydrating and skin nourishing properties. Infused with a complex aromatic blend of organic essential oils featuring Bergamot, Cardamon, Pink pepper, Ylang Ylang, Tonka Bean and Jasmine. How to use: Start with one to two pumps, massage into skin, add more as desired. Shake well before use, some settling may occur.",
+category: "عناية بالجسم",
+categoryEn: "Body Care",
+mainImage: "images/p41-17.jpg",
+images: ["images/p41-17.jpg",
+    "images/p41-17-1.jpg",
+    "images/p41-17-2.jpg",
+    "images/p41-17-3.jpg",
+],
+details: [
+"زيت جسم لامع",
+"يمنح البشرة إشراقة",
+"زيوت طبيعية",
+"غير دهني",
+"يمتص بسرعة",
+"رائحة عطرية"
+],
+detailsEn: [
+"Shimmering body oil",
+"Gives skin a glow",
+"Natural oils",
+"Non-greasy",
+"Quick absorption",
+"Aromatic scent"
+]
+},
+{
+id: "41_p18",
+name: "زيت شعر فاخر",
+nameEn: "Luxurious Hair Oil",
+description: "زيت شعر طبيعي غني بالأعشاب والزيوت المغذية.",
+descriptionEn: "Natural hair oil rich in nourishing herbs and oils.",
+longDescription: "الأكثر مبيعًا! زيت شعر سيحافظ على عرفك مزدهرًا! زيت الشعر الفاخر يتم خلطه بلطف لإيقاظ المكونات النشطة التي يحتويها باستمرار. يتم تحضيره بعناية مع عملية تسخين لطيفة أولية ويتم نقعه لمدة 30 يومًا على الأقل. يتم زيارته يوميًا وخلطه بلطف لإيقاظ المكونات النشطة. للاستخدام: رج الزجاجة بلطف، قسم الشعر وافرك كميات صغيرة في الجذور، دلك فروة الرأس بأطراف الأصابع لتعزيز الدورة الدموية والامتصاص الأقصى. اتركه لمدة ساعة أو طوال الليل. غط الشعر للسماح للمكونات النشطة بالعمل. استخدم 3 مرات في الأسبوع للحصول على أفضل النتائج. المكونات: زيت الجوجوبا، زيت الحبة السوداء، زيت اللوز الحلو، زيت الأفوكادو، زيت السمسم، زيت بذور اليقطين، زيت جوز الهند، براهمي، مستخلصات برينجراج، زيت الأملا، أملا، ألوفيرا، حلبة، كركديه، روزماري مجفف، زيت الخروع، فيتامين E، زيت شجرة الشاي، بتلات الورد العضوية، زيت الروزماري، زيت النعناع، زيت الأرز، زيت القرنفل.",
+longDescriptionEn: "Bestseller! SOAPRETTY hair oil will keep your mane thriving! Luxurious hair oil is gently mixed to continuously awaken the active ingredients it contains. Carefully cultivated with an initial gentle heating process & infused for a minimum of 30 days. Visited daily, gently mixed to awaken active ingredients. Directions: Gently shake bottle, section hair & rub small amounts into roots, massage scalp with fingertips to promote blood circulation and maximum absorption. Leave for 1 hour or overnight. Cover hair to allow active ingredients to work. Use 3x per week for best results. Ingredients: Jojoba Oil, Black Seed Oil, Sweet Almond Oil, Avocado Oil, Sesame Seed Oil, Pumpkin Seed Oil, Coconut Oil, Brahmi, Bhringraj Extracts, Amla Oil, Amla, Aloe Vera, Fenugreek, Hibiscus, Dried Rosemary, Castor Oil, Vitamin E, Tea Tree Oil, Organic Rose Petals, Rosemary Oil, Peppermint Oil, Cedarwood Oil, Clove Oil.",
+category: "عناية بالشعر",
+categoryEn: "Hair Care",
+mainImage: "images/p41-18.jpg",
+images: ["images/p41-18.jpg",
+    "images/p41-18-1.jpg",
+    "images/p41-18-2.jpg",
+    "images/p41-18-3.png",
+],
+details: [
+"زيت شعر فاخر",
+"منقوع 30 يومًا",
+"زيوت وأعشاب طبيعية",
+"يقوي الشعر",
+"ينشط فروة الرأس",
+"يعزز النمو"
+],
+detailsEn: [
+"Luxurious hair oil",
+"Infused for 30 days",
+"Natural oils and herbs",
+"Strengthens hair",
+"Invigorates scalp",
+"Promotes growth"
+]
+},
+{
+id: "41_p19",
+name: "صابون يدوي حسب الطلب",
+nameEn: "Custom Handmade Soap",
+description: "صابون طبيعي مصنوع يدويًا حسب الطلب بلمسة شخصية.",
+descriptionEn: "Natural handmade soap made to order with personal touch.",
+longDescription: "كل قطعة تصنع ببطء وحب واهتمام كامل بالتفاصيل - من اختيار أفضل الزيوت إلى تزيين كل قطعة باليد. إنه أكثر من مجرد صابون... إنه طقوس، مزاج، لحظة لنفسك. مكونات طبيعية 100%، صناعة يدوية في الإمارات، جاهز للهدايا بشكل جميل. جميع الطلبات تأتي في تغليف صديق للبيئة مع لمسة شخصية. يرجى مراسلتي عبر الرسائل المباشرة للتفاصيل.",
+longDescriptionEn: "Every bar is crafted slowly, lovingly, and with full attention to detail — from choosing the finest oils to decorating each piece by hand. It's more than soap… it's a ritual, a mood, a moment for yourself. 100% natural ingredients, handmade in UAE, beautifully gift-ready. All orders come in eco-friendly packaging with a personalised touch. Please dm for details.",
+category: "صابون",
+categoryEn: "Soap",
+mainImage: "images/p41-19.jpg",
+images: ["images/p41-19.jpg",
+    "images/p41-19-1.jpg",
+    "images/p41-19-2.jpg",
+],
+details: [
+"صابون طبيعي حسب الطلب",
+"صناعة يدوية في الإمارات",
+"مكونات طبيعية 100%",
+"تغليف صديق للبيئة",
+"لمسة شخصية"
+],
+detailsEn: [
+"Custom natural soap",
+"Handmade in UAE",
+"100% natural ingredients",
+"Eco-friendly packaging",
+"Personal touch"
+]
+},
+{
+id: "41_p20",
+name: "ساشيه شمع عطري (10 قطع)",
+nameEn: "Aroma Wax Sachet (min order 10pcs)",
+description: "كيس شمع عطري طبيعي، مناسب للهدايا والتوزيعات.",
+descriptionEn: "Natural aroma wax sachet, suitable for gifts and favors.",
+longDescription: "احتفل مع أناقة وسحر الكنوز المصنوعة يدويًا. مناسبة مثالية للتعبير عن حبك مع هدايا مدروسة مصنوعة يدويًا تتحدث من القلب. هذا العام، فكر في مفاجأة شخصك المميز بمنتجات رائعة مصنوعة في الإمارات، حيث يصب الحرفيون شغفهم وتقاليدهم في كل إبداع. أسعدهم بأكياس عطرية تنشر عطورًا مهدئة في أي مساحة، أو شموع فاخرة تضفي أجواء رومانسية بروائعها الإلهية. للمسة من التدليل، استكشف منتجات العناية بالبشرة الطبيعية التي تعد بالتدليل والتجديد. هذه الهدايا الفريدة لا تقدم تأثيرًا رائعًا فحسب، بل تظهر أيضًا الرعاية والاهتمام الذي ذهب إلى اختيار شيء شخصي جدًا. الحد الأدنى للطلب 10 قطع.",
+longDescriptionEn: "Celebrate with the elegance and charm of handmade treasures. Perfect occasion to express your love with thoughtful, handmade gifts that truly speak from the heart. This year, consider surprising your special someone with exquisite products crafted in the UAE, where artisans pour passion and tradition into each creation. Delight them with aromatic sachets that infuse any space with soothing fragrances, or luxurious candles that set a romantic ambiance with their divine scents. For a touch of indulgence, explore natural skincare products that promise to pamper and rejuvenate. These unique gifts not only deliver a wow effect but also demonstrate the care and consideration that went into selecting something so personal. Minimum order 10 pcs.",
+category: "معطرات",
+categoryEn: "Fragrance",
+mainImage: "images/p41-20.jpg",
+images: ["images/p41-20.jpg",
+    "images/p41-20-1.jpg",
+    "images/p41-20-2.jpg",
+],
+details: [
+"ساشيه شمع عطري",
+"الحد الأدنى 10 قطع",
+"هدايا مدروسة",
+"مثالي للتوزيعات",
+"روائح مهدئة",
+"صناعة يدوية في الإمارات"
+],
+detailsEn: [
+"Aroma wax sachet",
+"Min order 10 pcs",
+"Thoughtful gifts",
+"Ideal for favors",
+"Soothing scents",
+"Handmade in UAE"
+]
+},
+{
+id: "41_p21",
+name: "شمع صغير للهدايا",
+nameEn: "Mini Favor Candle",
+description: "شمع صغير بطابع الكريسماس، مثالي للتوزيعات.",
+descriptionEn: "Mini Christmas-themed candle, perfect for favors.",
+longDescription: "الحد الأدنى للطلب 15 قطعة. روائح مختلفة متوفرة. هدايا الشركات 🎁. موسم عيد الميلاد ورأس السنة الجديدة على الأبواب! اطلب هداياك الآن 🎁. شموع بطابع الكريسماس مع أعشاب وتوت مجفف تخدم كهدايا فريدة وساحرة لضيوفك أو زملائك أو عائلتك أو أصدقائك 💫. كل شمعة مصنوعة يدويًا بعناية وحب واهتمام بالتفاصيل، مما يجعلها قطعة فريدة من نوعها 🤩.",
+longDescriptionEn: "Minimum order 15pcs. Different scents available. CORPORATE GIFTS 🎁. Holiday Christmas and NY season is around the corner! Order your gifts now 🎁. Christmas-themed dry herbs and berries candle that serve as unique and charming favors for your guests, colleagues, family or friends 💫. Each candle is carefully handcrafted with love and attention to detail, making them one-of-a-kind pieces 🤩.",
+category: "شموع",
+categoryEn: "Candles",
+mainImage: "images/p41-21.jpg",
+images: ["images/p41-21.jpg",
+    "images/p41-21-1.jpg",
+    "images/p41-21-2.jpg",
+],
+details: [
+"شمع صغير للهدايا",
+"الحد الأدنى 15 قطعة",
+"طابع كريسماس",
+"أعشاب وتوت مجفف",
+"قطعة فريدة",
+"هدايا للشركات"
+],
+detailsEn: [
+"Mini favor candle",
+"Min order 15 pcs",
+"Christmas theme",
+"Dried herbs and berries",
+"Unique piece",
+"Corporate gifts"
+]
+},
+{
+id: "41_p22",
+name: "زيت جسم متوهج",
+nameEn: "GLOW BODY OIL",
+description: "زيت جسم طبيعي يمنح البشرة توهجًا وترطيبًا.",
+descriptionEn: "Natural body oil that gives skin a glow and hydration.",
+longDescription: "مزيج خاص من الزيوت الطبيعية الباردة والخفيفة التي تمتصها بشرتك بشكل جميل. رائع للبشرة الجافة، ويستخدم بشكل أفضل على البشرة الرطبة لامتصاص فائق. آمن للاستخدام اليومي. رائع لأنواع البشرة الحساسة والحالات الجلدية مثل الأكزيما والصدفية وحب الشباب والوردية وغيرها. زيت الجسم المتوهج مليء بالعناصر الغذائية والفيتامينات التي تجعل بشرتك ناعمة ورطبة. إنه غير لزج، خفيف الوزن ويمتص جيدًا في بشرتك. المكونات: زيت بذور العنب العضوي، زيت الأفوكادو العضوي، زيت المشمش العضوي، زيت اللوز الحلو العضوي، براعم الخزامى، براعم الورد، قشر البرتقال المجفف. استخدم صباحًا ومساءً، للحصول على أفضل النتائج، ضعه على بشرة رطبة قليلاً أو مباشرة بعد الاستحمام.",
+longDescriptionEn: "Special combination of cold-pressed, light, natural oils that absorb beautifully into your skin. Great for dry skin, best used on damp skin for ultra absorption. Safe to use daily. Great for sensitive skin types and skin conditions such as eczema, psoriasis, acne, rosacea & other skin conditions. Glow body oil is full of nutrients and vitamins that make your skin feel soft and moisturized. It's non sticky, lightweight and absorbs very well into your skin. Ingredients: Organic Grapeseed Oil, Organic Avocado Oil, Organic Apricot Oil, Organic Sweet Almond Oil, Lavender buds, Rose buds, Dried Orange peel. Use AM and PM, for best results apply to slightly damp skin or straight after shower.",
+category: "عناية بالجسم",
+categoryEn: "Body Care",
+mainImage: "images/p41-22.jpg",
+images: ["images/p41-22.jpg",
+    "images/p41-22-1.jpg",
+    "images/p41-22-2.jpg",
+],
+details: [
+"زيت جسم متوهج",
+"زيوت طبيعية باردة",
+"للأكزيما والصدفية",
+"غير لزج",
+"خفيف وسريع الامتصاص",
+"يستخدم يوميًا"
+],
+detailsEn: [
+"Glow body oil",
+"Cold-pressed natural oils",
+"For eczema and psoriasis",
+"Non-sticky",
+"Lightweight, quick absorption",
+"Daily use"
+]
+},
+{
+id: "41_p23",
+name: "شمع صويا طبيعي",
+nameEn: "Natural Hand-poured Soy Candle",
+description: "شمع صويا طبيعي بفتيل خشبي وأعشاب مجففة.",
+descriptionEn: "Natural soy candle with wooden wick and dried herbs.",
+longDescription: "هذا الشمع العطري هو هدية لطيفة ومدروسة لأي شخص تهتم به. سواء كان صديقك المفضل، خطيبك، أمك، زميلك، جدك أو حتى هدية صغيرة لنفسك. دعنا نواجه الأمر، من لا يحب إضاءة شمعة للاسترخاء بعد يوم طويل في العمل؟ شموعنا لها وقت احتراق طويل ويتم صبها يدويًا في الإمارات على دفعات صغيرة في عبوات زجاجية قابلة لإعادة الاستخدام. جميع شموعي مصنوعة من شمع الصويا الطبيعي، وهو صديق للبيئة ونباتي، ومعطرة بزيوت عطرية فاخرة تملأ الغرفة برائحة جميلة طويلة الأمد وتبدو رائعة في أي منزل. فتيل خشبي، مزين بأعشاب مجففة طبيعية، فواكه، إبر التنوب، مخروط التنوب، أعواد القرفة، توت. الرائحة: يانسون نجمي، قرفة، مانجو، برتقال. حوالي 50 ساعة احتراق.",
+longDescriptionEn: "This beautiful Scented Soy candle is a lovely and thoughtful personalised gift to give anyone you care about. From your Best Friend, Fiancé, Mum, Colleague, Grandparent or even as a little treat for yourself. Let's face it who doesn't like lighting a candle to relax and unwind after a long day at work? SOAPRETTY candles have a long burn time and are hand-poured in UAE in small batches into our premium glass re-usable apothecary jars. All of my candles are made with natural Soy Wax, which is Vegan friendly and fragranced with luxury fragrance oils that will fill your room with a beautiful, long-lasting aroma and would look great in any home. Wooden wick, decorated with natural dried herbs, fruits, fir needles, fir cone, cinnamon sticks, berries. Scent: star Anis, cinnamon, mango, orange. Approx 50h burn.",
+category: "شموع",
+categoryEn: "Candles",
+mainImage: "images/p41-23.jpg",
+images: ["images/p41-23.jpg",
+    "images/p41-23-1.jpg",
+    "images/p41-23-2.jpg",
+],
+details: [
+"شمع صويا طبيعي",
+"فتيل خشبي",
+"أعشاب وفواكه مجففة",
+"رائحة اليانسون والقرفة",
+"50 ساعة احتراق",
+"صناعة يدوية في الإمارات"
+],
+detailsEn: [
+"Natural soy candle",
+"Wooden wick",
+"Dried herbs and fruits",
+"Star anise and cinnamon scent",
+"50h burn time",
+"Handmade in UAE"
+]
+},
+{
+id: "41_p24",
+name: "شامبو صلب بالاعشاب",
+nameEn: "Herbal Solid Shampoo Bar",
+description: "شامبو صلب طبيعي بالأعشاب، بديل صديق للبيئة للشامبو السائل.",
+descriptionEn: "Natural herbal solid shampoo bar, eco-friendly alternative.",
+longDescription: "لا أستخدم SLS في تركيباتي لأنه معروف بأنه مهيج للبشرة. تغليف قابل للتحلل 100% ومطبوع بحبر مستدام. بديل منخفض النفايات لزجاجات الشامبو التقليدية البلاستيكية، مصنوع يدويًا بمكونات طبيعية فقط، مصمم لتنظيف الشعر وتوازنه وتغذيته. نظرًا لأنه صلب، فهو رائع للسفر. المكونات: صوديوم كوكويل إيزيثيونات، صوديوم لوريل سلفواسيتات، كوكاميدوبروبيل بيتين، زبدة الشيا، BTMS-50، كحول سيتيل، بروتين الحرير، عطر الكركديه، DL بانثينول، مسحوق الكركديه، جيرمال بلس. شاي الكركديه (للشعر): زهرة الكركديه هي عشب أيورفيدي يعزز نمو الشعر الصحي عن طريق منع تكسر الشعر وتقويته.",
+longDescriptionEn: "I DO NOT USE SLS IN MY FORMULATIONS AS THIS IS KNOWN TO BE A SKIN IRRITANT. Soapretty wrapping paper packaging is 100% biodegradable and printed with sustainable ink. Low waste alternative to conventional shampoo plastic bottles, made by hand with nothing but natural ingredients, it is meant to cleanse, balance and nourish the hair. Since they're solid, they're great for travel. Ingredients: Sodium Cocoyl Isethionate, Sodium Lauryl Sulfoacetate, Cocamidopropyl Betaine, Shea Butter, BTMS-50, Cetyl Alcohol, Silk Protein, Hibiscus Fragrance, DL Panthenol, Hibiscus Powder, Germall Plus. Hibiscus tea (hair): Hibiscus flower is an ayurvedic herb that promotes healthy hair growth by preventing hair breakage and strengthening hair strands.",
+category: "عناية بالشعر",
+categoryEn: "Hair Care",
+mainImage: "images/p41-24.jpg",
+images: ["images/p41-24.jpg",
+    "images/p41-24-1.jpg",
+    "images/p41-24-2.jpg",
+],
+details: [
+"شامبو صلب طبيعي",
+"بديل صديق للبيئة",
+"خالٍ من SLS",
+"يعزز نمو الشعر",
+"مثالي للسفر",
+"تغليف قابل للتحلل"
+],
+detailsEn: [
+"Natural solid shampoo bar",
+"Eco-friendly alternative",
+"SLS-free",
+"Promotes hair growth",
+"Perfect for travel",
+"Biodegradable packaging"
+]
+},
+{
+id: "41_p25",
+name: "صندوق صابون 13 قطعة",
+nameEn: "13 PCS SOAP HUMPER 20%OFF",
+description: "صندوق هدايا يحتوي على 10 قطع صابون عضوي طبيعي.",
+descriptionEn: "Gift box with 10 natural organic soap bars.",
+longDescription: "خصم 20%! صندوق طعام البشرة. 10 قطع صابون صحي غير كيميائي. شاركه مع شخصك المفضل الآن 🚀. صابون عضوي يدوي. هدية رائعة أو مجموعة للعائلة بأكملها ♥️. أرسل رسالة للطلب. جميع منتجاتي مصنوعة يدويًا بواسطتي في الإمارات.",
+longDescriptionEn: "20% OFF! SKINFOOD BOX. 10 healthy non chemical soap bars. Share it to your fav person right now 🚀. Handmade Organic. Amazing present or a whole family package ♥️. DM FOR ORDER. All of my products are handmade by me in UAE.",
+category: "هدايا",
+categoryEn: "Gifts",
+mainImage: "images/p41-25.jpg",
+images: ["images/p41-25.jpg",
+    "images/p41-25-1.jpg",
+    "images/p41-25-2.jpg",
+],
+details: [
+"صندوق هدايا 10 صابونات",
+"خصم 20%",
+"صابون عضوي طبيعي",
+"غير كيميائي",
+"هدية للعائلة",
+"صناعة يدوية في الإمارات"
+],
+detailsEn: [
+"Gift box with 10 soap bars",
+"20% discount",
+"Organic natural soap",
+"Chemical-free",
+"Family gift",
+"Handmade in UAE"
+]
+},
+{
+id: "41_p26",
+name: "رذاذ الوجه والجسم بالورد والخزامى",
+nameEn: "Rose & Lavender Face & Body Mist",
+description: "رذاذ منعش للوجه والجسم بماء الورد والخزامى.",
+descriptionEn: "Refreshing face and body mist with rose and lavender water.",
+longDescription: "هذا الرذاذ الخفيف يرطب البشرة ويهدئ الحواس برائحته المهدئة. غني بمضادات الأكسدة النباتية، مستخلص الخزامى والورد يساعد في حماية البشرة وإعادة توازن الجفاف لاستعادة التوهج الطبيعي. ماء الورد يساعد في توازن درجة حموضة البشرة وتهدئتها للحصول على بشرة أكثر إشراقًا. سيشعر بشرتك بالنعومة والخالية من اللمعان والمتجددة. زيت الخزامى الأساسي مهدئ ومريح وممتاز للأعصاب والقلق. يعزز احترام الذات والثقة والأمل والقوة العقلية ويرفع الروح المعنوية. يساعد في علاج الصداع والاكتئاب والتوتر العصبي والضغط العاطفي. يمكن استخدامه كرذاذ للاستيقاظ أو حتى كرذاذ منعش للمكياج لإضفاء مظهر مشرق وندي على البشرة.",
+longDescriptionEn: "This lightweight essence mist hydrates the skin and soothes the senses with a calming scent. Rich in plant antioxidants, Lavender and Rose extract helps protect the skin and rebalance dryness to restore a natural glow. Rosewater will help balance the skin's pH and calm skin for a brighter complexion. Your skin will feel soft, shine-free and refined. Lavender essential oil is calming, relaxing & excellent for nerves & anxiety. Lavender boosts self-esteem, confidence, hope, mental strength and uplifts spirits. It helps treat headaches, depression, nervous tension & emotional stress. To be used as a wake up mist or even as a refreshing makeup spray to give the skin a bright and dewy look.",
+category: "عناية بالبشرة",
+categoryEn: "Skincare",
+mainImage: "images/p41-26.jpg",
+images: ["images/p41-26.jpg",
+    "images/p41-26-1.jpg",
+    "images/p41-26-2.jpg",
+],
+details: [
+"رذاذ وجه وجسم بالورد والخزامى",
+"منعش ومرطب",
+"يبرد البشرة",
+"يهدئ الأعصاب",
+"يوازن درجة الحموضة",
+"مثالي للماكيج"
+],
+detailsEn: [
+"Rose & lavender face & body mist",
+"Refreshing and hydrating",
+"Cools skin",
+"Calms nerves",
+"Balances pH",
+"Perfect for makeup"
+]
+},
+{
+id: "41_p27",
+name: "صابون الفحم النشط",
+nameEn: "Activated Charcoal Soap Bar",
+description: "صابون طبيعي بالفحم النشط لتنقية البشرة.",
+descriptionEn: "Natural soap with activated charcoal for skin purification.",
+longDescription: "الفحم النشط يسحب الشوائب والسموم والزيوت وجزيئات الأوساخ، تاركًا بشرتك منتعشة ونظيفة. الحبيبات الناعمة تعمل كمقشر لطيف، تزيل خلايا الجلد الميتة لبشرة أكثر شبابًا. الفحم يمتص الأوساخ والزيوت للمساعدة في القضاء على الحبوب والرؤوس السوداء وحب الشباب. معروف بأنه مفيد حقًا لأولئك الذين يعانون من الوردية والأكزيما والصدفية أيضًا. صابون الفحم النشط، منظف طبيعي للوجه والجسم. مكونات بسيطة تجعله الأفضل لبشرتك. فقط الأشياء الجيدة: الفحم النشط، زيت الأفوكادو الغني بالفيتامينات، زبدة الشيا المرطبة، زيت الخروع المنظف، زيت الزيتون الغني بفيتامين E، زيت جوز الهند المجدد، وزيت النخيل المسؤول. جميع منتجاتي مصنوعة يدويًا بواسطتي في الإمارات.",
+longDescriptionEn: "Activated Charcoal draws out impurities, toxins, oils and dirt particles, leaving your skin fresh and clean. The fine grains act as a gentle exfoliate, removing dead skin cells for younger looking skin. Charcoal absorbs dirt and oil to help eliminate bumps, blackheads, and acne. Has been known to really help those with rosacea, eczema and psoriasis too. Activated Charcoal Soap Bar, all-natural detoxifying face and body cleanser. Simple ingredients make this the best for your skin. ONLY THE GOOD STUFF: activated charcoal, vitamin-rich avocado oil, moisturising shea butter, cleansing castor oil, vitamin-rich olive oil, restorative coconut oil and responsibly-sourced palm oil. All handmade by me in UAE.",
+category: "صابون",
+categoryEn: "Soap",
+mainImage: "images/p41-27.jpg",
+images: ["images/p41-27.jpg",
+    "images/p41-27-1.jpg",
+    "images/p41-27-2.jpg",
+],
+details: [
+"صابون بالفحم النشط",
+"ينظف بعمق",
+"يزيل السموم",
+"مقشر لطيف",
+"يعالج حب الشباب",
+"مفيد للأكزيما والصدفية"
+],
+detailsEn: [
+"Activated charcoal soap",
+"Deep cleansing",
+"Detoxifying",
+"Gentle exfoliant",
+"Treats acne",
+"Helpful for eczema and psoriasis"
+]
+},
+{
+id: "41_p28",
+name: "لوشن جسم ناعم",
+nameEn: "Fluffy Body Lotion",
+description: "لوشن جسم خفيف ومرطب يمتص بسرعة.",
+descriptionEn: "Light moisturizing body lotion that absorbs quickly.",
+longDescription: "لوشن جسم خفيف جدًا للترطيب. لمن لا يريد لمسة زيتية إضافية على البشرة. لوشن الجسم الذي يمتص بسرعة، يترك بشرتك رطبة ومنتعشة! كما هو الحال دائمًا، مكونات طبيعية بالكامل: زبدة الشيا، زيت اللوز، العسل الخام، فيتامين E، مستخلص نبتة سانت جون، مستخلص كلودبيري، مستخلص البابونج، ماء مقطر، مستحلب طبيعي. ضعه بعد الاستحمام لترطيب البشرة. الميزات الأساسية: بدون أصباغ، يحتوي على مكونات عضوية، إشراق وتغذية فورية للبشرة، يمنح البشرة التغذية اللازمة لتبقى ناعمة وسلسة ومعطرة لساعات طويلة، بدون بارابين.",
+longDescriptionEn: "Super light moisturizing Body Lotion. For those who doesn't want extra oily touch on the skin. Body Lotion which absorbs quickly, leaves your skin moisturized and fresh! As always, all natural ingredients: Shea butter, Almond oil, Raw Honey, Vitamin E, St. John's wort extract, Cloudberry extract, Chamomile extract, Distilled Water, Natural Emulsifier. Apply after a bath/shower to lock in moisture. Basic features: No dyes, contains organic ingredients, instant radiance and nourishment, gives skin necessary nourishment to stay soft and smooth for hours, without parabens.",
+category: "عناية بالجسم",
+categoryEn: "Body Care",
+mainImage: "images/p41-28.jpg",
+images: ["images/p41-28.jpg",
+    "images/p41-28-1.jpg",
+    "images/p41-28-2.jpg",
+],
+details: [
+"لوشن جسم خفيف",
+"يمتص بسرعة",
+"غير دهني",
+"مكونات طبيعية",
+"زبدة الشيا وزيت اللوز",
+"خالٍ من البارابين"
+],
+detailsEn: [
+"Light body lotion",
+"Quick absorption",
+"Non-greasy",
+"Natural ingredients",
+"Shea butter and almond oil",
+"Paraben-free"
+]
+},
+{
+id: "41_p29",
+name: "صابون حريري بشرانق دودة القز",
+nameEn: "Silkworm Cocoon Soap Bar",
+description: "صابون طبيعي كريمي بشرانق دودة القز لتنظيف لطيف.",
+descriptionEn: "Natural creamy soap with silkworm cocoon for gentle cleansing.",
+longDescription: "صابون حريري ناعم، صابون كريمي منزوع بالحرير، مصنوع بزيت جوز الهند البكر وزيت الزيتون، زيوت منقوعة بالأعشاب، زبدة الشيا وشرانق دودة القز لرغوة غنية مرطبة تحمي البشرة عند استخدامه. جميع القطع مصممة لبناء رغوة كريمية سميكة بشكل خاص لتنظيف شامل للوجه والجسم لا يترك بشرتك أو وجهك جافين. استخدم هذا الصابون لبناء رغوة في يديك أو مباشرة على وجهك. هذه القطعة متوازنة تمامًا لبشرتك مع درجة حموضة 5.5. لماذا صابوننا ؟ يتعلق الأمر كله بـ 'الجمال النظيف' الذي يسمح لك بالتسوق براحة البال مع العلم أن منتجاتي مصممة دون أي مواد كيميائية ضارة أو مكونات يمكن أن تؤثر على صحتك ورفاهيتك. حيثما أمكن، تم الحصول على مكونات عضوية وكوشير ونباتية ومعتمدة من Eco-Cert/Cosmos.",
+longDescriptionEn: "Homemade creamy Silk based Soap made with virgin coconut oil and olive oil, botanical infused oils, shea butter and silkworm cocoon for a rich moisturizing lather that protects skin when using it. All bars are formulated to build a particularly thick, creamy lather for a thorough face and body cleaning that won't leave your skin or face dry. Use this soap to build a lather in your hands or directly against your face. This bar is perfectly balanced for your skin with a pH of 5.5. Why Soapretty Bars? It is all about 'clean beauty' which allows you to shop with peace of mind knowing my products are formulated without any harmful chemicals or ingredients that could affect your health. Where possible, only organic, kosher, vegan and eco-cert/cosmos approved ingredients have been sourced.",
+category: "صابون",
+categoryEn: "Soap",
+mainImage: "images/p41-29.jpg",
+images: ["images/p41-29.jpg",
+    "images/p41-29-1.jpg",
+    "images/p41-29-2.jpg",
+],
+details: [
+"صابون كريمي بشرانق دودة القز",
+"رغوة غنية",
+"ينظف بلطف",
+"لا يجفف البشرة",
+"درجة حموضة 5.5",
+"جمال نظيف"
+],
+detailsEn: [
+"Creamy soap with silkworm cocoon",
+"Rich lather",
+"Gentle cleansing",
+"Doesn't dry skin",
+"pH 5.5",
+"Clean beauty"
+]
+},
+{
+id: "41_p30",
+name: "شمع بجوز الهند الطبيعي",
+nameEn: "Natural Hand-poured Coconut Shell Candle",
+description: "شمع طبيعي بوعاء جوز الهند مع فتيل خشبي متفرقع.",
+descriptionEn: "Natural candle in coconut shell with crackling wooden wick.",
+longDescription: "كل شمعة عطرية تستخدم فتيل شمع خشبي طبيعي متفرقع يقلد الصوت المهدئ للمدفأة، ويملأ الغرفة بمزيج متناغم ومهدئ من الرائحة والصوت. تأتي شموع وعاء جوز الهند معروض بشكل جميل في كيس هدايا عضوي طبيعي. هي علامة تجارية إماراتية معروفة تعمل مع المجتمعات الريفية لإنتاج منتجات مستدامة وصديقة للبيئة وهدايا. نريد إحداث فرق، ولهذا فإن منتجاتنا أخلاقية المصدر، خالية من البلاستيك وصديقة للبيئة. تعليمات الاستخدام: لا تترك الشمعة دون مراقبة أثناء الاحتراق، ضعها في حامل شموع مناسب، أبعدها عن التيارات الهوائية والاهتزازات، لا تحرق الشمعة أبدًا بالقرب من الأشياء القابلة للاشتعال.",
+longDescriptionEn: "Each of Soapretty aromatic candles uses a natural crackling wooden candle wick which imitates the relaxing sound of a fireplace, filling the room with a harmonious and soothing blend of smell and sound. Soapretty coconut bowl candles come beautifully presented in an organic, natural gift bag. Soapretty is a renowned UAE brand that works with rural communities to produce sustainable, eco-friendly products and gifts. We want to make a difference, and that's why our products are ethically-sourced, plastic-free and vegan-friendly. Suggested Use: Do not leave your candle unattended, place in suitable holder, keep away from drafts, never burn near flammable objects.",
+category: "شموع",
+categoryEn: "Candles",
+mainImage: "images/p41-30.jpg",
+images: ["images/p41-30.jpg",
+    "images/p41-30-1.jpg",
+    "images/p41-30-2.jpg",
+],
+details: [
+"شمع بوعاء جوز هند طبيعي",
+"فتيل خشبي متفرقع",
+"صوت مهدئ",
+"هدية عضوية",
+"مستدام وخالٍ من البلاستيك",
+"صناعة يدوية في الإمارات"
+],
+detailsEn: [
+"Candle in natural coconut shell",
+"Crackling wooden wick",
+"Soothing sound",
+"Organic gift",
+"Sustainable and plastic-free",
+"Handmade in UAE"
+]
+},
+{
+id: "41_p31",
+name: "زبدة جسم مخفوقة",
+nameEn: "Whipped Body Butter",
+description: "زبدة جسم طبيعية مخفوقة لترطيب عميق.",
+descriptionEn: "Natural whipped body butter for deep moisturizing.",
+longDescription: "زبدة الجسم هذه لها فوائد استثنائية في تنعيم وترطيب البشرة. لقد اخترت بعناية جميع الزبدة والزيوت الطبيعية المصممة لتنعيم وعلاج البشرة الجافة. زبدة الجسم مخفوقة بإتقان، تاركة قوامًا كثيفًا وناعمًا يذوب تلقائيًا عند ملامسته للبشرة. مكوني الرئيسي هو زبدة الشيا لأنني أحب ما تفعله بالبشرة، ما يقرب من ثلثي وصفتي تحتوي على زبدة الشيا، لقد خفقتها مع زبدة المانجو وزيت بذور العنب وزيت الجوجوبا وزيت الأفوكادو لتنعيم الملمس حيث أن زبدة الشيا في شكلها الطبيعي يمكن أن يكون من الصعب دمجها في الجلد. لقد فعلت كل ما بوسعي لمنع زبدة الجسم الدهنية أو اللزجة. الفوائد: ترطب وترطب البشرة الجافة، ترطيب نهائي، فوائد تنعيم مذهلة، بشرة أكثر صحة، يعالج البشرة الجافة في الجسم خاصة المرفقين والقدمين ومنطقة الأظافر. المكونات: زبدة الشيا الخام من غانا، زبدة المانجو، زبدة الكاكاو، زيت جوز الهند، زيت بذور العنب، زيت الأفوكادو، زيت الجوجوبا، زيت اللوز الحلو، مسحوق الأروروت، فيتامين E.",
+longDescriptionEn: "This Body Butter has outstanding softening and moisturising benefits for the skin. I have carefully picked all natural butters and oils designed to soften, heal and tackle dry skin. Soapretty body butters are whipped to perfection, leaving it with a consistency that is thick and smooth melting automatically when in contact with skin. My main ingredient is Shea Butter as I love what it does to the skin, almost 2/3 of my recipe contains Shea Butter, I've whipped it up with mango butter, grapeseed oil, jojoba oil and avocado oil to smoothen out the texture. I've done everything I can to prevent a greasy or sticky body butter. Benefits: Hydrates and moisturises dry skin, ultimate moisture, amazing softening benefits, healthier skin, tackles dry skin on the body, especially elbows, feet and cuticles. Ingredients: RAW Ghanaian Shea Butter, Mango Butter, Cocoa Butter, Coconut Oil, Grapeseed Oil, Avocado Oil, Jojoba Oil, Sweet Almond Oil, Arrowroot Powder, Vitamin E.",
+category: "عناية بالجسم",
+categoryEn: "Body Care",
+mainImage: "images/p41-31.jpg",
+images: ["images/p41-31.jpg",
+    "images/p41-31-1.jpg",
+    "images/p41-31-2.jpg",
+],
+details: [
+"زبدة جسم مخفوقة",
+"ترطيب عميق",
+"زبدة الشيا والمانجو",
+"غير دهنية",
+"تغذي البشرة الجافة",
+"مثالية للمرفقين والقدمين"
+],
+detailsEn: [
+"Whipped body butter",
+"Deep moisturizing",
+"Shea and mango butter",
+"Non-greasy",
+"Nourishes dry skin",
+"Perfect for elbows and feet"
+]
+},
+{
+id: "41_p32",
+name: "مقشر جسم باللافندر",
+nameEn: "Lavender Body Polish",
+description: "مقشر سكر طبيعي باللافندر لتقشير وترطيب البشرة.",
+descriptionEn: "Natural sugar scrub with lavender to exfoliate and moisturize skin.",
+longDescription: "هل ترغب في الحصول على بشرة ناعمة ورطبة جيدًا؟ مقشرات السكر هي أفضل طريقة لترطيب بشرتك أثناء تقشير جميع خلايا الجلد الميتة. شم العطر يمكن أن يثير ذاكرة ثمينة ويثير أفكارًا ممتعة، ولهذا السبب يعتبر اللافندر دائمًا نظيفًا ومنعشًا ومهدئًا. عند الخروج من الزجاجة، تفوح منه رائحة الخزامى الحقيقية وينتهي بأرجوان متفتح، سيكون دائمًا خيارًا مثاليًا لإضفاء رائحة رائعة على بشرتك. بعد الاستحمام، ضع المقشر ثم اشطفه أثناء الاستحمام. الزيوت الطبيعية ستتركك تشعر بالترطيب بحيث لا حاجة للوشن. مصنوع من مكونات فاخرة، مقشر الجسم هذا مثالي لتقشير البشرة الجافة والباهتة بلطف. يرطب بشرتك بشكل جميل دون أن يتركك تشعر بالدهون أو يسد المسام. الإضافة المثالية لروتين الاستحمام الخاص بك لتجعلك تبدو وتشعر بأفضل حال. خالٍ من البارابين والصويا والفثالات والغلوتين والكبريتات، خالٍ من القسوة، نباتي. نظرًا للطبيعة اليدوية لمنتجاتي، لا يوجد قطعتان متطابقتان. لا تعرض للحرارة المباشرة.",
+longDescriptionEn: "Would you like to have smooth and well-hydrated skin? Soapretty sugar scrubs are the best way to moisturize your skin while exfoliating all the dead skin cells. Smelling a fragrance can trigger a precious memory and trigger pleasant thoughts, which is why Lavender is always clean, fresh and calming. Out of the bottle, it smells like real lavender and ends with blooming lilac, it will always be a perfect choice to give your skin an exquisite scent. After showering apply the scrub then rinse it off while in the shower. Natural oils will leave you feeling moisturized that there's no need for lotion. Made with premium ingredients this sugar body scrub is perfect for gently exfoliating dull and dry skin. Moisturizing your skin beautifully without leaving you feeling greasy or clogging your pores. Paraben Free, Soy Free, Phthalate Free, Gluten Free, Sulfate Free, Cruelty Free, Vegan. Due to handmade nature, no two are identical. Do not expose to direct heat.",
+category: "عناية بالجسم",
+categoryEn: "Body Care",
+mainImage: "images/p41-32.jpg",
+images: ["images/p41-32.jpg",
+    "images/p41-32-1.jpg",
+],
+details: [
+"مقشر جسم باللافندر",
+"مقشر سكر طبيعي",
+"يرطب وينعم",
+"يزيل خلايا الجلد الميت",
+"رائحة مهدئة",
+"نباتي وخالٍ من المواد الضارة"
+],
+detailsEn: [
+"Lavender body polish",
+"Natural sugar scrub",
+"Moisturizes and softens",
+"Removes dead skin cells",
+"Calming scent",
+"Vegan and free from harmful chemicals"
+]
+},
+{
+id: "41_p33",
+name: "مقشر جسم بحليب جوز الهند",
+nameEn: "Coconut Milk Body Polish",
+description: "مقشر سكر طبيعي بحليب جوز الهند لترطيب وتقشير البشرة.",
+descriptionEn: "Natural sugar scrub with coconut milk to exfoliate and moisturize.",
+longDescription: "خليط السكر وزبدة الشيا هذا ينعم البشرة فورًا ويقشرها لتحصل على بشرة ناعمة بشكل لا يصدق. ستحب بشرتك الطريقة التي يذوب بها المقشر في الجلد، مقشرًا بلطف الجلد الميت ويرطبك، تاركًا شعورًا ناعمًا كالأطفال. أستخدم حليب جوز الهند الحقيقي في المقشر وحليب جوز الهند مليء بفيتامين C والنحاس، مما يساعد في الحفاظ على مرونة وليونة البشرة مع تحسين مظهرها وصحتها. كما يحارب الجفاف والحكة والتورم والاحمرار، ويهدئ البشرة، ويعزز بشرة صحية متوهجة. خالٍ من البارابين والصويا والفثالات والغلوتين والكبريتات، خالٍ من القسوة، نباتي. نظرًا للطبيعة اليدوية لمنتجاتي، لا يوجد قطعتان متطابقتان. يرجى السماح باختلافات في اللون مقارنة بصور المنتج. لا تعرض للحرارة المباشرة، قد تذوب المنتجات. مدة الصلاحية: 10 أشهر إلى سنة من تاريخ الشراء.",
+longDescriptionEn: "This softening Sugar-Shea butter mix instantly exfoliates for feel-to-believe, silky-smooth skin. Your Skin will love the way Soapretty scrub melts into the skin gently exfoliating dead skin away and moisturizing you, leaving a baby soft feel. I use real Coconut Milk in Soapretty Scrub, and Coconut milk is packed with vitamin C and copper, which help to maintain the elasticity and flexibility of the skin while improving its appearance and health. It also combats dryness, itchiness, swelling, and redness, soothes the skin, and promotes healthy, glowing skin. Paraben Free, Soy Free, Phthalate Free, Gluten Free, Sulfate Free, Cruelty Free, Vegan. Due to handmade nature, no two are identical. Please allow for color variations. Do not expose to direct heat, products may melt. Shelf life: 10 months to a year.",
+category: "عناية بالجسم",
+categoryEn: "Body Care",
+mainImage: "images/p41-33.jpg",
+images: ["images/p41-33.jpg",
+    "images/p41-33-1.jpg",
+],
+details: [
+"مقشر جسم بحليب جوز الهند",
+"مقشر سكر طبيعي",
+"ينعم البشرة",
+"يغذي ويرطب",
+"يخفف الجفاف والاحمرار",
+"نباتي وخالٍ من المواد الضارة"
+],
+detailsEn: [
+"Coconut milk body polish",
+"Natural sugar scrub",
+"Softens skin",
+"Nourishes and moisturizes",
+"Soothes dryness and redness",
+"Vegan and free from harmful chemicals"
+]
+}
+                ]
+            },
+            {
+                id:42,
+                name:"سويت بليند",
+                nameEn:"Sweet Blend",
+                emirate:"أبوظبي",
+                description:"كيكات وحلويات فاخرة",
+                descriptionEn:"Luxury Cakes & Desserts",
+                longDescription:"كيكات وحلويات فاخرة في أبوظبي، تُحضّر طازجة يوميًا حسب الطلب. للطلب عبر الواتساب أو الخاص.",
+                longDescriptionEn:"Luxury cakes and desserts in Abu Dhabi, freshly prepared daily upon order. Order via WhatsApp or DM.",
+                image:"images/p42.jpg",
+                phone:"971547598200",
+                whatsapp:"971547598200",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "sweeetblend.ae" },
+                    { type: "facebook", value: "Sweetblend2" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"حلويات",
+                categoryEn:"Sweets",
+                products:[]
+            },
+            {
+                id: 43,
+                name: "تاتش أوف تيست",
+                nameEn: "Touch of Taste",
+                emirate: "أبوظبي",
+                description: "مشروع طعام منزلي مرخص في الإمارات",
+                descriptionEn: "A licensed home-based food project in the UAE",
+                longDescription: "تجربة طهي منزلي فريدة بنكهة مميزة، حضرناها لكم بشغف. نسهل عليكم عملية الشراء من خلال خدمة الاستلام المباشر. لتذوق أفضل المأكولات، أرسلوا لنا طلبكم عبر الرسائل المباشرة.",
+                longDescriptionEn: "A unique home-cooked experience with a distinctive flavor, prepared for you with passion. We make your purchase easy with our direct pickup service. To savor the best dishes, send us your order via Direct Message.",
+                image: "images/p43.jpg",
+                phone: "",
+                whatsapp: "+971507738137",
+                email: "",
+                sell_points: [
+                    { type: "instagram", value: "touchof.taste" }
+                  ],
+                adra_license: "نعم",
+                coverage: "جميع إمارات الدولة",
+                badges: ["جديد"],
+                badgesEn: ["NEW"],
+                category: "أطعمة ومشروبات",
+                categoryEn: "Food & Beverages",
+                products: []
+            },
+            {
+                id:44,
+                name:"خيط دفا",
+                nameEn:"Khait Dafa",
+                emirate:"الفجيرة",
+                description:"مشغولات يدوية دافئة",
+                descriptionEn:"Warm Handmade Crafts",
+                longDescription:"مشغولات يدوية أنيقة تُصنع بقلب. حيث يبدأ الدفء. موجودين في الإمارات. للطلب عبر الخاص.",
+                longDescriptionEn:"Handmade with elegance & heart. Where warmth begins. Based in the UAE. Order via DM.",
+                image:"images/p44.jpg",
+                phone:"",
+                whatsapp:"+971566602772",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "khait_dafa" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:["جديد"],
+                badgesEn:["جديد"],
+                category:"يدويات",
+                categoryEn:"Handmade",
+                products:[]
+            },
+            {
+                id:45,
+                name:"ميدياس",
+                nameEn:"Meidias",
+                emirate:"",
+                description:"أكواب، أدوات مائدة، ألعاب رقمية",
+                descriptionEn:"Cups, Tableware, Digital Games",
+                longDescription:"نبيع أكواب، أدوات مائدة، وألعاب رقمية. نوصل لجميع مناطق الإمارات. المشروع مرخص من الدائرة الاقتصادية. للطلب عبر الموقع الإلكتروني أو التيك توك.",
+                longDescriptionEn:"We sell cups, tableware, and digital games. Delivery to all areas of the UAE. The project is licensed by the Economic Department. Order via our website or TikTok.",
+                image:"images/p45.jpg",
+                phone:"",
+                whatsapp:"",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "meidias.ae" },
+                    { type: "tiktok", value: "meidias.ae" },
+                    { type: "website", value: "https://www.meidias.ae/" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"هدايا",
+                categoryEn:"Gifts",
+                products:[
+                    {
+id: "45_p1",
+name: "علبة معدنية مربعة - أليس في بلاد العجائب",
+nameEn: "Alice in Wonderland Square Metal Tin Box",
+description: "علبة تخزين معدنية مربعة بتصميم أليس في بلاد العجائب.",
+descriptionEn: "Square metal storage tin box featuring an Alice in Wonderland design.",
+longDescription: "علبة معدنية مربعة الشكل، مثالية لتخزين الهدايا أو الحلويات أو الأغراض الصغيرة. تتميز برسومات جميلة مستوحاة من قصة أليس في بلاد العجائب، مما يجعلها قطعة ديكور جميلة وهدية مميزة.",
+longDescriptionEn: "A square metal tin box, perfect for storing gifts, sweets, or small items. It features beautiful illustrations inspired by Alice in Wonderland, making it a lovely decorative piece and a special gift.",
+category: "علب تخزين",
+categoryEn: "Storage Boxes",
+mainImage: "images/p45-1-1.jpg",
+images: ["images/p45-1-1.jpg",
+    "images/p45-1-2.jpg",
+],
+details: [
+"معدني متين",
+"تصميم مربع أنيق",
+"رسومات أليس في بلاد العجائب",
+"متعدد الاستخدامات"
+],
+detailsEn: [
+"Durable metal",
+"Elegant square design",
+"Alice in Wonderland artwork",
+"Multi-purpose"
+]
+},
+{
+id: "45_p2",
+name: "صينية تقديم معدنية - أليس في بلاد العجائب",
+nameEn: "Alice in Wonderland Metal Serving Tray",
+description: "صينية تقديم معدنية مستطيلة برسومات أليس في بلاد العجائب.",
+descriptionEn: "Rectangular metal serving tray with Alice in Wonderland illustrations.",
+longDescription: "صينية تقديم عملية وأنيقة، مصنوعة من المعدن المتين. تتميز بنقوش جميلة مستوحاة من قصة أليس في بلاد العجائب، مثالية لتقديم الشاي أو القهوة أو الحلويات في المناسبات.",
+longDescriptionEn: "A practical and elegant serving tray, made of durable metal. It features beautiful engravings inspired by Alice in Wonderland, perfect for serving tea, coffee, or desserts on special occasions.",
+category: "أواني تقديم",
+categoryEn: "Serving Ware",
+mainImage: "images/p45-2-1.jpg",
+images: ["images/p45-2-1.jpg",
+    "images/p45-2-2.jpg",
+    "images/p45-2-3.jpg"
+],
+details: [
+"معدني متين",
+"صينية تقديم",
+"تصميم أليس في بلاد العجائب",
+"مناسبة للمناسبات"
+],
+detailsEn: [
+"Durable metal",
+"Serving tray",
+"Alice in Wonderland design",
+"Perfect for occasions"
+]
+},
+{
+id: "45_p3",
+name: "دلو فشار معدني دائري - أليس في بلاد العجائب",
+nameEn: "Alice in Wonderland Round Metal Popcorn Bucket",
+description: "دلو فشار معدني دائري بتصميم أليس في بلاد العجائب.",
+descriptionEn: "Round metal popcorn bucket with an Alice in Wonderland design.",
+longDescription: "دلو فشار معدني دائري، مثالي لتقديم الفشار في السينما المنزلية أو الحفلات. يتميز برسومات ملونة وجميلة من عالم أليس في بلاد العجائب، ويمكن استخدامه أيضاً كعلبة تخزين أو ديكور.",
+longDescriptionEn: "A round metal popcorn bucket, perfect for serving popcorn during movie nights or parties. It features colorful and beautiful artwork from the world of Alice in Wonderland, and can also be used as a storage container or decorative piece.",
+category: "أواني تقديم",
+categoryEn: "Serving Ware",
+mainImage: "images/p45-3-1.jpg",
+images: ["images/p45-3-1.jpg",
+    "images/p45-3-2.jpg"
+],
+details: [
+"معدني دائري",
+"للفشار أو التخزين",
+"رسومات أليس",
+"مثالي للحفلات"
+],
+detailsEn: [
+"Round metal",
+"For popcorn or storage",
+"Alice in Wonderland artwork",
+"Perfect for parties"
+]
+},
+{
+id: "45_p4",
+name: "فنجان شاي أسود مكدس - أليس في بلاد العجائب",
+nameEn: "Alice in Wonderland Stacked Black Teacup",
+description: "فنجان شاي أسود بتصميم مكدس مستوحى من أليس.",
+descriptionEn: "Black stacked teacup inspired by Alice in Wonderland.",
+longDescription: "فنجان شاي أسود أنيق بتصميم فريد يشبه الأكواب المكدسة، مستوحى من قصة أليس في بلاد العجائب. قطعة مميزة لعشاق القصة، تضيف لمسة من السحر على طاولة الشاي.",
+longDescriptionEn: "An elegant black teacup with a unique stacked design, inspired by Alice in Wonderland. A distinctive piece for story lovers, adding a touch of magic to the tea table.",
+category: "أكواب وفناجين",
+categoryEn: "Cups & Mugs",
+mainImage: "images/p45-4-1.jpg",
+images: ["images/p45-4-1.jpg",
+    "images/p45-4-2.jpg"
+],
+details: [
+"أسود",
+"تصميم مكدس فريد",
+"مستوحى من أليس",
+"قطعة مميزة"
+],
+detailsEn: [
+"Black",
+"Unique stacked design",
+"Alice in Wonderland inspired",
+"Distinctive piece"
+]
+},
+{
+id: "45_p5",
+name: "فنجان شاي أبيض مكدس - أليس في بلاد العجائب",
+nameEn: "Alice in Wonderland Stacked White Teacup",
+description: "فنجان شاي أبيض بتصميم مكدس مستوحى من أليس.",
+descriptionEn: "White stacked teacup inspired by Alice in Wonderland.",
+longDescription: "فنجان شاي أبيض أنيق بتصميم فريد يشبه الأكواب المكدسة، مستوحى من قصة أليس في بلاد العجائب. قطعة راقية تضفي لمسة كلاسيكية على طاولة الشاي.",
+longDescriptionEn: "An elegant white teacup with a unique stacked design, inspired by Alice in Wonderland. A classy piece that adds a classic touch to the tea table.",
+category: "أكواب وفناجين",
+categoryEn: "Cups & Mugs",
+mainImage: "images/p45-5-1.jpg",
+images: ["images/p45-5-1.jpg",
+    "images/p45-5-2.jpg"
+],
+details: [
+"أبيض",
+"تصميم مكدس فريد",
+"مستوحى من أليس",
+"قطعة راقية"
+],
+detailsEn: [
+"White",
+"Unique stacked design",
+"Alice in Wonderland inspired",
+"Classy piece"
+]
+},
+{
+id: "45_p6",
+name: "طقم إبريق شاي وفنجان وصحن - أليس في بلاد العجائب",
+nameEn: "Alice in Wonderland Teapot, Cup & Saucer Set",
+description: "طقم إبريق شاي مع فنجان وصحن بتصميم أليس في بلاد العجائب.",
+descriptionEn: "Teapot set with cup and saucer featuring an Alice in Wonderland design.",
+longDescription: "طقم أنيق يتكون من إبريق شاي وفنجان مع صحنه، جميعها تحمل رسومات جميلة من عالم أليس في بلاد العجائب. هدية مثالية لعشاق القصة، تضفي أجواء ساحرة على حفلات الشاي.",
+longDescriptionEn: "An elegant set consisting of a teapot, a cup, and a saucer, all featuring beautiful illustrations from the world of Alice in Wonderland. A perfect gift for story lovers, adding a magical atmosphere to tea parties.",
+category: "أطقم شاي",
+categoryEn: "Tea Sets",
+mainImage: "images/p45-6-1.jpg",
+images: ["images/p45-6-1.jpg",
+    "images/p45-6-2.jpg"
+],
+details: [
+"إبريق شاي",
+"فنجان وصحن",
+"رسومات أليس",
+"طقم كامل"
+],
+detailsEn: [
+"Teapot",
+"Cup and saucer",
+"Alice in Wonderland artwork",
+"Complete set"
+]
+},
+{
+id: "45_p7",
+name: "كوب خبز القطط - 300 مل",
+nameEn: "Bread Kitten Mug 300ml",
+description: "كوب خزفي بتصميم قطط مع الخبز، سعة 300 مل.",
+descriptionEn: "Ceramic mug with a kitten and bread design, 300ml capacity.",
+longDescription: "كوب خزفي لطيف بتصميم قطط صغيرة ورغيف خبز، سعة 300 مل. مثالي لمحبي القطط والتصاميم المضحكة، يضفي بهجة على أوقات الشرب.",
+longDescriptionEn: "A cute ceramic mug featuring a small kitten and a loaf of bread, with a 300ml capacity. Perfect for cat lovers and fans of playful designs, bringing joy to drinking moments.",
+category: "أكواب وفناجين",
+categoryEn: "Cups & Mugs",
+mainImage: "images/p45-7-1.jpg",
+images: ["images/p45-7-1.jpg",
+    "images/p45-7-2.jpg"
+],
+details: [
+"خزفي",
+"سعة 300 مل",
+"تصميم قطط مع خبز",
+"لطيف ومضحك"
+],
+detailsEn: [
+"Ceramic",
+"300ml capacity",
+"Kitten and bread design",
+"Cute and funny"
+]
+},
+{
+id: "45_p8",
+name: "كوب الدب السمين الخزفي - 380 مل",
+nameEn: "Chubby Bear Ceramic Mug – 380ml",
+description: "كوب خزفي بتصميم دب سمين لطيف، سعة 380 مل.",
+descriptionEn: "Ceramic mug with a cute chubby bear design, 380ml capacity.",
+longDescription: "كوب خزفي بتصميم دب صغير سمين ولطيف، سعة كبيرة 380 مل. مثالي للمشروبات الساخنة أو الباردة بكمية وفيرة، ويضفي لمسة من المرح على الاستخدام اليومي.",
+longDescriptionEn: "A ceramic mug with a cute, chubby little bear design, with a large 380ml capacity. Perfect for hot or cold drinks in generous quantity, adding a touch of fun to daily use.",
+category: "أكواب وفناجين",
+categoryEn: "Cups & Mugs",
+mainImage: "images/p45-8-1.jpg",
+images: ["images/p45-8-1.jpg",
+    "images/p45-8-2.jpg"
+],
+details: [
+"خزفي",
+"سعة 380 مل",
+"تصميم دب سمين",
+"لطيف وعملي"
+],
+detailsEn: [
+"Ceramic",
+"380ml capacity",
+"Chubby bear design",
+"Cute and practical"
+]
+},
+{
+id: "45_p9",
+name: "كوب البطة الصغيرة - 300 مل",
+nameEn: "Duckling Mug 300ml",
+description: "كوب خزفي بتصميم بطة صغيرة لطيفة، سعة 300 مل.",
+descriptionEn: "Ceramic mug with a cute duckling design, 300ml capacity.",
+longDescription: "كوب خزفي بتصميم بطة صغيرة لطيفة باللون الأصفر، سعة 300 مل. يضفي أجواء من المرح والبهجة على أوقات الشرب، هدية لطيفة للأطفال والكبار.",
+longDescriptionEn: "A ceramic mug with a cute yellow duckling design, 300ml capacity. Adds a fun and joyful atmosphere to drinking moments, a lovely gift for kids and adults alike.",
+category: "أكواب وفناجين",
+categoryEn: "Cups & Mugs",
+mainImage: "images/p45-9-1.jpg",
+images: ["images/p45-9-1.jpg",
+    "images/p45-9-2.jpg"
+],
+details: [
+"خزفي",
+"سعة 300 مل",
+"تصميم بطة صفراء",
+"لطيف ومبهج"
+],
+detailsEn: [
+"Ceramic",
+"300ml capacity",
+"Yellow duckling design",
+"Cute and cheerful"
+]
+},
+{
+id: "45_p10",
+name: "كوب بطة الصباح - 380 مل",
+nameEn: "Morning Duck Mug- 380ml",
+description: "كوب خزفي بتصميم بطة الصباح، سعة 380 مل.",
+descriptionEn: "Ceramic mug with a morning duck design, 380ml capacity.",
+longDescription: "كوب خزفي بتصميم بطة لطيفة ترمز إلى الصباح والانتعاش، سعة كبيرة 380 مل. يضفي أجواء من التفاؤل والنشاط على بداية يومك.",
+longDescriptionEn: "A ceramic mug with a cute duck design symbolizing morning and freshness, with a large 380ml capacity. Adds an optimistic and energetic atmosphere to the start of your day.",
+category: "أكواب وفناجين",
+categoryEn: "Cups & Mugs",
+mainImage: "images/p45-10-1.jpg",
+images: ["images/p45-10-1.jpg",
+    "images/p45-10-2.jpg",
+    "images/p45-10-3.jpg"
+],
+details: [
+"خزفي",
+"سعة 380 مل",
+"تصميم بطة الصباح",
+"منعش ومبهج"
+],
+detailsEn: [
+"Ceramic",
+"380ml capacity",
+"Morning duck design",
+"Refreshing and cheerful"
+]
+},
+{
+id: "45_p11",
+name: "ملصق الشيخ محمد بن زايد",
+nameEn: "Sheikh Mohamed bin Zayed (MBZ) Sticker",
+description: "ملصق يحمل صورة الشيخ محمد بن زايد آل نهيان.",
+descriptionEn: "Sticker featuring an image of Sheikh Mohamed bin Zayed Al Nahyan.",
+longDescription: "ملصق عالي الجودة يحمل صورة صاحب السمو الشيخ محمد بن زايد آل نهيان، رئيس دولة الإمارات العربية المتحدة. مناسب للتزيين على اللابتوبات أو الهواتف أو الكراسات، يعبر عن الفخر والولاء.",
+longDescriptionEn: "A high-quality sticker featuring an image of His Highness Sheikh Mohamed bin Zayed Al Nahyan, President of the United Arab Emirates. Suitable for decorating laptops, phones, or notebooks, expressing pride and loyalty.",
+category: "إكسسوارات",
+categoryEn: "Accessories",
+mainImage: "images/p45-11-1.jpg",
+images: ["images/p45-11-1.jpg",
+    "images/p45-11-2.jpg"
+],
+details: [
+"ملصق جودة عالية",
+"صورة الشيخ محمد بن زايد",
+"للتزيين",
+"يعبر عن الفخر"
+],
+detailsEn: [
+"High-quality sticker",
+"Image of Sheikh Mohamed bin Zayed",
+"For decoration",
+"Expresses pride"
+]
+},
+{
+id: "45_p12",
+name: "طبق",
+nameEn: "Plate",
+description: "طبق بتصميم أنيق متعدد الاستخدامات.",
+descriptionEn: "Elegant multi-purpose plate.",
+longDescription: "طبق أنيق وعملي، مناسب لتقديم الأطعمة المختلفة أو كقطعة ديكور. مصنوع من مواد عالية الجودة، يضفي لمسة جمالية على سفرة الطعام.",
+longDescriptionEn: "An elegant and practical plate, suitable for serving various foods or as a decorative piece. Made of high-quality materials, adding an aesthetic touch to the dining table.",
+category: "أواني طعام",
+categoryEn: "Dinnerware",
+mainImage: "images/p45-12-1.jpg",
+images: ["images/p45-12-1.jpg",
+    "images/p45-12-2.jpg",
+    "images/p45-12-3.jpg"
+],
+details: [
+"طبق أنيق",
+"متعدد الاستخدامات",
+"جودة عالية",
+"قطعة ديكور"
+],
+detailsEn: [
+"Elegant plate",
+"Multi-purpose",
+"High quality",
+"Decorative piece"
+]
+},
+{
+id: "45_p13",
+name: "طقم أطباق الأمير الصغير - 4 قطع",
+nameEn: "The Little Prince 4PCS Dinnerware Set",
+description: "طقم أطباق من 4 قطع بتصميم الأمير الصغير.",
+descriptionEn: "4-piece dinnerware set featuring The Little Prince design.",
+longDescription: "طقم أطباق أنيق مكون من 4 قطع، كل قطعة تحمل رسومات جميلة مستوحاة من قصة الأمير الصغير. طقم متكامل مثالي للأطفال والكبار، يضفي أجواء من الحنين والجمال على أوقات الطعام.",
+longDescriptionEn: "An elegant 4-piece dinnerware set, each piece featuring beautiful illustrations inspired by The Little Prince story. A complete set perfect for children and adults, adding a nostalgic and beautiful atmosphere to meal times.",
+category: "أواني طعام",
+categoryEn: "Dinnerware",
+mainImage: "images/p45-13-1.jpg",
+images: ["images/p45-13-1.jpg",
+    "images/p45-13-2.jpg",
+    "images/p45-13-3.jpg",
+    "images/p45-13-4.jpg"
+],
+details: [
+"طقم 4 قطع",
+"رسومات الأمير الصغير",
+"أطباق متكاملة",
+"مناسب للكبار والأطفال"
+],
+detailsEn: [
+"4-piece set",
+"The Little Prince illustrations",
+"Complete dinnerware",
+"Suitable for adults and children"
+]
+},
+{
+id: "45_p14",
+name: "طقم إبريق شاي - الأمير الصغير",
+nameEn: "The Little Prince Teapot Set",
+description: "طقم إبريق شاي بتصميم الأمير الصغير.",
+descriptionEn: "Teapot set featuring The Little Prince design.",
+longDescription: "طقم إبريق شاي أنيق يحمل رسومات جميلة من قصة الأمير الصغير. قطعة فنية رائعة لعشاق القصة، تضيف لمسة سحرية على طاولة الشاي.",
+longDescriptionEn: "An elegant teapot set featuring beautiful illustrations from The Little Prince story. A wonderful artistic piece for story lovers, adding a magical touch to the tea table.",
+category: "أطقم شاي",
+categoryEn: "Tea Sets",
+mainImage: "images/p45-14-1.jpg",
+images: ["images/p45-14-1.jpg"],
+details: [
+"إبريق شاي",
+"رسومات الأمير الصغير",
+"قطعة فنية",
+"لعشاق القصة"
+],
+detailsEn: [
+"Teapot",
+"The Little Prince illustrations",
+"Artistic piece",
+"For story lovers"
+]
+},
+{
+id: "45_p15",
+name: "طقم كؤوس توتورو - 4 قطع",
+nameEn: "Totoro Ceramic Cup (4pcs per set) 100ml",
+description: "طقم من 4 كؤوس خزفية صغيرة بتصميم توتورو، سعة 100 مل لكل كوب.",
+descriptionEn: "Set of 4 small ceramic cups with Totoro design, 100ml each.",
+longDescription: "طقم رائع من 4 كؤوس خزفية صغيرة، كل كوب يحمل رسومات لطيفة لشخصية توتورو الشهيرة. سعة كل كوب 100 مل، مثالية للشاي أو القهوة التركية، هدية مثالية لمحبي أفلام الاستوديو جيبلي.",
+longDescriptionEn: "A wonderful set of 4 small ceramic cups, each featuring cute illustrations of the famous Totoro character. Each cup has a 100ml capacity, perfect for tea or Turkish coffee, an ideal gift for Studio Ghibli fans.",
+category: "أكواب وفناجين",
+categoryEn: "Cups & Mugs",
+mainImage: "images/p45-15-1.jpg",
+images: ["images/p45-15-1.jpg",
+    "images/p45-15-2.jpg",
+    "images/p45-15-3.jpg",
+],
+details: [
+"طقم 4 كؤوس",
+"خزفي",
+"سعة 100 مل لكل كوب",
+"تصميم توتورو",
+"لعشاق أفلام جيبلي"
+],
+detailsEn: [
+"Set of 4 cups",
+"Ceramic",
+"100ml each",
+"Totoro design",
+"For Studio Ghibli fans"
+]
+}
+                ]
+            },
+            {
+                id:46,
+                name:"كالي",
+                nameEn:"Caly",
+                emirate:"",
+                description:"كندورة، أقمشة",
+                descriptionEn:"Kandora, Fabrics",
+                longDescription:"بيع كندورات وأقمشة وتصاميم، قطع محدودة. مرخصين من الدائرة الاقتصادية. للطلب فقط عبر الواتساب.",
+                longDescriptionEn:"Selling kandoras, fabrics, and designs, limited pieces. Licensed by the Economic Department. Order only via WhatsApp.        ",
+                image:"images/p46.jpg",
+                phone:"",
+                whatsapp:"971544208225",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "caly.ae" },
+                    { type: "tiktok", value: "caly.ae" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"ملابس",
+                categoryEn:"Clothes",
+                products:[]
+            },
+            {
+                id:47,
+                name:"لوفا",
+                nameEn:"Luva",
+                emirate:"الشارقة",
+                description:"حلويات ومشروبات باردة",
+                descriptionEn:"Desserts & Cold Drinks",
+                longDescription:"بيع حلويات ومشروبات باردة. للطلب عبر الواتساب. الاستلام متاح في الشارقة من الساعة 9 مساءً حتى 12 منتصف الليل.",
+                longDescriptionEn:"Selling desserts and cold drinks. To order via WhatsApp. Pickup available in Sharjah from 9:00 pm to 12:00 am.",
+                image:"images/p47.jpg",
+                phone:"",
+                whatsapp:"971563977917",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "luva.uae" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"حلويات",
+                categoryEn:"Sweets",
+                products:[
+  {
+    id: "47_p1",
+    name: "هوت كوكو",
+    nameEn: "Hot Coco",
+    description: "مشروب كاكاو ساخن كريمي غني ولذيذ.",
+    descriptionEn: "Rich and creamy hot cocoa drink.",
+    longDescription: "استمتع بكوب من الهوت كوكو الدافئ والغني بنكهة الشوكولاتة الفاخرة. مشروب مثالي للأجواء الرمضانية الباردة يمنحك الدفء والطاقة.",
+    longDescriptionEn: "Enjoy a cup of warm and rich hot cocoa with a luxurious chocolate flavor. A perfect drink for cold Ramadan evenings, giving you warmth and energy.",
+    category: "مشروبات",
+    categoryEn: "Drinks",
+    mainImage: "images/p47.jpg",
+    images: [""],
+    details: [
+      "مشروب ساخن",
+      "كاكاو غني",
+      "كريمي ولذيذ",
+      "مثالي لرمضان"
+    ],
+    detailsEn: [
+      "Hot drink",
+      "Rich cocoa",
+      "Creamy and delicious",
+      "Perfect for Ramadan"
+    ]
+  },
+  {
+    id: "42_p2",
+    name: "كركديه",
+    nameEn: "Hibiscus",
+    description: "مشروب الكركديه المنعش المحضر من زهور الكركديه الطبيعية.",
+    descriptionEn: "Refreshing hibiscus drink made from natural hibiscus flowers.",
+    longDescription: "مشروب الكركديه الطبيعي يتميز بلونه الأحمر الجذاب وطعمه الحامض المنعش. غني بمضادات الأكسدة وفيتامين C، مثالي للإفطار في رمضان.",
+    longDescriptionEn: "Natural hibiscus drink with an attractive red color and refreshing sour taste. Rich in antioxidants and vitamin C, perfect for Iftar during Ramadan.",
+    category: "مشروبات",
+    categoryEn: "Drinks",
+    mainImage: "images/p47.jpg",
+    images: [""],
+    details: [
+      "مشروب طبيعي",
+      "منعش",
+      "غني بمضادات الأكسدة",
+      "مثالي للإفطار"
+    ],
+    detailsEn: [
+      "Natural drink",
+      "Refreshing",
+      "Rich in antioxidants",
+      "Perfect for Iftar"
+    ]
+  },
+  {
+    id: "42_p3",
+    name: "ماتشا لاتيه",
+    nameEn: "Matcha Latte",
+    description: "مشروب ماتشا لاتيه كريمي بنكهة الشاي الأخضر الياباني.",
+    descriptionEn: "Creamy matcha latte with Japanese green tea flavor.",
+    longDescription: "ماتشا لاتيه مصنوع من مسحوق الشاي الأخضر الفاخر الممزوج بالحليب الكريمي. مشروب غني بمضادات الأكسدة يمنحك النشاط والانتعاش.",
+    longDescriptionEn: "Matcha latte made from premium green tea powder blended with creamy milk. A drink rich in antioxidants that gives you energy and refreshment.",
+    category: "مشروبات",
+    categoryEn: "Drinks",
+    mainImage: "images/p47.jpg",
+    images: [""],
+    details: [
+      "شاي أخضر ياباني",
+      "كريمي",
+      "غني بمضادات الأكسدة",
+      "منعش"
+    ],
+    detailsEn: [
+      "Japanese green tea",
+      "Creamy",
+      "Rich in antioxidants",
+      "Refreshing"
+    ]
+  },
+  {
+    id: "42_p4",
+    name: "ماتشا فانيليا مالحة",
+    nameEn: "Salted Vanilla Matcha",
+    description: "ماتشا لاتيه بنكهة الفانيليا والملح البحري.",
+    descriptionEn: "Matcha latte with vanilla flavor and sea salt.",
+    longDescription: "مزيج فريد من الماتشا الغنية مع نكهة الفانيليا الحلوة ولمسة من الملح البحري. مشروب متوازن يجمع بين الحلاوة والملوحة بطريقة مبتكرة.",
+    longDescriptionEn: "A unique blend of rich matcha with sweet vanilla flavor and a touch of sea salt. A balanced drink combining sweet and salty in an innovative way.",
+    category: "مشروبات",
+    categoryEn: "Drinks",
+    mainImage: "images/p47.jpg",
+    images: [""],
+    details: [
+      "ماتشا مع فانيليا",
+      "لمسة ملح بحري",
+      "مزيج فريد",
+      "طعم مبتكر"
+    ],
+    detailsEn: [
+      "Matcha with vanilla",
+      "Touch of sea salt",
+      "Unique blend",
+      "Innovative taste"
+    ]
+  },
+  {
+    id: "42_p5",
+    name: "كيك لوفا",
+    nameEn: "Luva Cake",
+    description: "كيك الشوكولاتة السائلة مع قلب غني ذائب.",
+    descriptionEn: "Molten chocolate cake with a rich gooey center.",
+    longDescription: "كيك لوفا هو كيك الشوكولاتة السائلة الشهير، يتميز بقوامه الخارجي المخبوز وقلبه السائل الذائب من الشوكولاتة الفاخرة. يقدم دافئاً مع صوص الشوكولاتة.",
+    longDescriptionEn: "Luva cake is the famous molten chocolate cake, characterized by its baked outer texture and liquid molten center of luxury chocolate. Served warm with chocolate sauce.",
+    category: "حلويات",
+    categoryEn: "Desserts",
+    mainImage: "images/p47.jpg",
+    images: [""],
+    details: [
+      "كيك شوكولاتة سائلة",
+      "قلب ذائب",
+      "يقدم دافئاً",
+      "غني ولذيذ"
+    ],
+    detailsEn: [
+      "Molten chocolate cake",
+      "Gooey center",
+      "Served warm",
+      "Rich and delicious"
+    ]
+  },
+  {
+    id: "42_p6",
+    name: "سينامون",
+    nameEn: "Cinnamon",
+    description: "لفائف القرفة الشهية مع صوص الكراميل.",
+    descriptionEn: "Delicious cinnamon rolls with caramel sauce.",
+    longDescription: "لفائف القرفة الطرية المحشوة بخليط القرفة والسكر البني، مغطاة بصوص الكراميل الكريمي. حلوى دافئة برائحة القرفة المميزة.",
+    longDescriptionEn: "Soft cinnamon rolls filled with cinnamon and brown sugar mixture, topped with creamy caramel sauce. A warm dessert with the distinctive scent of cinnamon.",
+    category: "حلويات",
+    categoryEn: "Desserts",
+    mainImage: "images/p47.jpg",
+    images: [""],
+    details: [
+      "لفائف القرفة",
+      "صوص كراميل",
+      "طرية وشهية",
+      "رائحة قرفة مميزة"
+    ],
+    detailsEn: [
+      "Cinnamon rolls",
+      "Caramel sauce",
+      "Soft and delicious",
+      "Distinctive cinnamon scent"
+    ]
+  },
+  {
+    id: "42_p7",
+    name: "حلوى السنافر",
+    nameEn: "Smurfs Dessert",
+    description: "حلوى كريمية باللون الأزرق مستوحاة من شخصيات السنافر.",
+    descriptionEn: "Creamy blue dessert inspired by Smurfs characters.",
+    longDescription: "حلوى السنافر هي حلوى كريمية باللون الأزرق الجذاب، تتميز بطعمها الحلو المنعش وقوامها الخفيف. تزين بكريمة مخفوقة ورشات ملونة.",
+    longDescriptionEn: "Smurfs dessert is a creamy blue attractive dessert, characterized by its sweet refreshing taste and light texture. Decorated with whipped cream and colorful sprinkles.",
+    category: "حلويات",
+    categoryEn: "Desserts",
+    mainImage: "images/p47.jpg",
+    images: [""],
+    details: [
+      "كريمية",
+      "لون أزرق جذاب",
+      "خفيفة ومنعشة",
+      "تزيين جميل"
+    ],
+    detailsEn: [
+      "Creamy",
+      "Attractive blue color",
+      "Light and refreshing",
+      "Beautiful decoration"
+    ]
+  },
+  {
+    id: "42_p8",
+    name: "ورق عنب رول",
+    nameEn: "Warak Enab Rolls",
+    description: "ورق عنب محشو بخليط الأرز والبهارات الشرقية.",
+    descriptionEn: "Stuffed grape leaves with rice and oriental spices.",
+    longDescription: "ورق عنب رول هو طبق تقليدي شهير، يتكون من أوراق العنب المحشوة بخليط الأرز والطماطم والبقدونس والبهارات الشرقية. يقدم مع شرائح الليمون.",
+    longDescriptionEn: "Warak Enab Rolls is a famous traditional dish, consisting of grape leaves stuffed with a mixture of rice, tomatoes, parsley, and oriental spices. Served with lemon slices.",
+    category: "أطباق",
+    categoryEn: "Dishes",
+    mainImage: "images/p47.jpg",
+    images: [""],
+    details: [
+      "ورق عنب محشو",
+      "أرز وبهارات شرقية",
+      "طبق تقليدي",
+      "يقدم مع ليمون"
+    ],
+    detailsEn: [
+      "Stuffed grape leaves",
+      "Rice and oriental spices",
+      "Traditional dish",
+      "Served with lemon"
+    ]
+  }
+]
+            },
+            {
+                id:48,
+                name:"5F بخور",
+                nameEn:"5F Bakhoor",
+                emirate:"",
+                description:"بخور فاخر",
+                descriptionEn:"Premium Bakhoor",
+                longDescription:"بخور فاخر برائحة تبقى في الذاكرة. مشروع إماراتي. للطلب عبر الموقع الإلكتروني.",
+                longDescriptionEn:"Premium Bakhoor with a memorable scent. An Emirati project. Order via the website.",
+                image:"images/p48.jpg",
+                phone:"",
+                whatsapp:"",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "5fbakhoor.ae" },
+                    { type: "website", value: "https://5fbakhoor.ae/" },
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"روائح وعطور",
+                categoryEn:"Scents & Perfumes",
+                products:[
+                    {
+    id: "48_p1",
+    name: "بخور 2002",
+    nameEn: "Incense 2002",
+    description: "بخور شرقي فاخر ممزوج بنفحات فرنسية راقية، يجمع بين الأصالة والذوق العصري.",
+    descriptionEn: "A luxurious oriental incense blended with refined French notes, combining authenticity with modern taste.",
+    longDescription: "بخور 2002 هو بخور شرقي فاخر ممزوج بنفحات فرنسية راقية، يجمع بين الأصالة والذوق العصري في تركيبة عطرية تنبض بالفخامة والرقي. تبدأ رائحته بلمسة أنثوية ناعمة من الورود البيضاء الفرنسية، يليها قلب دافئ غني بنفحات المسك الفاخر، ليترك في النهاية أثرًا عميقًا من العود العربي الأصيل.",
+    longDescriptionEn: "Incense 2002 is a luxurious oriental incense blended with refined French notes, combining authenticity and modern taste in a fragrance composition that exudes luxury and elegance. Its scent opens with a soft feminine touch of French white roses, followed by a warm heart rich with premium musk notes, leaving a deep trace of authentic Arabic oud.",
+    category: "روائح وعطور",
+    categoryEn: "Scents & Perfumes",
+    mainImage: "images/p48-1.jpg",   // ⚠️ يرجى تحديث المسار للصورة الفعلية
+    images: ["images/p48-1.jpg",],                       // يمكنك إضافة صور إضافية هنا إذا وجدت
+    details: [
+        "تحتوي العبوة الواحدة على 10 قطع من البخور",
+        "مثالي للمنازل والمجالس",
+        "يمنح أجواءً دافئة ومترفة",
+        "يجمع بين العراقة والحداثة في تجربة عطرية فريدة"
+    ],
+    detailsEn: [
+        "Each package contains 10 pieces of incense",
+        "Ideal for homes and gatherings",
+        "Creates a warm and luxurious atmosphere",
+        "Combines tradition and modernity in a unique aromatic experience"
+    ]
+},
+{
+    id: "48_p2",
+    name: "أعواد بخور 2002",
+    nameEn: "Incense Sticks 2002",
+    description: "نسخة مصغّرة من بخور 2002 الشهير، تجمع بين الفخامة الفرنسية والأصالة العربية.",
+    descriptionEn: "A mini version of the famous Incense 2002, combining French luxury and Arabic authenticity.",
+    longDescription: "أعواد بخور 2002 هي النسخة المصغّرة من بخور 2002 الشهير، تمنحك تجربة عطرية فريدة تجمع بين الفخامة الفرنسية والأصالة العربية في آنٍ واحد. تمتاز برائحتها الهادئة والمريحة التي تضفي أجواءً من السكينة والصفاء أينما كنت، سواء في المكتب أو في البيت.",
+    longDescriptionEn: "Incense Sticks 2002 are the mini version of the famous Incense 2002, offering a unique aromatic experience that combines French luxury and Arabic authenticity. They feature a calm and soothing scent that creates an atmosphere of serenity and clarity wherever you are, whether at the office or at home.",
+    category: "روائح وعطور",
+    categoryEn: "Scents & Perfumes",
+    mainImage: "images/p48-2.jpg",   // ⚠️ يرجى تحديث المسار للصورة الفعلية
+    images: ["images/p48-2.jpg",],
+    details: [
+        "مدة الاحتراق: حوالي 45 دقيقة لكل عود",
+        "رائحة ناعمة وراقية مناسبة للاستخدام اليومي",
+        "مثالية للمكاتب، المنازل، وغرف النوم"
+    ],
+    detailsEn: [
+        "Burn time: approximately 45 minutes per stick",
+        "Soft and elegant scent suitable for daily use",
+        "Ideal for offices, homes, and bedrooms"
+    ]
+},
+{
+    id: "48_p3",
+    name: "مجموعة اكتشاف البخور",
+    nameEn: "Incense Discovery Set",
+    description: "مجموعة من 5 أنواع مختلفة من البخور الفاخر، مثالية لتجربة الروائح واكتشاف المفضل لديك.",
+    descriptionEn: "A set of 5 different luxury incense types, perfect for sampling scents and discovering your favorite.",
+    longDescription: "مجموعة اكتشاف البخور تحتوي على 5 أنواع مختلفة من البخور: 2002، رسالة، مريم، ساره، وguerlain. كل قطعة مصنوعة يدويًا باستخدام أجود المكونات الطبيعية والزيوت المختارة بعناية لتمنحك تجربة عطرية فاخرة وثابتة تدوم طويلًا. هذه المجموعة مثالية لتجربة روائحنا قبل اختيار المفضل لديك بالحجم الكامل، كما أنها هدية أنيقة لمحبي البخور.",
+    longDescriptionEn: "The Incense Discovery Set contains 5 different types of incense: 2002, Risala, Maryam, Sarah, and Guerlain. Each piece is handmade using the finest natural ingredients and carefully selected oils to provide a luxurious, long-lasting aromatic experience. This set is perfect for sampling our scents before choosing your favorite full-size product, and also makes an elegant gift for incense lovers.",
+    category: "روائح وعطور",
+    categoryEn: "Scents & Perfumes",
+    mainImage: "images/p48-3.jpg",   // ⚠️ يرجى تحديث المسار للصورة الفعلية
+    images: ["images/p48-3.jpg",
+        "images/p48-3-1.jpg",
+    ],
+    details: [
+        "تحتوي على 5 أنواع من البخور: 2002، رسالة، مريم، ساره، guerlain",
+        "كل قطعة مصنوعة يدويًا من مكونات طبيعية",
+        "مثالية لتجربة الروائح قبل الشراء",
+        "هدية أنيقة لمحبي البخور"
+    ],
+    detailsEn: [
+        "Contains 5 types of incense: 2002, Risala, Maryam, Sarah, Guerlain",
+        "Each piece handmade from natural ingredients",
+        "Perfect for sampling scents before purchasing",
+        "An elegant gift for incense lovers"
+    ]
+},
+{
+    id: "48_p4",
+    name: "حامل بخور من الخيزران",
+    nameEn: "Bamboo Incense Holder",
+    description: "حامل بخور أنيق مصنوع من الخيزران الطبيعي، مثالي لحمل أعواد البخور بأمان وأناقة.",
+    descriptionEn: "Elegant incense holder made of natural bamboo, perfect for holding incense sticks safely and stylishly.",
+    longDescription: "حامل بخور من الخيزران الطبيعي، يتميز بتصميمه البسيط والأنيق الذي يتناسب مع جميع الديكورات. يثبت أعواد البخور بشكل آمن ويساعد على جمع الرماد المتساقط، مما يحافظ على نظافة المكان. خفيف الوزن وسهل التنظيف، مثالي للاستخدام اليومي في المنزل أو المكتب.",
+    longDescriptionEn: "A natural bamboo incense holder with a simple and elegant design that suits all decors. It securely holds incense sticks and collects falling ash, keeping the area clean. Lightweight and easy to clean, perfect for daily use at home or the office.",
+    category: "روائح وعطور",
+    categoryEn: "Scents & Perfumes",
+    mainImage: "images/p48-4.jpg",   // ⚠️ يرجى تحديث المسار للصورة الفعلية
+    images: ["images/p48-4.jpg",
+        "images/p48-4-1.jpg",
+        "images/p48-4-2.jpg",
+    ],
+    details: [
+        "مصنوع من الخيزران الطبيعي عالي الجودة",
+        "تصميم أنيق وبسيط يناسب جميع الأذواق",
+        "يثبت أعواد البخور بشكل آمن ويمنع سقوطها",
+        "يساعد على جمع الرماد المتساقط للحفاظ على النظافة",
+        "خفيف الوزن وسهل التنظيف"
+    ],
+    detailsEn: [
+        "Made of high-quality natural bamboo",
+        "Elegant and simple design suits all tastes",
+        "Securely holds incense sticks and prevents falling",
+        "Helps collect falling ash to maintain cleanliness",
+        "Lightweight and easy to clean"
+    ]
+},
+{
+    id: "48_p5",
+    name: "بخور جرلاين",
+    nameEn: "Guerlain Incense",
+    description: "بخور فاخر يجمع بين نفحات العطر الأيقوني من غيرلان والدفء الشرقي والرقي العصري.",
+    descriptionEn: "Luxurious incense blending the iconic notes of Guerlain fragrance with oriental warmth and modern elegance.",
+    longDescription: "يتميز بخور جرلاين بامتزاج نفحات العطر الأيقوني من غيرلان، جامعًا بين الدفء الشرقي والرقي العصري في توليفة فاخرة. يمنحك هذا البخور رائحة تدوم طويلاً وتملأ المنزل أو المجلس بأجواء من الأناقة، ليجعل كل لحظة أكثر تميّزًا.",
+    longDescriptionEn: "Guerlain Incense is distinguished by its blend of the iconic notes of Guerlain fragrance, combining oriental warmth and modern elegance in a luxurious composition. This incense gives you a long-lasting scent that fills the home or gathering with an atmosphere of sophistication, making every moment more special.",
+    category: "روائح وعطور",
+    categoryEn: "Scents & Perfumes",
+    mainImage: "images/p48-5.jpg",   // ⚠️ يرجى تحديث المسار للصورة الفعلية
+    images: ["images/p48-5.jpg",],
+    details: [
+        "رائحة راقية مستوحاة من العطور العالمية الفاخرة",
+        "مثالي للجمعات والمناسبات الخاصة",
+        "يدوم طويلاً ويملأ المكان بأجواء من الأناقة"
+    ],
+    detailsEn: [
+        "Elegant scent inspired by luxury international perfumes",
+        "Ideal for gatherings and special occasions",
+        "Long-lasting and fills the space with an atmosphere of elegance"
+    ]
+},
+{
+    id: "48_p6",
+    name: "أعواد بخور جرلاين",
+    nameEn: "Guerlain Incense Sticks",
+    description: "أعواد بخور جرلاين مستوحاة من نوتة عطر جرلاين العالمية، لتمنحك تجربة عطرية فريدة تمزج بين الأصالة والحداثة.",
+    descriptionEn: "Guerlain incense sticks inspired by the iconic Guerlain fragrance notes, offering a unique aromatic experience that blends authenticity and modernity.",
+    longDescription: "يتميز البخور بعبيره الأنيق الذي يدوم طويلًا ويمنح أجواءً من الراحة والرقي سواء في منزلك أو مجلسك.",
+    longDescriptionEn: "This incense is distinguished by its elegant, long-lasting scent that creates an atmosphere of comfort and sophistication in your home or gathering.",
+    category: "روائح وعطور",
+    categoryEn: "Scents & Perfumes",
+    mainImage: "images/p48-6.jpg",   // ⚠️ يرجى تحديث المسار للصورة الفعلية
+    images: ["images/p48-6.jpg",],
+    details: [
+        "مدة الاحتراق: حوالي 45 دقيقة لكل عود",
+        "يمكن إعادة استخدامه أكثر من مرة عبر إطفائه بقطرات ماء عند الاكتفاء، للحفاظ على ما تبقى من العبق",
+        "رائحة عطرية راقية مستوحاة من العطور العالمية",
+        "مثالي للاستخدام اليومي والمناسبات الخاصة، والمكاتب، وغرف النوم"
+    ],
+    detailsEn: [
+        "Burn time: approximately 45 minutes per stick",
+        "Can be reused multiple times by extinguishing with a few drops of water when desired, preserving the remaining scent",
+        "Elegant fragrance inspired by international luxury perfumes",
+        "Ideal for daily use, special occasions, offices, and bedrooms"
+    ]
+},
+{
+    id: "48_p7",
+    name: "بخور مريم",
+    nameEn: "Maryam Incense",
+    description: "بخور شرقي فاخر يجمع بين أصالة العود العربي ودفء المسك بلمسة راقية من الزيوت الفرنسية الفاخرة.",
+    descriptionEn: "A luxurious oriental incense combining the authenticity of Arabic oud with the warmth of musk, touched with refined French oils.",
+    longDescription: "بخور مريم هو بخور شرقي فاخر يجمع بين أصالة العود العربي ودفء المسك بلمسة راقية من الزيوت الفرنسية الفاخرة. تركيبته المتوازنة تمنحك أجواءً عطرية استثنائية، مثالية للمناسبات الخاصة أو لإضفاء لمسة من الفخامة على منزلك ومجلسك.",
+    longDescriptionEn: "Maryam Incense is a luxurious oriental incense that blends the authenticity of Arabic oud with the warmth of musk, enhanced with a refined touch of premium French oils. Its balanced composition provides an exceptional aromatic atmosphere, perfect for special occasions or adding a touch of luxury to your home and gathering space.",
+    category: "روائح وعطور",
+    categoryEn: "Scents & Perfumes",
+    mainImage: "images/p48-7.jpg", 
+    images: ["images/p48-7.jpg",],
+    details: [
+        "نفحات عطرية شرقية بلمسة عصرية",
+        "مثالي للهدايا والمناسبات الفاخرة",
+        "عبير يدوم طويلاً ويترك أثرًا لا يُنسى"
+    ],
+    detailsEn: [
+        "Oriental aromatic notes with a modern touch",
+        "Ideal for gifts and luxury occasions",
+        "Long-lasting fragrance that leaves an unforgettable impression"
+    ]
+},
+{
+    id: "48_p8",
+    name: "أعواد بخور مريم",
+    nameEn: "Maryam Incense Sticks",
+    description: "النسخة الصغيرة من بخور مريم الأيقوني، تمنحك نفس شعور الاسترخاء والفخامة.",
+    descriptionEn: "The mini version of the iconic Maryam Incense, offering the same feeling of relaxation and luxury.",
+    longDescription: "عيدان بخور مريم هي النسخة الصغيرة من بخور مريم الأيقوني، وتمنحك نفس شعور الاسترخاء والفخامة من أول لحظة احتراق. بخليط راقٍ يجمع بين ثراء العود العربي الأصيل، ودفء المسك، وأناقة الزيوت العطرية الفرنسية الفاخرة.",
+    longDescriptionEn: "Maryam Incense Sticks are the mini version of the iconic Maryam Incense, giving you the same feeling of relaxation and luxury from the first moment of burning. A refined blend combining the richness of authentic Arabic oud, the warmth of musk, and the elegance of premium French aromatic oils.",
+    category: "روائح وعطور",
+    categoryEn: "Scents & Perfumes",
+    mainImage: "images/p48-8.jpg",   // ⚠️ يرجى تحديث المسار للصورة الفعلية
+    images: ["images/p48-8.jpg",],
+    details: [
+        "مدة الاحتراق: حوالي 45 دقيقة لكل عود",
+        "قابلة لإعادة الاستخدام: يمكن إطفاؤها بقطرات ماء قليلة للاستخدام لاحقًا",
+        "نفحات شرقية بلمسة عصرية",
+        "رائحة تدوم طويلاً وتترك انطباعًا لا يُنسى",
+        "مثالية للاستخدام اليومي، المكاتب، وغرف النوم"
+    ],
+    detailsEn: [
+        "Burn time: approximately 45 minutes per stick",
+        "Reusable: can be extinguished with a few drops of water for later use",
+        "Oriental notes with a modern touch",
+        "Long-lasting scent that leaves an unforgettable impression",
+        "Ideal for daily use, offices, and bedrooms"
+    ]
+},
+{
+    id: "48_p9",
+    name: "فحمة معطرة (لمدة ساعة)",
+    nameEn: "Scented Coal Disc (1 hour)",
+    description: "فحمة معطرة تدوم حتى ساعة كاملة، تستخدم مباشرة دون فحم تقليدي، ويمكن إضافة الدخون أو البخور فوقها.",
+    descriptionEn: "Scented coal disc that lasts up to one hour, used directly without traditional charcoal, and you can add your favorite incense on top.",
+    longDescription: "الفحمة المعطّرة تمنحك رائحة عطرية تدوم حتى ساعة كاملة دون الحاجة لاستخدام الفحم التقليدي. يمكنك استخدامها مباشرة لإضفاء أجواء عطرية راقية في المنزل أو المجلس، كما يمكن إضافة الدخون أو البخور المفضل لديك فوقها لتعزيز الفوحان حسب الرغبة. تحتوي العلبة على 8 قطع.",
+    longDescriptionEn: "The scented coal disc gives you an aromatic scent that lasts up to a full hour without the need for traditional charcoal. You can use it directly to create a refined aromatic atmosphere at home or in the gathering, and you can also add your favorite incense on top to enhance the fragrance as desired. The box contains 8 pieces.",
+    category: "روائح وعطور",
+    categoryEn: "Scents & Perfumes",
+    mainImage: "images/p48-9.jpg",  
+    images: ["images/p48-9.jpg",
+        "images/p48-9-1.jpg",
+        "images/p48-9-2.jpg",
+    ],
+    details: [
+        "مدة الاحتراق: حتى ساعة كاملة",
+        "تستخدم مباشرة دون الحاجة لفحم تقليدي",
+        "يمكن إضافة الدخون أو البخور المفضل فوقها لتعزيز الرائحة",
+        "العلبة تحتوي على 8 قطع"
+    ],
+    detailsEn: [
+        "Burn time: up to one full hour",
+        "Used directly without traditional charcoal",
+        "You can add your favorite incense on top to enhance the scent",
+        "Box contains 8 pieces"
+    ]
+},
+{
+    id: "48_p10",
+    name: "فحمة معطرة (٢٠ دقيقة)",
+    nameEn: "Scented Coal Disc (20 minutes)",
+    description: "فحمة معطرة تدوم حتى ٢٠ دقيقة، تستخدم مباشرة دون فحم تقليدي، ويمكن إضافة الدخون أو البخور فوقها.",
+    descriptionEn: "Scented coal disc that lasts up to 20 minutes, used directly without traditional charcoal, and you can add your favorite incense on top.",
+    longDescription: "الفحمة المعطّرة تمنحك رائحة عطرية تدوم حتى ٢٠ دقيقة دون الحاجة لاستخدام الفحم التقليدي. يمكنك استخدامها مباشرة لإضفاء أجواء عطرية راقية في المنزل أو المجلس، كما يمكن إضافة الدخون أو البخور المفضل لديك فوقها لتعزيز الفوحان حسب الرغبة. تحتوي العلبة على ١٠ قطع.",
+    longDescriptionEn: "The scented coal disc gives you an aromatic scent that lasts up to 20 minutes without the need for traditional charcoal. You can use it directly to create a refined aromatic atmosphere at home or in the gathering, and you can also add your favorite incense on top to enhance the fragrance as desired. The box contains 10 pieces.",
+    category: "روائح وعطور",
+    categoryEn: "Scents & Perfumes",
+    mainImage: "images/p48-10.jpg",   // ⚠️ يرجى تحديث المسار للصورة الفعلية
+    images: ["images/p48-10.jpg",
+        "images/p48-10-1.jpg",
+        "images/p48-10-2.jpg",
+    ],
+    details: [
+        "مدة الاحتراق: حتى ٢٠ دقيقة",
+        "تستخدم مباشرة دون الحاجة لفحم تقليدي",
+        "يمكن إضافة الدخون أو البخور المفضل فوقها لتعزيز الرائحة",
+        "العلبة تحتوي على ١٠ قطع"
+    ],
+    detailsEn: [
+        "Burn time: up to 20 minutes",
+        "Used directly without traditional charcoal",
+        "You can add your favorite incense on top to enhance the scent",
+        "Box contains 10 pieces"
+    ]
+},
+{
+    id: "48_p11",
+    name: "بخور رسالة",
+    nameEn: "Risala Incense",
+    description: "بخور شرقي فاخر يجمع بين الرقي الفرنسي وعبق الهوية العربية بنفحات عميقة من العود الهندي.",
+    descriptionEn: "A luxurious oriental incense combining French elegance with the essence of Arab identity, featuring deep notes of premium Indian oud.",
+    longDescription: "بخور رسالة هو بخور شرقي فاخر، يبعث رسالة من الفخامة والأناقة بتركيبته الفريدة التي تمزج بين الرقي الفرنسي وعبق الهوية العربية. تتجلى روائحه في نفحات عميقة من العود الهندي الفاخر، ما يجعله الخيار المثالي للمناسبات الخاصة والأوقات الاستثنائية. بفضل ثباته الطويل، يترك بخور رسالة أثرًا لا يُنسى يعبّر عن الأصالة والرقي.",
+    longDescriptionEn: "Risala Incense is a luxurious oriental incense that conveys a message of luxury and elegance through its unique composition blending French sophistication with the scent of Arab identity. Its fragrance manifests in deep notes of premium Indian oud, making it the perfect choice for special occasions and exceptional moments. With its long-lasting presence, Risala Incense leaves an unforgettable impression that expresses authenticity and refinement.",
+    category: "روائح وعطور",
+    categoryEn: "Scents & Perfumes",
+    mainImage: "images/p48-11.jpg",   // ⚠️ يرجى تحديث المسار للصورة الفعلية
+    images: ["images/p48-11.jpg"],
+    details: [
+        "تحتوي كل عبوة على 10 قطع من البخور",
+        "مثالي للمناسبات الخاصة والمجالس الفاخرة",
+        "يمنح منزلك أو مجلسك أجواءً مترفة وراقية",
+        "يجمع بين اللمسة الفرنسية الحديثة والأصالة الشرقية"
+    ],
+    detailsEn: [
+        "Each package contains 10 pieces of incense",
+        "Ideal for special occasions and luxury gatherings",
+        "Gives your home or gathering a luxurious and elegant atmosphere",
+        "Combines modern French touch with Eastern authenticity"
+    ]
+},
+{
+    id: "48_p12",
+    name: "أعواد بخور رسالة",
+    nameEn: "Risala Incense Sticks",
+    description: "النسخة المصغّرة من بخور رسالة الشهير، تمنحك نفس الإحساس بالاسترخاء والراحة منذ اللحظة الأولى لانبعاث عبيرها.",
+    descriptionEn: "The mini version of the famous Risala Incense, giving you the same feeling of relaxation and comfort from the first moment its fragrance emanates.",
+    longDescription: "أعواد بخور رسالة هي النسخة المصغّرة من بخور رسالة الشهير، تمنحك نفس الإحساس بالاسترخاء والراحة منذ اللحظة الأولى لانبعاث عبيرها الفوّاح. تتميز برائحتها الفريدة الممزوجة بين الأصالة العربية ولمسة الرقي الفرنسي، لتجعل كل لحظة مليئة بالفخامة والسكينة.",
+    longDescriptionEn: "Risala Incense Sticks are the mini version of the famous Risala Incense, offering the same feeling of relaxation and comfort from the first moment their fragrant scent emanates. They are distinguished by their unique fragrance blending Arabic authenticity with a touch of French elegance, making every moment filled with luxury and tranquility.",
+    category: "روائح وعطور",
+    categoryEn: "Scents & Perfumes",
+    mainImage: "images/p48-12.jpg",   // ⚠️ يرجى تحديث المسار للصورة الفعلية
+    images: ["images/p48-12.jpg"],
+    details: [
+        "مدة الاحتراق: حوالي 45 دقيقة لكل عود",
+        "يمكن إعادة استخدامه أكثر من مرة عبر إطفائه بقطرات ماء عند الاكتفاء، للحفاظ على ما تبقى من العبق",
+        "مثالي للاستخدام اليومي، المكاتب، وغرف النوم",
+        "خيار عملي وأنيق لعشاق البخور اليومي",
+        "يجمع بين فخامة العود الهندي ولمسات المسك والروح الفرنسي"
+    ],
+    detailsEn: [
+        "Burn time: approximately 45 minutes per stick",
+        "Can be reused multiple times by extinguishing with a few drops of water when desired, preserving the remaining scent",
+        "Ideal for daily use, offices, and bedrooms",
+        "A practical and elegant choice for daily incense lovers",
+        "Combines the luxury of Indian oud with touches of musk and French spirit"
+    ]
+},
+{
+    id: "48_p13",
+    name: "بخور ساره",
+    nameEn: "Sarah Incense",
+    description: "بخور فاخر ممزوج بزيوت فرنسية مميزة، صُمم ليمنحك تجربة عطرية عصرية تجمع بين الأناقة الأوروبية والروح الشرقية.",
+    descriptionEn: "A luxurious incense blended with distinctive French oils, designed to give you a contemporary aromatic experience combining European elegance and Eastern spirit.",
+    longDescription: "بخور سارة هو بخور فاخر ممزوج بزيوت فرنسية مميزة، صُمم ليمنحك تجربة عطرية عصرية تجمع بين الأناقة الأوروبية والروح الشرقية. يتميز بتركيبته الغنية التي تحتوي على نوتات عالمية فاخرة، ليضفي على منزلك ومجلسك لمسة من الرقي والفخامة تدوم طويلاً.",
+    longDescriptionEn: "Sarah Incense is a luxurious incense blended with distinctive French oils, designed to give you a contemporary aromatic experience combining European elegance and Eastern spirit. It features a rich composition containing premium international notes, adding a touch of sophistication and lasting luxury to your home and gathering space.",
+    category: "روائح وعطور",
+    categoryEn: "Scents & Perfumes",
+    mainImage: "images/p48-13.jpg",   // ⚠️ يرجى تحديث المسار للصورة الفعلية
+    images: ["images/p48-13.jpg",],
+    details: [
+        "بخور إماراتي فاخر بلمسة فرنسية",
+        "مناسب للاستخدام اليومي والمناسبات الخاصة",
+        "رائحة عصرية تحمل طابعاً عالمياً"
+    ],
+    detailsEn: [
+        "Luxurious Emirati incense with a French touch",
+        "Suitable for daily use and special occasions",
+        "Contemporary scent with an international character"
+    ]
+},
+{
+    id: "48_p14",
+    name: "أعواد بخور ساره",
+    nameEn: "Sarah Incense Sticks",
+    description: "النسخة الصغيرة من بخور سارة الأيقوني، تمنحك نفس شعور الاسترخاء والفخامة.",
+    descriptionEn: "The mini version of the iconic Sarah Incense, giving you the same feeling of relaxation and luxury.",
+    longDescription: "عيدان بخور سارة هي النسخة الصغيرة من بخور سارة الأيقوني، لكنها تمنحك نفس شعور الاسترخاء والفخامة من أول لحظة احتراق. ممزوجة بنفحات عالمية فاخرة، لتصنع رائحة تدوم طويلًا وتناسب الجلسات الخاصة، وتعطير المنزل، أو لحظات الدلال اليومي.",
+    longDescriptionEn: "Sarah Incense Sticks are the mini version of the iconic Sarah Incense, giving you the same feeling of relaxation and luxury from the first moment of burning. Blended with premium international notes, they create a long-lasting scent suitable for special gatherings, home fragrance, or daily pampering moments.",
+    category: "روائح وعطور",
+    categoryEn: "Scents & Perfumes",
+    mainImage: "images/p48-14.jpg",
+    images: ["images/p48-14.jpg",],
+    details: [
+        "مدة الاحتراق: حوالي 45 دقيقة لكل عود",
+        "قابلة لإعادة الاستخدام: يمكن إطفاؤها بقطرات ماء قليلة للاستخدام لاحقًا",
+        "بخور إماراتي فاخر بلمسة فرنسية راقية",
+        "مناسب للاستخدام اليومي والمناسبات الراقية",
+        "عطر عصري بنفحات عالمية"
+    ],
+    detailsEn: [
+        "Burn time: approximately 45 minutes per stick",
+        "Reusable: can be extinguished with a few drops of water for later use",
+        "Luxurious Emirati incense with a refined French touch",
+        "Suitable for daily use and elegant occasions",
+        "Contemporary fragrance with international notes"
+    ]
+}
+                ]
+            },
+            {
+                id:49,
+                name:"تي سبوت",
+                nameEn:"Tea Spot",
+                emirate:"أم القوين",
+                description:"شاي عضوي - Tea Bomb",
+                descriptionEn:"Organic Tea - Tea Bomb",
+                longDescription:"بيع شاي عضوي و Tea Bomb. شعارنا: أي وقت هو وقت شاي. موجودين في الإمارات. للطلب عبر الخاص.",
+                longDescriptionEn:"Selling organic tea and Tea Bomb. Our motto: Anytime is tea time. Based in the UAE. Order via DM.",
+                image:"images/p49.jpg",
+                phone:"",
+                whatsapp:"",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "tea_spot._" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"أطعمة ومشروبات",
+                categoryEn:"Food & Beverages",
+                products:[]
+            },
+            {
+                id:50,
+                name:"لمارا",
+                nameEn:"Lmara",
+                emirate:"",
+                description:"هدايا لجميع المناسبات",
+                descriptionEn:"Gifts for All Occasions",
+                longDescription:"متخصصون في تقديم أفكار هدايا مبتكرة تناسب كل مناسبة وذوق. مشروع مرخص من الدائرة الاقتصادية. للطلب عبر الواتساب. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"Specialized in providing innovative gift ideas suitable for every occasion and taste. A project licensed by the Economic Department. Order via WhatsApp. Delivery to all Emirates of the UAE.",
+                image:"images/p50.jpg",
+                phone:"",
+                whatsapp:"971505811587",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "lmara_gifts" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"هدايا",
+                categoryEn:"Gifts",
+                products:[]
+            },
+            {
+                id:51,
+                name:"تاتش أوف نفس",
+                nameEn:"Touch of Nafas",
+                emirate:"",
+                description:"دخون وعطور",
+                descriptionEn:"Oud & Perfumes",
+                longDescription:"متخصصون في الدخون والعطور الفاخرة. مرخصون من الدائرة الاقتصادية. نوصل لجميع إمارات الدولة. للطلب عبر الخاص أو الواتساب.",
+                longDescriptionEn:"Specialized in luxury Oud and perfumes. Licensed by the Economic Department. We deliver to all Emirates of the UAE. Order via DM or WhatsApp.",
+                image:"images/p51.jpg",
+                phone:"",
+                whatsapp:"+971545447808",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "touchofnafas" },
+                    { type: "instagram", value: "touchnafas" } // للحساب المذكور للهدايا
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"روائح وعطور",
+                categoryEn:"Fragrances",
+                products:[
+                    {
+    id: "51_p1",
+    name: "OUD JOURY",
+    nameEn: "Oud Joury",
+    description: "بخور فاخر بوزن 65 جرام، يتميز بعبقه العميق والثابت.",
+    descriptionEn: "Luxurious incense weighing 56 grams, characterized by its deep and long-lasting scent.",
+    longDescription: "بخور OUD JOURY هو بخور فاخر بوزن 56 جرام، يتميز بتركيبته الغنية التي تجمع بين أصالة العود العربي والفخامة العصرية. يمنحك تجربة عطرية استثنائية تدوم طويلاً وتضفي أجواء من الرقي والدفء على منزلك ومجلسك. نوفر خدمة التوصيل إلى جميع إمارات الدولة بأسعار ثابتة، مع إمكانية دفع عربون بقيمة 100 درهم لتأكيد الطلب.",
+    longDescriptionEn: "OUD JOURY is a luxurious incense weighing 56 grams, distinguished by its rich composition that combines the authenticity of Arabic oud with modern luxury. It gives you an exceptional aromatic experience that lasts long and adds an atmosphere of sophistication and warmth to your home and gathering. We offer delivery to all Emirates of the UAE with fixed prices, and a deposit of 100 AED can be paid to confirm the order.",
+    category: "روائح وعطور",
+    categoryEn: "Scents & Perfumes",
+    mainImage: "images/p51-1.jpg",   // ⚠️ يرجى تحديث المسار للصورة الفعلية
+    images: ["images/p51-1.jpg",
+        "images/p51-1-3.jpg",
+        "images/p51-1-2.jpg",
+        "images/p51-1-1.jpg",
+    ],
+    details: [
+        "الوزن: 65 جرام",
+        "دفع عربون: 100 درهم لتأكيد الطلب",
+        "التوصيل متوفر إلى جميع إمارات الدولة",
+        "أسعار ثابتة",
+        "بخور فاخر بعمق عربي أصيل"
+    ],
+    detailsEn: [
+        "Weight: 65 grams",
+        "Deposit: 100 AED to confirm the order",
+        "Delivery available to all Emirates of the UAE",
+        "Fixed prices",
+        "Luxurious incense with authentic Arabic depth"
+    ]
+},
+                ]
+            },
+            {
+                id:52,
+                name:"L.E Oud",
+                nameEn:"L.E Oud",
+                emirate:"أبوظبي",
+                description:"عود وأدهان عود",
+                descriptionEn:"Oud & Oud Oils",
+                longDescription:"حيث تلتقي الأصالة بالفخامة، ننتقي لكم أجود أنواع العود وأدهان العود. موقعنا في أبوظبي. للطلب عبر الواتساب..",
+                longDescriptionEn:"Where authenticity meets luxury, we select the finest types of Oud and Oud oils for you. Located in Abu Dhabi. Order via the link. Delivery to all Emirates of the UAE.",
+                image:"images/p52.jpg",
+                phone:"",
+                whatsapp:"+971502225675",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "l.eoud" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"روائح وعطور",
+                categoryEn:"Scents & Perfumes",
+                products:[
+                    // المنتج الأول - عود هندي زورا نقوه
+{
+    id: "51_p1",
+    name: "عود هندي زورا نقوه",
+    nameEn: "Zora Hindi Oud (Pure)",
+    description: "عود هندي فاخر من نوع زورا، يتميز بنقاوته العالية ورائحته العميقة.",
+    descriptionEn: "Premium Hindi oud of Zora type, characterized by its high purity and deep scent.",
+    longDescription: "عود هندي زورا نقوه هو عود طبيعي فاخر يُستخرج من أشجار العود في الهند. يتميز بجودته العالية ورائحته الخشبية العميقة التي تدوم طويلاً، ليمنحك تجربة عطرية أصيلة.",
+    longDescriptionEn: "Zora Hindi Oud (Pure) is a luxury natural oud extracted from oud trees in India. It features high quality and deep woody scent that lasts long, giving you an authentic aromatic experience.",
+    category: "روائح وعطور",
+    categoryEn: "Scents & Perfumes",
+    mainImage: "images/p52.jpg",
+    images: ["images/p52.jpg",],
+    details: [
+        "عود هندي طبيعي فاخر",
+        "نوع زورا",
+        "نقاوة عالية",
+        "رائحة خشبية عميقة"
+    ],
+    detailsEn: [
+        "Luxury natural Hindi oud",
+        "Zora type",
+        "High purity",
+        "Deep woody scent"
+    ]
+},
+
+// المنتج الثاني - عود هندي جار نقوه
+{
+    id: "51_p2",
+    name: "عود هندي جار نقوه",
+    nameEn: "Jar Hindi Oud (Pure)",
+    description: "عود هندي فاخر من نوع جار، يتميز بنقاوته العالية ورائحته الغنية.",
+    descriptionEn: "Premium Hindi oud of Jar type, characterized by high purity and rich scent.",
+    longDescription: "عود هندي جار نقوه هو عود طبيعي فاخر يُستخرج من أشجار العود في الهند. يتميز بجودته العالية ورائحته الخشبية الغنية التي تدوم طويلاً، ليمنحك تجربة عطرية أصيلة.",
+    longDescriptionEn: "Jar Hindi Oud (Pure) is a luxury natural oud extracted from oud trees in India. It features high quality and rich woody scent that lasts long, giving you an authentic aromatic experience.",
+    category: "روائح وعطور",
+    categoryEn: "Scents & Perfumes",
+    mainImage: "images/p52.jpg",
+    images: ["images/p52.jpg",],
+    details: [
+        "عود هندي طبيعي فاخر",
+        "نوع جار",
+        "نقاوة عالية",
+        "رائحة خشبية غنية"
+    ],
+    detailsEn: [
+        "Luxury natural Hindi oud",
+        "Jar type",
+        "High purity",
+        "Rich woody scent"
+    ]
+},
+
+// المنتج الثالث - عود هندي فيزاموري نقوه
+{
+    id: "51_p3",
+    name: "عود هندي فيزاموري نقوه",
+    nameEn: "Fizamouri Hindi Oud (Pure)",
+    description: "عود هندي فاخر من نوع فيزاموري، يتميز بنقاوته العالية ورائحته الفريدة.",
+    descriptionEn: "Premium Hindi oud of Fizamouri type, characterized by high purity and unique scent.",
+    longDescription: "عود هندي فيزاموري نقوه هو عود طبيعي فاخر يُستخرج من أشجار العود في الهند. يتميز بجودته العالية ورائحته الفريدة التي تدوم طويلاً، ليمنحك تجربة عطرية أصيلة.",
+    longDescriptionEn: "Fizamouri Hindi Oud (Pure) is a luxury natural oud extracted from oud trees in India. It features high quality and unique scent that lasts long, giving you an authentic aromatic experience.",
+    category: "روائح وعطور",
+    categoryEn: "Scents & Perfumes",
+    mainImage: "images/p52.jpg",
+    images: ["images/p52.jpg",],
+    details: [
+        "عود هندي طبيعي فاخر",
+        "نوع فيزاموري",
+        "نقاوة عالية",
+        "رائحة فريدة"
+    ],
+    detailsEn: [
+        "Luxury natural Hindi oud",
+        "Fizamouri type",
+        "High purity",
+        "Unique scent"
+    ]
+},
+
+// المنتج الرابع - عود هندي سيوفي نقوه
+{
+    id: "51_p4",
+    name: "عود هندي سيوفي نقوه",
+    nameEn: "Sioufi Hindi Oud (Pure)",
+    description: "عود هندي فاخر من نوع سيوفي، يتميز بنقاوته العالية ورائحته المميزة.",
+    descriptionEn: "Premium Hindi oud of Sioufi type, characterized by high purity and distinctive scent.",
+    longDescription: "عود هندي سيوفي نقوه هو عود طبيعي فاخر يُستخرج من أشجار العود في الهند. يتميز بجودته العالية ورائحته المميزة التي تدوم طويلاً، ليمنحك تجربة عطرية أصيلة.",
+    longDescriptionEn: "Sioufi Hindi Oud (Pure) is a luxury natural oud extracted from oud trees in India. It features high quality and distinctive scent that lasts long, giving you an authentic aromatic experience.",
+    category: "روائح وعطور",
+    categoryEn: "Scents & Perfumes",
+    mainImage: "images/p52.jpg",
+    images: ["images/p52.jpg",],
+    details: [
+        "عود هندي طبيعي فاخر",
+        "نوع سيوفي",
+        "نقاوة عالية",
+        "رائحة مميزة"
+    ],
+    detailsEn: [
+        "Luxury natural Hindi oud",
+        "Sioufi type",
+        "High purity",
+        "Distinctive scent"
+    ]
+},
+
+// المنتج الخامس - عود هندي بيبي سيوفي
+{
+    id: "51_p5",
+    name: "عود هندي بيبي سيوفي",
+    nameEn: "Baby Sioufi Hindi Oud",
+    description: "عود هندي فاخر من نوع بيبي سيوفي، يتميز برائحته الناعمة والراقية.",
+    descriptionEn: "Premium Hindi oud of Baby Sioufi type, characterized by its soft and elegant scent.",
+    longDescription: "عود هندي بيبي سيوفي هو عود طبيعي فاخر يُستخرج من أشجار العود في الهند. يتميز برائحته الناعمة والراقية التي تدوم طويلاً، ليمنحك تجربة عطرية فريدة.",
+    longDescriptionEn: "Baby Sioufi Hindi Oud is a luxury natural oud extracted from oud trees in India. It features a soft and elegant scent that lasts long, giving you a unique aromatic experience.",
+    category: "روائح وعطور",
+    categoryEn: "Scents & Perfumes",
+    mainImage: "images/p52.jpg",
+    images: ["images/p52.jpg",],
+    details: [
+        "عود هندي طبيعي فاخر",
+        "نوع بيبي سيوفي",
+        "رائحة ناعمة وراقية"
+    ],
+    detailsEn: [
+        "Luxury natural Hindi oud",
+        "Baby Sioufi type",
+        "Soft and elegant scent"
+    ]
+},
+
+// المنتج السادس - عود ليتمد دقه فلييني
+{
+    id: "51_p6",
+    name: "عود ليتمد دقه فلييني",
+    nameEn: "Lytmd Dqh Flyny Oud",
+    description: "عود فاخر يتميز بدقة تصنيعه وجودة عالية.",
+    descriptionEn: "Luxury oud characterized by precise craftsmanship and high quality.",
+    longDescription: "عود ليتمد دقه فلييني هو عود طبيعي فاخر يتميز بدقة تصنيعه وجودته العالية. يمنحك رائحة خشبية عميقة تدوم طويلاً، مناسبة للمناسبات الخاصة والاستخدام اليومي.",
+    longDescriptionEn: "Lytmd Dqh Flyny Oud is a luxury natural oud characterized by precise craftsmanship and high quality. It gives you a deep woody scent that lasts long, suitable for special occasions and daily use.",
+    category: "روائح وعطور",
+    categoryEn: "Scents & Perfumes",
+    mainImage: "images/p52.jpg",
+    images: ["images/p52.jpg",],
+    details: [
+        "عود طبيعي فاخر",
+        "دقة تصنيع عالية",
+        "رائحة خشبية عميقة"
+    ],
+    detailsEn: [
+        "Luxury natural oud",
+        "High precision craftsmanship",
+        "Deep woody scent"
+    ]
+},
+
+// المنتج السابع - دهن عود كمبودي
+{
+    id: "51_p7",
+    name: "دهن عود كمبودي",
+    nameEn: "Cambodian Oud Oil",
+    description: "دهن عود كمبودي فاخر، يتميز برائحته الغنية والثابتة.",
+    descriptionEn: "Premium Cambodian oud oil, characterized by its rich and long-lasting scent.",
+    longDescription: "دهن عود كمبودي هو زيت عود طبيعي مستخلص من أشجار العود في كمبوديا. يتميز برائحته الغنية والثابتة التي تدوم طويلاً، ليمنحك تجربة عطرية فاخرة.",
+    longDescriptionEn: "Cambodian Oud Oil is a natural oud oil extracted from oud trees in Cambodia. It features a rich and long-lasting scent, giving you a luxurious aromatic experience.",
+    category: "روائح وعطور",
+    categoryEn: "Scents & Perfumes",
+    mainImage: "images/p52.jpg",
+    images: ["images/p52.jpg",],
+    details: [
+        "دهن عود طبيعي",
+        "من كمبوديا",
+        "رائحة غنية وثابتة"
+    ],
+    detailsEn: [
+        "Natural oud oil",
+        "From Cambodia",
+        "Rich and long-lasting scent"
+    ]
+},
+
+// المنتج الثامن - دهن عود كاوياي ملكي
+{
+    id: "51_p8",
+    name: "دهن عود كاوياي ملكي",
+    nameEn: "Royal Kawayi Oud Oil",
+    description: "دهن عود كاوياي ملكي فاخر، يتميز برائحته الملكية والثبات العالي.",
+    descriptionEn: "Premium Royal Kawayi oud oil, characterized by its royal scent and high longevity.",
+    longDescription: "دهن عود كاوياي ملكي هو زيت عود طبيعي فاخر يتميز برائحته الملكية والثبات العالي. يمنحك تجربة عطرية استثنائية تناسب المناسبات الخاصة.",
+    longDescriptionEn: "Royal Kawayi Oud Oil is a luxury natural oud oil characterized by its royal scent and high longevity. It gives you an exceptional aromatic experience suitable for special occasions.",
+    category: "روائح وعطور",
+    categoryEn: "Scents & Perfumes",
+    mainImage: "images/p52.jpg",
+    images: ["images/p52.jpg",],
+    details: [
+        "دهن عود طبيعي فاخر",
+        "نوع كاوياي ملكي",
+        "رائحة ملكية",
+        "ثبات عالي"
+    ],
+    detailsEn: [
+        "Luxury natural oud oil",
+        "Royal Kawayi type",
+        "Royal scent",
+        "High longevity"
+    ]
+},
+
+// المنتج التاسع - دهن عود أساس فاخر
+{
+    id: "51_p9",
+    name: "دهن عود أساس فاخر",
+    nameEn: "Premium Base Oud Oil",
+    description: "دهن عود أساس فاخر، يستخدم كقاعدة ممتازة للخلطات العطرية.",
+    descriptionEn: "Premium base oud oil, used as an excellent base for fragrance blends.",
+    longDescription: "دهن عود أساس فاخر هو زيت عود طبيعي عالي الجودة، يستخدم كقاعدة ممتازة للخلطات العطرية. يتميز بجودته العالية ونقائه، مما يجعله خيارًا مثاليًا لمحبي العطور.",
+    longDescriptionEn: "Premium Base Oud Oil is a high-quality natural oud oil used as an excellent base for fragrance blends. It features high quality and purity, making it an ideal choice for fragrance lovers.",
+    category: "روائح وعطور",
+    categoryEn: "Scents & Perfumes",
+    mainImage: "images/p52.jpg",
+    images: ["images/p52.jpg",],
+    details: [
+        "دهن عود طبيعي",
+        "أساس فاخر للخلطات",
+        "نقاء عالي"
+    ],
+    detailsEn: [
+        "Natural oud oil",
+        "Premium base for blends",
+        "High purity"
+    ]
+},
+
+// المنتج العاشر - دهن عود LE
+{
+    id: "51_p10",
+    name: "دهن عود LE",
+    nameEn: "LE Oud Oil",
+    description: "دهن عود LE الفاخر، يتميز برائحته العصرية والجذابة.",
+    descriptionEn: "Premium LE oud oil, characterized by its modern and attractive scent.",
+    longDescription: "دهن عود LE هو زيت عود طبيعي فاخر يتميز برائحته العصرية والجذابة. يمنحك تجربة عطرية فريدة تجمع بين الأصالة والحداثة.",
+    longDescriptionEn: "LE Oud Oil is a luxury natural oud oil characterized by its modern and attractive scent. It gives you a unique aromatic experience combining authenticity and modernity.",
+    category: "روائح وعطور",
+    categoryEn: "Scents & Perfumes",
+    mainImage: "images/p52.jpg",
+    images: ["images/p52.jpg",],
+    details: [
+        "دهن عود طبيعي فاخر",
+        "رائحة عصرية وجذابة"
+    ],
+    detailsEn: [
+        "Luxury natural oud oil",
+        "Modern and attractive scent"
+    ]
+},
+
+// المنتج الحادي عشر - مخلط مليبو
+{
+    id: "51_p11",
+    name: "مخلط مليبو",
+    nameEn: "Malibu Blend",
+    description: "مخلط عطري فاخر بنفحات استوائية ومنعشة.",
+    descriptionEn: "Luxury fragrance blend with tropical and refreshing notes.",
+    longDescription: "مخلط مليبو هو مزيج عطري فاخر يجمع بين النفحات الاستوائية المنعشة والروائح الشرقية الدافئة. يمنحك تجربة عطرية فريدة تناسب جميع الأوقات.",
+    longDescriptionEn: "Malibu Blend is a luxury fragrance mix combining refreshing tropical notes with warm oriental scents. It gives you a unique aromatic experience suitable for all times.",
+    category: "روائح وعطور",
+    categoryEn: "Scents & Perfumes",
+    mainImage: "images/p52.jpg",
+    images: ["images/p52.jpg",],
+    details: [
+        "مخلط عطري فاخر",
+        "نفحات استوائية ومنعشة",
+        "مزيج شرقي غربي"
+    ],
+    detailsEn: [
+        "Luxury fragrance blend",
+        "Tropical and refreshing notes",
+        "Eastern-Western fusion"
+    ]
+},
+
+// المنتج الثاني عشر - دهن عود تراد خنين
+{
+    id: "51_p12",
+    name: "دهن عود تراد خنين",
+    nameEn: "Trad Khanin Oud Oil",
+    description: "دهن عود تراد خنين الفاخر، يتميز برائحته التقليدية الأصيلة.",
+    descriptionEn: "Premium Trad Khanin oud oil, characterized by its authentic traditional scent.",
+    longDescription: "دهن عود تراد خنين هو زيت عود طبيعي فاخر يتميز برائحته التقليدية الأصيلة. يمنحك تجربة عطرية تعبر عن التراث والعراقة.",
+    longDescriptionEn: "Trad Khanin Oud Oil is a luxury natural oud oil characterized by its authentic traditional scent. It gives you an aromatic experience that reflects heritage and authenticity.",
+    category: "روائح وعطور",
+    categoryEn: "Scents & Perfumes",
+    mainImage: "images/p52.jpg",
+    images: ["images/p52.jpg",],
+    details: [
+        "دهن عود طبيعي فاخر",
+        "رائحة تقليدية أصيلة"
+    ],
+    detailsEn: [
+        "Luxury natural oud oil",
+        "Authentic traditional scent"
+    ]
+}
+                ]
+            },
+            {
+                id:53,
+                name:"ناسامات واف",
+                nameEn:"Nasamat Waf",
+                emirate:"",
+                description:"بخور وعطور",
+                descriptionEn:"Oud & Perfumes",
+                longDescription:"مشروع مرخص من الدائرة الاقتصادية. الرجاء الطلب قبل يوم أو يومين. للتواصل عبر الدايركت أو الواتساب. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"A project licensed by the Economic Department. Please order 1-2 days in advance. Contact via DM or WhatsApp. Delivery to all Emirates of the UAE.",
+                image:"images/p53.jpg",
+                phone:"",
+                whatsapp:"+971509644505",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "nasamat_waf_ae" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"روائح وعطور",
+                categoryEn:"Scents & Perfumes",
+                products:[
+                    // المنتج الأول - كيك الإفطار (Breakfast cake)
+{
+    id: "53_p1",
+    name: "كيك الإفطار",
+    nameEn: "Breakfast Cake",
+    description: "كيك شهي مثالي لبدء يومك بنكهة رائعة وقوام هش.",
+    descriptionEn: "Delicious cake perfect for starting your day with great flavor and fluffy texture.",
+    longDescription: "كيك الإفطار هو كيك شهي مثالي لبدء يومك بنكهة رائعة وقوام هش. يقدم بحجم مناسب للعائلة، ويمكن تناوله مع القهوة أو الشاي أو الحليب. يتميز بمكوناته الطازجة وخلوه من المواد الحافظة.",
+    longDescriptionEn: "Breakfast Cake is a delicious cake perfect for starting your day with great flavor and fluffy texture. Served in a family size, it can be enjoyed with coffee, tea, or milk. It features fresh ingredients and is free from preservatives.",
+    category: "حلويات",
+    categoryEn: "Sweets",
+    mainImage: "images/p53-1.jpg",
+    images: [
+        "images/p53-1.jpg",
+        "images/p53-1-1.jpg",
+        "images/p53-1-2.jpg",
+    ],
+    details: [
+        "حجم مناسب للعائلة",
+        "مكونات طازجة",
+        "خالٍ من المواد الحافظة",
+        "مثالي مع القهوة أو الشاي"
+    ],
+    detailsEn: [
+        "Family size",
+        "Fresh ingredients",
+        "Preservative-free",
+        "Perfect with coffee or tea"
+    ]
+},
+
+// المنتج الثاني - بيتيفور (petitfor)
+{
+    id: "53_p2",
+    name: "بيتيفور",
+    nameEn: "Petit Four",
+    description: "تشكيلة من الحلويات الصغيرة الفرنسية التقليدية.",
+    descriptionEn: "Selection of traditional French small pastries.",
+    longDescription: "البيتيفور هو تشكيلة من الحلويات الصغيرة الفرنسية التقليدية، مثالية للتقديم في المناسبات والضيافة. تأتي بأنواع وأشكال متعددة، مزينة بشكل فني وجذاب، وتتميز بقوامها الهش وطعمها الرقيق.",
+    longDescriptionEn: "Petit Four is a selection of traditional French small pastries, perfect for serving at occasions and hospitality. It comes in multiple types and shapes, artistically decorated, characterized by its crumbly texture and delicate taste.",
+    category: "حلويات",
+    categoryEn: "Sweets",
+    mainImage: "images/p53-2.jpg",
+    images: [
+        "images/p53-2.jpg",
+        "images/p53-2-1.jpg",
+        "images/p53-2-2.jpg",
+        "images/p53-2-3.jpg",
+    ],
+    details: [
+        "تشكيلة متنوعة من الحلويات الصغيرة",
+        "تصميم فني وجذاب",
+        "مثالية للمناسبات والضيافة",
+        "قوام هش وطعم رقيق"
+    ],
+    detailsEn: [
+        "Assorted small pastries",
+        "Artistic and attractive design",
+        "Perfect for occasions and hospitality",
+        "Crumbly texture and delicate taste"
+    ]
+},
+
+// المنتج الثالث - ماجيك بار (Magic Bar)
+{
+    id: "53_p3",
+    name: "ماجيك بار",
+    nameEn: "Magic Bar",
+    description: "حلوى طبقات تجمع بين البسكويت والكراميل والشوكولاتة.",
+    descriptionEn: "Layered dessert combining biscuit, caramel, and chocolate.",
+    longDescription: "ماجيك بار هو حلوى طبقات سحرية تجمع بين قاعدة البسكويت المقرمش، وطبقة الكراميل الناعم، وغطاء الشوكولاتة الغنية. تقدم على شكل قضيب سحري لذيذ يذوب في الفم، مثالية لعشاق الحلويات الغنية.",
+    longDescriptionEn: "Magic Bar is a magical layered dessert combining a crispy biscuit base, soft caramel layer, and rich chocolate topping. Served in a delicious magical bar shape that melts in the mouth, perfect for rich dessert lovers.",
+    category: "حلويات",
+    categoryEn: "Sweets",
+    mainImage: "images/p53-3.jpg",
+    images: [
+        "images/p53-3-1.jpg",
+    ],
+    details: [
+        "قاعدة بسكويت مقرمش",
+        "طبقة كراميل ناعم",
+        "غطاء شوكولاتة غنية",
+        "شكل قضيب سحري",
+        "تذوب في الفم"
+    ],
+    detailsEn: [
+        "Crispy biscuit base",
+        "Soft caramel layer",
+        "Rich chocolate topping",
+        "Magical bar shape",
+        "Melts in the mouth"
+    ]
+},
+
+// المنتج الرابع - نيويورك كوكيز (New York cookies)
+{
+    id: "53_p4",
+    name: "نيويورك كوكيز",
+    nameEn: "New York Cookies",
+    description: "كوكيز على الطريقة النيويوركية، كبير الحجم ومليء بقطع الشوكولاتة.",
+    descriptionEn: "New York style cookies, large size packed with chocolate chunks.",
+    longDescription: "كوكيز على الطريقة النيويوركية الأصيلة، كبير الحجم ومليء بقطع الشوكولاتة البلجيكية الفاخرة. يتميز بقوامه المقرمش من الخارج والطري من الداخل، ليقدم تجربة كوكيز فاخرة لا تُقاوم.",
+    longDescriptionEn: "Authentic New York style cookies, large size packed with premium Belgian chocolate chunks. Characterized by its crispy outside and soft inside, offering an irresistible luxury cookie experience.",
+    category: "حلويات",
+    categoryEn: "Sweets",
+    mainImage: "images/p53-4.jpg",
+    images: [
+        "images/p53-4.jpg",
+        "images/p53-4-1.jpg"
+    ],
+    details: [
+        "كبير الحجم",
+        "مليء بقطع الشوكولاتة البلجيكية",
+        "مقرمش من الخارج",
+        "طري من الداخل",
+        "بطريقة نيويورك الأصيلة"
+    ],
+    detailsEn: [
+        "Large size",
+        "Packed with Belgian chocolate chunks",
+        "Crispy outside",
+        "Soft inside",
+        "Authentic New York style"
+    ]
+},
+
+// المنتج الخامس - براوني كوكيز (Brown cookies)
+{
+    id: "53_p5",
+    name: "براوني كوكيز",
+    nameEn: "Brownie Cookies",
+    description: "كوكيز غني بالشوكولاتة بقوام يشبه البراوني.",
+    descriptionEn: "Rich chocolate cookies with brownie-like texture.",
+    longDescription: "كوكيز براوني غني بالشوكولاتة الداكنة الفاخرة، بقوام كثيف يشبه البراوني الطازج. يحتوي على قطع الشوكولاتة الذائبة التي تضفي نكهة غنية وملمساً لا يقاوم. مثالي لعشاق الشوكولاتة.",
+    longDescriptionEn: "Rich brownie cookies made with premium dark chocolate, with a dense texture similar to fresh brownie. Contains melted chocolate chunks that add rich flavor and irresistible texture. Perfect for chocolate lovers.",
+    category: "حلويات",
+    categoryEn: "Sweets",
+    mainImage: "images/p53-5.jpg",
+    images: [
+        "images/p53-5.jpg",
+    ],
+    details: [
+        "شوكولاتة داكنة فاخرة",
+        "قوام كثيف يشبه البراوني",
+        "قطع شوكولاتة ذائبة",
+        "غني ولذيذ",
+        "لعشاق الشوكولاتة"
+    ],
+    detailsEn: [
+        "Premium dark chocolate",
+        "Dense brownie-like texture",
+        "Melted chocolate chunks",
+        "Rich and delicious",
+        "For chocolate lovers"
+    ]
+},
+
+// المنتج السادس - مكس كوكيز (Mix cookies)
+{
+    id: "53_p6",
+    name: "مكس كوكيز",
+    nameEn: "Mix Cookies",
+    description: "تشكيلة من أنواع الكوكيز المختلفة، مزيج رائع يناسب جميع الأذواق.",
+    descriptionEn: "A variety of different cookie types, a wonderful mix suitable for all tastes.",
+    longDescription: "تشكيلة مكس كوكيز تجمع بين أشهى أنواع الكوكيز في علبة واحدة، مزيج رائع من النكهات التي تناسب جميع الأذواق. مثالية للمشاركة مع العائلة والأصدقاء، أو لمن يحب التنويع.",
+    longDescriptionEn: "Mix Cookies assortment brings together the most delicious cookie types in one box, a wonderful blend of flavors suitable for all tastes. Perfect for sharing with family and friends, or for those who like variety.",
+    category: "حلويات",
+    categoryEn: "Sweets",
+    mainImage: "images/p53-6.jpg",
+    images: [
+        "images/p53-6.jpg",
+        "images/p53-6-1.jpg",
+    ],
+    details: [
+        "تشكيلة متنوعة من الكوكيز",
+        "مزيج من النكهات المختلفة",
+        "مثالية للمشاركة",
+        "تناسب جميع الأذواق",
+        "علبة واحدة تجمع الأفضل"
+    ],
+    detailsEn: [
+        "Assorted cookie varieties",
+        "Blend of different flavors",
+        "Perfect for sharing",
+        "Suitable for all tastes",
+        "One box brings the best"
+    ]
+}
+                ]
+            },
+            {
+                id:54,
+                name:"عود تو جو",
+                nameEn:"Oud2Go",
+                emirate:"",
+                description:"عود فاخر",
+                descriptionEn:"Premium Oud",
+                longDescription:"براند إماراتي 🇦🇪، علامة تجارية مسجلة ®️، مختص في تجارة العود. نوفر لكم أجود وأفضل أنواع العود، ونقدمها لكم في صندوق فخم حسب اختياركم. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"An Emirati brand 🇦🇪, registered trademark ®️, specialized in Oud trade. We provide you with the finest and best types of Oud, presented in a luxurious box of your choice. Delivery to all Emirates of the UAE.",
+                image:"images/p54.jpg",
+                phone:"",
+                whatsapp:"",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "oud2.go" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"روائح وعطور",
+                categoryEn:"Scents & Perfumes",
+                products:[]
+            },
+            {
+                id:55,
+                name:"فبراير",
+                nameEn:"February",
+                emirate:"الشارقة",
+                description:"هدايا ومنتجات رومانسية",
+                descriptionEn:"Gifts & Romantic Products",
+                longDescription:"شارك الحب مع فبراير 💞✨. الرجاء الطلب قبل 48 ساعة. الطلب عبر الواتساب فقط. متوفر استلام شخصي من الشارقة أو توصيل. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"Share love with February 💞✨. Please order 48 hours in advance. Order via WhatsApp only. Pickup available in Sharjah or delivery. Delivery to all Emirates of the UAE.",
+                image:"images/p55.jpg",
+                phone:"971542694703",
+                whatsapp:"971542694703",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "ae.february" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"هدايا",
+                categoryEn:"Gifts",
+                products:[]
+            },
+            {
+                id:56,
+                name:"ميرني",
+                nameEn:"Mirny",
+                emirate:"",
+                description:"مجوهرات وهدايا",
+                descriptionEn:"Jewellery & Gifts",
+                longDescription:"(سابقاً Adamas) متخصصون في المجوهرات والهدايا الفاخرة. نوصل لجميع أنحاء العالم من الإمارات. للطلب عبر الموقع الإلكتروني أو الواتساب.",
+                longDescriptionEn:"(formerly Adamas) Specialized in luxury jewellery and gifts. We ship worldwide from the UAE. Order via our website or WhatsApp.",
+                image:"images/p56.jpg",
+                phone:"",
+                whatsapp:"+971 52 733 7411", 
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "mirny.ae" },
+                    { type: "website", value: "https://mirny.net/" } 
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"هدايا",
+                categoryEn:"Gifts",
+                products:[]
+            },
+            {
+                id:57,
+                name:"كيوت ستورز",
+                nameEn:"Cute Stores",
+                emirate:"",
+                description:"دفاتر وأدوات مميزة",
+                descriptionEn:"Notebooks & Stationery",
+                longDescription:"بيع دفاتر وأدوات مميزة. للطلب عبر الرابط في البايو.",
+                longDescriptionEn:"Selling distinctive notebooks and stationery. Order via the link in bio. Shipping within UAE only.",
+                image:"images/p57.jpg",
+                phone:"",
+                whatsapp:"",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "cutestores.ll" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"يدويات",
+                categoryEn:"Handmade",
+                products:[]
+            },
+            {
+                id:58,
+                name:"ودادي بوتيك",
+                nameEn:"Wedady Boutique",
+                emirate:"",
+                description:"بوتيك",
+                descriptionEn:"Boutique",
+                longDescription:"نعمل بكل حب من أجلكم ونقدم خدمة تليق بكم. للطلب والاستفسار عبر الواتساب.",
+                longDescriptionEn:"We work with love to serve you and provide a service that suits you. For orders and inquiries via WhatsApp. Delivery to all Emirates of the UAE.",
+                image:"images/p58.jpg",
+                phone:"",
+                whatsapp:"+971522869999",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "wedady_boutique" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"",
+                categoryEn:"",
+                products:[]
+            },
+            {
+                id:59,
+                name:"همس الدجى",
+                nameEn:"Hamsah",
+                emirate:"",
+                description:"دخون وعطور",
+                descriptionEn:"Oud & Perfumes",
+                longDescription:"متخصصون في تجارة وصناعة الدخون والعطور الفاخرة. مرخصون من دائرة التنمية الاقتصادية. للطلب والتواصل عبر الرقم الموجود. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"Specialized in the trade and manufacturing of luxury Oud and perfumes. Licensed by the Economic Development Department. For orders and inquiries via the provided number. Delivery to all Emirates of the UAE.",
+                image:"images/p59.jpg",
+                phone:"9710568369909",
+                whatsapp:"971568369909",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "hamsah1101" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"روائح وعطور",
+                categoryEn:"Scents & Perfumes",
+                products:[]
+            },
+            {
+                id:60,
+                name:"ساندويتش زون",
+                nameEn:"Sandwich Zone",
+                emirate:"أبوظبي",
+                description:"ميني بوفيه",
+                descriptionEn:"Mini Buffet",
+                longDescription:"ميني بوفيه يقدم أفضل الأطعمة لأفضل اللحظات في أبوظبي. للطلب عبر الأرقام التالية: 028869000 و 0501777397.",
+                longDescriptionEn:"A mini buffet offering the best food for the best moments in Abu Dhabi. We deliver to all Emirates of the UAE. To order, please call: 028869000 or 0501777397.",
+                image:"images/p60.jpg",
+                phone:"028869000",
+                whatsapp:"971501777397",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "sandwich_zone" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"أطعمة ومشروبات",
+                categoryEn:"Food & Beverages",
+                products:[]
+            },
+            {
+                id:61,
+                name:"نيفلوري",
+                nameEn:"Nivlori",
+                emirate:"",
+                description:"أطعمة ومشروبات",
+                descriptionEn:"Food & Beverages",
+                longDescription:"اللهم إني استودعتك رزقي. متوفر توصيل داخل الإمارات. متوفر أيضاً في @granita_cafe. مرخص من التنمية الاقتصادية. للطلب عبر الواتساب.",
+                longDescriptionEn:"O Allah, I entrust You with my sustenance. Delivery available within the UAE. Also available at @granita_cafe. Licensed by the Economic Development. To order via WhatsApp.",
+                image:"images/p61.jpg",
+                phone:"",
+                whatsapp:"971558825381",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "nivlori._.food" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"أطعمة ومشروبات",
+                categoryEn:"Food & Beverages",
+                products:[]
+            },
+            {
+                id:62,
+                name:"فلافي بايتس",
+                nameEn:"Fluffy Bites",
+                emirate:"أبوظبي",
+                description:"حلويات منزلية وكيك أعياد الميلاد",
+                descriptionEn:"Homemade Desserts & Birthday Cakes",
+                longDescription:"حلويات منزلية شهية وكيك أعياد الميلاد، تُصنع بحب! 🎂✨ موقعنا في أبوظبي، الإمارات. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"Delicious homemade desserts and birthday cakes, made with love! 🎂✨ Located in Abu Dhabi, UAE. Delivery to all Emirates of the UAE.",
+                image:"images/p62.jpg",
+                phone:"",
+                whatsapp:"",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "fluffybites_uae" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"حلويات",
+                categoryEn:"Sweets",
+                products:[]
+            },
+            {
+                id:63,
+                name:"شوغر آند سبايس",
+                nameEn:"Sugar & Spice",
+                emirate:"أبوظبي",
+                description:"حلويات",
+                descriptionEn:"Sweets",
+                longDescription:"صُنع بحب. مرخصين من دائرة التنمية الاقتصادية. نوصل لجميع إمارات الدولة. للطلب عبر الواتساب.",
+                longDescriptionEn:"Made with love. Licensed by the Economic Development Department. Delivery to all Emirates of the UAE. Order via WhatsApp.",
+                image:"images/p63.jpg",
+                phone:"",
+                whatsapp:"971563958531",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "sugarandspice.ae_" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"حلويات",
+                categoryEn:"Sweets",
+                products:[
+                    
+  {
+    id: "63_p1",
+    name: "بوكس البوفيه المشكل (20 حبة)",
+    nameEn: "Mixed Buffet Box (20 pcs)",
+    description: "بوكس ضيافة يجمع أشهى المقبلات والمعجنات، مثالي للمناسبات والاجتماعات.",
+    descriptionEn: "A hospitality box featuring a selection of delicious appetizers and pastries, perfect for events and gatherings.",
+    longDescription: "بوكس البوفيه المشكل يحتوي على 20 قطعة متنوعة من المقبلات الساخنة والباردة، تشمل أصناف مثل ورق عنب، سمبوسة، مسخن، حمص باللحم، دجاج مشوي، باستا وغيرها. يتم تحضيرها طازجة يومياً بأجود المكونات.",
+    longDescriptionEn: "The Mixed Buffet Box contains 20 assorted hot and cold appetizers, including stuffed grape leaves, samosa, musakhan, hummus with meat, grilled chicken, pasta and more. Prepared fresh daily with the finest ingredients.",
+    category: "أطعمة ومشروبات",
+    categoryEn: "Food & Beverages",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "20 قطعة مشكلة",
+      "تشمل ورق عنب، سمبوسة، مسخن، دجاج، باستا",
+      "محضرة طازجة يومياً",
+      "مثالية للولائم والمناسبات"
+    ],
+    detailsEn: [
+      "20 assorted pieces",
+      "Includes grape leaves, samosa, musakhan, chicken, pasta",
+      "Prepared fresh daily",
+      "Ideal for banquets and events"
+    ]
+  },
+  {
+    id: "63_p2",
+    name: "مسخن رول",
+    nameEn: "Musakhan Rolls",
+    description: "لفائف المسخن المحشوة بخليط الدجاج والبصل والسماق، مغطاة بالصنوبر.",
+    descriptionEn: "Musakhan rolls stuffed with chicken, onions and sumac, topped with pine nuts.",
+    longDescription: "طبق فلسطيني تقليدي: لفائف الخبز المحشوة بخليط دجاج متبل بالبصل والسماق، مغطاة بزيت الزيتون والصنوبر المحمص. مخبوزة حتى تكتسب لوناً ذهبياً.",
+    longDescriptionEn: "A classic Palestinian dish: bread rolls stuffed with spiced chicken, onions and sumac, drizzled with olive oil and topped with toasted pine nuts. Baked until golden.",
+    category: "أطعمة ومشروبات",
+    categoryEn: "Food & Beverages",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "حشوة دجاج وبصل وسماق",
+      "مغطاة بالصنوبر وزيت الزيتون",
+      "طبق فلسطيني تقليدي"
+    ],
+    detailsEn: [
+      "Stuffed with chicken, onions and sumac",
+      "Topped with pine nuts and olive oil",
+      "Traditional Palestinian dish"
+    ]
+  },
+  {
+    id: "63_p3",
+    name: "سمبوسة",
+    nameEn: "Samosa",
+    description: "عجينة مثلثة محشوة بحشوات متنوعة، مقلية حتى الذهبية.",
+    descriptionEn: "Triangular pastry filled with various stuffings, fried until golden.",
+    longDescription: "سمبوسة منزلية هشة، متوفرة بحشوات اللحم المفروم، الجبن، أو الخضار. تقلى طازجة عند الطلب وتقدم مع صوصات منزلية.",
+    longDescriptionEn: "Homemade crispy samosas, available with minced meat, cheese, or vegetable fillings. Freshly fried upon order and served with homemade dips.",
+    category: "أطعمة ومشروبات",
+    categoryEn: "Food & Beverages",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "خيارات الحشو: لحم، جبن، خضار",
+      "مقلية طازجة",
+      "تقدم مع صوص منزلي"
+    ],
+    detailsEn: [
+      "Filling options: meat, cheese, vegetables",
+      "Freshly fried",
+      "Served with homemade sauce"
+    ]
+  },
+  {
+    id: "63_p4",
+    name: "سبرنغ رول",
+    nameEn: "Spring Roll",
+    description: "رقائق محشوة بالخضروات أو اللحم، مقلية ومقرمشة.",
+    descriptionEn: "Pastry rolls stuffed with vegetables or meat, fried and crispy.",
+    longDescription: "سبرنغ رول آسيوي الطابع، محشو بمزيج من الخضروات الطازجة أو اللحم المفروم، ملفوف برقائق رقيقة ومقلي حتى يصبح مقرمشاً. يقدم مع صوص حلو وحامض.",
+    longDescriptionEn: "Asian-style spring rolls stuffed with fresh vegetables or minced meat, wrapped in thin pastry and fried until crispy. Served with sweet and sour sauce.",
+    category: "أطعمة ومشروبات",
+    categoryEn: "Food & Beverages",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "خيارات: خضار أو لحم",
+      "مقرمشة وذهبية",
+      "تقدم مع صوص حلو وحامض"
+    ],
+    detailsEn: [
+      "Options: vegetable or meat",
+      "Crispy and golden",
+      "Served with sweet and sour sauce"
+    ]
+  },
+  {
+    id: "63_p5",
+    name: "ورق عنب",
+    nameEn: "Stuffed Grape Leaves",
+    description: "أوراق عنب محشوة بخليط الأرز والبهارات، مطبوخة حتى النضج.",
+    descriptionEn: "Grape leaves stuffed with rice and spice mixture, cooked until tender.",
+    longDescription: "ورق عنب على الطريقة العربية التقليدية، محشو بخليط الأرز والطماطم والبقدونس والبهارات. يطهى ببطء في مرق الليمون ليكتسب نكهة حمضية منعشة.",
+    longDescriptionEn: "Traditional Arabic stuffed grape leaves filled with a mixture of rice, tomatoes, parsley and spices. Slowly cooked in lemon broth for a refreshing tangy flavor.",
+    category: "أطعمة ومشروبات",
+    categoryEn: "Food & Beverages",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "محشوة بالأرز والبهارات",
+      "مطبوخة بمرق الليمون",
+      "مقبلات تقليدية"
+    ],
+    detailsEn: [
+      "Stuffed with rice and spices",
+      "Cooked in lemon broth",
+      "Traditional appetizer"
+    ]
+  },
+  {
+    id: "63_p6",
+    name: "حمص باللحم",
+    nameEn: "Hummus with Meat",
+    description: "حمص مطحون بالطحينة مغطى بقطع لحم غنم وبقدونس.",
+    descriptionEn: "Mashed hummus with tahini, topped with lamb pieces and parsley.",
+    longDescription: "حمص منزلي كريمي، يزين بقطع لحم غنم مقلية بالزبدة والصنوبر، ويقدم مع زيت الزيتون. طبق غني بالبروتين والنكهة.",
+    longDescriptionEn: "Creamy homemade hummus topped with lamb pieces fried in butter and pine nuts, drizzled with olive oil. A protein-rich and flavorful dish.",
+    category: "أطعمة ومشروبات",
+    categoryEn: "Food & Beverages",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "حمص طري مع طحينة",
+      "لحم غنم مفروم أو مكعبات",
+      "مزين بالصنوبر وزيت الزيتون"
+    ],
+    detailsEn: [
+      "Smooth hummus with tahini",
+      "Lamb minced or cubed",
+      "Garnished with pine nuts and olive oil"
+    ]
+  },
+  {
+    id: "63_p7",
+    name: "دجاج مشوي",
+    nameEn: "Grilled Chicken",
+    description: "قطع دجاج متبلة ومشوية على الفحم.",
+    descriptionEn: "Marinated chicken pieces grilled over charcoal.",
+    longDescription: "دجاج منزوع العظم منقوع في تتبيلة لبن وزبادي وبهارات شرقية، ثم يشوى على الفحم حتى يحمر. يقدم مع أرز أو خبز.",
+    longDescriptionEn: "Boneless chicken marinated in yogurt and oriental spices, then charcoal-grilled until charred. Served with rice or bread.",
+    category: "أطعمة ومشروبات",
+    categoryEn: "Food & Beverages",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "دجاج متبل بالبهارات",
+      "مشوي على الفحم",
+      "طري ومدخن"
+    ],
+    detailsEn: [
+      "Chicken marinated in spices",
+      "Charcoal-grilled",
+      "Tender and smoky"
+    ]
+  },
+  {
+    id: "63_p8",
+    name: "دجاج تكا",
+    nameEn: "Chicken Tikka",
+    description: "مكعبات دجاج مشوية على الطريقة الباكستانية.",
+    descriptionEn: "Grilled chicken cubes in Pakistani style.",
+    longDescription: "دجاج تكا: قطع صدر دجاج متبلة بالزبادي والبهارات الباكستانية (غارام ماسالا، كزبرة، كمون)، ثم تشوى في الفرن أو على التندور. يقدم مع صوص ريتا.",
+    longDescriptionEn: "Chicken tikka: breast cubes marinated in yogurt and Pakistani spices (garam masala, coriander, cumin), then grilled in oven or tandoor. Served with raita sauce.",
+    category: "أطعمة ومشروبات",
+    categoryEn: "Food & Beverages",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "دجاج مكعبات",
+      "متبل ببهارات باكستانية",
+      "مشوي في التندور"
+    ],
+    detailsEn: [
+      "Cubed chicken",
+      "Marinated in Pakistani spices",
+      "Tandoor-grilled"
+    ]
+  },
+  {
+    id: "63_p9",
+    name: "باستا بيضا",
+    nameEn: "White Pasta",
+    description: "باستا كريمية بصلصة بيضاء غنية.",
+    descriptionEn: "Creamy pasta with rich white sauce.",
+    longDescription: "باستا مسلوقة ممزوجة بصلصة بيضاء كريمية (بشاميل أو ألبان) مع لمسة من جبن البارميزان والفلفل الأبيض.",
+    longDescriptionEn: "Boiled pasta tossed in a creamy white sauce (béchamel or dairy) with a touch of parmesan cheese and white pepper.",
+    category: "أطعمة ومشروبات",
+    categoryEn: "Food & Beverages",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "باستا بالصلصة البيضاء",
+      "كريمية وغنية",
+      "تقدم ساخنة"
+    ],
+    detailsEn: [
+      "Pasta in white sauce",
+      "Creamy and rich",
+      "Served hot"
+    ]
+  },
+  {
+    id: "63_p10",
+    name: "مكرونة حمرا",
+    nameEn: "Red Pasta",
+    description: "باستا بصلصة الطماطم الغنية.",
+    descriptionEn: "Pasta with rich tomato sauce.",
+    longDescription: "باستا مسلوقة ممزوجة بصلصة طماطم منزلية مع الثوم والريحان والزعتر، مضاف إليها خضروات اختيارية.",
+    longDescriptionEn: "Boiled pasta tossed in homemade tomato sauce with garlic, basil and thyme, optional vegetables added.",
+    category: "أطعمة ومشروبات",
+    categoryEn: "Food & Beverages",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "باستا مع صلصة طماطم",
+      "طعم كلاسيكي",
+      "يمكن إضافة خضروات"
+    ],
+    detailsEn: [
+      "Pasta with tomato sauce",
+      "Classic flavor",
+      "Vegetables can be added"
+    ]
+  },
+  {
+    id: "63_p11",
+    name: "بينك باستا",
+    nameEn: "Pink Pasta",
+    description: "باستا ممزوجة بصلصة وردية كريمية تجمع بين الأحمر والأبيض.",
+    descriptionEn: "Pasta blended with a creamy pink sauce combining red and white.",
+    longDescription: "باستا بينك: مزيج متوازن من صلصة الطماطم والكريمة، ينتج لوناً وردياً وطعماً حلواً لذيذاً. تقدم مع جبن مبشور.",
+    longDescriptionEn: "Pink pasta: a balanced blend of tomato sauce and cream, resulting in a pink color and sweetish delicious taste. Served with grated cheese.",
+    category: "أطعمة ومشروبات",
+    categoryEn: "Food & Beverages",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "مزيج صلصة حمراء وكريمة",
+      "لون وردي جذاب",
+      "طعم كريمي"
+    ],
+    detailsEn: [
+      "Mix of red sauce and cream",
+      "Attractive pink color",
+      "Creamy taste"
+    ]
+  },
+  {
+    id: "63_p12",
+    name: "كشري",
+    nameEn: "Koshari",
+    description: "طبق مصري تقليدي يتكون من عدس وأرز ومكرونة وصلصة طماطم حارة.",
+    descriptionEn: "Traditional Egyptian dish of lentils, rice, pasta and spicy tomato sauce.",
+    longDescription: "كشري مصري أصيل: طبقات من الأرز، العدس البني، المكرونة، وحمص، مغطاة بصلصة طماطم حارة وبصل مقرمش.",
+    longDescriptionEn: "Authentic Egyptian koshari: layers of rice, brown lentils, pasta and chickpeas, topped with spicy tomato sauce and crispy onions.",
+    category: "أطعمة ومشروبات",
+    categoryEn: "Food & Beverages",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "أرز، عدس، مكرونة، حمص",
+      "صلصة طماطم حارة",
+      "بصل مقرمش"
+    ],
+    detailsEn: [
+      "Rice, lentils, pasta, chickpeas",
+      "Spicy tomato sauce",
+      "Crispy onions"
+    ]
+  },
+  {
+    id: "63_p13",
+    name: "باشميل",
+    nameEn: "Bechamel Pasta",
+    description: "باستا بالفرن مغطاة بصلصة البشاميل والجبن.",
+    descriptionEn: "Oven-baked pasta topped with béchamel sauce and cheese.",
+    longDescription: "طبق باستا مخبوز بالفرن مع صلصة بشاميل غنية بالجبن، طبقات من المعكرونة واللحم المفروم اختياري.",
+    longDescriptionEn: "Oven-baked pasta dish with rich cheese béchamel sauce, layers of pasta and optional minced meat.",
+    category: "أطعمة ومشروبات",
+    categoryEn: "Food & Beverages",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "باستا بالبشاميل والجبن",
+      "مخبوزة في الفرن",
+      "يمكن إضافة لحم مفروم"
+    ],
+    detailsEn: [
+      "Pasta with béchamel and cheese",
+      "Oven-baked",
+      "Minced meat optional"
+    ]
+  },
+  {
+    id: "63_p14",
+    name: "لازانيا",
+    nameEn: "Lasagna",
+    description: "رقائق لازانيا محشوة باللحم وصلصة الطماطم والجبن.",
+    descriptionEn: "Lasagna sheets layered with meat, tomato sauce and cheese.",
+    longDescription: "لازانيا إيطالية بحشوة لحم مفروم متبل، صلصة طماطم، وصلصة بشاميل، مغطاة بجبن موزاريلا وتخبز حتى الذهبية.",
+    longDescriptionEn: "Italian lasagna with spiced minced meat, tomato sauce and béchamel sauce, topped with mozzarella cheese and baked until golden.",
+    category: "أطعمة ومشروبات",
+    categoryEn: "Food & Beverages",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "لحم مفروم وصلصة طماطم",
+      "بشاميل وجبن موزاريلا",
+      "مخبوزة بالفرن"
+    ],
+    detailsEn: [
+      "Minced meat and tomato sauce",
+      "Béchamel and mozzarella",
+      "Oven-baked"
+    ]
+  },
+  {
+    id: "63_p15",
+    name: "نودلز",
+    nameEn: "Noodles",
+    description: "نودلز مقلية مع خضروات وصلصة صويا.",
+    descriptionEn: "Stir-fried noodles with vegetables and soy sauce.",
+    longDescription: "نودلز آسيوية مقلية مع خضروات مشكلة (جزر، فلفل، بروكلي) وصلصة الصويا، يمكن إضافة دجاج أو جمبري.",
+    longDescriptionEn: "Asian stir-fried noodles with mixed vegetables (carrot, pepper, broccoli) and soy sauce, chicken or shrimp can be added.",
+    category: "أطعمة ومشروبات",
+    categoryEn: "Food & Beverages",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "نودلز مقلية مع خضروات",
+      "صلصة صويا",
+      "خيار إضافة دجاج/جمبري"
+    ],
+    detailsEn: [
+      "Stir-fried noodles with vegetables",
+      "Soy sauce",
+      "Option to add chicken/shrimp"
+    ]
+  },
+  {
+    id: "63_p16",
+    name: "صينية بطاطس بالباشميل",
+    nameEn: "Potato Bechamel Tray",
+    description: "شرائح بطاطس مغطاة بصلصة البشاميل والجبن.",
+    descriptionEn: "Potato slices topped with béchamel sauce and cheese.",
+    longDescription: "صينية بطاطس بالفرن: طبقات من البطاطس المسلوقة مع صلصة بشاميل غنية وجبن موزاريلا، مخبوزة حتى ذهبية.",
+    longDescriptionEn: "Oven potato tray: layers of boiled potatoes with rich béchamel sauce and mozzarella cheese, baked until golden.",
+    category: "أطعمة ومشروبات",
+    categoryEn: "Food & Beverages",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "بطاطس شرائح",
+      "بشاميل وجبن",
+      "طبق جانبي أو رئيسي"
+    ],
+    detailsEn: [
+      "Sliced potatoes",
+      "Béchamel and cheese",
+      "Side or main dish"
+    ]
+  },
+  {
+    id: "63_p17",
+    name: "عيش أخضر بالدجاج",
+    nameEn: "Green Rice with Chicken",
+    description: "أرز أخضر ممزوج بالأعشاب وقطع الدجاج.",
+    descriptionEn: "Green rice mixed with herbs and chicken pieces.",
+    longDescription: "عيش أخضر هو أرز مطبوخ مع كزبرة، شبت، بقدونس، وسبانخ، مخلوط مع دجاج مشوي أو مسلوق. طبق صحي ولذيذ.",
+    longDescriptionEn: "Green rice is cooked with coriander, dill, parsley and spinach, mixed with grilled or boiled chicken. A healthy and tasty dish.",
+    category: "أطعمة ومشروبات",
+    categoryEn: "Food & Beverages",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "أرز بالأعشاب الخضراء",
+      "دجاج مشوي",
+      "طبق صحي"
+    ],
+    detailsEn: [
+      "Rice with green herbs",
+      "Grilled chicken",
+      "Healthy dish"
+    ]
+  },
+  {
+    id: "63_p18",
+    name: "عيش صيني",
+    nameEn: "Chinese Rice",
+    description: "أرز مقلي على الطريقة الصينية مع خضروات.",
+    descriptionEn: "Fried rice Chinese style with vegetables.",
+    longDescription: "أرز مقلي مع بيض، بازلاء، جزر، وذرة، بنكهة الصويا. يمكن إضافة دجاج أو جمبري.",
+    longDescriptionEn: "Fried rice with eggs, peas, carrots and corn, flavored with soy sauce. Chicken or shrimp can be added.",
+    category: "أطعمة ومشروبات",
+    categoryEn: "Food & Beverages",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "أرز مقلي بالصويا",
+      "خضروات مشكلة",
+      "يقدم مع اللحوم"
+    ],
+    detailsEn: [
+      "Soy fried rice",
+      "Mixed vegetables",
+      "Served with meats"
+    ]
+  },
+  {
+    id: "63_p19",
+    name: "برياني دجاج",
+    nameEn: "Chicken Biryani",
+    description: "أرز بسمتي مع دجاج متبل وبهارات برياني.",
+    descriptionEn: "Basmati rice with spiced chicken and biryani spices.",
+    longDescription: "برياني دجاج عطري: أرز بسمتي مطبوخ مع دجاج متبل بالبهارات الهندية، زعفران، وماء ورد، يقدم مع صلصة رايتا.",
+    longDescriptionEn: "Aromatic chicken biryani: basmati rice cooked with Indian-spiced chicken, saffron and rose water, served with raita sauce.",
+    category: "أطعمة ومشروبات",
+    categoryEn: "Food & Beverages",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "أرز بسمتي",
+      "دجاج متبل",
+      "زعفران وماء ورد",
+      "يقدم مع رايتا"
+    ],
+    detailsEn: [
+      "Basmati rice",
+      "Spiced chicken",
+      "Saffron and rose water",
+      "Served with raita"
+    ]
+  },
+  {
+    id: "63_p20",
+    name: "مكرونة الطيبين",
+    nameEn: "Special Macaroni",
+    description: "مكرونة بصلصة غنية وقطع لحم، وصفة خاصة.",
+    descriptionEn: "Macaroni in rich sauce with meat pieces, a special recipe.",
+    longDescription: "طبق مكرونة خاص منزل: معكرونة مسلوقة ممزوجة بصلصة طماطم محلية مع قطع لحم غنم وبازلاء، تقدم ساخنة.",
+    longDescriptionEn: "Special homemade macaroni: boiled pasta tossed in local tomato sauce with lamb pieces and peas, served hot.",
+    category: "أطعمة ومشروبات",
+    categoryEn: "Food & Beverages",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "مكرونة بصلصة طماطم",
+      "قطع لحم غنم",
+      "وصفة منزلية"
+    ],
+    detailsEn: [
+      "Macaroni in tomato sauce",
+      "Lamb pieces",
+      "Homemade recipe"
+    ]
+  },
+  {
+    id: "63_p21",
+    name: "فتة ورق عنب",
+    nameEn: "Grape Leaves Fatteh",
+    description: "فتة بالخبز المحمص واللبن مع ورق عنب.",
+    descriptionEn: "Fatteh with toasted bread, yogurt and stuffed grape leaves.",
+    longDescription: "فتة ورق عنب: طبقات من خبز محمص، لبن زبادي، وورق عنب محشو، مغطاة بصوص طحينة وزيت زيتون.",
+    longDescriptionEn: "Grape leaves fatteh: layers of toasted bread, yogurt and stuffed grape leaves, topped with tahini sauce and olive oil.",
+    category: "أطعمة ومشروبات",
+    categoryEn: "Food & Beverages",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "خبز مقرمش",
+      "لبن زبادي",
+      "ورق عنب محشو",
+      "طحينة وزيت زيتون"
+    ],
+    detailsEn: [
+      "Crispy bread",
+      "Yogurt",
+      "Stuffed grape leaves",
+      "Tahini and olive oil"
+    ]
+  },
+  {
+    id: "63_p22",
+    name: "فتة شاورما",
+    nameEn: "Shawarma Fatteh",
+    description: "فتة مع شرائح شاورما لحم أو دجاج.",
+    descriptionEn: "Fatteh with chicken or meat shawarma slices.",
+    longDescription: "فتة الشاورما: خبز محمص، لبن، شاورما لحم أو دجاج، صنوبر، وبقدونس.",
+    longDescriptionEn: "Shawarma fatteh: toasted bread, yogurt, chicken or meat shawarma, pine nuts and parsley.",
+    category: "أطعمة ومشروبات",
+    categoryEn: "Food & Beverages",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "شاورما دجاج أو لحم",
+      "خبز مقرمش",
+      "لبن زبادي",
+      "صنوبر"
+    ],
+    detailsEn: [
+      "Chicken or meat shawarma",
+      "Crispy bread",
+      "Yogurt",
+      "Pine nuts"
+    ]
+  },
+  {
+    id: "63_p23",
+    name: "فتة كفتة",
+    nameEn: "Kofta Fatteh",
+    description: "فتة مع كفتة لحم مشوية.",
+    descriptionEn: "Fatteh with grilled meat kofta.",
+    longDescription: "فتة الكفتة: خبز محمص، لبن زبادي، كفتة لحم مشوية، طحينة، صنوبر.",
+    longDescriptionEn: "Kofta fatteh: toasted bread, yogurt, grilled meat kofta, tahini, pine nuts.",
+    category: "أطعمة ومشروبات",
+    categoryEn: "Food & Beverages",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "كفتة لحم مشوية",
+      "خبز مقرمش",
+      "لبن زبادي",
+      "طحينة"
+    ],
+    detailsEn: [
+      "Grilled meat kofta",
+      "Crispy bread",
+      "Yogurt",
+      "Tahini"
+    ]
+  },
+  {
+    id: "63_p24",
+    name: "فتة تونة",
+    nameEn: "Tuna Fatteh",
+    description: "فتة مع تونة وصلصة طحينة.",
+    descriptionEn: "Fatteh with tuna and tahini sauce.",
+    longDescription: "فتة التونة: خبز محمص، تونة، لبن زبادي، طحينة، خيار مخلل، بقدونس.",
+    longDescriptionEn: "Tuna fatteh: toasted bread, tuna, yogurt, tahini, pickled cucumber, parsley.",
+    category: "أطعمة ومشروبات",
+    categoryEn: "Food & Beverages",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "تونة",
+      "خبز مقرمش",
+      "لبن وطحينة",
+      "خيار مخلل"
+    ],
+    detailsEn: [
+      "Tuna",
+      "Crispy bread",
+      "Yogurt and tahini",
+      "Pickled cucumber"
+    ]
+  },
+  {
+    id: "63_p25",
+    name: "تيراميسو كلاسيك",
+    nameEn: "Classic Tiramisu",
+    description: "حلوى إيطالية كلاسيكية بطبقات من القهوة والجبن.",
+    descriptionEn: "Classic Italian dessert with layers of coffee and mascarpone.",
+    longDescription: "تيراميسو كلاسيك محضر بطريقة منزلية: أصابع ليدي فنغر مغموسة بالقهوة، طبقة كريمة ماسكاربوني، كاكاو خام. متوفر بأحجام صغير، وسط، كبير.",
+    longDescriptionEn: "Homemade classic tiramisu: ladyfingers dipped in coffee, mascarpone cream layer, cocoa powder. Available in small, medium, large sizes.",
+    category: "حلويات",
+    categoryEn: "Sweets",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "طبقات قهوة وكاكاو",
+      "كريمة ماسكاربوني",
+      "أحجام: صغير، وسط، كبير"
+    ],
+    detailsEn: [
+      "Coffee and cocoa layers",
+      "Mascarpone cream",
+      "Sizes: small, medium, large"
+    ]
+  },
+  {
+    id: "63_p26",
+    name: "تيراميسو زعفران",
+    nameEn: "Saffron Tiramisu",
+    description: "تيراميسو بنكهة الزعفران والهيل.",
+    descriptionEn: "Tiramisu flavored with saffron and cardamom.",
+    longDescription: "نسخة شرقية من التيراميسو: أصابع بنكهة الزعفران، كريمة بالهيل وزعفران، تقدم مع فستق حلبي. بأحجام صغير، وسط، كبير.",
+    longDescriptionEn: "Oriental version of tiramisu: saffron-flavored ladyfingers, cardamom and saffron cream, served with pistachio. Available in small, medium, large.",
+    category: "حلويات",
+    categoryEn: "Sweets",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "زعفران وهيل",
+      "فستق حلبي",
+      "أحجام: صغير، وسط، كبير"
+    ],
+    detailsEn: [
+      "Saffron and cardamom",
+      "Pistachio",
+      "Sizes: small, medium, large"
+    ]
+  },
+  {
+    id: "63_p27",
+    name: "كيك دولتشي",
+    nameEn: "Dolce Cake",
+    description: "كيك إسفنجي هش مغطى بطبقة كريمية.",
+    descriptionEn: "Fluffy sponge cake topped with creamy layer.",
+    longDescription: "كيك دولتشي هو كيك فانيليا إسفنجي مع طبقة كريمية خفيفة، يزين بالفواكه أو الشوكولاتة.",
+    longDescriptionEn: "Dolce cake is a vanilla sponge cake with a light creamy layer, decorated with fruits or chocolate.",
+    category: "حلويات",
+    categoryEn: "Sweets",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "كيك إسفنجي هش",
+      "طبقة كريمية",
+      "مزين بالفواكه"
+    ],
+    detailsEn: [
+      "Fluffy sponge cake",
+      "Creamy layer",
+      "Decorated with fruits"
+    ]
+  },
+  {
+    id: "63_p28",
+    name: "تيراميسو طبقات",
+    nameEn: "Layered Tiramisu",
+    description: "تيراميسو مكون من طبقات متعددة من الكريمة والبسكويت.",
+    descriptionEn: "Tiramisu composed of multiple layers of cream and biscuits.",
+    longDescription: "تيراميسو طبقات: وصفة غنية بثلاث طبقات من البسكويت والكريمة، منقوعة بالقهوة ومغطاة بمسحوق الكاكاو.",
+    longDescriptionEn: "Layered tiramisu: rich recipe with three layers of biscuits and cream, soaked in coffee and dusted with cocoa.",
+    category: "حلويات",
+    categoryEn: "Sweets",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "طبقات متعددة",
+      "كريمة كثيفة",
+      "قهوة وكاكاو"
+    ],
+    detailsEn: [
+      "Multiple layers",
+      "Dense cream",
+      "Coffee and cocoa"
+    ]
+  },
+  {
+    id: "63_p29",
+    name: "كيكة شوكولاتة",
+    nameEn: "Chocolate Cake",
+    description: "كيك شوكولاتة غني بطبقة جاناش.",
+    descriptionEn: "Rich chocolate cake with ganache layer.",
+    longDescription: "كيكة شوكولاتة منزلية: كيك شوكولاتة رطب مغطى بصوص شوكولاتة غنية وجوز.",
+    longDescriptionEn: "Homemade chocolate cake: moist chocolate cake topped with rich chocolate sauce and nuts.",
+    category: "حلويات",
+    categoryEn: "Sweets",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "كيك شوكولاتة رطب",
+      "جاناش شوكولاتة",
+      "مزين بالمكسرات"
+    ],
+    detailsEn: [
+      "Moist chocolate cake",
+      "Chocolate ganache",
+      "Garnished with nuts"
+    ]
+  },
+  {
+    id: "63_p30",
+    name: "كيكة تمر",
+    nameEn: "Date Cake",
+    description: "كيك بالتمر والقرفة، رطب ولذيذ.",
+    descriptionEn: "Date and cinnamon cake, moist and delicious.",
+    longDescription: "كيكة التمر: كيك مصنوع من عجوة التمر مع لمسة قرفة وجوز، تقدم مع صوص كراميل.",
+    longDescriptionEn: "Date cake: made with date paste, a touch of cinnamon and walnuts, served with caramel sauce.",
+    category: "حلويات",
+    categoryEn: "Sweets",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "تمر طبيعي",
+      "قرفة وجوز",
+      "صوص كراميل"
+    ],
+    detailsEn: [
+      "Natural dates",
+      "Cinnamon and walnuts",
+      "Caramel sauce"
+    ]
+  },
+  {
+    id: "63_p31",
+    name: "كيكة زعفران",
+    nameEn: "Saffron Cake",
+    description: "كيك بنكهة الزعفران والفستق.",
+    descriptionEn: "Saffron-flavored cake with pistachio.",
+    longDescription: "كيكة زعفران فاخرة: كيك هش بنقوع الزعفران وماء الورد، مغطاة بطبقة من الفستق المطحون.",
+    longDescriptionEn: "Luxury saffron cake: fluffy cake infused with saffron and rose water, topped with ground pistachio.",
+    category: "حلويات",
+    categoryEn: "Sweets",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "زعفران وماء ورد",
+      "فستق حلبي",
+      "كيكة المناسبات"
+    ],
+    detailsEn: [
+      "Saffron and rose water",
+      "Pistachio",
+      "Celebration cake"
+    ]
+  },
+  {
+    id: "63_p32",
+    name: "بودينغ سنافر",
+    nameEn: "Smurf Pudding",
+    description: "بودينغ كريمي بلون أزرق جذاب.",
+    descriptionEn: "Creamy pudding with an attractive blue color.",
+    longDescription: "بودينغ سنافر هو حلوى كريمية بنكهة الفانيليا واللوز، ملونة باللون الأزرق الطبيعي. تقدم باردة ومزينة بكريمة. متوفر بأحجام صغير وكبير.",
+    longDescriptionEn: "Smurf pudding is a creamy vanilla and almond flavored dessert, naturally colored blue. Served chilled and topped with cream. Available in small and large sizes.",
+    category: "حلويات",
+    categoryEn: "Sweets",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "كريمي بالفانيليا واللوز",
+      "لون أزرق طبيعي",
+      "أحجام: صغير، كبير"
+    ],
+    detailsEn: [
+      "Creamy vanilla and almond",
+      "Natural blue color",
+      "Sizes: small, large"
+    ]
+  },
+  {
+    id: "63_p33",
+    name: "ساقو بالمانغو",
+    nameEn: "Sago with Mango",
+    description: "حلوى التابيوكا بحليب جوز الهند وصلصة المانغو.",
+    descriptionEn: "Tapioca dessert with coconut milk and mango sauce.",
+    longDescription: "ساقو بالمانغو: حبات التابيوكا المطبوخة بحليب جوز الهند، تقدم مع صلصة مانغو طازجة وفستق.",
+    longDescriptionEn: "Sago with mango: tapioca pearls cooked in coconut milk, served with fresh mango sauce and pistachio.",
+    category: "حلويات",
+    categoryEn: "Sweets",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "تابيوكا بحليب جوز الهند",
+      "صوص مانغو طازجة",
+      "مزينة بالفستق"
+    ],
+    detailsEn: [
+      "Tapioca in coconut milk",
+      "Fresh mango sauce",
+      "Garnished with pistachio"
+    ]
+  },
+  {
+    id: "63_p34",
+    name: "قرص عقيلي بالحلوى",
+    nameEn: "Aqili Pastry with Sweet Filling",
+    description: "معجنات محشوة بحشوة حلوة.",
+    descriptionEn: "Pastry filled with sweet filling.",
+    longDescription: "قرص عقيلي هو نوع من المعجنات التقليدية المحشوة بخليط من الحلويات مثل القطر والمكسرات.",
+    longDescriptionEn: "Aqili pastry is a traditional pastry filled with a sweet mixture of syrup and nuts.",
+    category: "حلويات",
+    categoryEn: "Sweets",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "عجينة هشة",
+      "حشوة حلوة بالمكسرات",
+      "مغموسة بالقطر"
+    ],
+    detailsEn: [
+      "Flaky pastry",
+      "Sweet nut filling",
+      "Soaked in syrup"
+    ]
+  },
+  {
+    id: "63_p35",
+    name: "سلطة فواقة",
+    nameEn: "Fawagga Salad",
+    description: "سلطة خضراء منعشة.",
+    descriptionEn: "Fresh green salad.",
+    longDescription: "سلطة فواقة: خس، خيار، طماطم، بصل، نعناع، بقدونس مع عصير ليمون وزيت زيتون.",
+    longDescriptionEn: "Fawagga salad: lettuce, cucumber, tomato, onion, mint, parsley with lemon juice and olive oil.",
+    category: "سلطات",
+    categoryEn: "Salads",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "خس، خيار، طماطم",
+      "نعناع وبقدونس",
+      "عصير ليمون وزيت زيتون"
+    ],
+    detailsEn: [
+      "Lettuce, cucumber, tomato",
+      "Mint and parsley",
+      "Lemon juice and olive oil"
+    ]
+  },
+  {
+    id: "63_p36",
+    name: "سلطة الشبا",
+    nameEn: "Shaba Salad",
+    description: "سلطة خضار بالطحينة.",
+    descriptionEn: "Vegetable salad with tahini.",
+    longDescription: "سلطة الشبا: خيار، طماطم، بصل، فلفل أخضر مع صوص طحينة وليمون.",
+    longDescriptionEn: "Shaba salad: cucumber, tomato, onion, green pepper with tahini lemon sauce.",
+    category: "سلطات",
+    categoryEn: "Salads",
+    mainImage: "images/p63-36.jpg",
+    images: [],
+    details: [
+      "خضار مشكلة",
+      "صوص طحينة",
+      "منعشة"
+    ],
+    detailsEn: [
+      "Mixed vegetables",
+      "Tahini sauce",
+      "Refreshing"
+    ]
+  },
+  {
+    id: "63_p37",
+    name: "سلطة دريتوس",
+    nameEn: "Doritos Salad",
+    description: "سلطة برقائق الذرة والجبن.",
+    descriptionEn: "Salad with corn chips and cheese.",
+    longDescription: "سلطة دريتوس: خس، طماطم، ذرة، فاصوليا حمراء، جبن مبشور، رقائق دريتوس، مع صوص رانش.",
+    longDescriptionEn: "Doritos salad: lettuce, tomato, corn, kidney beans, grated cheese, Doritos chips, with ranch dressing.",
+    category: "سلطات",
+    categoryEn: "Salads",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "خس وطماطم وذرة",
+      "فاصوليا حمراء",
+      "جبن ودرايتوس",
+      "صوص رانش"
+    ],
+    detailsEn: [
+      "Lettuce, tomato, corn",
+      "Kidney beans",
+      "Cheese and Doritos",
+      "Ranch dressing"
+    ]
+  },
+  {
+    id: "63_p38",
+    name: "سلطة مكرونة",
+    nameEn: "Pasta Salad",
+    description: "سلطة مكرونة باردة بالمايونيز والخضار.",
+    descriptionEn: "Cold pasta salad with mayonnaise and vegetables.",
+    longDescription: "سلطة مكرونة: معكرونة مسلوقة، خيار، طماطم، فلفل، ذرة، مايونيز، مستردة.",
+    longDescriptionEn: "Pasta salad: boiled pasta, cucumber, tomato, pepper, corn, mayonnaise, mustard.",
+    category: "سلطات",
+    categoryEn: "Salads",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "مكرونة مسلوقة",
+      "مايونيز",
+      "خضروات مشكلة"
+    ],
+    detailsEn: [
+      "Boiled pasta",
+      "Mayonnaise",
+      "Mixed vegetables"
+    ]
+  },
+  {
+    id: "63_p39",
+    name: "تبولة شمند",
+    nameEn: "Beetroot Tabbouleh",
+    description: "تبولة بالبنجر بدلاً من البرغل.",
+    descriptionEn: "Tabbouleh with beetroot instead of bulgur.",
+    longDescription: "تبولة الشمند: بقدونس مفروم، نعناع، شمند مبشور، طماطم، بصل، عصير ليمون وزيت زيتون.",
+    longDescriptionEn: "Beetroot tabbouleh: chopped parsley, mint, grated beetroot, tomato, onion, lemon juice and olive oil.",
+    category: "سلطات",
+    categoryEn: "Salads",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "بقدونس ونعناع",
+      "شمند مبشور",
+      "ليمون وزيت زيتون"
+    ],
+    detailsEn: [
+      "Parsley and mint",
+      "Grated beetroot",
+      "Lemon and olive oil"
+    ]
+  },
+  {
+    id: "63_p40",
+    name: "سلطة حمص",
+    nameEn: "Hummus Salad",
+    description: "سلطة حمص بالطحينة.",
+    descriptionEn: "Hummus salad with tahini.",
+    longDescription: "سلطة حمص: حمص مسلوق، طحينة، ليمون، ثوم، بقدونس.",
+    longDescriptionEn: "Hummus salad: boiled chickpeas, tahini, lemon, garlic, parsley.",
+    category: "سلطات",
+    categoryEn: "Salads",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "حمص",
+      "طحينة وليمون",
+      "ثوم وبقدونس"
+    ],
+    detailsEn: [
+      "Chickpeas",
+      "Tahini and lemon",
+      "Garlic and parsley"
+    ]
+  },
+  {
+    id: "63_p41",
+    name: "سلطة دجاج",
+    nameEn: "Chicken Salad",
+    description: "سلطة خضار مع قطع دجاج مشوي.",
+    descriptionEn: "Vegetable salad with grilled chicken pieces.",
+    longDescription: "سلطة دجاج: خس، طماطم، خيار، ذرة، فلفل، دجاج مشوي، صوص رانش أو ليمون.",
+    longDescriptionEn: "Chicken salad: lettuce, tomato, cucumber, corn, pepper, grilled chicken, ranch or lemon dressing.",
+    category: "سلطات",
+    categoryEn: "Salads",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "خضار طازجة",
+      "دجاج مشوي",
+      "صوص حسب الرغبة"
+    ],
+    detailsEn: [
+      "Fresh vegetables",
+      "Grilled chicken",
+      "Dressing of choice"
+    ]
+  },
+  {
+    id: "63_p42",
+    name: "جيب التاجر",
+    nameEn: "Jeeb Al-Tajir Sandwich",
+    description: "ساندويتش خبز عربي محشي بلحم ودجاج.",
+    descriptionEn: "Arabic bread sandwich stuffed with meat and chicken.",
+    longDescription: "جيب التاجر: خبز عربي محشي بخليط لحم ودجاج، مع خضار وصلصة طحينة.",
+    longDescriptionEn: "Jeeb Al-Tajir: Arabic bread stuffed with meat and chicken mix, vegetables and tahini sauce.",
+    category: "سندويشات",
+    categoryEn: "Sandwiches",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "لحم ودجاج",
+      "خضار مشكلة",
+      "صوص طحينة"
+    ],
+    detailsEn: [
+      "Meat and chicken",
+      "Mixed vegetables",
+      "Tahini sauce"
+    ]
+  },
+  {
+    id: "63_p43",
+    name: "شاورما",
+    nameEn: "Shawarma",
+    description: "شاورما دجاج أو لحم مع ثوم وخضار.",
+    descriptionEn: "Chicken or meat shawarma with garlic sauce and vegetables.",
+    longDescription: "شاورما منزلية: شرائح دجاج أو لحم متبلة، ملفوفة بخبز عربي مع ثوم، خيار مخلل، بطاطا مقلية.",
+    longDescriptionEn: "Homemade shawarma: marinated chicken or meat slices, wrapped in Arabic bread with garlic sauce, pickles and fries.",
+    category: "سندويشات",
+    categoryEn: "Sandwiches",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "دجاج أو لحم",
+      "صوص ثوم",
+      "مخلل وبطاطا"
+    ],
+    detailsEn: [
+      "Chicken or meat",
+      "Garlic sauce",
+      "Pickles and fries"
+    ]
+  },
+  {
+    id: "63_p44",
+    name: "كباب",
+    nameEn: "Kebab",
+    description: "أسياخ كباب لحم مشوي مع بهارات.",
+    descriptionEn: "Grilled meat kebab skewers with spices.",
+    longDescription: "كباب لحم غنم مفروم مع بقدونس وبهارات، مشوي على الفحم، يقدم مع خبز وبصل.",
+    longDescriptionEn: "Minced lamb kebab with parsley and spices, charcoal-grilled, served with bread and onions.",
+    category: "سندويشات",
+    categoryEn: "Sandwiches",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "لحم غنم مفروم",
+      "مشوي على الفحم",
+      "بهارات شرقية"
+    ],
+    detailsEn: [
+      "Minced lamb",
+      "Charcoal-grilled",
+      "Oriental spices"
+    ]
+  },
+  {
+    id: "63_p45",
+    name: "عرايس",
+    nameEn: "Arous Sandwich",
+    description: "ساندويتش خبز محشي بلحم ودجاج مشوي.",
+    descriptionEn: "Bread sandwich stuffed with grilled meat and chicken.",
+    longDescription: "ساندويتش عرايس : خبز عربي محشي بشرائح دجاج ولحم، خضار، صوص طحينة.",
+    longDescriptionEn: "Arous sandwich: Arabic bread stuffed with chicken and meat slices, vegetables, tahini sauce.",
+    category: "سندويشات",
+    categoryEn: "Sandwiches",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "دجاج ولحم",
+      "خضار",
+      "صوص طحينة"
+    ],
+    detailsEn: [
+      "Chicken and meat",
+      "Vegetables",
+      "Tahini sauce"
+    ]
+  },
+  {
+    id: "63_p46",
+    name: "سندويش فقيه",
+    nameEn: "Fukia Sandwich",
+    description: "ساندويتش بفتات اللحم والصلصة الخاصة.",
+    descriptionEn: "Sandwich with minced meat and special sauce.",
+    longDescription: "سندويش فقيه: خبز محشي بفتات لحم متبل، صوص طماطم، جبن، خس.",
+    longDescriptionEn: "Fukia sandwich: bread stuffed with spiced minced meat, tomato sauce, cheese, lettuce.",
+    category: "سندويشات",
+    categoryEn: "Sandwiches",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "فتات لحم",
+      "صوص طماطم",
+      "جبن وخس"
+    ],
+    detailsEn: [
+      "Minced meat",
+      "Tomato sauce",
+      "Cheese and lettuce"
+    ]
+  },
+  {
+    id: "63_p47",
+    name: "سندويش ريبان",
+    nameEn: "Ribbon Sandwich",
+    description: "ساندويتش بشرائح اللحم والصلصة الحارة.",
+    descriptionEn: "Sandwich with meat slices and spicy sauce.",
+    longDescription: "سندويش ريبان: خبز طويل محشي بشرائح لحم متبلة، صوص حار، خضار.",
+    longDescriptionEn: "Ribbon sandwich: long bread stuffed with spiced meat slices, spicy sauce, vegetables.",
+    category: "سندويشات",
+    categoryEn: "Sandwiches",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "شرائح لحم متبلة",
+      "صوص حار",
+      "خضار مشكلة"
+    ],
+    detailsEn: [
+      "Spiced meat slices",
+      "Spicy sauce",
+      "Mixed vegetables"
+    ]
+  },
+  {
+    id: "63_p48",
+    name: "سندويش دجاج مشوي",
+    nameEn: "Grilled Chicken Sandwich",
+    description: "ساندويتش بقطع دجاج مشوي وخضار.",
+    descriptionEn: "Sandwich with grilled chicken pieces and vegetables.",
+    longDescription: "سندويش دجاج مشوي: خبز عربي محشي بقطع دجاج مشوي، خس، طماطم، صوص رانش.",
+    longDescriptionEn: "Grilled chicken sandwich: Arabic bread stuffed with grilled chicken pieces, lettuce, tomato, ranch dressing.",
+    category: "سندويشات",
+    categoryEn: "Sandwiches",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "دجاج مشوي",
+      "خس وطماطم",
+      "صوص رانش"
+    ],
+    detailsEn: [
+      "Grilled chicken",
+      "Lettuce and tomato",
+      "Ranch dressing"
+    ]
+  },
+  {
+    id: "63_p49",
+    name: "سندويش كلماري",
+    nameEn: "Calamari Sandwich",
+    description: "ساندويتش بحلقات كلماري مقلية.",
+    descriptionEn: "Sandwich with fried calamari rings.",
+    longDescription: "سندويش كلماري: خبز طري محشي بحلقات كلماري مقلية، صوص كوكتيل، خس.",
+    longDescriptionEn: "Calamari sandwich: soft bread stuffed with fried calamari rings, cocktail sauce, lettuce.",
+    category: "سندويشات",
+    categoryEn: "Sandwiches",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "حلقات كلماري مقلية",
+      "صوص كوكتيل",
+      "خس"
+    ],
+    detailsEn: [
+      "Fried calamari rings",
+      "Cocktail sauce",
+      "Lettuce"
+    ]
+  },
+  {
+    id: "63_p50",
+    name: "كيكة السوشي",
+    nameEn: "Sushi Cake",
+    description: "طبقات من أرز السوشي والسمك النيء، بشكل كيكة.",
+    descriptionEn: "Layers of sushi rice and raw fish, shaped like a cake.",
+    longDescription: "كيكة سوشي مبتكرة: طبقات من أرز السوشي بالخل، أفوكادو، سمك سلمون نيء، ملفوفة بأعشاب بحرية.",
+    longDescriptionEn: "Innovative sushi cake: layers of vinegared sushi rice, avocado, raw salmon, wrapped in seaweed.",
+    category: "مأكولات بحرية",
+    categoryEn: "Seafood",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "أرز سوشي",
+      "سلمون نيء",
+      "أفوكادو",
+      "أعشاب بحرية"
+    ],
+    detailsEn: [
+      "Sushi rice",
+      "Raw salmon",
+      "Avocado",
+      "Seaweed"
+    ]
+  },
+  {
+    id: "63_p51",
+    name: "رامن",
+    nameEn: "Ramen",
+    description: "شوربة نودلز يابانية مع مرق لحم وخضار.",
+    descriptionEn: "Japanese noodle soup with meat broth and vegetables.",
+    longDescription: "رامن: نودلز في مرق لحم أو دجاج، مضاف إليه خضار، بيض مسلوق، شرائح لحم.",
+    longDescriptionEn: "Ramen: noodles in meat or chicken broth, with vegetables, boiled egg, meat slices.",
+    category: "أطباق آسيوية",
+    categoryEn: "Asian Dishes",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "نودلز",
+      "مرق لحم",
+      "خضار وبيض"
+    ],
+    detailsEn: [
+      "Noodles",
+      "Meat broth",
+      "Vegetables and egg"
+    ]
+  },
+  {
+    id: "63_p52",
+    name: "دمبلنق",
+    nameEn: "Dumplings",
+    description: "عجينة محشوة بالجمبري أو المشروم، مطبوخة على البخار أو مقلية.",
+    descriptionEn: "Dough stuffed with shrimp or mushrooms, steamed or fried.",
+    longDescription: "دمبلنق آسيوي محضر يدوياً، متوفر بحشوة الجمبري الطازج أو المشروم مع الخضار. يقدم مع صوص صويا.",
+    longDescriptionEn: "Handmade Asian dumplings, available with fresh shrimp or mushroom and vegetable filling. Served with soy sauce.",
+    category: "أطباق آسيوية",
+    categoryEn: "Asian Dishes",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "خيارات الحشو: جمبري أو مشروم",
+      "مطبوخة على البخار أو مقلية",
+      "تقدم مع صوص الصويا"
+    ],
+    detailsEn: [
+      "Filling options: shrimp or mushroom",
+      "Steamed or fried",
+      "Served with soy sauce"
+    ]
+  },
+  {
+    id: "63_p53",
+    name: "دبللقي مشروم",
+    nameEn: "Double Mushroom",
+    description: "طبق مكرونة بالصلصة الكريمية مع المشروم.",
+    descriptionEn: "Pasta dish in creamy sauce with mushrooms.",
+    longDescription: "دبللقي مشروم: باستا مع صلصة كريمية غنية بقطع المشروم الطازج، بارميزان، بقدونس.",
+    longDescriptionEn: "Double Mushroom: pasta in rich creamy sauce with fresh mushroom pieces, parmesan, parsley.",
+    category: "أطباق رئيسية",
+    categoryEn: "Main Dishes",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "باستا",
+      "صلصة كريمية",
+      "مشروم طازج",
+      "جبن بارميزان"
+    ],
+    detailsEn: [
+      "Pasta",
+      "Creamy sauce",
+      "Fresh mushrooms",
+      "Parmesan cheese"
+    ]
+  },
+  {
+    id: "63_p54",
+    name: "دبللقي سي فود",
+    nameEn: "Double Seafood",
+    description: "طبق باستا مع مزيج من المأكولات البحرية.",
+    descriptionEn: "Pasta dish with a mix of seafood.",
+    longDescription: "دبللقي سي فود: باستا مع صلصة طماطم خفيفة أو كريمية، تحتوي على جمبري، كاليماري، وقطع سمك.",
+    longDescriptionEn: "Double Seafood: pasta with light tomato or creamy sauce, containing shrimp, calamari and fish pieces.",
+    category: "مأكولات بحرية",
+    categoryEn: "Seafood",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "باستا",
+      "جمبري، كاليماري، سمك",
+      "صلصة طماطم أو كريمية"
+    ],
+    detailsEn: [
+      "Pasta",
+      "Shrimp, calamari, fish",
+      "Tomato or creamy sauce"
+    ]
+  },
+  {
+    id: "63_p55",
+    name: "سلطة كراب",
+    nameEn: "Crab Salad",
+    description: "سلطة بخيوط الكراب والخضار.",
+    descriptionEn: "Salad with crab sticks and vegetables.",
+    longDescription: "سلطة كراب: خيوط كراب، خس، ذرة، خيار، مايونيز، ليمون.",
+    longDescriptionEn: "Crab salad: crab sticks, lettuce, corn, cucumber, mayonnaise, lemon.",
+    category: "سلطات",
+    categoryEn: "Salads",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "كراب",
+      "خس وذرة",
+      "مايونيز"
+    ],
+    detailsEn: [
+      "Crab sticks",
+      "Lettuce and corn",
+      "Mayonnaise"
+    ]
+  },
+  {
+    id: "63_p56",
+    name: "نودلز بالدبالي الصيني",
+    nameEn: "Chinese Noodles with Vegetables",
+    description: "نودلز مقلية مع خضار على الطريقة الصينية.",
+    descriptionEn: "Stir-fried noodles with vegetables Chinese style.",
+    longDescription: "نودلز بالدبالي الصيني: نودلز مقلية مع خضار مشكلة (بروكلي، جزر، فلفل)، صوص صويا، زنجبيل.",
+    longDescriptionEn: "Chinese style stir-fried noodles with mixed vegetables (broccoli, carrot, pepper), soy sauce, ginger.",
+    category: "أطباق آسيوية",
+    categoryEn: "Asian Dishes",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "نودلز",
+      "خضار مشكلة",
+      "صوص صويا"
+    ],
+    detailsEn: [
+      "Noodles",
+      "Mixed vegetables",
+      "Soy sauce"
+    ]
+  },
+  {
+    id: "63_p57",
+    name: "حمص بالثوم والليمون",
+    nameEn: "Garlic Lemon Hummus",
+    description: "حمص بالطحينة مع نكهة الثوم والليمون.",
+    descriptionEn: "Hummus with tahini, garlic and lemon flavor.",
+    longDescription: "حمص بالثوم والليمون: حمص مطبوخ مهروس مع طحينة، ثوم طازج، عصير ليمون، زيت زيتون.",
+    longDescriptionEn: "Garlic lemon hummus: cooked chickpeas mashed with tahini, fresh garlic, lemon juice, olive oil.",
+    category: "مقبلات",
+    categoryEn: "Appetizers",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "حمص",
+      "ثوم طازج",
+      "ليمون",
+      "طحينة"
+    ],
+    detailsEn: [
+      "Chickpeas",
+      "Fresh garlic",
+      "Lemon",
+      "Tahini"
+    ]
+  },
+  {
+    id: "63_p58",
+    name: "موهيتو",
+    nameEn: "Mojito",
+    description: "مشروب منعش بنكهة الفواكه.",
+    descriptionEn: "Refreshing fruit-flavored drink.",
+    longDescription: "موهيتو منزلي خالٍ من الكحول، بنكهة الفراولة أو التوت الأزرق، مع نعناع ليمون وصودا.",
+    longDescriptionEn: "Homemade non-alcoholic mojito, strawberry or blueberry flavor, with mint, lemon and soda.",
+    category: "مشروبات",
+    categoryEn: "Beverages",
+    mainImage: "images/p63.jpg",
+    images: ["images/p63.jpg"],
+    details: [
+      "نكهات: فراولة، توت أزرق",
+      "مكون منعش",
+      "خالٍ من الكحول"
+    ],
+    detailsEn: [
+      "Flavors: strawberry, blueberry",
+      "Refreshing",
+      "Non-alcoholic"
+    ]
+  }
+],
+
+            },
+            {
+                id:64,
+                name:"لا سوريلا",
+                nameEn:"La Sorella",
+                emirate:"أبوظبي",
+                description:"مخبوزات بالخميرة الطبيعية وحلويات فرنسية",
+                descriptionEn:"Sourdough Bakery & French Pastries",
+                longDescription:"مخبوزات شهية بالخميرة الطبيعية وحلويات فرنسية. موقعنا في أبوظبي (الشامخة). للطلب عبر الواتساب.",
+                longDescriptionEn:"Delicious sourdough baked goods and French pastries. Located in Abu Dhabi (Al Shamkha). Order via WhatsApp.",
+                image:"images/p64.jpg",
+                phone:"",
+                whatsapp:"971507514345",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "la_sorella_bakery" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"أطعمة ومشروبات",
+                categoryEn:"Food & Beverages",
+                products:[]
+            },
+            {
+                id:65,
+                name:"يامي فراي",
+                nameEn:"Yummy Fri",
+                emirate:"أبوظبي",
+                description:"وجبات سريعة",
+                descriptionEn:"Fast Food",
+                longDescription:"نقدم وجبات شهية. شعارنا: Crave. Enjoy. Repeat. الاستلام متاح من الرياض، أبوظبي. للطلب عبر الواتساب، أو عبر طلبات وكيتا. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"We offer delicious food. Our motto: Crave. Enjoy. Repeat. Pickup available in Al Riyadh, Abu Dhabi. Order via WhatsApp, Talabat, or Keeta. Delivery to all Emirates of the UAE.",
+                image:"images/p65.jpg",
+                phone:"",
+                whatsapp:"971569333609",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "yummyfri.ae" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"أطعمة ومشروبات",
+                categoryEn:"Food & Beverages",
+                products:[]
+            },
+            {
+                id:66,
+                name:"آر إم سويت",
+                nameEn:"RM Sweet",
+                emirate:"",
+                description:"حلويات",
+                descriptionEn:"Sweets",
+                longDescription:"نقدم لكم نكهات متناغمة صنعت من أجود المكونات لترضي ذائقتكم. نوصل لأبوظبي وجميع إمارات الدولة. للطلب عبر الواتساب.",
+                longDescriptionEn:"We offer you harmonious flavors made from the finest ingredients to satisfy your taste. We deliver to Abu Dhabi and all Emirates of the UAE. Order via WhatsApp.",
+                image:"images/p66.jpg",
+                phone:"",
+                whatsapp:"971544982099",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "rm1.sweet" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"حلويات",
+                categoryEn:"Sweets",
+                products:[]
+            },
+            {
+                id:67,
+                name:"إس رابس",
+                nameEn:"S Wraps",
+                emirate:"",
+                description:"محاشي",
+                descriptionEn:"Stuffed Vegetables",
+                longDescription:"مشروع مرخص من الدائرة الاقتصادية، نقدم ألذ المحاشي وألذ منيو، وآراؤكم هي الإثبات. متواجدين في طلبات. للطلب عبر الأرقام التالية. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"A project licensed by the Economic Department, we offer the delicious stuffed vegetables and menu, your reviews are our proof. Available on Talabat. Order via the numbers below. Delivery to all Emirates of the UAE.",
+                image:"images/p67.jpg",
+                phone:"0569712230",
+                whatsapp:"971521681109",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "s_wraps_" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"أطعمة ومشروبات",
+                categoryEn:"Food & Beverages",
+                products:[
+                
+                {
+id: "67_p01",
+name: "ورق عنب",
+nameEn: "Vine Leaves",
+description: "ورق عنب محشي، طبق تقليدي شهي.",
+descriptionEn: "Stuffed vine leaves, a delicious traditional dish.",
+longDescription: "ورق عنب محشي بالأرز والبهارات، يقدم مع اللبن. متوفر بأحجام مختلفة.",
+longDescriptionEn: "Vine leaves stuffed with rice and spices, served with yogurt. Available in different sizes.",
+category: "محاشي",
+categoryEn: "Stuffed Vegetables",
+mainImage: "images/p67.jpg",
+images: ["images/p67.jpg"],
+details: ["نصف كيلو", "كيلو", "كيلو ونصف"],
+detailsEn: ["Half kilo", "1 kilo", "1.5 kilos"]
+},
+{
+id: "67_p02",
+name: "ملفوف",
+nameEn: "Cabbage",
+description: "ملفوف محشي بالأرز واللحم المفروم.",
+descriptionEn: "Cabbage stuffed with rice and minced meat.",
+longDescription: "أوراق الملفوف المحشية بالأرز واللحم المفروم والبهارات، تطبخ على نار هادئة حتى النضج.",
+longDescriptionEn: "Cabbage leaves stuffed with rice, minced meat, and spices, cooked slowly until tender.",
+category: "محاشي",
+categoryEn: "Stuffed Vegetables",
+mainImage: "images/p67.jpg",
+images: ["images/p67.jpg"],
+details: ["نصف كيلو", "كيلو", "كيلو ونصف"],
+detailsEn: ["Half kilo", "1 kilo", "1.5 kilos"]
+},
+{
+id: "67_p03",
+name: "بطاطس",
+nameEn: "Potatoes",
+description: "بطاطس محشية باللحم المفروم.",
+descriptionEn: "Potatoes stuffed with minced meat.",
+longDescription: "حبات البطاطس المحشية بخليط اللحم المفروم والبهارات، ثم تحمر وتطهى بالصلصة.",
+longDescriptionEn: "Potato halves stuffed with minced meat and spices, then fried and cooked in sauce.",
+category: "محاشي",
+categoryEn: "Stuffed Vegetables",
+mainImage: "images/p67.jpg",
+images: ["images/p67.jpg"],
+details: ["نصف كيلو", "كيلو", "كيلو ونصف"],
+detailsEn: ["Half kilo", "1 kilo", "1.5 kilos"]
+},
+{
+id: "67_p04",
+name: "بصل",
+nameEn: "Onion",
+description: "بصل محشي بالأرز واللحم.",
+descriptionEn: "Onions stuffed with rice and meat.",
+longDescription: "بصل محشي بخليط الأرز واللحم المفروم والبهارات، يطهى في مرقة غنية.",
+longDescriptionEn: "Onions stuffed with a mixture of rice, minced meat, and spices, cooked in a rich broth.",
+category: "محاشي",
+categoryEn: "Stuffed Vegetables",
+mainImage: "images/p67.jpg",
+images: ["images/p67.jpg"],
+details: ["نصف كيلو", "كيلو", "كيلو ونصف"],
+detailsEn: ["Half kilo", "1 kilo", "1.5 kilos"]
+},
+{
+id: "67_p05",
+name: "باذنجان",
+nameEn: "Eggplant",
+description: "باذنجان محشي باللحم المفروم.",
+descriptionEn: "Eggplant stuffed with minced meat.",
+longDescription: "باذنجان محشي باللحم المفروم والبهارات، يقدم مع صلصة الطماطم.",
+longDescriptionEn: "Eggplants stuffed with minced meat and spices, served with tomato sauce.",
+category: "محاشي",
+categoryEn: "Stuffed Vegetables",
+mainImage: "images/p67.jpg",
+images: ["images/p67.jpg"],
+details: ["نصف كيلو", "كيلو", "كيلو ونصف"],
+detailsEn: ["Half kilo", "1 kilo", "1.5 kilos"]
+},
+{
+id: "67_p06",
+name: "ميكس محشي",
+nameEn: "Mahashi Mix",
+description: "ميكس مشكل من المحاشي (12 قطعة).",
+descriptionEn: "Assorted stuffed vegetables mix (12 pieces).",
+longDescription: "صندوق يجمع أشهى المحاشي: ورق عنب، كوسا، باذنجان، فلفل، وغيرها. 12 قطعة مشكلة.",
+longDescriptionEn: "A box of delicious stuffed vegetables: vine leaves, zucchini, eggplant, pepper, and more. 12 assorted pieces.",
+category: "محاشي",
+categoryEn: "Stuffed Vegetables",
+mainImage: "images/p67.jpg",
+images: ["images/p67.jpg"],
+details: ["12 قطعة مشكلة"],
+detailsEn: ["12 assorted pieces"]
+},
+{
+id: "67_p07",
+name: "فتة",
+nameEn: "Fattah",
+description: "فتة باللحم والزبادي (9 قطع).",
+descriptionEn: "Fattah with meat and yogurt (9 pieces).",
+longDescription: "طبقات من الخبز المقرمش والأرز واللحم، يعلوها الزبادي والصنوبر. 9 قطع تكفي لعائلة.",
+longDescriptionEn: "Layers of crispy bread, rice, and meat, topped with yogurt and pine nuts. 9 pieces, family size.",
+category: "أطباق رئيسية",
+categoryEn: "Main Dishes",
+mainImage: "images/p67.jpg",
+images: ["images/p67.jpg"],
+details: ["9 قطع"],
+detailsEn: ["9 pieces"]
+},
+{
+id: "67_p08",
+name: "حلى الطيبين",
+nameEn: "Sweet Al-Taybeen",
+description: "حلى منزلي لذيذ يكفي 6-8 أشخاص.",
+descriptionEn: "Delicious homemade dessert, serves 6-8 people.",
+longDescription: "حلى الطيبين هو مزيج من البسكويت والكريمة والطبقات اللذيذة، يقدم بارداً.",
+longDescriptionEn: "Sweet Al-Taybeen is a mix of biscuits, cream, and delicious layers, served chilled.",
+category: "حلويات",
+categoryEn: "Desserts",
+mainImage: "images/p67.jpg",
+images: ["images/p67.jpg"],
+details: ["يكفي 6-8 أشخاص"],
+detailsEn: ["Serves 6-8 people"]
+},
+{
+id: "67_p09",
+name: "برغر دجاج مقرمش",
+nameEn: "Crispy Chicken Burger",
+description: "برغر دجاج مقرمش (6 قطع).",
+descriptionEn: "Crispy chicken burger (6 pieces).",
+longDescription: "قطع دجاج مقرمشة مع خس، ميونيز، وخبز برغر طري. 6 قطع.",
+longDescriptionEn: "Crispy chicken patties with lettuce, mayonnaise, and soft burger buns. 6 pieces.",
+category: "ساندويشات",
+categoryEn: "Sandwiches",
+mainImage: "images/p67.jpg",
+images: ["images/p67.jpg"],
+details: ["6 قطع"],
+detailsEn: ["6 pieces"]
+},
+{
+id: "67_p10",
+name: "برغر الطيبين",
+nameEn: "Burger Al-Taybeen",
+description: "برغر لحم بقري (6 قطع).",
+descriptionEn: "Beef burger (6 pieces).",
+longDescription: "برغر لحم بقري مشوي مع جبن، خس، طماطم، وصلصة خاصة. 6 قطع.",
+longDescriptionEn: "Grilled beef burger with cheese, lettuce, tomato, and special sauce. 6 pieces.",
+category: "ساندويشات",
+categoryEn: "Sandwiches",
+mainImage: "images/p67.jpg",
+images: ["images/p67.jpg"],
+details: ["6 قطع"],
+detailsEn: ["6 pieces"]
+},
+{
+id: "67_p11",
+name: "رز شياط",
+nameEn: "Rice Shayat",
+description: "رز شياط بالدجاج.",
+descriptionEn: "Rice Shayat with chicken.",
+longDescription: "رز مفلفل مع قطع الدجاج المتبلة والمحمصة، يقدم مع المكسرات. متوفر بدون دجاج، مع دجاج، أو دجاج مزدوج.",
+longDescriptionEn: "Fluffy rice with seasoned roasted chicken pieces, served with nuts. Available without chicken, with chicken, or double chicken.",
+category: "أطباق رئيسية",
+categoryEn: "Main Dishes",
+mainImage: "images/p67.jpg",
+images: ["images/p67.jpg"],
+details: ["بدون دجاج", "مع دجاج", "دجاج مزدوج"],
+detailsEn: ["Without chicken", "With chicken", "Double chicken"]
+},
+{
+id: "67_p12",
+name: "أندومي",
+nameEn: "Indomie",
+description: "أندومي بصوصات مختلفة.",
+descriptionEn: "Indomie with different sauces.",
+longDescription: "نودلز أندومي سريعة التحضير، تقدم مع صوص أبيض أو صوص ورق العنب.",
+longDescriptionEn: "Instant Indomie noodles, served with white sauce or vine leaves sauce.",
+category: "مقبلات",
+categoryEn: "Appetizers",
+mainImage: "images/p67.jpg",
+images: ["images/p67.jpg"],
+details: ["صوص أبيض", "صوص ورق العنب"],
+detailsEn: ["White sauce", "Vine leaves sauce"]
+},
+{
+id: "67_p13",
+name: "صوص ورق العنب",
+nameEn: "Vine Leaves Sauce",
+description: "صوص خاص بورش العنب.",
+descriptionEn: "Special vine leaves sauce.",
+longDescription: "صوص غني بالطماطم والبهارات، مثالي لتناوله مع ورق العنب أو الأرز.",
+longDescriptionEn: "Rich tomato and spice sauce, perfect to enjoy with vine leaves or rice.",
+category: "صلصات",
+categoryEn: "Sauces",
+mainImage: "images/p67.jpg",
+images: ["images/p67.jpg"],
+details: ["صلصة حمراء"],
+detailsEn: ["Red sauce"]
+},
+
+                ]
+            },
+            {
+                id:68,
+                name:"يوفوريا باك",
+                nameEn:"Euphoria Bake",
+                emirate:"أبوظبي",
+                description:"كوكيز نيويورك",
+                descriptionEn:"NY Style Cookies",
+                longDescription:"نقدم أشهى كوكيز بنيويورك. شعارنا: لا يمكنك إقناعي أن في الحياة أكثر من كوكيز برقائق الشوكولاتة 🍪. موقعنا في أبوظبي (سابقاً @nadin.bake). للطلب عبر الواتساب. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"We offer the most delicious NY style cookies. Our motto: You can never convince me that there's more to life than a chocolate chip cookie 🍪. Based in Abu Dhabi (formerly @nadin.bake). Order via WhatsApp. Delivery to all Emirates of the UAE.",
+                image:"images/p68.jpg",
+                phone:"",
+                whatsapp:"971588529914",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "euphoria__bake" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"حلويات",
+                categoryEn:"Sweets",
+                products:[]
+            },
+            {
+                id:69,
+                name:"فش مربح",
+                nameEn:"Fish Mirbeh",
+                emirate:"",
+                description:"ملح بجودة عالية",
+                descriptionEn:"High Quality Salt",
+                longDescription:"نوفر لكم المالح بجودة عالية. المشروع مرخص من الجهات المختصة. نوصل لجميع إمارات الدولة. للطلب والاستفسار عبر الرسائل المباشرة.",
+                longDescriptionEn:"We provide you with high-quality salted fish. The project is licensed by the competent authorities. We deliver to all Emirates of the UAE. For orders and inquiries Dairct massegge.",
+                image:"images/p69.jpg",
+                phone:"",
+                whatsapp:"", 
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "fish_mirbeh" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"أطعمة ومشروبات",
+                categoryEn:"Food & Beverages",
+                products:[]
+            },
+            {
+                id:70,
+                name:"لا تنسى",
+                nameEn:"La Tinsa",
+                emirate:"",
+                description:"لعبة ورق",
+                descriptionEn:"Card Game",
+                longDescription:"لعبة لا تنسى، هدفها تكون كروتك أقل من بقية اللاعبين بدون ما تشوف كروتك. تصميم @roudah.graphic. للطلب عبر الواتساب أو الخاص. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"An unforgettable card game where the goal is to have your card count be less than the other players without seeing your cards. Designed by @roudah.graphic. Order via WhatsApp or DM. Delivery to all Emirates of the UAE.",
+                image:"images/p70.jpg",
+                phone:"",
+                whatsapp:"971586906627",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "la.tinsa" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"ترفيه",
+                categoryEn:"Entertainment",
+                products:[]
+            },
+            {
+                id:71,
+                name:"أماي",
+                nameEn:"Amai",
+                emirate:"",
+                description:"",
+                descriptionEn:"",
+                longDescription:"مشروع منزلي مرخص من دائرة التنمية الاقتصادية. للطلب عبر الواتساب. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"A home-based project licensed by the Economic Development Department. To order via WhatsApp. Delivery to all Emirates of the UAE.",
+                image:"images/p71.jpg",
+                phone:"",
+                whatsapp:"971503434649",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "amaiuae" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"أطعمة ومشروبات",
+                categoryEn:"Food & Beverages",
+                products:[
+                    {
+id: "71_p01",
+name: "بسبوسة بالقشطة",
+nameEn: "Basbousa with Cream",
+description: "بسبوسة تقليدية بالسميد والقشطة.",
+descriptionEn: "Traditional semolina cake with cream.",
+longDescription: "بسبوسة طرية بالسميد مغطاة بطبقة من القشطة الشهية، تقدم باردة.",
+longDescriptionEn: "Soft semolina cake topped with a layer of delicious cream, served chilled.",
+category: "حلويات",
+categoryEn: "Desserts",
+mainImage: "images/p71.jpg",
+images: ["images/p71.jpg"],
+details: ["قطعة واحدة"],
+detailsEn: ["One piece"]
+},
+{
+id: "71_p02",
+name: "بان كيك",
+nameEn: "Pancake",
+description: "بان كيك منزلي (12 حبة).",
+descriptionEn: "Homemade pancakes (12 pieces).",
+longDescription: "بان كيك هش ولذيذ، يقدم مع العسل أو الشوكولاتة.",
+longDescriptionEn: "Fluffy and delicious pancakes, served with honey or chocolate.",
+category: "حلويات",
+categoryEn: "Desserts",
+mainImage: "images/p71.jpg",
+images: ["images/p71.jpg"],
+details: ["12 حبة"],
+detailsEn: ["12 pieces"]
+},
+{
+id: "71_p03",
+name: "مقبلات كورية",
+nameEn: "Korean Appetizers",
+description: "مقبلات كورية متنوعة (16 حبة).",
+descriptionEn: "Assorted Korean appetizers (16 pieces).",
+longDescription: "تشكيلة من المقبلات الكورية اللذيذة، مثالية للمشاركة.",
+longDescriptionEn: "A selection of delicious Korean appetizers, perfect for sharing.",
+category: "مقبلات",
+categoryEn: "Appetizers",
+mainImage: "images/p71.jpg",
+images: ["images/p71.jpg"],
+details: ["16 حبة"],
+detailsEn: ["16 pieces"]
+},
+{
+id: "71_p04",
+name: "فتة ورق العنب",
+nameEn: "Vine Leaves Fattah",
+description: "فتة ورق العنب باللحم والزبادي (12 حبة).",
+descriptionEn: "Vine leaves fattah with meat and yogurt (12 pieces).",
+longDescription: "طبقات من الخبز المقرمش والأرز واللحم، مغطاة بزبادي ورقائق ورق العنب.",
+longDescriptionEn: "Layers of crispy bread, rice, and meat, topped with yogurt and vine leaves chips.",
+category: "أطباق رئيسية",
+categoryEn: "Main Dishes",
+mainImage: "images/p71.jpg",
+images: ["images/p71.jpg"],
+details: ["12 حبة"],
+detailsEn: ["12 pieces"]
+},
+{
+id: "71_p05",
+name: "ميني برجر",
+nameEn: "Mini Burger",
+description: "برجر صغير الحجم، مثالي للسناكس.",
+descriptionEn: "Mini burgers, perfect for snacks.",
+longDescription: "برجر صغير مع لحم بقري أو دجاج، جبن، وخضار. متوفر بعدد حبات مختلف.",
+longDescriptionEn: "Mini burgers with beef or chicken, cheese, and vegetables. Available in different quantities.",
+category: "ساندويشات",
+categoryEn: "Sandwiches",
+mainImage: "images/p71.jpg",
+images: ["images/p71.jpg"],
+details: ["12 حبة - 70 درهم", "24 حبة - 140 درهم"],
+detailsEn: ["12 pieces - 70 AED", "24 pieces - 140 AED"]
+},
+{
+id: "71_p06",
+name: "سان سابستيان",
+nameEn: "San Sebastian Cheesecake",
+description: "تشيز كيك سان سابستيان (12 حبة).",
+descriptionEn: "San Sebastian cheesecake (12 pieces).",
+longDescription: "تشيز كيك كراميلية ناعمة، محروقة من الخارج، تقدم في قوالب صغيرة.",
+longDescriptionEn: "Smooth caramelized cheesecake, burnt on the outside, served in small molds.",
+category: "حلويات",
+categoryEn: "Desserts",
+mainImage: "images/p71.jpg",
+images: ["images/p71.jpg"],
+details: ["12 حبة"],
+detailsEn: ["12 pieces"]
+},
+{
+id: "71_p07",
+name: "ورق عنب (بوكسات)",
+nameEn: "Vine Leaves Boxes",
+description: "ورق عنب محشي بعلب مختلفة.",
+descriptionEn: "Stuffed vine leaves in different box sizes.",
+longDescription: "ورق عنب محشي بالأرز والبهارات، يقدم في بوكسات صغيرة أو كبيرة.",
+longDescriptionEn: "Vine leaves stuffed with rice and spices, served in small or large boxes.",
+category: "محاشي",
+categoryEn: "Stuffed Vegetables",
+mainImage: "images/p71.jpg",
+images: ["images/p71.jpg"],
+details: ["بوكس صغير (4 علب) - 70 درهم", "بوكس كبير (8 علب) - 140 درهم"],
+detailsEn: ["Small box (4 containers) - 70 AED", "Large box (8 containers) - 140 AED"]
+},
+{
+id: "71_p08",
+name: "شيا بودينج",
+nameEn: "Chia Pudding",
+description: "بودينج الشيا بالحليب والفواكه.",
+descriptionEn: "Chia pudding with milk and fruits.",
+longDescription: "بودينج الشيا الصحي، محضر بحليب جوز الهند والفواكه الموسمية. 12 حبة.",
+longDescriptionEn: "Healthy chia pudding made with coconut milk and seasonal fruits. 12 pieces.",
+category: "حلويات",
+categoryEn: "Desserts",
+mainImage: "images/p71.jpg",
+images: ["images/p71.jpg"],
+details: ["12 حبة - 120 درهم"],
+detailsEn: ["12 pieces - 120 AED"]
+},
+{
+id: "71_p09",
+name: "حلى جرة",
+nameEn: "Dessert Jars",
+description: "حلى بطبقات في جرة بنكهات جالكسي وفستق.",
+descriptionEn: "Layered dessert in jars with Galaxy and pistachio flavors.",
+longDescription: "حلى بارد بطبقات من الكريمة والبسكويت، بنكهة جالكسي أو فستق. 12 جرة.",
+longDescriptionEn: "Chilled layered dessert with cream and biscuits, Galaxy or pistachio flavor. 12 jars.",
+category: "حلويات",
+categoryEn: "Desserts",
+mainImage: "images/p71.jpg",
+images: ["images/p71.jpg"],
+details: ["نكهة جالكسي - 12 حبة", "نكهة فستق - 12 حبة"],
+detailsEn: ["Galaxy flavor - 12 pcs", "Pistachio flavor - 12 pcs"]
+}
+                ]
+            },
+            {
+                id:72,
+                name:"كيكوز",
+                nameEn:"Kikoz",
+                emirate:"أبوظبي",
+                description:"شوكولاتة بلجيكية",
+                descriptionEn:"Belgian Chocolate",
+                longDescription:"شوكولاتة بلجيكية فاخرة. موقعنا في العين، مرخص من دائرة التنمية الاقتصادية. للطلب عبر الواتساب. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"Luxury Belgian chocolate. Located in Al Ain, licensed by the Economic Development Department. Order via WhatsApp. Delivery to all Emirates of the UAE.",
+                image:"images/p72.jpg",
+                phone:"",
+                whatsapp:"971566277713",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "kikoz.ae" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"حلويات",
+                categoryEn:"Sweets",
+                products:[
+                    {
+id: "72_p1",
+name: "كوكيز",
+nameEn: "Cooki1es",
+description: "كوكيز طري ولذيذ، متوفر بأحجام مختلفة.",
+descriptionEn: "Soft and delicious cookies, available in different sizes.",
+longDescription: "كوكيز منزلي طري بنكهة الزبدة، يقدم بكميات مناسبة للمناسبات والهدايا. يتميز بقوامه الناعم وطعمه الغني.",
+longDescriptionEn: "Homemade soft butter cookies, perfect for events and gifts. Known for its soft texture and rich taste.",
+category: "حلويات",
+categoryEn: "Desserts",
+mainImage: "images/p72.jpg",
+images: ["images/p72.jpg"],
+details: [
+"60 قطعة صغيرة",
+"27 قطعة صغيرة",
+"هدايا 5 قطع صغيرة",
+"قطعة واحدة"
+],
+detailsEn: [
+"60 mini pieces",
+"27 mini pieces",
+"Giveaways 5 mini pieces",
+"1 piece"
+]
+}
+                ]
+            },
+            {
+                id:73,
+                name:"ورق عنب النور",
+                nameEn:"Warq anabb alnour",
+                emirate:"أبوظبي",
+                description:"",
+                descriptionEn:"",
+                longDescription:"مشروع مرخص من دائرة التنمية الاقتصادية في أبوظبي. الرجاء الطلب قبل يوم. للتواصل عبر الواتساب..",
+                longDescriptionEn:"A project licensed by the Economic Development Department in Abu Dhabi. Please order one day in advance. Contact via WhatsApp.",
+                image:"images/p73.jpg",
+                phone:"",
+                whatsapp:"971503663461",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "w_3nabb" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"أطعمة ومشوربات",
+                categoryEn:"Food & Beverages",
+                products:[
+                    {
+id: "73_p1",
+name: "ورق عنب",
+nameEn: "Vine Leaves",
+description: "ورق عنب محشي بأنواع مختلفة (عادي، بدبس الرمان، حامض).",
+descriptionEn: "Stuffed vine leaves with different varieties (plain, with pomegranate molasses, sour).",
+longDescription: "ورق عنب محشي بالأرز والبهارات، يتوفر بثلاث نكهات: عادي، بدبس الرمان، وحامض. يقدم مع اللبن. يمكن اختيار العدد المناسب: 35، 75، أو 95 حبة.",
+longDescriptionEn: "Vine leaves stuffed with rice and spices, available in three flavors: plain, with pomegranate molasses, and sour. Served with yogurt. Choose from 35, 75, or 95 pieces.",
+category: "محاشي",
+categoryEn: "Stuffed Vegetables",
+mainImage: "images/p73.jpg",
+images: ["images/p73.jpg"],
+details: [
+"35,75,95 حبة - عادي",
+"35,75,95 حبة - بدبس الرمان",
+"35,75,95 حبة - حامض",
+],
+detailsEn: [
+"35,75,95 pieces - Plain",
+"35,75,95 pieces - With Pomegranate Molasses",
+"35,75,95 pieces - Sour",
+]
+},
+{
+id: "73_p2",
+name: "فتة",
+nameEn: "Fattah",
+description: "فتة بأنواع مختلفة (ورق عنب، بالبطاط، بالشيتوز، بالخبز المحمص).",
+descriptionEn: "Fattah with different varieties (vine leaves, potato, Cheetos, toasted bread).",
+longDescription: "فتة شهية تتكون من طبقات من الخبز والأرز واللحم واللبن، متوفرة بأربع نكهات: فته ورق عنب، فته بالبطاط، فته بالشيتوز، فته بالخبز المحمص. كل نوع يأتي بحجم 12 حبة.",
+longDescriptionEn: "Delicious fattah consisting of layers of bread, rice, meat, and yogurt, available in four flavors: vine leaves fattah, potato fattah, Cheetos fattah, and toasted bread fattah. Each type comes in 12 pieces.",
+category: "أطباق رئيسية",
+categoryEn: "Main Dishes",
+mainImage: "images/p73.jpg",
+images: ["images/p73.jpg"],
+details: [
+"فته ورق عنب",
+"فته بالبطاط",
+"فته بالشيتوز",
+"فته بالخبز المحمص"
+],
+detailsEn: [
+"Vine Leaves Fattah",
+"Potato Fattah",
+"Cheetos Fattah",
+"Toasted Bread Fattah"
+]
+}
+
+                ]
+            },
+            {
+                id:74,
+                name:"كرامب جوي",
+                nameEn:"Crumb Joy",
+                emirate:"",
+                description:"تيراميسو وحلويات",
+                descriptionEn:"Tiramisu & Sweets",
+                longDescription:"حلويات وتيراميسو مصنوع يدويًا، طازج ومنزلي، نوصل لك. للطلب عبر الواتساب أو الخاص. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"Handcrafted tiramisu and sweets, fresh, homemade, delivered to you. Order via WhatsApp or DM. Delivery to all Emirates of the UAE.",
+                image:"images/p74.jpg",
+                phone:"",
+                whatsapp:"971548888525",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "crumbjoy.ae" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"حلويات",
+                categoryEn:"Sweets",
+                products:[]
+            },
+            {
+                id:75,
+                name:"ون ناين",
+                nameEn:"One Nine",
+                emirate:"أبوظبي",
+                description:"حلويات",
+                descriptionEn:"Sweets",
+                longDescription:"حلويات مثالية، تقدم بشكل دائري. نتعامل مع الشركات (B2B). مرخص من دائرة التنمية الاقتصادية. موقعنا في أبوظبي (مدينة الرياض). نوصل لجميع إمارات الدولة. للطلب عبر الواتساب.",
+                longDescriptionEn:"Sweet perfection, served in circles. We specialize in B2B. Licensed by the DED. Located in Abu Dhabi (Al Riyadh City). We deliver to all Emirates of the UAE. Order via WhatsApp.",
+                image:"images/p75.jpg",
+                phone:"",
+                whatsapp:"971543977103",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "onenine.ae" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"حلويات",
+                categoryEn:"Sweets",
+                products:[
+                    {
+id: "75_p1",
+name: "تشيز كيك كلاسيك",
+nameEn: "Classic Cheesecake",
+description: "تشيز كيك كلاسيكي بطبقة كريمية ناعمة على قاعدة بسكويت.",
+descriptionEn: "Classic cheesecake with a smooth creamy layer on a biscuit base.",
+longDescription: "تشيز كيك كلاسيكي بتركيبة كريمية غنية وناعمة، يقدم على قاعدة بسكويت مقرمشة. حلوى متوازنة بنكهة الجبن الكريمي المميزة، مثالية لعشاق الحلويات التقليدية.",
+longDescriptionEn: "A classic cheesecake with a rich, smooth, and creamy texture, served on a crispy biscuit base. A balanced dessert with a distinctive cream cheese flavor, perfect for traditional dessert lovers.",
+category: "حلويات",
+categoryEn: "Desserts",
+mainImage: "images/p75-1-1.jpg",
+images: ["images/p75-1-1.jpg"],
+details: [
+"تشيز كيك كلاسيكي",
+"طبقة كريمية ناعمة",
+"قاعدة بسكويت مقرمشة",
+"نكهة جبنة كريمية مميزة"
+],
+detailsEn: [
+"Classic cheesecake",
+"Smooth creamy layer",
+"Crispy biscuit base",
+"Distinctive cream cheese flavor"
+]
+},
+{
+id: "75_p2",
+name: "تشيز كيك مدريد",
+nameEn: "Madrid Cheesecake",
+description: "تشيز كيك على الطريقة الإسبانية بقشرة محمصة من الخارج وكريمية من الداخل.",
+descriptionEn: "Spanish-style cheesecake with a toasted crust and creamy center.",
+longDescription: "تشيز كيك مدريد هو النسخة الإسبانية الشهيرة من التشيز كيك، يتميز بقشرته المحمصة من الخارج وقلبه الكريمي الناعم من الداخل. درجة حرارة الخبز العالية تعطيه ملمساً فريداً ونكهة الكراميل الخفيفة.",
+longDescriptionEn: "Madrid Cheesecake is the famous Spanish version of cheesecake, characterized by its toasted crust on the outside and soft, creamy center on the inside. The high baking temperature gives it a unique texture and a hint of caramel flavor.",
+category: "حلويات",
+categoryEn: "Desserts",
+mainImage: "images/p75-2-1.jpg",
+images: ["images/p75-2-1.jpg"],
+details: [
+"تشيز كيك إسباني",
+"قشرة محمصة من الخارج",
+"قلب كريمي ناعم",
+"نكهة كراميل خفيفة"
+],
+detailsEn: [
+"Spanish-style cheesecake",
+"Toasted crust on the outside",
+"Soft creamy center",
+"Hint of caramel flavor"
+]
+},
+{
+id: "75_p3",
+name: "تشيز كيك أبسايد داون",
+nameEn: "Upside Down Cheesecake",
+description: "تشيز كيك مقلوب بطبقة كراميل غنية وكريمة ناعمة.",
+descriptionEn: "Upside down cheesecake with a rich caramel layer and smooth cream.",
+longDescription: "تشيز كيك أبسايد داون هو ابتكار مميز حيث توضع طبقة الكراميل في القاع وتُقلب عند التقديم. يتميز بطبقة كراميل غنية وكريمة الجبن الناعمة، ليمنحك تجربة متكاملة من النكهات.",
+longDescriptionEn: "Upside Down Cheesecake is a unique innovation where a caramel layer is placed at the bottom and flipped when served. It features a rich caramel layer and smooth cheese cream, giving you a complete flavor experience.",
+category: "حلويات",
+categoryEn: "Desserts",
+mainImage: "images/p75-3-1.jpg",
+images: ["images/p75-3-1.jpg"],
+details: [
+"تشيز كيك مقلوب",
+"طبقة كراميل غنية",
+"كريمة جبن ناعمة",
+"تجربة نكهات متكاملة"
+],
+detailsEn: [
+"Upside down cheesecake",
+"Rich caramel layer",
+"Smooth cheese cream",
+"Complete flavor experience"
+]
+},
+{
+id: "75_p4",
+name: "تشيز كيك فستق",
+nameEn: "Pistachio Cheesecake",
+description: "تشيز كيك غني بنكهة الفستق الحلبي مع كريمة ناعمة.",
+descriptionEn: "Rich pistachio cheesecake with a smooth cream.",
+longDescription: "تشيز كيك فستق يجمع بين كريمة الجبن الناعمة والنكهة الغنية للفستق الحلبي. يزين بطبقة من الفستق المطحون، ليمنحك حلوى فاخرة بنكهة شرقية مميزة.",
+longDescriptionEn: "Pistachio Cheesecake combines smooth cream cheese with the rich flavor of pistachio. Topped with a layer of ground pistachio, giving you a luxurious dessert with a distinctive oriental flavor.",
+category: "حلويات",
+categoryEn: "Desserts",
+mainImage: "images/p75-4-1.jpg",
+images: ["images/P75-4-1.jpg"],
+details: [
+"تشيز كيك بالفستق",
+"كريمة جبن ناعمة",
+"طبقة فستق مطحون",
+"نكهة شرقية مميزة"
+],
+detailsEn: [
+"Pistachio cheesecake",
+"Smooth cream cheese",
+"Layer of ground pistachio",
+"Distinctive oriental flavor"
+]
+},
+{
+id: "75_p5",
+name: "كيك الشوكولاتة",
+nameEn: "Chocolate Cake",
+description: "كيك شوكولاتة غني بطبقة كريمية بنكهة الشوكولاتة.",
+descriptionEn: "Rich chocolate cake with a creamy chocolate layer.",
+longDescription: "كيك الشوكولاتة الغني بقوامه الطري ونكهته العميقة، مغطى بطبقة من كريمة الشوكولاتة الفاخرة. حلوى مثالية لعشاق الشوكولاتة، تناسب جميع المناسبات.",
+longDescriptionEn: "Rich chocolate cake with its soft texture and deep flavor, topped with a layer of luxurious chocolate cream. A perfect dessert for chocolate lovers, suitable for all occasions.",
+category: "حلويات",
+categoryEn: "Desserts",
+mainImage: "images/p75-5-1.jpg",
+images: ["images/P75-5-1.jpg"],
+details: [
+"كيك شوكولاتة غني",
+"قوام طري",
+"كريمة شوكولاتة فاخرة",
+"لجميع المناسبات"
+],
+detailsEn: [
+"Rich chocolate cake",
+"Soft texture",
+"Luxurious chocolate cream",
+"For all occasions"
+]
+},
+{
+id: "75_p6",
+name: "كيك الجزر تري ليتشيز",
+nameEn: "Carrot tre leches",
+description: "كيك الجزر بثلاثة أنواع من الحليب، بقوام رطب ونكهة مميزة.",
+descriptionEn: "Carrot cake with three types of milk, with a moist texture and distinctive flavor.",
+longDescription: "كيك الجزر تري ليتشيز يجمع بين حلاوة كيك الجزر التقليدي وطريقة التري ليتشيز المشبعة بالحليب. يتميز بقوامه الرطب ونكهة الجزر مع القرفة، ويقدم مع صلصة الكراميل.",
+longDescriptionEn: "Carrot tre leches combines the sweetness of traditional carrot cake with the milk-soaked tres leches method. It features a moist texture and carrot flavor with cinnamon, served with caramel sauce.",
+category: "حلويات",
+categoryEn: "Desserts",
+mainImage: "images/p75-6-1.jpg",
+images: ["images/P75-6-1.jpg"],
+details: [
+"كيك الجزر بتري ليتشيز",
+"قوام رطب",
+"نكهة الجزر والقرفة",
+"يقدم مع صلصة كراميل"
+],
+detailsEn: [
+"Carrot tres leches cake",
+"Moist texture",
+"Carrot and cinnamon flavor",
+"Served with caramel sauce"
+]
+},
+{
+id: "75_p7",
+name: "كيك التمر والجوز",
+nameEn: "Date Pecan Cake",
+description: "كيك غني بالتمر والجوز بنكهة شرقية دافئة.",
+descriptionEn: "Rich date and pecan cake with a warm oriental flavor.",
+longDescription: "كيك التمر والجوز يجمع بين حلاوة التمر الطبيعية وقرمشة الجوز المحمص. كيكة تقليدية بنكهة دافئة ومشبعة، تقدم مع صوص التوفي أو العسل.",
+longDescriptionEn: "Date Pecan Cake combines the natural sweetness of dates with the crunch of roasted pecans. A traditional cake with a warm and satisfying flavor, served with toffee sauce or honey.",
+category: "حلويات",
+categoryEn: "Desserts",
+mainImage: "images/p75-7-1.jpg",
+images: ["images/p75-7-1.jpg"],
+details: [
+"كيك التمر والجوز",
+"حلاوة التمر الطبيعية",
+"قرمشة الجوز المحمص",
+"نكهة شرقية دافئة"
+],
+detailsEn: [
+"Date pecan cake",
+"Natural sweetness of dates",
+"Crunch of roasted pecans",
+"Warm oriental flavor"
+]
+},
+{
+id: "75_p8",
+name: "كيك جوز الهند",
+nameEn: "Coconut Cake",
+description: "كيكة هشة بنكهة جوز الهند الطازجة وطبقة كريمية.",
+descriptionEn: "Fluffy cake with fresh coconut flavor and a creamy layer.",
+longDescription: "كيك جوز الهند الطري بنكهة جوز الهند الطازجة، مغطى بطبقة من كريمة جوز الهند. يتميز بقوامه الخفيف والناعم، مثالي مع كوب من الشاي.",
+longDescriptionEn: "Soft coconut cake with fresh coconut flavor, topped with a layer of coconut cream. It features a light and smooth texture, perfect with a cup of tea.",
+category: "حلويات",
+categoryEn: "Desserts",
+mainImage: "images/p75-8-1.jpg",
+images: ["images/p75-8-1.jpg"],
+details: [
+"كيك جوز الهند",
+"نكهة جوز الهند الطازجة",
+"قوام خفيف وناعم",
+"كريمة جوز الهند"
+],
+detailsEn: [
+"Coconut cake",
+"Fresh coconut flavor",
+"Light and smooth texture",
+"Coconut cream"
+]
+},
+{
+id: "75_p9",
+name: "براونيز",
+nameEn: "Brownies",
+description: "براونيز شوكولاتة بقوام كثيف وغني، بطبقة خارجية مقرمشة وقلب طري.",
+descriptionEn: "Rich and dense chocolate brownies with a crispy outer layer and soft center.",
+longDescription: "براونيز الشوكولاتة الداكنة بقوامه الكثيف والغني، يتميز بطبقة خارجية مقرمشة وقلب طري وناعم. قطعة صغيرة من المتعة لمحبي الشوكولاتة.",
+longDescriptionEn: "Dark chocolate brownies with a dense and rich texture, featuring a crispy outer layer and a soft, fudgy center. A small piece of pleasure for chocolate lovers.",
+category: "حلويات",
+categoryEn: "Desserts",
+mainImage: "images/p75-9-1.jpg",
+images: ["images/p75-9-1.jpg"],
+details: [
+"براونيز شوكولاتة داكنة",
+"قوام كثيف وغني",
+"طبقة خارجية مقرمشة",
+"قلب طري وناعم"
+],
+detailsEn: [
+"Dark chocolate brownies",
+"Dense and rich texture",
+"Crispy outer layer",
+"Soft and fudgy center"
+]
+},
+{
+id: "75_p10",
+name: "تارت تشيز كيك",
+nameEn: "Cheesecake Tart",
+description: "تارت بحشوة كريمة الجبن على قاعدة مقرمشة.",
+descriptionEn: "Tart with cream cheese filling on a crispy base.",
+longDescription: "تارت تشيز كيك يجمع بين قشرة التارت المقرمشة وحشوة كريمة الجبن الناعمة. حلوى فردية مثالية للضيافة، بنكهة كلاسيكية متوازنة.",
+longDescriptionEn: "Cheesecake Tart combines a crispy tart crust with a smooth cream cheese filling. A perfect individual dessert for hospitality, with a balanced classic flavor.",
+category: "حلويات",
+categoryEn: "Desserts",
+mainImage: "images/p75-10-1.jpg",
+images: ["images/p75-10-1.jpg"],
+details: [
+"تارت تشيز كيك",
+"قشرة تارت مقرمشة",
+"حشوة كريمة جبن ناعمة",
+"حجم فردي"
+],
+detailsEn: [
+"Cheesecake tart",
+"Crispy tart crust",
+"Smooth cream cheese filling",
+"Individual size"
+]
+},
+{
+id: "75_p11",
+name: "تارت التمر",
+nameEn: "Date Tart",
+description: "تارت بحشوة التمر الطبيعي بنكهة شرقية.",
+descriptionEn: "Tart with natural date filling, oriental flavor.",
+longDescription: "تارت التمر يجمع بين قشرة التارت الهشة وحشوة التمر الطبيعي الغنية. حلوى تقليدية بنكهة شرقية دافئة، تقدم مع القهوة العربية.",
+longDescriptionEn: "Date Tart combines a crumbly tart crust with a rich natural date filling. A traditional dessert with a warm oriental flavor, served with Arabic coffee.",
+category: "حلويات",
+categoryEn: "Desserts",
+mainImage: "images/p75-11-1.jpg",
+images: ["images/p75-11-1.jpg"],
+details: [
+"تارت التمر",
+"قشرة هشة",
+"حشوة تمر طبيعي",
+"نكهة شرقية دافئة"
+],
+detailsEn: [
+"Date tart",
+"Crumbly crust",
+"Natural date filling",
+"Warm oriental flavor"
+]
+},
+{
+id: "75_p12",
+name: "بودنغ الموز",
+nameEn: "Banana Pudding",
+description: "بودنغ الموز الكريمي بطبقات من الموز والبسكويت.",
+descriptionEn: "Creamy banana pudding with layers of banana and cookies.",
+longDescription: "بودنغ الموز الكريمي يتكون من طبقات متناوبة من الموز الطازج والبسكويت والكريمة. حلوى خفيفة ولذيذة تقدم باردة، تناسب جميع الأذواق.",
+longDescriptionEn: "Creamy banana pudding consists of alternating layers of fresh banana, cookies, and cream. A light and delicious dessert served cold, suitable for all tastes.",
+category: "حلويات",
+categoryEn: "Desserts",
+mainImage: "images/p75-12-1.jpg",
+images: ["images/p75-12-1.jpg"],
+details: [
+"بودنغ الموز",
+"طبقات موز وبسكويت",
+"كريمة ناعمة",
+"يقدم بارداً"
+],
+detailsEn: [
+"Banana pudding",
+"Layers of banana and cookies",
+"Smooth cream",
+"Served cold"
+]
+},
+{
+id: "75_p13",
+name: "تشوكو ميسو",
+nameEn: "Choco Misu",
+description: "حلوى إيطالية بنكهة الشوكولاتة والقهوة.",
+descriptionEn: "Italian dessert with chocolate and coffee flavor.",
+longDescription: "تشوكو ميسو هو نسخة الشوكولاتة من التيراميسو الشهير. يتكون من طبقات من البسكويت المنقوع بالقهوة وكريمة الماسكاربوني وطبقة غنية من الشوكولاتة.",
+longDescriptionEn: "Choco Misu is the chocolate version of the famous tiramisu. It consists of layers of coffee-soaked biscuits, mascarpone cream, and a rich chocolate layer.",
+category: "حلويات",
+categoryEn: "Desserts",
+mainImage: "images/p75-13-1.jpg",
+images: ["images/p75-13-1.jpg"],
+details: [
+"نسخة شوكولاتة من التيراميسو",
+"بسكويت منقوع بالقهوة",
+"كريمة ماسكاربوني",
+"طبقة شوكولاتة غنية"
+],
+detailsEn: [
+"Chocolate version of tiramisu",
+"Coffee-soaked biscuits",
+"Mascarpone cream",
+"Rich chocolate layer"
+]
+},
+                ]
+            },
+            {
+                id:76,
+                name:"تاستي سبايسي",
+                nameEn:"Tasty Spicy 9",
+                emirate:"",
+                description:"ورق عنب ومحاشي",
+                descriptionEn:"Stuffed Grape Leaves",
+                longDescription:"متخصصون في ورق العنب والمحاشي. للطلب عبر الدايركت مسج أو الواتساب. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"Specialized in stuffed grape leaves and vegetables. Order via DM or WhatsApp. Delivery to all Emirates of the UAE.",
+                image:"images/p76.jpg",
+                phone:"",
+                whatsapp:"971523987258",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "tasty.spicy9" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"أطعمة ومشروبات",
+                categoryEn:"Food & Beverages",
+                products:[]
+            },
+            {
+                id:77,
+                name:"مونش",
+                nameEn:"Munch",
+                emirate:"",
+                description:"شوكولاتة فاخرة",
+                descriptionEn:"Premium Chocolates",
+                longDescription:"متجر شوكولاتة فاخرة، مصنوعة يدويًا للهدايا والمناسبات. متوفرة على طلبات في رأس الخيمة، وعلى طلبات وكيتا في الشارقة. للطلب عبر الخاص أو الواتساب. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"A premium chocolate store, handcrafted for gifts and occasions. Available on Talabat in RAK, and on Talabat & Keeta in Sharjah. Order via DM or WhatsApp. Delivery to all Emirates of the UAE.",
+                image:"images/p77.jpg",
+                phone:"",
+                whatsapp:"971569447423",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "munch_ae" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"حلويات",
+                categoryEn:"Sweets",
+                products:[]
+            },
+            {
+                id:78,
+                name:"أم راشد كيتشن",
+                nameEn:"Um Rashed Kitchen",
+                emirate:"أبوظبي",
+                description:"مأكولات تراثية وشعبية",
+                descriptionEn:"Traditional & Folk Cuisine",
+                longDescription:"مطبخ منزلي بأيدي إماراتية، متخصص في ألذ المأكولات التراثية والشعبية في أبوظبي. الرجاء التواصل قبل يوم من موعد الطلب. للطلب عبر الواتساب. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"A home kitchen with Emirati hands, specializing in delicious traditional and folk cuisine in Abu Dhabi. Please contact us one day before your order date. Order via WhatsApp. Delivery to all Emirates of the UAE.",
+                image:"images/p78.jpg",
+                phone:"",
+                whatsapp:"971544044838",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "umrashed_kitchen9" },
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"أطعمة ومشروبات",
+                categoryEn:"Food & Beverages",
+                products:[]
+            },
+            {
+                id:79,
+                name:"هوم ميد",
+                nameEn:"Home Made",
+                emirate:"أبوظبي",
+                description:"حلويات ووجبات خفيفة عصرية",
+                descriptionEn:"Sweets & Trendy Snacks",
+                longDescription:"متجر يدعم المشاريع المنزلية، نقدم لكم حلويات ووجبات خفيفة عصرية. للتسوق والتواصل عبر الواتساب والسناب شات. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"A store supporting home projects, offering sweets and trendy snacks. Shop and contact via WhatsApp and Snapchat. Delivery to all Emirates of the UAE.",
+                image:"images/p79.jpg",
+                phone:"",
+                whatsapp:"971506316648",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "homemade.ae9" },
+                    { type: "snapchat", value: "homemade.ae9" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"حلويات",
+                categoryEn:"Sweets",
+                products:[]
+            },
+            {
+                id:80,
+                name:"ديليزيا",
+                nameEn:"Delizia",
+                emirate:"",
+                description:"حلويات",
+                descriptionEn:"Sweets",
+                longDescription:"ديليزيا - حيث تبدأ الحلاوة. حلويات مصممة لترسم البسمة على وجهك، بطعم ستبقى تتذكره دائماً. الرجاء الطلب قبل يومين. للطلب عبر الواتساب. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"Delizia — where sweetness begins. Crafts made to make you smile, a taste you'll always remember. Please order 2 days in advance. Order via WhatsApp. Delivery to all Emirates of the UAE.",
+                image:"images/p80.jpg",
+                phone:"",
+                whatsapp:"", // الرجاء إضافة رقم الواتساب إن وجد
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "delizia__sweet" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"حلويات",
+                categoryEn:"Sweets",
+                products:[]
+            },
+            {
+                id:81,
+                name:"شوكولاتا فايبز",
+                nameEn:"Chocolate Vibes",
+                emirate:"",
+                description:"شوكولاتة",
+                descriptionEn:"Chocolate",
+                longDescription:"متخصصون في بيع الشوكولاتة. للطلب عبر الواتساب. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"Specialized in selling chocolate. Order via WhatsApp. Delivery to all Emirates of the UAE.",
+                image:"images/p81.jpg",
+                phone:"",
+                whatsapp:"971545166026",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "chocolatevibes.ae" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"حلويات",
+                categoryEn:"Sweets",
+                products:[]
+            },
+            {
+                id:82,
+                name:"كاندلين",
+                nameEn:"Candleen",
+                emirate:"",
+                description:"شموع معطرة فاخرة",
+                descriptionEn:"Luxury Scented Candles",
+                longDescription:"شموع معطرة فاخرة، مصنوعة يدويًا بحب. نوفر علب هدايا وطلبات خاصة. نوصل لجميع إمارات الدولة. للطلب عبر الخاص.",
+                longDescriptionEn:"Luxury scented candles, handmade with love. We offer gift boxes and special orders. Delivery to all Emirates of the UAE. Order via DM.",
+                image:"images/p82.jpg",
+                phone:"",
+                whatsapp:"",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "candleen.ae" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"هدايا",
+                categoryEn:"Gifts",
+                products:[]
+            },
+            {
+                id:83,
+                name:"كوك لاين",
+                nameEn:"Cookline",
+                emirate:"",
+                description:"أطعمة ومشروبات",
+                descriptionEn:"Food & Beverages",
+                longDescription:"للطلب، يرجى التواصل عبر الرسائل المباشرة على إنستغرام أو الاتصال على الرقم. الرجاء الطلب قبل ساعة من الموعد.",
+                longDescriptionEn:"To order, please contact us via Instagram Direct Message or call the number. Please order one hour in advance.",
+                image:"images/p83.jpg",
+                phone:"",
+                whatsapp:"971561338555",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "cookline_" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"أطعمة ومشروبات",
+                categoryEn:"Food & Beverages",
+                products:[]
+            },
+            {
+                id:84,
+                name:"غيم",
+                nameEn:"Ghaym",
+                emirate:"",
+                description:"حلويات ومعجنات",
+                descriptionEn:"Sweets & Pastries",
+                longDescription:"خذ لك لحظة وحليها! ☁️ حلويات ومعجنات غيم، صنعت لكم بحب. علامة تجارية مرخصة، للطلب عبر الواتساب.",
+                longDescriptionEn:"Take a moment and sweeten it! ☁️ Ghaym's sweets and pastries, made with love for you. A licensed brand, delivering to all Emirates of the UAE. Order via WhatsApp.",
+                image:"images/p84.jpg",
+                phone:"",
+                whatsapp:"971501141241",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "ghaym.uae2025" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"حلويات",
+                categoryEn:"Sweets",
+                products:[
+                    {
+id: "84_p1",
+name: "كيكة البرتقال الطريمة",
+nameEn: "Orange Cake",
+description: "كيكة برتقال طرية وهشة بنكهة البرتقال الطبيعية.",
+descriptionEn: "Soft and fluffy orange cake with natural orange flavor.",
+longDescription: "كيكة البرتقال الطريمة هي حلوى منزلية شهية، تتميز بقوامها الهش ونكهة البرتقال الطازجة. تُحضر بمكونات طبيعية، وتُزين بشرائح البرتقال أو السكر البودرة. مثالية مع الشاي أو القهوة.",
+longDescriptionEn: "Orange cake is a delicious homemade dessert, characterized by its fluffy texture and fresh orange flavor. Made with natural ingredients, decorated with orange slices or powdered sugar. Perfect with tea or coffee.",
+category: "حلويات",
+categoryEn: "Desserts",
+mainImage: "images/p84.jpg",
+images: ["images/p84.jpg"],
+details: [
+"كيكة برتقال",
+"قوام هش",
+"نكهة طبيعية",
+"مثالية للقهوة"
+],
+detailsEn: [
+"Orange cake",
+"Fluffy texture",
+"Natural flavor",
+"Perfect with coffee"
+]
+},
+{
+id: "84_p2",
+name: "ورق العنب الصمن العائلتي",
+nameEn: "Stuffed Grape Leaves - Family Size",
+description: "ورق عنب محشو بحجم عائلي، طبق تقليدي شهي.",
+descriptionEn: "Stuffed grape leaves family size, delicious traditional dish.",
+longDescription: "ورق العنب الصمن العائلتي هو طبق تقليدي محضر بحرفية، حيث تُحشى أوراق العنب بخليط الأرز والبهارات واللحم المفروم حسب الرغبة. هذه الكمية الكبيرة تكفي العائلة في المناسبات.",
+longDescriptionEn: "Family size stuffed grape leaves is a traditional dish prepared with skill, where grape leaves are stuffed with a mixture of rice, spices, and minced meat as desired. This large quantity is enough for family gatherings.",
+category: "أطباق رئيسية",
+categoryEn: "Main Dishes",
+mainImage: "images/p84.jpg",
+images: ["images/p84.jpg"],
+details: [
+"ورق عنب محشو",
+"حجم عائلي",
+"أرز وبهارات",
+"يكفي العائلة"
+],
+detailsEn: [
+"Stuffed grape leaves",
+"Family size",
+"Rice and spices",
+"Serves family"
+]
+},
+{
+id: "84_p3",
+name: "ورق العنب الصمن المغير",
+nameEn: "Stuffed Grape Leaves - Regular",
+description: "ورق عنب محشو بالطريقة التقليدية، حجم متوسط.",
+descriptionEn: "Traditional stuffed grape leaves, medium size.",
+longDescription: "ورق العنب الصمن المغير هو طبق جانبي أو مقبلات شهية من ورق العنب المحشو بخليط الأرز والبهارات. يقدم بارداً أو ساخناً مع اللبن والليمون.",
+longDescriptionEn: "Stuffed grape leaves regular is a delicious side dish or appetizer made of grape leaves stuffed with rice and spices. Served cold or hot with yogurt and lemon.",
+category: "مقبلات",
+categoryEn: "Appetizers",
+mainImage: "images/p84.jpg",
+images: ["images/p84.jpg"],
+details: [
+"ورق عنب محشو",
+"حجم متوسط",
+"مقبلات تقليدية",
+"يقدم مع اللبن"
+],
+detailsEn: [
+"Stuffed grape leaves",
+"Regular size",
+"Traditional appetizer",
+"Served with yogurt"
+]
+},
+{
+id: "84_p4",
+name: "بسكويت المحشو بالتمر",
+nameEn: "Stuffed Date Cookies",
+description: "بسكويت هش محشو بالتمر الطبيعي.",
+descriptionEn: "Crumbly cookies stuffed with natural dates.",
+longDescription: "بسكويت محشو بالتمر هو حلوى تقليدية تجمع بين هشاشة العجينة وحلاوة التمر الطبيعية. مثالي مع القهوة العربية أو الشاي.",
+longDescriptionEn: "Stuffed date cookies are a traditional sweet combining crumbly dough and natural date sweetness. Perfect with Arabic coffee or tea.",
+category: "حلويات",
+categoryEn: "Desserts",
+mainImage: "images/p84.jpg",
+images: ["images/p84.jpg"],
+details: [
+"بسكويت هش",
+"حشوة تمر طبيعي",
+"حلوى تقليدية",
+"مثالي مع القهوة"
+],
+detailsEn: [
+"Crumbly cookies",
+"Natural date filling",
+"Traditional sweet",
+"Perfect with coffee"
+]
+},
+{
+id: "84_p5",
+name: "بسكويت المحشو بالتمر (24 حبة) للتوزيعات",
+nameEn: "Stuffed Date Cookies (24 pcs) for Favors",
+description: "علبة بسكويت تمر مكونة من 24 حبة مناسبة للهدايا والتوزيعات.",
+descriptionEn: "Box of 24 stuffed date cookies, suitable for gifts and favors.",
+longDescription: "هذه العلبة تحتوي على 24 حبة من البسكويت المحشو بالتمر، معبأة بشكل أنيق لتكون هدية مثالية في المناسبات أو للتوزيعات في الحفلات.",
+longDescriptionEn: "This box contains 24 pieces of stuffed date cookies, neatly packed to be a perfect gift for occasions or party favors.",
+category: "هدايا",
+categoryEn: "Gifts",
+mainImage: "images/p84.jpg",
+images: ["images/p84.jpg"],
+details: [
+"24 حبة بسكويت تمر",
+"مناسب للتوزيعات",
+"تغليف أنيق",
+"هدية مميزة"
+],
+detailsEn: [
+"24 date cookies",
+"Suitable for favors",
+"Elegant packaging",
+"Special gift"
+]
+},
+{
+id: "84_p6",
+name: "غريبة هشة وطريقه 1 كيلو",
+nameEn: "Crumbly Ghorayeba 1kg",
+description: "كيلو كامل من الغريبة الهشة والطرية بنكهة الفانيليا.",
+descriptionEn: "Full kilo of crumbly and soft ghorayeba with vanilla flavor.",
+longDescription: "الغريبة الهشة والطرية هي حلوى شرقية كلاسيكية تذوب في الفم. مصنوعة من السميد أو الدقيق والسكر والزبدة، بنكهة الفانيليا. هذا الكيلو يكفي للعائلة أو المناسبات.",
+longDescriptionEn: "Crumbly and soft ghorayeba is a classic oriental dessert that melts in the mouth. Made with semolina or flour, sugar, and butter, with vanilla flavor. This kilo is enough for family or occasions.",
+category: "حلويات",
+categoryEn: "Desserts",
+mainImage: "images/p84.jpg",
+images: ["images/p84.jpg"],
+details: [
+"وزن كيلو",
+"غريبة هشة",
+"نكهة فانيليا",
+"تذوب في الفم"
+],
+detailsEn: [
+"1 kg weight",
+"Crumbly ghorayeba",
+"Vanilla flavor",
+"Melts in mouth"
+]
+}
+                ]
+            },
+            {
+                id:85,
+                name:"أولد فود",
+                nameEn:"Old Food",
+                emirate:"أم القيوين",
+                description:"",
+                descriptionEn:"",
+                longDescription:"الرجاء الطلب قبل يومين. نوصل لجميع إمارات الدولة. للتواصل عبر الواتساب.",
+                longDescriptionEn:"Please order 2 days in advance. We deliver to all Emirates of the UAE. Contact us via WhatsApp.",
+                image:"images/p85.jpg",
+                phone:"",
+                whatsapp:"971526076088",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "_old_food" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"",
+                categoryEn:"",
+                products:[]
+            },
+            {
+                id:86,
+                name:"لذا شوكوليت",
+                nameEn:"Ledha Chocolates",
+                emirate:"الفجيرة",
+                description:"شوكولاتة منزلية فاخرة",
+                descriptionEn:"Premium Homemade Chocolates",
+                longDescription:"شوكولاتة منزلية فاخرة، وخدمة تخصيص الشوكولاتة للمناسبات والفعاليات. ملاحظة: الصينية ليست للبيع. للطلب عبر الخاص. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"Premium homemade chocolates, and custom chocolate service for any event or function. Note: The tray is not for sale. Order via DM. Delivery to all Emirates of the UAE.",
+                image:"images/p86.jpg",
+                phone:"",
+                whatsapp:"",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "ledha.uae" },
+                    { type: "tiktok", value: "ledha.uae" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"حلويات",
+                categoryEn:"Sweets",
+                products:[]
+            },
+            {
+                id:87,
+                name:"ويش سويتس",
+                nameEn:"Wish Sweets",
+                emirate:"رأس الخيمة",
+                description:"حلويات",
+                descriptionEn:"Sweets",
+                longDescription:"مشروع مرخص من دائرة التنمية الاقتصادية، نقدم لكم الحلويات منذ 2020. الرجاء الطلب قبل يوم. للطلب عبر الواتساب. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"A project licensed by the Economic Development Department, serving you sweets since 2020. Please order one day in advance. Order via WhatsApp. Delivery to all Emirates of the UAE.",
+                image:"images/p87.jpg",
+                phone:"971501705353",
+                whatsapp:"971501705353",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "wish.sweets" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"حلويات",
+                categoryEn:"Sweets",
+                products:[]
+            },
+            {
+                id:88,
+                name:"بلاش بيري",
+                nameEn:"Blushberry",
+                emirate:"رأس الخيمة",
+                description:"هدايا للمناسبات الخاصة",
+                descriptionEn:"Gifts for Special Occasions",
+                longDescription:"فاجئ أحباءك في مناسباتهم الخاصة. مشروع مرخص من دائرة التنمية الاقتصادية. للطلب عبر الخاص. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"Surprise your loved ones on their special occasions. A project licensed by the DED. Order via DM. Delivery to all Emirates of the UAE.",
+                image:"images/p88.jpg",
+                phone:"",
+                whatsapp:"971555515478",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "blushberry.ae" },
+                    { type: "tiktok", value: "blushberry.ae" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"هدايا",
+                categoryEn:"Gifts",
+                products:[]
+            },
+            {
+                id:89,
+                name:"همايل",
+                nameEn:"Hamayel",
+                emirate:"",
+                description:"ضيافة فاخرة وتخطيط فعاليات",
+                descriptionEn:"Luxury Hospitality & Event Planning",
+                longDescription:"متعهد حفلات، متخصصون في الضيافة الفاخرة وتنسيق الطعام وتخطيط الفعاليات. مشروع وطني مرخص من ADDED و ADFSA. للطلب عبر الواتساب. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"Catering service, specialized in luxury hospitality, food styling, and event planning. A national project licensed by ADDED and ADFSA. Order via WhatsApp. Delivery to all Emirates of the UAE.",
+                image:"images/default.png",
+                phone:"",
+                whatsapp:"971507165087",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "hamayel.ae" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"أطعمة ومشروبات",
+                categoryEn:"Food & Beverages",
+                products:[]
+            },
+            {
+                id:90,
+                name:"أوفينا",
+                nameEn:"Ovena",
+                emirate:"",
+                description:"أطعمة ومشروبات",
+                descriptionEn:"Food & Beverages",
+                longDescription:"للطلب، راسلونا على الواتساب. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"To order, message us on WhatsApp. Delivery to all Emirates of the UAE.",
+                image:"images/p90.jpg",
+                phone:"",
+                whatsapp:"971562275117",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "ovena.ae" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"أطعمة ومشروبات",
+                categoryEn:"Food & Beverages",
+                products:[]
+            },
+            {
+                id:91,
+                name:"تنتا",
+                nameEn:"Tinta",
+                emirate:"أبوظبي",
+                description:"",
+                descriptionEn:"",
+                longDescription:"تأسس في العين 2025. للطلب عبر الواتساب. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"Est. in Al Ain 2025. Order via WhatsApp. Delivery to all Emirates of the UAE.",
+                image:"images/p91.jpg",
+                phone:"",
+                whatsapp:"", 
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "tinta_uae" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"",
+                categoryEn:"",
+                products:[]
+            },
+            {
+                id:92,
+                name:"خاشوقة",
+                nameEn:"Khashoogha",
+                emirate:"عجمان",
+                description:"معجنات ومقبلات",
+                descriptionEn:"Pastries & Appetizers",
+                longDescription:"مشروع منزلي إماراتي 🇦🇪، مرخص من دائرة التنمية الاقتصادية، متخصص في الميني فطاير والمسخن والمعجنات والمقبلات والحلويات. موقعنا في عجمان (منطقة الياسمين - مقابل الرحمانية). نوصل لجميع إمارات الدولة أو الاستلام من المنزل. للطلب عبر الواتساب أو التليجرام.",
+                longDescriptionEn:"An Emirati home-based project 🇦🇪, licensed by the Economic Development Department, specializing in mini pies, Msakhan, pastries, appetizers, and desserts. Located in Ajman (Al Yasmeen area - opposite Al Rahmaniya). We deliver to all Emirates of the UAE or offer pickup from home. Order via WhatsApp or Telegram.",
+                image:"images/p92.jpg",
+                phone:"",
+                whatsapp:"", // الرجاء إضافة رقم الواتساب إن وجد
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "khashoogha" },
+                    { type: "telegram", value: "khashoogha" },
+                    { type: "snapchat", value: "khashoogha" },
+                    { type: "tiktok", value: "khashoogha" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"أطعمة ومشروبات",
+                categoryEn:"Food & Beverages",
+                products:[]
+            },
+            {
+                id:93,
+                name:"فواله إيفنتس",
+                nameEn:"Fwalah Events",
+                emirate:"",
+                description:"ضيافة فاخرة للمناسبات",
+                descriptionEn:"Luxury Hospitality for Events",
+                longDescription:"متخصصون في تقديم الضيافة الفاخرة للمناسبات. مشروع مرخص من دائرة التنمية الاقتصادية. للطلب عبر الواتساب. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"Specialized in providing luxury hospitality for events. A project licensed by the Economic Development Department. Order via WhatsApp. Delivery to all Emirates of the UAE.",
+                image:"images/p93.jpg",
+                phone:"",
+                whatsapp:"971567550590",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "fwalah.events" },
+                    { type: "whatsapp", value: "971567550590" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"أطعمة ومشروبات",
+                categoryEn:"Food & Beverages",
+                products:[]
+            },
+            {
+                id:94,
+                name:"الخلود للزيوت",
+                nameEn:"Alkholoud Oil",
+                emirate:"أبوظبي",
+                description:"منتجات صحية وتجميلية طبيعية",
+                descriptionEn:"Natural Health & Beauty Products",
+                longDescription:"مشروع مرخص من دائرة التنمية الاقتصادية في أبوظبي 🇦🇪، متخصص في المنتجات الطبيعية للصحة والتجميل. للطلب عبر الخاص. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"A project licensed by the Economic Development Department in Abu Dhabi 🇦🇪, specializing in natural health and beauty products. Order via DM. Delivery to all Emirates of the UAE.",
+                image:"images/p94.jpg",
+                phone:"",
+                whatsapp:"",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "alkholoud.oil" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"عناية",
+                categoryEn:"Care",
+                products:[
+                    {
+id: "94_p1",
+name: "زيت الخلود",
+nameEn: "Al Khuloud Oil",
+description: "زيت طبيعي للعناية بالشعر، يغذي ويقوي ويعزز النمو.",
+descriptionEn: "Natural hair care oil that nourishes, strengthens, and promotes growth.",
+longDescription: "زيت الخلود هو مزيج طبيعي فاخر للعناية بالشعر، يحتوي على خلطة فريدة تغذي الشعر بعمق. يمنح الشعر قوة ولمعاناً صحياً، ويقلل التساقط والتقصف. يعمل على تنظيف فروة الرأس وعلاج القشرة، كما ينشط الدورة الدموية ويساعد على نمو الشعر. يساهم في تحسين كثافة الشعر ومظهره. تركيبة طبيعية آمنة، تمنحك شعراً أقوى وأكثر حيوية.",
+longDescriptionEn: "Al Khuloud Oil is a luxurious natural blend for hair care, containing a unique formula that deeply nourishes the hair. It gives hair strength and healthy shine, reduces hair fall and breakage. Cleanses the scalp and treats dandruff, activates blood circulation, and promotes hair growth. Contributes to improving hair density and appearance. A safe natural formula that gives you stronger and more vibrant hair.",
+category: "عناية بالشعر",
+categoryEn: "Hair Care",
+mainImage: "images/p94-1-1.png",
+images: [
+    "images/p94-1-1.png",
+    "images/p94-1.jpg"
+    
+],
+details: [
+"خليط طبيعي يغذي الشعر بعمق",
+"يقوي الشعر ويمنحه لمعاناً صحياً",
+"يقلل التساقط والتقصف",
+"ينظف فروة الرأس ويعالج القشرة",
+"ينشط الدورة الدموية ويساعد على النمو",
+"يساهم في تحسين كثافة الشعر"
+],
+detailsEn: [
+"Natural blend that deeply nourishes hair",
+"Strengthens hair and gives healthy shine",
+"Reduces hair fall and breakage",
+"Cleanses scalp and treats dandruff",
+"Activates blood circulation and promotes growth",
+"Improves hair density"
+]
+},
+                ]
+            },
+            {
+                id:95,
+                name:"سوفت بيك",
+                nameEn:"Soft Peak",
+                emirate:"",
+                description:"مرنغ مصنوع يدويًا",
+                descriptionEn:"Handmade Meringues",
+                longDescription:"مرنغ مشكّل ومصنوع يدويًا بأناقة. مشروع إماراتي. الرجاء الطلب قبل يوم. للطلب عبر الخاص. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"Hand-piped and shaped meringues. An Emirati business. Please order 1 day in advance. Order via DM. Delivery to all Emirates of the UAE.",
+                image:"images/p95.jpg",
+                phone:"",
+                whatsapp:"",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "softpeak.ae" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"حلويات",
+                categoryEn:"Sweets",
+                products:[]
+            },
+            {
+                id:96,
+                name:"AY بوتيك",
+                nameEn:"AY Boutique",
+                emirate:"",
+                description:"ملابس - علامة تجارية",
+                descriptionEn:"Clothing - Brand",
+                longDescription:"علامة تجارية للملابس مرخصة من الدائرة الاقتصادية. للطلب عبر الخاص أو الواتساب. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"A clothing brand licensed by the Economic Department. Order via DM or WhatsApp. Delivery to all Emirates of the UAE.",
+                image:"images/p96.jpg",
+                phone:"",
+                whatsapp:"971509933961",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "ay.boutiqe" }
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"ملابس",
+                categoryEn:"Clothes",
+                products:[]
+            },
+            {
+                id:97,
+                name:"مودز شوب",
+                nameEn:"Moods Shop",
+                emirate:"دبي",
+                description:"منتجات تجميل وعناية",
+                descriptionEn:"Beauty & Personal Care",
+                longDescription:"منتجات أصلية 100%. حساب موثّق ومرخّص من اقتصادية دبي 🇦🇪. نوصل داخل الإمارات ودول الخليج. للطلب عبر الخاص أو الواتساب أو الموقع الإلكتروني.",
+                longDescriptionEn:"100% original products. A verified and licensed account by Dubai Economy 🇦🇪. We deliver within the UAE and the GCC. Order via DM, WhatsApp, or our website.",
+                image:"images/p97.jpg",
+                phone:"",
+                whatsapp:"971558865391",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "moodsshopae" },
+                    { type: "facebook", value: "moodsshopae" },
+                ],
+                adra_license:"نعم",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"عناية",
+                categoryEn:"Care",
+                products:[]
+            },
+            {
+                id:98,
+                name:"ديبورا",
+                nameEn:"Debora",
+                emirate:"",
+                description:"هدايا",
+                descriptionEn:"Gifts & Giveaways",
+                longDescription:"متجر هدايا وتوزيعات في الإمارات. نجعل لحظاتكم تضيء ✨. للطلب عبر الموقع الإلكتروني أو الواتساب. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"A gifts and giveaways store in the UAE. We make your moments glow ✨. Order via our website or WhatsApp. Delivery to all Emirates of the UAE.",
+                image:"images/p98.jpg",
+                phone:"",
+                whatsapp:"971501797799",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "debora.ae" },
+                    { type: "website", value: "https://deborauae.com/" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"هدايا",
+                categoryEn:"Gifts",
+                products:[]
+            },
+            {
+                id:99,
+                name:"صاب بار",
+                nameEn:"Soapbar",
+                emirate:"",
+                description:"منتجات عناية طبيعية",
+                descriptionEn:"Natural Self-care Essentials",
+                longDescription:"منتجات عناية طبيعية، نصنعها في الإمارات منذ 2019. للطلب عبر الخاص. نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"Natural self-care essentials, made in the UAE since 2019. Order via DM. Delivery to all Emirates of the UAE.",
+                image:"images/p99.jpg",
+                phone:"",
+                whatsapp:"",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "soapbar.ae" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"عناية",
+                categoryEn:"Care",
+                products:[]
+            },
+            {
+                id:100,
+                name:"إيرور كيك",
+                nameEn:"Error Cake",
+                emirate:"",
+                description:"متجر شوكولاتة",
+                descriptionEn:"Chocolate Store",
+                longDescription:"متجر شوكولاتة، نوصل لجميع مناطق الإمارات. الطلب عبر الواتساب فقط (لا نستقبل مكالمات). نوصل لجميع إمارات الدولة.",
+                longDescriptionEn:"A chocolate store, delivering to all areas of the UAE. Order via WhatsApp only (we don't receive calls). Delivery to all Emirates of the UAE.",
+                image:"images/p100.jpg",
+                phone:"",
+                whatsapp:"971508718565",
+                email:"",
+                sell_points: [
+                    { type: "instagram", value: "error.cake" }
+                ],
+                adra_license:"لا",
+                coverage:"جميع إمارات الدولة",
+                badges:[""],
+                badgesEn:[""],
+                category:"حلويات",
+                categoryEn:"Sweets",
+                products:[]
+            },
+        ];
+
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = familiesData;
+}
