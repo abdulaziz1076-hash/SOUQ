@@ -1611,7 +1611,6 @@ const familiesData = [
                 id: 16,
                 name: "إل دولتشي ديزرتس",
                 nameEn: "Il Dolce Desserts",
-                is_paid: true,
                 emirate: "عجمان",
                 description: "حلويات",
                 descriptionEn: "Sweets",
