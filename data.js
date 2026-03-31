@@ -8769,8 +8769,8 @@ longDescription: "ورق عنب محشي بالأرز والبهارات، يق�
 longDescriptionEn: "Vine leaves stuffed with rice and spices, served with yogurt. Available in different sizes.",
 category: "محاشي",
 categoryEn: "Stuffed Vegetables",
-mainImage: "images/p67-1-1.jpg",
-images: ["images/p67-1-1.jpg"],
+mainImage: "images/p67.jpg",
+images: ["images/p67.jpg"],
 details: ["نصف كيلو", "كيلو", "كيلو ونصف"],
 detailsEn: ["Half kilo", "1 kilo", "1.5 kilos"]
 },
@@ -9295,10 +9295,8 @@ longDescription: "فتة شهية تتكون من طبقات من الخبز و�
 longDescriptionEn: "Delicious fattah consisting of layers of bread, rice, meat, and yogurt, available in four flavors: vine leaves fattah, potato fattah, Cheetos fattah, and toasted bread fattah. Each type comes in 12 pieces.",
 category: "أطباق رئيسية",
 categoryEn: "Main Dishes",
-mainImage: "images/p73-2-1.jpg",
-images: ["images/p73-2-1.jpg",
-        "images/p73-2-2.jpg",
-        "images/p73-2-3.jpg"],
+mainImage: "images/p73.jpg",
+images: ["images/p73.jpg"],
 details: [
 "فته ورق عنب",
 "فته بالبطاط",
