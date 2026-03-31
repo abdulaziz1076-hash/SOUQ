@@ -10,6 +10,7 @@ Allow: /
 
 # تحديد موقع خريطة الموقع
 Sitemap: https://souqalmasharie.onrender.com/sitemap.xml
+Crawl-delay: 2
 
 # منع فهرسة الصفحات الإدارية أو المؤقتة (إذا وجدت)
 # Disallow: /admin
