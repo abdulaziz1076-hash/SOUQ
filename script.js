@@ -170,10 +170,18 @@
                 email: "البريد الإلكتروني",
                 addToFavorites: "تمت الإضافة للمفضلة",
                 removeFromFavorites: "تمت الإزالة من المفضلة",
-                linkCopied: "تم نسخ الرابط!"
-            },
+                linkCopied: "تم نسخ الرابط!",
+                registerTitle: "سجل مشروعك الآن",
+                registerViaTwitter: "راسلنا على منصة X",
+                registerViaInstagram: "راسلنا على انستغرام",
+                registerViaTikTok: "راسلنا على تيك توك",
+                },
             en: {
                 siteTitle: "Projects Souq",
+                registerTitle: "Register Your Project Now",
+                registerViaX: "Message us on X",
+                registerViaInstagram: "Message us on Instagram",
+                registerViaTikTok: "Message us on TikTok",
                 paidBadge: "Featured",
                 dealsTitle: "Offers & Packages",
                 viewingDeal: "Viewing deal details...",
@@ -1160,173 +1168,175 @@ function handleHashChange() {
 
         // ==================== دوال اللغة ====================
         function toggleLanguage() {
-            showLoader();
-            const newLang = appState.currentLanguage === 'ar' ? 'en' : 'ar';
-            appState.currentLanguage = newLang;
-            localStorage.setItem('projectSouqLang', newLang);
-            const htmlTag = document.getElementById('htmlTag');
-            if (document.querySelector('.paid-badge span')) {
-             // النص يتم تحديثه تلقائياً عند إعادة العرض
-            }
-            if (newLang === 'ar') {
-                htmlTag.setAttribute('dir', 'rtl');
-                htmlTag.setAttribute('lang', 'ar');
-                document.body.classList.remove('en-mode');
-            } else {
-                htmlTag.setAttribute('dir', 'ltr');
-                htmlTag.setAttribute('lang', 'en');
-                document.body.classList.add('en-mode');
-            }
-            
-            // تحديث النصوص في الصفحة
-            const t = translations[newLang];
-            document.getElementById('siteTitle').textContent = t.siteTitle;
-            document.getElementById('privacyLink').textContent = t.privacy;
-            document.getElementById('offersPageTitle').textContent = t.offersPageTitle;
-            document.getElementById('offersPageSubtitle').textContent = t.offersPageSubtitle;
-            document.getElementById('termsLink').textContent = t.terms;
-            document.getElementById('offersBtnText').textContent = t.offersBtnText;
-            document.getElementById('siteSubtitle').textContent = t.siteSubtitle;
-            document.getElementById('navHome').textContent = t.navHome;
-            document.getElementById('navMarket').textContent = t.navMarket;
-            document.getElementById('navRegister').textContent = t.navRegister;
-            document.getElementById('navFavorites').textContent = t.navFavorites;
-            document.getElementById('footerLogo').textContent = t.footerLogo;
-            document.getElementById('footerText').textContent = t.footerText;
-            document.getElementById('copyright').textContent = t.copyright;
-            document.getElementById('langBtn').textContent = t.langBtn;
-            document.getElementById('heroTitle').textContent = t.heroTitle;
-            document.getElementById('heroSubtitle').textContent = t.heroSubtitle;
-            document.getElementById('discoverBtn').textContent = t.discoverBtn;
-            document.getElementById('joinBtn').textContent = t.joinBtn;
-            document.getElementById('aboutTitle').textContent = t.aboutTitle;
-            document.getElementById('aboutText1').innerHTML = t.aboutText1;
-            document.getElementById('aboutText2').innerHTML = t.aboutText2;
-            document.getElementById('aboutText3').innerHTML = t.aboutText3;
-            document.getElementById('stat1').textContent = t.stat1;
-            document.getElementById('stat2').textContent = t.stat2;
-            document.getElementById('stat3').textContent = t.stat3;
-            document.getElementById('stat4').textContent = t.stat4;
-            document.getElementById('badge1').textContent = t.badge1;
-            document.getElementById('badge2').textContent = t.badge2;
-            document.getElementById('badge3').textContent = t.badge3;
-            document.getElementById('badge4').textContent = t.badge4;
-            document.getElementById('familiesPageTitle').textContent = t.familiesPageTitle;
-            document.getElementById('familiesPageSubtitle').textContent = t.familiesPageSubtitle;
-            document.getElementById('productsTitle').textContent = t.productsTitle;
-            document.getElementById('favoritesPageTitle').textContent = t.favoritesPageTitle;
-            document.getElementById('favoritesPageSubtitle').textContent = t.favoritesPageSubtitle;
-            document.getElementById('popupTitle').textContent = t.popupTitle;
-            document.getElementById('step1').textContent = t.step1;
-            document.getElementById('step2').textContent = t.step2;
-            document.getElementById('step3').textContent = t.step3;
-            document.getElementById('gotItBtn').textContent = t.gotItBtn;
-            document.getElementById('shareTitle').textContent = t.shareTitle;
-            document.getElementById('shareProfileTitle').textContent = t.shareProfile;
-            document.getElementById('copyLinkText').textContent = t.copyLinkText;
-            document.getElementById('copyProfileLinkText').textContent = t.copyLinkText;
-            document.getElementById('closeShareBtn').textContent = t.closeShareBtn;
-            document.getElementById('closeProfileShareBtn').textContent = t.closeShareBtn;
-            document.getElementById('modalTitle').textContent = t.modalTitle;
-            document.getElementById('modalSubtitle').textContent = t.modalSubtitle;
-            document.getElementById('projectNameLabel').textContent = t.projectNameLabel;
-            document.getElementById('emirateLabel').textContent = t.emirateLabel;
-            document.getElementById('descriptionLabel').textContent = t.descriptionLabel;
-            document.getElementById('licenseLabel').textContent = t.licenseLabel;
-            document.getElementById('yesLabel').textContent = t.yesLabel;
-            document.getElementById('noLabel').textContent = t.noLabel;
-            document.getElementById('coverageLabel').textContent = t.coverageLabel;
-            document.getElementById('phoneLabel').textContent = t.phoneLabel;
-            document.getElementById('whatsappLabel').textContent = t.whatsappLabel;
-            document.getElementById('emailLabel').textContent = t.emailLabel;
-            document.getElementById('instagramLabel').textContent = t.instagramLabel;
-            document.getElementById('telegramLabel').textContent = t.telegramLabel;
-            document.getElementById('snapchatLabel').textContent = t.snapchatLabel;
-            document.getElementById('tiktokLabel').textContent = t.tiktokLabel;
-            document.getElementById('facebookLabel').textContent = t.facebookLabel;
-            document.getElementById('websiteLabel').textContent = t.websiteLabel;
-            document.getElementById('categoriesLabel').textContent = t.categoriesLabel;
-            document.getElementById('catFood').textContent = t.catFood;
-            document.getElementById('catIT').textContent = t.catIT;
-            document.getElementById('catPerfumes').textContent = t.catPerfumes;
-            document.getElementById('catCare').textContent = t.catCare;
-            document.getElementById('catSweets').textContent = t.catSweets;
-            document.getElementById('catBeauty').textContent = t.catBeauty;
-            document.getElementById('catClothes').textContent = t.catClothes;
-            document.getElementById('catHandmade').textContent = t.catHandmade;
-            document.getElementById('catGifts').textContent = t.catGifts;
-            document.getElementById('catApothecary').textContent = t.catApothecary;
-            document.getElementById('catArts').textContent = t.catArts;
-            document.getElementById('catPlants').textContent = t.catPlants;
-            document.getElementById('catEntertainment').textContent = t.catEntertainment;
-            document.getElementById('submitBtn').textContent = t.submitBtn;
-            document.getElementById('submitHint').textContent = t.submitHint;
-            document.getElementById('homeSearch').placeholder = t.homeSearchPlaceholder;
-            document.getElementById('familiesSearch').placeholder = t.familiesSearchPlaceholder;
-            document.getElementById('dealsTitle').textContent = t.dealsTitle || 'العروض الخاصة';
-
-            // إعادة تهيئة الشرائح
-            initEmiratesChips();
-            initCategoriesChips();
-            // تحديث الصفحة الحالية
-            const currentPage = appState.currentPage;
-            if (currentPage === 'families') renderFamilies();
-            else if (currentPage === 'products' && appState.currentFamilyId) showFamilyProducts(appState.currentFamilyId, false);
-            else if (currentPage === 'product-detail' && appState.currentFamilyId && appState.currentProductId) showProductDetail(appState.currentFamilyId, appState.currentProductId, false);
-            else if (currentPage === 'favorites') renderFavorites();
-            hideLoader();
+    showLoader();
+    const newLang = appState.currentLanguage === 'ar' ? 'en' : 'ar';
+    appState.currentLanguage = newLang;
+    localStorage.setItem('projectSouqLang', newLang);
+    const htmlTag = document.getElementById('htmlTag');
+    if (newLang === 'ar') {
+        htmlTag.setAttribute('dir', 'rtl');
+        htmlTag.setAttribute('lang', 'ar');
+        document.body.classList.remove('en-mode');
+    } else {
+        htmlTag.setAttribute('dir', 'ltr');
+        htmlTag.setAttribute('lang', 'en');
+        document.body.classList.add('en-mode');
+    }
+    
+    const t = translations[newLang];
+    
+    // تحديث العناصر الموجودة فقط (مع التحقق من وجودها)
+    const elementsToUpdate = [
+        { id: 'siteTitle', property: 'textContent' },
+        { id: 'siteSubtitle', property: 'textContent' },
+        { id: 'navHome', property: 'textContent' },
+        { id: 'navMarket', property: 'textContent' },
+        { id: 'navFavorites', property: 'textContent' },
+        { id: 'footerLogo', property: 'textContent' },
+        { id: 'footerText', property: 'textContent' },
+        { id: 'copyright', property: 'textContent' },
+        { id: 'langBtn', property: 'textContent' },
+        { id: 'heroTitle', property: 'textContent' },
+        { id: 'heroSubtitle', property: 'textContent' },
+        { id: 'discoverBtn', property: 'textContent' },
+        { id: 'joinBtn', property: 'textContent' },
+        { id: 'aboutTitle', property: 'textContent' },
+        { id: 'stat1', property: 'textContent' },
+        { id: 'stat2', property: 'textContent' },
+        { id: 'stat3', property: 'textContent' },
+        { id: 'stat4', property: 'textContent' },
+        { id: 'badge1', property: 'textContent' },
+        { id: 'badge2', property: 'textContent' },
+        { id: 'badge3', property: 'textContent' },
+        { id: 'badge4', property: 'textContent' },
+        { id: 'familiesPageTitle', property: 'textContent' },
+        { id: 'familiesPageSubtitle', property: 'textContent' },
+        { id: 'productsTitle', property: 'textContent' },
+        { id: 'favoritesPageTitle', property: 'textContent' },
+        { id: 'favoritesPageSubtitle', property: 'textContent' },
+        { id: 'popupTitle', property: 'textContent' },
+        { id: 'step1', property: 'textContent' },
+        { id: 'step2', property: 'textContent' },
+        { id: 'step3', property: 'textContent' },
+        { id: 'gotItBtn', property: 'textContent' },
+        { id: 'shareTitle', property: 'textContent' },
+        { id: 'copyLinkText', property: 'textContent' },
+        { id: 'closeShareBtn', property: 'textContent' },
+        { id: 'offersBtnText', property: 'textContent' },
+        { id: 'offersPageTitle', property: 'textContent' },
+        { id: 'offersPageSubtitle', property: 'textContent' },
+        { id: 'dealsTitle', property: 'textContent' }
+    ];
+    
+    // تحديث النصوص مع التحقق من وجود العنصر
+    elementsToUpdate.forEach(item => {
+        const element = document.getElementById(item.id);
+        if (element && t[item.id]) {
+            element[item.property] = t[item.id];
         }
-
-        // ==================== دوال نموذج التسجيل ====================
-        function showRegisterForm() {
-            document.getElementById('registerModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
+    });
+    
+    // تحديث النصوص الداخلية (innerHTML)
+    const innerElementsToUpdate = [
+        { id: 'aboutText1', property: 'innerHTML' },
+        { id: 'aboutText2', property: 'innerHTML' },
+        { id: 'aboutText3', property: 'innerHTML' }
+    ];
+    
+    innerElementsToUpdate.forEach(item => {
+        const element = document.getElementById(item.id);
+        if (element && t[item.id]) {
+            element[item.property] = t[item.id];
         }
+    });
+    
+    // تحديث placeholders
+    const homeSearch = document.getElementById('homeSearch');
+    if (homeSearch) homeSearch.placeholder = t.homeSearchPlaceholder || '';
+    
+    const familiesSearch = document.getElementById('familiesSearch');
+    if (familiesSearch) familiesSearch.placeholder = t.familiesSearchPlaceholder || '';
+    
+    // إعادة تهيئة الشرائح
+    initEmiratesChips();
+    initCategoriesChips();
+    
+    // تحديث الصفحة الحالية
+    const currentPage = appState.currentPage;
+    if (currentPage === 'families') renderFamilies();
+    else if (currentPage === 'products' && appState.currentFamilyId) showFamilyProducts(appState.currentFamilyId, false);
+    else if (currentPage === 'product-detail' && appState.currentFamilyId && appState.currentProductId) showProductDetail(appState.currentFamilyId, appState.currentProductId, false);
+    else if (currentPage === 'favorites') renderFavorites();
+    
+    hideLoader();
+}
 
-        function closeRegisterForm() {
-            document.getElementById('registerModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
+        
+        function showSocialContact() {
+    const t = translations[appState.currentLanguage];
+    
+    // إنشاء نافذة منبثقة للتواصل
+    let popup = document.getElementById('socialContactPopup');
+    if (!popup) {
+        popup = document.createElement('div');
+        popup.id = 'socialContactPopup';
+        popup.className = 'instruction-popup';
+        document.body.appendChild(popup);
+    }
+    
+    const socialLinks = `
+        <div class="popup-header">
+            <i class="fas fa-hands-helping" style="font-size: 42px; color: var(--secondary);"></i>
+            <h3>${t.registerTitle || (appState.currentLanguage === 'ar' ? 'سجل مشروعك الآن' : 'Register Your Project Now')}</h3>
+        </div>
+        <div class="steps" style="margin-bottom: 15px;">
+            <div class="step">
+                <div class="step-icon"><i class="fab fa-x"></i></div>
+                <span>${t.registerViaX || (appState.currentLanguage === 'ar' ? 'راسلنا على منصة X' : 'Message us on X')}</span>
+            </div>
+            <div class="step">
+                <div class="step-icon"><i class="fab fa-instagram"></i></div>
+                <span>${t.registerViaInstagram || (appState.currentLanguage === 'ar' ? 'راسلنا على انستغرام' : 'Message us on Instagram')}</span>
+            </div>
+            <div class="step">
+                <div class="step-icon"><i class="fab fa-tiktok"></i></div>
+                <span>${t.registerViaTikTok || (appState.currentLanguage === 'ar' ? 'راسلنا على تيك توك' : 'Message us on TikTok')}</span>
+            </div>
+        </div>
+        <div class="contact-buttons" style="display: flex; gap: 20px; justify-content: center; margin: 20px 0;">
+            <a href="https://x.com/souqalmasharie" target="_blank" class="social-contact-btn" style="background: #000000; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.3s ease; font-size: 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                <i class="fab fa-x"></i>
+            </a>
+            <a href="https://instagram.com/souqalmasharie" target="_blank" class="social-contact-btn" style="background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.3s ease; font-size: 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://tiktok.com/@souqalmsharie" target="_blank" class="social-contact-btn" style="background: #000000; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.3s ease; font-size: 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                <i class="fab fa-tiktok"></i>
+            </a>
+        </div>
+        <button class="close-btn" onclick="closeSocialContactPopup()">
+            <i class="fas fa-check-circle"></i> 
+            <span>${t.gotItBtn || (appState.currentLanguage === 'ar' ? 'حسناً' : 'Got it')}</span>
+        </button>
+    `;
+    
+    popup.innerHTML = socialLinks;
+    popup.classList.add('show');
+}
 
-        function validateFamilyForm(event) {
-            event.preventDefault();
-            try {
-                const adraLicense = document.querySelector('input[name="adra_license"]:checked');
-                if (!adraLicense) {
-                    showToast(appState.currentLanguage === 'ar' ? "❌ يرجى اختيار حالة الترخيص" : "❌ Please select license status");
-                    return false;
-                }
-                const categories = document.querySelectorAll('input[name="category[]"]:checked');
-                if (categories.length === 0) {
-                    showToast(appState.currentLanguage === 'ar' ? "❌ يرجى اختيار تصنيف واحد على الأقل" : "❌ Please select at least one category");
-                    return false;
-                }
-                const instagram = document.querySelector('input[name="instagram"]').value.trim();
-                const telegram = document.querySelector('input[name="telegram"]').value.trim();
-                const snapchat = document.querySelector('input[name="snapchat"]').value.trim();
-                const tiktok = document.querySelector('input[name="tiktok"]').value.trim();
-                const facebook= document.querySelector('input[name="facebook"]').value.trim();
-                const website = document.querySelector('input[name="website"]').value.trim();
-                let sellPointsArray = [];
-                if (instagram) sellPointsArray.push(`instagram:${instagram}`);
-                if (telegram) sellPointsArray.push(`telegram:${telegram}`);
-                if (snapchat) sellPointsArray.push(`snapchat:${snapchat}`);
-                if (tiktok) sellPointsArray.push(`tiktok:${tiktok}`);
-                if (facebook) sellPointsArray.push(`facebook:${facebook}`);
-                if (website) sellPointsArray.push(`website:${website}`);
-                let hiddenSellPoint = document.createElement('input');
-                hiddenSellPoint.type = 'hidden';
-                hiddenSellPoint.name = 'sell_point';
-                hiddenSellPoint.value = sellPointsArray.join(', ');
-                event.target.appendChild(hiddenSellPoint);
-                event.target.submit();
-            } catch (error) {
-                console.error(error);
-                showToast(appState.currentLanguage === 'ar' ? "❌ حدث خطأ، يرجى المحاولة مرة أخرى" : "❌ An error occurred, please try again");
-                return false;
-            }
-            return false;
-        }
+function closeSocialContactPopup() {
+    const popup = document.getElementById('socialContactPopup');
+    if (popup) {
+        popup.classList.remove('show');
+    }
+}
+
+function closeSocialContactPopup() {
+    const popup = document.getElementById('socialContactPopup');
+    if (popup) {
+        popup.classList.remove('show');
+    }
+}
 
         // ==================== دوال إضافية ====================
         function showToast(msg) {
@@ -1423,9 +1433,6 @@ function showTermsModal() {
         window.showProductDetail = showProductDetail;
         window.performHomeSearch = performHomeSearch;
         window.performFamiliesSearch = performFamiliesSearch;
-        window.showRegisterForm = showRegisterForm;
-        window.closeRegisterForm = closeRegisterForm;
-        window.validateFamilyForm = validateFamilyForm;
         window.closeInstructionPopup = closeInstructionPopup;
         window.scrollToContact = scrollToContact;
         window.openZoom = openZoom;
