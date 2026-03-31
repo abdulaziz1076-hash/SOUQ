@@ -9913,8 +9913,9 @@ longDescription: "كيكة البرتقال الطريمة هي حلوى منز�
 longDescriptionEn: "Orange cake is a delicious homemade dessert, characterized by its fluffy texture and fresh orange flavor. Made with natural ingredients, decorated with orange slices or powdered sugar. Perfect with tea or coffee.",
 category: "حلويات",
 categoryEn: "Desserts",
-mainImage: "images/p84.jpg",
-images: ["images/p84.jpg"],
+mainImage: "images/p84-1-1.jpg",
+images: ["images/p84-1-1.jpg",
+        "images/p84-1-2.jpg",],
 details: [
 "كيكة برتقال",
 "قوام هش",
