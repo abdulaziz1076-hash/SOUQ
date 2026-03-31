@@ -23,6 +23,9 @@
         gtag('js', new Date());
         gtag('config', 'G-P5YLDRQQGE');
     </script>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:;">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
     <meta name="google-site-verification" content="UwEARwAkfxnW1CP0oDBEnlnKhHl2QuANOH1SF_8pvJg">
     <meta name="fragment" content="!">
     <meta charset="UTF-8">
@@ -3363,6 +3366,7 @@ img {
 }
 
     </style>
+    
 </head>
 <body>
     <div class="loader-wrapper" id="loader">
@@ -3669,16 +3673,16 @@ img {
         
         <!-- روابط السياسة والشروط - بشكل أنيق جنب بعض -->
         <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 15px; flex-wrap: wrap;">
-    <a href="javascript:void(0)" onclick="showPrivacyModal()" style="color: var(--secondary); text-decoration: none; font-size: 12px; display: inline-flex; align-items: center; gap: 5px;">
-        <i class="fas fa-lock" style="font-size: 10px;"></i>
-        <span id="privacyLink">سياسة الخصوصية</span>
-    </a>
-    <span style="color: var(--gray);">|</span>
-    <a href="javascript:void(0)" onclick="showTermsModal()" style="color: var(--secondary); text-decoration: none; font-size: 12px; display: inline-flex; align-items: center; gap: 5px;">
-        <i class="fas fa-file-contract" style="font-size: 10px;"></i>
-        <span id="termsLink">شروط الاستخدام</span>
-    </a>
-</div>
+        <a href="privacy.html" style="color: var(--secondary); text-decoration: none; font-size: 12px;">
+            <i class="fas fa-lock"></i>
+            <span id="privacyLink">سياسة الخصوصية</span>
+        </a>
+        <span style="color: var(--gray);">|</span>
+        <a href="terms.html" style="color: var(--secondary); text-decoration: none; font-size: 12px;">
+            <i class="fas fa-file-contract"></i>
+            <span id="termsLink">شروط الاستخدام</span>
+        </a>
+    </div>
         
         <!-- حقوق النشر -->
         <div class="copyright" id="copyright">
