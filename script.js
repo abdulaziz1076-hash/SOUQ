@@ -33,8 +33,8 @@ const appState = {
             try {
 
                 const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxH--GD-SEouHX16A31ROWpP9m07M7VHT7qvn5ndkXPbLUlrHWi1qeT-Dwlzr5ht7dN/exec';
-                
-                console.log('جاري الاتصال المباشر بـ Google Sheets...');
+
+                console.log('البيانات القادمة من Google:', contacts);
                 const response = await fetch(GOOGLE_SHEETS_URL);
                 
                 if (!response.ok) {
@@ -42,6 +42,7 @@ const appState = {
                 }
                 
                 const contacts = await response.json();
+                console.log('البيانات القادمة من Google:', contacts);  // ✅ أضف هذا السطر
                 console.log(`✅ تم تحميل ${contacts.length} جهة اتصال من Google Sheets مباشرة`);
                 
                 // تحويل المصفوفة إلى كائن لتسهيل الوصول (نفس الكود القديم)
