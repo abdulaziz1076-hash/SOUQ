@@ -1,6 +1,6 @@
 let contactsData = {};
 
-const API_SECRET_KEY = 'https://script.google.com/macros/s/AKfycbzIxohF1YAtTDcYgDcPi-u5J808PAVCYS-f3BL6ZH6UVQvxlaoBb4EKEAIPulvozkfE/exec';
+const API_SECRET_KEY = 'MySuperSecretKey2026';
 const appState = {
             currentPage: 'home',
             currentEmirate: 'all',
@@ -31,11 +31,11 @@ const appState = {
         }
 
         async function loadContactsData() {
-    try {
-        const response = await fetch('/api/contacts', {
-            headers: {
-                'x-api-key': 'https://script.google.com/macros/s/AKfycbzIxohF1YAtTDcYgDcPi-u5J808PAVCYS-f3BL6ZH6UVQvxlaoBb4EKEAIPulvozkfE/exec'
-            }
+            try {
+                    const response = await fetch('/api/contacts', {
+                        headers: {
+                            'x-api-key': API_SECRET_KEY
+                        }
         });
         
         if (!response.ok) {
