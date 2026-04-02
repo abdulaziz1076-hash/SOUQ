@@ -31,19 +31,21 @@ const appState = {
 
         async function loadContactsData() {
     try {
-        const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbx2o1IPkxFqzdJm_MOOAT7sbHmrH-ospLtyZnzT43x7cnPShDvySqNTqodzgUY1p1hZ/exec';
-        
-        console.log('جاري الاتصال المباشر بـ Google Sheets...');
-        const response = await fetch(GOOGLE_SHEETS_URL);
+        // ✅ الاتصال بالـ Proxy المحلي (بدون مفتاح - آمن)
+        console.log('🔄 جاري الاتصال بالخادم لجلب بيانات التواصل...');
+        const response = await fetch('/api/contacts');
         
         if (!response.ok) {
-            throw new Error(`فشل الاتصال بـ Google Sheets: ${response.status}`);
+            throw new Error(`فشل الاتصال: ${response.status}`);
         }
         
-        const contacts = await response.json();  // ✅ تعريف المتغير هنا
+        const contacts = await response.json();
         
-        console.log('البيانات القادمة من Google:', contacts);  // ✅ السطر هنا بعد التعريف
-        console.log(`✅ تم تحميل ${contacts.length} جهة اتصال من Google Sheets مباشرة`);
+        if (contacts.error) {
+            throw new Error(contacts.error);
+        }
+        
+        console.log(`✅ تم تحميل ${contacts.length} جهة اتصال من الخادم`);
         
         // تحويل المصفوفة إلى كائن
         contactsData = {};
@@ -64,7 +66,7 @@ const appState = {
             if (contact.website) contactsData[contact.id].sell_points.push({ type: 'website', value: contact.website });
         });
         
-        console.log('contactsData بعد التحويل:', contactsData);  // ✅ أضف هذا أيضاً للتحقق
+        console.log('✅ contactsData:', contactsData);
         
         // تحديث الواجهة
         if (appState.currentPage === 'products' && appState.currentFamilyId) {
@@ -73,7 +75,7 @@ const appState = {
         
         return true;
     } catch (error) {
-        console.error('❌ فشل تحميل بيانات التواصل من Google Sheets مباشرة:', error);
+        console.error('❌ فشل تحميل بيانات التواصل:', error);
         return false;
     }
 }
