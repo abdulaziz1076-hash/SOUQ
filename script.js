@@ -29,53 +29,54 @@ const appState = {
             document.getElementById('loader').classList.remove('show');
         }
 
-                async function loadContactsData() {
-            try {
-
-                const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxH--GD-SEouHX16A31ROWpP9m07M7VHT7qvn5ndkXPbLUlrHWi1qeT-Dwlzr5ht7dN/exec';
-
-                console.log('البيانات القادمة من Google:', contacts);
-                const response = await fetch(GOOGLE_SHEETS_URL);
-                
-                if (!response.ok) {
-                    throw new Error(`فشل الاتصال بـ Google Sheets: ${response.status}`);
-                }
-                
-                const contacts = await response.json();
-                console.log('البيانات القادمة من Google:', contacts);  // ✅ أضف هذا السطر
-                console.log(`✅ تم تحميل ${contacts.length} جهة اتصال من Google Sheets مباشرة`);
-                
-                // تحويل المصفوفة إلى كائن لتسهيل الوصول (نفس الكود القديم)
-                contactsData = {};
-                contacts.forEach(contact => {
-                    contactsData[contact.id] = {
-                        whatsapp: contact.whatsapp || null,
-                        phone: contact.phone || null,
-                        email: contact.email || null,
-                        sell_points: []
-                    };
-                    
-                    if (contact.instagram) contactsData[contact.id].sell_points.push({ type: 'instagram', value: contact.instagram });
-                    if (contact.telegram) contactsData[contact.id].sell_points.push({ type: 'telegram', value: contact.telegram });
-                    if (contact.snapchat) contactsData[contact.id].sell_points.push({ type: 'snapchat', value: contact.snapchat });
-                    if (contact.tiktok) contactsData[contact.id].sell_points.push({ type: 'tiktok', value: contact.tiktok });
-                    if (contact.facebook) contactsData[contact.id].sell_points.push({ type: 'facebook', value: contact.facebook });
-                    if (contact.twitter) contactsData[contact.id].sell_points.push({ type: 'twitter', value: contact.twitter });
-                    if (contact.website) contactsData[contact.id].sell_points.push({ type: 'website', value: contact.website });
-                });
-                
-                // تحديث الواجهة إذا كانت الصفحة الحالية تتطلب بيانات التواصل
-                if (appState.currentPage === 'products' && appState.currentFamilyId) {
-                    showFamilyProducts(appState.currentFamilyId, false);
-                }
-                
-                return true;
-            } catch (error) {
-                console.error('❌ فشل تحميل بيانات التواصل من Google Sheets مباشرة:', error);
-                return false;
-            }
+        async function loadContactsData() {
+    try {
+        const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbx2o1IPkxFqzdJm_MOOAT7sbHmrH-ospLtyZnzT43x7cnPShDvySqNTqodzgUY1p1hZ/exec';
+        
+        console.log('جاري الاتصال المباشر بـ Google Sheets...');
+        const response = await fetch(GOOGLE_SHEETS_URL);
+        
+        if (!response.ok) {
+            throw new Error(`فشل الاتصال بـ Google Sheets: ${response.status}`);
         }
-
+        
+        const contacts = await response.json();  // ✅ تعريف المتغير هنا
+        
+        console.log('البيانات القادمة من Google:', contacts);  // ✅ السطر هنا بعد التعريف
+        console.log(`✅ تم تحميل ${contacts.length} جهة اتصال من Google Sheets مباشرة`);
+        
+        // تحويل المصفوفة إلى كائن
+        contactsData = {};
+        contacts.forEach(contact => {
+            contactsData[contact.id] = {
+                whatsapp: contact.whatsapp || null,
+                phone: contact.phone || null,
+                email: contact.email || null,
+                sell_points: []
+            };
+            
+            if (contact.instagram) contactsData[contact.id].sell_points.push({ type: 'instagram', value: contact.instagram });
+            if (contact.telegram) contactsData[contact.id].sell_points.push({ type: 'telegram', value: contact.telegram });
+            if (contact.snapchat) contactsData[contact.id].sell_points.push({ type: 'snapchat', value: contact.snapchat });
+            if (contact.tiktok) contactsData[contact.id].sell_points.push({ type: 'tiktok', value: contact.tiktok });
+            if (contact.facebook) contactsData[contact.id].sell_points.push({ type: 'facebook', value: contact.facebook });
+            if (contact.twitter) contactsData[contact.id].sell_points.push({ type: 'twitter', value: contact.twitter });
+            if (contact.website) contactsData[contact.id].sell_points.push({ type: 'website', value: contact.website });
+        });
+        
+        console.log('contactsData بعد التحويل:', contactsData);  // ✅ أضف هذا أيضاً للتحقق
+        
+        // تحديث الواجهة
+        if (appState.currentPage === 'products' && appState.currentFamilyId) {
+            showFamilyProducts(appState.currentFamilyId, false);
+        }
+        
+        return true;
+    } catch (error) {
+        console.error('❌ فشل تحميل بيانات التواصل من Google Sheets مباشرة:', error);
+        return false;
+    }
+}
         // ==================== الترجمة ====================
         const translations = {
             ar: {
