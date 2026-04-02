@@ -1,5 +1,6 @@
 let contactsData = {};
-const API_SECRET_KEY = 'MySuperSecretKey2026';
+
+const API_SECRET_KEY = 'https://script.google.com/macros/s/AKfycbzIxohF1YAtTDcYgDcPi-u5J808PAVCYS-f3BL6ZH6UVQvxlaoBb4EKEAIPulvozkfE/exec';
 const appState = {
             currentPage: 'home',
             currentEmirate: 'all',
