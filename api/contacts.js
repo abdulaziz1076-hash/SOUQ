@@ -1,12 +1,19 @@
 // api/contacts.js
 export default async function handler(req, res) {
-    // السماح فقط من نطاق موقعك
+    // السماح من نطاق موقعك
     const allowedOrigin = 'https://souqalmasharie.onrender.com';
     res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
+    res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-api-key');
     
-    // ✅ المفتاح السري - غيّره إلى نص عشوائي قصير
+    // معالجة preflight request
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
+    
+    // التحقق من المفتاح
     const apiKey = req.headers['x-api-key'];
-    const SECRET_KEY = 'MySuperSecretKey2026';  // <--- غير هذا
+    const SECRET_KEY = 'MySuperSecretKey2026';
     
     if (apiKey !== SECRET_KEY) {
         return res.status(401).json({ 
@@ -16,7 +23,6 @@ export default async function handler(req, res) {
     }
     
     try {
-        // ✅ الرابط الصحيح من Google Apps Script (اللي يعطيك JSON)
         const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbzIxohF1YAtTDcYgDcPi-u5J808PAVCYS-f3BL6ZH6UVQvxlaoBb4EKEAIPulvozkfE/exec';
         
         const response = await fetch(GOOGLE_SHEETS_URL);
@@ -26,7 +32,6 @@ export default async function handler(req, res) {
         }
         
         const contacts = await response.json();
-        
         res.status(200).json(contacts);
         
     } catch (error) {
