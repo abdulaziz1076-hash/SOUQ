@@ -4,7 +4,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // 🔐 المفتاح السري - يتم تخزينه في Environment Variables في Render
-const SECRET_KEY = process.env.API_SECRET_KEY || 'x7K9mP2qR5tY8uV3wZ1aB4cD6fG9hJ2kL5nP7qR9sT2uV5wX8z';
+const SECRET_KEY = process.env.API_SECRET_KEY;
 
 // منع الوصول من نطاقات غير مصرح بها (اختياري)
 const ALLOWED_ORIGINS = [
