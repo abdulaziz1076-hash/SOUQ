@@ -32,7 +32,7 @@ const appState = {
                 async function loadContactsData() {
             try {
 
-                const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbw6_0kvuogH_jx8mKvNdT2DXZUI0XBj4DLCP-H5MqVD4IAJW2ds1oQbUghKbAVe56DU/exec';
+                const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbx2o1IPkxFqzdJm_MOOAT7sbHmrH-ospLtyZnzT43x7cnPShDvySqNTqodzgUY1p1hZ/exec';
                 
                 console.log('جاري الاتصال المباشر بـ Google Sheets...');
                 const response = await fetch(GOOGLE_SHEETS_URL);
