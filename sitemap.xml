@@ -1,0 +1,1374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <!-- ==================== الصفحات الثابتة ==================== -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>https://souqalmasharie.onrender.com/projects/emirate/all</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <url>
+    <loc>https://souqalmasharie.onrender.com/offers</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://souqalmasharie.onrender.com/favorites</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://souqalmasharie.onrender.com/privacy.html</loc>
+    <lastmod>2026-03-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  
+  <url>
+    <loc>https://souqalmasharie.onrender.com/terms.html</loc>
+    <lastmod>2026-03-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  
+  <url>
+    <loc>https://souqalmasharie.onrender.com/privacyen.html</loc>
+    <lastmod>2026-03-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  
+  <url>
+    <loc>https://souqalmasharie.onrender.com/termsen.html</loc>
+    <lastmod>2026-03-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <!-- ==================== صفحات المشاريع (الأسر المنتجة) ==================== -->
+  <!-- id: 1 - موتشا Motcha -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/1</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 2 - ورقة قص Cards Play -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/2</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 3 - spicy taste -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/3</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 4 - m_.dresses -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/4</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 5 - maisonde_noa -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/5</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 6 - dukhon.hajar -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/6</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 7 - Whisk & Bloom -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/7</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 8 - قلو تان Glow Tan -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/8</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 9 - اللقمة افينيو Bite Avenue -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/9</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 10 - أدورا بول ADORA BOWL -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/10</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 11 - رغبة السوشي Sushi Crava -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/11</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 12 - دخون ماركت Dkhoon Market -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/12</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 13 - السلة baskete -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/13</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 14 - سوب ڤالي Soap Valley -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/14</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 15 - حلويات البيت Sweet House -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/15</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 16 - إل دولتشي ديزرتس Il Dolce Desserts -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/16</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 17 - جوي كرافت هَب Joy Craft Hub -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/17</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 18 - مطبخ ورقة عنب Kitchen Warqa Enb -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/18</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 19 - أر.الورود R flowers -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/19</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 20 - لا سيت للعبايات La Cette Abayas -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/20</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 21 - بي دياموند B Diamond -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/21</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 22 - حيثة Haytha -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/22</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 23 - سوكي Sookie -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/23</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 24 - صوفيا كاندلز Sophia Candles -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/24</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 25 - جو جرين Go Green -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/25</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 26 - عكس 3aks -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/26</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 27 - فادي عاطف آرت Fady Atef Art -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/27</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 28 - فكرة و عمل Fekra w 3mal -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/28</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 29 - دار الظبي Dar Al-Dhabi -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/29</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 30 - سويتاتي Sweetati -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/30</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 31 - كسرة عود فابريك Kasrat Oud Fabric -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/31</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 32 - مذاق أمي Mom's Goodiez -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/32</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 33 - ABM عود ABM Oud -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/33</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 34 - ميثاء المرزوقي Maitha Almarzooqi -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/34</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 35 - معمول Mamool -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/35</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 36 - بلوسوم آند بليس Blossom & Bliss -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/36</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 37 - رويال عود Royal Oud UAE -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/37</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 38 - كاندلير Candleier -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/38</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 39 - آيلاند برفيوم Island Perfume -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/39</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 40 - ذا اورجانيك واي The Organic Way -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/40</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 41 - سوبريتي Soapretty -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/41</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 42 - سويت بليند Sweet Blend -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/42</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 43 - تاتش أوف تيست Touch of Taste -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/43</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 44 - خيط دفا Khait Dafa -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/44</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 45 - ميدياس Meidias -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/45</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 46 - كالي Caly -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/46</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 47 - لوفا Luva -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/47</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 48 - 5F بخور 5F Bakhoor -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/48</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 49 - تي سبوت Tea Spot -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/49</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 50 - لمارا Lmara -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/50</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 51 - تاتش أوف نفس Touch of Nafas -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/51</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 52 - L.E Oud -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/52</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 53 - ناسامات واف Nasamat Waf -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/53</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 54 - عود تو جو Oud2Go -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/54</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 55 - فبراير February -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/55</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 56 - ميرني Mirny -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/56</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 57 - كيوت ستورز Cute Stores -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/57</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 58 - ودادي بوتيك Wedady Boutique -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/58</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 59 - همس الدجى Hamsah -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/59</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 60 - ساندويتش زون Sandwich Zone -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/60</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 61 - نيفلوري Nivlori -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/61</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 62 - فلافي بايتس Fluffy Bites -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/62</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 63 - شوغر آند سبايس Sugar & Spice -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/63</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 64 - لا سوريلا La Sorella -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/64</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 65 - يامي فراي Yummy Fri -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/65</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 66 - آر إم سويت RM Sweet -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/66</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 67 - إس رابس S Wraps -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/67</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 68 - يوفوريا باك Euphoria Bake -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/68</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 69 - فش مربح Fish Mirbeh -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/69</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 70 - لا تنسى La Tinsa -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/70</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 71 - أماي Amai -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/71</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 72 - كيكوز Kikoz -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/72</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 73 - ورق عنب النور Warq anabb alnour -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/73</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 74 - كرامب جوي Crumb Joy -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/74</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 75 - ون ناين One Nine -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/75</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 76 - تاستي سبايسي Tasty Spicy 9 -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/76</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 77 - مونش Munch -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/77</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 78 - أم راشد كيتشن Um Rashed Kitchen -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/78</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 79 - هوم ميد Home Made -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/79</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 80 - ديليزيا Delizia -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/80</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 81 - شوكولاتا فايبز Chocolate Vibes -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/81</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 82 - كاندلين Candleen -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/82</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 83 - كوك لاين Cookline -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/83</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 84 - غيم Ghaym -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/84</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 85 - أولد فود Old Food -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/85</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 86 - لذا شوكوليت Ledha Chocolates -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/86</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 87 - ويش سويتس Wish Sweets -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/87</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 88 - بلاش بيري Blushberry -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/88</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 89 - همايل Hamayel -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/89</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 90 - أوفينا Ovena -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/90</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 91 - تنتا Tinta -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/91</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 92 - خاشوقة Khashoogha -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/92</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 93 - فواله إيفنتس Fwalah Events -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/93</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 94 - الخلود للزيوت Alkholoud Oil -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/94</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 95 - سوفت بيك Soft Peak -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/95</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 96 - AY بوتيك AY Boutique -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/96</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 97 - مودز شوب Moods Shop -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/97</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 98 - ديبورا Debora -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/98</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 99 - صاب بار Soapbar -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/99</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- id: 100 - إيرور كيك Error Cake -->
+  <url>
+    <loc>https://souqalmasharie.onrender.com/family/100</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ==================== صفحات المنتجات (جميع المنتجات) ==================== -->
+  <!-- المشروع 1: موتشا Motcha - 4 منتجات -->
+  <url><loc>https://souqalmasharie.onrender.com/product/1/2_p1</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/1/2_p2</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/1/2_p3</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/1/2_p4</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 2: ورقة قص - 1 منتج -->
+  <url><loc>https://souqalmasharie.onrender.com/product/2/1_p1</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 3: spicy taste - 3 منتجات -->
+  <url><loc>https://souqalmasharie.onrender.com/product/3/3_p1</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/3/3_p2</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/3/3_p3</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 4: m_.dresses - 4 منتجات -->
+  <url><loc>https://souqalmasharie.onrender.com/product/4/4_p1</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/4/4_p2</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/4/4_p3</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/4/4_p4</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 5: maisonde_noa - لا منتجات -->
+  
+  <!-- المشروع 6: dukhon.hajar - 12 منتج -->
+  <url><loc>https://souqalmasharie.onrender.com/product/6/6_p1</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/6/6_p2</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/6/6_p3</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/6/6_p4</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/6/6_p5</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/6/6_p6</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/6/6_p7</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/6/6_p8</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/6/6_p9</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/6/6_p10</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/6/6_p11</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/6/6_p12</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 7: Whisk & Bloom - لا منتجات -->
+  
+  <!-- المشروع 8: قلو تان - 1 منتج -->
+  <url><loc>https://souqalmasharie.onrender.com/product/8/1_p8</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 9: اللقمة افينيو - لا منتجات -->
+  
+  <!-- المشروع 10: أدورا بول - 4 منتجات -->
+  <url><loc>https://souqalmasharie.onrender.com/product/10/10_p1</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/10/10_p2</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/10/10_p4</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/10/10_p5</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 11: رغبة السوشي - 16 منتج -->
+  <url><loc>https://souqalmasharie.onrender.com/product/11/11_p1</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/11/11_p2</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/11/11_p3</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/11/11_p4</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/11/11_p5</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/11/11_p6</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/11/11_p7</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/11/11_p8</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/11/11_p9</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/11/11_p10</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/11/11_p11</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/11/11_p12</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/11/11_p13</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/11/11_p14</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/11/11_p15</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/11/11_p16</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 12: دخون ماركت - لا منتجات -->
+  
+  <!-- المشروع 13: السلة - لا منتجات -->
+  
+  <!-- المشروع 14: سوب ڤالي - لا منتجات -->
+  
+  <!-- المشروع 15: حلويات البيت - لا منتجات -->
+  
+  <!-- المشروع 16: إل دولتشي ديزرتس - 7 منتجات -->
+  <url><loc>https://souqalmasharie.onrender.com/product/16/16_p1</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/16/16_p2</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/16/16_p3</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/16/16_p4</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/16/16_p5</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/16/16_p6</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/16/16_p7</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 17: جوي كرافت هَب - لا منتجات -->
+  
+  <!-- المشروع 18: مطبخ ورقة عنب - 11 منتج -->
+  <url><loc>https://souqalmasharie.onrender.com/product/18/18_p1</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/18/18_p2</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/18/18_p3</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/18/18_p4</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/18/18_p5</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/18/18_p6</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/18/18_p7</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/18/18_p8</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/18/18_p9</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/18/18_p10</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/18/18_p11</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 19: أر.الورود - لا منتجات -->
+  
+  <!-- المشروع 20: لا سيت للعبايات - لا منتجات -->
+  
+  <!-- المشروع 21: بي دياموند - لا منتجات -->
+  
+  <!-- المشروع 22: حيثة - لا منتجات -->
+  
+  <!-- المشروع 23: سوكي - 6 منتجات -->
+  <url><loc>https://souqalmasharie.onrender.com/product/23/23_p1</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/23/23_p2</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/23/23_p3</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/23/23_p4</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/23/23_p5</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/23/23_p6</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 24: صوفيا كاندلز - لا منتجات -->
+  
+  <!-- المشروع 25: جو جرين - لا منتجات -->
+  
+  <!-- المشروع 26: عكس - 8 منتجات -->
+  <url><loc>https://souqalmasharie.onrender.com/product/26/26_p1</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/26/26_p2</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/26/26_p3</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/26/26_p4</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/26/26_p5</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/26/26_p6</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/26/26_p7</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/26/26_p8</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 27: فادي عاطف آرت - 3 منتجات -->
+  <url><loc>https://souqalmasharie.onrender.com/product/27/27_p1</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/27/27_p2</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/27/27_p3</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 28: فكرة و عمل - لا منتجات -->
+  
+  <!-- المشروع 29: دار الظبي - لا منتجات -->
+  
+  <!-- المشروع 30: سويتاتي - لا منتجات -->
+  
+  <!-- المشروع 31: كسرة عود فابريك - لا منتجات -->
+  
+  <!-- المشروع 32: مذاق أمي - 11 منتج -->
+  <url><loc>https://souqalmasharie.onrender.com/product/32/32_p1</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/32/32_p2</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/32/32_p3</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/32/32_p4</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/32/32_p5</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/32/32_p6</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/32/32_p7</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/32/32_p8</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/32/32_p9</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/32/32_p10</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/32/32_p11</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 33: ABM عود - لا منتجات -->
+  
+  <!-- المشروع 34: ميثاء المرزوقي - لا منتجات -->
+  
+  <!-- المشروع 35: معمول - لا منتجات -->
+  
+  <!-- المشروع 36: بلوسوم آند بليس - لا منتجات -->
+  
+  <!-- المشروع 37: رويال عود - لا منتجات -->
+  
+  <!-- المشروع 38: كاندلير - لا منتجات -->
+  
+  <!-- المشروع 39: آيلاند برفيوم - لا منتجات -->
+  
+  <!-- المشروع 40: ذا اورجانيك واي - 28 منتج -->
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p1</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p2</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p3</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p4</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p5</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p6</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p7</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p8</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p9</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p10</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p11</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p12</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p13</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p14</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p15</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p16</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p17</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p18</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p19</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p20</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p21</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p22</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p23</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p24</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p25</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p26</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p27</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/40/40_p28</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 41: سوبريتي - 33 منتج -->
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p1</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p2</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p3</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p4</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p5</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p6</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p7</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p8</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p9</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p10</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p11</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p12</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p13</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p14</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p15</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p16</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p17</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p18</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p19</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p20</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p21</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p22</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p23</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p24</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p25</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p26</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p27</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p28</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p29</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p30</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p31</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p32</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/41/41_p33</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 42: سويت بليند - لا منتجات -->
+  
+  <!-- المشروع 43: تاتش أوف تيست - لا منتجات -->
+  
+  <!-- المشروع 44: خيط دفا - لا منتجات -->
+  
+  <!-- المشروع 45: ميدياس - 15 منتج -->
+  <url><loc>https://souqalmasharie.onrender.com/product/45/45_p1</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/45/45_p2</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/45/45_p3</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/45/45_p4</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/45/45_p5</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/45/45_p6</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/45/45_p7</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/45/45_p8</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/45/45_p9</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/45/45_p10</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/45/45_p11</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/45/45_p12</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/45/45_p13</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/45/45_p14</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/45/45_p15</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 46: كالي - لا منتجات -->
+  
+  <!-- المشروع 47: لوفا - 8 منتجات -->
+  <url><loc>https://souqalmasharie.onrender.com/product/47/47_p1</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/47/42_p2</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/47/42_p3</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/47/42_p4</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/47/42_p5</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/47/42_p6</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/47/42_p7</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/47/42_p8</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 48: 5F بخور - 14 منتج -->
+  <url><loc>https://souqalmasharie.onrender.com/product/48/48_p1</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/48/48_p2</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/48/48_p3</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/48/48_p4</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/48/48_p5</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/48/48_p6</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/48/48_p7</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/48/48_p8</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/48/48_p9</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/48/48_p10</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/48/48_p11</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/48/48_p12</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/48/48_p13</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/48/48_p14</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 49: تي سبوت - لا منتجات -->
+  
+  <!-- المشروع 50: لمارا - لا منتجات -->
+  
+  <!-- المشروع 51: تاتش أوف نفس - 1 منتج -->
+  <url><loc>https://souqalmasharie.onrender.com/product/51/51_p1</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 52: L.E Oud - 12 منتج -->
+  <url><loc>https://souqalmasharie.onrender.com/product/52/51_p1</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/52/51_p2</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/52/51_p3</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/52/51_p4</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/52/51_p5</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/52/51_p6</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/52/51_p7</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/52/51_p8</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/52/51_p9</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/52/51_p10</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/52/51_p11</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/52/51_p12</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 53: ناسامات واف - 6 منتجات -->
+  <url><loc>https://souqalmasharie.onrender.com/product/53/53_p1</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/53/53_p2</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/53/53_p3</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/53/53_p4</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/53/53_p5</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/53/53_p6</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 54: عود تو جو - لا منتجات -->
+  
+  <!-- المشروع 55: فبراير - لا منتجات -->
+  
+  <!-- المشروع 56: ميرني - لا منتجات -->
+  
+  <!-- المشروع 57: كيوت ستورز - لا منتجات -->
+  
+  <!-- المشروع 58: ودادي بوتيك - لا منتجات -->
+  
+  <!-- المشروع 59: همس الدجى - لا منتجات -->
+  
+  <!-- المشروع 60: ساندويتش زون - لا منتجات -->
+  
+  <!-- المشروع 61: نيفلوري - لا منتجات -->
+  
+  <!-- المشروع 62: فلافي بايتس - لا منتجات -->
+  
+  <!-- المشروع 63: شوغر آند سبايس - 58 منتج -->
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p1</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p2</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p3</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p4</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p5</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p6</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p7</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p8</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p9</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p10</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p11</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p12</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p13</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p14</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p15</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p16</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p17</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p18</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p19</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p20</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p21</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p22</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p23</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p24</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p25</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p26</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p27</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p28</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p29</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p30</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p31</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p32</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p33</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p34</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p35</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p36</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p37</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p38</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p39</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p40</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p41</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p42</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p43</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p44</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p45</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p46</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p47</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p48</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p49</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p50</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p51</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p52</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p53</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p54</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p55</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p56</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p57</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/63/63_p58</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 64: لا سوريلا - لا منتجات -->
+  
+  <!-- المشروع 65: يامي فراي - لا منتجات -->
+  
+  <!-- المشروع 66: آر إم سويت - لا منتجات -->
+  
+  <!-- المشروع 67: إس رابس - 13 منتج -->
+  <url><loc>https://souqalmasharie.onrender.com/product/67/67_p01</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/67/67_p02</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/67/67_p03</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/67/67_p04</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/67/67_p05</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/67/67_p06</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/67/67_p07</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/67/67_p08</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/67/67_p09</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/67/67_p10</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/67/67_p11</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/67/67_p12</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/67/67_p13</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 68: يوفوريا باك - لا منتجات -->
+  
+  <!-- المشروع 69: فش مربح - لا منتجات -->
+  
+  <!-- المشروع 70: لا تنسى - لا منتجات -->
+  
+  <!-- المشروع 71: أماي - 9 منتجات -->
+  <url><loc>https://souqalmasharie.onrender.com/product/71/71_p01</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/71/71_p02</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/71/71_p03</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/71/71_p04</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/71/71_p05</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/71/71_p06</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/71/71_p07</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/71/71_p08</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/71/71_p09</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 72: كيكوز - 1 منتج -->
+  <url><loc>https://souqalmasharie.onrender.com/product/72/72_p1</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 73: ورق عنب النور - 2 منتج -->
+  <url><loc>https://souqalmasharie.onrender.com/product/73/73_p1</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/73/73_p2</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 74: كرامب جوي - لا منتجات -->
+  
+  <!-- المشروع 75: ون ناين - 13 منتج -->
+  <url><loc>https://souqalmasharie.onrender.com/product/75/75_p1</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/75/75_p2</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/75/75_p3</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/75/75_p4</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/75/75_p5</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/75/75_p6</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/75/75_p7</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/75/75_p8</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/75/75_p9</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/75/75_p10</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/75/75_p11</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/75/75_p12</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/75/75_p13</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 76: تاستي سبايسي - لا منتجات -->
+  
+  <!-- المشروع 77: مونش - لا منتجات -->
+  
+  <!-- المشروع 78: أم راشد كيتشن - لا منتجات -->
+  
+  <!-- المشروع 79: هوم ميد - لا منتجات -->
+  
+  <!-- المشروع 80: ديليزيا - لا منتجات -->
+  
+  <!-- المشروع 81: شوكولاتا فايبز - لا منتجات -->
+  
+  <!-- المشروع 82: كاندلين - لا منتجات -->
+  
+  <!-- المشروع 83: كوك لاين - لا منتجات -->
+  
+  <!-- المشروع 84: غيم - 6 منتجات -->
+  <url><loc>https://souqalmasharie.onrender.com/product/84/84_p1</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/84/84_p2</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/84/84_p3</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/84/84_p4</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/84/84_p5</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://souqalmasharie.onrender.com/product/84/84_p6</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 85: أولد فود - لا منتجات -->
+  
+  <!-- المشروع 86: لذا شوكوليت - لا منتجات -->
+  
+  <!-- المشروع 87: ويش سويتس - لا منتجات -->
+  
+  <!-- المشروع 88: بلاش بيري - لا منتجات -->
+  
+  <!-- المشروع 89: همايل - لا منتجات -->
+  
+  <!-- المشروع 90: أوفينا - لا منتجات -->
+  
+  <!-- المشروع 91: تنتا - لا منتجات -->
+  
+  <!-- المشروع 92: خاشوقة - لا منتجات -->
+  
+  <!-- المشروع 93: فواله إيفنتس - لا منتجات -->
+  
+  <!-- المشروع 94: الخلود للزيوت - 1 منتج -->
+  <url><loc>https://souqalmasharie.onrender.com/product/94/94_p1</loc><lastmod>2026-03-31</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  
+  <!-- المشروع 95: سوفت بيك - لا منتجات -->
+  
+  <!-- المشروع 96: AY بوتيك - لا منتجات -->
+  
+  <!-- المشروع 97: مودز شوب - لا منتجات -->
+  
+  <!-- المشروع 98: ديبورا - لا منتجات -->
+  
+  <!-- المشروع 99: صاب بار - لا منتجات -->
+  
+  <!-- المشروع 100: إيرور كيك - لا منتجات -->
+  
+</urlset>
