@@ -1,3 +1,5 @@
+let contactsData = {};
+const API_SECRET_KEY = 'MySuperSecretKey2026';
 const appState = {
             currentPage: 'home',
             currentEmirate: 'all',
@@ -26,6 +28,68 @@ const appState = {
         function hideLoader() {
             document.getElementById('loader').classList.remove('show');
         }
+
+        async function loadContactsData() {
+    try {
+        const response = await fetch('/api/contacts', {
+            headers: {
+                'x-api-key': 'https://script.google.com/macros/s/AKfycbzIxohF1YAtTDcYgDcPi-u5J808PAVCYS-f3BL6ZH6UVQvxlaoBb4EKEAIPulvozkfE/exec'
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to fetch contacts');
+        }
+        
+        const contacts = await response.json();
+        
+        // تحويل المصفوفة إلى كائن لتسهيل الوصول
+        contactsData = {};
+        contacts.forEach(contact => {
+            contactsData[contact.id] = {
+                whatsapp: contact.whatsapp || null,
+                phone: contact.phone || null,
+                email: contact.email || null,
+                sell_points: []
+            };
+            
+            // تحويل وسائل التواصل إلى مصفوفة sell_points
+            if (contact.instagram) {
+                contactsData[contact.id].sell_points.push({ type: 'instagram', value: contact.instagram });
+            }
+            if (contact.telegram) {
+                contactsData[contact.id].sell_points.push({ type: 'telegram', value: contact.telegram });
+            }
+            if (contact.snapchat) {
+                contactsData[contact.id].sell_points.push({ type: 'snapchat', value: contact.snapchat });
+            }
+            if (contact.tiktok) {
+                contactsData[contact.id].sell_points.push({ type: 'tiktok', value: contact.tiktok });
+            }
+            if (contact.facebook) {
+                contactsData[contact.id].sell_points.push({ type: 'facebook', value: contact.facebook });
+            }
+            if (contact.twitter) {
+                contactsData[contact.id].sell_points.push({ type: 'twitter', value: contact.twitter });
+            }
+            if (contact.website) {
+                contactsData[contact.id].sell_points.push({ type: 'website', value: contact.website });
+            }
+        });
+        
+        console.log('✅ تم تحميل بيانات التواصل بنجاح');
+        
+        // تحديث الواجهة إذا كانت الصفحة الحالية تتطلب بيانات التواصل
+        if (appState.currentPage === 'products' && appState.currentFamilyId) {
+            showFamilyProducts(appState.currentFamilyId, false);
+        }
+        
+        return true;
+    } catch (error) {
+        console.error('❌ فشل تحميل بيانات التواصل:', error);
+        return false;
+    }
+}
 
         // ==================== الترجمة ====================
         const translations = {
@@ -898,7 +962,12 @@ function renderOffers() {
         function showFamilyProducts(id, updateHash = true) {
             const family = familiesData.find(f => f.id == id);
             if (!family) return;
-            appState.currentFamilyId = id;
+            const contactInfo = contactsData[id] || {};
+                family.whatsapp = contactInfo.whatsapp || null;
+                family.phone = contactInfo.phone || null;
+                family.email = contactInfo.email || null;
+                family.sell_points = contactInfo.sell_points || [];
+                        appState.currentFamilyId = id;
             if (updateHash) {
                 navigateTo(`/family/${id}`);
                 return;
@@ -996,6 +1065,11 @@ function renderOffers() {
         function showProductDetail(familyId, productId, updateHash = true) {
             const family = familiesData.find(f => f.id == familyId);
             if (!family) return;
+            const contactInfo = contactsData[familyId] || {};
+                family.whatsapp = contactInfo.whatsapp || null;
+                family.phone = contactInfo.phone || null;
+                family.email = contactInfo.email || null;
+                family.sell_points = contactInfo.sell_points || [];
             const product = family.products.find(p => p.id == productId);
             if (!product) return;
             appState.currentFamilyId = familyId;
@@ -1611,6 +1685,11 @@ function showTermsModal() {
         window.open('termsen.html', '_blank');
     }
 }
+// تحميل بيانات التواصل عند بدء التطبيق
+(async function init() {
+    await loadContactsData();
+    // ... باقي كود التهيئة
+})();
 
         window.addEventListener('hashchange', handleHashChange);
 
