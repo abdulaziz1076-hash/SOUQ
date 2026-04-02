@@ -1014,7 +1014,7 @@ function renderOffers() {
             
             // واتساب
             if (family.whatsapp) {
-                const whatsappUrl = `https://wa.me/${family.whatsapp.replace(/[^0-9]/g,'')}`;
+                const whatsappUrl = `https://wa.me/${String(family.whatsapp).replace(/[^0-9]/g,'')}`;
                 contactHtml += `<a href="#" onclick="handleContact('${whatsappUrl}', 'whatsapp'); return false;" class="contact-item"><div class="contact-icon whatsapp-bg"><i class="fab fa-whatsapp"></i></div></a>`;
             }
             
@@ -1091,7 +1091,7 @@ function renderOffers() {
             
             // واتساب
             if (family.whatsapp) {
-                const whatsappUrl = `https://wa.me/${family.whatsapp.replace(/[^0-9]/g,'')}`;
+                const whatsappUrl = `https://wa.me/${String(family.whatsapp).replace(/[^0-9]/g,'')}`;
                 sellerContactHtml += `<a href="#" onclick="handleContact('${whatsappUrl}', 'whatsapp'); return false;" class="seller-contact-item"><div class="seller-contact-icon whatsapp-bg"><i class="fab fa-whatsapp"></i></div></a>`;
             }
             
