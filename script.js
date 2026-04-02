@@ -1,6 +1,5 @@
 let contactsData = {};
 
-const API_SECRET_KEY = 'MySuperSecretKey2026';
 const appState = {
             currentPage: 'home',
             currentEmirate: 'all',
@@ -32,9 +31,8 @@ const appState = {
 
                 async function loadContactsData() {
             try {
-                // رابط Google Sheets مباشرة (بدون API الوسيط)
-                // تأكد من أن هذا الرابط هو الرابط الصحيح من الخطوة 2 في الشرح السابق
-                const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwPJIkdR4C8ZJKDCkwDgXJAzCVR07qifWjCFoMlEsHUcdoqTqpcNobOaCSCZHsxdzGc/exec';
+
+                const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbw6_0kvuogH_jx8mKvNdT2DXZUI0XBj4DLCP-H5MqVD4IAJW2ds1oQbUghKbAVe56DU/exec';
                 
                 console.log('جاري الاتصال المباشر بـ Google Sheets...');
                 const response = await fetch(GOOGLE_SHEETS_URL);
