@@ -31,49 +31,96 @@ function hideLoader() {
 
 async function loadContactsData() {
     try {
-        console.log('🔄 جاري الاتصال بالخادم...');
+        console.log('🔄 جاري الاتصال بالخادم لجلب بيانات التواصل...');
+        
         const response = await fetch('/api/contacts');
+        
+        console.log('📡 استجابة الخادم:', response.status);
         
         if (!response.ok) {
             throw new Error(`فشل الاتصال: ${response.status}`);
         }
         
-        const contacts = await response.json();
+        const result = await response.json();
+        console.log('📦 البيانات المستلمة:', result);
         
-        // إذا كان هناك خطأ أو البيانات فارغة
-        if (contacts.error || !contacts.length) {
-            console.log('⚠️ لا توجد بيانات تواصل، استخدام بيانات افتراضية');
+        // تأكد من وجود البيانات
+        if (!result.success || !result.data) {
+            console.warn('⚠️ لا توجد بيانات تواصل');
             contactsData = {};
-            return true;
+            return false;
         }
         
-        console.log(`✅ تم تحميل ${contacts.length} جهة اتصال`);
-        
+        // تحويل البيانات إلى الصيغة المطلوبة
         contactsData = {};
-        contacts.forEach(contact => {
-            contactsData[contact.id] = {
+        result.data.forEach(contact => {
+            const id = contact.id;
+            if (!id) return;
+            
+            contactsData[id] = {
                 whatsapp: contact.whatsapp || null,
                 phone: contact.phone || null,
                 email: contact.email || null,
                 sell_points: []
             };
             
-            if (contact.instagram) contactsData[contact.id].sell_points.push({ type: 'instagram', value: contact.instagram });
-            if (contact.telegram) contactsData[contact.id].sell_points.push({ type: 'telegram', value: contact.telegram });
-            if (contact.snapchat) contactsData[contact.id].sell_points.push({ type: 'snapchat', value: contact.snapchat });
-            if (contact.tiktok) contactsData[contact.id].sell_points.push({ type: 'tiktok', value: contact.tiktok });
-            if (contact.facebook) contactsData[contact.id].sell_points.push({ type: 'facebook', value: contact.facebook });
-            if (contact.twitter) contactsData[contact.id].sell_points.push({ type: 'twitter', value: contact.twitter });
-            if (contact.website) contactsData[contact.id].sell_points.push({ type: 'website', value: contact.website });
+            // إضافة روابط التواصل الاجتماعي
+            if (contact.instagram) {
+                contactsData[id].sell_points.push({ 
+                    type: 'instagram', 
+                    value: contact.instagram.replace('@', '') 
+                });
+            }
+            if (contact.telegram) {
+                contactsData[id].sell_points.push({ 
+                    type: 'telegram', 
+                    value: contact.telegram.replace('@', '') 
+                });
+            }
+            if (contact.snapchat) {
+                contactsData[id].sell_points.push({ 
+                    type: 'snapchat', 
+                    value: contact.snapchat.replace('@', '') 
+                });
+            }
+            if (contact.tiktok) {
+                contactsData[id].sell_points.push({ 
+                    type: 'tiktok', 
+                    value: contact.tiktok.replace('@', '') 
+                });
+            }
+            if (contact.facebook) {
+                contactsData[id].sell_points.push({ 
+                    type: 'facebook', 
+                    value: contact.facebook 
+                });
+            }
+            if (contact.twitter) {
+                contactsData[id].sell_points.push({ 
+                    type: 'twitter', 
+                    value: contact.twitter.replace('@', '') 
+                });
+            }
+            if (contact.website) {
+                contactsData[id].sell_points.push({ 
+                    type: 'website', 
+                    value: contact.website 
+                });
+            }
         });
         
+        console.log('✅ تم تحميل بيانات التواصل لـ', Object.keys(contactsData).length, 'مشروع');
+        console.log('📞 البيانات:', contactsData);
+        
+        // إذا كنا في صفحة منتجات، قم بتحديثها
         if (appState.currentPage === 'products' && appState.currentFamilyId) {
             showFamilyProducts(appState.currentFamilyId, false);
         }
         
         return true;
+        
     } catch (error) {
-        console.error('❌ فشل تحميل البيانات:', error);
+        console.error('❌ فشل تحميل بيانات التواصل:', error);
         contactsData = {};
         return false;
     }
