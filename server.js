@@ -29,7 +29,8 @@ app.use(helmet({
             defaultSrc: ["'self'"],
             styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com"],
             fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"],
-            scriptSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com", "https://www.googletagmanager.com"],
+            scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://cdnjs.cloudflare.com", "https://www.googletagmanager.com"],
+            scriptSrcAttr: ["'unsafe-inline'"],  // <-- أضف هذا السطر
             imgSrc: ["'self'", "data:", "https:"],
             connectSrc: ["'self'", "https://script.google.com", "https://www.google-analytics.com", "https://api.ipify.org"],
         },
