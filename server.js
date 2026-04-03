@@ -270,11 +270,8 @@ app.post('/api/refresh', async (req, res) => {
 // ==================== الملفات الثابتة ====================
 
 // خدمة الملفات الثابتة مع إضافة رؤوس التخزين المؤقت
-app.use(express.static(path.join(__dirname), {
-    maxAge: '1d',
-    etag: true,
-    lastModified: true
-}));
+app.use(express.static(path.join(__dirname))); // هذا يخدم الملفات الجذرية
+app.use('/images', express.static(path.join(__dirname, 'images'))); // هذا يخدم مجلد الصو
 
 // ==================== التحديث الدوري ====================
 
