@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 // ==================== الإعدادات الأمنية ====================
 
 // 🔐 المفتاح السري - يتم تخزينه في Environment Variables في Render
-const SECRET_KEY = process.env.API_SECRET_KEY;
+const SECRET_KEY = process.env.API_SECRET_KEY || 'dev-key-123';
 
 // قائمة النطاقات المسموح بها (لمنع الوصول غير المصرح به)
 const ALLOWED_ORIGINS = [
@@ -22,7 +22,7 @@ const ALLOWED_ORIGINS = [
 
 // ==================== Middleware ====================
 
-// 🔒 حماية الرأسيات (Helmet)
+// 🔒 حماية الرأسيات (Helmet) - بدون X-Frame-Options المكرر
 app.use(helmet({
     contentSecurityPolicy: {
         directives: {
@@ -31,7 +31,7 @@ app.use(helmet({
             fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"],
             scriptSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com", "https://www.googletagmanager.com"],
             imgSrc: ["'self'", "data:", "https:"],
-            connectSrc: ["'self'", "https://script.google.com", "https://www.google-analytics.com"],
+            connectSrc: ["'self'", "https://script.google.com", "https://www.google-analytics.com", "https://api.ipify.org"],
         },
     },
 }));
@@ -77,11 +77,17 @@ async function fetchDataFromSheets() {
     fetchInProgress = true;
     
     try {
-        // التحقق من وجود المفتاح السري
-        if (!SECRET_KEY) {
-            console.error('❌ API_SECRET_KEY غير موجود في متغيرات البيئة');
-            console.error('💡 يرجى إضافة المتغير في إعدادات Render');
-            return null;
+        // في بيئة التطوير، نستخدم بيانات تجريبية
+        if (process.env.NODE_ENV !== 'production' || !SECRET_KEY || SECRET_KEY === 'dev-key-123') {
+            console.log('📝 وضع التطوير: استخدام بيانات تجريبية');
+            // بيانات تجريبية للاختبار
+            const mockData = [
+                { id: 1, whatsapp: '971501234567', phone: '971501234567', email: 'test@example.com', instagram: 'test_account' },
+                { id: 2, whatsapp: '971502345678', phone: '971502345678', email: 'test2@example.com' }
+            ];
+            cachedData = mockData;
+            lastFetchTime = Date.now();
+            return mockData;
         }
 
         const GOOGLE_SHEETS_URL = `https://script.google.com/macros/s/AKfycbyMBfGz_xiaK2iqOA8_46g37xz7Cj9M7vUDmQO4A3Cvr4iLFy6buNSkUIOjMH3r0dox/exec?key=${SECRET_KEY}`;
@@ -138,7 +144,9 @@ async function fetchDataFromSheets() {
             return cachedData;
         }
         
-        return null;
+        // في حالة عدم وجود بيانات مخزنة، نعيد مصفوفة فارغة
+        console.log('⚠️ لا توجد بيانات مخزنة، إرجاع مصفوفة فارغة');
+        return [];
         
     } finally {
         fetchInProgress = false;
@@ -165,16 +173,19 @@ app.get('/api/contacts', async (req, res) => {
     const startTime = Date.now();
     
     try {
-        // التحقق من المفتاح في رأس الطلب (طبقة أمان إضافية)
-        const apiKey = req.headers['x-api-key'] || req.query.key;
+        // في بيئة التطوير، نسمح لجميع الطلبات
+        const isDevMode = process.env.NODE_ENV !== 'production' || !SECRET_KEY || SECRET_KEY === 'dev-key-123';
         
-        // في بيئة الإنتاج، نتحقق من المفتاح
-        if (process.env.NODE_ENV === 'production' && apiKey !== SECRET_KEY) {
-            console.warn(`⚠️ محاولة وصول غير مصرح بها من ${req.ip}`);
-            return res.status(401).json({ 
-                error: 'غير مصرح بالوصول',
-                success: false 
-            });
+        if (!isDevMode) {
+            // في بيئة الإنتاج، نتحقق من المفتاح
+            const apiKey = req.headers['x-api-key'] || req.query.key;
+            if (apiKey !== SECRET_KEY) {
+                console.warn(`⚠️ محاولة وصول غير مصرح بها من ${req.ip}`);
+                return res.status(401).json({ 
+                    error: 'غير مصرح بالوصول',
+                    success: false 
+                });
+            }
         }
         
         // جلب البيانات
@@ -184,10 +195,13 @@ app.get('/api/contacts', async (req, res) => {
         
         if (!data || data.length === 0) {
             console.warn(`⚠️ لا توجد بيانات متاحة (استغرق ${responseTime}ms)`);
-            return res.status(503).json({
-                error: 'البيانات غير متاحة حالياً، يرجى المحاولة لاحقاً',
-                success: false,
-                data: []
+            // نعيد مصفوفة فارغة بدلاً من خطأ
+            return res.json({
+                success: true,
+                count: 0,
+                data: [],
+                cached: false,
+                lastUpdate: lastFetchTime
             });
         }
         
@@ -231,6 +245,7 @@ app.get('/api/contacts', async (req, res) => {
         res.status(500).json({
             error: 'حدث خطأ داخلي في الخادم',
             success: false,
+            data: [],
             message: process.env.NODE_ENV === 'development' ? error.message : undefined
         });
     }
@@ -244,7 +259,8 @@ app.get('/api/health', (req, res) => {
         uptime: process.uptime(),
         memory: process.memoryUsage(),
         cached: cachedData !== null,
-        cacheAge: cachedData ? Math.floor((Date.now() - lastFetchTime) / 1000) : null
+        cacheAge: cachedData ? Math.floor((Date.now() - lastFetchTime) / 1000) : null,
+        nodeEnv: process.env.NODE_ENV || 'development'
     });
 });
 
@@ -270,8 +286,23 @@ app.post('/api/refresh', async (req, res) => {
 // ==================== الملفات الثابتة ====================
 
 // خدمة الملفات الثابتة مع إضافة رؤوس التخزين المؤقت
-app.use(express.static(path.join(__dirname))); // هذا يخدم الملفات الجذرية
-app.use('/images', express.static(path.join(__dirname, 'images'))); // هذا يخدم مجلد الصو
+app.use(express.static(path.join(__dirname), {
+    maxAge: '1d',
+    etag: true,
+    lastModified: true,
+    setHeaders: (res, filePath) => {
+        // منع تخزين HTML مؤقتاً
+        if (filePath.endsWith('.html')) {
+            res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+        }
+    }
+}));
+
+// تأكد من خدمة مجلد الصور
+app.use('/images', express.static(path.join(__dirname, 'images'), {
+    maxAge: '7d',
+    etag: true
+}));
 
 // ==================== التحديث الدوري ====================
 
@@ -291,13 +322,13 @@ setInterval(async () => {
 
 // معالجة جميع الصفحات (لـ SPA) - مع دعم الروابط المباشرة
 app.get('*', (req, res) => {
-    // منع محاولة الوصول إلى ملفات غير موجودة
-    const requestedPath = req.path;
-    if (requestedPath !== '/' && !requestedPath.includes('.')) {
-        res.sendFile(path.join(__dirname, 'index.html'));
-    } else {
-        res.sendFile(path.join(__dirname, 'index.html'));
+    // منع محاولة الوصول إلى ملفات API غير موجودة
+    if (req.path.startsWith('/api/')) {
+        return res.status(404).json({ error: 'API endpoint not found' });
     }
+    
+    // إرسال ملف index.html لجميع المسارات الأخرى
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // ==================== تشغيل الخادم ====================
@@ -307,7 +338,7 @@ const server = app.listen(PORT, () => {
     console.log(`🚀 خادم سوق المشاريع يعمل على المنفذ ${PORT}`);
     console.log(`🔗 الرابط: http://localhost:${PORT}`);
     console.log(`🌐 البيئة: ${process.env.NODE_ENV || 'development'}`);
-    console.log(`🔐 المفتاح السري: ${SECRET_KEY ? '✅ موجود' : '❌ غير موجود'}`);
+    console.log(`🔐 المفتاح السري: ${SECRET_KEY && SECRET_KEY !== 'dev-key-123' ? '✅ موجود' : '⚠️ وضع التطوير'}`);
     console.log(`💾 التخزين المؤقت: ${CACHE_DURATION / 1000 / 60} دقائق`);
     console.log('═'.repeat(50));
 });
@@ -337,3 +368,5 @@ process.on('uncaughtException', (error) => {
 process.on('unhandledRejection', (reason, promise) => {
     console.error('❌ رفض غير معالج:', reason);
 });
+
+module.exports = app;
