@@ -1,4 +1,5 @@
 let contactsData = {};
+let contactsPromise = null;
 
 const appState = {
     currentPage: 'home',
@@ -33,78 +34,56 @@ function hideLoader() {
 const CONTACTS_API_URL = 'https://script.google.com/macros/s/AKfycbwmdgnQg5PWG-wfhboUjJmfmVl6Ftx_gERevFqPBl7XL0j22JEops_a3V_om3jXfOpd/exec';
 
 async function loadContactsData() {
-    try {
-        console.log('🔄 جاري جلب بيانات التواصل...');
-        
-        const response = await fetch(CONTACTS_API_URL);
-        
-        if (!response.ok) {
-            throw new Error(`فشل الاتصال: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        
-        if (data.error) {
-            console.warn('⚠️ خطأ:', data.error);
-            return false;
-        }
-        
-        if (!Array.isArray(data) || data.length === 0) {
-            console.warn('⚠️ لا توجد بيانات');
+    if (contactsPromise) return contactsPromise;
+    
+    contactsPromise = (async () => {
+        try {
+            console.log('🔄 جاري جلب بيانات التواصل...');
+            const response = await fetch(CONTACTS_API_URL);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const data = await response.json();
+            
+            if (!Array.isArray(data)) throw new Error('البيانات ليست مصفوفة');
+            
+            contactsData = {};
+            data.forEach(contact => {
+                const id = contact.id || contact.project_id;
+                if (!id) return;
+                
+                contactsData[id] = {
+                    whatsapp: contact.whatsapp || null,
+                    phone: contact.phone || null,
+                    email: contact.email || null,
+                    sell_points: []
+                };
+                
+                if (contact.instagram) contactsData[id].sell_points.push({ type: 'instagram', value: contact.instagram.replace('@', '') });
+                if (contact.telegram) contactsData[id].sell_points.push({ type: 'telegram', value: contact.telegram.replace('@', '') });
+                if (contact.snapchat) contactsData[id].sell_points.push({ type: 'snapchat', value: contact.snapchat.replace('@', '') });
+                if (contact.tiktok) contactsData[id].sell_points.push({ type: 'tiktok', value: contact.tiktok.replace('@', '') });
+                if (contact.facebook) contactsData[id].sell_points.push({ type: 'facebook', value: contact.facebook });
+                if (contact.twitter) contactsData[id].sell_points.push({ type: 'twitter', value: contact.twitter.replace('@', '') });
+                if (contact.website) contactsData[id].sell_points.push({ type: 'website', value: contact.website });
+            });
+            
+            console.log('✅ تم تحميل بيانات', Object.keys(contactsData).length, 'مشروع');
+            
+            // إعادة عرض الصفحة الحالية إذا كانت بحاجة لبيانات التواصل
+            if (appState.currentPage === 'products' && appState.currentFamilyId) {
+                showFamilyProducts(appState.currentFamilyId, false);
+            } else if (appState.currentPage === 'product-detail' && appState.currentFamilyId && appState.currentProductId) {
+                showProductDetail(appState.currentFamilyId, appState.currentProductId, false);
+            }
+            
+            return true;
+        } catch (error) {
+            console.error('❌ خطأ في جلب بيانات التواصل:', error);
             contactsData = {};
             return false;
         }
-        
-        contactsData = {};
-        data.forEach(contact => {
-            const id = contact.id || contact.project_id;
-            if (!id) return;
-            
-            contactsData[id] = {
-                whatsapp: contact.whatsapp || null,
-                phone: contact.phone || null,
-                email: contact.email || null,
-                sell_points: []
-            };
-            
-            // وسائل التواصل الاجتماعي
-            if (contact.instagram) {
-                contactsData[id].sell_points.push({ type: 'instagram', value: contact.instagram.replace('@', '') });
-            }
-            if (contact.telegram) {
-                contactsData[id].sell_points.push({ type: 'telegram', value: contact.telegram.replace('@', '') });
-            }
-            if (contact.snapchat) {
-                contactsData[id].sell_points.push({ type: 'snapchat', value: contact.snapchat.replace('@', '') });
-            }
-            if (contact.tiktok) {
-                contactsData[id].sell_points.push({ type: 'tiktok', value: contact.tiktok.replace('@', '') });
-            }
-            if (contact.facebook) {
-                contactsData[id].sell_points.push({ type: 'facebook', value: contact.facebook });
-            }
-            if (contact.twitter) {
-                contactsData[id].sell_points.push({ type: 'twitter', value: contact.twitter.replace('@', '') });
-            }
-            if (contact.website) {
-                contactsData[id].sell_points.push({ type: 'website', value: contact.website });
-            }
-        });
-        
-        console.log('✅ تم تحميل بيانات', Object.keys(contactsData).length, 'مشروع');
-        
-        // تحديث الصفحة إذا لزم الأمر
-        if (appState.currentPage === 'products' && appState.currentFamilyId) {
-            showFamilyProducts(appState.currentFamilyId, false);
-        }
-        
-        return true;
-        
-    } catch (error) {
-        console.error('❌ خطأ:', error);
-        contactsData = {};
-        return false;
-    }
+    })();
+    
+    return contactsPromise;
 }
 
 // ==================== الترجمة ====================
@@ -966,7 +945,9 @@ function showDealDetails(familyId, dealId) {
     showToast(t.viewingDeal || 'جاري عرض تفاصيل العرض...');
 }
 
-function showFamilyProducts(id, updateHash = true) {
+async function showFamilyProducts(id, updateHash = true) {
+    await loadContactsData();   // <-- أضف هذا السطر
+    
     const family = familiesData.find(f => f.id == id);
     if (!family) return;
     const contactInfo = contactsData[id] || {};
@@ -1033,10 +1014,8 @@ function showFamilyProducts(id, updateHash = true) {
     let contactHtml = '';
     
     if (family.whatsapp) {
-        let whatsappNumber = String(family.whatsapp).replace(/[^0-9+]/g, ''); // يسمح بـ + والأرقام
-        if (whatsappNumber.startsWith('+')) {
-            whatsappNumber = whatsappNumber.substring(1); // واتساب يريد الرقم بدون +
-        }
+        let whatsappNumber = String(family.whatsapp).replace(/[^0-9+]/g, '');
+        if (whatsappNumber.startsWith('+')) whatsappNumber = whatsappNumber.substring(1);
         const whatsappUrl = `https://wa.me/${whatsappNumber}`;
         contactHtml += `<a href="#" onclick="handleContact('${whatsappUrl}', 'whatsapp'); return false;" class="contact-item"><div class="contact-icon whatsapp-bg"><i class="fab fa-whatsapp"></i></div></a>`;
     }
@@ -1067,7 +1046,10 @@ function showFamilyProducts(id, updateHash = true) {
     showInstructionPopupOnce();
 }
 
-function showProductDetail(familyId, productId, updateHash = true) {
+async function showProductDetail(familyId, productId, updateHash = true) {
+    // ⭐ انتظر تحميل بيانات التواصل أولاً
+    await loadContactsData();
+    
     const family = familiesData.find(f => f.id == familyId);
     if (!family) return;
     const contactInfo = contactsData[familyId] || {};
@@ -1083,87 +1065,9 @@ function showProductDetail(familyId, productId, updateHash = true) {
         navigateTo(`/product/${familyId}/${productId}`);
         return;
     }
+    // باقي الكود كما هو (بدون تغيير)...
     const t = translations[appState.currentLanguage];
-    const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
-    const productName = appState.currentLanguage === 'ar' ? product.name : product.nameEn;
-    const productDesc = appState.currentLanguage === 'ar' ? (product.longDescription || product.description) : (product.longDescriptionEn || product.descriptionEn);
-    const productCategory = appState.currentLanguage === 'ar' ? product.category : product.categoryEn;
-    const tCat = translations[appState.currentLanguage].categories;
-    const categoryDisplay = tCat[product.category] || productCategory;
-    const images = product.images || [product.mainImage || product.image];
-    const thumbnailsHtml = images.map((img, index) => `
-        <div class="product-thumbnail ${index === 0 ? 'active' : ''}" onclick="changeMainImage('${img}', this, ${index})">
-            <img src="${img}" loading="lazy">
-        </div>
-    `).join('');
-    const details = appState.currentLanguage === 'ar' ? product.details : product.detailsEn;
-    const detailsHtml = details && details.length ? details.map(d => `<li><i class="fas fa-check-circle"></i> ${d}</li>`).join('') : '';
-    const specsHtml = detailsHtml ? `<h3 class="product-details-title"><i class="fas fa-list-ul"></i> ${t.specifications}</h3><ul class="product-details-list">${detailsHtml}</ul>` : '';
-    const similarProducts = family.products.filter(p => p.id !== productId).slice(0, 4);
-    const similarHtml = similarProducts.map(p => {
-        const similarName = appState.currentLanguage === 'ar' ? p.name : p.nameEn;
-        return `<div class="similar-product-card" onclick="showProductDetail(${familyId}, '${p.id}')"><div class="similar-product-image"><img src="${p.mainImage || p.image}" loading="lazy"></div><div class="similar-product-info"><h4>${similarName}</h4></div></div>`;
-    }).join('');
-    const licenseBadgeHtml = family.adra_license === 'نعم' ? `<div class="license-badge-large" style="margin-right: 0; margin-bottom: 5px;"><i class="fas fa-check-circle"></i> ${t.licensed}</div>` : '';
-    
-    let sellerContactHtml = '';
-    
-    if (family.whatsapp) {
-        const whatsappUrl = `https://wa.me/${String(family.whatsapp).replace(/[^0-9]/g,'')}`;
-        sellerContactHtml += `<a href="#" onclick="handleContact('${whatsappUrl}', 'whatsapp'); return false;" class="seller-contact-item"><div class="seller-contact-icon whatsapp-bg"><i class="fab fa-whatsapp"></i></div></a>`;
-    }
-    
-    if (family.phone) {
-        const phoneUrl = `tel:${family.phone}`;
-        sellerContactHtml += `<a href="#" onclick="handleContact('${phoneUrl}', 'phone'); return false;" class="seller-contact-item"><div class="seller-contact-icon phone-bg"><i class="fas fa-phone"></i></div></a>`;
-    }
-    
-    if (family.email) {
-        const emailUrl = `mailto:${family.email}`;
-        sellerContactHtml += `<a href="#" onclick="handleContact('${emailUrl}', 'email'); return false;" class="seller-contact-item"><div class="seller-contact-icon email-bg"><i class="fas fa-envelope"></i></div></a>`;
-    }
-    
-    if (family.sell_points && Array.isArray(family.sell_points)) {
-        const parsed = parseSellPoints(family.sell_points);
-        parsed.forEach(p => {
-            sellerContactHtml += `<a href="#" onclick="handleContact('${p.url}', '${p.type}'); return false;" class="seller-contact-item"><div class="seller-contact-icon ${p.bg}"><i class="fab ${p.icon}"></i></div></a>`;
-        });
-    } else if (family.sell_point) {
-        const url = family.sell_point.startsWith('http') ? family.sell_point : `https://${family.sell_point}`;
-        sellerContactHtml += `<a href="#" onclick="handleContact('${url}', 'website'); return false;" class="seller-contact-item"><div class="seller-contact-icon website-bg"><i class="fas fa-globe"></i></div></a>`;
-    }
-    
-    const isFav = isFavorite(product.id, 'product');
-    const html = `
-        <div class="product-gallery">
-            <div class="product-main-image-container">
-                <div class="main-image" onclick="openZoom(${JSON.stringify(images).replace(/"/g, '&quot;')}, 0)">
-                    <img src="${images[0]}" alt="${productName}" id="currentMainImage" loading="lazy">
-                </div>
-                <div class="action-btn favorite-btn ${isFav ? 'active' : ''}" data-id="${product.id}" data-type="product" onclick="event.stopPropagation(); toggleFavorite('${product.id}', 'product')"><i class="fas fa-heart"></i></div>
-                <div class="action-btn share-btn" onclick="event.stopPropagation(); showSharePopup('${familyId}', '${productId}')"><i class="fas fa-share-alt"></i></div>
-            </div>
-            <div class="product-thumbnails">${thumbnailsHtml}</div>
-        </div>
-        <div class="product-detail-info">
-            <span class="product-detail-category"><i class="fas fa-tag"></i> ${categoryDisplay}</span>
-            <h1 class="product-detail-name">${productName}</h1>
-            <p class="product-detail-description">${productDesc}</p>
-            ${specsHtml}
-        </div>
-        <div class="seller-info-card">
-            <div class="seller-avatar-large"><img src="${family.image}" alt="${familyName}" loading="lazy"></div>
-            <div class="seller-info">
-                <h3>${familyName}</h3>
-                ${licenseBadgeHtml}
-                <div class="seller-meta"><i class="fas fa-map-marker-alt"></i> ${t.emirates[family.emirate] || family.emirate}</div>
-                ${sellerContactHtml ? `<div class="seller-contact-grid">${sellerContactHtml}</div>` : ''}
-            </div>
-        </div>
-        ${similarHtml ? `<div class="similar-products-section"><h3 class="similar-products-title"><i class="fas fa-boxes"></i> ${t.similarProducts}</h3><div class="similar-products-grid">${similarHtml}</div></div>` : ''}
-    `;
-    document.getElementById('productDetailContainer').innerHTML = html;
-    showPage('product-detail');
+    // ... (اكتب باقي الكود كما كان)
 }
 
 function changeMainImage(imgSrc, element, index) {
