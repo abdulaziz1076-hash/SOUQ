@@ -1,79 +1,53 @@
 const express = require('express');
 const path = require('path');
 const compression = require('compression');
-const rateLimit = require('express-rate-limit');
-const helmet = require('helmet');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ==================== الإعدادات ====================
+// مفتاح Google Sheets من متغيرات البيئة
+const SECRET_KEY = process.env.API_SECRET_KEY || 'x7K9mP2qR5tY8uV3wZ1aB4cD6fG9hJ2kL5nP7qR9sT2uV5wX8z';
+const GOOGLE_SHEETS_URL = process.env.GOOGLE_SHEETS_URL;
 
-const SECRET_KEY = process.env.API_SECRET_KEY;
-const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyMBfGz_xiaK2iqOA8_46g37xz7Cj9M7vUDmQO4A3Cvr4iLFy6buNSkUIOjMH3r0dox/exec';
+// تخزين مؤقت للبيانات
+let cachedData = null;
+let lastFetchTime = 0;
+const CACHE_DURATION = 10 * 60 * 1000; // 10 دقائق
 
-console.log('🔧 إعدادات الخادم:');
-console.log(`   SECRET_KEY: ${SECRET_KEY ? '✅ موجود' : '❌ غير موجود'}`);
-console.log(`   GOOGLE_SHEETS_URL: ${GOOGLE_SHEETS_URL}`);
-
-// ==================== Middleware ====================
-
-app.use(helmet({
-    contentSecurityPolicy: {
-        directives: {
-            defaultSrc: ["'self'"],
-            styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com"],
-            fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"],
-            scriptSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com", "https://www.googletagmanager.com"],
-            scriptSrcAttr: ["'unsafe-inline'"],
-            imgSrc: ["'self'", "data:", "https:"],
-            connectSrc: ["'self'", "https://script.google.com", "https://script.googleusercontent.com", "https://www.google-analytics.com", "https://api.ipify.org"],
-        },
-    },
-}));
-
+// وسطاء (Middleware)
 app.use(compression());
 app.use(express.json());
 
-const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 100,
-    message: { error: 'تم تجاوز حد الطلبات' }
+// السماح بـ CORS للتطوير المحلي
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
 });
-app.use('/api/', limiter);
 
-// ==================== التخزين المؤقت ====================
+// خدمة الملفات الثابتة
+app.use(express.static(path.join(__dirname)));
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
-let cachedData = null;
-let lastFetchTime = 0;
-let fetchInProgress = false;
-const CACHE_DURATION = 5 * 60 * 1000; // 5 دقائق
+// ==================== API لجلب البيانات من Google Sheets ====================
 
 async function fetchDataFromSheets() {
-    if (fetchInProgress) {
-        console.log('⏳ جلب البيانات قيد التنفيذ...');
-        return new Promise((resolve) => {
-            const interval = setInterval(() => {
-                if (!fetchInProgress && cachedData) {
-                    clearInterval(interval);
-                    resolve(cachedData);
-                }
-            }, 100);
-        });
+    if (!GOOGLE_SHEETS_URL) {
+        console.log('⚠️ GOOGLE_SHEETS_URL غير محدد');
+        return [];
     }
-
-    fetchInProgress = true;
+    
+    const urlWithKey = `${GOOGLE_SHEETS_URL}?key=${SECRET_KEY}`;
+    console.log('🔄 جلب البيانات من Google Sheets...');
     
     try {
-        console.log(`🔄 [${new Date().toISOString()}] جلب البيانات من Google Sheets...`);
-        
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 15000);
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
         
-        const response = await fetch(GOOGLE_SHEETS_URL, {
-            method: 'GET',
-            headers: { 'Accept': 'application/json' },
-            signal: controller.signal
+        const response = await fetch(urlWithKey, {
+            signal: controller.signal,
+            headers: { 'Accept': 'application/json' }
         });
         
         clearTimeout(timeoutId);
@@ -84,41 +58,42 @@ async function fetchDataFromSheets() {
         
         const data = await response.json();
         
-        if (!Array.isArray(data)) {
-            throw new Error('البيانات ليست مصفوفة');
+        let contacts = [];
+        if (data && data.success === true && Array.isArray(data.data)) {
+            contacts = data.data;
+        } else if (data && Array.isArray(data)) {
+            contacts = data;
+        } else if (data && data.data && Array.isArray(data.data)) {
+            contacts = data.data;
         }
         
-        console.log(`✅ تم جلب ${data.length} سجل من Google Sheets`);
-        cachedData = data;
+        console.log(`✅ تم جلب ${contacts.length} جهة اتصال`);
+        
+        cachedData = contacts;
         lastFetchTime = Date.now();
         
-        return data;
+        return contacts;
         
     } catch (error) {
         console.error(`❌ خطأ: ${error.message}`);
         
         if (cachedData) {
-            console.log(`⚠️ استخدام بيانات مخزنة من ${new Date(lastFetchTime).toLocaleTimeString()}`);
+            console.log(`⚠️ استخدام بيانات مخزنة`);
             return cachedData;
         }
         
         return [];
-        
-    } finally {
-        fetchInProgress = false;
     }
 }
 
-// ==================== API Endpoints ====================
+// ==================== مسارات API ====================
 
+// جلب جميع جهات الاتصال
 app.get('/api/contacts', async (req, res) => {
-    const startTime = Date.now();
-    
     try {
         const data = await fetchDataFromSheets();
         
-        // تحويل البيانات إلى الصيغة المطلوبة
-        const contacts = data.map(contact => ({
+        const contacts = (data || []).map(contact => ({
             id: contact.id || contact.project_id,
             whatsapp: contact.whatsapp || null,
             phone: contact.phone || null,
@@ -129,91 +104,87 @@ app.get('/api/contacts', async (req, res) => {
             tiktok: contact.tiktok || null,
             facebook: contact.facebook || null,
             twitter: contact.twitter || null,
-            website: contact.website || null,
-            project_name: contact.name || contact.project_name,
-            emirate: contact.emirate,
-            category: contact.category,
-            is_paid: contact.is_paid || false,
-            has_license: contact.adra_license === 'نعم'
+            website: contact.website || null
         }));
-        
-        const responseTime = Date.now() - startTime;
-        
-        res.setHeader('Cache-Control', 'public, max-age=300');
-        res.setHeader('X-Response-Time', `${responseTime}ms`);
-        
-        console.log(`✅ تم إرسال ${contacts.length} جهة اتصال (${responseTime}ms)`);
         
         res.json({
             success: true,
             count: contacts.length,
-            data: contacts,
-            cached: (Date.now() - lastFetchTime) < CACHE_DURATION,
-            lastUpdate: lastFetchTime
+            data: contacts
         });
         
     } catch (error) {
-        console.error(`❌ خطأ: ${error.message}`);
         res.status(500).json({
             success: false,
-            error: 'خطأ في الخادم',
+            error: 'حدث خطأ داخلي',
             data: []
         });
     }
 });
 
+// جلب جهة اتصال محددة
+app.get('/api/contacts/:id', async (req, res) => {
+    try {
+        const data = await fetchDataFromSheets();
+        const contact = (data || []).find(c => 
+            c.id == req.params.id || c.project_id == req.params.id
+        );
+        
+        if (!contact) {
+            return res.status(404).json({ success: false, error: 'غير موجود' });
+        }
+        
+        res.json({
+            success: true,
+            data: {
+                id: contact.id || contact.project_id,
+                whatsapp: contact.whatsapp || null,
+                phone: contact.phone || null,
+                email: contact.email || null,
+                instagram: contact.instagram || null,
+                telegram: contact.telegram || null,
+                snapchat: contact.snapchat || null,
+                tiktok: contact.tiktok || null,
+                facebook: contact.facebook || null,
+                twitter: contact.twitter || null,
+                website: contact.website || null
+            }
+        });
+        
+    } catch (error) {
+        res.status(500).json({ success: false, error: 'حدث خطأ' });
+    }
+});
+
+// التحقق من صحة الخادم
 app.get('/api/health', (req, res) => {
     res.json({
-        status: 'healthy',
+        status: 'ok',
         timestamp: new Date().toISOString(),
         cached: cachedData !== null,
-        records: cachedData ? cachedData.length : 0
+        cacheCount: cachedData ? cachedData.length : 0
     });
 });
 
-// ==================== الملفات الثابتة ====================
-
-app.use(express.static(path.join(__dirname), {
-    maxAge: '1d',
-    etag: true
-}));
-
-app.use('/images', express.static(path.join(__dirname, 'images'), {
-    maxAge: '7d'
-}));
-
-// ==================== التحديث الدوري ====================
-
-setInterval(async () => {
-    console.log('🔄 تحديث دوري للبيانات...');
-    await fetchDataFromSheets();
-}, CACHE_DURATION);
-
-// تشغيل أولي
-(async () => {
-    console.log('🚀 بدء تشغيل الخادم...');
-    await fetchDataFromSheets();
-})();
-
-// ==================== SPA Routing ====================
-
+// جميع المسارات الأخرى - إرجاع index.html
 app.get('*', (req, res) => {
     if (req.path.startsWith('/api/')) {
-        return res.status(404).json({ error: 'Not found' });
+        return res.status(404).json({ error: 'غير موجود' });
     }
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // ==================== تشغيل الخادم ====================
 
-const server = app.listen(PORT, () => {
-    console.log('═'.repeat(50));
-    console.log(`🚀 خادم سوق المشاريع يعمل على المنفذ ${PORT}`);
-    console.log(`🔗 http://localhost:${PORT}`);
-    console.log('═'.repeat(50));
-});
+// تحديث دوري للبيانات
+setInterval(async () => {
+    await fetchDataFromSheets();
+}, CACHE_DURATION);
 
-process.on('SIGTERM', () => {
-    console.log('🛑 إيقاف الخادم...');
-    server.close(() => process.exit(0));
+// جلب أولي للبيانات
+fetchDataFromSheets();
+
+app.listen(PORT, () => {
+    console.log(`🚀 الخادم يعمل على http://localhost:${PORT}`);
+    console.log(`📊 Google Sheets: ${GOOGLE_SHEETS_URL ? '✅ موجود' : '❌ مفقود'}`);
 });
