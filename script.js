@@ -29,32 +29,35 @@ function hideLoader() {
     document.getElementById('loader').classList.remove('show');
 }
 
+// 👇 حط رابط Web App حقك هنا
+const CONTACTS_API_URL = 'https://script.google.com/macros/s/AKfycbx7EsfNq2io4ogiuJ8WIPCS83Vi5LpxunRhQhwQa5uDjUdpcmG0bUbXXWC-m4NO8C6Y/exec';
+
 async function loadContactsData() {
     try {
-        console.log('🔄 جاري الاتصال بالخادم لجلب بيانات التواصل...');
+        console.log('🔄 جاري جلب بيانات التواصل...');
         
-        const response = await fetch('/api/contacts');
-        
-        console.log('📡 استجابة الخادم:', response.status);
+        const response = await fetch(CONTACTS_API_URL);
         
         if (!response.ok) {
             throw new Error(`فشل الاتصال: ${response.status}`);
         }
         
-        const result = await response.json();
-        console.log('📦 البيانات المستلمة:', result);
+        const data = await response.json();
         
-        // تأكد من وجود البيانات
-        if (!result.success || !result.data) {
-            console.warn('⚠️ لا توجد بيانات تواصل');
+        if (data.error) {
+            console.warn('⚠️ خطأ:', data.error);
+            return false;
+        }
+        
+        if (!Array.isArray(data) || data.length === 0) {
+            console.warn('⚠️ لا توجد بيانات');
             contactsData = {};
             return false;
         }
         
-        // تحويل البيانات إلى الصيغة المطلوبة
         contactsData = {};
-        result.data.forEach(contact => {
-            const id = contact.id;
+        data.forEach(contact => {
+            const id = contact.id || contact.project_id;
             if (!id) return;
             
             contactsData[id] = {
@@ -64,55 +67,33 @@ async function loadContactsData() {
                 sell_points: []
             };
             
-            // إضافة روابط التواصل الاجتماعي
+            // وسائل التواصل الاجتماعي
             if (contact.instagram) {
-                contactsData[id].sell_points.push({ 
-                    type: 'instagram', 
-                    value: contact.instagram.replace('@', '') 
-                });
+                contactsData[id].sell_points.push({ type: 'instagram', value: contact.instagram.replace('@', '') });
             }
             if (contact.telegram) {
-                contactsData[id].sell_points.push({ 
-                    type: 'telegram', 
-                    value: contact.telegram.replace('@', '') 
-                });
+                contactsData[id].sell_points.push({ type: 'telegram', value: contact.telegram.replace('@', '') });
             }
             if (contact.snapchat) {
-                contactsData[id].sell_points.push({ 
-                    type: 'snapchat', 
-                    value: contact.snapchat.replace('@', '') 
-                });
+                contactsData[id].sell_points.push({ type: 'snapchat', value: contact.snapchat.replace('@', '') });
             }
             if (contact.tiktok) {
-                contactsData[id].sell_points.push({ 
-                    type: 'tiktok', 
-                    value: contact.tiktok.replace('@', '') 
-                });
+                contactsData[id].sell_points.push({ type: 'tiktok', value: contact.tiktok.replace('@', '') });
             }
             if (contact.facebook) {
-                contactsData[id].sell_points.push({ 
-                    type: 'facebook', 
-                    value: contact.facebook 
-                });
+                contactsData[id].sell_points.push({ type: 'facebook', value: contact.facebook });
             }
             if (contact.twitter) {
-                contactsData[id].sell_points.push({ 
-                    type: 'twitter', 
-                    value: contact.twitter.replace('@', '') 
-                });
+                contactsData[id].sell_points.push({ type: 'twitter', value: contact.twitter.replace('@', '') });
             }
             if (contact.website) {
-                contactsData[id].sell_points.push({ 
-                    type: 'website', 
-                    value: contact.website 
-                });
+                contactsData[id].sell_points.push({ type: 'website', value: contact.website });
             }
         });
         
-        console.log('✅ تم تحميل بيانات التواصل لـ', Object.keys(contactsData).length, 'مشروع');
-        console.log('📞 البيانات:', contactsData);
+        console.log('✅ تم تحميل بيانات', Object.keys(contactsData).length, 'مشروع');
         
-        // إذا كنا في صفحة منتجات، قم بتحديثها
+        // تحديث الصفحة إذا لزم الأمر
         if (appState.currentPage === 'products' && appState.currentFamilyId) {
             showFamilyProducts(appState.currentFamilyId, false);
         }
@@ -120,7 +101,7 @@ async function loadContactsData() {
         return true;
         
     } catch (error) {
-        console.error('❌ فشل تحميل بيانات التواصل:', error);
+        console.error('❌ خطأ:', error);
         contactsData = {};
         return false;
     }
