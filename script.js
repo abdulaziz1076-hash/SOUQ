@@ -30,7 +30,7 @@ function hideLoader() {
 }
 
 // 👇 حط رابط Web App حقك هنا
-const CONTACTS_API_URL = 'https://script.google.com/macros/s/AKfycbx7EsfNq2io4ogiuJ8WIPCS83Vi5LpxunRhQhwQa5uDjUdpcmG0bUbXXWC-m4NO8C6Y/exec';
+const CONTACTS_API_URL = 'https://script.google.com/macros/s/AKfycbwmdgnQg5PWG-wfhboUjJmfmVl6Ftx_gERevFqPBl7XL0j22JEops_a3V_om3jXfOpd/exec';
 
 async function loadContactsData() {
     try {
