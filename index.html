@@ -2,24 +2,23 @@
 <html lang="ar" dir="rtl" id="htmlTag">
 <head>
     <script>
-        // تحديد اللغة المخزنة فوراً قبل تحميل الصفحة المرئية
-        (function() {
-    const savedLang = localStorage.getItem('projectSouqLang');
-    const htmlTag = document.getElementById('htmlTag');
-    // تحقق من وجود htmlTag قبل استخدامه
-    if (htmlTag) {
-        if (savedLang === 'en') {
-            htmlTag.setAttribute('dir', 'ltr');
-            htmlTag.setAttribute('lang', 'en');
-            document.body.classList.add('en-mode');
-        } else {
-            htmlTag.setAttribute('dir', 'rtl');
-            htmlTag.setAttribute('lang', 'ar');
-            document.body.classList.remove('en-mode');
+    (function() {
+        const savedLang = localStorage.getItem('projectSouqLang');
+        const htmlTag = document.getElementById('htmlTag');
+        // تحقق من وجود العنصر قبل استخدامه
+        if (htmlTag) {
+            if (savedLang === 'en') {
+                htmlTag.setAttribute('dir', 'ltr');
+                htmlTag.setAttribute('lang', 'en');
+                if (document.body) document.body.classList.add('en-mode');
+            } else {
+                htmlTag.setAttribute('dir', 'rtl');
+                htmlTag.setAttribute('lang', 'ar');
+                if (document.body) document.body.classList.remove('en-mode');
+            }
         }
-    }
-})();
-    </script>
+    })();
+</script>
     <!-- أضف هذا في نهاية الـ head -->
     <script type="application/ld+json">
     {
