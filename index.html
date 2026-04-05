@@ -794,6 +794,20 @@
     opacity: 0;
     pointer-events: none;
 }
+/* تحسين تجربة التمرير عند تحميل الصفحة */
+html {
+    scroll-behavior: smooth;
+}
+
+/* منع الوميض أثناء استعادة مكان التمرير */
+body {
+    min-height: 100vh;
+}
+
+/* تحسين ظهور الـ loader */
+.loader-wrapper {
+    transition: opacity 0.15s ease;
+}
 
         /* ===== صفحة المشاريع ===== */
         .families-page .container,
