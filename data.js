@@ -30,7 +30,6 @@ const familiesData = [
         categoryEn: "Food & Beverages",
         mainImage: "images/p2-5.jpg",
         images: [
-          "images/p2-5.jpg",
           "images/p2-5-1.jpg",
           "images/p2-5-2.jpg",
           "images/p2-5-3.jpg",
@@ -145,7 +144,7 @@ const familiesData = [
       },
       {
         id: "11_p2",
-        name: "تيمبورا باك",
+        name: "                ",
         nameEn: "Tempura bake",
         description:
           "باك التيمبورا المقرمش بالصوص الحار والجبن/ والعادي.",
@@ -158,7 +157,7 @@ const familiesData = [
         category: "أطعمة ومشروبات",
         categoryEn: "Food & Beverages",
         mainImage: "images/p11-2-1.jpg",
-        images: ["images/p11-2-1.jpg", "images/p11-2-2.png"],
+        images: ["images/p11-2-2.png"],
         details: [
           "تيمبورا مقرمش",
           "صوص كريمي حار/عادي",
@@ -1072,4 +1071,12 @@ const familiesData = [
 
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = familiesData;
+}
+// حفظ البيانات في cache عند التحميل
+if (typeof localStorage !== 'undefined') {
+    try {
+        localStorage.setItem('cachedFamiliesData', JSON.stringify(familiesData));
+        localStorage.setItem('cachedFamiliesDataTime', Date.now().toString());
+        console.log('✅ تم حفظ بيانات المشاريع في cache من data.js');
+    } catch(e) { console.error(e); }
 }
