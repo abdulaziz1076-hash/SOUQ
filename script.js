@@ -22,6 +22,68 @@ const appState = {
     currentZoomIndex: 0
 };
 
+// ==================== التخزين المؤقت للبيانات (Cache) ====================
+
+// حفظ بيانات المشاريع في localStorage
+function cacheFamiliesData() {
+    try {
+        localStorage.setItem('cachedFamiliesData', JSON.stringify(familiesData));
+        localStorage.setItem('cachedFamiliesDataTime', Date.now().toString());
+        console.log('✅ تم حفظ بيانات المشاريع في cache');
+    } catch(e) { console.error('فشل حفظ cache:', e); }
+}
+
+// تحميل بيانات المشاريع من cache
+function loadCachedFamiliesData() {
+    try {
+        const cached = localStorage.getItem('cachedFamiliesData');
+        const cachedTime = localStorage.getItem('cachedFamiliesDataTime');
+        
+        if (cached && cachedTime) {
+            const age = Date.now() - parseInt(cachedTime);
+            // صلاحية cache: 24 ساعة
+            if (age < 24 * 60 * 60 * 1000) {
+                const data = JSON.parse(cached);
+                if (data && data.length > 0) {
+                    console.log(`📦 تم تحميل ${data.length} مشروع من cache (عمره ${Math.round(age/60000)} دقيقة)`);
+                    return data;
+                }
+            }
+        }
+    } catch(e) { console.error('فشل تحميل cache:', e); }
+    return null;
+}
+
+// حفظ بيانات التواصل في localStorage
+function cacheContactsData(contacts) {
+    try {
+        localStorage.setItem('cachedContactsData', JSON.stringify(contacts));
+        localStorage.setItem('cachedContactsDataTime', Date.now().toString());
+        console.log('✅ تم حفظ بيانات التواصل في cache');
+    } catch(e) { console.error('فشل حفظ cache:', e); }
+}
+
+// تحميل بيانات التواصل من cache
+function loadCachedContactsData() {
+    try {
+        const cached = localStorage.getItem('cachedContactsData');
+        const cachedTime = localStorage.getItem('cachedContactsDataTime');
+        
+        if (cached && cachedTime) {
+            const age = Date.now() - parseInt(cachedTime);
+            // صلاحية cache: 24 ساعة
+            if (age < 24 * 60 * 60 * 1000) {
+                const data = JSON.parse(cached);
+                if (data && Object.keys(data).length > 0) {
+                    console.log(`📦 تم تحميل بيانات التواصل من cache (عمره ${Math.round(age/60000)} دقيقة)`);
+                    return data;
+                }
+            }
+        }
+    } catch(e) { console.error('فشل تحميل cache:', e); }
+    return null;
+}
+
 // متغيرات معرض الصور
 let currentProductImagesArray = [];
 let currentProductImageIndex = 0;
@@ -39,16 +101,26 @@ function hideLoader() {
 }
 
 // ==================== تحميل بيانات التواصل ====================
-async function loadContactsData() {
+async function loadContactsData(forceRefresh = false) {
     try {
         const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbx2o1IPkxFqzdJm_MOOAT7sbHmrH-ospLtyZnzT43x7cnPShDvySqNTqodzgUY1p1hZ/exec';
         
         console.log('جاري الاتصال المباشر بـ Google Sheets...');
         const response = await fetch(GOOGLE_SHEETS_URL);
         
-        if (!response.ok) {
-            throw new Error(`فشل الاتصال بـ Google Sheets: ${response.status}`);
+        if (!forceRefresh) {
+        const cached = loadCachedContactsData();
+        if (cached) {
+            contactsData = cached;
+            console.log('✅ تم استخدام بيانات التواصل من cache');
+            
+            // تحديث الصفحة الحالية إذا لزم الأمر
+            if (appState.currentPage === 'products' && appState.currentFamilyId) {
+                showFamilyProducts(appState.currentFamilyId, false);
+            }
+            return true;
         }
+    }
         
         const contacts = await response.json();
         
@@ -63,7 +135,7 @@ async function loadContactsData() {
                 sell_points: []
             };
             
-            if (contact.instagram) contactsData[contact.id].sell_points.push({ type: 'instagram', value: contact.instagram });
+             if (contact.instagram) contactsData[contact.id].sell_points.push({ type: 'instagram', value: contact.instagram });
             if (contact.telegram) contactsData[contact.id].sell_points.push({ type: 'telegram', value: contact.telegram });
             if (contact.snapchat) contactsData[contact.id].sell_points.push({ type: 'snapchat', value: contact.snapchat });
             if (contact.tiktok) contactsData[contact.id].sell_points.push({ type: 'tiktok', value: contact.tiktok });
@@ -72,16 +144,135 @@ async function loadContactsData() {
             if (contact.website) contactsData[contact.id].sell_points.push({ type: 'website', value: contact.website });
         });
         
+        // حفظ في cache
+        cacheContactsData(contactsData);
+        
+        // تحديث الصفحة الحالية إذا لزم الأمر
         if (appState.currentPage === 'products' && appState.currentFamilyId) {
             showFamilyProducts(appState.currentFamilyId, false);
         }
         
         return true;
     } catch (error) {
-        console.error('❌ فشل تحميل بيانات التواصل من Google Sheets:', error);
+        console.error('❌ فشل تحميل بيانات التواصل:', error);
+        
+        // إذا فشل التحميل ولا يوجد cache، نستخدم بيانات فارغة
+        if (!contactsData || Object.keys(contactsData).length === 0) {
+            contactsData = {};
+        }
         return false;
     }
 }
+// ==================== تهيئة التطبيق (مع Cache سريع جداً) ====================
+window.addEventListener('load', async function() {
+    // 1. تفعيل حفظ مكان التمرير
+    setupScrollSaveOnUnload();
+    
+    // 2. قراءة اللغة المخزنة
+    const savedLang = localStorage.getItem('projectSouqLang');
+    appState.currentLanguage = savedLang === 'en' ? 'en' : 'ar';
+    
+    // 3. تطبيق الاتجاه واللغة
+    if (appState.currentLanguage === 'en') {
+        document.body.classList.add('en-mode');
+    } else {
+        document.body.classList.remove('en-mode');
+    }
+    
+    // 4. تحديث النصوص الثابتة فوراً
+    const t = translations[appState.currentLanguage];
+    
+    const textElements = {
+        'siteTitle': 'siteTitle',
+        'siteSubtitle': 'siteSubtitle',
+        'navHome': 'navHome',
+        'navMarket': 'navMarket',
+        'navFavorites': 'navFavorites',
+        'navRegister': 'navRegister',
+        'footerLogo': 'footerLogo',
+        'footerText': 'footerText',
+        'copyright': 'copyright',
+        'langBtn': 'langBtn',
+        'heroTitle': 'heroTitle',
+        'heroSubtitle': 'heroSubtitle',
+        'discoverBtn': 'discoverBtn',
+        'joinBtn': 'joinBtn',
+        'aboutTitle': 'aboutTitle',
+        'stat1': 'stat1',
+        'stat2': 'stat2',
+        'stat3': 'stat3',
+        'stat4': 'stat4',
+        'badge1': 'badge1',
+        'badge2': 'badge2',
+        'badge3': 'badge3',
+        'badge4': 'badge4',
+        'familiesPageTitle': 'familiesPageTitle',
+        'familiesPageSubtitle': 'familiesPageSubtitle',
+        'productsTitle': 'productsTitle',
+        'favoritesPageTitle': 'favoritesPageTitle',
+        'favoritesPageSubtitle': 'favoritesPageSubtitle',
+        'popupTitle': 'popupTitle',
+        'step1': 'step1',
+        'step2': 'step2',
+        'step3': 'step3',
+        'gotItBtn': 'gotItBtn',
+        'shareTitle': 'shareTitle',
+        'copyLinkText': 'copyLinkText',
+        'closeShareBtn': 'closeShareBtn',
+        'offersBtnText': 'offersBtnText',
+        'offersPageTitle': 'offersPageTitle',
+        'offersPageSubtitle': 'offersPageSubtitle',
+        'dealsTitle': 'dealsTitle'
+    };
+    
+    for (const [id, key] of Object.entries(textElements)) {
+        const el = document.getElementById(id);
+        if (el && t[key]) el.textContent = t[key];
+    }
+    
+    // تحديث placeholders
+    const homeSearch = document.getElementById('homeSearch');
+    if (homeSearch) homeSearch.placeholder = t.homeSearchPlaceholder;
+    
+    const familiesSearch = document.getElementById('familiesSearch');
+    if (familiesSearch) familiesSearch.placeholder = t.familiesSearchPlaceholder;
+    
+    // 5. تهيئة الفلاتر
+    initEmiratesChips();
+    initCategoriesChips();
+    
+    // 6. محاولة تحميل بيانات المشاريع من cache (سريع جداً)
+    const cachedFamilies = loadCachedFamiliesData();
+    if (cachedFamilies) {
+        // إذا وجد cache، نستخدمه فوراً (بدون انتظار)
+        console.log('⚡ عرض الصفحة من cache فوراً');
+        Object.assign(familiesData, cachedFamilies);
+    }
+    
+    // 7. عرض الصفحة فوراً (بدون أي انتظار)
+    handleHashChange();
+    
+    // 8. إخفاء الـ loader خلال 100ms فقط (بدلاً من 500ms)
+    setTimeout(() => {
+        hideLoader();
+    }, 100);
+    
+    // 9. تحميل بيانات التواصل في الخلفية (لا ننتظرها)
+    loadContactsData().catch(console.error);
+    
+    // 10. تحديث cache في الخلفية (مرة واحدة فقط في اليوم)
+    const lastCacheUpdate = localStorage.getItem('cachedFamiliesDataTime');
+    const needUpdate = !lastCacheUpdate || (Date.now() - parseInt(lastCacheUpdate) > 12 * 60 * 60 * 1000);
+    
+    if (needUpdate) {
+        // تحديث cache في الخلفية دون التأثير على المستخدم
+        setTimeout(() => {
+            console.log('🔄 تحديث cache في الخلفية...');
+            cacheFamiliesData();
+            loadContactsData(true).catch(console.error);
+        }, 2000);
+    }
+});
 
 // ==================== دوال معرض الصور المحسنة ====================
 function changeMainImage(imgSrc, element, index) {
@@ -644,6 +835,7 @@ const translations = {
 
 // ==================== التنقل ====================
 function navigateTo(path) {
+    saveScrollPosition();
     showLoader();
     window.location.hash = path;
 }
@@ -1087,6 +1279,9 @@ function showFamilyProducts(id, updateHash = true) {
     
     showPage('products');
     showInstructionPopupOnce();
+    setTimeout(() => {
+        restoreScrollPosition();
+    }, 100);
 }
 
 // ==================== عرض تفاصيل المنتج ====================
@@ -1203,9 +1398,16 @@ function showProductDetail(familyId, productId, updateHash = true) {
     const container = document.getElementById('productDetailContainer');
     if (container) container.innerHTML = html;
     showPage('product-detail');
+    requestAnimationFrame(() => {
+        setTimeout(() => {
+            hideLoader();
+            restoreScrollPosition(); // أضف هذا السطر
+        }, 50);
+    });
 }
 
 // ==================== معالجة الـ Hash ====================
+// ==================== معالجة الـ Hash المحسّنة ====================
 function handleHashChange() {
     const hash = window.location.hash.slice(1) || '/';
     const parts = hash.split('/').filter(p => p !== '');
@@ -1218,9 +1420,15 @@ function handleHashChange() {
     }
     
     showLoader();
+    
+    // تنفيذ التنقل
     setTimeout(() => {
         if (parts.length === 0 || parts[0] === '') {
             showPage('home');
+            setTimeout(() => {
+                hideLoader();
+                restoreScrollPosition();
+            }, 100);
         }
         else if (parts[0] === 'projects' && parts[1] === 'emirate' && parts[2]) {
             appState.currentEmirate = decodeURIComponent(parts[2]);
@@ -1233,25 +1441,48 @@ function handleHashChange() {
             if (searchInput && appState.searchQuery) {
                 searchInput.value = appState.searchQuery;
             }
+            setTimeout(() => {
+                hideLoader();
+                restoreScrollPosition();
+            }, 100);
         }
         else if (parts[0] === 'family' && parts[1]) {
             showFamilyProducts(parseInt(parts[1]), false);
+            setTimeout(() => {
+                hideLoader();
+                restoreScrollPosition();
+            }, 200); // تأخير أطول قليلاً لتحميل المنتجات
         }
         else if (parts[0] === 'product' && parts[1] && parts[2]) {
             showProductDetail(parseInt(parts[1]), parts[2], false);
+            setTimeout(() => {
+                hideLoader();
+                restoreScrollPosition();
+            }, 200);
         }
         else if (parts[0] === 'favorites') { 
             showPage('favorites'); 
             renderFavorites(); 
+            setTimeout(() => {
+                hideLoader();
+                restoreScrollPosition();
+            }, 100);
         }
         else if (parts[0] === 'offers') { 
             showPage('offers'); 
             renderOffers(); 
+            setTimeout(() => {
+                hideLoader();
+                restoreScrollPosition();
+            }, 100);
         }
         else {
             showPage('home');
+            setTimeout(() => {
+                hideLoader();
+                restoreScrollPosition();
+            }, 100);
         }
-        hideLoader();
     }, 50);
 }
 
@@ -1633,9 +1864,59 @@ function showTermsModal() {
     const lang = appState.currentLanguage;
     window.open(lang === 'ar' ? 'terms.html' : 'termsEn.html', '_blank');
 }
+// ==================== حفظ واستعادة مكان التمرير ====================
+
+// حفظ مكان التمرير قبل مغادرة الصفحة
+function saveScrollPosition() {
+    const scrollKey = `scroll_${window.location.hash || 'home'}`;
+    const scrollPosition = window.scrollY;
+    sessionStorage.setItem(scrollKey, scrollPosition);
+    console.log(`تم حفظ مكان التمرير: ${scrollKey} = ${scrollPosition}`);
+}
+
+// استعادة مكان التمرير بعد تحميل الصفحة
+function restoreScrollPosition() {
+    const scrollKey = `scroll_${window.location.hash || 'home'}`;
+    const savedPosition = sessionStorage.getItem(scrollKey);
+    
+    if (savedPosition !== null && parseInt(savedPosition) > 0) {
+        console.log(`استعادة مكان التمرير: ${scrollKey} = ${savedPosition}`);
+        
+        // تأخير بسيط للتأكد من تحميل المحتوى بالكامل
+        setTimeout(() => {
+            window.scrollTo({
+                top: parseInt(savedPosition),
+                behavior: 'auto' // استخدام 'auto' بدلاً من 'smooth' لمنع الحركة الإضافية
+            });
+        }, 300);
+    }
+}
+
+// حفظ مكان التمرير عند المغادرة
+function setupScrollSaveOnUnload() {
+    // قبل مغادرة الصفحة (تحديث أو إغلاق)
+    window.addEventListener('beforeunload', function() {
+        saveScrollPosition();
+    });
+    
+    // عند تغيير الـ hash (التنقل بين الصفحات)
+    window.addEventListener('hashchange', function() {
+        saveScrollPosition();
+    });
+    
+    // عند تمرير الصفحة (حفظ تلقائي)
+    let scrollTimeout;
+    window.addEventListener('scroll', function() {
+        if (scrollTimeout) clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            saveScrollPosition();
+        }, 300); // حفظ كل 300 مللي ثانية من التوقف عن التمرير
+    });
+}
 
 // ==================== تهيئة التطبيق ====================
 window.addEventListener('load', async function() {
+    setupScrollSaveOnUnload();
     // اللغة تم تطبيقها بالفعل من HTML، نقرأها فقط
     const savedLang = localStorage.getItem('projectSouqLang');
     appState.currentLanguage = savedLang === 'en' ? 'en' : 'ar';
