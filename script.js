@@ -1,5 +1,5 @@
+// ==================== البيانات والمتغيرات العامة ====================
 let contactsData = {};
-let contactsPromise = null;
 
 const appState = {
     currentPage: 'home',
@@ -22,78 +22,420 @@ const appState = {
     currentZoomIndex: 0
 };
 
+// متغيرات معرض الصور
+let currentProductImagesArray = [];
+let currentProductImageIndex = 0;
+let loaderTimeout = null;
+
 // ==================== دوال مؤشر التحميل ====================
 function showLoader() {
-    document.getElementById('loader').classList.add('show');
+    const loader = document.getElementById('loader');
+    if (loader) loader.classList.add('show');
 }
+
 function hideLoader() {
-    document.getElementById('loader').classList.remove('show');
+    const loader = document.getElementById('loader');
+    if (loader) loader.classList.remove('show');
 }
 
-// 👇 حط رابط Web App حقك هنا
-const CONTACTS_API_URL = 'https://script.google.com/macros/s/AKfycbwmdgnQg5PWG-wfhboUjJmfmVl6Ftx_gERevFqPBl7XL0j22JEops_a3V_om3jXfOpd/exec';
-
+// ==================== تحميل بيانات التواصل ====================
 async function loadContactsData() {
-    if (contactsPromise) return contactsPromise;
-    
-    contactsPromise = (async () => {
-        try {
-            console.log('🔄 جاري جلب بيانات التواصل...');
-            const response = await fetch(CONTACTS_API_URL);
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            const data = await response.json();
-            
-            if (!Array.isArray(data)) throw new Error('البيانات ليست مصفوفة');
-            
-            contactsData = {};
-            data.forEach(contact => {
-                const id = contact.id || contact.project_id;
-                if (!id) return;
-                
-                contactsData[id] = {
-                    whatsapp: contact.whatsapp || null,
-                    phone: contact.phone || null,
-                    email: contact.email || null,
-                    sell_points: []
-                };
-                
-                if (contact.instagram) contactsData[id].sell_points.push({ type: 'instagram', value: contact.instagram.replace('@', '') });
-                if (contact.telegram) contactsData[id].sell_points.push({ type: 'telegram', value: contact.telegram.replace('@', '') });
-                if (contact.snapchat) contactsData[id].sell_points.push({ type: 'snapchat', value: contact.snapchat.replace('@', '') });
-                if (contact.tiktok) contactsData[id].sell_points.push({ type: 'tiktok', value: contact.tiktok.replace('@', '') });
-                if (contact.facebook) contactsData[id].sell_points.push({ type: 'facebook', value: contact.facebook });
-                if (contact.twitter) contactsData[id].sell_points.push({ type: 'twitter', value: contact.twitter.replace('@', '') });
-                if (contact.website) contactsData[id].sell_points.push({ type: 'website', value: contact.website });
-            });
-            
-            console.log('✅ تم تحميل بيانات', Object.keys(contactsData).length, 'مشروع');
-            
-            // إعادة عرض الصفحة الحالية إذا كانت بحاجة لبيانات التواصل
-            if (appState.currentPage === 'products' && appState.currentFamilyId) {
-                showFamilyProducts(appState.currentFamilyId, false);
-            } else if (appState.currentPage === 'product-detail' && appState.currentFamilyId && appState.currentProductId) {
-                showProductDetail(appState.currentFamilyId, appState.currentProductId, false);
-            }
-            
-            return true;
-        } catch (error) {
-            console.error('❌ خطأ في جلب بيانات التواصل:', error);
-            contactsData = {};
-            return false;
+    try {
+        const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbx2o1IPkxFqzdJm_MOOAT7sbHmrH-ospLtyZnzT43x7cnPShDvySqNTqodzgUY1p1hZ/exec';
+        
+        console.log('جاري الاتصال المباشر بـ Google Sheets...');
+        const response = await fetch(GOOGLE_SHEETS_URL);
+        
+        if (!response.ok) {
+            throw new Error(`فشل الاتصال بـ Google Sheets: ${response.status}`);
         }
-    })();
+        
+        const contacts = await response.json();
+        
+        console.log(`✅ تم تحميل ${contacts.length} جهة اتصال من Google Sheets مباشرة`);
+        
+        contactsData = {};
+        contacts.forEach(contact => {
+            contactsData[contact.id] = {
+                whatsapp: contact.whatsapp || null,
+                phone: contact.phone || null,
+                email: contact.email || null,
+                sell_points: []
+            };
+            
+            if (contact.instagram) contactsData[contact.id].sell_points.push({ type: 'instagram', value: contact.instagram });
+            if (contact.telegram) contactsData[contact.id].sell_points.push({ type: 'telegram', value: contact.telegram });
+            if (contact.snapchat) contactsData[contact.id].sell_points.push({ type: 'snapchat', value: contact.snapchat });
+            if (contact.tiktok) contactsData[contact.id].sell_points.push({ type: 'tiktok', value: contact.tiktok });
+            if (contact.facebook) contactsData[contact.id].sell_points.push({ type: 'facebook', value: contact.facebook });
+            if (contact.twitter) contactsData[contact.id].sell_points.push({ type: 'twitter', value: contact.twitter });
+            if (contact.website) contactsData[contact.id].sell_points.push({ type: 'website', value: contact.website });
+        });
+        
+        if (appState.currentPage === 'products' && appState.currentFamilyId) {
+            showFamilyProducts(appState.currentFamilyId, false);
+        }
+        
+        return true;
+    } catch (error) {
+        console.error('❌ فشل تحميل بيانات التواصل من Google Sheets:', error);
+        return false;
+    }
+}
+
+// ==================== دوال معرض الصور المحسنة ====================
+function changeMainImage(imgSrc, element, index) {
+    const mainImage = document.getElementById('currentMainImage');
+    if (mainImage) {
+        mainImage.src = imgSrc;
+    }
     
-    return contactsPromise;
+    document.querySelectorAll('.product-thumbnail').forEach(thumb => {
+        thumb.classList.remove('active');
+    });
+    if (element) {
+        element.classList.add('active');
+    }
+    
+    // هذا السطر مهم جداً - يحفظ الفهرس الحالي
+    currentProductImageIndex = index;
+}
+// دالة فتح معرض الصور - الإصدار النهائي الذي يعمل بشكل صحيح
+function openZoomGallery(images, startIndex = 0) {
+    if (!images || images.length === 0) return;
+    startIndex = Math.min(Math.max(0, startIndex), images.length - 1);
+    
+    appState.currentZoomImages = images;
+    appState.currentZoomIndex = startIndex;
+    
+    const modal = document.getElementById('zoomModal');
+    const container = document.getElementById('zoomImageContainer');
+    const dotsContainer = document.getElementById('zoomDots');
+    
+    if (!modal || !container || !dotsContainer) return;
+    
+    container.innerHTML = '';
+    dotsContainer.innerHTML = '';
+    
+    images.forEach((img, idx) => {
+        const slide = document.createElement('div');
+        slide.className = 'zoom-slide';
+        slide.innerHTML = `<img src="${img}" loading="lazy">`;
+        container.appendChild(slide);
+        
+        const dot = document.createElement('div');
+        dot.className = `zoom-dot ${idx === startIndex ? 'active' : ''}`;
+        dot.setAttribute('data-index', idx);
+        dot.onclick = (function(i) {
+            return function() { scrollToZoomImage(i); };
+        })(idx);
+        dotsContainer.appendChild(dot);
+    });
+    
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    // التمرير إلى الصورة المطلوبة - مع مراعاة RTL
+    setTimeout(function() {
+        const slideWidth = container.clientWidth;
+        if (slideWidth > 0) {
+            if (appState.currentLanguage === 'ar') {
+                // للعربية: نستخدم scrollRight
+                container.scrollLeft = (images.length - 1 - startIndex) * slideWidth;
+            } else {
+                // للإنجليزية: نستخدم scrollLeft
+                container.scrollLeft = startIndex * slideWidth;
+            }
+        }
+    }, 100);
+    
+    modal.onclick = function(e) { 
+        if (e.target === modal) closeZoomModal(); 
+    };
+}
+
+// دالة فتح التكبير من الصورة المصغرة - الحل النهائي
+// دالة فتح التكبير من الصورة الرئيسية
+function openZoomFromProductDetail() {
+    if (currentProductImagesArray && currentProductImagesArray.length > 0) {
+        // استخدم currentProductImageIndex الذي تم تحديثه عند الضغط على الصورة المصغرة
+        let indexToShow = currentProductImageIndex;
+        if (indexToShow === undefined || indexToShow < 0 || indexToShow >= currentProductImagesArray.length) {
+            indexToShow = 0;
+        }
+        openZoomGallery(currentProductImagesArray, indexToShow);
+    }
+}
+
+// دالة فتح نافذة التكبير
+function openZoomGallery(images, startIndex = 0) {
+    if (!images || images.length === 0) return;
+    startIndex = Math.min(Math.max(0, startIndex), images.length - 1);
+    
+    appState.currentZoomImages = images;
+    appState.currentZoomIndex = startIndex;
+    
+    const modal = document.getElementById('zoomModal');
+    const container = document.getElementById('zoomImageContainer');
+    const dotsContainer = document.getElementById('zoomDots');
+    
+    if (!modal || !container || !dotsContainer) return;
+    
+    container.innerHTML = '';
+    dotsContainer.innerHTML = '';
+    
+    // بناء الشرائح
+    images.forEach((img, idx) => {
+        const slide = document.createElement('div');
+        slide.className = 'zoom-slide';
+        slide.innerHTML = `<img src="${img}" loading="lazy">`;
+        container.appendChild(slide);
+        
+        const dot = document.createElement('div');
+        dot.className = `zoom-dot ${idx === startIndex ? 'active' : ''}`;
+        dot.setAttribute('data-index', idx);
+        dot.addEventListener('click', (function(i) {
+            return function() { scrollToZoomImage(i); };
+        })(idx));
+        dotsContainer.appendChild(dot);
+    });
+    
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    // التمرير إلى الصورة المطلوبة - إصلاح مشكلة RTL
+    setTimeout(function() {
+        const targetSlide = container.children[startIndex];
+        if (targetSlide) {
+            targetSlide.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'center' });
+        }
+    }, 50);
+    
+    // مستمع التمرير لتحديث النقاط
+    const updateActiveDot = function() {
+        let closestIndex = 0;
+        let closestDistance = Infinity;
+        
+        for (let i = 0; i < container.children.length; i++) {
+            const slide = container.children[i];
+            const rect = slide.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+            const distance = Math.abs(rect.left - containerRect.left);
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closestIndex = i;
+            }
+        }
+        
+        if (closestIndex !== appState.currentZoomIndex) {
+            appState.currentZoomIndex = closestIndex;
+            const dots = document.querySelectorAll('.zoom-dot');
+            dots.forEach((dot, i) => {
+                if (i === closestIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+    };
+    
+    container.addEventListener('scroll', updateActiveDot);
+    
+    modal.onclick = function(e) { 
+        if (e.target === modal) closeZoomModal(); 
+    };
+    
+    document.addEventListener('keydown', function onEsc(e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeZoomModal();
+            document.removeEventListener('keydown', onEsc);
+        }
+    });
+}
+
+function closeZoomModal() {
+    const modal = document.getElementById('zoomModal');
+    if (modal) modal.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// دالة فتح التكبير من الصورة الرئيسية
+function openZoomFromMainImage() {
+    console.log('===== فتح التكبير من الصورة الرئيسية =====');
+    console.log('الفهرس الحالي:', currentProductImageIndex);
+    console.log('مصفوفة الصور:', currentProductImagesArray);
+    
+    if (currentProductImagesArray && currentProductImagesArray.length > 0) {
+        let indexToShow = currentProductImageIndex;
+        if (indexToShow === undefined || indexToShow < 0 || indexToShow >= currentProductImagesArray.length) {
+            indexToShow = 0;
+        }
+        openZoomGallery(currentProductImagesArray, indexToShow);
+    } else {
+        console.error('لا توجد صور للعرض');
+    }
+}
+
+// إغلاق معرض الصور
+function closeZoomModal() {
+    const modal = document.getElementById('zoomModal');
+    if (modal) {
+        modal.classList.remove('active');
+    }
+    document.body.style.overflow = '';
+    appState.currentZoomImages = [];
+    appState.currentZoomIndex = 0;
+}
+
+// دالة احتياطية للتوافق مع الكود القديم
+function openZoom(images, startIndex) {
+    openZoomGallery(images, startIndex);
+}
+
+function scrollToZoomImage(index) {
+    const container = document.getElementById('zoomImageContainer');
+    if (!container) return;
+    const targetSlide = container.children[index];
+    if (targetSlide) {
+        targetSlide.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+}
+
+// ==================== دوال المفضلة ====================
+function isFavorite(id, type) {
+    return appState.favorites.includes(`${type}_${id}`);
+}
+
+function toggleFavorite(id, type) {
+    const key = `${type}_${id}`;
+    const index = appState.favorites.indexOf(key);
+    const t = translations[appState.currentLanguage];
+    
+    if (index === -1) {
+        appState.favorites.push(key);
+        showToast(t.addToFavorites);
+    } else {
+        appState.favorites.splice(index, 1);
+        showToast(t.removeFromFavorites);
+    }
+    localStorage.setItem('projectSouqFavorites', JSON.stringify(appState.favorites));
+    updateFavoriteUI(id, type);
+    if (appState.currentPage === 'favorites') renderFavorites();
+}
+
+function updateFavoriteUI(id, type) {
+    document.querySelectorAll(`.favorite-btn[data-id="${id}"][data-type="${type}"]`).forEach(btn => {
+        if (isFavorite(id, type)) btn.classList.add('active');
+        else btn.classList.remove('active');
+    });
+    if (type === 'product') {
+        document.querySelectorAll(`.product-card[data-product-id="${id}"]`).forEach(card => {
+            if (isFavorite(id, 'product')) card.classList.add('favorite-active');
+            else card.classList.remove('favorite-active');
+        });
+    }
+}
+
+function showFavorites() {
+    navigateTo('/favorites');
+}
+
+function renderFavorites() {
+    const container = document.getElementById('favoritesContent');
+    const t = translations[appState.currentLanguage];
+    const favoriteProducts = [];
+    
+    familiesData.forEach(family => {
+        family.products.forEach(product => {
+            if (isFavorite(product.id, 'product')) {
+                favoriteProducts.push({ family, product });
+            }
+        });
+    });
+    
+    if (favoriteProducts.length === 0) {
+        container.innerHTML = `<div class="empty-favorites"><i class="fas fa-heart"></i><p>${t.emptyFavoritesProducts}</p></div>`;
+        return;
+    }
+    
+    let html = '<div class="favorites-list">';
+    favoriteProducts.forEach(({ family, product }) => {
+        const productName = appState.currentLanguage === 'ar' ? product.name : product.nameEn;
+        const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
+        html += `
+            <div class="favorite-list-item" onclick="navigateTo('/product/${family.id}/${product.id}')">
+                <div class="favorite-item-image"><img src="${product.mainImage || product.image}" alt="${productName}" loading="lazy"></div>
+                <div class="favorite-item-info">
+                    <div class="favorite-item-title">${productName}</div>
+                    <div class="favorite-item-meta"><i class="fas fa-store"></i> <span>${familyName}</span></div>
+                </div>
+            </div>
+        `;
+    });
+    html += '</div>';
+    container.innerHTML = html;
+}
+
+// ==================== دالة تحليل نقاط البيع ====================
+function parseSellPoints(sellPoints) {
+    if (!sellPoints || !Array.isArray(sellPoints)) return [];
+    return sellPoints.map(sp => {
+        let type = sp.type;
+        let value = sp.value;
+        let cleanValue = value.replace(/^@/, '');
+        let url = '';
+        let icon = '';
+        let bg = '';
+        switch (type) {
+            case 'instagram':
+                url = `https://instagram.com/${cleanValue}`;
+                icon = 'fa-instagram';
+                bg = 'instagram-bg';
+                break;
+            case 'twitter':
+                url = `https://x.com/${cleanValue}`;
+                icon = 'fa-x-twitter';
+                bg = 'twitter-bg';
+                break;
+            case 'telegram':
+                url = `https://t.me/${cleanValue}`;
+                icon = 'fa-telegram';
+                bg = 'telegram-bg';
+                break;
+            case 'snapchat':
+                url = `https://snapchat.com/add/${cleanValue}`;
+                icon = 'fa-snapchat';
+                bg = 'snapchat-bg';
+                break;
+            case 'tiktok':
+                url = `https://tiktok.com/@${cleanValue}`;
+                icon = 'fa-tiktok';
+                bg = 'tiktok-bg';
+                break;
+            case 'facebook':
+                url = `https://facebook.com/${cleanValue}`;
+                icon = 'fa-facebook';
+                bg = 'facebook-bg';
+                break;
+            case 'website':
+                url = value.startsWith('http') ? value : `https://${value}`;
+                icon = 'fa-globe';
+                bg = 'website-bg';
+                break;
+            default:
+                url = value;
+                icon = 'fa-globe';
+                bg = 'website-bg';
+        }
+        return { url, icon, bg, type };
+    });
 }
 
 // ==================== الترجمة ====================
 const translations = {
     ar: {
         siteTitle: "سوق المشاريع",
-        forShopperTitle: "للباحث عن منتج",
-        forShopperDesc: "اكتشف منتجات محلية بإيدين إماراتية ومقيمة. أكل بيتي، حلويات، عطور، هدايا، مشغولات يدوية. تواصل مباشر مع البائع بدون وسيط.",
-        forProjectOwnerTitle: "لصاحب المشروع",
-        forProjectOwnerDesc: "سجل مشروعك مجاناً. واصل آلاف الزوار شهرياً. بدون عمولات ولا رسوم خفيفة. دعم مجتمعي للأسر المنتجة في الإمارات.",
         paidBadge: "مميز",
         privacy: "سياسة الخصوصية",
         terms: "شروط الاستخدام",
@@ -108,9 +450,9 @@ const translations = {
         footerLogo: "سوق المشاريع",
         footerText: "منصة المشاريع الإماراتية",
         copyright: "© 2026 سوق المشاريع - جميع الحقوق محفوظة",
-        langBtn: "English",
+        langBtn: "En",
         heroTitle: "سوق المشاريع",
-        heroSubtitle: "أول منصة إماراتية تجمع المشاريع المنزلية والأسر المنتجة في مكان واحد",
+        heroSubtitle: "منصة متخصصة لدعم المشاريع في الامارات",
         discoverBtn: "ادخل السوق",
         joinBtn: "سجل مشروعك",
         aboutTitle: "من نحن",
@@ -144,50 +486,24 @@ const translations = {
         shareTitle: "مشاركة المنتج",
         copyLinkText: "نسخ الرابط",
         closeShareBtn: "إغلاق",
-        modalTitle: "تسجيل مشروع جديد",
-        modalSubtitle: "انضم إلى منصة سوق المشاريع",
-        projectNameLabel: "اسم المشروع",
-        projectNamePlaceholder: "مثال: مشروع البيت",
-        emirateLabel: "الإمارة",
-        selectEmirate: "اختر الإمارة",
-        descriptionLabel: "نبذة عن المشروع",
-        descriptionPlaceholder: "اكتب نبذة مختصرة عن مشروعك...",
-        licenseLabel: "الترخيص",
-        yesLabel: "نعم",
-        noLabel: "لا",
-        coverageLabel: "التغطية",
-        selectCoverage: "اختر نطاق التغطية",
-        phoneLabel: "الهاتف",
-        phonePlaceholder: "05x xxx xxxx",
-        whatsappLabel: "واتساب",
-        whatsappPlaceholder: "05x xxx xxxx",
-        emailLabel: "البريد الإلكتروني",
-        emailPlaceholder: "info@example.com",
-        instagramLabel: "إنستغرام",
-        telegramLabel: "تليجرام",
-        snapchatLabel: "سناب شات",
-        tiktokLabel: "تيك توك",
-        facebookLabel: "فيسبوك",
-        websiteLabel: "موقع ويب",
-        categoriesLabel: "التصنيفات",
-        catFood: "أطعمة ومشروبات",
-        catIT: "الرقميات",
-        catPerfumes: "روائح وعطور",
-        catCare: "عناية",
-        catSweets: "حلويات",
-        catBeauty: "تجميل",
-        catClothes: "ملابس",
-        catHandmade: "يدويات",
-        catGifts: "هدايا",
-        catApothecary: "عطارة",
-        catArts: "فنون",
-        catPlants: "نباتات",
-        catEntertainment: "ترفيه",
-        submitBtn: "إرسال طلب التسجيل",
         offersBtnText: "العروض",
         offersPageTitle: "العروض الخاصة",
         offersPageSubtitle: "أحدث العروض والباقات",
-        submitHint: "سيتم التواصل معكم خلال 24 ساعة",
+        addToFavorites: "تمت الإضافة للمفضلة",
+        removeFromFavorites: "تمت الإزالة من المفضلة",
+        linkCopied: "تم نسخ الرابط!",
+        licensed: "مرخص",
+        coverage: "التغطية",
+        descriptionLabel: "نبذة عن المشروع",
+        noContact: "لا توجد معلومات تواصل",
+        noProjects: "لا مشاريع متاحة",
+        viewProducts: "المنتجات",
+        call: "اتصال",
+        email: "البريد الإلكتروني",
+        registerTitle: "سجل مشروعك الآن",
+        registerViaX: "راسلنا على منصة X",
+        registerViaInstagram: "راسلنا على انستغرام",
+        registerViaTikTok: "راسلنا على تيك توك",
         emirates: {
             all: "كل الإمارات",
             أبوظبي: "أبوظبي",
@@ -219,38 +535,10 @@ const translations = {
             "جميع إمارات الدولة": "جميع إمارات الدولة",
             "دول الخليج": "دول الخليج",
             "العالم": "العالم"
-        },
-        viewProducts: "المنتجات",
-        noProjects: "لا مشاريع متاحة، أخبر أي مشروع تعرفه بالتسجيل معنا",
-        noContact: "لا توجد معلومات تواصل",
-        licensed: "مرخص",
-        coverage: "التغطية",
-        call: "اتصال",
-        email: "البريد الإلكتروني",
-        addToFavorites: "تمت الإضافة للمفضلة",
-        removeFromFavorites: "تمت الإزالة من المفضلة",
-        linkCopied: "تم نسخ الرابط!",
-        registerTitle: "سجل مشروعك الآن",
-        registerViaTwitter: "راسلنا على منصة X",
-        registerViaInstagram: "راسلنا على انستغرام",
-        registerViaTikTok: "راسلنا على تيك توك",
-        forShopperTitle: "للباحث عن منتج",
-        forShopperDesc: "اكتشف منتجات محلية بإيدين إماراتية ومقيمة. أكل بيتي، حلويات، عطور، هدايا، مشغولات يدوية. تواصل مباشر مع البائع بدون وسيط.",
-        forProjectOwnerTitle: "لصاحب المشروع",
-        forProjectOwnerDesc: "سجل مشروعك مجاناً. واصل آلاف الزوار شهرياً. بدون عمولات ولا رسوم خفيفة. دعم مجتمعي للأسر المنتجة في الإمارات.",
+        }
     },
     en: {
         siteTitle: "Projects Souq",
-        forShopperTitle: "For Shoppers",
-        forShopperDesc: "Discover local products made by Emirati and resident hands. Home food, sweets, perfumes, gifts, handicrafts. Direct contact with the seller without intermediary.",
-        forProjectOwnerTitle: "For Project Owners",
-        forProjectOwnerDesc: "Register your project for free. Reach thousands of visitors monthly. No commissions or hidden fees. Community support for productive families in the UAE.",
-        forShopperTitle: "For Shoppers",
-        forShopperDesc: "Discover local products made by Emirati and resident hands. Home food, sweets, perfumes, gifts, handicrafts. Direct contact with the seller without intermediary.",
-        forProjectOwnerTitle: "For Project Owners",
-        forProjectOwnerDesc: "Register your project for free. Reach thousands of visitors monthly. No commissions or hidden fees. Community support for productive families in the UAE.",
-        privacy: "Privacy Policy",
-        terms: "Terms of Use",
         registerTitle: "Register Your Project Now",
         registerViaX: "Message us on X",
         registerViaInstagram: "Message us on Instagram",
@@ -308,47 +596,17 @@ const translations = {
         shareTitle: "Share Product",
         copyLinkText: "Copy Link",
         closeShareBtn: "Close",
-        modalTitle: "Register New Project",
-        modalSubtitle: "Join Projects Souq Platform",
-        projectNameLabel: "Project Name",
-        projectNamePlaceholder: "Example: Home Project",
-        emirateLabel: "Emirate",
-        selectEmirate: "Select Emirate",
+        addToFavorites: "Added to favorites",
+        removeFromFavorites: "Removed from favorites",
+        linkCopied: "Link copied!",
+        licensed: "Licensed",
+        coverage: "Coverage",
         descriptionLabel: "About the Project",
-        descriptionPlaceholder: "Write a brief description of your project...",
-        licenseLabel: "License",
-        yesLabel: "Yes",
-        noLabel: "No",
-        coverageLabel: "Coverage",
-        selectCoverage: "Select Coverage",
-        phoneLabel: "Phone",
-        phonePlaceholder: "05x xxx xxxx",
-        whatsappLabel: "WhatsApp",
-        whatsappPlaceholder: "05x xxx xxxx",
-        emailLabel: "Email",
-        emailPlaceholder: "info@example.com",
-        instagramLabel: "Instagram",
-        telegramLabel: "Telegram",
-        snapchatLabel: "Snapchat",
-        tiktokLabel: "TikTok",
-        facebookLabel: "Facebook",
-        websiteLabel: "Website",
-        categoriesLabel: "Categories",
-        catFood: "Food & Beverages",
-        catIT: "IT",
-        catPerfumes: "Scents & Perfumes",
-        catCare: "Care",
-        catSweets: "Sweets",
-        catBeauty: "Beauty",
-        catClothes: "Clothes",
-        catHandmade: "Handmade",
-        catGifts: "Gifts",
-        catApothecary: "Apothecary",
-        catArts: "Arts",
-        catPlants: "Plants",
-        catEntertainment: "Entertainment",
-        submitBtn: "Submit Registration",
-        submitHint: "We will contact you within 24 hours",
+        noContact: "No contact information",
+        noProjects: "No projects available",
+        viewProducts: "Products",
+        call: "Call",
+        email: "Email",
         emirates: {
             all: "All Emirates",
             أبوظبي: "Abu Dhabi",
@@ -380,196 +638,11 @@ const translations = {
             "جميع إمارات الدولة": "All emirates",
             "دول الخليج": "GCC",
             "العالم": "Worldwide"
-        },
-        viewProducts: "Products",
-        noProjects: "No projects available. Tell any project you know to register.",
-        noContact: "No contact information",
-        licensed: "Licensed",
-        coverage: "Coverage",
-        call: "Call",
-        email: "Email",
-        addToFavorites: "Added to favorites",
-        removeFromFavorites: "Removed from favorites",
-        linkCopied: "Link copied!"
+        }
     }
 };
 
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-function parseSellPoints(sellPoints) {
-    if (!sellPoints || !Array.isArray(sellPoints)) return [];
-    return sellPoints.map(sp => {
-        let type = sp.type;
-        let value = sp.value;
-        let cleanValue = value.replace(/^@/, '');
-        let url = '';
-        let icon = '';
-        let bg = '';
-        switch (type) {
-            case 'instagram':
-                url = `https://instagram.com/${cleanValue}`;
-                icon = 'fa-instagram';
-                bg = 'instagram-bg';
-                break;
-            case 'twitter':
-                url = `https://x.com/${cleanValue}`;
-                icon = 'fa-x-twitter';
-                bg = 'twitter-bg';
-                break;
-            case 'telegram':
-                url = `https://t.me/${cleanValue}`;
-                icon = 'fa-telegram';
-                bg = 'telegram-bg';
-                break;
-            case 'snapchat':
-                url = `https://snapchat.com/add/${cleanValue}`;
-                icon = 'fa-snapchat';
-                bg = 'snapchat-bg';
-                break;
-            case 'tiktok':
-                url = `https://tiktok.com/@${cleanValue}`;
-                icon = 'fa-tiktok';
-                bg = 'tiktok-bg';
-                break;
-            case 'facebook':
-                url = `https://facebook.com/${cleanValue}`;
-                icon = 'fa-facebook';
-                bg = 'facebook-bg';
-                break;
-            case 'website':
-                url = value.startsWith('http') ? value : `https://${value}`;
-                break;
-            default:
-                url = value;
-                icon = 'fa-globe';
-                bg = 'website-bg';
-        }
-        return {url, icon, bg, type};
-    });
-}
-
-function isFavorite(id, type) {
-    return appState.favorites.includes(`${type}_${id}`);
-}
-
-function toggleFavorite(id, type) {
-    const key = `${type}_${id}`;
-    const index = appState.favorites.indexOf(key);
-    if (index === -1) {
-        appState.favorites.push(key);
-        showToast(translations[appState.currentLanguage].addToFavorites);
-    } else {
-        appState.favorites.splice(index, 1);
-        showToast(translations[appState.currentLanguage].removeFromFavorites);
-    }
-    localStorage.setItem('projectSouqFavorites', JSON.stringify(appState.favorites));
-    updateFavoriteUI(id, type);
-    if (appState.currentPage === 'favorites') renderFavorites();
-}
-
-function updateFavoriteUI(id, type) {
-    document.querySelectorAll(`.favorite-btn[data-id="${id}"][data-type="${type}"]`).forEach(btn => {
-        if (isFavorite(id, type)) btn.classList.add('active');
-        else btn.classList.remove('active');
-    });
-    if (type === 'product') {
-        document.querySelectorAll(`.product-card[data-product-id="${id}"]`).forEach(card => {
-            if (isFavorite(id, 'product')) card.classList.add('favorite-active');
-            else card.classList.remove('favorite-active');
-        });
-    }
-}
-
-function showFavorites() {
-    navigateTo('/favorites');
-}
-
-function renderFavorites() {
-    const container = document.getElementById('favoritesContent');
-    const t = translations[appState.currentLanguage];
-    const favoriteProducts = [];
-    familiesData.forEach(family => {
-        family.products.forEach(product => {
-            if (isFavorite(product.id, 'product')) {
-                favoriteProducts.push({ family, product });
-            }
-        });
-    });
-    if (favoriteProducts.length === 0) {
-        container.innerHTML = `<div class="empty-favorites"><i class="fas fa-heart"></i><p>${t.emptyFavoritesProducts}</p></div>`;
-        return;
-    }
-    let html = '<div class="favorites-list">';
-    favoriteProducts.forEach(({ family, product }) => {
-        const productName = appState.currentLanguage === 'ar' ? product.name : product.nameEn;
-        const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
-        html += `
-        <div class="favorite-list-item" onclick="navigateTo('/product/${family.id}/${product.id}')">
-            <div class="favorite-item-image"><img src="${product.mainImage || product.image}" alt="${productName}" loading="lazy"></div>
-            <div class="favorite-item-info">
-                <div class="favorite-item-title">${productName}</div>
-                <div class="favorite-item-meta"><i class="fas fa-store"></i> <span>${familyName}</span></div>
-            </div>
-        </div>
-        `;
-    });
-    html += '</div>';
-    container.innerHTML = html;
-}
-
-function openZoom(images, startIndex = 0) {
-    appState.currentZoomImages = images;
-    appState.currentZoomIndex = startIndex;
-    const container = document.getElementById('zoomImageContainer');
-    const dotsContainer = document.getElementById('zoomDots');
-    let slidesHtml = '', dotsHtml = '';
-    images.forEach((img, index) => {
-        slidesHtml += `<div class="zoom-slide"><img src="${img}" loading="lazy"></div>`;
-        dotsHtml += `<div class="zoom-dot ${index === startIndex ? 'active' : ''}" onclick="scrollToZoomImage(${index})"></div>`;
-    });
-    container.innerHTML = slidesHtml;
-    dotsContainer.innerHTML = dotsHtml;
-    document.getElementById('zoomModal').classList.add('active');
-    document.body.style.overflow = 'hidden';
-    setTimeout(() => {
-        const imageWidth = container.clientWidth;
-        container.scrollTo({ left: startIndex * imageWidth, behavior: 'auto' });
-    }, 50);
-    container.addEventListener('scroll', updateZoomDots);
-}
-
-function updateZoomDots() {
-    const container = document.getElementById('zoomImageContainer');
-    const scrollPosition = container.scrollLeft;
-    const imageWidth = container.clientWidth;
-    const currentIndex = Math.round(scrollPosition / imageWidth);
-    document.querySelectorAll('.zoom-dot').forEach((dot, index) => {
-        if (index === currentIndex) dot.classList.add('active');
-        else dot.classList.remove('active');
-    });
-}
-
-function scrollToZoomImage(index) {
-    const container = document.getElementById('zoomImageContainer');
-    const imageWidth = container.clientWidth;
-    container.scrollTo({ left: index * imageWidth, behavior: 'smooth' });
-}
-
-function closeZoomModal() {
-    document.getElementById('zoomModal').classList.remove('active');
-    document.body.style.overflow = 'auto';
-}
-
+// ==================== التنقل ====================
 function navigateTo(path) {
     showLoader();
     window.location.hash = path;
@@ -582,30 +655,24 @@ function goBack() {
 function scrollToTop() {
     const menu = document.getElementById('navMenu');
     if (menu) menu.classList.remove('active');
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     hideLoader();
 }
 
 function toggleMenu() {
-    document.getElementById('navMenu').classList.toggle('active');
+    const menu = document.getElementById('navMenu');
+    if (menu) menu.classList.toggle('active');
 }
 
 function showPage(pageId) {
     document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-    document.getElementById(pageId + '-page').style.display = 'block';
+    const pageElement = document.getElementById(pageId + '-page');
+    if (pageElement) pageElement.style.display = 'block';
     appState.currentPage = pageId;
     window.scrollTo(0, 0);
-    if (pageId === 'families') {
-        const offersBtn = document.getElementById('offersBtnText');
-        if (offersBtn) {
-            offersBtn.textContent = translations[appState.currentLanguage].offersBtnText;
-        }
-    }
 }
 
+// ==================== فلاتر الإمارات والتصنيفات ====================
 function initEmiratesChips() {
     const container = document.getElementById('emiratesScroll');
     if (!container) return;
@@ -634,7 +701,8 @@ function filterByEmirate(emirateId) {
     appState.searchQuery = '';
     updateActiveEmirateChip(emirateId);
     updateActiveCategoryChip('all');
-    document.getElementById('familiesSearch').value = '';
+    const searchInput = document.getElementById('familiesSearch');
+    if (searchInput) searchInput.value = '';
     navigateTo(`/projects/emirate/${encodeURIComponent(emirateId)}`);
     hideLoader();
 }
@@ -681,15 +749,7 @@ function initCategoriesChips() {
 function filterByCategory(id) {
     showLoader();
     appState.currentCategory = id;
-    document.querySelectorAll('.category-chip').forEach(chip => chip.classList.remove('active'));
-    document.querySelectorAll('.category-chip').forEach(chip => {
-        const span = chip.querySelector('span');
-        if (span) {
-            const t = translations[appState.currentLanguage];
-            if (id === 'all' && span.innerText === t.categories.all) chip.classList.add('active');
-            else if (span.innerText === t.categories[id]) chip.classList.add('active');
-        }
-    });
+    updateActiveCategoryChip(id);
     renderFamilies();
     hideLoader();
 }
@@ -706,6 +766,7 @@ function updateActiveCategoryChip(categoryId) {
     });
 }
 
+// ==================== البحث ====================
 function performHomeSearch() {
     showLoader();
     const query = document.getElementById('homeSearch').value.trim();
@@ -728,6 +789,7 @@ function performFamiliesSearch() {
     hideLoader();
 }
 
+// ==================== عرض المشاريع ====================
 function renderFamilies() {
     let filtered = [...familiesData];
     const t = translations[appState.currentLanguage];
@@ -769,7 +831,8 @@ function renderFamilies() {
 
                 return nameAr.includes(query) || nameEn.includes(query) ||
                        descAr.includes(query) || descEn.includes(query) ||
-                       longDescAr.includes(query) || longDescEn.includes(query) || productMatch;
+                       longDescAr.includes(query) || longDescEn.includes(query) ||
+                       productMatch;
             });
         }
     }
@@ -797,46 +860,26 @@ function renderFamilies() {
         const paidBadge = family.is_paid ? `
             <div class="paid-badge-red">
                 <i class="fas fa-fire"></i>
-                <span>${t.paidBadge || 'مميز'}</span>
+                <span>${t.paidBadge}</span>
             </div>
         ` : '';
         
         return `
-        <div class="family-card ${family.is_paid ? 'paid-card-red' : ''}" onclick="navigateTo('/family/${family.id}')">
-            ${paidBadge}
-            ${licenseBadge}
-            <div class="family-image"><img src="${family.image}" alt="${familyName}" loading="lazy"></div>
-            <div class="family-content">
-                <h3 class="family-name">${familyName}</h3>
-                <div class="family-location"><i class="fas fa-map-marker-alt"></i> ${t.emirates[family.emirate] || family.emirate}</div>
-                <div class="family-description">${familyDesc}</div>
+            <div class="family-card" onclick="navigateTo('/family/${family.id}')">
+                ${paidBadge}
+                ${licenseBadge}
+                <div class="family-image"><img src="${family.image}" alt="${familyName}" loading="lazy"></div>
+                <div class="family-content">
+                    <h3 class="family-name">${familyName}</h3>
+                    <div class="family-location"><i class="fas fa-map-marker-alt"></i> ${t.emirates[family.emirate] || family.emirate}</div>
+                    <div class="family-description">${familyDesc}</div>
+                </div>
             </div>
-        </div>
-    `}).join('');
+        `;
+    }).join('');
 }
 
-function renderFeaturedProjects() {
-    const featured = familiesData.filter(f => f.is_paid === true).slice(0, 4);
-    const container = document.getElementById('featuredProjectsGrid');
-    if (!container) return;
-    
-    if (featured.length === 0) {
-        container.innerHTML = '<div style="grid-column: span 2; text-align: center; padding: 20px;">لا توجد مشاريع مميزة حالياً</div>';
-        return;
-    }
-    
-    container.innerHTML = featured.map(project => `
-        <div class="family-card" onclick="navigateTo('/family/${project.id}')" style="cursor: pointer;">
-            <div class="family-image"><img src="${project.image}" loading="lazy"></div>
-            <div class="family-content">
-                <h3 class="family-name">${appState.currentLanguage === 'ar' ? project.name : project.nameEn}</h3>
-                <div class="family-location"><i class="fas fa-map-marker-alt"></i> ${translations[appState.currentLanguage].emirates[project.emirate] || project.emirate}</div>
-                <div class="family-description">${appState.currentLanguage === 'ar' ? project.description : project.descriptionEn}</div>
-            </div>
-        </div>
-    `).join('');
-}
-
+// ==================== العروض الخاصة ====================
 function showOffersPage() {
     navigateTo('/offers');
 }
@@ -871,17 +914,17 @@ function renderOffers() {
         const offerBadge = appState.currentLanguage === 'ar' ? (offer.badge || 'عرض') : (offer.badgeEn || offer.badge || 'Offer');
         
         html += `
-        <div class="favorite-list-item" onclick="navigateTo('/family/${offer.familyId}')">
-            <div class="favorite-item-image"><img src="${offer.image}" alt="${offerTitle}" loading="lazy"></div>
-            <div class="favorite-item-info">
-                <div class="favorite-item-title">${offerTitle}</div>
-                <div class="favorite-item-meta">
-                    <i class="fas fa-store"></i> <span>${offer.familyName}</span>
-                    <span class="project-badge" style="background: #C41E3A; color: white; border: none;">${offerBadge}</span>
+            <div class="favorite-list-item" onclick="navigateTo('/family/${offer.familyId}')">
+                <div class="favorite-item-image"><img src="${offer.image}" alt="${offerTitle}" loading="lazy"></div>
+                <div class="favorite-item-info">
+                    <div class="favorite-item-title">${offerTitle}</div>
+                    <div class="favorite-item-meta">
+                        <i class="fas fa-store"></i> <span>${offer.familyName}</span>
+                        <span class="project-badge" style="background: #C41E3A; color: white; border: none;">${offerBadge}</span>
+                    </div>
+                    <div style="font-size: 11px; color: var(--gray); margin-top: 5px;">${offerDesc}</div>
                 </div>
-                <div style="font-size: 11px; color: var(--gray); margin-top: 5px;">${offerDesc}</div>
             </div>
-        </div>
         `;
     });
     html += '</div>';
@@ -893,41 +936,32 @@ function renderFamilyDeals(family) {
     const dealsGrid = document.getElementById('dealsGrid');
     
     if (!family.deals || family.deals.length === 0) {
-        dealsSection.style.display = 'none';
+        if (dealsSection) dealsSection.style.display = 'none';
         return;
     }
     
-    dealsSection.style.display = 'block';
+    if (dealsSection) dealsSection.style.display = 'block';
     
     const t = translations[appState.currentLanguage];
-    dealsGrid.innerHTML = family.deals.map(deal => {
-        const dealTitle = appState.currentLanguage === 'ar' ? deal.title : (deal.titleEn || deal.title);
-        const dealDesc = appState.currentLanguage === 'ar' ? deal.description : (deal.descriptionEn || deal.description);
-        const dealBadge = appState.currentLanguage === 'ar' ? (deal.badge || 'عرض') : (deal.badgeEn || deal.badge || 'Offer');
-        const dealExpiry = deal.expiry ? formatExpiryDate(deal.expiry) : '';
-        
-        return `
-        <div class="deal-card" onclick="showDealDetails(${family.id}, '${deal.id}')">
-            <div class="deal-badge">${dealBadge}</div>
-            <div class="deal-image">
-                <img src="${deal.image}" alt="${dealTitle}" loading="lazy">
-            </div>
-            <div class="deal-content">
-                <h4 class="deal-title">${dealTitle}</h4>
-                <p class="deal-description">${dealDesc}</p>
-                ${dealExpiry ? `<div class="deal-expiry"><i class="far fa-clock"></i> ${t.expiryUntil || 'ينتهي'}: ${dealExpiry}</div>` : ''}
-            </div>
-        </div>
-    `}).join('');
-}
-
-function formatExpiryDate(dateString) {
-    if (!dateString) return '';
-    const date = new Date(dateString);
-    if (appState.currentLanguage === 'ar') {
-        return date.toLocaleDateString('ar-AE', { year: 'numeric', month: 'short', day: 'numeric' });
-    } else {
-        return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    if (dealsGrid) {
+        dealsGrid.innerHTML = family.deals.map(deal => {
+            const dealTitle = appState.currentLanguage === 'ar' ? deal.title : (deal.titleEn || deal.title);
+            const dealDesc = appState.currentLanguage === 'ar' ? deal.description : (deal.descriptionEn || deal.description);
+            const dealBadge = appState.currentLanguage === 'ar' ? (deal.badge || 'عرض') : (deal.badgeEn || deal.badge || 'Offer');
+            
+            return `
+                <div class="deal-card" onclick="showDealDetails(${family.id}, '${deal.id}')">
+                    <div class="deal-badge">${dealBadge}</div>
+                    <div class="deal-image">
+                        <img src="${deal.image}" alt="${dealTitle}" loading="lazy">
+                    </div>
+                    <div class="deal-content">
+                        <h4 class="deal-title">${dealTitle}</h4>
+                        <p class="deal-description">${dealDesc}</p>
+                    </div>
+                </div>
+            `;
+        }).join('');
     }
 }
 
@@ -939,23 +973,25 @@ function showDealDetails(familyId, dealId) {
     if (!deal) return;
     
     const images = deal.images && deal.images.length > 0 ? deal.images : [deal.image];
-    openZoom(images, 0);
+    openZoomGallery(images, 0);
     
     const t = translations[appState.currentLanguage];
-    showToast(t.viewingDeal || 'جاري عرض تفاصيل العرض...');
+    showToast(t.viewingDeal);
 }
 
-async function showFamilyProducts(id, updateHash = true) {
-    await loadContactsData();   // <-- أضف هذا السطر
-    
+// ==================== عرض منتجات المشروع ====================
+function showFamilyProducts(id, updateHash = true) {
+    hideLoader();
     const family = familiesData.find(f => f.id == id);
     if (!family) return;
+    
     const contactInfo = contactsData[id] || {};
     family.whatsapp = contactInfo.whatsapp || null;
     family.phone = contactInfo.phone || null;
     family.email = contactInfo.email || null;
     family.sell_points = contactInfo.sell_points || [];
     appState.currentFamilyId = id;
+    
     if (updateHash) {
         navigateTo(`/family/${id}`);
         return;
@@ -967,56 +1003,63 @@ async function showFamilyProducts(id, updateHash = true) {
     const licenseBadgeHtml = family.adra_license === 'نعم' ? `<div class="license-badge-large"><i class="fas fa-check-circle"></i> ${t.licensed}</div>` : '';
     const shareButtonHtml = `<div class="action-btn share-btn" onclick="event.stopPropagation(); showProfileSharePopup(${family.id})" title="${t.shareProfile}"><i class="fas fa-share-alt"></i></div>`;
     
-    document.getElementById('familyProfileContainer').innerHTML = `
-        <div class="family-profile">
-            <div class="profile-header">
-                ${shareButtonHtml}
-                <div class="profile-avatar" style="background-image: url('${family.image}');"></div>
-                <div>
-                    <h2 class="profile-name">${familyName}</h2>
-                    ${licenseBadgeHtml}
-                    <div class="profile-location"><i class="fas fa-map-marker-alt"></i> ${t.emirates[family.emirate] || family.emirate}</div>
+    const profileContainer = document.getElementById('familyProfileContainer');
+    if (profileContainer) {
+        profileContainer.innerHTML = `
+            <div class="family-profile">
+                <div class="profile-header">
+                    ${shareButtonHtml}
+                    <div class="profile-avatar" style="background-image: url('${family.image}');"></div>
+                    <div>
+                        <h2 class="profile-name">${familyName}</h2>
+                        ${licenseBadgeHtml}
+                        <div class="profile-location"><i class="fas fa-map-marker-alt"></i> ${t.emirates[family.emirate] || family.emirate}</div>
+                    </div>
+                </div>
+                <div class="profile-body">
+                    <div class="profile-info-grid">
+                        <div class="profile-info-row"><i class="fas fa-align-right"></i><strong>${t.descriptionLabel}:</strong><span>${familyDescription}</span></div>
+                    </div>
+                    <div class="coverage-section">
+                        <div class="coverage-title"><i class="fas fa-globe-asia"></i> ${t.coverage}:</div>
+                        <div class="coverage-tags"><div class="coverage-tag"><i class="fas fa-map-marker-alt"></i> ${t.coverageOptions[family.coverage] || family.coverage}</div></div>
+                    </div>
                 </div>
             </div>
-            <div class="profile-body">
-                <div class="profile-info-grid">
-                    <div class="profile-info-row"><i class="fas fa-align-right"></i><strong>${t.descriptionLabel}:</strong><span>${familyDescription}</span></div>
-                </div>
-                <div class="coverage-section">
-                    <div class="coverage-title"><i class="fas fa-globe-asia"></i> ${t.coverage}:</div>
-                    <div class="coverage-tags"><div class="coverage-tag"><i class="fas fa-map-marker-alt"></i> ${t.coverageOptions[family.coverage] || family.coverage}</div></div>
-                </div>
-            </div>
-        </div>
-    `;
+        `;
+    }
     
     renderFamilyDeals(family);
     
-    document.getElementById('productsCount').textContent = `${family.products.length} ${t.productsTitle}`;
-    document.getElementById('productsGrid').innerHTML = family.products.map(p => {
-        const productName = appState.currentLanguage === 'ar' ? p.name : p.nameEn;
-        const productDesc = appState.currentLanguage === 'ar' ? p.description : p.descriptionEn;
-        const productCategory = appState.currentLanguage === 'ar' ? p.category : p.categoryEn;
-        const tCat = translations[appState.currentLanguage].categories;
-        const categoryDisplay = tCat[p.category] || productCategory;
-        const isFav = isFavorite(p.id, 'product');
-        return `
-        <div class="product-card ${isFav ? 'favorite-active' : ''}" data-product-id="${p.id}" onclick="navigateTo('/product/${family.id}/${p.id}')">
-            <div class="product-image"><img src="${p.mainImage || p.image}" alt="${productName}" loading="lazy"></div>
-            <div class="product-content">
-                <h3 class="product-name">${productName}</h3>
-                <div class="product-description">${productDesc}</div>
-                <div class="product-category">${categoryDisplay}</div>
-            </div>
-        </div>
-    `}).join('');
+    const productsCount = document.getElementById('productsCount');
+    if (productsCount) productsCount.textContent = `${family.products.length}`;
+    
+    const productsGrid = document.getElementById('productsGrid');
+    if (productsGrid) {
+        productsGrid.innerHTML = family.products.map(p => {
+            const productName = appState.currentLanguage === 'ar' ? p.name : p.nameEn;
+            const productDesc = appState.currentLanguage === 'ar' ? p.description : p.descriptionEn;
+            const productCategory = appState.currentLanguage === 'ar' ? p.category : p.categoryEn;
+            const tCat = translations[appState.currentLanguage].categories;
+            const categoryDisplay = tCat[p.category] || productCategory;
+            const isFav = isFavorite(p.id, 'product');
+            return `
+                <div class="product-card ${isFav ? 'favorite-active' : ''}" data-product-id="${p.id}" onclick="navigateTo('/product/${family.id}/${p.id}')">
+                    <div class="product-image"><img src="${p.mainImage || p.image}" alt="${productName}" loading="lazy"></div>
+                    <div class="product-content">
+                        <h3 class="product-name">${productName}</h3>
+                        <div class="product-description">${productDesc}</div>
+                        <div class="product-category">${categoryDisplay}</div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
     
     let contactHtml = '';
     
     if (family.whatsapp) {
-        let whatsappNumber = String(family.whatsapp).replace(/[^0-9+]/g, '');
-        if (whatsappNumber.startsWith('+')) whatsappNumber = whatsappNumber.substring(1);
-        const whatsappUrl = `https://wa.me/${whatsappNumber}`;
+        const whatsappUrl = `https://wa.me/${String(family.whatsapp).replace(/[^0-9]/g, '')}`;
         contactHtml += `<a href="#" onclick="handleContact('${whatsappUrl}', 'whatsapp'); return false;" class="contact-item"><div class="contact-icon whatsapp-bg"><i class="fab fa-whatsapp"></i></div></a>`;
     }
     
@@ -1035,57 +1078,151 @@ async function showFamilyProducts(id, updateHash = true) {
         parsed.forEach(p => {
             contactHtml += `<a href="#" onclick="handleContact('${p.url}', '${p.type}'); return false;" class="contact-item"><div class="contact-icon ${p.bg}"><i class="fab ${p.icon}"></i></div></a>`;
         });
-    } else if (family.sell_point) {
-        const url = family.sell_point.startsWith('http') ? family.sell_point : `https://${family.sell_point}`;
-        contactHtml += `<a href="#" onclick="handleContact('${url}', 'website'); return false;" class="contact-item"><div class="contact-icon website-bg"><i class="fas fa-globe"></i></div></a>`;
     }
     
-    document.getElementById('contactSectionBottom').innerHTML = `<h3 class="contact-title"><i class="fas fa-phone-alt"></i> ${t.contactSeller}</h3><div class="contact-grid">${contactHtml || `<p>${t.noContact}</p>`}</div>`;
+    const contactSection = document.getElementById('contactSectionBottom');
+    if (contactSection) {
+        contactSection.innerHTML = `<h3 class="contact-title"><i class="fas fa-phone-alt"></i> ${t.contactSeller}</h3><div class="contact-grid">${contactHtml || `<p>${t.noContact}</p>`}</div>`;
+    }
     
     showPage('products');
     showInstructionPopupOnce();
 }
 
-async function showProductDetail(familyId, productId, updateHash = true) {
-    // ⭐ انتظر تحميل بيانات التواصل أولاً
-    await loadContactsData();
-    
+// ==================== عرض تفاصيل المنتج ====================
+function showProductDetail(familyId, productId, updateHash = true) {
+     hideLoader();
     const family = familiesData.find(f => f.id == familyId);
     if (!family) return;
+    
     const contactInfo = contactsData[familyId] || {};
     family.whatsapp = contactInfo.whatsapp || null;
     family.phone = contactInfo.phone || null;
     family.email = contactInfo.email || null;
     family.sell_points = contactInfo.sell_points || [];
+    
     const product = family.products.find(p => p.id == productId);
     if (!product) return;
+    
     appState.currentFamilyId = familyId;
     appState.currentProductId = productId;
+    
     if (updateHash) {
         navigateTo(`/product/${familyId}/${productId}`);
         return;
     }
-    // باقي الكود كما هو (بدون تغيير)...
+    
     const t = translations[appState.currentLanguage];
-    // ... (اكتب باقي الكود كما كان)
+    const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
+    const productName = appState.currentLanguage === 'ar' ? product.name : product.nameEn;
+    const productDesc = appState.currentLanguage === 'ar' ? (product.longDescription || product.description) : (product.longDescriptionEn || product.descriptionEn);
+    const productCategory = appState.currentLanguage === 'ar' ? product.category : product.categoryEn;
+    const tCat = translations[appState.currentLanguage].categories;
+    const categoryDisplay = tCat[product.category] || productCategory;
+    
+    // تخزين الصور في المتغير العام
+    const images = product.images && product.images.length > 0 ? product.images : [product.mainImage || product.image];
+    currentProductImagesArray = images;
+    currentProductImageIndex = 0;
+    
+    console.log('تم تحميل صور المنتج:', images.length, 'صورة');
+    
+    const thumbnailsHtml = images.map((img, index) => `
+        <div class="product-thumbnail ${index === 0 ? 'active' : ''}" onclick="changeMainImage('${img}', this, ${index})">
+            <img src="${img}" loading="lazy">
+        </div>
+    `).join('');
+    
+    const details = appState.currentLanguage === 'ar' ? product.details : product.detailsEn;
+    const detailsHtml = details && details.length ? details.map(d => `<li><i class="fas fa-check-circle"></i> ${d}</li>`).join('') : '';
+    const specsHtml = detailsHtml ? `<h3 class="product-details-title"><i class="fas fa-list-ul"></i> ${t.specifications}</h3><ul class="product-details-list">${detailsHtml}</ul>` : '';
+    
+    const similarProducts = family.products.filter(p => p.id !== productId).slice(0, 4);
+    const similarHtml = similarProducts.map(p => {
+        const similarName = appState.currentLanguage === 'ar' ? p.name : p.nameEn;
+        return `<div class="similar-product-card" onclick="showProductDetail(${familyId}, '${p.id}')"><div class="similar-product-image"><img src="${p.mainImage || p.image}" loading="lazy"></div><div class="similar-product-info"><h4>${similarName}</h4></div></div>`;
+    }).join('');
+    
+    const licenseBadgeHtml = family.adra_license === 'نعم' ? `<div class="license-badge-large" style="margin-right: 0; margin-bottom: 5px;"><i class="fas fa-check-circle"></i> ${t.licensed}</div>` : '';
+    
+    let sellerContactHtml = '';
+    
+    if (family.whatsapp) {
+        const whatsappUrl = `https://wa.me/${String(family.whatsapp).replace(/[^0-9]/g, '')}`;
+        sellerContactHtml += `<a href="#" onclick="handleContact('${whatsappUrl}', 'whatsapp'); return false;" class="seller-contact-item"><div class="seller-contact-icon whatsapp-bg"><i class="fab fa-whatsapp"></i></div></a>`;
+    }
+    
+    if (family.phone) {
+        const phoneUrl = `tel:${family.phone}`;
+        sellerContactHtml += `<a href="#" onclick="handleContact('${phoneUrl}', 'phone'); return false;" class="seller-contact-item"><div class="seller-contact-icon phone-bg"><i class="fas fa-phone"></i></div></a>`;
+    }
+    
+    if (family.email) {
+        const emailUrl = `mailto:${family.email}`;
+        sellerContactHtml += `<a href="#" onclick="handleContact('${emailUrl}', 'email'); return false;" class="seller-contact-item"><div class="seller-contact-icon email-bg"><i class="fas fa-envelope"></i></div></a>`;
+    }
+    
+    if (family.sell_points && Array.isArray(family.sell_points)) {
+        const parsed = parseSellPoints(family.sell_points);
+        parsed.forEach(p => {
+            sellerContactHtml += `<a href="#" onclick="handleContact('${p.url}', '${p.type}'); return false;" class="seller-contact-item"><div class="seller-contact-icon ${p.bg}"><i class="fab ${p.icon}"></i></div></a>`;
+        });
+    }
+    
+    const isFav = isFavorite(product.id, 'product');
+    
+    const html = `
+        <div class="product-gallery">
+            <div class="product-main-image-container">
+                <div class="main-image" onclick="openZoomFromMainImage()">
+                    <img src="${images[0]}" alt="${productName}" id="currentMainImage" loading="lazy">
+                </div>
+                <div class="action-btn favorite-btn ${isFav ? 'active' : ''}" data-id="${product.id}" data-type="product" onclick="event.stopPropagation(); toggleFavorite('${product.id}', 'product')"><i class="fas fa-heart"></i></div>
+                <div class="action-btn share-btn" onclick="event.stopPropagation(); showSharePopup('${familyId}', '${productId}')"><i class="fas fa-share-alt"></i></div>
+            </div>
+            <div class="product-thumbnails" id="productThumbnails">${thumbnailsHtml}</div>
+        </div>
+        <div class="product-detail-info">
+            <span class="product-detail-category"><i class="fas fa-tag"></i> ${categoryDisplay}</span>
+            <h1 class="product-detail-name">${productName}</h1>
+            <p class="product-detail-description">${productDesc}</p>
+            ${specsHtml}
+        </div>
+        <div class="seller-info-card">
+            <div class="seller-avatar-large"><img src="${family.image}" alt="${familyName}" loading="lazy"></div>
+            <div class="seller-info">
+                <h3>${familyName}</h3>
+                ${licenseBadgeHtml}
+                <div class="seller-meta"><i class="fas fa-map-marker-alt"></i> ${t.emirates[family.emirate] || family.emirate}</div>
+                ${sellerContactHtml ? `<div class="seller-contact-grid">${sellerContactHtml}</div>` : ''}
+            </div>
+        </div>
+        ${similarHtml ? `<div class="similar-products-section"><h3 class="similar-products-title"><i class="fas fa-boxes"></i> ${t.similarProducts}</h3><div class="similar-products-grid">${similarHtml}</div></div>` : ''}
+    `;
+    
+    const container = document.getElementById('productDetailContainer');
+    if (container) container.innerHTML = html;
+    showPage('product-detail');
 }
 
-function changeMainImage(imgSrc, element, index) {
-    document.getElementById('currentMainImage').src = imgSrc;
-    document.querySelectorAll('.product-thumbnail').forEach(thumb => thumb.classList.remove('active'));
-    element.classList.add('active');
-    appState.currentZoomIndex = index;
-}
-
+// ==================== معالجة الـ Hash ====================
 function handleHashChange() {
     const hash = window.location.hash.slice(1) || '/';
     const parts = hash.split('/').filter(p => p !== '');
+    
+    // قراءة اللغة المحفوظة أولاً
+    const savedLang = localStorage.getItem('projectSouqLang');
+    if (savedLang && savedLang !== appState.currentLanguage) {
+        appState.currentLanguage = savedLang;
+        toggleLanguage();
+    }
+    
     showLoader();
     setTimeout(() => {
         if (parts.length === 0 || parts[0] === '') {
             showPage('home');
-            renderFeaturedProjects();
-        } else if (parts[0] === 'projects' && parts[1] === 'emirate' && parts[2]) {
+        }
+        else if (parts[0] === 'projects' && parts[1] === 'emirate' && parts[2]) {
             appState.currentEmirate = decodeURIComponent(parts[2]);
             appState.currentCategory = 'all';
             updateActiveEmirateChip(appState.currentEmirate);
@@ -1096,42 +1233,56 @@ function handleHashChange() {
             if (searchInput && appState.searchQuery) {
                 searchInput.value = appState.searchQuery;
             }
-        } else if (parts[0] === 'family' && parts[1]) {
+        }
+        else if (parts[0] === 'family' && parts[1]) {
             showFamilyProducts(parseInt(parts[1]), false);
-        } else if (parts[0] === 'product' && parts[1] && parts[2]) {
+        }
+        else if (parts[0] === 'product' && parts[1] && parts[2]) {
             showProductDetail(parseInt(parts[1]), parts[2], false);
-        } else if (parts[0] === 'favorites') { 
+        }
+        else if (parts[0] === 'favorites') { 
             showPage('favorites'); 
             renderFavorites(); 
-        } else if (parts[0] === 'offers') { 
+        }
+        else if (parts[0] === 'offers') { 
             showPage('offers'); 
             renderOffers(); 
-        } else {
+        }
+        else {
             showPage('home');
-            renderFeaturedProjects();
         }
         hideLoader();
     }, 50);
 }
 
+// ==================== دوال المشاركة ====================
 function showSharePopup(familyId, productId) {
-    event.stopPropagation();
+    if (event) event.stopPropagation();
     const family = familiesData.find(f => f.id == familyId);
     if (!family) return;
     const product = family.products.find(p => p.id === productId);
     if (!product) return;
     appState.currentShareProduct = { familyId, productId };
-    document.getElementById('sharePopup').classList.add('show');
+    const popup = document.getElementById('sharePopup');
+    if (popup) popup.classList.add('show');
 }
 
 function showProfileSharePopup(familyId) {
-    event.stopPropagation();
+    if (event) event.stopPropagation();
     appState.currentShareProfile = familyId;
-    document.getElementById('shareProfilePopup').classList.add('show');
+    const popup = document.getElementById('shareProfilePopup');
+    if (popup) popup.classList.add('show');
 }
 
-function closeSharePopup() { document.getElementById('sharePopup').classList.remove('show'); }
-function closeShareProfilePopup() { document.getElementById('shareProfilePopup').classList.remove('show'); }
+function closeSharePopup() {
+    const popup = document.getElementById('sharePopup');
+    if (popup) popup.classList.remove('show');
+}
+
+function closeShareProfilePopup() {
+    const popup = document.getElementById('shareProfilePopup');
+    if (popup) popup.classList.remove('show');
+}
 
 function shareVia(platform) {
     if (!appState.currentShareProduct) return;
@@ -1156,7 +1307,7 @@ function shareProfileVia(platform) {
     const family = familiesData.find(f => f.id == appState.currentShareProfile);
     const url = window.location.href;
     const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
-    const text = appState.currentLanguage === 'ar' ? `اكتشف مشروع ${familyName} على سوق المشاريع - ${family.description}` : `Discover ${familyName} on Projects Souq - ${family.descriptionEn}`;
+    const text = appState.currentLanguage === 'ar' ? `اكتشف مشروع ${familyName} على سوق المشاريع` : `Discover ${familyName} on Projects Souq`;
     let shareUrl = '';
     switch(platform) {
         case 'whatsapp': shareUrl = `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`; break;
@@ -1182,118 +1333,116 @@ function copyProfileLink() {
     });
 }
 
+// ==================== دوال اللغة ====================
+// ==================== دوال اللغة المحسنة ====================
 function toggleLanguage() {
-    showLoader();
     const newLang = appState.currentLanguage === 'ar' ? 'en' : 'ar';
     appState.currentLanguage = newLang;
     localStorage.setItem('projectSouqLang', newLang);
     
-    const htmlTag = document.getElementById('htmlTag');
+    // حفظ الصفحة الحالية والبحث والفلتر
+    const currentHash = window.location.hash;
+    const currentSearch = appState.searchQuery;
+    const currentEmirate = appState.currentEmirate;
+    const currentCategory = appState.currentCategory;
+    
+    // تحديث اتجاه الصفحة وكلاسات body
     if (newLang === 'ar') {
-        htmlTag.setAttribute('dir', 'rtl');
-        htmlTag.setAttribute('lang', 'ar');
-        document.body.classList.remove('en-mode');
+        document.documentElement.setAttribute('dir', 'rtl');
+        document.documentElement.setAttribute('lang', 'ar');
+        document.documentElement.classList.remove('en-mode');
+        document.body.style.fontFamily = "'Almarai', sans-serif";
     } else {
-        htmlTag.setAttribute('dir', 'ltr');
-        htmlTag.setAttribute('lang', 'en');
-        document.body.classList.add('en-mode');
+        document.documentElement.setAttribute('dir', 'ltr');
+        document.documentElement.setAttribute('lang', 'en');
+        document.documentElement.classList.add('en-mode');
+        document.body.style.fontFamily = "'Poppins', 'Almarai', sans-serif";
     }
     
+    // تحديث كل النصوص الثابتة
     const t = translations[newLang];
     
-    // ✅ تحديث عنوان الصفحة ووصف SEO
-    document.title = t.siteTitle + (newLang === 'ar' ? ' - المشاريع في الإمارات' : ' - Projects in UAE');
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-        metaDescription.setAttribute('content', 
-            newLang === 'ar' 
-                ? 'سوق المشاريع: منصة المشاريع المنزلية والأسر المنتجة في الإمارات. اكتشف منتجات محلية وسجل مشروعك مجاناً.'
-                : 'Projects Souq: Platform for home-based businesses in the UAE. Discover local products and register your project for free.'
-        );
+    // تحديث النصوص الأساسية
+    const textElements = {
+        'siteTitle': 'siteTitle',
+        'siteSubtitle': 'siteSubtitle',
+        'navHome': 'navHome',
+        'navMarket': 'navMarket',
+        'navFavorites': 'navFavorites',
+        'navRegister': 'navRegister',
+        'footerLogo': 'footerLogo',
+        'footerText': 'footerText',
+        'copyright': 'copyright',
+        'langBtn': 'langBtn',
+        'heroTitle': 'heroTitle',
+        'heroSubtitle': 'heroSubtitle',
+        'discoverBtn': 'discoverBtn',
+        'joinBtn': 'joinBtn',
+        'aboutTitle': 'aboutTitle',
+        'stat1': 'stat1',
+        'stat2': 'stat2',
+        'stat3': 'stat3',
+        'stat4': 'stat4',
+        'badge1': 'badge1',
+        'badge2': 'badge2',
+        'badge3': 'badge3',
+        'badge4': 'badge4',
+        'familiesPageTitle': 'familiesPageTitle',
+        'familiesPageSubtitle': 'familiesPageSubtitle',
+        'productsTitle': 'productsTitle',
+        'favoritesPageTitle': 'favoritesPageTitle',
+        'favoritesPageSubtitle': 'favoritesPageSubtitle',
+        'popupTitle': 'popupTitle',
+        'step1': 'step1',
+        'step2': 'step2',
+        'step3': 'step3',
+        'gotItBtn': 'gotItBtn',
+        'shareTitle': 'shareTitle',
+        'copyLinkText': 'copyLinkText',
+        'closeShareBtn': 'closeShareBtn',
+        'offersBtnText': 'offersBtnText',
+        'offersPageTitle': 'offersPageTitle',
+        'offersPageSubtitle': 'offersPageSubtitle',
+        'dealsTitle': 'dealsTitle',
+        'privacyLink': 'privacy',
+        'termsLink': 'terms'
+    };
+    
+    for (const [id, key] of Object.entries(textElements)) {
+        const el = document.getElementById(id);
+        if (el && t[key]) el.textContent = t[key];
     }
     
-    const elementsToUpdate = [
-        { id: 'siteTitle', property: 'textContent' },
-        { id: 'siteSubtitle', property: 'textContent' },
-        { id: 'navHome', property: 'textContent' },
-        { id: 'navMarket', property: 'textContent' },
-        { id: 'navFavorites', property: 'textContent' },
-        { id: 'navRegister', property: 'textContent' },
-        { id: 'footerLogo', property: 'textContent' },
-        { id: 'footerText', property: 'textContent' },
-        { id: 'copyright', property: 'textContent' },
-        { id: 'langBtn', property: 'textContent' },
-        { id: 'heroTitle', property: 'textContent' },
-        { id: 'heroSubtitle', property: 'textContent' },
-        { id: 'discoverBtn', property: 'textContent' },
-        { id: 'joinBtn', property: 'textContent' },
-        { id: 'aboutTitle', property: 'textContent' },
-        { id: 'forShopperTitle', property: 'textContent' },
-        { id: 'forShopperDesc', property: 'textContent' },
-        { id: 'forProjectOwnerTitle', property: 'textContent' },
-        { id: 'forProjectOwnerDesc', property: 'textContent' },
-        { id: 'privacyLink', property: 'textContent' },
-        { id: 'termsLink', property: 'textContent' },
-        { id: 'stat1', property: 'textContent' },
-        { id: 'stat2', property: 'textContent' },
-        { id: 'stat3', property: 'textContent' },
-        { id: 'stat4', property: 'textContent' },
-        { id: 'badge1', property: 'textContent' },
-        { id: 'badge2', property: 'textContent' },
-        { id: 'badge3', property: 'textContent' },
-        { id: 'badge4', property: 'textContent' },
-        { id: 'familiesPageTitle', property: 'textContent' },
-        { id: 'familiesPageSubtitle', property: 'textContent' },
-        { id: 'productsTitle', property: 'textContent' },
-        { id: 'favoritesPageTitle', property: 'textContent' },
-        { id: 'favoritesPageSubtitle', property: 'textContent' },
-        { id: 'popupTitle', property: 'textContent' },
-        { id: 'step1', property: 'textContent' },
-        { id: 'step2', property: 'textContent' },
-        { id: 'step3', property: 'textContent' },
-        { id: 'gotItBtn', property: 'textContent' },
-        { id: 'shareTitle', property: 'textContent' },
-        { id: 'copyLinkText', property: 'textContent' },
-        { id: 'closeShareBtn', property: 'textContent' },
-        { id: 'offersBtnText', property: 'textContent' },
-        { id: 'offersPageTitle', property: 'textContent' },
-        { id: 'offersPageSubtitle', property: 'textContent' },
-        { id: 'dealsTitle', property: 'textContent' }
-    ];
-    
-    const validElements = elementsToUpdate.filter(item => document.getElementById(item.id));
-    validElements.forEach(item => {
-        const element = document.getElementById(item.id);
-        if (element && t[item.id]) {
-            element[item.property] = t[item.id];
-        }
-    });
-    
+    // تحديث placeholders
     const homeSearch = document.getElementById('homeSearch');
-    if (homeSearch) homeSearch.placeholder = t.homeSearchPlaceholder || '';
+    if (homeSearch) homeSearch.placeholder = t.homeSearchPlaceholder;
     
     const familiesSearch = document.getElementById('familiesSearch');
-    if (familiesSearch) familiesSearch.placeholder = t.familiesSearchPlaceholder || '';
+    if (familiesSearch) familiesSearch.placeholder = t.familiesSearchPlaceholder;
     
+    // إعادة بناء الفلاتر فقط (وهي تقوم بتحديث النصوص بدون إعادة تحميل الصفحة)
     initEmiratesChips();
     initCategoriesChips();
     
-    const currentPage = appState.currentPage;
-    if (currentPage === 'families') renderFamilies();
-    else if (currentPage === 'products' && appState.currentFamilyId) showFamilyProducts(appState.currentFamilyId, false);
-    else if (currentPage === 'product-detail' && appState.currentFamilyId && appState.currentProductId) showProductDetail(appState.currentFamilyId, appState.currentProductId, false);
-    else if (currentPage === 'favorites') renderFavorites();
-    else if (currentPage === 'home') renderFeaturedProjects();
-    
-    hideLoader();
+    // تحديث المحتوى الحالي بناءً على الصفحة
+    if (appState.currentPage === 'families') {
+        renderFamilies();
+    } else if (appState.currentPage === 'products' && appState.currentFamilyId) {
+        showFamilyProducts(appState.currentFamilyId, false);
+    } else if (appState.currentPage === 'product-detail' && appState.currentFamilyId && appState.currentProductId) {
+        showProductDetail(appState.currentFamilyId, appState.currentProductId, false);
+    } else if (appState.currentPage === 'favorites') {
+        renderFavorites();
+    } else if (appState.currentPage === 'offers') {
+        renderOffers();
+    }
 }
 
+// ==================== نافذة تأكيد التواصل ====================
 let contactPendingUrl = null;
-let contactPendingType = null;
 
 function showContactConfirm(url, type) {
     contactPendingUrl = url;
-    contactPendingType = type;
     
     let modal = document.getElementById('contactConfirmModal');
     if (!modal) {
@@ -1333,9 +1482,7 @@ function showContactConfirm(url, type) {
                 justify-content: center;
                 backdrop-filter: blur(5px);
             }
-            .contact-confirm-modal.show {
-                display: flex;
-            }
+            .contact-confirm-modal.show { display: flex; }
             .contact-confirm-content {
                 background: white;
                 border-radius: 28px;
@@ -1351,73 +1498,14 @@ function showContactConfirm(url, type) {
                 from { opacity: 0; transform: scale(0.9); }
                 to { opacity: 1; transform: scale(1); }
             }
-            .contact-confirm-header {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 10px;
-                margin-bottom: 20px;
-            }
-            .contact-confirm-header i {
-                font-size: 48px;
-                color: var(--secondary);
-            }
-            .contact-confirm-header h3 {
-                font-family: 'El Messiri', serif;
-                color: var(--primary-dark);
-                font-size: 22px;
-                margin: 0;
-            }
-            .contact-confirm-body p {
-                font-size: 14px;
-                line-height: 1.6;
-                color: var(--dark);
-                margin-bottom: 12px;
-                text-align: center;
-            }
-            .contact-confirm-body p:last-child {
-                font-size: 12px;
-                color: var(--gray);
-                background: var(--light);
-                padding: 10px;
-                border-radius: 16px;
-            }
-            .contact-confirm-buttons {
-                display: flex;
-                gap: 12px;
-                margin-top: 20px;
-            }
-            .confirm-cancel, .confirm-proceed {
-                flex: 1;
-                padding: 12px;
-                border-radius: 40px;
-                font-weight: 700;
-                cursor: pointer;
-                border: none;
-                font-size: 14px;
-                transition: all 0.2s;
-            }
-            .confirm-cancel {
-                background: var(--light);
-                color: var(--dark);
-                border: 1px solid var(--light-gray);
-            }
-            .confirm-cancel:hover {
-                background: var(--light-gray);
-            }
-            .confirm-proceed {
-                background: var(--primary-gradient);
-                color: white;
-                border: 1px solid var(--secondary);
-            }
-            .confirm-proceed:hover {
-                transform: scale(1.02);
-                box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
-            }
-            [dir="ltr"] .contact-confirm-content {
-                border-left: 5px solid var(--secondary);
-                border-right: none;
-            }
+            .contact-confirm-header i { font-size: 48px; color: var(--secondary); margin-bottom: 10px; }
+            .contact-confirm-header h3 { font-family: 'El Messiri', serif; color: var(--primary-dark); font-size: 22px; }
+            .contact-confirm-body p { font-size: 14px; line-height: 1.6; color: var(--dark); margin-bottom: 12px; }
+            .contact-confirm-buttons { display: flex; gap: 12px; margin-top: 20px; }
+            .confirm-cancel, .confirm-proceed { flex: 1; padding: 12px; border-radius: 40px; font-weight: 700; cursor: pointer; border: none; font-size: 14px; }
+            .confirm-cancel { background: var(--light); color: var(--dark); border: 1px solid var(--light-gray); }
+            .confirm-proceed { background: var(--primary-gradient); color: white; border: 1px solid var(--secondary); }
+            [dir="ltr"] .contact-confirm-content { border-left: 5px solid var(--secondary); border-right: none; }
         `;
         document.head.appendChild(style);
         
@@ -1432,7 +1520,6 @@ function closeContactConfirm() {
     const modal = document.getElementById('contactConfirmModal');
     if (modal) modal.classList.remove('show');
     contactPendingUrl = null;
-    contactPendingType = null;
 }
 
 function proceedToContact() {
@@ -1446,9 +1533,11 @@ function handleContact(url, type) {
     showContactConfirm(url, type);
 }
 
+// ==================== التواصل الاجتماعي للتسجيل ====================
 function showSocialContact() {
     const t = translations[appState.currentLanguage];
     const currentLang = appState.currentLanguage;
+    const registerUrl = currentLang === 'ar' ? 'register.html' : 'registerEn.html';
     
     let popup = document.getElementById('socialContactPopup');
     if (!popup) {
@@ -1458,25 +1547,23 @@ function showSocialContact() {
         document.body.appendChild(popup);
     }
     
-    const registerUrl = currentLang === 'ar' ? 'register.html' : 'registerEn.html';
-    
     const socialLinks = `
         <div class="popup-header">
             <i class="fas fa-hands-helping" style="font-size: 42px; color: var(--secondary);"></i>
-            <h3>${t.registerTitle || (currentLang === 'ar' ? 'سجل مشروعك - لفترة محدودة' : 'Register Your Project - Limited Time')}</h3>
+            <h3>${t.registerTitle}</h3>
         </div>
         <div class="steps" style="margin-bottom: 15px;">
             <div class="step">
                 <div class="step-icon"><i class="fab fa-x-twitter"></i></div>
-                <span>${t.registerViaX || (currentLang === 'ar' ? 'راسلنا على منصة X' : 'Message us on X')}</span>
+                <span>${t.registerViaX}</span>
             </div>
             <div class="step">
                 <div class="step-icon"><i class="fab fa-instagram"></i></div>
-                <span>${t.registerViaInstagram || (currentLang === 'ar' ? 'راسلنا على انستغرام' : 'Message us on Instagram')}</span>
+                <span>${t.registerViaInstagram}</span>
             </div>
             <div class="step">
                 <div class="step-icon"><i class="fab fa-tiktok"></i></div>
-                <span>${t.registerViaTikTok || (currentLang === 'ar' ? 'راسلنا على تيك توك' : 'Message us on TikTok')}</span>
+                <span>${t.registerViaTikTok}</span>
             </div>
         </div>
         <div class="contact-buttons" style="display: flex; gap: 20px; justify-content: center; margin: 20px 0;">
@@ -1490,15 +1577,13 @@ function showSocialContact() {
                 <i class="fab fa-tiktok"></i>
             </a>
         </div>
-        
         <button onclick="closeSocialContactPopup(); window.location.href='${registerUrl}';" style="background: linear-gradient(135deg, #0F3D2E, #1A5F44); color: white; border: 1px solid var(--secondary); padding: 12px 25px; border-radius: 40px; font-size: 16px; font-weight: 700; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 12px;">
             <i class="fas fa-file-alt"></i>
             <span>${currentLang === 'ar' ? 'سجل مشروعك الآن' : 'Register Your Project Now'}</span>
         </button>
-        
         <button class="close-btn" onclick="closeSocialContactPopup()">
             <i class="fas fa-check-circle"></i> 
-            <span>${t.gotItBtn || (currentLang === 'ar' ? 'حسناً' : 'Got it')}</span>
+            <span>${t.gotItBtn}</span>
         </button>
     `;
     
@@ -1508,11 +1593,10 @@ function showSocialContact() {
 
 function closeSocialContactPopup() {
     const popup = document.getElementById('socialContactPopup');
-    if (popup) {
-        popup.classList.remove('show');
-    }
+    if (popup) popup.classList.remove('show');
 }
 
+// ==================== دوال إضافية ====================
 function showToast(msg) {
     const toast = document.getElementById('toastMessage');
     toast.textContent = msg;
@@ -1521,130 +1605,127 @@ function showToast(msg) {
 }
 
 function closeInstructionPopup() {
-    document.getElementById('instructionPopup').classList.remove('show');
-}
-
-function scrollToContact() {
-    document.getElementById('contactSectionBottom').scrollIntoView({ behavior: 'smooth' });
+    const popup = document.getElementById('instructionPopup');
+    if (popup) popup.classList.remove('show');
 }
 
 function showInstructionPopupOnce() {
     if (!sessionStorage.getItem('instructionPopupShown')) {
-        document.getElementById('instructionPopup').classList.add('show');
+        const popup = document.getElementById('instructionPopup');
+        if (popup) popup.classList.add('show');
         sessionStorage.setItem('instructionPopupShown', 'true');
-        setTimeout(() => {
-            closeInstructionPopup();
-        }, 8000);
+        setTimeout(() => closeInstructionPopup(), 8000);
     }
 }
 
-window.addEventListener('load', function() {
-    showLoader();
-    
-    // اللغة تم تطبيقها مسبقاً من كود الـ head، لكننا نريد تحديث النصوص
-    const htmlLang = document.getElementById('htmlTag').getAttribute('lang');
-    appState.currentLanguage = htmlLang === 'en' ? 'en' : 'ar';
-    
-    // تحديث كل النصوص الديناميكية
-    updateDynamicTexts();
-    
-    // تهيئة باقي العناصر
-    initEmiratesChips();
-    initCategoriesChips();
-    handleHashChange();
-    
-    setTimeout(() => hideLoader(), 200);
-});
-
-function updateDynamicTexts() {
-    const t = translations[appState.currentLanguage];
-    if (!t) return;
-
-    // قائمة بجميع العناصر التي تحتوي على نصوص قابلة للترجمة
-    const elementsToUpdate = [
-        // الهيدر والقوائم
-        'siteTitle', 'siteSubtitle', 'navHome', 'navMarket', 'navFavorites', 'navRegister',
-        'footerLogo', 'footerText', 'copyright', 'langBtn',
-        // الهيرو
-        'heroTitle', 'heroSubtitle', 'discoverBtn', 'joinBtn',
-        // قسم "من نحن"
-        'aboutTitle', 'forShopperTitle', 'forShopperDesc', 'forProjectOwnerTitle', 'forProjectOwnerDesc',
-        // الإحصائيات
-        'stat1', 'stat2', 'stat3', 'stat4', 'badge1', 'badge2', 'badge3', 'badge4',
-        // صفحات المشاريع والمنتجات
-        'familiesPageTitle', 'familiesPageSubtitle', 'productsTitle',
-        'favoritesPageTitle', 'favoritesPageSubtitle',
-        // منبّه التعليمات
-        'popupTitle', 'step1', 'step2', 'step3', 'gotItBtn',
-        // منبّه المشاركة
-        'shareTitle', 'copyLinkText', 'closeShareBtn',
-        // العروض
-        'offersBtnText', 'offersPageTitle', 'offersPageSubtitle', 'dealsTitle',
-        // الفوتر
-        'privacyLink', 'termsLink'
-    ];
-
-    // تحديث النصوص للعناصر الموجودة
-    elementsToUpdate.forEach(id => {
-        const element = document.getElementById(id);
-        if (element && t[id] !== undefined) {
-            element.textContent = t[id];
-        }
-    });
-
-    // تحديث الـ placeholders في حقول البحث
-    const homeSearch = document.getElementById('homeSearch');
-    if (homeSearch && t.homeSearchPlaceholder) {
-        homeSearch.placeholder = t.homeSearchPlaceholder;
-    }
-    const familiesSearch = document.getElementById('familiesSearch');
-    if (familiesSearch && t.familiesSearchPlaceholder) {
-        familiesSearch.placeholder = t.familiesSearchPlaceholder;
-    }
-
-    // تحديث أي نصوص أخرى غير قابلة للتعريف بواسطة ID (مثل الأزرار داخل المودال)
-    const modalTitle = document.querySelector('#registerModal .modal-title');
-    if (modalTitle && t.modalTitle) modalTitle.textContent = t.modalTitle;
-    
-    const modalSubtitle = document.querySelector('#registerModal .modal-subtitle');
-    if (modalSubtitle && t.modalSubtitle) modalSubtitle.textContent = t.modalSubtitle;
-    
-    const submitBtnText = document.querySelector('#registerForm button[type="submit"] span');
-    if (submitBtnText && t.submitBtn) submitBtnText.textContent = t.submitBtn;
+function scrollToContact() {
+    const section = document.getElementById('contactSectionBottom');
+    if (section) section.scrollIntoView({ behavior: 'smooth' });
 }
 
+// ==================== دوال السياسة والشروط ====================
 function showPrivacyModal() {
     const lang = appState.currentLanguage;
-    if (lang === 'ar') {
-        window.open('privacy.html', '_blank');
-    } else {
-        window.open('privacyen.html', '_blank');
-    }
+    window.open(lang === 'ar' ? 'privacy.html' : 'privacyEn.html', '_blank');
 }
 
 function showTermsModal() {
     const lang = appState.currentLanguage;
-    if (lang === 'ar') {
-        window.open('terms.html', '_blank');
-    } else {
-        window.open('termsen.html', '_blank');
-    }
+    window.open(lang === 'ar' ? 'terms.html' : 'termsEn.html', '_blank');
 }
 
-(async function init() {
+// ==================== تهيئة التطبيق ====================
+window.addEventListener('load', async function() {
+    // اللغة تم تطبيقها بالفعل من HTML، نقرأها فقط
+    const savedLang = localStorage.getItem('projectSouqLang');
+    appState.currentLanguage = savedLang === 'en' ? 'en' : 'ar';
+    
+    // نتأكد من أن كلاسات body صحيحة (احتياطي)
+    if (appState.currentLanguage === 'en') {
+        document.body.classList.add('en-mode');
+    } else {
+        document.body.classList.remove('en-mode');
+    }
+    
+    // نطبق الترجمة على النصوص الثابتة
+    const t = translations[appState.currentLanguage];
+    
+    // تحديث النصوص الأساسية (بدون استدعاء toggleLanguage الكامل)
+    const textElements = {
+        'siteTitle': 'siteTitle',
+        'siteSubtitle': 'siteSubtitle',
+        'navHome': 'navHome',
+        'navMarket': 'navMarket',
+        'navFavorites': 'navFavorites',
+        'navRegister': 'navRegister',
+        'footerLogo': 'footerLogo',
+        'footerText': 'footerText',
+        'copyright': 'copyright',
+        'langBtn': 'langBtn',
+        'heroTitle': 'heroTitle',
+        'heroSubtitle': 'heroSubtitle',
+        'discoverBtn': 'discoverBtn',
+        'joinBtn': 'joinBtn',
+        'aboutTitle': 'aboutTitle',
+        'stat1': 'stat1',
+        'stat2': 'stat2',
+        'stat3': 'stat3',
+        'stat4': 'stat4',
+        'badge1': 'badge1',
+        'badge2': 'badge2',
+        'badge3': 'badge3',
+        'badge4': 'badge4',
+        'familiesPageTitle': 'familiesPageTitle',
+        'familiesPageSubtitle': 'familiesPageSubtitle',
+        'productsTitle': 'productsTitle',
+        'favoritesPageTitle': 'favoritesPageTitle',
+        'favoritesPageSubtitle': 'favoritesPageSubtitle',
+        'popupTitle': 'popupTitle',
+        'step1': 'step1',
+        'step2': 'step2',
+        'step3': 'step3',
+        'gotItBtn': 'gotItBtn',
+        'shareTitle': 'shareTitle',
+        'copyLinkText': 'copyLinkText',
+        'closeShareBtn': 'closeShareBtn',
+        'offersBtnText': 'offersBtnText',
+        'offersPageTitle': 'offersPageTitle',
+        'offersPageSubtitle': 'offersPageSubtitle',
+        'dealsTitle': 'dealsTitle'
+    };
+    
+    for (const [id, key] of Object.entries(textElements)) {
+        const el = document.getElementById(id);
+        if (el && t[key]) el.textContent = t[key];
+    }
+    
+    // تحديث placeholders
+    const homeSearch = document.getElementById('homeSearch');
+    if (homeSearch) homeSearch.placeholder = t.homeSearchPlaceholder;
+    
+    const familiesSearch = document.getElementById('familiesSearch');
+    if (familiesSearch) familiesSearch.placeholder = t.familiesSearchPlaceholder;
+    
+    // تهيئة الفلاتر
+    initEmiratesChips();
+    initCategoriesChips();
+    
+    // تحميل البيانات ومعالجة الـ hash
     await loadContactsData();
-})();
+    handleHashChange();
+});
 
 window.addEventListener('hashchange', handleHashChange);
 
+// ربط الدوال بالكائن العام
 window.toggleMenu = toggleMenu;
 window.showOffersPage = showOffersPage;
 window.renderOffers = renderOffers;
 window.navigateTo = navigateTo;
 window.goBack = goBack;
 window.scrollToTop = scrollToTop;
-window.showPrivacyModal = showPrivacyModal; 
-window.showTermsModal = showTermsModal; 
+window.showPrivacyModal = showPrivacyModal;
+window.showTermsModal = showTermsModal;
 window.filterByCategory = filterByCategory;
 window.filterByEmirate = filterByEmirate;
 window.showFamilyProducts = showFamilyProducts;
@@ -1653,10 +1734,9 @@ window.performHomeSearch = performHomeSearch;
 window.performFamiliesSearch = performFamiliesSearch;
 window.closeInstructionPopup = closeInstructionPopup;
 window.scrollToContact = scrollToContact;
-window.openZoom = openZoom;
+window.openZoomGallery = openZoomGallery;
 window.closeZoomModal = closeZoomModal;
 window.scrollToZoomImage = scrollToZoomImage;
-window.changeMainImage = changeMainImage;
 window.toggleLanguage = toggleLanguage;
 window.showSharePopup = showSharePopup;
 window.showProfileSharePopup = showProfileSharePopup;
@@ -1670,5 +1750,8 @@ window.toggleFavorite = toggleFavorite;
 window.showFavorites = showFavorites;
 window.renderFamilyDeals = renderFamilyDeals;
 window.showDealDetails = showDealDetails;
-window.formatExpiryDate = formatExpiryDate;
 window.handleContact = handleContact;
+window.showSocialContact = showSocialContact;
+window.closeSocialContactPopup = closeSocialContactPopup;
+window.openZoomFromThumbnail = openZoomFromThumbnail;
+window.openZoomFromMainImage = openZoomFromMainImage;
