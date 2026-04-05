@@ -729,7 +729,7 @@ const translations = {
         }
     },
     en: {
-        siteTitle: "Projects Souq",
+        siteTitle: "Souq Almasharie",
         registerTitle: "Register Your Project Now",
         registerViaX: "Message us on X",
         registerViaInstagram: "Message us on Instagram",
@@ -743,11 +743,11 @@ const translations = {
         navMarket: "Market",
         navRegister: "Register Project",
         navFavorites: "Favorites",
-        footerLogo: "Projects Souq",
+        footerLogo: "Souq Almasharie",
         footerText: "UAE Projects Platform",
-        copyright: "© 2026 Projects Souq - All Rights Reserved",
+        copyright: "© 2026 Souq Almasharie - All Rights Reserved",
         langBtn: "عربي",
-        heroTitle: "Projects Souq",
+        heroTitle: "Souq Almasharie",
         heroSubtitle: "A specialized platform supporting projects in the UAE",
         discoverBtn: "Enter the market",
         joinBtn: "Register Project",
@@ -1521,7 +1521,7 @@ function shareVia(platform) {
     const product = family.products.find(p => p.id === appState.currentShareProduct.productId);
     const productName = appState.currentLanguage === 'ar' ? product.name : product.nameEn;
     const url = window.location.href;
-    const text = appState.currentLanguage === 'ar' ? `شاهد هذا المنتج: ${productName} - من ${family.name} على سوق المشاريع` : `Check out this product: ${productName} - from ${family.nameEn} on Projects Souq`;
+    const text = appState.currentLanguage === 'ar' ? `شاهد هذا المنتج: ${productName} - من ${family.name} على سوق المشاريع` : `Check out this product: ${productName} - from ${family.nameEn} on Souq Almasharie`;
     let shareUrl = '';
     switch(platform) {
         case 'whatsapp': shareUrl = `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`; break;
@@ -1538,7 +1538,7 @@ function shareProfileVia(platform) {
     const family = familiesData.find(f => f.id == appState.currentShareProfile);
     const url = window.location.href;
     const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
-    const text = appState.currentLanguage === 'ar' ? `اكتشف مشروع ${familyName} على سوق المشاريع` : `Discover ${familyName} on Projects Souq`;
+    const text = appState.currentLanguage === 'ar' ? `اكتشف مشروع ${familyName} على سوق المشاريع` : `Discover ${familyName} on Souq Almasharie`;
     let shareUrl = '';
     switch(platform) {
         case 'whatsapp': shareUrl = `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`; break;
