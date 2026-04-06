@@ -641,6 +641,10 @@ const translations = {
         navFavorites: "المفضلة",
         footerLogo: "سوق المشاريع",
         footerText: "منصة المشاريع الإماراتية",
+        forShopperTitle: "للباحث عن منتج",
+        forShopperDesc: "اكتشف منتجات محلية بأيادٍ إماراتية ومقيمة. أكل بيتي، حلويات، عطور، هدايا، مشغولات يدوية. تواصل مباشر مع البائع بدون وسيط.",
+        forProjectOwnerTitle: "لصاحب المشروع",
+        forProjectOwnerDesc: "سجل مشروعك مجاناً. واصل آلاف الزوار شهرياً. بدون عمولات ولا رسوم خفية. دعم مجتمعي للأسر المنتجة في الإمارات.",
         copyright: "© 2026 سوق المشاريع - جميع الحقوق محفوظة",
         langBtn: "En",
         heroTitle: "سوق المشاريع",
@@ -747,6 +751,10 @@ const translations = {
         navFavorites: "Favorites",
         footerLogo: "Souq Almasharie",
         footerText: "UAE Projects Platform",
+        forShopperTitle: "For Product Seekers",
+        forShopperDesc: "Discover local products made by Emirati and resident hands. Home-cooked food, sweets, perfumes, gifts, handicrafts. Direct contact with the seller, no middleman.",
+        forProjectOwnerTitle: "For Project Owners",
+        forProjectOwnerDesc: "Register your project for free. Reach thousands of visitors monthly. No commissions or hidden fees. Community support for productive families in the UAE.",
         copyright: "© 2026 Souq Almasharie - All Rights Reserved",
         langBtn: "عربي",
         heroTitle: "Souq Almasharie",
@@ -754,6 +762,10 @@ const translations = {
         discoverBtn: "Enter the market",
         joinBtn: "Register Project",
         aboutTitle: "About Us",
+        forShopperTitle: "For Product Seekers",
+        forShopperDesc: "Discover local products made by Emirati and resident hands. Home-cooked food, sweets, perfumes, gifts, handicrafts. Direct contact with the seller, no middleman.",
+        forProjectOwnerTitle: "For Project Owners",
+        forProjectOwnerDesc: "Register your project for free. Reach thousands of visitors monthly. No commissions or hidden fees. Community support for productive families in the UAE.",
         stat1: "Projects",
         stat2: "Diverse Products",
         stat3: "Contact Requests",
@@ -886,6 +898,64 @@ function initEmiratesChips() {
             <i class="${e.icon}"></i><span>${e.name}</span>
         </div>
     `).join('');
+}
+
+// ==================== عرض المشاريع المميزة في الصفحة الرئيسية ====================
+function renderFeaturedProjects() {
+    const container = document.getElementById('featuredProjectsGrid');
+    if (!container) return;
+    
+    // جلب المشاريع المميزة (is_paid === true)
+    const featuredProjects = familiesData.filter(project => project.is_paid === true);
+    
+    if (featuredProjects.length === 0) {
+        // إذا لا توجد مشاريع مميزة، نخفي القسم
+        const featuredSection = document.querySelector('.featured-projects');
+        if (featuredSection) featuredSection.style.display = 'none';
+        return;
+    }
+    
+    const t = translations[appState.currentLanguage];
+    
+    // نأخذ أول 4 مشاريع مميزة فقط
+    const projectsToShow = featuredProjects.slice(0, 4);
+    
+    container.innerHTML = projectsToShow.map(project => {
+        const projectName = appState.currentLanguage === 'ar' ? project.name : project.nameEn;
+        const projectDesc = appState.currentLanguage === 'ar' ? (project.description || project.longDescription) : (project.descriptionEn || project.longDescriptionEn);
+        
+        // اختصار الوصف إذا كان طويلاً
+        const shortDesc = projectDesc ? (projectDesc.length > 60 ? projectDesc.substring(0, 60) + '...' : projectDesc) : '';
+        
+        return `
+            <div class="family-card" onclick="navigateTo('/family/${project.id}')" style="cursor: pointer;">
+                <div class="paid-badge-red" style="position: absolute; top: 8px; left: 8px; z-index: 15;">
+                    <i class="fas fa-fire"></i>
+                    <span>${t.paidBadge || 'مميز'}</span>
+                </div>
+                ${project.adra_license === 'نعم' ? `<div class="license-badge-card" style="position: absolute; top: 8px; right: 8px;"><i class="fas fa-check-circle"></i>${t.licensed || 'مرخص'}</div>` : ''}
+                <div class="family-image">
+                    <img src="${project.image}" alt="${projectName}" loading="lazy">
+                </div>
+                <div class="family-content">
+                    <h3 class="family-name">${projectName}</h3>
+                    <div class="family-location"><i class="fas fa-map-marker-alt"></i> ${t.emirates[project.emirate] || project.emirate}</div>
+                    <div class="family-description">${shortDesc || (appState.currentLanguage === 'ar' ? 'اضغط للمزيد من التفاصيل' : 'Click for more details')}</div>
+                </div>
+            </div>
+        `;
+    }).join('');
+    
+    // إذا كان عدد المشاريع المميزة أقل من 4، نضبط الـ grid حسب العدد
+    if (projectsToShow.length === 1) {
+        container.style.gridTemplateColumns = '1fr';
+        container.style.maxWidth = '350px';
+        container.style.margin = '0 auto';
+    } else if (projectsToShow.length === 2) {
+        container.style.gridTemplateColumns = 'repeat(2, 1fr)';
+    } else {
+        container.style.gridTemplateColumns = 'repeat(2, 1fr)';
+    }
 }
 
 function filterByEmirate(emirateId) {
@@ -1600,6 +1670,11 @@ function toggleLanguage() {
         'siteTitle': 'siteTitle',
         'siteSubtitle': 'siteSubtitle',
         'navHome': 'navHome',
+        'footerKeywords': 'footerKeywords',
+        'forShopperTitle': 'forShopperTitle',
+        'forShopperDesc': 'forShopperDesc',
+        'forProjectOwnerTitle': 'forProjectOwnerTitle',
+        'forProjectOwnerDesc': 'forProjectOwnerDesc',
         'navMarket': 'navMarket',
         'navFavorites': 'navFavorites',
         'navRegister': 'navRegister',
@@ -1656,6 +1731,7 @@ function toggleLanguage() {
     // إعادة بناء الفلاتر فقط (وهي تقوم بتحديث النصوص بدون إعادة تحميل الصفحة)
     initEmiratesChips();
     initCategoriesChips();
+    renderFeaturedProjects();
     
     // تحديث المحتوى الحالي بناءً على الصفحة
     if (appState.currentPage === 'families') {
@@ -1939,6 +2015,11 @@ window.addEventListener('load', async function() {
         'siteSubtitle': 'siteSubtitle',
         'navHome': 'navHome',
         'navMarket': 'navMarket',
+        'footerKeywords': 'footerKeywords',
+        'forShopperTitle': 'forShopperTitle',
+        'forShopperDesc': 'forShopperDesc',
+        'forProjectOwnerTitle': 'forProjectOwnerTitle',
+        'forProjectOwnerDesc': 'forProjectOwnerDesc',
         'navFavorites': 'navFavorites',
         'navRegister': 'navRegister',
         'footerLogo': 'footerLogo',
@@ -1992,6 +2073,7 @@ window.addEventListener('load', async function() {
     // تهيئة الفلاتر
     initEmiratesChips();
     initCategoriesChips();
+    renderFeaturedProjects();
     
     // تحميل البيانات ومعالجة الـ hash
     await loadContactsData();
@@ -2036,5 +2118,4 @@ window.showDealDetails = showDealDetails;
 window.handleContact = handleContact;
 window.showSocialContact = showSocialContact;
 window.closeSocialContactPopup = closeSocialContactPopup;
-window.openZoomFromThumbnail = openZoomFromThumbnail;
 window.openZoomFromMainImage = openZoomFromMainImage;
