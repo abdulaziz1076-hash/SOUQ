@@ -144,7 +144,7 @@ const familiesData = [
       },
       {
         id: "11_p2",
-        name: "                ",
+        name: "تيمبورا باك",
         nameEn: "Tempura bake",
         description:
           "باك التيمبورا المقرمش بالصوص الحار والجبن/ والعادي.",
@@ -157,7 +157,7 @@ const familiesData = [
         category: "أطعمة ومشروبات",
         categoryEn: "Food & Beverages",
         mainImage: "images/p11-2-1.jpg",
-        images: ["images/p11-2-2.png"],
+        images: ["images/p11-2-1.jpg","images/p11-2-2.png"],
         details: [
           "تيمبورا مقرمش",
           "صوص كريمي حار/عادي",
