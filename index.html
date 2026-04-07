@@ -2,28 +2,24 @@
 <html lang="ar" dir="rtl" id="htmlTag">
 <head>
     <script>
-    // منع الوميض: تطبيق اللغة والاتجاه فوراً قبل تحميل أي شيء
-    (function() {
-        try {
-            const savedLang = localStorage.getItem('projectSouqLang');
-            if (savedLang === 'en') {
-                document.documentElement.setAttribute('dir', 'ltr');
-                document.documentElement.setAttribute('lang', 'en');
-                // نضيف كلاس للمساعدة في CSS
-                document.documentElement.classList.add('en-mode');
-                // نغير اتجاه body بشكل مؤقت لمنع الوميض
-                document.body.style.direction = 'ltr';
-                document.body.style.fontFamily = "'Poppins', 'Almarai', sans-serif";
-            } else {
-                document.documentElement.setAttribute('dir', 'rtl');
-                document.documentElement.setAttribute('lang', 'ar');
-                document.documentElement.classList.remove('en-mode');
-                document.body.style.direction = 'rtl';
-                document.body.style.fontFamily = "'Almarai', sans-serif";
-            }
-        } catch(e) { console.error(e); }
-    })();
-</script>
+        // منع الوميض: تطبيق اللغة والاتجاه فوراً على عنصر html
+        (function() {
+            try {
+                const savedLang = localStorage.getItem('projectSouqLang');
+                const htmlTag = document.documentElement; // الوصول لوسم html مباشرة
+                
+                if (savedLang === 'en') {
+                    htmlTag.setAttribute('dir', 'ltr');
+                    htmlTag.setAttribute('lang', 'en');
+                    htmlTag.classList.add('en-mode');
+                } else {
+                    htmlTag.setAttribute('dir', 'rtl');
+                    htmlTag.setAttribute('lang', 'ar');
+                    htmlTag.classList.remove('en-mode');
+                }
+            } catch(e) { console.error(e); }
+        })();
+    </script>
     <!-- أضف هذا في نهاية الـ head -->
     <script type="application/ld+json">
     {
@@ -3610,7 +3606,7 @@
                 <div class="featured-projects" style="margin: 50px 0 20px;">
                     <h2 class="section-title">مشاريع مميزة</h2>
                     <div class="featured-grid" id="featuredProjectsGrid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px;">
-                         ستتم تعبئتها بواسطة JavaScript
+                       ستتم تعبئتها بواسطة JavaScript 
                     </div>
                 </div> -->
                 
@@ -3691,7 +3687,7 @@
                 
                 <div class="products-header">
                     <h2 class="products-title" id="productsTitle">المنتجات</h2>
-                    <div class="products-badge" id="productsCount">0</div>
+                    <!--div class="products-badge" id="productsCount">0</div-->
                 </div>
                 <div class="products-grid" id="productsGrid"></div>
                 <div id="contactSectionBottom" class="contact-section-bottom"></div>
