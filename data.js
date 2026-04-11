@@ -3,7 +3,7 @@ const familiesData = [
     id: 1,
     name: "موتشا - Motcha",
     nameEn: "Motcha",
-    is_paid: false ,
+    is_paid: true ,
     emirate: "دبي",
     description: "نقدم نوع ممتاز جداً و نوفر كميات كبيرة للكوفيات.",
     descriptionEn: "We offer excellent quality matcha and provide bulk quantities for cafes.",
