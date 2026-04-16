@@ -654,7 +654,19 @@ const familiesData = [
         expiry: "",
         badge: "باقة",
         badgeEn: "Package"
-      }
+      },
+      {
+    id: "deal1",
+    title: "الدلع ما يليق إلا فيكم",
+    titleEn: "Spoiling only suits you",
+    description: "هدية مدخن مع كل طلب - حتى نفاذ الكمية",
+    descriptionEn: "Free smoke gift with every order - while supplies last",
+    image: "images/p6-d-3.jpg",
+    images: ["images/p6-d-3.jpg"],
+    expiry: "حتى نفاذ الكمية",
+    badge: "هدية",
+    badgeEn: "Special offer"
+  }
     ],
     products: [
       {
