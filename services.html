@@ -341,59 +341,63 @@
         /* ---------- التعديلات الجديدة لبطاقة التوصيل ---------- */
         /* جعل البطاقة شفافة */
         .delivery-card {
-            background: rgba(255, 255, 255, 0.65) !important;
-            backdrop-filter: blur(1px);
-            cursor: default; /* لا يظهر كزر */
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .delivery-card:hover {
-            transform: none;
-            border-color: var(--light-gray);
-            box-shadow: var(--card-shadow);
-        }
-        
-        /* تراكب يغطي البطاقة بالكامل ويظهر النص "قيد التجهيز" */
-        .delivery-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            backdrop-filter: blur(6px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 24px;
-            z-index: 10;
-            pointer-events: none; /* يمنع التأثير على النقر (لأننا نريد ألا ترسل لأي مكان أصلاً) */
-        }
-        
-        .delivery-overlay span {
-            font-family: 'El Messiri', serif;
-            font-size: 180px;
-            font-weight: 900;
-            color: var(--secondary);
-            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
-            background: rgba(0,0,0,0.5);
-            padding: 12px 24px;
-            border-radius: 60px;
-            letter-spacing: 2px;
-            white-space: nowrap;
-        }
-        
-        .en-mode .delivery-overlay span {
-            font-family: 'Poppins', serif;
-            font-size: 24px;
-        }
-        
-        @media (max-width: 600px) {
-            .delivery-overlay span {
-                font-size: 35px;
-                padding: 100px 150px;
-                white-space: none;
-            }
+    background: rgba(255, 255, 255, 0.65) !important;
+    backdrop-filter: blur(1px);
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+}
+
+.delivery-card:hover {
+    transform: none;
+    border-color: var(--light-gray);
+    box-shadow: var(--card-shadow);
+}
+
+/* طبقة التراكب: خلفية شفافة تماماً، فقط لتوسيط النص */
+.delivery-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    backdrop-filter: blur(15px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 24px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* النص: كبير جداً، عريض، بدون أي حدود أو خلفية */
+.delivery-overlay span {
+    font-family: 'El Messiri', serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: #0F3D2E;  /* يمكنك تغيير اللون إلى ما تريد */
+    text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    white-space: nowrap;
+}
+
+.en-mode .delivery-overlay span {
+    font-family: 'Poppins', serif;
+    font-size: 40px;
+}
+
+@media (max-width: 600px) {
+    .delivery-overlay span {
+        font-size: 60px;
+        white-space: normal;
+        text-align: center;
+    }
+    .en-mode .delivery-overlay span {
+        font-size: 24px;
+    }
         }
 
         /* ===== الفوتير ===== */
@@ -519,7 +523,7 @@
             <p id="service3Desc">دليل شركات التوصيل المعتمدة في الإمارات لشحن منتجاتك بأفضل الأسعار</p>
             <!-- التراكب الذي يغطي البطاقة بالكامل ويظهر النص -->
             <div class="delivery-overlay">
-                <span id="preparingText">قيد التجهيز</span>
+                <span id="preparingText">قيد التطوير</span>
             </div>
         </div>
     </div>
@@ -573,7 +577,7 @@
                 privacyLink: "سياسة الخصوصية",
                 termsLink: "شروط الاستخدام",
                 copyright: "© 2026 سوق المشاريع - جميع الحقوق محفوظة",
-                preparing: "قيد التجهيز"
+                preparing: "قيد التطوير"
             } : 
             { 
                 heroTitle: "Project Services", 
