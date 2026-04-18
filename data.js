@@ -656,7 +656,7 @@ const familiesData = [
         badgeEn: "Package"
       },
       {
-    id: "deal1",
+    id: "deal2",
     title: "الدلع ما يليق إلا فيكم",
     titleEn: "Spoiling only suits you",
     description: "هدية مدخن مع كل طلب - حتى نفاذ الكمية",
