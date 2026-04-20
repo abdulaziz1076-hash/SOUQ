@@ -482,7 +482,7 @@ const translations = {
         badge2: "Coming Soon", 
         badge3: "Coming Soon", 
         badge4: "Coming Soon",
-        navServices: "Project Services", 
+        navServices: "Services", 
         navArticles: "Guidance Articles", 
         navDelivery: "Delivery Companies",
         homeSearchPlaceholder: "Search for product or project...",
