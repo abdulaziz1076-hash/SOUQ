@@ -265,6 +265,18 @@
             select.addEventListener('change', handleStatusChange);
         });
     }
+    // داخل admin.html، استبدل دالة checkAdminPassword بهذه
+function checkAdminPassword() {
+    var pwd = document.getElementById('adminPassword').value;
+    if (pwd === "admin123") {
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('adminContent').style.display = 'block';
+        // بعد الدخول، حمّل البيانات من Supabase (هنا يحتاج إنترنت)
+        loadAllData();
+    } else {
+        alert("كلمة مرور خاطئة");
+    }
+}
 
     async function handleStatusChange(e) {
         const select = e.target;
