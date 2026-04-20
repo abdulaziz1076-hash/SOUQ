@@ -394,7 +394,7 @@ const translations = {
         badge2: "قريباً", 
         badge3: "قريباً", 
         badge4: "قريباً",
-        navServices: "خدمات المشاريع", 
+        navServices: "الخدمات العامة", 
         navArticles: "المقالات الإرشادية", 
         navDelivery: "شركات التوصيل",
         homeSearchPlaceholder: "ابحث عن منتج أو مشروع...",
