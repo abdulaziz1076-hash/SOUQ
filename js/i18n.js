@@ -43,7 +43,8 @@ export const translations = {
     servicesButtonCurrent: "الخدمات العامة",
     coverage: "التغطية",
     emirates: { all: "كل الإمارات", دبي: "دبي", أبوظبي: "أبوظبي", الشارقة: "الشارقة" },
-    categories: { all: "الكل", "أطعمة ومشروبات": "أطعمة ومشروبات", "روائح وعطور": "روائح وعطور" }
+    categories: { all: "الكل", "أطعمة ومشروبات": "أطعمة ومشروبات", "روائح وعطور": "روائح وعطور" },
+    feedbackBtn: "شكوى أو اقتراح",
   },
   en: {
     siteTitle: "Souq Almasharie",
@@ -89,7 +90,8 @@ export const translations = {
     licensed: "Licensed",
     coverage: "Coverage",
     emirates: { all: "All Emirates", دبي: "Dubai", أبوظبي: "Abu Dhabi", الشارقة: "Sharjah" },
-    categories: { all: "All", "أطعمة ومشروبات": "Food & Beverages", "روائح وعطور": "Scents & Perfumes" }
+    categories: { all: "All", "أطعمة ومشروبات": "Food & Beverages", "روائح وعطور": "Scents & Perfumes" },
+    feedbackBtn: "Complaint or Suggestion"
   }
 };
 

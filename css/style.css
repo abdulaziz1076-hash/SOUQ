@@ -1264,6 +1264,22 @@ html[dir="ltr"] .license-badge-card {
     border: 1px solid rgba(212, 175, 55, 0.3);
 }
 
+.feedback-btn {
+    background: white;
+    color: #C41E3A;
+    border-color: var(--secondary);
+    left: 15px !important;
+    right: auto;
+    bottom: 60px !important;
+}
+.feedback-btn:hover {
+    background: var(--secondary);
+    color: white;
+    transform: scale(1.1);
+    left: 8px;
+    right: auto;
+}
+
 .action-btn:hover {
     transform: scale(1.1);
     border-color: var(--secondary);
@@ -4770,4 +4786,11 @@ html[dir="ltr"] .share-popup {
     background: var(--secondary);
     color: var(--primary-dark);
     transform: scale(1.05);
+}
+
+.feedback-btn:hover {
+    background: var(--favorite-red) !important;  /* خلفية حمراء */
+    border-color: var(--favorite-red) !important; /* حدود حمراء */
+    color: white !important;                      /* تغيير لون الأيقونة إلى الأبيض */
+    transform: scale(1.1);                        /* تكبير بسيط (اختياري) */
 }

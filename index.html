@@ -17,9 +17,11 @@
                 }
             } catch(e) { console.error(e); }
         })();
+        fetch('/api/track', { method: 'POST', body: JSON.stringify({ page: location.pathname, referrer: document.referrer }) });
     </script>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-P5YLDRQQGE"></script>
+    
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -94,8 +96,8 @@
     <button class="close-btn" onclick="closeInstructionPopup()"><i class="fas fa-check-circle"></i> <span id="gotItBtn">إغلاق</span></button>
 </div>
 
-<div id="sharePopup" class="share-popup" style="display: none;"></div>
-<div id="shareProfilePopup" class="share-popup" style="display: none;"></div>
+<div id="sharePopup" class="share-popup"></div>
+<div id="shareProfilePopup" class="share-popup"></div>
 <div id="toastMessage" class="toast-message"></div>
 
 <header class="app-header">
@@ -458,6 +460,37 @@
         });
     }
 </script>
+
+<!-- مودال الشكاوى والاقتراحات -->
+<div id="feedbackModal" class="modal-overlay">
+    <div class="modal-container" style="max-width: 500px;">
+        <div class="modal-close" onclick="closeFeedbackModal()"><i class="fas fa-times"></i></div>
+        <div class="modal-body">
+            <h3 id="feedbackModalTitle">إرسال شكوى أو اقتراح</h3>
+            <form id="feedbackFormModal">
+                <div class="form-group">
+                    <label>نوع الرسالة *</label>
+                    <select id="feedbackTypeModal" required>
+                        <option value="complaint">شكوى</option>
+                        <option value="suggestion">اقتراح</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>بريدك الإلكتروني (للرد)</label>
+                    <input type="email" id="feedbackEmailModal" placeholder="example@domain.com">
+                </div>
+                <div class="form-group">
+                    <label>نص الرسالة *</label>
+                    <textarea id="feedbackMessageModal" rows="4" required></textarea>
+                </div>
+                <input type="hidden" id="feedbackTargetIdModal">
+                <input type="hidden" id="feedbackTargetNameModal">
+                <button type="submit" class="btn-generate" style="width:100%;">إرسال</button>
+            </form>
+            <div id="feedbackResultModal" style="margin-top:15px; text-align:center;"></div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

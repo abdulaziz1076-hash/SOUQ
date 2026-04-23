@@ -1,7 +1,6 @@
 // main.js - كامل مع التعديلات المطلوبة
 import { APP_CONFIG } from './config.js';
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-
 const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
 let projectsData = [];
 let contactsData = {};
@@ -25,7 +24,7 @@ const appState = {
     currentZoomImages: [],
     currentZoomIndex: 0
 };
-
+console.log("main.js is loaded successfully");
 // ==================== Helper: Build Sell Points ====================
 function buildSellPoints(contact) {
     const points = [];
@@ -846,31 +845,25 @@ function showFamilyProducts(id, updateHash = true) {
     const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
     const familyDescription = appState.currentLanguage === 'ar' ? (family.longDescription || family.description) : (family.longDescriptionEn || family.descriptionEn);
     const licenseBadgeHtml = family.adra_license === 'نعم' ? `<div class="license-badge-large"><i class="fas fa-check-circle"></i> ${t.licensed}</div>` : '';
-    const shareButtonHtml = `<div class="action-btn share-btn" onclick="event.stopPropagation(); showProfileSharePopup(${family.id})" title="${t.shareProfile}"><i class="fas fa-share-alt"></i></div>`;
+    const feedbackButtonHtml = `<div class="action-btn feedback-btn" onclick="event.stopPropagation(); openFeedbackModal(${family.id}, '${familyName}')" title="${t.feedbackBtn || 'شكوى أو اقتراح'}"><i class="fas fa-comment-dots"></i></div>`;
+    const shareButtonHtml = `<div class="action-btn share-btn" onclick="event.stopPropagation(); showProfileSharePopup(event, ${family.id})" title="${t.shareProfile}"><i class="fas fa-share-alt"></i></div>`;
     const profileContainer = document.getElementById('familyProfileContainer');
     if (profileContainer) {
         profileContainer.innerHTML = `
-            <div class="family-profile">
-                <div class="profile-header">
-                    ${shareButtonHtml}
-                    <div class="profile-avatar" style="background-image: url('${family.image}');"></div>
-                    <div>
-                        <h2 class="profile-name">${familyName}</h2>
-                        ${licenseBadgeHtml}
-                        <div class="profile-location"><i class="fas fa-map-marker-alt"></i> ${t.emirates[family.emirate] || family.emirate}</div>
-                    </div>
-                </div>
-                <div class="profile-body">
-                    <div class="profile-info-grid">
-                        <div class="profile-info-row"><i class="fas fa-align-right"></i><strong>${t.descriptionLabel}:</strong><span>${familyDescription}</span></div>
-                    </div>
-                    <div class="coverage-section">
-                        <div class="coverage-title"><i class="fas fa-globe-asia"></i> ${t.coverage}:</div>
-                        <div class="coverage-tags"><div class="coverage-tag"><i class="fas fa-map-marker-alt"></i> ${t.coverageOptions[family.coverage] || family.coverage}</div></div>
-                    </div>
-                </div>
+    <div class="family-profile">
+        <div class="profile-header">
+            ${shareButtonHtml}
+            ${feedbackButtonHtml}
+            <div class="profile-avatar" style="background-image: url('${family.image}');"></div>
+            <div>
+                <h2 class="profile-name">${familyName}</h2>
+                ${licenseBadgeHtml}
+                <div class="profile-location"><i class="fas fa-map-marker-alt"></i> ${t.emirates[family.emirate] || family.emirate}</div>
             </div>
-        `;
+        </div>
+        ...
+    </div>
+`;
     }
     renderFamilyDeals(family);
     const productsGrid = document.getElementById('productsGrid');
@@ -992,7 +985,7 @@ function showProductDetail(familyId, productId, updateHash = true) {
                     <img src="${images[0]}" alt="${productName}" id="currentMainImage" loading="lazy">
                 </div>
                 <div class="action-btn favorite-btn ${isFav ? 'active' : ''}" data-id="${product.id}" data-type="product" onclick="event.stopPropagation(); toggleFavorite('${product.id}', 'product')"><i class="fas fa-heart"></i></div>
-                <div class="action-btn share-btn" onclick="event.stopPropagation(); showSharePopup('${familyId}', '${productId}')"><i class="fas fa-share-alt"></i></div>
+                <div class="action-btn share-btn" data-family-id="${familyId}" data-product-id="${productId}"><i class="fas fa-share-alt"></i></div>
             </div>
             <div class="product-thumbnails" id="productThumbnails">${thumbnailsHtml}</div>
         </div>
@@ -1076,17 +1069,38 @@ function handleHashChange() {
 }
 
 // ==================== Share Popups ====================
-function showSharePopup(familyId, productId) {
+function showSharePopup(event, familyId, productId) {
     if (event) event.stopPropagation();
+    
+    // التأكد من تحميل البيانات
+    if (!projectsData || projectsData.length === 0) {
+        console.warn('projectsData not loaded yet');
+        showToast('يرجى الانتظار قليلاً ثم المحاولة مرة أخرى');
+        return;
+    }
+    
     const family = projectsData.find(f => f.id == familyId);
-    if (!family) return;
+    if (!family) {
+        console.error('Family not found', familyId);
+        return;
+    }
     const product = family.products.find(p => p.id === productId);
-    if (!product) return;
+    if (!product) {
+        console.error('Product not found', productId);
+        return;
+    }
+    
     const t = translations[appState.currentLanguage];
     const url = window.location.href;
     const text = encodeURIComponent(`${product.name} - ${family.name}`);
     const popup = document.getElementById('sharePopup');
-    if (!popup) return;
+    if (!popup) {
+        console.error('sharePopup element not found');
+        return;
+    }
+    
+    // إعادة تعيين المحتوى
+    popup.classList.remove('show');
     popup.innerHTML = `
         <h3>${t.shareTitle}</h3>
         <div class="share-options">
@@ -1111,7 +1125,7 @@ function showSharePopup(familyId, productId) {
     popup.classList.add('show');
 }
 
-function showProfileSharePopup(familyId) {
+function showProfileSharePopup(event, familyId) {
     if (event) event.stopPropagation();
     const family = projectsData.find(f => f.id == familyId);
     if (!family) return;
@@ -1120,6 +1134,7 @@ function showProfileSharePopup(familyId) {
     const text = encodeURIComponent(family.name);
     const popup = document.getElementById('shareProfilePopup');
     if (!popup) return;
+    popup.classList.remove('show');
     popup.innerHTML = `
         <h3>${t.shareProfile}</h3>
         <div class="share-options">
@@ -1148,7 +1163,6 @@ function closeSharePopup() {
     const popup = document.getElementById('sharePopup');
     if (popup) popup.classList.remove('show');
 }
-
 function closeShareProfilePopup() {
     const popup = document.getElementById('shareProfilePopup');
     if (popup) popup.classList.remove('show');
@@ -1361,6 +1375,27 @@ function toggleLanguage() {
     else if (appState.currentPage === 'offers') renderOffers();
 }
 
+// ==================== معالجة مشاركة المنتج عبر delegation ====================
+document.addEventListener('click', function(e) {
+    const shareBtn = e.target.closest('.share-btn');
+    if (!shareBtn) return;
+    e.stopPropagation();
+    
+    const familyId = shareBtn.dataset.familyId;
+    const productId = shareBtn.dataset.productId;
+    if (familyId && productId) {
+        showSharePopup(e, familyId, productId);
+    } else {
+        // إذا لم يجد البيانات، قد يكون زر المشاركة في صفحة المشروع (يعمل بالطريقة القديمة)
+        // نحتفظ بالتوافق مع الأزرار القديمة التي لا تحمل data attributes
+        const onclickAttr = shareBtn.getAttribute('onclick');
+        if (onclickAttr && onclickAttr.includes('showSharePopup')) {
+            // تنفيذ الدالة بشكل مباشر (لن يحدث تعارض)
+            eval(onclickAttr);
+        }
+    }
+});
+
 // ==================== Initialization ====================
 window.addEventListener('load', async function() {
     setupScrollSaveOnUnload();
@@ -1398,6 +1433,11 @@ window.addEventListener('load', async function() {
     await loadProjectsFromSupabase();
     handleHashChange();
     setTimeout(() => hideLoader(), 100);
+    const feedbackForm = document.getElementById('feedbackFormModal');
+    if (feedbackForm) {
+        feedbackForm.removeEventListener('submit', submitFeedback); // تجنب التكرار
+        feedbackForm.addEventListener('submit', submitFeedback);
+    }
 });
 
 window.addEventListener('pageshow', function(event) {
@@ -1461,3 +1501,50 @@ window.closeContactConfirmModal = closeContactConfirmModal;
 window.proceedToContact = proceedToContact;
 window.openZoomFromMainImage = openZoomFromMainImage;
 window.changeMainImage = changeMainImage;
+window.openFeedbackModal = openFeedbackModal;
+window.closeFeedbackModal = closeFeedbackModal;
+window.submitFeedback = submitFeedback;
+
+// فتح مودال الشكاوى والاقتراحات
+function openFeedbackModal(projectId, projectName) {
+    document.getElementById('feedbackTargetIdModal').value = projectId;
+    document.getElementById('feedbackTargetNameModal').value = projectName;
+    document.getElementById('feedbackModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeFeedbackModal() {
+    document.getElementById('feedbackModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// إرسال البيانات إلى Supabase
+async function submitFeedback(event) {
+    event.preventDefault();
+    const type = document.getElementById('feedbackTypeModal').value;
+    const reporter_email = document.getElementById('feedbackEmailModal').value || null;
+    const message = document.getElementById('feedbackMessageModal').value;
+    const target_id = document.getElementById('feedbackTargetIdModal').value;
+    const target_type = 'project'; // لأن الزر داخل صفحة المشروع
+
+    const { data, error } = await supabase.from('feedbacks').insert([{
+        type,
+        target_type,
+        target_id,
+        reporter_email,
+        message,
+        status: 'pending'
+    }]);
+
+    const resultDiv = document.getElementById('feedbackResultModal');
+    if (error) {
+        resultDiv.innerHTML = `<span style="color:red;">❌ حدث خطأ: ${error.message}</span>`;
+    } else {
+        resultDiv.innerHTML = '<span style="color:green;">✅ تم إرسال رسالتك بنجاح. شكراً لك.</span>';
+        document.getElementById('feedbackFormModal').reset();
+        setTimeout(() => closeFeedbackModal(), 2000);
+    }
+}
+
+// ربط الحدث
+document.getElementById('feedbackFormModal')?.addEventListener('submit', submitFeedback);
