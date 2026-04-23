@@ -827,6 +827,7 @@ function showDealDetails(familyId, dealId) {
 }
 
 // ==================== Show Family Products ====================
+// ==================== Show Family Products (المعدلة) ====================
 function showFamilyProducts(id, updateHash = true) {
     hideLoader();
     const family = projectsData.find(f => f.id == id);
@@ -843,27 +844,53 @@ function showFamilyProducts(id, updateHash = true) {
     }
     const t = translations[appState.currentLanguage];
     const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
-    const familyDescription = appState.currentLanguage === 'ar' ? (family.longDescription || family.description) : (family.longDescriptionEn || family.descriptionEn);
+    // الوصف الطويل
+    const longDescription = appState.currentLanguage === 'ar' ? (family.longDescription || family.description) : (family.longDescriptionEn || family.descriptionEn);
+    // التغطية (coverage) ونصها المعرب
+    let coverageText = "";
+    if (family.coverage) {
+        if (appState.currentLanguage === 'ar') {
+            coverageText = t.coverageOptions[family.coverage] || family.coverage;
+        } else {
+            coverageText = t.coverageOptions[family.coverage] || family.coverage;
+        }
+    }
     const licenseBadgeHtml = family.adra_license === 'نعم' ? `<div class="license-badge-large"><i class="fas fa-check-circle"></i> ${t.licensed}</div>` : '';
-    const feedbackButtonHtml = `<div class="action-btn feedback-btn" onclick="event.stopPropagation(); openFeedbackModal(${family.id}, '${familyName}')" title="${t.feedbackBtn || 'شكوى أو اقتراح'}"><i class="fas fa-comment-dots"></i></div>`;
+    const feedbackButtonHtml = `<div class="action-btn feedback-btn" onclick="event.stopPropagation(); openFeedbackModal(${family.id}, '${familyName}')" title="شكوى أو اقتراح"><i class="fas fa-comment-dots"></i></div>`;
     const shareButtonHtml = `<div class="action-btn share-btn" onclick="event.stopPropagation(); showProfileSharePopup(event, ${family.id})" title="${t.shareProfile}"><i class="fas fa-share-alt"></i></div>`;
+
     const profileContainer = document.getElementById('familyProfileContainer');
     if (profileContainer) {
         profileContainer.innerHTML = `
-    <div class="family-profile">
-        <div class="profile-header">
-            ${shareButtonHtml}
-            ${feedbackButtonHtml}
-            <div class="profile-avatar" style="background-image: url('${family.image}');"></div>
-            <div>
-                <h2 class="profile-name">${familyName}</h2>
-                ${licenseBadgeHtml}
-                <div class="profile-location"><i class="fas fa-map-marker-alt"></i> ${t.emirates[family.emirate] || family.emirate}</div>
+            <div class="family-profile">
+                <div class="profile-header">
+                    ${shareButtonHtml}
+                    ${feedbackButtonHtml}
+                    <div class="profile-avatar" style="background-image: url('${family.image}');"></div>
+                    <div>
+                        <h2 class="profile-name">${familyName}</h2>
+                        ${licenseBadgeHtml}
+                        <div class="profile-location"><i class="fas fa-map-marker-alt"></i> ${t.emirates[family.emirate] || family.emirate}</div>
+                    </div>
+                </div>
+                <div class="profile-body">
+                    <div class="profile-info-grid">
+                        <!-- الوصف الطويل -->
+                        <div class="profile-info-row">
+                            <i class="fas fa-align-right"></i>
+                            <strong>${t.descriptionLabel || "نبذة عن المشروع"}:</strong>
+                            <span>${longDescription || "لا يوجد وصف"}</span>
+                        </div>
+                        <!-- التغطية -->
+                        <div class="profile-info-row">
+                            <i class="fas fa-globe"></i>
+                            <strong>${t.coverage || "التغطية"}:</strong>
+                            <span>${coverageText || "غير محدد"}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        ...
-    </div>
-`;
+        `;
     }
     renderFamilyDeals(family);
     const productsGrid = document.getElementById('productsGrid');
