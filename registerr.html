@@ -63,8 +63,14 @@
 
 <!-- محتوى التسجيل (نموذج واحد عربي/إنجليزي) -->
 <div class="register-container">
-    <h1 id="pageTitle">📋 سجل مشروعك الآن</h1>
-    <div class="sub" id="subText">العرض لفترة محدودة وعدد محدود من المشاريع - اغتنم الفرصة</div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; flex-wrap: wrap;">
+        <a href="index.html" class="back-button" id="backHomeBtn" style="position: relative; top: auto; flex-shrink: 0;">
+            <i class="fas fa-arrow-right"></i>
+        </a>
+        <h1 id="pageTitle" style="margin: 0; flex: 1; text-align: center;">📋 سجل مشروعك الآن</h1>
+        <!-- عنصر شفاف للمساواة في حالة الرغبة بتوسيط العنوان -->
+        <div style="width: 34px;"></div>
+    </div>    <div class="sub" id="subText">العرض لفترة محدودة وعدد محدود من المشاريع - اغتنم الفرصة</div>
 
     <div class="success" id="successMsg">✅ تم استلام طلبك! سنقوم بالتواصل معك خلال 24 ساعة.</div>
     <div class="loading" id="loadingMsg"><i class="fas fa-spinner"></i> <span id="loadingText">جاري إرسال الطلب...</span></div>
@@ -134,11 +140,6 @@
         <div class="note" id="noteText">* لن يتم نشر أي شيء قبل مراجعتك والتواصل معك</div>
     </form>
 
-    <div class="button-group">
-        <a href="index.html" class="back-button" id="backHomeBtn">
-            <i class="fas fa-arrow-right"></i>
-        </a>
-    </div>
 </div>
 
 <footer class="app-footer">
