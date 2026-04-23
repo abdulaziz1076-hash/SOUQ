@@ -420,9 +420,9 @@ html {
     position: absolute;
     top: 20px;
     right: 12px;
-    background: rgba(255,255,255,0.15);
+    background: #1A5F44;
     border: 1px solid rgba(255,255,255,0.2);
-    color: rgb(17, 103, 16);
+    color: rgb(255, 255, 255);
     width: 34px;
     height: 34px;
     border-radius: 10px;
