@@ -344,6 +344,7 @@
             <button class="tab-btn" data-tab="feedbacks"><i class="fas fa-comment-dots"></i> الشكاوى</button>
         </div>
 
+        <!-- Dashboard -->
         <div id="dashboardTab" class="content-card active">
             <div class="period-selector">
                 <select id="analyticsPeriod">
@@ -354,7 +355,7 @@
                 <button id="refreshAnalyticsBtn"><i class="fas fa-sync-alt"></i> تحديث</button>
             </div>
             <div class="analytics-grid">
-                <div class="analytics-card"><h3><i class="fas fa-chart-line"></i> الزيارات</h3><div class="chart-container"><canvas id="visitsChart"></canvas></div></div>
+                <div class="analytics-card"><h3><i class="fas fa-chart-line"></i> الزيارات (عدد الزيارات لكل دقيقة)</h3><div class="chart-container"><canvas id="visitsChart"></canvas></div></div>
                 <div class="analytics-card"><h3><i class="fas fa-globe"></i> المصادر</h3><div class="chart-container"><canvas id="sourcesChart"></canvas></div></div>
                 <div class="analytics-card"><h3><i class="fas fa-mobile-alt"></i> الأجهزة</h3><div class="chart-container"><canvas id="devicesChart"></canvas></div></div>
                 <div class="analytics-card"><h3><i class="fas fa-map-marker-alt"></i> الإمارات (تقدير)</h3><div class="chart-container"><canvas id="geoChart"></canvas></div></div>
@@ -368,7 +369,6 @@
             </div>
         </div>
 
-        <!-- باقي التبويبات كما هي (لم تتغير) -->
         <div id="registrationsTab" class="content-card">
             <div class="filter-bar"><select id="regStatusFilter"><option value="all">كل الحالات</option><option value="pending">معلق</option><option value="approved">موافق</option><option value="rejected">مرفوض</option></select><button id="refreshRegistrationsBtn"><i class="fas fa-sync-alt"></i> تحديث</button></div>
             <div id="registrationsTableContainer"></div>
@@ -401,7 +401,7 @@
     </div>
 </div>
 
-<!-- المودالات كما هي (لم تتغير) -->
+<!-- المودالات -->
 <div id="projectModal" class="modal"><div class="modal-content"><div class="modal-header"><h3 id="projectModalTitle">مشروع</h3><button class="modal-close" data-modal="projectModal"><i class="fas fa-times"></i></button></div><div class="modal-body"><form id="projectForm"><input type="hidden" id="projectId"><div class="form-row"><label>الاسم (عربي)</label><input id="projectNameAr" required></div><div class="form-row"><label>الاسم (إنجليزي)</label><input id="projectNameEn" required></div><div class="form-row"><label>الإمارة</label><select id="projectEmirate"><option>أبوظبي</option><option>دبي</option><option>الشارقة</option><option>عجمان</option><option>رأس الخيمة</option><option>الفجيرة</option><option>أم القيوين</option></select></div><div class="form-row"><label>التصنيف (عربي)</label><input id="projectCategoryAr"></div><div class="form-row"><label>الوصف القصير (عربي)</label><textarea id="projectDescAr" rows="2"></textarea></div><div class="form-row"><label>الصورة (URL)</label><input id="projectImage"></div><div class="checkbox-row"><input type="checkbox" id="projectLicense"><label>رخصة أدريا</label></div><div class="form-row"><label>الحالة</label><select id="projectStatus"><option value="pending">معلق</option><option value="approved">موافق</option><option value="rejected">مرفوض</option></select></div><button class="btn-save">حفظ</button></form></div></div></div>
 
 <div id="productModal" class="modal"><div class="modal-content"><div class="modal-header"><h3>منتج</h3><button class="modal-close" data-modal="productModal"><i class="fas fa-times"></i></button></div><div class="modal-body"><form id="productForm"><input type="hidden" id="productId"><input type="hidden" id="productProjectId"><div class="form-row"><label>الاسم (عربي)</label><input id="productNameAr" required></div><div class="form-row"><label>الاسم (إنجليزي)</label><input id="productNameEn" required></div><div class="form-row"><label>الصورة الرئيسية (URL)</label><input id="productMainImage"></div><div class="form-row"><label>صور إضافية (فاصلة)</label><input id="productImages" placeholder="url1,url2"></div><div class="form-row"><label>التفاصيل (عربي - سطر لكل تفصيل)</label><textarea id="productDetailsAr" rows="3"></textarea></div><button class="btn-save">حفظ</button></form></div></div></div>
@@ -443,9 +443,10 @@
         `;
     }
 
-    // -------------------- تحليلات حقيقية فقط --------------------
+    // -------------------- تحليلات حقيقية --------------------
     async function loadAnalytics() {
-        const period = document.getElementById('analyticsPeriod').value;
+        const periodSelect = document.getElementById('analyticsPeriod');
+        const period = periodSelect ? periodSelect.value : '30min';
         let since;
         const now = new Date();
         switch(period) {
@@ -466,17 +467,17 @@
             return;
         }
         if (!events || events.length === 0) {
-            // إفراغ الرسوم البيانية
+            // إظهار رسالة "لا توجد بيانات" وتفريغ الرسوم
             if (charts.visitsChart) charts.visitsChart.destroy();
             if (charts.sourcesChart) charts.sourcesChart.destroy();
             if (charts.devicesChart) charts.devicesChart.destroy();
             if (charts.geoChart) charts.geoChart.destroy();
             const tbody = document.querySelector('#recentVisitsTable tbody');
-            if (tbody) tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;">لا توجد زيارات في هذه الفترة</td></tr>`;
+            if (tbody) tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;">لا توجد زيارات في الفترة المحددة</td></tr>`;
             return;
         }
         
-        // معالجة البيانات
+        // 1) الزيارات لكل دقيقة (آخر 10 فترات)
         const eventsByMinute = {};
         const startTime = new Date(sinceISO);
         for (let d = new Date(startTime); d <= now; d.setMinutes(d.getMinutes() + 1)) {
@@ -497,6 +498,7 @@
             data: { labels: labels.map(l => l.slice(11,16)), datasets: [{ label: 'الزيارات', data: dataPoints, borderColor: '#D4AF37', tension: 0.3 }] }
         });
         
+        // 2) المصادر
         const sources = {};
         events.forEach(ev => {
             let ref = ev.referrer || 'مباشر';
@@ -512,6 +514,7 @@
             data: { labels: Object.keys(sources), datasets: [{ data: Object.values(sources), backgroundColor: ['#0F3D2E','#1A5F44','#D4AF37','#8B7355'] }] }
         });
         
+        // 3) الأجهزة
         const devices = {};
         events.forEach(ev => {
             let d = ev.device || 'غير معروف';
@@ -527,7 +530,7 @@
             data: { labels: Object.keys(devices), datasets: [{ label: 'الزيارات', data: Object.values(devices), backgroundColor: '#0F3D2E' }] }
         });
         
-        // توزيع جغرافي تقديري (نفس النسب السابقة)
+        // 4) الإمارات (تقدير نسبي)
         const geoData = { 'دبي': 0, 'أبوظبي': 0, 'الشارقة': 0, 'أخرى': 0 };
         const total = events.length;
         geoData['دبي'] = Math.round(total * 0.45);
@@ -541,6 +544,7 @@
             data: { labels: Object.keys(geoData), datasets: [{ data: Object.values(geoData), backgroundColor: ['#D4AF37','#1A5F44','#0F3D2E','#8B7355'] }] }
         });
         
+        // 5) جدول آخر 20 زيارة
         const tbody = document.querySelector('#recentVisitsTable tbody');
         tbody.innerHTML = '';
         events.slice(0,20).forEach(ev => {
@@ -548,34 +552,295 @@
         });
     }
 
-    // -------------------- باقي دوال CRUD (كما هي من ملفك القديم، لم تتغير) --------------------
-    // أدرج هنا دوال loadRegistrations, loadProjects, loadProducts, loadDeals, loadContacts, loadFeedbacks, initEmirateFilter, initProjectSelects, إلخ.
-    // لأنها طويلة ولكن يمكنك نسخها من ملف admin الحالي (وهي تعمل بشكل صحيح).
-    // لتوفير المساحة، سأكتبها مختصرة – لكن في الحقيقة يجب أن تكون كاملة كما في ملفك الأصلي.
-    // بما أنك أرفقت ملف admin كاملاً سابقاً، استخدم نفس الدوال التي كانت لديك (loadRegistrations, loadProjects, ...) لأنها لم تتغير.
+    // -------------------- إدارة طلبات التسجيل --------------------
+    async function loadRegistrations() {
+        const status = document.getElementById('regStatusFilter').value;
+        let query = supabase.from('project_registrations').select('*').order('created_at', { ascending: false });
+        if (status !== 'all') query = query.eq('status', status);
+        const { data, error } = await query;
+        if (error) { showToast(error.message, true); return; }
+        if (!data || data.length === 0) { document.getElementById('registrationsTableContainer').innerHTML = '<p>لا توجد طلبات</p>'; return; }
+        let html = `<table class="data-table"><thead><tr><th>#</th><th>اسم المشروع</th><th>الإمارة</th><th>واتساب</th><th>الحالة</th><th>تاريخ التسجيل</th><th>إجراءات</th></tr></thead><tbody>`;
+        data.forEach(reg => {
+            html += `<tr>
+                <td>${reg.id}</td>
+                <td>${escapeHtml(reg.project_name)}</td>
+                <td>${reg.emirate}</td>
+                <td>${reg.whatsapp}</td>
+                <td>${reg.status === 'pending' ? 'معلق' : (reg.status === 'approved' ? 'موافق' : 'مرفوض')}</td>
+                <td>${new Date(reg.created_at).toLocaleString()}</td>
+                <td class="action-buttons">
+                    <button class="action-btn edit" onclick="window.updateRegistrationStatus(${reg.id}, 'approved')"><i class="fas fa-check-circle"></i></button>
+                    <button class="action-btn delete" onclick="window.updateRegistrationStatus(${reg.id}, 'rejected')"><i class="fas fa-times-circle"></i></button>
+                </td>
+            </tr>`;
+        });
+        html += `</tbody></table>`;
+        document.getElementById('registrationsTableContainer').innerHTML = html;
+    }
+    window.updateRegistrationStatus = async (id, newStatus) => {
+        const { error } = await supabase.from('project_registrations').update({ status: newStatus }).eq('id', id);
+        if (error) showToast(error.message, true);
+        else { showToast(`تم تغيير الحالة إلى ${newStatus}`); loadRegistrations(); loadStats(); }
+    };
 
-    // ========== هنا يجب أن تضع دوال CRUD كاملة (وهي موجودة بالفعل في ملفك القديم) ==========
-    // لأن هذا المثال سيظهر بدونها، لكن عند الاستخدام الفعلي يجب أن تكون موجودة.
-    // أنصحك بنسخ دوال CRUD من ملفك الحالي إلى هذا الملف بدلاً من كتابتها من جديد.
+    // -------------------- إدارة المشاريع --------------------
+    async function loadProjects() {
+        let query = supabase.from('projects').select('*').order('id', { ascending: false });
+        const search = document.getElementById('projectSearch').value;
+        const emirate = document.getElementById('projectEmirateFilter').value;
+        const status = document.getElementById('projectStatusFilter').value;
+        if (search) query = query.or(`name_ar.ilike.%${search}%,name_en.ilike.%${search}%`);
+        if (emirate) query = query.eq('emirate', emirate);
+        if (status) query = query.eq('status', status);
+        const { data, error } = await query;
+        if (error) { showToast(error.message, true); return; }
+        let html = `<table class="data-table"><thead><tr><th>ID</th><th>الاسم (عربي)</th><th>الإمارة</th><th>الحالة</th><th>إجراءات</th></table></thead><tbody>`;
+        (data || []).forEach(p => {
+            html += `<tr>
+                <td>${p.id}</td>
+                <td>${escapeHtml(p.name_ar)}</td>
+                <td>${p.emirate}</td>
+                <td>${p.status}</td>
+                <td class="action-buttons">
+                    <button class="action-btn edit" onclick="window.editProject(${p.id})"><i class="fas fa-edit"></i></button>
+                    <button class="action-btn delete" onclick="window.deleteItem('projects',${p.id})"><i class="fas fa-trash"></i></button>
+                </td>
+            </tr>`;
+        });
+        html += `</tbody></table>`;
+        document.getElementById('projectsTableContainer').innerHTML = html;
+    }
+    window.editProject = async (id) => {
+        const { data } = await supabase.from('projects').select('*').eq('id', id).single();
+        if (data) {
+            document.getElementById('projectId').value = data.id;
+            document.getElementById('projectNameAr').value = data.name_ar;
+            document.getElementById('projectNameEn').value = data.name_en;
+            document.getElementById('projectEmirate').value = data.emirate;
+            document.getElementById('projectCategoryAr').value = data.category_ar || '';
+            document.getElementById('projectDescAr').value = data.description_ar || '';
+            document.getElementById('projectImage').value = data.image || '';
+            document.getElementById('projectLicense').checked = data.adra_license || false;
+            document.getElementById('projectStatus').value = data.status || 'pending';
+            document.getElementById('projectModal').classList.add('active');
+        }
+    };
+    document.getElementById('projectForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('projectId').value;
+        const payload = {
+            name_ar: document.getElementById('projectNameAr').value,
+            name_en: document.getElementById('projectNameEn').value,
+            emirate: document.getElementById('projectEmirate').value,
+            category_ar: document.getElementById('projectCategoryAr').value,
+            description_ar: document.getElementById('projectDescAr').value,
+            image: document.getElementById('projectImage').value,
+            adra_license: document.getElementById('projectLicense').checked,
+            status: document.getElementById('projectStatus').value
+        };
+        let error;
+        if (id) error = (await supabase.from('projects').update(payload).eq('id', id)).error;
+        else error = (await supabase.from('projects').insert(payload)).error;
+        if (error) showToast(error.message, true);
+        else { showToast('تم الحفظ'); document.getElementById('projectModal').classList.remove('active'); loadProjects(); loadStats(); }
+    });
 
-    // دوال مساعدة (موجودة في ملفك القديم):
-    async function initEmirateFilter() { /* موجود */ }
-    async function initProjectSelects() { /* موجود */ }
-    async function loadRegistrations() { /* موجود */ }
-    async function loadProjects() { /* موجود */ }
-    async function loadProducts() { /* موجود */ }
-    async function loadDeals() { /* موجود */ }
-    async function loadContacts() { /* موجود */ }
-    async function loadFeedbacks() { /* موجود */ }
-    window.updateRegistrationStatus = async (id, newStatus) => { /* موجود */ };
-    window.editProject = async (id) => { /* موجود */ };
-    window.deleteItem = async (table, id) => { /* موجود */ };
-    window.editProduct = async (id) => { /* موجود */ };
-    window.editDeal = async (id) => { /* موجود */ };
-    window.updateFeedbackStatus = async (id, newStatus) => { /* موجود */ };
-    function escapeHtml(str) { /* موجود */ }
+    // -------------------- إدارة المنتجات --------------------
+    async function loadProducts() {
+        const projectId = document.getElementById('productProjectFilter').value;
+        if (!projectId) { document.getElementById('productsTableContainer').innerHTML = '<p>اختر مشروعاً أولاً</p>'; return; }
+        const { data, error } = await supabase.from('products').select('*').eq('project_id', projectId);
+        if (error) { showToast(error.message, true); return; }
+        let html = `<table class="data-table"><thead><tr><th>ID</th><th>الاسم (عربي)</th><th>إجراءات</th></tr></thead><tbody>`;
+        (data || []).forEach(p => {
+            html += `<tr>
+                <td>${p.id}</td>
+                <td>${escapeHtml(p.name_ar)}</td>
+                <td class="action-buttons">
+                    <button class="action-btn edit" onclick="window.editProduct('${p.id}')"><i class="fas fa-edit"></i></button>
+                    <button class="action-btn delete" onclick="window.deleteItem('products','${p.id}')"><i class="fas fa-trash"></i></button>
+                </td>
+            </tr>`;
+        });
+        html += `</tbody><table>`;
+        document.getElementById('productsTableContainer').innerHTML = html;
+    }
+    window.editProduct = async (id) => {
+        const { data } = await supabase.from('products').select('*').eq('id', id).single();
+        if (data) {
+            document.getElementById('productId').value = data.id;
+            document.getElementById('productProjectId').value = data.project_id;
+            document.getElementById('productNameAr').value = data.name_ar;
+            document.getElementById('productNameEn').value = data.name_en;
+            document.getElementById('productMainImage').value = data.main_image || '';
+            document.getElementById('productImages').value = (data.images || []).join(',');
+            document.getElementById('productDetailsAr').value = (data.details_ar || []).join('\n');
+            document.getElementById('productModal').classList.add('active');
+        }
+    };
+    document.getElementById('productForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('productId').value;
+        const projectId = document.getElementById('productProjectId').value;
+        const imagesArr = document.getElementById('productImages').value.split(',').map(s=>s.trim()).filter(Boolean);
+        const detailsArr = document.getElementById('productDetailsAr').value.split('\n').filter(l=>l.trim());
+        const payload = {
+            name_ar: document.getElementById('productNameAr').value,
+            name_en: document.getElementById('productNameEn').value,
+            main_image: document.getElementById('productMainImage').value,
+            images: imagesArr,
+            details_ar: detailsArr,
+            project_id: projectId
+        };
+        let error;
+        if (id) error = (await supabase.from('products').update(payload).eq('id', id)).error;
+        else error = (await supabase.from('products').insert(payload)).error;
+        if (error) showToast(error.message, true);
+        else { showToast('تم الحفظ'); document.getElementById('productModal').classList.remove('active'); loadProducts(); loadStats(); }
+    });
 
-    // -------------------- دوال تسجيل الدخول والتبويبات --------------------
+    // -------------------- إدارة العروض --------------------
+    async function loadDeals() {
+        const projectId = document.getElementById('dealProjectFilter').value;
+        if (!projectId) { document.getElementById('dealsTableContainer').innerHTML = '<p>اختر مشروعاً</p>'; return; }
+        const { data, error } = await supabase.from('deals').select('*').eq('project_id', projectId);
+        if (error) { showToast(error.message, true); return; }
+        let html = `<table class="data-table"><thead><tr><th>ID</th><th>العنوان (عربي)</th><th>إجراءات</th></tr></thead><tbody>`;
+        (data || []).forEach(d => {
+            html += `<tr>
+                <td>${d.id}</td>
+                <td>${escapeHtml(d.title_ar)}</td>
+                <td class="action-buttons">
+                    <button class="action-btn edit" onclick="window.editDeal('${d.id}')"><i class="fas fa-edit"></i></button>
+                    <button class="action-btn delete" onclick="window.deleteItem('deals','${d.id}')"><i class="fas fa-trash"></i></button>
+                </td>
+            </tr>`;
+        });
+        html += `</tbody></table>`;
+        document.getElementById('dealsTableContainer').innerHTML = html;
+    }
+    window.editDeal = async (id) => {
+        const { data } = await supabase.from('deals').select('*').eq('id', id).single();
+        if (data) {
+            document.getElementById('dealId').value = data.id;
+            document.getElementById('dealProjectId').value = data.project_id;
+            document.getElementById('dealTitleAr').value = data.title_ar;
+            document.getElementById('dealTitleEn').value = data.title_en;
+            document.getElementById('dealImage').value = data.image || '';
+            document.getElementById('dealDescAr').value = data.description_ar || '';
+            document.getElementById('dealModal').classList.add('active');
+        }
+    };
+    document.getElementById('dealForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('dealId').value;
+        const projectId = document.getElementById('dealProjectId').value;
+        const payload = {
+            title_ar: document.getElementById('dealTitleAr').value,
+            title_en: document.getElementById('dealTitleEn').value,
+            image: document.getElementById('dealImage').value,
+            description_ar: document.getElementById('dealDescAr').value,
+            project_id: projectId
+        };
+        let error;
+        if (id) error = (await supabase.from('deals').update(payload).eq('id', id)).error;
+        else error = (await supabase.from('deals').insert(payload)).error;
+        if (error) showToast(error.message, true);
+        else { showToast('تم الحفظ'); document.getElementById('dealModal').classList.remove('active'); loadDeals(); loadStats(); }
+    });
+
+    // -------------------- إدارة جهات التواصل --------------------
+    async function loadContacts() {
+        const projectId = document.getElementById('contactProjectFilter').value;
+        if (!projectId) { document.getElementById('contactsTableContainer').innerHTML = '<p>اختر مشروعاً</p>'; return; }
+        let { data, error } = await supabase.from('contacts').select('*').eq('project_id', projectId);
+        if (error && error.code !== 'PGRST116') { showToast(error.message, true); return; }
+        if (!data || data.length === 0) data = [{ project_id: projectId, whatsapp: '', phone: '', email: '', instagram: '' }];
+        const contact = data[0];
+        let html = `<div class="contact-edit-form">
+            <div class="form-row"><label>واتساب</label><input id="editWhatsapp" value="${contact.whatsapp || ''}"></div>
+            <div class="form-row"><label>هاتف</label><input id="editPhone" value="${contact.phone || ''}"></div>
+            <div class="form-row"><label>بريد</label><input id="editEmail" value="${contact.email || ''}"></div>
+            <div class="form-row"><label>إنستغرام</label><input id="editInstagram" value="${contact.instagram || ''}"></div>
+            <button id="saveContactBtn" class="btn-save">حفظ التغييرات</button>
+        </div>`;
+        document.getElementById('contactsTableContainer').innerHTML = html;
+        document.getElementById('saveContactBtn').onclick = async () => {
+            const payload = {
+                project_id: parseInt(projectId),
+                whatsapp: document.getElementById('editWhatsapp').value,
+                phone: document.getElementById('editPhone').value,
+                email: document.getElementById('editEmail').value,
+                instagram: document.getElementById('editInstagram').value
+            };
+            const { error } = await supabase.from('contacts').upsert(payload);
+            if (error) showToast(error.message, true); else showToast('تم حفظ بيانات التواصل');
+        };
+    }
+
+    // -------------------- إدارة الشكاوى --------------------
+    async function loadFeedbacks() {
+        const status = document.getElementById('feedbackStatusFilter').value;
+        let query = supabase.from('feedbacks').select('*').order('created_at', { ascending: false });
+        if (status) query = query.eq('status', status);
+        const { data, error } = await query;
+        if (error) { showToast(error.message, true); return; }
+        let html = `<table class="data-table"><thead><tr><th>ID</th><th>النوع</th><th>الرسالة</th><th>البريد</th><th>الحالة</th><th>التاريخ</th><th>تغيير الحالة</th></tr></thead><tbody>`;
+        (data || []).forEach(f => {
+            html += `<tr>
+                <td>${f.id}</td>
+                <td>${f.type}</td>
+                <td>${escapeHtml(f.message)}</td>
+                <td>${f.reporter_email || '-'}</td>
+                <td>${f.status}</td>
+                <td>${new Date(f.created_at).toLocaleString()}</td>
+                <td><select onchange="window.updateFeedbackStatus(${f.id}, this.value)">
+                    <option value="pending" ${f.status==='pending'?'selected':''}>معلق</option>
+                    <option value="reviewed" ${f.status==='reviewed'?'selected':''}>مراجَع</option>
+                    <option value="resolved" ${f.status==='resolved'?'selected':''}>محلول</option>
+                    <option value="rejected" ${f.status==='rejected'?'selected':''}>مرفوض</option>
+                </select></td>
+            </tr>`;
+        });
+        html += `</tbody></table>`;
+        document.getElementById('feedbacksTableContainer').innerHTML = html;
+    }
+    window.updateFeedbackStatus = async (id, newStatus) => {
+        const { error } = await supabase.from('feedbacks').update({ status: newStatus }).eq('id', id);
+        if (error) showToast(error.message, true); else { showToast('تم التحديث'); loadFeedbacks(); }
+    };
+
+    // -------------------- دوال مساعدة --------------------
+    async function initEmirateFilter() {
+        const { data } = await supabase.from('projects').select('emirate');
+        const unique = [...new Set((data||[]).map(p=>p.emirate).filter(Boolean))];
+        const select = document.getElementById('projectEmirateFilter');
+        unique.forEach(e => { const opt = document.createElement('option'); opt.value = e; opt.textContent = e; select.appendChild(opt); });
+    }
+    async function initProjectSelects() {
+        const { data } = await supabase.from('projects').select('id, name_ar');
+        if (!data) return;
+        const fillSelect = (id) => {
+            const sel = document.getElementById(id);
+            sel.innerHTML = '<option value="">اختر المشروع</option>';
+            data.forEach(p => { const opt = document.createElement('option'); opt.value = p.id; opt.textContent = p.name_ar; sel.appendChild(opt); });
+        };
+        fillSelect('productProjectFilter');
+        fillSelect('dealProjectFilter');
+        fillSelect('contactProjectFilter');
+    }
+    window.deleteItem = async (table, id) => {
+        if (confirm('حذف؟')) {
+            const { error } = await supabase.from(table).delete().eq('id', id);
+            if (error) showToast(error.message, true);
+            else { showToast('تم الحذف'); if (table === 'projects') loadProjects(); else if (table === 'products') loadProducts(); else if (table === 'deals') loadDeals(); loadStats(); }
+        }
+    };
+    function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, function(m) { if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m; }); }
+    window.escapeHtml = escapeHtml;
+
+    // -------------------- تسجيل الدخول والتبويبات --------------------
     async function performLogin(email, pwd) {
         const { data, error } = await supabase.auth.signInWithPassword({ email, password: pwd });
         if (error || data.user.email !== ALLOWED_EMAIL) { document.getElementById('loginError').innerText = 'بيانات غير صحيحة'; return; }
@@ -628,7 +893,10 @@
     document.getElementById('addDealBtn').onclick = () => { const pid = document.getElementById('dealProjectFilter').value; if(!pid){ showToast('اختر مشروعاً', true); return; } document.getElementById('dealForm').reset(); document.getElementById('dealId').value = ''; document.getElementById('dealProjectId').value = pid; document.getElementById('dealModal').classList.add('active'); };
     document.querySelectorAll('.modal-close').forEach(btn => btn.addEventListener('click', () => { document.getElementById(btn.dataset.modal).classList.remove('active'); }));
     window.onclick = (e) => { if(e.target.classList.contains('modal')) e.target.classList.remove('active'); };
-    document.getElementById('exportAnalyticsBtn').onclick = () => showToast('سيتم إضافة تصدير CSV قريباً');
+    document.getElementById('exportAnalyticsBtn').onclick = () => {
+        const period = document.getElementById('analyticsPeriod').value;
+        showToast(`سيتم تصدير بيانات الفترة ${period} قريباً`);
+    };
     document.getElementById('refreshAnalyticsBtn').addEventListener('click', () => loadAnalytics());
     document.getElementById('analyticsPeriod').addEventListener('change', () => loadAnalytics());
 
