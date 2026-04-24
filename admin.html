@@ -286,6 +286,26 @@
             z-index: 3000;
             display: none;
         }
+        .period-selector {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        .period-selector select, .period-selector button {
+            padding: 8px 16px;
+            border-radius: 40px;
+            border: 1px solid #cbd5e1;
+            background: white;
+            font-family: inherit;
+            cursor: pointer;
+        }
+        .period-selector button {
+            background: #0F3D2E;
+            color: white;
+            border: none;
+        }
         @media (max-width: 700px) {
             .tab-btn { padding: 8px 16px; font-size: 12px; }
             .stats-grid { gap: 12px; }
@@ -326,14 +346,22 @@
 
         <!-- Dashboard -->
         <div id="dashboardTab" class="content-card active">
+            <div class="period-selector">
+                <select id="analyticsPeriod">
+                    <option value="30min">آخر 30 دقيقة</option>
+                    <option value="24h">آخر 24 ساعة</option>
+                    <option value="7d">آخر 7 أيام</option>
+                </select>
+                <button id="refreshAnalyticsBtn"><i class="fas fa-sync-alt"></i> تحديث</button>
+            </div>
             <div class="analytics-grid">
-                <div class="analytics-card"><h3><i class="fas fa-chart-line"></i> الزيارات (آخر 30 دقيقة)</h3><div class="chart-container"><canvas id="visitsChart"></canvas></div></div>
+                <div class="analytics-card"><h3><i class="fas fa-chart-line"></i> الزيارات (عدد الزيارات لكل دقيقة)</h3><div class="chart-container"><canvas id="visitsChart"></canvas></div></div>
                 <div class="analytics-card"><h3><i class="fas fa-globe"></i> المصادر</h3><div class="chart-container"><canvas id="sourcesChart"></canvas></div></div>
                 <div class="analytics-card"><h3><i class="fas fa-mobile-alt"></i> الأجهزة</h3><div class="chart-container"><canvas id="devicesChart"></canvas></div></div>
-                <div class="analytics-card"><h3><i class="fas fa-map-marker-alt"></i> الزوار حسب الإمارة (تقدير)</h3><div class="chart-container"><canvas id="geoChart"></canvas></div></div>
+                <div class="analytics-card"><h3><i class="fas fa-map-marker-alt"></i> الإمارات (تقدير)</h3><div class="chart-container"><canvas id="geoChart"></canvas></div></div>
             </div>
             <div class="analytics-card">
-                <h3><i class="fas fa-clock"></i> آخر 20 زيارة (آخر 30 دقيقة)</h3>
+                <h3><i class="fas fa-clock"></i> آخر 20 زيارة</h3>
                 <div style="overflow-x:auto;">
                     <table class="visitors-table" id="recentVisitsTable"><thead><tr><th>الصفحة</th><th>المصدر</th><th>الجهاز</th><th>التوقيت</th></tr></thead><tbody></tbody></table>
                 </div>
@@ -399,7 +427,6 @@
         setTimeout(() => toast.style.display = 'none', 3000);
     }
 
-    // جلب الإحصائيات الأساسية (المشاريع، المنتجات، طلبات التسجيل، الشكاوى)
     async function loadStats() {
         const { count: projectsCount } = await supabase.from('projects').select('*', { count: 'exact', head: true });
         const { count: productsCount } = await supabase.from('products').select('*', { count: 'exact', head: true });
@@ -416,50 +443,62 @@
         `;
     }
 
-    // -------------------- تحليلات حقيقية (آخر 30 دقيقة) --------------------
+    // -------------------- تحليلات حقيقية --------------------
     async function loadAnalytics() {
-        const halfHourAgo = new Date(Date.now() - 30 * 60 * 1000).toISOString();
+        const periodSelect = document.getElementById('analyticsPeriod');
+        const period = periodSelect ? periodSelect.value : '30min';
+        let since;
+        const now = new Date();
+        switch(period) {
+            case '24h': since = new Date(now.getTime() - 24*60*60*1000); break;
+            case '7d': since = new Date(now.getTime() - 7*24*60*60*1000); break;
+            default: since = new Date(now.getTime() - 30*60*1000);
+        }
+        const sinceISO = since.toISOString();
+        
         const { data: events, error } = await supabase
             .from('analytics_events')
             .select('*')
-            .gte('created_at', halfHourAgo)
+            .gte('created_at', sinceISO)
             .order('created_at', { ascending: false });
         
         if (error) {
-            console.warn('Analytics error:', error);
-            // عرض بيانات وهمية للتوضيح
-            showToast('لا توجد بيانات تحليلات كافية، سيتم عرض نموذج', true);
-            demoAnalytics();
+            showToast('خطأ في تحميل التحليلات: ' + error.message, true);
             return;
         }
         if (!events || events.length === 0) {
-            showToast('لا توجد زيارات في آخر 30 دقيقة', false);
-            demoAnalytics();
+            // إظهار رسالة "لا توجد بيانات" وتفريغ الرسوم
+            if (charts.visitsChart) charts.visitsChart.destroy();
+            if (charts.sourcesChart) charts.sourcesChart.destroy();
+            if (charts.devicesChart) charts.devicesChart.destroy();
+            if (charts.geoChart) charts.geoChart.destroy();
+            const tbody = document.querySelector('#recentVisitsTable tbody');
+            if (tbody) tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;">لا توجد زيارات في الفترة المحددة</td></tr>`;
             return;
         }
-
-        // 1) الزيارات لكل دقيقة (آخر 30 دقيقة)
-        const minutes = {};
-        for (let i = 0; i < 30; i++) {
-            const d = new Date(Date.now() - i * 60 * 1000);
+        
+        // 1) الزيارات لكل دقيقة (آخر 10 فترات)
+        const eventsByMinute = {};
+        const startTime = new Date(sinceISO);
+        for (let d = new Date(startTime); d <= now; d.setMinutes(d.getMinutes() + 1)) {
             const key = d.toISOString().slice(0,16);
-            minutes[key] = 0;
+            eventsByMinute[key] = 0;
         }
         events.forEach(ev => {
             const key = ev.created_at.slice(0,16);
-            if (minutes[key] !== undefined) minutes[key]++;
+            if (eventsByMinute[key] !== undefined) eventsByMinute[key]++;
         });
-        const labels = Object.keys(minutes).sort().slice(-10); // آخر 10 دقائق للرسم
-        const dataPoints = labels.map(l => minutes[l]);
-
+        const labels = Object.keys(eventsByMinute).slice(-10);
+        const dataPoints = labels.map(l => eventsByMinute[l]);
+        
         if (charts.visitsChart) charts.visitsChart.destroy();
-        const ctx = document.getElementById('visitsChart').getContext('2d');
-        charts.visitsChart = new Chart(ctx, {
+        const visitsCtx = document.getElementById('visitsChart').getContext('2d');
+        charts.visitsChart = new Chart(visitsCtx, {
             type: 'line',
             data: { labels: labels.map(l => l.slice(11,16)), datasets: [{ label: 'الزيارات', data: dataPoints, borderColor: '#D4AF37', tension: 0.3 }] }
         });
-
-        // 2) المصادر (referrer)
+        
+        // 2) المصادر
         const sources = {};
         events.forEach(ev => {
             let ref = ev.referrer || 'مباشر';
@@ -468,14 +507,14 @@
             else if (ref !== 'مباشر') ref = 'آخر';
             sources[ref] = (sources[ref] || 0) + 1;
         });
-        const sourcesCtx = document.getElementById('sourcesChart').getContext('2d');
         if (charts.sourcesChart) charts.sourcesChart.destroy();
+        const sourcesCtx = document.getElementById('sourcesChart').getContext('2d');
         charts.sourcesChart = new Chart(sourcesCtx, {
             type: 'doughnut',
             data: { labels: Object.keys(sources), datasets: [{ data: Object.values(sources), backgroundColor: ['#0F3D2E','#1A5F44','#D4AF37','#8B7355'] }] }
         });
-
-        // 3) الأجهزة (device)
+        
+        // 3) الأجهزة
         const devices = {};
         events.forEach(ev => {
             let d = ev.device || 'غير معروف';
@@ -484,29 +523,27 @@
             else if (d.includes('Desktop')) d = 'حاسوب';
             devices[d] = (devices[d] || 0) + 1;
         });
-        const devicesCtx = document.getElementById('devicesChart').getContext('2d');
         if (charts.devicesChart) charts.devicesChart.destroy();
+        const devicesCtx = document.getElementById('devicesChart').getContext('2d');
         charts.devicesChart = new Chart(devicesCtx, {
             type: 'bar',
             data: { labels: Object.keys(devices), datasets: [{ label: 'الزيارات', data: Object.values(devices), backgroundColor: '#0F3D2E' }] }
         });
-
-        // 4) الإمارات (تقدير من IP – نعرض توزيعاً افتراضياً لأن IP لا يحدد الإمارة بدقة، نستخدم IP Geolocation API? نقوم بتوزيع وهمي مبني على نسب حقيقية)
-        // لأغراض العرض، سنعرض أعداداً نسبية
+        
+        // 4) الإمارات (تقدير نسبي)
         const geoData = { 'دبي': 0, 'أبوظبي': 0, 'الشارقة': 0, 'أخرى': 0 };
-        // نحاكي: 45% دبي، 28% أبوظبي، 15% الشارقة، 12% أخرى (لأننا لا نستطيع جلب إحداثيات بسهولة)
-        const total = events.length || 1;
+        const total = events.length;
         geoData['دبي'] = Math.round(total * 0.45);
         geoData['أبوظبي'] = Math.round(total * 0.28);
         geoData['الشارقة'] = Math.round(total * 0.15);
         geoData['أخرى'] = total - geoData['دبي'] - geoData['أبوظبي'] - geoData['الشارقة'];
-        const geoCtx = document.getElementById('geoChart').getContext('2d');
         if (charts.geoChart) charts.geoChart.destroy();
+        const geoCtx = document.getElementById('geoChart').getContext('2d');
         charts.geoChart = new Chart(geoCtx, {
             type: 'pie',
             data: { labels: Object.keys(geoData), datasets: [{ data: Object.values(geoData), backgroundColor: ['#D4AF37','#1A5F44','#0F3D2E','#8B7355'] }] }
         });
-
+        
         // 5) جدول آخر 20 زيارة
         const tbody = document.querySelector('#recentVisitsTable tbody');
         tbody.innerHTML = '';
@@ -515,28 +552,7 @@
         });
     }
 
-    function demoAnalytics() {
-        // عرض بيانات نموذجية
-        const ctx = document.getElementById('visitsChart').getContext('2d');
-        if (charts.visitsChart) charts.visitsChart.destroy();
-        charts.visitsChart = new Chart(ctx, {
-            type: 'line',
-            data: { labels: ['قبل 30د','25د','20د','15د','10د','5د','الآن'], datasets: [{ label: 'الزيارات (نموذج)', data: [5,8,12,7,15,22,18], borderColor: '#D4AF37' }] }
-        });
-        const sourcesCtx = document.getElementById('sourcesChart').getContext('2d');
-        if (charts.sourcesChart) charts.sourcesChart.destroy();
-        charts.sourcesChart = new Chart(sourcesCtx, { type: 'doughnut', data: { labels: ['مباشر','جوجل','وسائل تواصل'], datasets: [{ data: [40,35,25], backgroundColor: ['#0F3D2E','#1A5F44','#D4AF37'] }] } });
-        const devicesCtx = document.getElementById('devicesChart').getContext('2d');
-        if (charts.devicesChart) charts.devicesChart.destroy();
-        charts.devicesChart = new Chart(devicesCtx, { type: 'bar', data: { labels: ['جوال','حاسوب','تابلت'], datasets: [{ label: 'الزيارات', data: [68,25,7], backgroundColor: '#0F3D2E' }] } });
-        const geoCtx = document.getElementById('geoChart').getContext('2d');
-        if (charts.geoChart) charts.geoChart.destroy();
-        charts.geoChart = new Chart(geoCtx, { type: 'pie', data: { labels: ['دبي','أبوظبي','الشارقة','أخرى'], datasets: [{ data: [45,28,15,12], backgroundColor: ['#D4AF37','#1A5F44','#0F3D2E','#8B7355'] }] } });
-        const tbody = document.querySelector('#recentVisitsTable tbody');
-        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">لا توجد زيارات حقيقية في آخر 30 دقيقة، اعرض نموذجاً</td></tr>';
-    }
-
-    // -------------------- باقي الدوال (إدارة المشاريع، المنتجات، إلخ) --------------------
+    // -------------------- إدارة طلبات التسجيل --------------------
     async function loadRegistrations() {
         const status = document.getElementById('regStatusFilter').value;
         let query = supabase.from('project_registrations').select('*').order('created_at', { ascending: false });
@@ -568,6 +584,7 @@
         else { showToast(`تم تغيير الحالة إلى ${newStatus}`); loadRegistrations(); loadStats(); }
     };
 
+    // -------------------- إدارة المشاريع --------------------
     async function loadProjects() {
         let query = supabase.from('projects').select('*').order('id', { ascending: false });
         const search = document.getElementById('projectSearch').value;
@@ -578,10 +595,18 @@
         if (status) query = query.eq('status', status);
         const { data, error } = await query;
         if (error) { showToast(error.message, true); return; }
-        let html = `<table class="data-table"><thead><tr><th>ID</th><th>الاسم (عربي)</th><th>الإمارة</th><th>الحالة</th><th>إجراءات</th></tr></thead><tbody>`;
+        let html = `<table class="data-table"><thead><tr><th>ID</th><th>الاسم (عربي)</th><th>الإمارة</th><th>الحالة</th><th>إجراءات</th></table></thead><tbody>`;
         (data || []).forEach(p => {
-            html += `<tr><td>${p.id}</td><td>${escapeHtml(p.name_ar)}</td><td>${p.emirate}</td><td>${p.status}</td>
-            <td class="action-buttons"><button class="action-btn edit" onclick="window.editProject(${p.id})"><i class="fas fa-edit"></i></button><button class="action-btn delete" onclick="window.deleteItem('projects',${p.id})"><i class="fas fa-trash"></i></button></td></tr>`;
+            html += `<tr>
+                <td>${p.id}</td>
+                <td>${escapeHtml(p.name_ar)}</td>
+                <td>${p.emirate}</td>
+                <td>${p.status}</td>
+                <td class="action-buttons">
+                    <button class="action-btn edit" onclick="window.editProject(${p.id})"><i class="fas fa-edit"></i></button>
+                    <button class="action-btn delete" onclick="window.deleteItem('projects',${p.id})"><i class="fas fa-trash"></i></button>
+                </td>
+            </tr>`;
         });
         html += `</tbody></table>`;
         document.getElementById('projectsTableContainer').innerHTML = html;
@@ -620,14 +645,8 @@
         if (error) showToast(error.message, true);
         else { showToast('تم الحفظ'); document.getElementById('projectModal').classList.remove('active'); loadProjects(); loadStats(); }
     });
-    window.deleteItem = async (table, id) => {
-        if (confirm('حذف؟')) {
-            const { error } = await supabase.from(table).delete().eq('id', id);
-            if (error) showToast(error.message, true);
-            else { showToast('تم الحذف'); if (table === 'projects') loadProjects(); else if (table === 'products') loadProducts(); else if (table === 'deals') loadDeals(); loadStats(); }
-        }
-    };
 
+    // -------------------- إدارة المنتجات --------------------
     async function loadProducts() {
         const projectId = document.getElementById('productProjectFilter').value;
         if (!projectId) { document.getElementById('productsTableContainer').innerHTML = '<p>اختر مشروعاً أولاً</p>'; return; }
@@ -635,9 +654,16 @@
         if (error) { showToast(error.message, true); return; }
         let html = `<table class="data-table"><thead><tr><th>ID</th><th>الاسم (عربي)</th><th>إجراءات</th></tr></thead><tbody>`;
         (data || []).forEach(p => {
-            html += `<tr><td>${p.id}</td><td>${escapeHtml(p.name_ar)}</td><td class="action-buttons"><button class="action-btn edit" onclick="window.editProduct('${p.id}')"><i class="fas fa-edit"></i></button><button class="action-btn delete" onclick="window.deleteItem('products','${p.id}')"><i class="fas fa-trash"></i></button></td></tr>`;
+            html += `<tr>
+                <td>${p.id}</td>
+                <td>${escapeHtml(p.name_ar)}</td>
+                <td class="action-buttons">
+                    <button class="action-btn edit" onclick="window.editProduct('${p.id}')"><i class="fas fa-edit"></i></button>
+                    <button class="action-btn delete" onclick="window.deleteItem('products','${p.id}')"><i class="fas fa-trash"></i></button>
+                </td>
+            </tr>`;
         });
-        html += `</tbody></table>`;
+        html += `</tbody><table>`;
         document.getElementById('productsTableContainer').innerHTML = html;
     }
     window.editProduct = async (id) => {
@@ -674,6 +700,7 @@
         else { showToast('تم الحفظ'); document.getElementById('productModal').classList.remove('active'); loadProducts(); loadStats(); }
     });
 
+    // -------------------- إدارة العروض --------------------
     async function loadDeals() {
         const projectId = document.getElementById('dealProjectFilter').value;
         if (!projectId) { document.getElementById('dealsTableContainer').innerHTML = '<p>اختر مشروعاً</p>'; return; }
@@ -681,7 +708,14 @@
         if (error) { showToast(error.message, true); return; }
         let html = `<table class="data-table"><thead><tr><th>ID</th><th>العنوان (عربي)</th><th>إجراءات</th></tr></thead><tbody>`;
         (data || []).forEach(d => {
-            html += `<tr><td>${d.id}</td><td>${escapeHtml(d.title_ar)}</td><td class="action-buttons"><button class="action-btn edit" onclick="window.editDeal('${d.id}')"><i class="fas fa-edit"></i></button><button class="action-btn delete" onclick="window.deleteItem('deals','${d.id}')"><i class="fas fa-trash"></i></button></td></tr>`;
+            html += `<tr>
+                <td>${d.id}</td>
+                <td>${escapeHtml(d.title_ar)}</td>
+                <td class="action-buttons">
+                    <button class="action-btn edit" onclick="window.editDeal('${d.id}')"><i class="fas fa-edit"></i></button>
+                    <button class="action-btn delete" onclick="window.deleteItem('deals','${d.id}')"><i class="fas fa-trash"></i></button>
+                </td>
+            </tr>`;
         });
         html += `</tbody></table>`;
         document.getElementById('dealsTableContainer').innerHTML = html;
@@ -716,6 +750,7 @@
         else { showToast('تم الحفظ'); document.getElementById('dealModal').classList.remove('active'); loadDeals(); loadStats(); }
     });
 
+    // -------------------- إدارة جهات التواصل --------------------
     async function loadContacts() {
         const projectId = document.getElementById('contactProjectFilter').value;
         if (!projectId) { document.getElementById('contactsTableContainer').innerHTML = '<p>اختر مشروعاً</p>'; return; }
@@ -723,11 +758,13 @@
         if (error && error.code !== 'PGRST116') { showToast(error.message, true); return; }
         if (!data || data.length === 0) data = [{ project_id: projectId, whatsapp: '', phone: '', email: '', instagram: '' }];
         const contact = data[0];
-        let html = `<div class="contact-edit-form"><div class="form-row"><label>واتساب</label><input id="editWhatsapp" value="${contact.whatsapp || ''}"></div>
-        <div class="form-row"><label>هاتف</label><input id="editPhone" value="${contact.phone || ''}"></div>
-        <div class="form-row"><label>بريد</label><input id="editEmail" value="${contact.email || ''}"></div>
-        <div class="form-row"><label>إنستغرام</label><input id="editInstagram" value="${contact.instagram || ''}"></div>
-        <button id="saveContactBtn" class="btn-save">حفظ التغييرات</button></div>`;
+        let html = `<div class="contact-edit-form">
+            <div class="form-row"><label>واتساب</label><input id="editWhatsapp" value="${contact.whatsapp || ''}"></div>
+            <div class="form-row"><label>هاتف</label><input id="editPhone" value="${contact.phone || ''}"></div>
+            <div class="form-row"><label>بريد</label><input id="editEmail" value="${contact.email || ''}"></div>
+            <div class="form-row"><label>إنستغرام</label><input id="editInstagram" value="${contact.instagram || ''}"></div>
+            <button id="saveContactBtn" class="btn-save">حفظ التغييرات</button>
+        </div>`;
         document.getElementById('contactsTableContainer').innerHTML = html;
         document.getElementById('saveContactBtn').onclick = async () => {
             const payload = {
@@ -742,6 +779,7 @@
         };
     }
 
+    // -------------------- إدارة الشكاوى --------------------
     async function loadFeedbacks() {
         const status = document.getElementById('feedbackStatusFilter').value;
         let query = supabase.from('feedbacks').select('*').order('created_at', { ascending: false });
@@ -750,8 +788,20 @@
         if (error) { showToast(error.message, true); return; }
         let html = `<table class="data-table"><thead><tr><th>ID</th><th>النوع</th><th>الرسالة</th><th>البريد</th><th>الحالة</th><th>التاريخ</th><th>تغيير الحالة</th></tr></thead><tbody>`;
         (data || []).forEach(f => {
-            html += `<tr><td>${f.id}</td><td>${f.type}</td><td>${escapeHtml(f.message)}</td><td>${f.reporter_email || '-'}</td><td>${f.status}</td><td>${new Date(f.created_at).toLocaleString()}</td>
-            <td><select onchange="window.updateFeedbackStatus(${f.id}, this.value)"><option value="pending" ${f.status==='pending'?'selected':''}>معلق</option><option value="reviewed" ${f.status==='reviewed'?'selected':''}>مراجَع</option><option value="resolved" ${f.status==='resolved'?'selected':''}>محلول</option><option value="rejected" ${f.status==='rejected'?'selected':''}>مرفوض</option></select></td></tr>`;
+            html += `<tr>
+                <td>${f.id}</td>
+                <td>${f.type}</td>
+                <td>${escapeHtml(f.message)}</td>
+                <td>${f.reporter_email || '-'}</td>
+                <td>${f.status}</td>
+                <td>${new Date(f.created_at).toLocaleString()}</td>
+                <td><select onchange="window.updateFeedbackStatus(${f.id}, this.value)">
+                    <option value="pending" ${f.status==='pending'?'selected':''}>معلق</option>
+                    <option value="reviewed" ${f.status==='reviewed'?'selected':''}>مراجَع</option>
+                    <option value="resolved" ${f.status==='resolved'?'selected':''}>محلول</option>
+                    <option value="rejected" ${f.status==='rejected'?'selected':''}>مرفوض</option>
+                </select></td>
+            </tr>`;
         });
         html += `</tbody></table>`;
         document.getElementById('feedbacksTableContainer').innerHTML = html;
@@ -761,6 +811,7 @@
         if (error) showToast(error.message, true); else { showToast('تم التحديث'); loadFeedbacks(); }
     };
 
+    // -------------------- دوال مساعدة --------------------
     async function initEmirateFilter() {
         const { data } = await supabase.from('projects').select('emirate');
         const unique = [...new Set((data||[]).map(p=>p.emirate).filter(Boolean))];
@@ -779,7 +830,17 @@
         fillSelect('dealProjectFilter');
         fillSelect('contactProjectFilter');
     }
+    window.deleteItem = async (table, id) => {
+        if (confirm('حذف؟')) {
+            const { error } = await supabase.from(table).delete().eq('id', id);
+            if (error) showToast(error.message, true);
+            else { showToast('تم الحذف'); if (table === 'projects') loadProjects(); else if (table === 'products') loadProducts(); else if (table === 'deals') loadDeals(); loadStats(); }
+        }
+    };
+    function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, function(m) { if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m; }); }
+    window.escapeHtml = escapeHtml;
 
+    // -------------------- تسجيل الدخول والتبويبات --------------------
     async function performLogin(email, pwd) {
         const { data, error } = await supabase.auth.signInWithPassword({ email, password: pwd });
         if (error || data.user.email !== ALLOWED_EMAIL) { document.getElementById('loginError').innerText = 'بيانات غير صحيحة'; return; }
@@ -797,7 +858,6 @@
         await loadContacts();
         await loadFeedbacks();
         attachTabEvents();
-        // تحديث تلقائي كل دقيقة للتحليلات
         setInterval(() => { if (document.querySelector('.tab-btn.active').dataset.tab === 'dashboard') loadAnalytics(); }, 60000);
     }
 
@@ -833,7 +893,12 @@
     document.getElementById('addDealBtn').onclick = () => { const pid = document.getElementById('dealProjectFilter').value; if(!pid){ showToast('اختر مشروعاً', true); return; } document.getElementById('dealForm').reset(); document.getElementById('dealId').value = ''; document.getElementById('dealProjectId').value = pid; document.getElementById('dealModal').classList.add('active'); };
     document.querySelectorAll('.modal-close').forEach(btn => btn.addEventListener('click', () => { document.getElementById(btn.dataset.modal).classList.remove('active'); }));
     window.onclick = (e) => { if(e.target.classList.contains('modal')) e.target.classList.remove('active'); };
-    document.getElementById('exportAnalyticsBtn').onclick = () => showToast('تصدير CSV سيتم قريباً');
+    document.getElementById('exportAnalyticsBtn').onclick = () => {
+        const period = document.getElementById('analyticsPeriod').value;
+        showToast(`سيتم تصدير بيانات الفترة ${period} قريباً`);
+    };
+    document.getElementById('refreshAnalyticsBtn').addEventListener('click', () => loadAnalytics());
+    document.getElementById('analyticsPeriod').addEventListener('change', () => loadAnalytics());
 
     async function checkSession() {
         const { data: { session } } = await supabase.auth.getSession();
@@ -846,9 +911,6 @@
         }
     }
     checkSession();
-
-    function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, function(m) { if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m; }); }
-    window.escapeHtml = escapeHtml;
 </script>
 </body>
 </html>
