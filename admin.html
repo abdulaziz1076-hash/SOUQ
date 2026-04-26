@@ -451,6 +451,9 @@
         <input type="password" id="adminPassword" placeholder="كلمة المرور" style="width:100%; padding:14px; margin-bottom:24px; border-radius:40px; border:1px solid #ccc;">
         <button id="loginBtn" style="background:#0a2e25; color:white; width:100%; padding:14px; border-radius:40px; font-weight:bold; border:none; font-size:16px;">دخول <i class="fas fa-arrow-left"></i></button>
         <div id="loginError" style="color:#dc2626; margin-top:16px;"></div>
+        <div style="margin-top: 15px;">
+            <a href="#" id="forgotPasswordLink" style="color: #D4AF37; text-decoration: none; font-size: 13px;">نسيت كلمة المرور؟</a>
+        </div>
     </div>
 </div>
 
@@ -979,5 +982,29 @@
     document.getElementById('logoutBtn').onclick = async () => { await supabase.auth.signOut(); location.reload(); };
     checkSession();
 </script>
+
+<script>
+    document.getElementById('forgotPasswordLink')?.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('adminEmail').value;
+        if (!email || !email.includes('@')) {
+            alert('الرجاء إدخال البريد الإلكتروني أولاً');
+            return;
+        }
+        const supabaseUrl = 'https://xyepcwptfihnztgghimx.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5ZXBjd3B0Zmlobnp0Z2doaW14Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0ODA2OTcsImV4cCI6MjA5MjA1NjY5N30.SZvZjWpih1JiUlv24xLhNwjTvzo9RNsrTiI9fchWldE';
+        const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+        const supabase = createClient(supabaseUrl, supabaseKey);
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+            redirectTo: 'https://souqalmasharie.onrender.com/reset-password.html'
+        });
+        if (error) {
+            alert('حدث خطأ: ' + error.message);
+        } else {
+            alert('تم إرسال رابط إعادة التعيين إلى بريدك الإلكتروني');
+        }
+    });
+</script>
+
 </body>
 </html>
