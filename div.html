@@ -329,7 +329,6 @@ const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey
             interests.push({ email: email, phone: phone, date: new Date().toISOString() });
             localStorage.setItem('deliveryInterest', JSON.stringify(interests));
 
-            // يمكنك أيضاً إرسال إلى Formspree أو Google Sheets
             try {
     const { error } = await supabase
         .from('delivery_interests')
