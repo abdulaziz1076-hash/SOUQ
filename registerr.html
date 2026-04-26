@@ -165,7 +165,10 @@
     </div>
 </footer>
 
-<script>
+<script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+import { APP_CONFIG } from './config.js';
+const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
     // ---- بيانات الترجمة (نموذج واحد) ----
     const translations = {
         ar: {
@@ -357,8 +360,6 @@
         }
     });
     
-    // إرسال النموذج
-    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xvzvbgne';
     const form = document.getElementById('registerForm');
     
     form.addEventListener('submit', async function(e) {
@@ -398,23 +399,31 @@
         localStorage.setItem('projectRegistrations', JSON.stringify(registrations));
         
         try {
-            const response = await fetch(FORMSPREE_ENDPOINT, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                body: JSON.stringify(formData)
-            });
-            if (response.ok) {
-                setTimeout(() => { window.location.href = 'thankyou.html'; }, 1000);
-            } else {
-                loadingDiv.style.display = 'none';
-                alert(currentLang === 'ar' ? 'حدث خطأ في إرسال الطلب. سيتم حفظ بياناتك محلياً وسنتواصل معك قريباً.' : 'There was an error sending your request. Your data has been saved locally and we will contact you soon.');
-                setTimeout(() => { window.location.href = 'thankyou.html'; }, 1500);
-            }
-        } catch (error) {
-            loadingDiv.style.display = 'none';
-            alert(currentLang === 'ar' ? 'خطأ في الشبكة. تم حفظ طلبك وسنتواصل معك قريباً.' : 'Network error. Your request has been saved and we will contact you soon.');
-            setTimeout(() => { window.location.href = 'thankyou.html'; }, 1500);
-        }
+    const { error: insertError } = await supabase
+        .from('project_registrations')
+        .insert([{
+            project_name: formData.projectName,
+            emirate: formData.emirate,
+            whatsapp: formData.whatsapp,
+            instagram: formData.instagram,
+            category: formData.category,
+            description: formData.description,
+            status: 'pending'
+        }]);
+
+    if (insertError) throw insertError;
+
+    // نجاح
+    setTimeout(() => { window.location.href = 'thankyou.html'; }, 1000);
+} catch (error) {
+    console.error(error);
+    loadingDiv.style.display = 'none';
+    // نفس رسائل الخطأ القديمة (يمكنك إبقاؤها أو تعديلها)
+    alert(currentLang === 'ar' 
+        ? 'تعذر الإرسال للخادم. تم حفظ طلبك محلياً وسنتواصل معك قريباً.' 
+        : 'Could not send to server. Your request has been saved locally and we will contact you soon.');
+    setTimeout(() => { window.location.href = 'thankyou.html'; }, 1500);
+}
     });
     
     async function getClientIP() {
@@ -428,6 +437,6 @@
     }
     
     updateUI();
-</script>
+</script type="module">
 </body>
 </html>
