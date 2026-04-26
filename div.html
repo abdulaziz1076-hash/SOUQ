@@ -203,7 +203,10 @@
         </div>
     </footer>
 
-    <script>
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+import { APP_CONFIG } from './config.js';
+const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
         let currentLang = 'ar';
 
         const translations = {
@@ -327,16 +330,14 @@
             localStorage.setItem('deliveryInterest', JSON.stringify(interests));
 
             // يمكنك أيضاً إرسال إلى Formspree أو Google Sheets
-            fetch('https://formspree.io/f/xvzvbgne', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    email: email, 
-                    phone: phone, 
-                    type: 'delivery_interest',
-                    message: `مهتم بدليل شركات التوصيل - البريد: ${email}، الهاتف: ${phone}`
-                })
-            }).catch(console.error);
+            try {
+    const { error } = await supabase
+        .from('delivery_interests')
+        .insert([{ email, phone }]);
+    if (error) console.warn('Supabase insert warning:', error);
+} catch (e) {
+    console.warn('Supabase insert error:', e);
+}
 
             showToast(t.toastSuccess);
             document.getElementById('notifyEmail').value = '';
