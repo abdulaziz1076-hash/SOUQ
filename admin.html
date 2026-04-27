@@ -403,8 +403,22 @@
             <div><label class="font-bold block mb-1" style="color:#0F3D2E;">التصنيف</label><select id="productCategory" class="w-full"><option value="">-- اختر --</option><option>أطعمة ومشروبات</option><option>روائح وعطور</option><option>عناية</option><option>حلويات</option><option>هدايا</option><option>ملابس</option><option>يدويات</option><option>فنون</option><option>نباتات</option><option>ترفيه</option></select></div>
             <div><label class="font-bold block mb-1" style="color:#0F3D2E;">الوصف (عربي)</label><textarea id="productDescAr" rows="2" class="w-full"></textarea></div>
             <div><label class="font-bold block mb-1" style="color:#0F3D2E;">الوصف (إنجليزي)</label><textarea id="productDescEn" rows="2" class="w-full"></textarea></div>
-            <div><label class="font-bold block mb-1" style="color:#0F3D2E;">تفاصيل إضافية (عربي - كل سطر عنصر)</label><textarea id="productDetailsAr" rows="3" class="w-full"></textarea></div>
-            <button type="submit" class="btn-primary w-full py-3 text-lg">حفظ المنتج</button>
+            <div class="border-t pt-4 mt-4">
+                <h4 class="font-bold mb-3 flex items-center gap-2" style="color:#0F3D2E;">
+                    <i class="fas fa-list-ul" style="color:#D4AF37;"></i> خيارات المنتج (الأحجام، النكهات...)
+                </h4>
+                <div id="variantsList" class="space-y-2 mb-3"></div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+                    <input type="text" id="newVariantAr" placeholder="اسم الخيار (عربي)" class="flex-1">
+                    <input type="text" id="newVariantEn" placeholder="اسم الخيار (إنجليزي)" class="flex-1">
+                    <input type="text" id="newVariantPriceAr" placeholder="السعر (عربي)" class="w-24">
+                    <input type="text" id="newVariantPriceEn" placeholder="السعر (إنجليزي)" class="w-24">
+                    <button type="button" id="addVariantBtn" class="btn-primary text-sm" style="background:#D4AF37;color:#0F3D2E;">
+                        <i class="fas fa-plus"></i> إضافة خيار
+                    </button>
+                </div>
+            </div>
+            <button type="submit" class="btn-primary w-full py-3 text-lg">حفظ المنتج</button>            <button type="submit" class="btn-primary w-full py-3 text-lg">حفظ المنتج</button>
         </form>
     </div>
 </div>
@@ -683,6 +697,51 @@
         loadStats();
     };
 
+        // ====== إدارة خيارات المنتج ======
+    let tempVariants = [];
+
+    function renderVariantsList() {
+        const list = document.getElementById('variantsList');
+        if (!list) return;
+        list.innerHTML = tempVariants.map((v, idx) => `
+            <div class="flex items-center gap-2 bg-gray-50 p-2 rounded-lg">
+                <span class="flex-1 font-bold">${v.label_ar} (${v.label_en})</span>
+                <span class="text-sm text-gray-600">${v.price_ar || v.price_en || '-'}</span>
+                ${v.is_default ? '<span class="badge badge-featured text-xs">افتراضي</span>' : ''}
+                <button type="button" onclick="window.removeVariant(${idx})" class="text-red-500 hover:bg-red-100 p-1 rounded"><i class="fas fa-trash"></i></button>
+            </div>
+        `).join('');
+    }
+
+    function addVariant() {
+        const ar = document.getElementById('newVariantAr')?.value.trim();
+        const en = document.getElementById('newVariantEn')?.value.trim();
+        if (!ar || !en) return showToast('أدخل اسم الخيار بالعربية والإنجليزية', true);
+        const prAr = document.getElementById('newVariantPriceAr')?.value.trim();
+        const prEn = document.getElementById('newVariantPriceEn')?.value.trim();
+        tempVariants.push({
+            label_ar: ar,
+            label_en: en,
+            price_ar: prAr,
+            price_en: prEn,
+            is_default: tempVariants.length === 0
+        });
+        document.getElementById('newVariantAr').value = '';
+        document.getElementById('newVariantEn').value = '';
+        document.getElementById('newVariantPriceAr').value = '';
+        document.getElementById('newVariantPriceEn').value = '';
+        renderVariantsList();
+    }
+
+    window.removeVariant = (idx) => {
+        tempVariants.splice(idx, 1);
+        if (tempVariants.length > 0 && !tempVariants.some(v => v.is_default)) {
+            tempVariants[0].is_default = true;
+        }
+        renderVariantsList();
+    };
+
+    document.getElementById('addVariantBtn')?.addEventListener('click', addVariant);
     // ==================== PRODUCTS ====================
     async function loadProducts() {
         const pid = document.getElementById('productProjectFilter').value;
@@ -703,7 +762,7 @@
                 `).join('')}</tbody>
             </table>`;
     }
-    window.editProduct = async (id) => {
+        window.editProduct = async (id) => {
         const { data } = await supabase.from('products').select('*').eq('id',id).single();
         if(!data) return;
         document.getElementById('productId').value = data.id;
@@ -718,12 +777,18 @@
         document.getElementById('productDescAr').value = data.description_ar||'';
         document.getElementById('productDescEn').value = data.description_en||'';
         document.getElementById('productDetailsAr').value = (data.details_ar||[]).join('\n');
+
+        // تحميل الخيارات من القاعدة
+        const { data: variants } = await supabase.from('product_variants').select('*').eq('product_id', id);
+        tempVariants = variants || [];
+        renderVariantsList();
+
         openModal('productModal');
     };
-    document.getElementById('productForm').addEventListener('submit', async (e) => {
+        document.getElementById('productForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const projId = document.getElementById('productProjectId').value;
-        const id = document.getElementById('productId').value;
+        const existingId = document.getElementById('productId').value;
         const payload = {
             name_ar: document.getElementById('productNameAr').value,
             name_en: document.getElementById('productNameEn').value,
@@ -738,11 +803,34 @@
             details_ar: document.getElementById('productDetailsAr').value.split('\n').filter(l=>l.trim()),
             project_id: projId
         };
-        if (id) { await supabase.from('products').update(payload).eq('id',id); }
-        else { payload.id = crypto.randomUUID(); await supabase.from('products').insert(payload); }
-        closeModal('productModal'); loadProducts(); loadStats(); showToast('تم الحفظ');
-    });
 
+        let finalProductId = existingId;
+        if (existingId) {
+            await supabase.from('products').update(payload).eq('id', existingId);
+        } else {
+            payload.id = crypto.randomUUID();
+            finalProductId = payload.id;
+            await supabase.from('products').insert(payload);
+        }
+
+        // تحديث الخيارات
+        await supabase.from('product_variants').delete().eq('product_id', finalProductId);
+        if (tempVariants.length > 0) {
+            const variantsPayload = tempVariants.map(v => ({
+                ...v,
+                id: crypto.randomUUID(),
+                product_id: finalProductId
+            }));
+            await supabase.from('product_variants').insert(variantsPayload);
+        }
+
+        closeModal('productModal');
+        loadProducts();
+        loadStats();
+        showToast('تم حفظ المنتج مع الخيارات');
+        tempVariants = [];
+        renderVariantsList();
+    });
     // ==================== DEALS ====================
     async function loadDeals() {
         const pid = document.getElementById('dealProjectFilter').value;
@@ -900,12 +988,14 @@
         document.getElementById('projectStatus').value = 'pending';
         openModal('projectModal');
     };
-    document.getElementById('addProductBtn').onclick = () => {
+        document.getElementById('addProductBtn').onclick = () => {
         const pid = document.getElementById('productProjectFilter').value;
         if (!pid) { showToast('اختر مشروعاً أولاً', true); return; }
         document.getElementById('productForm').reset();
         document.getElementById('productId').value = '';
         document.getElementById('productProjectId').value = pid;
+        tempVariants = [];
+        renderVariantsList();
         openModal('productModal');
     };
     document.getElementById('addDealBtn').onclick = () => {
