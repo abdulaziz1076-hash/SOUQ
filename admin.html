@@ -897,31 +897,31 @@
         renderVariants();
     });
 
-    async function saveProject(e) {
-        e.preventDefault();
-        const id = document.getElementById('projectId').value;
-        const payload = {
-            name_ar: document.getElementById('projectNameAr').value,
-            name_en: document.getElementById('projectNameEn').value,
-            emirate: document.getElementById('projectEmirate').value,
-            image: document.getElementById('projectImage').value,
-            description_ar: document.getElementById('projectDescAr').value,
-            description_en: document.getElementById('projectDescEn').value,
-            long_description_ar: document.getElementById('projectLongDescAr').value,
-            long_description_en: document.getElementById('projectLongDescEn').value,
-            adra_license: document.getElementById('projectLicense').checked,
-            status: document.getElementById('projectStatus').value
-        };
-        let error;
-        if (id) {
-            error = (await supabase.from('projects').update(payload).eq('id', id)).error;
-        } else {
-            // الحصول على أكبر id لإضافته يدويا (بما أننا لم نعدل الجدول بشكل دائم، نستخدم هذه الطريقة)
-            const { data: maxIdData } = await supabase.from('projects').select('id').order('id', { ascending: false }).limit(1);
-            const newId = (maxIdData && maxIdData[0]?.id) ? maxIdData[0].id + 1 : 1000;
-            payload.id = newId;
-            error = (await supabase.from('projects').insert(payload)).error;
-        }
+async function saveProject(e) {
+    e.preventDefault();
+    const id = document.getElementById('projectId').value;
+    const payload = {
+        name_ar: document.getElementById('projectNameAr').value,
+        name_en: document.getElementById('projectNameEn').value,
+        emirate: document.getElementById('projectEmirate').value,
+        image: document.getElementById('projectImage').value,
+        description_ar: document.getElementById('projectDescAr').value,
+        description_en: document.getElementById('projectDescEn').value,
+        long_description_ar: document.getElementById('projectLongDescAr').value,
+        long_description_en: document.getElementById('projectLongDescEn').value,
+        adra_license: document.getElementById('projectLicense').checked,
+        status: document.getElementById('projectStatus').value
+    };
+    let error;
+    if (id) {
+        error = (await supabase.from('projects').update(payload).eq('id', id)).error;
+    } else {
+        // لا ترسل id، لأن قاعدة البيانات تولدها تلقائياً
+        error = (await supabase.from('projects').insert(payload)).error;
+    }
+    if (error) showToast(error.message, true);
+    else { showToast('تم حفظ المشروع'); document.getElementById('projectModal').classList.remove('active'); loadProjects(); loadStats(); }
+}
         if (error) showToast(error.message, true);
         else { showToast('تم حفظ المشروع'); document.getElementById('projectModal').classList.remove('active'); loadProjects(); loadStats(); }
     }
