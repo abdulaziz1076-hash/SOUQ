@@ -364,6 +364,7 @@ function parseSellPoints(sellPoints) {
 const translations = {
     ar: {
         siteTitle: "سوق المشاريع", 
+        variantsTitle: "الخيارات",
         paidBadge: "مميز", 
         privacy: "سياسة الخصوصية", 
         terms: "شروط الاستخدام",
@@ -450,6 +451,7 @@ const translations = {
     },
     en: {
         siteTitle: "Souq Almasharie", 
+        variantsTitle: "Options",
         registerTitle: "Register Your Project Now", 
         registerViaX: "Message us on X",
         registerViaInstagram: "Message us on Instagram", 
@@ -973,12 +975,13 @@ function showProductDetail(familyId, productId, updateHash = true) {
     const product = family.products.find(p => p.id === productId);
     if (!product) return;
     appState.currentFamilyId = familyId;
-    currentVariants = variants || [];
     appState.currentProductId = productId;
+
     if (updateHash) {
         navigateTo(`/product/${familyId}/${productId}`);
         return;
     }
+
     const t = translations[appState.currentLanguage];
     const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
     const productName = appState.currentLanguage === 'ar' ? product.name : product.nameEn;
@@ -986,23 +989,29 @@ function showProductDetail(familyId, productId, updateHash = true) {
     const productCategory = appState.currentLanguage === 'ar' ? product.category : product.categoryEn;
     const tCat = translations[appState.currentLanguage].categories;
     const categoryDisplay = tCat[product.category] || productCategory;
+
     const images = product.images && product.images.length > 0 ? product.images : [product.mainImage || product.image];
     currentProductImagesArray = images;
     currentProductImageIndex = 0;
+
     const thumbnailsHtml = images.map((img, index) => `
         <div class="product-thumbnail ${index === 0 ? 'active' : ''}" onclick="changeMainImage('${img}', this, ${index})">
             <img src="${img}" loading="lazy">
         </div>
     `).join('');
+
     const details = appState.currentLanguage === 'ar' ? product.details : product.detailsEn;
     const detailsHtml = details && details.length ? details.map(d => `<li><i class="fas fa-check-circle"></i> ${d}</li>`).join('') : '';
     const specsHtml = detailsHtml ? `<h3 class="product-details-title"><i class="fas fa-list-ul"></i> ${t.specifications}</h3><ul class="product-details-list">${detailsHtml}</ul>` : '';
+
     const similarProducts = family.products.filter(p => p.id !== productId).slice(0, 4);
     const similarHtml = similarProducts.map(p => {
         const similarName = appState.currentLanguage === 'ar' ? p.name : p.nameEn;
         return `<div class="similar-product-card" onclick="showProductDetail(${familyId}, '${p.id}')"><div class="similar-product-image"><img src="${p.mainImage || p.image}" loading="lazy"></div><div class="similar-product-info"><h4>${similarName}</h4></div></div>`;
     }).join('');
+
     const licenseBadgeHtml = family.adra_license === 'نعم' ? `<div class="license-badge-large" style="margin-right: 0; margin-bottom: 5px;"><i class="fas fa-check-circle"></i> ${t.licensed}</div>` : '';
+
     let sellerContactHtml = '';
     if (family.whatsapp) {
         const whatsappUrl = `https://wa.me/${String(family.whatsapp).replace(/[^0-9]/g, '')}`;
@@ -1022,20 +1031,23 @@ function showProductDetail(familyId, productId, updateHash = true) {
             sellerContactHtml += `<a href="#" onclick="handleContact('${p.url}', '${p.type}'); return false;" class="seller-contact-item"><div class="seller-contact-icon ${p.bg}"><i class="fab ${p.icon}"></i></div></a>`;
         });
     }
+
     const isFav = isFavorite(product.id, 'product');
-    // ✅ السعر هنا بشكل منفصل
-    const priceDisplay = getPriceDisplay(product);
-        // جلب خيارات المنتج من قاعدة البيانات
+
+    // جلب خيارات المنتج من قاعدة البيانات
     const { data: variants, error: varErr } = await supabase
         .from('product_variants')
         .select('*')
         .eq('product_id', product.id);
-    const hasVariants = variants && variants.length > 0;
-    const currentVariants = variants || [];
+    
+    // تحديث المتغير العام
+    currentVariants = variants || [];
+    const hasVariants = currentVariants.length > 0;
     const defaultVariant = currentVariants.find(v => v.is_default) || currentVariants[0];
     const initialPrice = defaultVariant 
         ? (appState.currentLanguage === 'ar' ? defaultVariant.price_ar : defaultVariant.price_en)
         : getPriceDisplay(product);
+
     const html = `
         <div class="product-gallery">
             <div class="product-main-image-container">
@@ -1050,7 +1062,7 @@ function showProductDetail(familyId, productId, updateHash = true) {
         <div class="product-detail-info">
             <span class="product-detail-category"><i class="fas fa-tag"></i> ${categoryDisplay}</span>
             <h1 class="product-detail-name">${productName}</h1>
-            <div class="product-price-display" id="dynamicPrice">${escapeHtml(initialPrice)}</div>
+            <div class="product-price-display" id="dynamicPrice">${initialPrice}</div>
             ${hasVariants ? `
             <div class="product-variants mt-4">
                 <h3 class="product-details-title"><i class="fas fa-list-ul"></i> ${t.variantsTitle || 'الخيارات'}</h3>
@@ -1064,7 +1076,8 @@ function showProductDetail(familyId, productId, updateHash = true) {
                     `).join('')}
                 </div>
             </div>
-            ` : ''}            <p class="product-detail-description">${productDesc}</p>
+            ` : ''}
+            <p class="product-detail-description">${productDesc}</p>
             ${specsHtml}
         </div>
         <div class="seller-info-card">
@@ -1078,6 +1091,7 @@ function showProductDetail(familyId, productId, updateHash = true) {
         </div>
         ${similarHtml ? `<div class="similar-products-section"><h3 class="similar-products-title"><i class="fas fa-boxes"></i> ${t.similarProducts}</h3><div class="similar-products-grid">${similarHtml}</div></div>` : ''}
     `;
+
     const container = document.getElementById('productDetailContainer');
     if (container) container.innerHTML = html;
     showPage('product-detail');
