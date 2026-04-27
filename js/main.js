@@ -65,8 +65,6 @@ async function loadProjectsFromSupabase() {
             name: project.name_ar,
             nameEn: project.name_en,
             is_paid: project.is_paid,
-            price_ar: p.price_ar,
-            price_en: p.price_en,
             emirate: project.emirate,
             description: project.description_ar,
             descriptionEn: project.description_en,
@@ -82,8 +80,6 @@ async function loadProjectsFromSupabase() {
                 name: p.name_ar,
                 nameEn: p.name_en,
                 description: p.description_ar,
-                price_ar: p.price_ar,
-                price_en: p.price_en,
                 descriptionEn: p.description_en,
                 longDescription: p.long_description_ar,
                 longDescriptionEn: p.long_description_en,
@@ -92,7 +88,9 @@ async function loadProjectsFromSupabase() {
                 details: p.details_ar || [],
                 detailsEn: p.details_en || [],
                 category: p.category_ar,
-                categoryEn: p.category_en
+                categoryEn: p.category_en,
+                price_ar: p.price_ar,
+                price_en: p.price_en,
             })),
             deals: (project.deals || []).map(d => ({
                 id: d.id,
@@ -100,8 +98,6 @@ async function loadProjectsFromSupabase() {
                 titleEn: d.title_en,
                 description: d.description_ar,
                 descriptionEn: d.description_en,
-                price_ar: p.price_ar,
-                price_en: p.price_en,
                 image: d.image,
                 images: d.images || [],
                 badge: d.badge_ar,
@@ -875,6 +871,7 @@ function showFamilyProducts(id, updateHash = true) {
                     ${shareButtonHtml}
                     ${feedbackButtonHtml}
                     <div class="profile-avatar" style="background-image: url('${family.image}');"></div>
+                    <div class="product-price">${priceText}</div>
                     <div>
                         <h2 class="profile-name">${familyName}</h2>
                         ${licenseBadgeHtml}
