@@ -1640,28 +1640,20 @@ async function submitFeedback(event) {
 }
 
 // ==================== Analytics Tracking ====================
-function trackPageView() {
-    const supabaseUrl = "https://xyepcwptfihnztgghimx.supabase.co";
-    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5ZXBjd3B0Zmlobnp0Z2doaW14Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0ODA2OTcsImV4cCI6MjA5MjA1NjY5N30.SZvZjWpih1JiUlv24xLhNwjTvzo9RNsrTiI9fchWldE";
+async function trackPageView() {
     let device = 'Desktop';
     const ua = navigator.userAgent;
     if (/Mobile|Android|iPhone|iPad|iPod/i.test(ua)) device = 'Mobile';
     else if (/Tablet/i.test(ua)) device = 'Tablet';
     
-    fetch(`${supabaseUrl}/rest/v1/analytics_events`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'apikey': supabaseKey,
-            'Authorization': `Bearer ${supabaseKey}`
-        },
-        body: JSON.stringify({
+    try {
+        await supabase.from('analytics_events').insert([{
             page: window.location.pathname + window.location.hash,
             referrer: document.referrer || 'direct',
             device: device,
             user_agent: ua.slice(0, 200)
-        })
-    }).catch(e => console.warn("Tracking error:", e));
+        }]);
+    } catch(e) { console.warn("Tracking error:", e); }
 }
 
 window.addEventListener('load', () => setTimeout(trackPageView, 100));
