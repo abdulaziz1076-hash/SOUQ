@@ -476,7 +476,6 @@
             <button class="tab-btn" data-tab="feedbacks"><i class="fas fa-comment-dots"></i> الشكاوى</button>
         </div>
 
-        <!-- Dashboard -->
         <div id="dashboardTab" class="content-card active">
             <div class="period-selector">
                 <select id="analyticsPeriod">
@@ -504,7 +503,6 @@
             </div>
         </div>
 
-        <!-- باقي التبويبات بنفس الجودة -->
         <div id="registrationsTab" class="content-card">
             <div class="filter-bar">
                 <div class="filter-group">
@@ -569,8 +567,34 @@
     </div>
 </div>
 
-<!-- مودالات المشروع والمنتج والعرض -->
-<div id="projectModal" class="modal"><div class="modal-content"><div class="modal-header"><h3 id="projectModalTitle">مشروع</h3><button class="modal-close" data-modal="projectModal"><i class="fas fa-times"></i></button></div><div class="modal-body"><form id="projectForm"><input type="hidden" id="projectId"><div class="form-row"><label>الاسم (عربي)</label><input id="projectNameAr" required></div><div class="form-row"><label>الاسم (إنجليزي)</label><input id="projectNameEn" required></div><div class="form-row"><label>الإمارة</label><select id="projectEmirate"><option>أبوظبي</option><option>دبي</option><option>الشارقة</option><option>عجمان</option><option>رأس الخيمة</option><option>الفجيرة</option><option>أم القيوين</option></select></div><div class="form-row"><label>الصورة (URL)</label><input id="projectImage" placeholder="رابط الصورة"></div><div class="checkbox-row"><input type="checkbox" id="projectLicense"><label>رخصة أدريا</label></div><div class="form-row"><label>الحالة</label><select id="projectStatus"><option value="pending">معلق</option><option value="approved">موافق</option><option value="rejected">مرفوض</option></select></div><button class="btn-save">حفظ</button></form></div></div></div>
+<div id="projectModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="projectModalTitle">مشروع</h3>
+            <button class="modal-close" data-modal="projectModal"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <form id="projectForm">
+                <input type="hidden" id="projectId">
+                <div class="form-row"><label>الاسم (عربي)</label><input id="projectNameAr" required></div>
+                <div class="form-row"><label>الاسم (إنجليزي)</label><input id="projectNameEn" required></div>
+                <div class="form-row"><label>الإمارة</label>
+                    <select id="projectEmirate">
+                        <option>أبوظبي</option><option>دبي</option><option>الشارقة</option><option>عجمان</option><option>رأس الخيمة</option><option>الفجيرة</option><option>أم القيوين</option>
+                    </select>
+                </div>
+                <div class="form-row"><label>الصورة (URL)</label><input id="projectImage" placeholder="رابط الصورة"></div>
+                <div class="checkbox-row"><input type="checkbox" id="projectLicense"><label>رخصة أدريا</label></div>
+                <div class="form-row"><label>الحالة</label>
+                    <select id="projectStatus">
+                        <option value="pending">معلق</option><option value="approved">موافق</option><option value="rejected">مرفوض</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-save">حفظ</button>
+            </form>
+        </div>
+    </div>
+</div>
 
 <div id="productModal" class="modal">
   <div class="modal-content">
@@ -587,7 +611,6 @@
         <div class="form-row"><label>الصورة الرئيسية (URL)</label><input id="productMainImage"></div>
         <div class="form-row"><label>صور إضافية (فاصلة)</label><input id="productImages" placeholder="url1,url2"></div>
         <div class="form-row"><label>التفاصيل (عربي)</label><textarea id="productDetailsAr" rows="3"></textarea></div>
-        <!-- ✅ إضافة حقلي السعر هنا -->
         <div class="form-row">
           <label>السعر (عربي)</label>
           <input type="text" id="productPriceAr" placeholder="مثل: 50 درهم">
@@ -596,17 +619,37 @@
           <label>السعر (إنجليزي)</label>
           <input type="text" id="productPriceEn" placeholder="e.g. 50 AED">
         </div>
-        <button class="btn-save">حفظ</button>
+        <button type="submit" class="btn-save">حفظ</button>
       </form>
     </div>
   </div>
 </div>
 
-<div id="dealModal" class="modal"><div class="modal-content"><div class="modal-header"><h3>عرض</h3><button class="modal-close" data-modal="dealModal"><i class="fas fa-times"></i></button></div><div class="modal-body"><form id="dealForm"><input type="hidden" id="dealId"><input type="hidden" id="dealProjectId"><div class="form-row"><label>العنوان (عربي)</label><input id="dealTitleAr" required></div><div class="form-row"><label>العنوان (إنجليزي)</label><input id="dealTitleEn" required></div><div class="form-row"><label>الصورة (URL)</label><input id="dealImage"></div><div class="form-row"><label>الوصف (عربي)</label><textarea id="dealDescAr" rows="2"></textarea></div><button class="btn-save">حفظ</button></form></div></div></div>
+<div id="dealModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>عرض</h3>
+            <button class="modal-close" data-modal="dealModal"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <form id="dealForm">
+                <input type="hidden" id="dealId">
+                <input type="hidden" id="dealProjectId">
+                <div class="form-row"><label>العنوان (عربي)</label><input id="dealTitleAr" required></div>
+                <div class="form-row"><label>العنوان (إنجليزي)</label><input id="dealTitleEn" required></div>
+                <div class="form-row"><label>الصورة (URL)</label><input id="dealImage"></div>
+                <div class="form-row"><label>الوصف (عربي)</label><textarea id="dealDescAr" rows="2"></textarea></div>
+                <button type="submit" class="btn-save">حفظ</button>
+            </form>
+        </div>
+    </div>
+</div>
 
 <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+    // تنبيه: تأكد من وجود ملف config.js في نفس المجلد الذي يحتوي على هذه الصفحة.
     import { APP_CONFIG } from './config.js';
+    
     const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
     const ALLOWED_EMAIL = 'abdulaziz1076@gmail.com';
     let charts = {};
@@ -647,7 +690,7 @@
         const { data: events, error } = await supabase.from('analytics_events').select('*').gte('created_at', since.toISOString()).order('created_at', { ascending: false });
         if (error || !events) return;
         
-        // الزيارات لكل دقيقة (آخر 10 فترات)
+        // الزيارات لكل دقيقة
         const byMinute = {};
         events.forEach(ev => { let key = ev.created_at.slice(0,16); byMinute[key] = (byMinute[key] || 0) + 1; });
         const labels = Object.keys(byMinute).slice(-10).map(k => k.slice(11,16));
@@ -693,7 +736,7 @@
         tbody.innerHTML = events.slice(0,20).map(ev => `<tr><td>${ev.page || '-'}</td><td>${ev.referrer || 'مباشر'}</td><td>${ev.device || '-'}</td><td>${new Date(ev.created_at).toLocaleString()}</td></tr>`).join('');
     }
     
-    // طلبات التسجيل (مع وسوم)
+    // طلبات التسجيل
     async function loadRegistrations() {
         const status = document.getElementById('regStatusFilter').value;
         let query = supabase.from('project_registrations').select('*').order('created_at', { ascending: false });
@@ -726,7 +769,7 @@
         loadRegistrations(); loadStats();
     };
     
-    // المشاريع مع pagination وصور مصغرة
+    // المشاريع
     async function loadProjects(page = 1) {
         currentProjectsPage = page;
         let query = supabase.from('projects').select('*', { count: 'exact' }).order('id', { ascending: false }).range((page-1)*10, page*10-1);
@@ -756,7 +799,6 @@
         });
         html += `</tbody></table>`;
         document.getElementById('projectsTableContainer').innerHTML = html;
-        // pagination controls
         let totalPages = Math.ceil(projectsTotal / 10);
         let paginationHtml = '<div class="pagination">';
         for (let i = 1; i <= totalPages; i++) {
@@ -776,6 +818,25 @@
         }
     };
     
+    // حفظ المشاريع (تمت إضافة هذا الكود المفقود)
+    document.getElementById('projectForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('projectId').value;
+        const payload = {
+            name_ar: document.getElementById('projectNameAr').value,
+            name_en: document.getElementById('projectNameEn').value,
+            emirate: document.getElementById('projectEmirate').value,
+            image: document.getElementById('projectImage').value,
+            adra_license: document.getElementById('projectLicense').checked,
+            status: document.getElementById('projectStatus').value
+        };
+        let error;
+        if (id) error = (await supabase.from('projects').update(payload).eq('id', id)).error;
+        else error = (await supabase.from('projects').insert(payload)).error;
+        if (error) showToast(error.message, true);
+        else { showToast('تم حفظ المشروع بنجاح'); document.getElementById('projectModal').classList.remove('active'); loadProjects(currentProjectsPage); loadStats(); }
+    });
+
     window.editProject = async (id) => {
         const { data } = await supabase.from('projects').select('*').eq('id', id).single();
         if (data) {
@@ -790,30 +851,6 @@
         }
     };
     
-    document.getElementById('productForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const id = document.getElementById('productId').value;
-    const projectId = document.getElementById('productProjectId').value;
-    const imagesArr = document.getElementById('productImages').value.split(',').map(s=>s.trim()).filter(Boolean);
-    const detailsArr = document.getElementById('productDetailsAr').value.split('\n').filter(l=>l.trim());
-    const payload = {
-        name_ar: document.getElementById('productNameAr').value,
-        name_en: document.getElementById('productNameEn').value,
-        main_image: document.getElementById('productMainImage').value,
-        images: imagesArr,
-        details_ar: detailsArr,
-        project_id: projectId,
-        // ✅ أضف السعر
-        price_ar: document.getElementById('productPriceAr').value,
-        price_en: document.getElementById('productPriceEn').value
-    };
-    let error;
-    if (id) error = (await supabase.from('products').update(payload).eq('id', id)).error;
-    else error = (await supabase.from('products').insert(payload)).error;
-    if (error) showToast(error.message, true);
-    else { showToast('تم حفظ المنتج'); document.getElementById('productModal').classList.remove('active'); loadProducts(); loadStats(); }
-});
-    
     // المنتجات
     async function loadProducts() {
         const projectId = document.getElementById('productProjectFilter').value;
@@ -826,29 +863,40 @@
         html += `</tbody></table>`;
         document.getElementById('productsTableContainer').innerHTML = html;
     }
+
     window.editProduct = async (id) => {
-    const { data } = await supabase.from('products').select('*').eq('id', id).single();
-    if (data) {
-        document.getElementById('productId').value = data.id;
-        document.getElementById('productProjectId').value = data.project_id;
-        document.getElementById('productNameAr').value = data.name_ar;
-        document.getElementById('productNameEn').value = data.name_en;
-        document.getElementById('productMainImage').value = data.main_image || '';
-        document.getElementById('productImages').value = (data.images || []).join(',');
-        document.getElementById('productDetailsAr').value = (data.details_ar || []).join('\n');
-        // ✅ السعر
-        document.getElementById('productPriceAr').value = data.price_ar || '';
-        document.getElementById('productPriceEn').value = data.price_en || '';
-        document.getElementById('productModal').classList.add('active');
-    }
-};
+        const { data } = await supabase.from('products').select('*').eq('id', id).single();
+        if (data) {
+            document.getElementById('productId').value = data.id;
+            document.getElementById('productProjectId').value = data.project_id;
+            document.getElementById('productNameAr').value = data.name_ar;
+            document.getElementById('productNameEn').value = data.name_en;
+            document.getElementById('productMainImage').value = data.main_image || '';
+            document.getElementById('productImages').value = (data.images || []).join(',');
+            document.getElementById('productDetailsAr').value = (data.details_ar || []).join('\n');
+            document.getElementById('productPriceAr').value = data.price_ar || '';
+            document.getElementById('productPriceEn').value = data.price_en || '';
+            document.getElementById('productModal').classList.add('active');
+        }
+    };
+
+    // تم توحيد كود حفظ المنتجات هنا بدلاً من تكراره
     document.getElementById('productForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const id = document.getElementById('productId').value;
         const projectId = document.getElementById('productProjectId').value;
         const imagesArr = document.getElementById('productImages').value.split(',').map(s=>s.trim()).filter(Boolean);
         const detailsArr = document.getElementById('productDetailsAr').value.split('\n').filter(l=>l.trim());
-        const payload = { name_ar: document.getElementById('productNameAr').value, name_en: document.getElementById('productNameEn').value, main_image: document.getElementById('productMainImage').value, images: imagesArr, details_ar: detailsArr, project_id: projectId };
+        const payload = {
+            name_ar: document.getElementById('productNameAr').value,
+            name_en: document.getElementById('productNameEn').value,
+            main_image: document.getElementById('productMainImage').value,
+            images: imagesArr,
+            details_ar: detailsArr,
+            project_id: projectId,
+            price_ar: document.getElementById('productPriceAr').value,
+            price_en: document.getElementById('productPriceEn').value
+        };
         let error;
         if (id) error = (await supabase.from('products').update(payload).eq('id', id)).error;
         else error = (await supabase.from('products').insert(payload)).error;
@@ -896,8 +944,7 @@
         const projectId = document.getElementById('contactProjectFilter').value;
         if (!projectId) { document.getElementById('contactsTableContainer').innerHTML = '<p>اختر مشروعاً لعرض بيانات التواصل</p>'; return; }
         let { data } = await supabase.from('contacts').select('*').eq('project_id', projectId);
-        if (!data || data.length === 0) data = [{ project_id: projectId, whatsapp: '', phone: '', email: '', instagram: '' }];
-        const contact = data[0];
+        let contact = (data && data.length > 0) ? data[0] : { project_id: projectId, whatsapp: '', phone: '', email: '', instagram: '' };
         let html = `<div style="display:grid; gap:16px;"><div class="form-row"><label>واتساب</label><input id="editWhatsapp" value="${contact.whatsapp || ''}"></div>
         <div class="form-row"><label>هاتف</label><input id="editPhone" value="${contact.phone || ''}"></div>
         <div class="form-row"><label>البريد الإلكتروني</label><input id="editEmail" value="${contact.email || ''}"></div>
@@ -1017,10 +1064,8 @@
         }
     };
     document.getElementById('logoutBtn').onclick = async () => { await supabase.auth.signOut(); location.reload(); };
-    checkSession();
-</script>
-
-<script>
+    
+    // تم نقل كود استعادة كلمة المرور إلى هنا لتجنب كشف المفاتيح في HTML
     document.getElementById('forgotPasswordLink')?.addEventListener('click', async (e) => {
         e.preventDefault();
         const email = document.getElementById('adminEmail').value;
@@ -1028,10 +1073,6 @@
             alert('الرجاء إدخال البريد الإلكتروني أولاً');
             return;
         }
-        const supabaseUrl = 'https://xyepcwptfihnztgghimx.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5ZXBjd3B0Zmlobnp0Z2doaW14Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0ODA2OTcsImV4cCI6MjA5MjA1NjY5N30.SZvZjWpih1JiUlv24xLhNwjTvzo9RNsrTiI9fchWldE';
-        const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
-        const supabase = createClient(supabaseUrl, supabaseKey);
         const { error } = await supabase.auth.resetPasswordForEmail(email, {
             redirectTo: 'https://souqalmasharie.onrender.com/reset-password.html'
         });
@@ -1041,6 +1082,8 @@
             alert('تم إرسال رابط إعادة التعيين إلى بريدك الإلكتروني');
         }
     });
+
+    checkSession();
 </script>
 
 </body>
