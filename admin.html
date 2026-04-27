@@ -849,7 +849,6 @@
             const { error } = await supabase.from(table).delete().eq('id', id);
             if (error) showToast(error.message, true);
             else { showToast('تم الحذف بنجاح'); if (table === 'projects') loadProjects(); else if (table === 'products') loadProducts(); else if (table === 'deals') loadDeals(); loadStats(); }
-        }
     };
 
     window.editProject = async (id) => {
