@@ -572,7 +572,14 @@
 <!-- مودالات المشروع والمنتج والعرض -->
 <div id="projectModal" class="modal"><div class="modal-content"><div class="modal-header"><h3 id="projectModalTitle">مشروع</h3><button class="modal-close" data-modal="projectModal"><i class="fas fa-times"></i></button></div><div class="modal-body"><form id="projectForm"><input type="hidden" id="projectId"><div class="form-row"><label>الاسم (عربي)</label><input id="projectNameAr" required></div><div class="form-row"><label>الاسم (إنجليزي)</label><input id="projectNameEn" required></div><div class="form-row"><label>الإمارة</label><select id="projectEmirate"><option>أبوظبي</option><option>دبي</option><option>الشارقة</option><option>عجمان</option><option>رأس الخيمة</option><option>الفجيرة</option><option>أم القيوين</option></select></div><div class="form-row"><label>الصورة (URL)</label><input id="projectImage" placeholder="رابط الصورة"></div><div class="checkbox-row"><input type="checkbox" id="projectLicense"><label>رخصة أدريا</label></div><div class="form-row"><label>الحالة</label><select id="projectStatus"><option value="pending">معلق</option><option value="approved">موافق</option><option value="rejected">مرفوض</option></select></div><button class="btn-save">حفظ</button></form></div></div></div>
 
-<div id="productModal" class="modal"><div class="modal-content"><div class="modal-header"><h3>منتج</h3><button class="modal-close" data-modal="productModal"><i class="fas fa-times"></i></button></div><div class="modal-body"><form id="productForm"><input type="hidden" id="productId"><input type="hidden" id="productProjectId"><div class="form-row"><label>الاسم (عربي)</label><input id="productNameAr" required></div><div class="form-row"><label>الاسم (إنجليزي)</label><input id="productNameEn" required></div><div class="form-row"><label>الصورة الرئيسية (URL)</label><input id="productMainImage"></div><div class="form-row"><label>صور إضافية (فاصلة)</label><input id="productImages" placeholder="url1,url2"></div><div class="form-row"><label>التفاصيل (عربي)</label><textarea id="productDetailsAr" rows="3"></textarea></div><button class="btn-save">حفظ</button></form></div></div></div>
+<div id="productModal" class="modal"><div class="modal-content"><div class="modal-header"><h3>منتج</h3><button class="modal-close" data-modal="productModal"><i class="fas fa-times"></i></button></div><div class="modal-body"><form id="productForm"><input type="hidden" id="productId"><input type="hidden" id="productProjectId"><div class="form-row"><label>الاسم (عربي)</label><input id="productNameAr" required></div><div class="form-row"><label>الاسم (إنجليزي)</label><input id="productNameEn" required></div><div class="form-row"><label>الصورة الرئيسية (URL)</label><input id="productMainImage"></div><div class="form-row"><label>صور إضافية (فاصلة)</label><input id="productImages" placeholder="url1,url2"></div><div class="form-row"><label>التفاصيل (عربي)</label><textarea id="productDetailsAr" rows="3"></textarea></div><button class="btn-save">حفظ</button></form></div></div> <div class="form-row">
+    <label>السعر (عربي)</label>
+    <input type="text" id="productPriceAr" placeholder="مثل: 50 درهم">
+</div>
+<div class="form-row">
+    <label>السعر (إنجليزي)</label>
+    <input type="text" id="productPriceEn" placeholder="e.g. 50 AED">
+</div> </div>
 
 <div id="dealModal" class="modal"><div class="modal-content"><div class="modal-header"><h3>عرض</h3><button class="modal-close" data-modal="dealModal"><i class="fas fa-times"></i></button></div><div class="modal-body"><form id="dealForm"><input type="hidden" id="dealId"><input type="hidden" id="dealProjectId"><div class="form-row"><label>العنوان (عربي)</label><input id="dealTitleAr" required></div><div class="form-row"><label>العنوان (إنجليزي)</label><input id="dealTitleEn" required></div><div class="form-row"><label>الصورة (URL)</label><input id="dealImage"></div><div class="form-row"><label>الوصف (عربي)</label><textarea id="dealDescAr" rows="2"></textarea></div><button class="btn-save">حفظ</button></form></div></div></div>
 
@@ -772,6 +779,8 @@
             image: document.getElementById('projectImage').value,
             adra_license: document.getElementById('projectLicense').checked,
             status: document.getElementById('projectStatus').value
+            price_ar: document.getElementById('productPriceAr').value,
+            price_en: document.getElementById('productPriceEn').value
         };
         let error;
         if (id) error = (await supabase.from('projects').update(payload).eq('id', id)).error;
@@ -803,6 +812,8 @@
             document.getElementById('productImages').value = (data.images || []).join(',');
             document.getElementById('productDetailsAr').value = (data.details_ar || []).join('\n');
             document.getElementById('productModal').classList.add('active');
+            document.getElementById('productPriceAr').value = data.price_ar || '';
+            document.getElementById('productPriceEn').value = data.price_en || '';
         }
     };
     document.getElementById('productForm').addEventListener('submit', async (e) => {
