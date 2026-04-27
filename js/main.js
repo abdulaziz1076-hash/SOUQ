@@ -76,22 +76,22 @@ async function loadProjectsFromSupabase() {
             category: project.category_ar,
             categoryEn: project.category_en,
             products: (project.products || []).map(p => ({
-                id: p.id,
-                name: p.name_ar,
-                nameEn: p.name_en,
-                description: p.description_ar,
-                descriptionEn: p.description_en,
-                longDescription: p.long_description_ar,
-                longDescriptionEn: p.long_description_en,
-                mainImage: p.main_image,
-                images: p.images || [],
-                details: p.details_ar || [],
-                detailsEn: p.details_en || [],
-                category: p.category_ar,
-                categoryEn: p.category_en,
-                price_ar: p.price_ar,
-                price_en: p.price_en,
-            })),
+    id: p.id,
+    name: p.name_ar,
+    nameEn: p.name_en,
+    description: p.description_ar,
+    descriptionEn: p.description_en,
+    longDescription: p.long_description_ar,
+    longDescriptionEn: p.long_description_en,
+    mainImage: p.main_image,
+    images: p.images || [],
+    details: p.details_ar || [],
+    detailsEn: p.details_en || [],
+    category: p.category_ar,
+    categoryEn: p.category_en,
+    price_ar: p.price_ar,
+    price_en: p.price_en
+})),
             deals: (project.deals || []).map(d => ({
                 id: d.id,
                 title: d.title_ar,
@@ -833,8 +833,6 @@ function showDealDetails(familyId, dealId) {
 function showFamilyProducts(id, updateHash = true) {
     hideLoader();
     const family = projectsData.find(f => f.id == id);
-    const priceText = getPriceDisplay(product);
-    const priceHtml = priceText ? `<div class="product-price">${priceText}</div>` : '';
     if (!family) return;
     const contactInfo = contactsData[id] || {};
     family.whatsapp = contactInfo.whatsapp || null;
@@ -848,16 +846,10 @@ function showFamilyProducts(id, updateHash = true) {
     }
     const t = translations[appState.currentLanguage];
     const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
-    // الوصف الطويل
     const longDescription = appState.currentLanguage === 'ar' ? (family.longDescription || family.description) : (family.longDescriptionEn || family.descriptionEn);
-    // التغطية (coverage) ونصها المعرب
     let coverageText = "";
     if (family.coverage) {
-        if (appState.currentLanguage === 'ar') {
-            coverageText = t.coverageOptions[family.coverage] || family.coverage;
-        } else {
-            coverageText = t.coverageOptions[family.coverage] || family.coverage;
-        }
+        coverageText = t.coverageOptions[family.coverage] || family.coverage;
     }
     const licenseBadgeHtml = family.adra_license === 'نعم' ? `<div class="license-badge-large"><i class="fas fa-check-circle"></i> ${t.licensed}</div>` : '';
     const feedbackButtonHtml = `<div class="action-btn feedback-btn" onclick="event.stopPropagation(); openFeedbackModal(${family.id}, '${familyName}')" title="شكوى أو اقتراح"><i class="fas fa-comment-dots"></i></div>`;
@@ -871,7 +863,6 @@ function showFamilyProducts(id, updateHash = true) {
                     ${shareButtonHtml}
                     ${feedbackButtonHtml}
                     <div class="profile-avatar" style="background-image: url('${family.image}');"></div>
-                    <div class="product-price">${priceText}</div>
                     <div>
                         <h2 class="profile-name">${familyName}</h2>
                         ${licenseBadgeHtml}
@@ -880,13 +871,11 @@ function showFamilyProducts(id, updateHash = true) {
                 </div>
                 <div class="profile-body">
                     <div class="profile-info-grid">
-                        <!-- الوصف الطويل -->
                         <div class="profile-info-row">
                             <i class="fas fa-align-right"></i>
                             <strong>${t.descriptionLabel || "نبذة عن المشروع"}:</strong>
                             <span>${longDescription || "لا يوجد وصف"}</span>
                         </div>
-                        <!-- التغطية -->
                         <div class="profile-info-row">
                             <i class="fas fa-globe"></i>
                             <strong>${t.coverage || "التغطية"}:</strong>
@@ -907,12 +896,16 @@ function showFamilyProducts(id, updateHash = true) {
             const tCat = translations[appState.currentLanguage].categories;
             const categoryDisplay = tCat[p.category] || productCategory;
             const isFav = isFavorite(p.id, 'product');
+            // ✅ السعر يضاف هنا لكل منتج
+            const priceText = getPriceDisplay(p);
+            const priceHtml = priceText ? `<div class="product-price">${priceText}</div>` : '';
             return `
                 <div class="product-card ${isFav ? 'favorite-active' : ''}" data-product-id="${p.id}" onclick="navigateTo('/product/${family.id}/${p.id}')">
                     <div class="product-image"><img src="${p.mainImage || p.image}" alt="${productName}" loading="lazy"></div>
                     <div class="product-content">
                         <h3 class="product-name">${productName}</h3>
                         <div class="product-description">${productDesc}</div>
+                        ${priceHtml}
                         <div class="product-category">${categoryDisplay}</div>
                     </div>
                 </div>
@@ -970,9 +963,6 @@ function getPriceDisplay(product) {
 function showProductDetail(familyId, productId, updateHash = true) {
     hideLoader();
     const family = projectsData.find(f => f.id == familyId);
-    const priceText = getPriceDisplay(product);
-    const priceHtml = priceText ? `<div class="product-price">${priceText}</div>` : '';
-    const priceDisplay = getPriceDisplay(product);
     if (!family) return;
     const contactInfo = contactsData[familyId] || {};
     family.whatsapp = contactInfo.whatsapp || null;
@@ -1031,6 +1021,8 @@ function showProductDetail(familyId, productId, updateHash = true) {
         });
     }
     const isFav = isFavorite(product.id, 'product');
+    // ✅ السعر هنا بشكل منفصل
+    const priceDisplay = getPriceDisplay(product);
     const html = `
         <div class="product-gallery">
             <div class="product-main-image-container">
@@ -1040,12 +1032,12 @@ function showProductDetail(familyId, productId, updateHash = true) {
                 <div class="action-btn favorite-btn ${isFav ? 'active' : ''}" data-id="${product.id}" data-type="product" onclick="event.stopPropagation(); toggleFavorite('${product.id}', 'product')"><i class="fas fa-heart"></i></div>
                 <div class="action-btn share-btn" data-family-id="${familyId}" data-product-id="${productId}"><i class="fas fa-share-alt"></i></div>
             </div>
-            <div class="product-price-display">${priceDisplay}</div>
             <div class="product-thumbnails" id="productThumbnails">${thumbnailsHtml}</div>
         </div>
         <div class="product-detail-info">
             <span class="product-detail-category"><i class="fas fa-tag"></i> ${categoryDisplay}</span>
             <h1 class="product-detail-name">${productName}</h1>
+            <div class="product-price-display">${priceDisplay}</div>
             <p class="product-detail-description">${productDesc}</p>
             ${specsHtml}
         </div>
@@ -1071,7 +1063,6 @@ function showProductDetail(familyId, productId, updateHash = true) {
         }, 50);
     });
 }
-
 // ==================== Hash Change Handler ====================
 function handleHashChange() {
     const hash = window.location.hash.slice(1) || '/';
