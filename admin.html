@@ -921,10 +921,10 @@ async function saveProject(e) {
     }
     if (error) showToast(error.message, true);
     else { showToast('تم حفظ المشروع'); document.getElementById('projectModal').classList.remove('active'); loadProjects(); loadStats(); }
-}
+
         if (error) showToast(error.message, true);
         else { showToast('تم حفظ المشروع'); document.getElementById('projectModal').classList.remove('active'); loadProjects(); loadStats(); }
-    }
+    
 
     async function saveProduct(e) {
         e.preventDefault();
