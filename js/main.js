@@ -1544,21 +1544,19 @@ window.addEventListener('pageshow', function(event) {
             // دوال الخيارات
     let currentSelectedVariantData = null;
     window.selectVariant = (event, variantId) => {
-        event.stopPropagation();
-        const variant = currentVariants.find(v => v.id === variantId);
-        if (!variant) return;
-        currentSelectedVariantData = variant;
-        // تحديث السعر
-        const priceEl = document.getElementById('dynamicPrice');
-        if (priceEl) {
-            priceEl.textContent = appState.currentLanguage === 'ar' ? variant.price_ar : variant.price_en;
-        }
-        // تغيير الكلاس النشط
-        document.querySelectorAll('.variant-option').forEach(el => el.classList.remove('active'));
-        const targetLabel = document.querySelector(`.variant-option input[value="${variantId}"]`)?.closest('.variant-option');
-        if (targetLabel) targetLabel.classList.add('active');
-    };
-});
+    event.stopPropagation();
+    const variant = currentVariants.find(v => v.id === variantId);
+    if (!variant) return;
+    // تحديث السعر
+    const priceEl = document.getElementById('dynamicPrice');
+    if (priceEl) {
+        priceEl.textContent = appState.currentLanguage === 'ar' ? variant.price_ar : variant.price_en;
+    }
+    // تغيير الكلاس النشط
+    document.querySelectorAll('.variant-option').forEach(el => el.classList.remove('active'));
+    const targetLabel = document.querySelector(`.variant-option input[value="${variantId}"]`)?.closest('.variant-option');
+    if (targetLabel) targetLabel.classList.add('active');
+};
 
 window.addEventListener('hashchange', handleHashChange);
 
