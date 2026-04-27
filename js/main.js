@@ -1103,6 +1103,18 @@ function showProductDetail(familyId, productId, updateHash = true) {
         }, 50);
     });
 }
+window.selectVariant = (event, variantId) => {
+    event.stopPropagation();
+    const variant = currentVariants.find(v => v.id === variantId);
+    if (!variant) return;
+    const priceEl = document.getElementById('dynamicPrice');
+    if (priceEl) {
+        priceEl.textContent = appState.currentLanguage === 'ar' ? variant.price_ar : variant.price_en;
+    }
+    document.querySelectorAll('.variant-option').forEach(el => el.classList.remove('active'));
+    const targetLabel = document.querySelector(`.variant-option input[value="${variantId}"]`)?.closest('.variant-option');
+    if (targetLabel) targetLabel.classList.add('active');
+};
 // ==================== Hash Change Handler ====================
 function handleHashChange() {
     const hash = window.location.hash.slice(1) || '/';
@@ -1541,8 +1553,9 @@ window.addEventListener('pageshow', function(event) {
         else if (appState.currentPage === 'offers') renderOffers();
         hideLoader();
         ensureLoaderHidden();
+    }
+});
             // دوال الخيارات
-    let currentSelectedVariantData = null;
     window.selectVariant = (event, variantId) => {
     event.stopPropagation();
     const variant = currentVariants.find(v => v.id === variantId);
