@@ -790,25 +790,29 @@
         }
     };
     
-    document.getElementById('projectForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const id = document.getElementById('projectId').value;
-        const payload = {
-            name_ar: document.getElementById('projectNameAr').value,
-            name_en: document.getElementById('projectNameEn').value,
-            emirate: document.getElementById('projectEmirate').value,
-            image: document.getElementById('projectImage').value,
-            adra_license: document.getElementById('projectLicense').checked,
-            status: document.getElementById('projectStatus').value
-            price_ar: document.getElementById('productPriceAr').value,
-            price_en: document.getElementById('productPriceEn').value
-        };
-        let error;
-        if (id) error = (await supabase.from('projects').update(payload).eq('id', id)).error;
-        else error = (await supabase.from('projects').insert(payload)).error;
-        if (error) showToast(error.message, true);
-        else { showToast('تم الحفظ'); document.getElementById('projectModal').classList.remove('active'); loadProjects(); loadStats(); }
-    });
+    document.getElementById('productForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('productId').value;
+    const projectId = document.getElementById('productProjectId').value;
+    const imagesArr = document.getElementById('productImages').value.split(',').map(s=>s.trim()).filter(Boolean);
+    const detailsArr = document.getElementById('productDetailsAr').value.split('\n').filter(l=>l.trim());
+    const payload = {
+        name_ar: document.getElementById('productNameAr').value,
+        name_en: document.getElementById('productNameEn').value,
+        main_image: document.getElementById('productMainImage').value,
+        images: imagesArr,
+        details_ar: detailsArr,
+        project_id: projectId,
+        // ✅ أضف السعر
+        price_ar: document.getElementById('productPriceAr').value,
+        price_en: document.getElementById('productPriceEn').value
+    };
+    let error;
+    if (id) error = (await supabase.from('products').update(payload).eq('id', id)).error;
+    else error = (await supabase.from('products').insert(payload)).error;
+    if (error) showToast(error.message, true);
+    else { showToast('تم حفظ المنتج'); document.getElementById('productModal').classList.remove('active'); loadProducts(); loadStats(); }
+});
     
     // المنتجات
     async function loadProducts() {
@@ -823,20 +827,21 @@
         document.getElementById('productsTableContainer').innerHTML = html;
     }
     window.editProduct = async (id) => {
-        const { data } = await supabase.from('products').select('*').eq('id', id).single();
-        if (data) {
-            document.getElementById('productId').value = data.id;
-            document.getElementById('productProjectId').value = data.project_id;
-            document.getElementById('productNameAr').value = data.name_ar;
-            document.getElementById('productNameEn').value = data.name_en;
-            document.getElementById('productMainImage').value = data.main_image || '';
-            document.getElementById('productImages').value = (data.images || []).join(',');
-            document.getElementById('productDetailsAr').value = (data.details_ar || []).join('\n');
-            document.getElementById('productModal').classList.add('active');
-            document.getElementById('productPriceAr').value = data.price_ar || '';
-            document.getElementById('productPriceEn').value = data.price_en || '';
-        }
-    };
+    const { data } = await supabase.from('products').select('*').eq('id', id).single();
+    if (data) {
+        document.getElementById('productId').value = data.id;
+        document.getElementById('productProjectId').value = data.project_id;
+        document.getElementById('productNameAr').value = data.name_ar;
+        document.getElementById('productNameEn').value = data.name_en;
+        document.getElementById('productMainImage').value = data.main_image || '';
+        document.getElementById('productImages').value = (data.images || []).join(',');
+        document.getElementById('productDetailsAr').value = (data.details_ar || []).join('\n');
+        // ✅ السعر
+        document.getElementById('productPriceAr').value = data.price_ar || '';
+        document.getElementById('productPriceEn').value = data.price_en || '';
+        document.getElementById('productModal').classList.add('active');
+    }
+};
     document.getElementById('productForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const id = document.getElementById('productId').value;
