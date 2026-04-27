@@ -3,652 +3,1072 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>لوحة التحكم | سوق المشاريع</title>
+    <title>لوحة التحكم المتقدمة | سوق المشاريع</title>
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome -->
+    <script src="https://cdn.tailwindcss.com">
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js">
+    </script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0F3D2E',
+                        'primary-light': '#1A5F44',
+                        secondary: '#D4AF37',
+                        'secondary-light': '#f5d06b',
+                        accent: '#8B7355',
+                        light: '#F8F5F0',
+                        danger: '#C41E3A',
+                    }
+                }
+            }
+        }
+    </script>
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap');
-        body { font-family: 'Tajawal', sans-serif; background-color: #f3f4f6; }
-        .rtl { direction: rtl; }
-        .ltr { direction: ltr; }
-        .tab-btn.active { background-color: #0f766e; color: white; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-        .modal { transition: opacity 0.25s ease; }
-        .modal-active { opacity: 1; pointer-events: auto; }
-        .toast { animation: slideIn 0.3s ease; }
-        @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap');
+        
+        * { font-family: 'Tajawal', sans-serif; }
+        body { background: #F8F5F0; }
+        
+        .tab-btn { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .tab-btn.active {
+            background: linear-gradient(135deg, #0F3D2E, #1A5F44);
+            color: white;
+            box-shadow: 0 10px 25px rgba(15, 61, 46, 0.25);
+            transform: translateY(-2px);
+        }
+        .tab-btn:hover:not(.active) {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: #D4AF37;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #E8E4DD;
+            transition: all 0.25s;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(15, 61, 46, 0.15);
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid #E8E4DD;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 100%;
+            background: #D4AF37;
+            border-radius: 0 20px 20px 0;
+        }
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(15, 61, 46, 0.15);
+            border-color: #D4AF37;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .badge-pending { background: #fff3e0; color: #c47a2e; }
+        .badge-approved { background: #dcfce7; color: #15803d; }
+        .badge-rejected { background: #fee2e2; color: #b91c1c; }
+        .badge-resolved { background: #d9f99d; color: #3f6212; }
+        .badge-featured { background: linear-gradient(135deg, #D4AF37, #f5d06b); color: #0F3D2E; }
+        
+        input, select, textarea {
+            border: 2px solid #E8E4DD;
+            border-radius: 12px;
+            padding: 10px 14px;
+            font-family: 'Tajawal', sans-serif;
+            transition: 0.2s;
+            background: #FEFEFE;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #D4AF37;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #0F3D2E, #1A5F44);
+            color: white;
+            border: 1px solid #D4AF37;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+        }
+        .btn-danger {
+            background: #C41E3A;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-danger:hover {
+            background: #a01830;
+            transform: translateY(-2px);
+        }
+        
+        .modal-overlay {
+            background: rgba(15, 61, 46, 0.7);
+            backdrop-filter: blur(4px);
+        }
+        
+        .thumb-img {
+            width: 45px;
+            height: 45px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: 0.2s;
+        }
+        .thumb-img:hover {
+            border-color: #D4AF37;
+            transform: scale(1.05);
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #0F3D2E;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 60px;
+            z-index: 9999;
+            font-weight: 500;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+            animation: slideUp 0.3s ease;
+            border: 2px solid #D4AF37;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        
         table { border-collapse: separate; border-spacing: 0; }
-        th { position: sticky; top: 0; background: #f9fafb; z-index: 10; }
+        th { background: #F8F5F0; color: #0F3D2E; font-weight: 800; }
+        tr:hover td { background: #faf9f7; }
     </style>
 </head>
 <body class="rtl">
 
-    <!-- شاشة تسجيل الدخول -->
-    <div id="loginSection" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-800 to-teal-900">
-        <div class="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md mx-4 transform transition-all">
-            <div class="text-center mb-8">
-                <i class="fas fa-chart-line text-6xl text-yellow-500 mb-4"></i>
-                <h2 class="text-3xl font-bold text-teal-900">دخول المشرف</h2>
-                <p class="text-gray-500 mt-2">لوحة تحكم سوق المشاريع</p>
-            </div>
-            <div class="space-y-5">
-                <div>
-                    <input type="email" id="adminEmail" placeholder="البريد الإلكتروني" value="abdulaziz1076@gmail.com" 
-                           class="w-full px-5 py-3 border-2 border-gray-200 rounded-xl focus:border-teal-500 focus:outline-none transition">
-                </div>
-                <div>
-                    <input type="password" id="adminPassword" placeholder="كلمة المرور" 
-                           class="w-full px-5 py-3 border-2 border-gray-200 rounded-xl focus:border-teal-500 focus:outline-none transition">
-                </div>
-                <button id="loginBtn" class="w-full bg-teal-700 hover:bg-teal-800 text-white font-bold py-3 rounded-xl transition duration-200 transform hover:scale-105">
-                    <i class="fas fa-sign-in-alt ml-2"></i> تسجيل الدخول
-                </button>
-                <div id="loginError" class="text-red-500 text-sm text-center mt-2"></div>
-                <div class="text-center mt-4">
-                    <a href="#" id="forgotPasswordLink" class="text-teal-600 hover:underline text-sm">نسيت كلمة المرور؟</a>
-                </div>
+<!-- ============ شاشة تسجيل الدخول ============ -->
+<div id="loginSection" class="min-h-screen flex items-center justify-center" style="background: linear-gradient(135deg, #0F3D2E, #1A5F44);">
+    <div class="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md mx-4" style="border: 2px solid #D4AF37;">
+        <div class="text-center mb-8">
+            <i class="fas fa-chart-bar text-6xl mb-4" style="color: #D4AF37;"></i>
+            <h2 class="text-3xl font-extrabold" style="color: #0F3D2E;">لوحة التحكم</h2>
+            <p class="text-gray-500 mt-2">سوق المشاريع - منصة المشاريع المنزلية</p>
+        </div>
+        <div class="space-y-4">
+            <input type="email" id="adminEmail" placeholder="البريد الإلكتروني" value="abdulaziz1076@gmail.com" class="w-full py-3">
+            <input type="password" id="adminPassword" placeholder="كلمة المرور" class="w-full py-3">
+            <button id="loginBtn" class="btn-primary w-full py-3 text-lg">
+                <i class="fas fa-sign-in-alt ml-2"></i> دخول
+            </button>
+            <div id="loginError" class="text-red-500 text-sm text-center"></div>
+            <div class="text-center mt-3">
+                <a href="#" id="forgotPasswordLink" style="color: #D4AF37;" class="hover:underline text-sm">نسيت كلمة المرور؟</a>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- المحتوى الرئيسي للوحة التحكم -->
-    <div id="adminContent" class="hidden">
-        <!-- شريط التنقل العلوي -->
-        <header class="bg-white shadow-md sticky top-0 z-50">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-                <div class="flex items-center gap-3">
-                    <i class="fas fa-store text-yellow-500 text-2xl"></i>
-                    <h1 class="text-2xl font-bold text-teal-800">سوق المشاريع | لوحة التحكم</h1>
-                </div>
-                <button id="logoutBtn" class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-full transition flex items-center gap-2">
-                    <i class="fas fa-sign-out-alt"></i> خروج
-                </button>
+<!-- ============ المحتوى الرئيسي ============ -->
+<div id="adminContent" class="hidden">
+    
+    <!-- الهيدر -->
+    <header class="sticky top-0 z-50 shadow-lg" style="background: linear-gradient(135deg, #0F3D2E, #1A5F44);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <i class="fas fa-store text-2xl" style="color: #D4AF37;"></i>
+                <h1 class="text-2xl font-black text-white">سوق المشاريع | المشرف</h1>
             </div>
-        </header>
-
-        <!-- الإحصائيات السريعة -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4" id="statsContainer">
-                <!-- يتم ملؤها بـ JS -->
-            </div>
+            <button id="logoutBtn" class="btn-danger flex items-center gap-2 px-5 py-2 rounded-full">
+                <i class="fas fa-sign-out-alt"></i> خروج
+            </button>
         </div>
+    </header>
 
-        <!-- التبويبات -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
-            <div class="flex flex-wrap gap-2 bg-white rounded-2xl p-2 shadow-sm">
-                <button class="tab-btn active px-5 py-2 rounded-xl font-semibold transition" data-tab="dashboard"><i class="fas fa-chart-line ml-2"></i> التحليلات</button>
-                <button class="tab-btn px-5 py-2 rounded-xl font-semibold transition" data-tab="registrations"><i class="fas fa-clipboard-list ml-2"></i> طلبات التسجيل</button>
-                <button class="tab-btn px-5 py-2 rounded-xl font-semibold transition" data-tab="projects"><i class="fas fa-store ml-2"></i> المشاريع</button>
-                <button class="tab-btn px-5 py-2 rounded-xl font-semibold transition" data-tab="products"><i class="fas fa-box ml-2"></i> المنتجات</button>
-                <button class="tab-btn px-5 py-2 rounded-xl font-semibold transition" data-tab="deals"><i class="fas fa-tags ml-2"></i> العروض</button>
-                <button class="tab-btn px-5 py-2 rounded-xl font-semibold transition" data-tab="contacts"><i class="fas fa-address-card ml-2"></i> التواصل</button>
-                <button class="tab-btn px-5 py-2 rounded-xl font-semibold transition" data-tab="feedbacks"><i class="fas fa-comment-dots ml-2"></i> الشكاوى</button>
-            </div>
-        </div>
+    <!-- الإحصائيات -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4" id="statsContainer"></div>
+    </div>
 
-        <!-- محتوى التبويبات -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 pb-10">
-            <!-- Dashboard Tab -->
-            <div id="dashboardTab" class="tab-content">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-lg font-bold mb-4"><i class="fas fa-chart-line text-teal-600 ml-2"></i>الزيارات لكل دقيقة</h3><div class="h-64"><canvas id="visitsChart"></canvas></div></div>
-                    <div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-lg font-bold mb-4"><i class="fas fa-globe text-teal-600 ml-2"></i>مصادر الزيارات</h3><div class="h-64"><canvas id="sourcesChart"></canvas></div></div>
-                    <div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-lg font-bold mb-4"><i class="fas fa-mobile-alt text-teal-600 ml-2"></i>الأجهزة</h3><div class="h-64"><canvas id="devicesChart"></canvas></div></div>
-                    <div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-lg font-bold mb-4"><i class="fas fa-map-marker-alt text-teal-600 ml-2"></i>الإمارات (حسب الصفحات)</h3><div class="h-64"><canvas id="geoChart"></canvas></div></div>
-                </div>
-                <div class="bg-white rounded-2xl p-6 shadow-sm mt-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-lg font-bold"><i class="fas fa-history text-teal-600 ml-2"></i>آخر النشاطات</h3>
-                        <button id="exportAnalyticsBtn" class="bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 rounded-full text-sm font-bold transition"><i class="fas fa-download ml-2"></i>تصدير CSV</button>
-                    </div>
-                    <div class="overflow-x-auto"><table class="w-full text-sm" id="recentVisitsTable"><thead><tr class="border-b"><th class="py-2 text-right">الصفحة</th><th class="py-2 text-right">المصدر</th><th class="py-2 text-right">الجهاز</th><th class="py-2 text-right">التوقيت</th></tr></thead><tbody></tbody></table></div>
-                </div>
-            </div>
-
-            <!-- Registrations Tab -->
-            <div id="registrationsTab" class="tab-content hidden">
-                <div class="bg-white rounded-2xl p-6 shadow-sm">
-                    <div class="flex gap-4 mb-4">
-                        <select id="regStatusFilter" class="border rounded-lg px-3 py-2"><option value="all">كل الحالات</option><option value="pending">معلق</option><option value="approved">موافق</option><option value="rejected">مرفوض</option></select>
-                        <button id="exportRegBtn" class="bg-teal-700 text-white px-4 py-2 rounded-lg"><i class="fas fa-download ml-2"></i>تصدير</button>
-                    </div>
-                    <div id="registrationsTableContainer" class="overflow-x-auto"></div>
-                </div>
-            </div>
-
-            <!-- Projects Tab -->
-            <div id="projectsTab" class="tab-content hidden">
-                <div class="bg-white rounded-2xl p-6 shadow-sm">
-                    <div class="flex flex-wrap gap-4 mb-4">
-                        <input type="text" id="projectSearch" placeholder="بحث..." class="border rounded-lg px-3 py-2 flex-1">
-                        <select id="projectEmirateFilter" class="border rounded-lg px-3 py-2"><option value="">كل الإمارات</option></select>
-                        <button id="addProjectBtn" class="bg-teal-700 text-white px-4 py-2 rounded-lg"><i class="fas fa-plus ml-2"></i>مشروع</button>
-                    </div>
-                    <div id="projectsTableContainer" class="overflow-x-auto"></div>
-                    <div id="projectsPagination" class="flex justify-center gap-2 mt-4"></div>
-                </div>
-            </div>
-
-            <!-- Products Tab -->
-            <div id="productsTab" class="tab-content hidden">
-                <div class="bg-white rounded-2xl p-6 shadow-sm">
-                    <div class="flex gap-4 mb-4">
-                        <select id="productProjectFilter" class="border rounded-lg px-3 py-2"><option value="">اختر مشروعاً</option></select>
-                        <button id="addProductBtn" class="bg-teal-700 text-white px-4 py-2 rounded-lg"><i class="fas fa-plus ml-2"></i>منتج</button>
-                    </div>
-                    <div id="productsTableContainer" class="overflow-x-auto"></div>
-                </div>
-            </div>
-
-            <!-- Deals Tab -->
-            <div id="dealsTab" class="tab-content hidden">
-                <div class="bg-white rounded-2xl p-6 shadow-sm">
-                    <div class="flex gap-4 mb-4">
-                        <select id="dealProjectFilter" class="border rounded-lg px-3 py-2"><option value="">اختر مشروعاً</option></select>
-                        <button id="addDealBtn" class="bg-teal-700 text-white px-4 py-2 rounded-lg"><i class="fas fa-plus ml-2"></i>عرض</button>
-                    </div>
-                    <div id="dealsTableContainer" class="overflow-x-auto"></div>
-                </div>
-            </div>
-
-            <!-- Contacts Tab -->
-            <div id="contactsTab" class="tab-content hidden">
-                <div class="bg-white rounded-2xl p-6 shadow-sm">
-                    <select id="contactProjectFilter" class="border rounded-lg px-3 py-2 mb-4"><option value="">اختر مشروعاً</option></select>
-                    <div id="contactsTableContainer"></div>
-                </div>
-            </div>
-
-            <!-- Feedbacks Tab -->
-            <div id="feedbacksTab" class="tab-content hidden">
-                <div class="bg-white rounded-2xl p-6 shadow-sm">
-                    <select id="feedbackStatusFilter" class="border rounded-lg px-3 py-2 mb-4"><option value="">كل الحالات</option><option value="pending">معلق</option><option value="reviewed">مراجَع</option><option value="resolved">محلول</option><option value="rejected">مرفوض</option></select>
-                    <div id="feedbacksTableContainer" class="overflow-x-auto"></div>
-                </div>
-            </div>
+    <!-- التبويبات -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+        <div class="flex flex-wrap gap-2 bg-white rounded-2xl p-2 shadow-sm border" style="border-color: #E8E4DD;">
+            <button class="tab-btn active px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 border-2 border-transparent" data-tab="dashboard">
+                <i class="fas fa-chart-line"></i> التحليلات
+            </button>
+            <button class="tab-btn px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 border-2 border-transparent" data-tab="registrations">
+                <i class="fas fa-clipboard-list"></i> طلبات التسجيل
+            </button>
+            <button class="tab-btn px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 border-2 border-transparent" data-tab="projects">
+                <i class="fas fa-store"></i> المشاريع
+            </button>
+            <button class="tab-btn px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 border-2 border-transparent" data-tab="products">
+                <i class="fas fa-box"></i> المنتجات
+            </button>
+            <button class="tab-btn px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 border-2 border-transparent" data-tab="deals">
+                <i class="fas fa-tags"></i> العروض
+            </button>
+            <button class="tab-btn px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 border-2 border-transparent" data-tab="contacts">
+                <i class="fas fa-address-card"></i> التواصل
+            </button>
+            <button class="tab-btn px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 border-2 border-transparent" data-tab="feedbacks">
+                <i class="fas fa-comment-dots"></i> الشكاوى
+            </button>
         </div>
     </div>
 
-    <!-- مودال المشروع -->
-    <div id="projectModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden modal">
-        <div class="bg-white rounded-3xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto shadow-2xl">
-            <div class="sticky top-0 bg-white p-6 border-b flex justify-between items-center">
-                <h3 class="text-2xl font-bold">معلومات المشروع</h3>
-                <button class="text-gray-500 hover:text-red-500 text-3xl" onclick="closeModal('projectModal')">&times;</button>
-            </div>
-            <form id="projectForm" class="p-6 space-y-4">
-                <input type="hidden" id="projectId">
-                <div><label class="block font-semibold mb-1">الاسم (عربي)</label><input id="projectNameAr" required class="w-full border rounded-xl p-3"></div>
-                <div><label class="block font-semibold mb-1">الاسم (إنجليزي)</label><input id="projectNameEn" required class="w-full border rounded-xl p-3"></div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div><label class="block font-semibold mb-1">الإمارة</label><select id="projectEmirate" class="w-full border rounded-xl p-3"><option>أبوظبي</option><option>دبي</option><option>الشارقة</option><option>عجمان</option><option>رأس الخيمة</option><option>الفجيرة</option><option>أم القيوين</option></select></div>
-                    <div><label class="block font-semibold mb-1">الحالة</label><select id="projectStatus" class="w-full border rounded-xl p-3"><option value="pending">معلق</option><option value="approved">موافق</option><option value="rejected">مرفوض</option></select></div>
-                </div>
-                <div><label class="block font-semibold mb-1">الصورة (URL)</label><input id="projectImage" class="w-full border rounded-xl p-3"></div>
-                <div class="flex items-center gap-3"><input type="checkbox" id="projectLicense"><label>رخصة أدرا</label></div>
-                <button type="submit" class="w-full bg-teal-700 text-white py-3 rounded-xl font-bold hover:bg-teal-800 transition">حفظ</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- مودال المنتج -->
-    <div id="productModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden modal">
-        <div class="bg-white rounded-3xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto shadow-2xl">
-            <div class="sticky top-0 bg-white p-6 border-b flex justify-between items-center">
-                <h3 class="text-2xl font-bold">معلومات المنتج</h3>
-                <button class="text-gray-500 hover:text-red-500 text-3xl" onclick="closeModal('productModal')">&times;</button>
-            </div>
-            <form id="productForm" class="p-6 space-y-4">
-                <input type="hidden" id="productId">
-                <input type="hidden" id="productProjectId">
-                <div><label class="block font-semibold mb-1">الاسم (عربي)</label><input id="productNameAr" required class="w-full border rounded-xl p-3"></div>
-                <div><label class="block font-semibold mb-1">الاسم (إنجليزي)</label><input id="productNameEn" required class="w-full border rounded-xl p-3"></div>
-                <div><label class="block font-semibold mb-1">الصورة الرئيسية</label><input id="productMainImage" class="w-full border rounded-xl p-3"></div>
-                <div><label class="block font-semibold mb-1">صور إضافية (مفصولة بفواصل)</label><input id="productImages" class="w-full border rounded-xl p-3"></div>
-                <div><label class="block font-semibold mb-1">السعر (عربي)</label><input id="productPriceAr" class="w-full border rounded-xl p-3" placeholder="مثال: 50 درهم"></div>
-                <div><label class="block font-semibold mb-1">السعر (إنجليزي)</label><input id="productPriceEn" class="w-full border rounded-xl p-3" placeholder="e.g. 50 AED"></div>
-                <div><label class="block font-semibold mb-1">تفاصيل (عربي - كل سطر عنصر)</label><textarea id="productDetailsAr" rows="3" class="w-full border rounded-xl p-3"></textarea></div>
-                <button type="submit" class="w-full bg-teal-700 text-white py-3 rounded-xl font-bold hover:bg-teal-800 transition">حفظ</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- مودال العرض -->
-    <div id="dealModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden modal">
-        <div class="bg-white rounded-3xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto shadow-2xl">
-            <div class="sticky top-0 bg-white p-6 border-b flex justify-between items-center">
-                <h3 class="text-2xl font-bold">معلومات العرض</h3>
-                <button class="text-gray-500 hover:text-red-500 text-3xl" onclick="closeModal('dealModal')">&times;</button>
-            </div>
-            <form id="dealForm" class="p-6 space-y-4">
-                <input type="hidden" id="dealId">
-                <input type="hidden" id="dealProjectId">
-                <div><label class="block font-semibold mb-1">العنوان (عربي)</label><input id="dealTitleAr" required class="w-full border rounded-xl p-3"></div>
-                <div><label class="block font-semibold mb-1">العنوان (إنجليزي)</label><input id="dealTitleEn" required class="w-full border rounded-xl p-3"></div>
-                <div><label class="block font-semibold mb-1">الصورة (URL)</label><input id="dealImage" class="w-full border rounded-xl p-3"></div>
-                <div><label class="block font-semibold mb-1">الوصف (عربي)</label><textarea id="dealDescAr" rows="2" class="w-full border rounded-xl p-3"></textarea></div>
-                <button type="submit" class="w-full bg-teal-700 text-white py-3 rounded-xl font-bold hover:bg-teal-800 transition">حفظ</button>
-            </form>
-        </div>
-    </div>
-
-    <script type="module">
-        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-        import { APP_CONFIG } from './config.js';
+    <!-- محتوى التبويبات -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 pb-12">
         
-        const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
-        const ALLOWED_EMAIL = 'abdulaziz1076@gmail.com';
-        let charts = {};
+        <!-- Dashboard -->
+        <div id="dashboardTab" class="tab-content space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="card p-6"><h3 class="font-bold mb-4 flex items-center gap-2" style="color:#0F3D2E;"><i class="fas fa-chart-line" style="color:#D4AF37;"></i> الزيارات (آخر 30 دقيقة)</h3><div style="height:250px;"><canvas id="visitsChart"></canvas></div></div>
+                <div class="card p-6"><h3 class="font-bold mb-4 flex items-center gap-2" style="color:#0F3D2E;"><i class="fas fa-globe" style="color:#D4AF37;"></i> مصادر الزيارات</h3><div style="height:250px;"><canvas id="sourcesChart"></canvas></div></div>
+                <div class="card p-6"><h3 class="font-bold mb-4 flex items-center gap-2" style="color:#0F3D2E;"><i class="fas fa-mobile-alt" style="color:#D4AF37;"></i> الأجهزة</h3><div style="height:250px;"><canvas id="devicesChart"></canvas></div></div>
+                <div class="card p-6"><h3 class="font-bold mb-4 flex items-center gap-2" style="color:#0F3D2E;"><i class="fas fa-map-marker-alt" style="color:#D4AF37;"></i> الإمارات (من الصفحات)</h3><div style="height:250px;"><canvas id="geoChart"></canvas></div></div>
+            </div>
+            <div class="card p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-bold flex items-center gap-2" style="color:#0F3D2E;"><i class="fas fa-history" style="color:#D4AF37;"></i> آخر 20 نشاط</h3>
+                    <button id="refreshAnalyticsBtn" class="btn-primary text-sm px-4 py-2"><i class="fas fa-sync-alt ml-2"></i>تحديث</button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm" id="recentVisitsTable">
+                        <thead><tr class="border-b"><th class="py-2 text-right">الصفحة</th><th class="py-2 text-right">المصدر</th><th class="py-2 text-right">الجهاز</th><th class="py-2 text-right">التوقيت</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
-        // ============ TOOLS ============
-        function showToast(msg, isErr = false) {
-            const toast = document.createElement('div');
-            toast.className = `fixed bottom-5 left-1/2 transform -translate-x-1/2 ${isErr ? 'bg-red-500' : 'bg-teal-700'} text-white px-6 py-3 rounded-full shadow-lg z-50 toast`;
-            toast.innerText = msg;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
+        <!-- Registrations -->
+        <div id="registrationsTab" class="tab-content hidden">
+            <div class="card p-6">
+                <div class="flex flex-wrap gap-4 mb-4 items-center">
+                    <select id="regStatusFilter" class="py-2"><option value="all">كل الحالات</option><option value="pending">معلق</option><option value="approved">موافق</option><option value="rejected">مرفوض</option></select>
+                    <button id="refreshRegsBtn" class="btn-primary text-sm"><i class="fas fa-sync-alt ml-2"></i>تحديث</button>
+                </div>
+                <div id="registrationsTableContainer" class="overflow-x-auto"></div>
+            </div>
+        </div>
+
+        <!-- Projects -->
+        <div id="projectsTab" class="tab-content hidden">
+            <div class="card p-6">
+                <div class="flex flex-wrap gap-4 mb-4 items-center">
+                    <input type="text" id="projectSearch" placeholder="بحث بالاسم..." class="flex-1 min-w-[200px]">
+                    <select id="projectEmirateFilter" class="py-2"><option value="">كل الإمارات</option></select>
+                    <select id="projectStatusFilter" class="py-2"><option value="">كل الحالات</option><option value="approved">موافق</option><option value="pending">معلق</option><option value="rejected">مرفوض</option></select>
+                    <button id="refreshProjectsBtn" class="btn-primary text-sm"><i class="fas fa-sync-alt ml-2"></i>تحديث</button>
+                    <button id="addProjectBtn" class="btn-primary text-sm" style="background:#D4AF37;color:#0F3D2E;"><i class="fas fa-plus ml-2"></i>مشروع جديد</button>
+                </div>
+                <div id="projectsTableContainer" class="overflow-x-auto"></div>
+                <div id="projectsPagination" class="flex justify-center gap-2 mt-4"></div>
+            </div>
+        </div>
+
+        <!-- Products -->
+        <div id="productsTab" class="tab-content hidden">
+            <div class="card p-6">
+                <div class="flex flex-wrap gap-4 mb-4 items-center">
+                    <select id="productProjectFilter" class="py-2 flex-1 min-w-[200px]"><option value="">اختر مشروعاً أولاً</option></select>
+                    <button id="refreshProductsBtn" class="btn-primary text-sm"><i class="fas fa-sync-alt ml-2"></i>تحديث</button>
+                    <button id="addProductBtn" class="btn-primary text-sm" style="background:#D4AF37;color:#0F3D2E;"><i class="fas fa-plus ml-2"></i>منتج جديد</button>
+                </div>
+                <div id="productsTableContainer" class="overflow-x-auto"></div>
+            </div>
+        </div>
+
+        <!-- Deals -->
+        <div id="dealsTab" class="tab-content hidden">
+            <div class="card p-6">
+                <div class="flex flex-wrap gap-4 mb-4 items-center">
+                    <select id="dealProjectFilter" class="py-2 flex-1 min-w-[200px]"><option value="">اختر مشروعاً</option></select>
+                    <button id="refreshDealsBtn" class="btn-primary text-sm"><i class="fas fa-sync-alt ml-2"></i>تحديث</button>
+                    <button id="addDealBtn" class="btn-primary text-sm" style="background:#D4AF37;color:#0F3D2E;"><i class="fas fa-plus ml-2"></i>عرض جديد</button>
+                </div>
+                <div id="dealsTableContainer" class="overflow-x-auto"></div>
+            </div>
+        </div>
+
+        <!-- Contacts -->
+        <div id="contactsTab" class="tab-content hidden">
+            <div class="card p-6">
+                <select id="contactProjectFilter" class="py-2 mb-4 w-full max-w-md"><option value="">اختر مشروعاً</option></select>
+                <div id="contactsTableContainer"></div>
+            </div>
+        </div>
+
+        <!-- Feedbacks -->
+        <div id="feedbacksTab" class="tab-content hidden">
+            <div class="card p-6">
+                <div class="flex flex-wrap gap-4 mb-4 items-center">
+                    <select id="feedbackStatusFilter" class="py-2"><option value="">كل الحالات</option><option value="pending">معلق</option><option value="reviewed">مراجَع</option><option value="resolved">محلول</option><option value="rejected">مرفوض</option></select>
+                    <button id="refreshFeedbacksBtn" class="btn-primary text-sm"><i class="fas fa-sync-alt ml-2"></i>تحديث</button>
+                </div>
+                <div id="feedbacksTableContainer" class="overflow-x-auto"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ مودال المشروع ============ -->
+<div id="projectModal" class="fixed inset-0 modal-overlay flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-3xl max-w-3xl w-full mx-4 max-h-[90vh] overflow-y-auto shadow-2xl" style="border: 2px solid #D4AF37;">
+        <div class="sticky top-0 bg-white p-6 border-b flex justify-between items-center rounded-t-3xl" style="background: #F8F5F0;">
+            <h3 class="text-2xl font-black" style="color:#0F3D2E;">معلومات المشروع</h3>
+            <button class="text-3xl hover:text-red-500 transition" onclick="closeModal('projectModal')">&times;</button>
+        </div>
+        <form id="projectForm" class="p-6 space-y-4">
+            <input type="hidden" id="projectId">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div><label class="font-bold block mb-1" style="color:#0F3D2E;">الاسم (عربي) *</label><input id="projectNameAr" required class="w-full"></div>
+                <div><label class="font-bold block mb-1" style="color:#0F3D2E;">الاسم (إنجليزي) *</label><input id="projectNameEn" required class="w-full"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div><label class="font-bold block mb-1" style="color:#0F3D2E;">الإمارة</label><select id="projectEmirate" class="w-full"><option>أبوظبي</option><option>دبي</option><option>الشارقة</option><option>عجمان</option><option>رأس الخيمة</option><option>الفجيرة</option><option>أم القيوين</option></select></div>
+                <div><label class="font-bold block mb-1" style="color:#0F3D2E;">التصنيف</label><select id="projectCategory" class="w-full"><option value="">-- اختر --</option><option>أطعمة ومشروبات</option><option>روائح وعطور</option><option>عناية</option><option>حلويات</option><option>هدايا</option><option>ملابس</option><option>يدويات</option><option>فنون</option><option>نباتات</option><option>ترفيه</option><option>الرقميات</option></select></div>
+                <div><label class="font-bold block mb-1" style="color:#0F3D2E;">الحالة</label><select id="projectStatus" class="w-full"><option value="approved">موافق</option><option value="pending">معلق</option><option value="rejected">مرفوض</option></select></div>
+            </div>
+            <div><label class="font-bold block mb-1" style="color:#0F3D2E;">الصورة (URL)</label><input id="projectImage" class="w-full"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div><label class="font-bold block mb-1" style="color:#0F3D2E;">التغطية</label><select id="projectCoverage" class="w-full"><option value="الإمارة فقط">الإمارة فقط</option><option value="جميع إمارات الدولة">جميع إمارات الدولة</option><option value="دول الخليج">دول الخليج</option><option value="العالم">العالم</option></select></div>
+                <div class="flex items-center gap-4 mt-6">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="projectLicense" class="w-5 h-5">
+                        <span class="font-bold" style="color:#0F3D2E;">رخصة أدرا</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="projectPaid" class="w-5 h-5">
+                        <span class="font-bold" style="color:#0F3D2E;">مميز</span>
+                    </label>
+                </div>
+            </div>
+            <div><label class="font-bold block mb-1" style="color:#0F3D2E;">الوصف (عربي)</label><textarea id="projectDescAr" rows="2" class="w-full"></textarea></div>
+            <div><label class="font-bold block mb-1" style="color:#0F3D2E;">الوصف (إنجليزي)</label><textarea id="projectDescEn" rows="2" class="w-full"></textarea></div>
+            <button type="submit" class="btn-primary w-full py-3 text-lg">حفظ المشروع</button>
+        </form>
+    </div>
+</div>
+
+<!-- ============ مودال المنتج ============ -->
+<div id="productModal" class="fixed inset-0 modal-overlay flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-3xl max-w-3xl w-full mx-4 max-h-[90vh] overflow-y-auto shadow-2xl" style="border: 2px solid #D4AF37;">
+        <div class="sticky top-0 bg-white p-6 border-b flex justify-between items-center rounded-t-3xl" style="background: #F8F5F0;">
+            <h3 class="text-2xl font-black" style="color:#0F3D2E;">معلومات المنتج</h3>
+            <button class="text-3xl hover:text-red-500 transition" onclick="closeModal('productModal')">&times;</button>
+        </div>
+        <form id="productForm" class="p-6 space-y-4">
+            <input type="hidden" id="productId">
+            <input type="hidden" id="productProjectId">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div><label class="font-bold block mb-1" style="color:#0F3D2E;">الاسم (عربي) *</label><input id="productNameAr" required class="w-full"></div>
+                <div><label class="font-bold block mb-1" style="color:#0F3D2E;">الاسم (إنجليزي) *</label><input id="productNameEn" required class="w-full"></div>
+            </div>
+            <div><label class="font-bold block mb-1" style="color:#0F3D2E;">الصورة الرئيسية (URL)</label><input id="productMainImage" class="w-full"></div>
+            <div><label class="font-bold block mb-1" style="color:#0F3D2E;">صور إضافية (مفصولة بفواصل)</label><input id="productImages" class="w-full" placeholder="url1, url2, url3"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div><label class="font-bold block mb-1" style="color:#0F3D2E;">السعر (عربي)</label><input id="productPriceAr" class="w-full" placeholder="مثال: 50 درهم"></div>
+                <div><label class="font-bold block mb-1" style="color:#0F3D2E;">السعر (إنجليزي)</label><input id="productPriceEn" class="w-full" placeholder="e.g. 50 AED"></div>
+            </div>
+            <div><label class="font-bold block mb-1" style="color:#0F3D2E;">التصنيف</label><select id="productCategory" class="w-full"><option value="">-- اختر --</option><option>أطعمة ومشروبات</option><option>روائح وعطور</option><option>عناية</option><option>حلويات</option><option>هدايا</option><option>ملابس</option><option>يدويات</option><option>فنون</option><option>نباتات</option><option>ترفيه</option></select></div>
+            <div><label class="font-bold block mb-1" style="color:#0F3D2E;">الوصف (عربي)</label><textarea id="productDescAr" rows="2" class="w-full"></textarea></div>
+            <div><label class="font-bold block mb-1" style="color:#0F3D2E;">الوصف (إنجليزي)</label><textarea id="productDescEn" rows="2" class="w-full"></textarea></div>
+            <div><label class="font-bold block mb-1" style="color:#0F3D2E;">تفاصيل إضافية (عربي - كل سطر عنصر)</label><textarea id="productDetailsAr" rows="3" class="w-full"></textarea></div>
+            <button type="submit" class="btn-primary w-full py-3 text-lg">حفظ المنتج</button>
+        </form>
+    </div>
+</div>
+
+<!-- ============ مودال العرض ============ -->
+<div id="dealModal" class="fixed inset-0 modal-overlay flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-3xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto shadow-2xl" style="border: 2px solid #D4AF37;">
+        <div class="sticky top-0 bg-white p-6 border-b flex justify-between items-center rounded-t-3xl" style="background: #F8F5F0;">
+            <h3 class="text-2xl font-black" style="color:#0F3D2E;">معلومات العرض</h3>
+            <button class="text-3xl hover:text-red-500 transition" onclick="closeModal('dealModal')">&times;</button>
+        </div>
+        <form id="dealForm" class="p-6 space-y-4">
+            <input type="hidden" id="dealId">
+            <input type="hidden" id="dealProjectId">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div><label class="font-bold block mb-1" style="color:#0F3D2E;">العنوان (عربي) *</label><input id="dealTitleAr" required class="w-full"></div>
+                <div><label class="font-bold block mb-1" style="color:#0F3D2E;">العنوان (إنجليزي) *</label><input id="dealTitleEn" required class="w-full"></div>
+            </div>
+            <div><label class="font-bold block mb-1" style="color:#0F3D2E;">الصورة (URL)</label><input id="dealImage" class="w-full"></div>
+            <div><label class="font-bold block mb-1" style="color:#0F3D2E;">الوصف (عربي)</label><textarea id="dealDescAr" rows="3" class="w-full"></textarea></div>
+            <div><label class="font-bold block mb-1" style="color:#0F3D2E;">الوصف (إنجليزي)</label><textarea id="dealDescEn" rows="3" class="w-full"></textarea></div>
+            <div><label class="font-bold block mb-1" style="color:#0F3D2E;">الشارة (عربي)</label><input id="dealBadgeAr" class="w-full" placeholder="مثال: عرض خاص"></div>
+            <div><label class="font-bold block mb-1" style="color:#0F3D2E;">تاريخ الانتهاء</label><input type="date" id="dealExpiry" class="w-full"></div>
+            <button type="submit" class="btn-primary w-full py-3 text-lg">حفظ العرض</button>
+        </form>
+    </div>
+</div>
+
+<script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+    import { APP_CONFIG } from './config.js';
+    
+    const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
+    const ALLOWED_EMAIL = 'abdulaziz1076@gmail.com';
+    let charts = {};
+    let projectsPage = 1;
+
+    // ==================== TOOLS ====================
+    function showToast(msg, isErr = false) {
+        const old = document.querySelector('.toast');
+        if (old) old.remove();
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.style.background = isErr ? '#C41E3A' : '#0F3D2E';
+        toast.innerText = msg;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    }
+
+    function closeModal(id) {
+        document.getElementById(id).classList.add('hidden');
+    }
+
+    function openModal(id) {
+        document.getElementById(id).classList.remove('hidden');
+    }
+
+    window.closeModal = closeModal;
+
+    // ==================== STATS ====================
+    async function loadStats() {
+        const [proj, prod, fb, regs, pend] = await Promise.all([
+            supabase.from('projects').select('*', { count: 'exact', head: true }),
+            supabase.from('products').select('*', { count: 'exact', head: true }),
+            supabase.from('feedbacks').select('*', { count: 'exact', head: true }),
+            supabase.from('project_registrations').select('*', { count: 'exact', head: true }),
+            supabase.from('project_registrations').select('*', { count: 'exact', head: true }).eq('status', 'pending')
+        ]);
+        
+        const stats = [
+            { icon: 'fa-store', count: proj.count || 0, label: 'المشاريع', color: '#0F3D2E' },
+            { icon: 'fa-box', count: prod.count || 0, label: 'المنتجات', color: '#1A5F44' },
+            { icon: 'fa-clipboard-list', count: regs.count || 0, label: 'طلبات التسجيل', color: '#8B7355' },
+            { icon: 'fa-clock', count: pend.count || 0, label: 'معلقة', color: '#c47a2e' },
+            { icon: 'fa-comment-dots', count: fb.count || 0, label: 'الشكاوى', color: '#C41E3A' }
+        ];
+        
+        document.getElementById('statsContainer').innerHTML = stats.map(s => `
+            <div class="stat-card">
+                <i class="fas ${s.icon} text-2xl mb-2" style="color:${s.color};"></i>
+                <div class="text-3xl font-black" style="color:#0F3D2E;">${s.count}</div>
+                <div class="text-gray-500 font-semibold">${s.label}</div>
+            </div>
+        `).join('');
+    }
+
+    // ==================== ANALYTICS ====================
+    async function loadAnalytics() {
+        const { data: events, error } = await supabase.from('analytics_events').select('*').order('created_at', { ascending: false }).limit(300);
+        if (error || !events?.length) {
+            console.warn('No analytics data');
+            return;
         }
 
-        function closeModal(id) {
-            document.getElementById(id).classList.add('hidden');
-            document.getElementById(id).classList.remove('modal-active');
-        }
+        // الزيارات لكل دقيقة (آخر 10 فترات)
+        const byMinute = {};
+        events.forEach(ev => {
+            if (ev.created_at) {
+                const key = ev.created_at.slice(0, 16);
+                byMinute[key] = (byMinute[key] || 0) + 1;
+            }
+        });
+        const sortedMinutes = Object.keys(byMinute).sort().slice(-10);
+        const minuteLabels = sortedMinutes.map(k => k.slice(11, 16));
+        const minuteData = sortedMinutes.map(k => byMinute[k]);
 
-        function openModal(id) {
-            document.getElementById(id).classList.remove('hidden');
-            document.getElementById(id).classList.add('modal-active');
-        }
+        if (charts.visitsChart) charts.visitsChart.destroy();
+        charts.visitsChart = new Chart(document.getElementById('visitsChart'), {
+            type: 'line',
+            data: {
+                labels: minuteLabels,
+                datasets: [{
+                    label: 'زيارات',
+                    data: minuteData,
+                    borderColor: '#D4AF37',
+                    backgroundColor: 'rgba(212,175,55,0.1)',
+                    fill: true,
+                    tension: 0.3,
+                    pointBackgroundColor: '#0F3D2E'
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
 
-        window.closeModal = closeModal;
+        // المصادر
+        const sources = { 'مباشر': 0, 'جوجل': 0, 'وسائل تواصل': 0, 'أخرى': 0 };
+        events.forEach(ev => {
+            const ref = (ev.referrer || '').toLowerCase();
+            if (!ref || ref === 'direct') sources['مباشر']++;
+            else if (ref.includes('google')) sources['جوجل']++;
+            else if (ref.includes('facebook') || ref.includes('instagram') || ref.includes('x.com') || ref.includes('twitter') || ref.includes('t.co')) sources['وسائل تواصل']++;
+            else sources['أخرى']++;
+        });
+        if (charts.sourcesChart) charts.sourcesChart.destroy();
+        charts.sourcesChart = new Chart(document.getElementById('sourcesChart'), {
+            type: 'doughnut',
+            data: {
+                labels: Object.keys(sources),
+                datasets: [{
+                    data: Object.values(sources),
+                    backgroundColor: ['#0F3D2E', '#D4AF37', '#1A5F44', '#8B7355'],
+                    borderWidth: 2,
+                    borderColor: '#fff'
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
 
-        // ============ LOAD STATS ============
-        async function loadStats() {
-            const { count: projectsCount } = await supabase.from('projects').select('*', { count: 'exact', head: true });
-            const { count: productsCount } = await supabase.from('products').select('*', { count: 'exact', head: true });
-            const { count: feedbacksCount } = await supabase.from('feedbacks').select('*', { count: 'exact', head: true });
-            const { count: totalRegs } = await supabase.from('project_registrations').select('*', { count: 'exact', head: true });
-            const { count: pendingRegs } = await supabase.from('project_registrations').select('*', { count: 'exact', head: true }).eq('status', 'pending');
-            
-            document.getElementById('statsContainer').innerHTML = `
-                <div class="bg-white rounded-2xl p-4 shadow-sm"><i class="fas fa-store text-2xl text-teal-600 mb-2"></i><div class="text-2xl font-bold">${projectsCount||0}</div><div class="text-gray-500">مشاريع</div></div>
-                <div class="bg-white rounded-2xl p-4 shadow-sm"><i class="fas fa-box text-2xl text-teal-600 mb-2"></i><div class="text-2xl font-bold">${productsCount||0}</div><div class="text-gray-500">منتجات</div></div>
-                <div class="bg-white rounded-2xl p-4 shadow-sm"><i class="fas fa-clipboard-list text-2xl text-teal-600 mb-2"></i><div class="text-2xl font-bold">${totalRegs||0}</div><div class="text-gray-500">طلبات</div></div>
-                <div class="bg-white rounded-2xl p-4 shadow-sm"><i class="fas fa-clock text-2xl text-orange-500 mb-2"></i><div class="text-2xl font-bold">${pendingRegs||0}</div><div class="text-gray-500">معلقة</div></div>
-                <div class="bg-white rounded-2xl p-4 shadow-sm"><i class="fas fa-comment-dots text-2xl text-teal-600 mb-2"></i><div class="text-2xl font-bold">${feedbacksCount||0}</div><div class="text-gray-500">شكاوى</div></div>
-            `;
-        }
+        // الأجهزة
+        const devices = { 'حاسوب': 0, 'جوال': 0, 'تابلت': 0 };
+        events.forEach(ev => {
+            const d = ev.device || '';
+            if (d.includes('Mobile') || d.includes('Android') || d.includes('iPhone')) devices['جوال']++;
+            else if (d.includes('Tablet') || d.includes('iPad')) devices['تابلت']++;
+            else devices['حاسوب']++;
+        });
+        if (charts.devicesChart) charts.devicesChart.destroy();
+        charts.devicesChart = new Chart(document.getElementById('devicesChart'), {
+            type: 'bar',
+            data: {
+                labels: Object.keys(devices),
+                datasets: [{
+                    label: 'الزيارات',
+                    data: Object.values(devices),
+                    backgroundColor: ['#0F3D2E', '#1A5F44', '#D4AF37'],
+                    borderRadius: 8
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
 
-        // ============ ANALYTICS ============
-        async function loadAnalytics() {
-            const { data: events, error } = await supabase.from('analytics_events').select('*').order('created_at', { ascending: false }).limit(200);
-            if (error || !events) return;
-
-            // زيارات لكل دقيقة
-            const byMinute = {};
-            events.forEach(ev => { let key = ev.created_at?.slice(0,16); if(key) byMinute[key] = (byMinute[key]||0)+1; });
-            const labels = Object.keys(byMinute).slice(-10).map(k => k.slice(11,16));
-            const dataPoints = labels.map((_,i) => Object.values(byMinute).slice(-10)[i] || 0);
-            if (charts.visitsChart) charts.visitsChart.destroy();
-            charts.visitsChart = new Chart(document.getElementById('visitsChart'), { type: 'line', data: { labels, datasets: [{ label: 'زيارات', data: dataPoints, borderColor: '#0f766e', tension: 0.3 }] } });
-
-            // المصادر
-            const sources = { 'مباشر':0, 'جوجل':0, 'وسائل تواصل':0, 'آخر':0 };
-            events.forEach(ev => {
-                let ref = ev.referrer || '';
-                if (ref.includes('google')) sources['جوجل']++;
-                else if (ref.includes('facebook') || ref.includes('instagram') || ref.includes('x.com')) sources['وسائل تواصل']++;
-                else if (ref === '' || ref === 'direct') sources['مباشر']++;
-                else sources['آخر']++;
-            });
-            if (charts.sourcesChart) charts.sourcesChart.destroy();
-            charts.sourcesChart = new Chart(document.getElementById('sourcesChart'), { type: 'doughnut', data: { labels: Object.keys(sources), datasets: [{ data: Object.values(sources), backgroundColor: ['#0f766e','#facc15','#3b82f6','#9ca3af'] }] } });
-
-            // الأجهزة
-            const devices = { 'حاسوب':0, 'جوال':0, 'تابلت':0 };
-            events.forEach(ev => {
-                if (ev.device?.includes('Mobile')) devices['جوال']++;
-                else if (ev.device?.includes('Tablet')) devices['تابلت']++;
-                else devices['حاسوب']++;
-            });
-            if (charts.devicesChart) charts.devicesChart.destroy();
-            charts.devicesChart = new Chart(document.getElementById('devicesChart'), { type: 'bar', data: { labels: Object.keys(devices), datasets: [{ data: Object.values(devices), backgroundColor: '#0f766e' }] } });
-
-            // الإمارات (بتحليل ذكي من الصفحات)
-            const geo = {};
-            events.forEach(ev => {
-                const match = ev.page?.match(/emirate\/([^/]+)/);
-                if (match) {
-                    const em = decodeURIComponent(match[1]);
-                    if (em && em !== 'all') geo[em] = (geo[em] || 0) + 1;
+        // تحليل الإمارات من الصفحات (دقيق)
+        const emiratesMap = {};
+        const emiratePatterns = ['أبوظبي', 'دبي', 'الشارقة', 'عجمان', 'رأس الخيمة', 'الفجيرة', 'أم القيوين'];
+        events.forEach(ev => {
+            const page = ev.page || '';
+            emiratePatterns.forEach(em => {
+                if (page.includes(encodeURIComponent(em)) || page.includes(em)) {
+                    emiratesMap[em] = (emiratesMap[em] || 0) + 1;
                 }
             });
-            const geoLabels = Object.keys(geo);
-            const geoData = Object.values(geo);
-            if (charts.geoChart) charts.geoChart.destroy();
-            charts.geoChart = new Chart(document.getElementById('geoChart'), { 
-                type: 'pie', 
-                data: { 
-                    labels: geoLabels.length ? geoLabels : ['غير متوفر'], 
-                    datasets: [{ data: geoData.length ? geoData : [1], backgroundColor: ['#0f766e','#facc15','#3b82f6','#ef4444','#8b5cf6'] }] 
-                } 
+        });
+        const geoLabels = Object.keys(emiratesMap);
+        const geoData = Object.values(emiratesMap);
+        if (charts.geoChart) charts.geoChart.destroy();
+        charts.geoChart = new Chart(document.getElementById('geoChart'), {
+            type: 'pie',
+            data: {
+                labels: geoLabels.length ? geoLabels : ['لا توجد بيانات كافية'],
+                datasets: [{
+                    data: geoData.length ? geoData : [1],
+                    backgroundColor: ['#D4AF37', '#0F3D2E', '#1A5F44', '#8B7355', '#f5d06b', '#C41E3A', '#3b82f6'],
+                    borderWidth: 2,
+                    borderColor: '#fff'
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        // آخر النشاطات
+        document.querySelector('#recentVisitsTable tbody').innerHTML = events.slice(0, 20).map(ev => `
+            <tr class="border-b hover:bg-gray-50">
+                <td class="py-2 text-sm">${ev.page || '-'}</td>
+                <td class="py-2 text-sm">${ev.referrer || 'مباشر'}</td>
+                <td class="py-2 text-sm">${ev.device || '-'}</td>
+                <td class="py-2 text-sm">${new Date(ev.created_at).toLocaleString('ar-SA')}</td>
+            </tr>
+        `).join('');
+    }
+
+    // ==================== REGISTRATIONS ====================
+    async function loadRegistrations() {
+        const status = document.getElementById('regStatusFilter').value;
+        let query = supabase.from('project_registrations').select('*').order('created_at', { ascending: false });
+        if (status !== 'all') query = query.eq('status', status);
+        const { data } = await query;
+        const cont = document.getElementById('registrationsTableContainer');
+        if (!data?.length) { cont.innerHTML = '<p class="text-center py-8 text-gray-500">لا توجد طلبات</p>'; return; }
+        cont.innerHTML = `
+            <table class="w-full text-sm">
+                <thead><tr class="border-b"><th class="py-3">#</th><th class="py-3">المشروع</th><th class="py-3">الإمارة</th><th class="py-3">واتساب</th><th class="py-3">الحالة</th><th class="py-3">التاريخ</th><th class="py-3">إجراءات</th></tr></thead>
+                <tbody>${data.map(r => `
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="py-2">${r.id}</td>
+                        <td class="py-2 font-bold">${r.project_name || '-'}</td>
+                        <td class="py-2">${r.emirate || '-'}</td>
+                        <td class="py-2">${r.whatsapp || '-'}</td>
+                        <td class="py-2"><span class="badge ${r.status==='approved'?'badge-approved':r.status==='rejected'?'badge-rejected':'badge-pending'}">${r.status==='approved'?'موافق':r.status==='rejected'?'مرفوض':'معلق'}</span></td>
+                        <td class="py-2 text-xs">${new Date(r.created_at).toLocaleString('ar-SA')}</td>
+                        <td class="py-2 flex gap-2">
+                            <button onclick="window.updateRegStatus(${r.id},'approved')" class="text-green-600 hover:bg-green-100 p-2 rounded-lg"><i class="fas fa-check"></i></button>
+                            <button onclick="window.updateRegStatus(${r.id},'rejected')" class="text-red-600 hover:bg-red-100 p-2 rounded-lg"><i class="fas fa-times"></i></button>
+                        </td>
+                    </tr>
+                `).join('')}</tbody>
+            </table>`;
+    }
+    window.updateRegStatus = async (id, status) => {
+        await supabase.from('project_registrations').update({ status }).eq('id', id);
+        showToast('تم تحديث الحالة');
+        loadRegistrations();
+        loadStats();
+    };
+
+    // ==================== PROJECTS ====================
+    async function loadProjects(page = 1) {
+        projectsPage = page;
+        const search = document.getElementById('projectSearch')?.value || '';
+        const emirate = document.getElementById('projectEmirateFilter')?.value || '';
+        const status = document.getElementById('projectStatusFilter')?.value || '';
+        let query = supabase.from('projects').select('*', { count: 'exact' }).order('is_paid', { ascending: false }).order('id', { ascending: false }).range((page - 1) * 10, page * 10 - 1);
+        if (search) query = query.or(`name_ar.ilike.%${search}%,name_en.ilike.%${search}%`);
+        if (emirate) query = query.eq('emirate', emirate);
+        if (status) query = query.eq('status', status);
+        const { data, count } = await query;
+        const cont = document.getElementById('projectsTableContainer');
+        cont.innerHTML = `
+            <table class="w-full text-sm">
+                <thead><tr class="border-b"><th class="py-3">ID</th><th class="py-3">صورة</th><th class="py-3">الاسم</th><th class="py-3">الإمارة</th><th class="py-3">التصنيف</th><th class="py-3">مميز</th><th class="py-3">الحالة</th><th class="py-3">إجراءات</th></tr></thead>
+                <tbody>${(data||[]).map(p => `
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="py-2">${p.id}</td>
+                        <td class="py-2">${p.image ? `<img src="${p.image}" class="thumb-img" onclick="window.open('${p.image}')">` : '-'}</td>
+                        <td class="py-2 font-bold" style="color:#0F3D2E;">${p.name_ar || '-'}</td>
+                        <td class="py-2">${p.emirate || '-'}</td>
+                        <td class="py-2">${p.category_ar || '-'}</td>
+                        <td class="py-2">${p.is_paid ? '<span class="badge badge-featured">مميز</span>' : '-'}</td>
+                        <td class="py-2"><span class="badge ${p.status==='approved'?'badge-approved':p.status==='rejected'?'badge-rejected':'badge-pending'}">${p.status==='approved'?'موافق':p.status==='rejected'?'مرفوض':'معلق'}</span></td>
+                        <td class="py-2 flex gap-2">
+                            <button onclick="window.editProject(${p.id})" class="text-blue-600 hover:bg-blue-100 p-2 rounded-lg"><i class="fas fa-edit"></i></button>
+                            <button onclick="window.deleteItem('projects',${p.id})" class="text-red-600 hover:bg-red-100 p-2 rounded-lg"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `).join('')}</tbody>
+            </table>`;
+        const totalPages = Math.ceil((count || 0) / 10);
+        document.getElementById('projectsPagination').innerHTML = totalPages > 1 ? Array.from({ length: totalPages }, (_, i) => `
+            <button onclick="window.loadProjects(${i + 1})" class="px-4 py-2 rounded-xl font-bold border-2 transition ${i + 1 === page ? 'text-white border-transparent' : 'border-gray-300 hover:border-gray-400'}" 
+                style="${i + 1 === page ? 'background:linear-gradient(135deg,#0F3D2E,#1A5F44);' : ''}">${i + 1}</button>
+        `).join('') : '';
+    }
+    window.loadProjects = loadProjects;
+
+    window.editProject = async (id) => {
+        const { data } = await supabase.from('projects').select('*').eq('id', id).single();
+        if (!data) return;
+        document.getElementById('projectId').value = data.id;
+        document.getElementById('projectNameAr').value = data.name_ar || '';
+        document.getElementById('projectNameEn').value = data.name_en || '';
+        document.getElementById('projectEmirate').value = data.emirate || '';
+        document.getElementById('projectCategory').value = data.category_ar || '';
+        document.getElementById('projectStatus').value = data.status || 'pending';
+        document.getElementById('projectImage').value = data.image || '';
+        document.getElementById('projectCoverage').value = data.coverage || 'الإمارة فقط';
+        document.getElementById('projectLicense').checked = data.adra_license || false;
+        document.getElementById('projectPaid').checked = data.is_paid || false;
+        document.getElementById('projectDescAr').value = data.description_ar || '';
+        document.getElementById('projectDescEn').value = data.description_en || '';
+        openModal('projectModal');
+    };
+
+    document.getElementById('projectForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('projectId').value;
+        const payload = {
+            name_ar: document.getElementById('projectNameAr').value,
+            name_en: document.getElementById('projectNameEn').value,
+            emirate: document.getElementById('projectEmirate').value,
+            category_ar: document.getElementById('projectCategory').value,
+            category_en: document.getElementById('projectCategory').value,
+            status: document.getElementById('projectStatus').value,
+            image: document.getElementById('projectImage').value,
+            coverage: document.getElementById('projectCoverage').value,
+            adra_license: document.getElementById('projectLicense').checked,
+            is_paid: document.getElementById('projectPaid').checked,
+            description_ar: document.getElementById('projectDescAr').value,
+            description_en: document.getElementById('projectDescEn').value
+        };
+        if (id) {
+            const { error } = await supabase.from('projects').update(payload).eq('id', id);
+            if (error) { showToast(error.message, true); return; }
+        } else {
+            const { error } = await supabase.from('projects').insert(payload);
+            if (error) { showToast(error.message, true); return; }
+        }
+        closeModal('projectModal');
+        loadProjects(projectsPage);
+        loadStats();
+        showToast('تم حفظ المشروع بنجاح');
+    });
+
+    // ==================== DELETE ====================
+    window.deleteItem = async (table, id) => {
+        if (!confirm('هل أنت متأكد من الحذف؟')) return;
+        const { error } = await supabase.from(table).delete().eq('id', id);
+        if (error) { showToast(error.message, true); return; }
+        showToast('تم الحذف');
+        if (table === 'projects') loadProjects(projectsPage);
+        else if (table === 'products') loadProducts();
+        else if (table === 'deals') loadDeals();
+        else if (table === 'feedbacks') loadFeedbacks();
+        loadStats();
+    };
+
+    // ==================== PRODUCTS ====================
+    async function loadProducts() {
+        const pid = document.getElementById('productProjectFilter').value;
+        if (!pid) { document.getElementById('productsTableContainer').innerHTML = '<p class="text-center py-8 text-gray-500">اختر مشروعاً أولاً</p>'; return; }
+        const { data } = await supabase.from('products').select('*').eq('project_id', pid);
+        document.getElementById('productsTableContainer').innerHTML = `
+            <table class="w-full text-sm">
+                <thead><tr class="border-b"><th class="py-3">صورة</th><th class="py-3">الاسم</th><th class="py-3">السعر</th><th class="py-3">التصنيف</th><th class="py-3">إجراءات</th></tr></thead>
+                <tbody>${(data||[]).map(p => `
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="py-2">${p.main_image ? `<img src="${p.main_image}" class="thumb-img">` : '-'}</td>
+                        <td class="py-2 font-bold" style="color:#0F3D2E;">${p.name_ar || '-'}</td>
+                        <td class="py-2">${p.price_ar || '-'}</td>
+                        <td class="py-2">${p.category_ar || '-'}</td>
+                        <td class="py-2 flex gap-2">
+                            <button onclick="window.editProduct('${p.id}')" class="text-blue-600 hover:bg-blue-100 p-2 rounded-lg"><i class="fas fa-edit"></i></button>
+                            <button onclick="window.deleteItem('products','${p.id}')" class="text-red-600 hover:bg-red-100 p-2 rounded-lg"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `).join('')}</tbody>
+            </table>`;
+    }
+
+    window.editProduct = async (id) => {
+        const { data } = await supabase.from('products').select('*').eq('id', id).single();
+        if (!data) return;
+        document.getElementById('productId').value = data.id;
+        document.getElementById('productProjectId').value = data.project_id;
+        document.getElementById('productNameAr').value = data.name_ar || '';
+        document.getElementById('productNameEn').value = data.name_en || '';
+        document.getElementById('productMainImage').value = data.main_image || '';
+        document.getElementById('productImages').value = (data.images || []).join(',');
+        document.getElementById('productPriceAr').value = data.price_ar || '';
+        document.getElementById('productPriceEn').value = data.price_en || '';
+        document.getElementById('productCategory').value = data.category_ar || '';
+        document.getElementById('productDescAr').value = data.description_ar || '';
+        document.getElementById('productDescEn').value = data.description_en || '';
+        document.getElementById('productDetailsAr').value = (data.details_ar || []).join('\n');
+        openModal('productModal');
+    };
+
+    document.getElementById('productForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const projId = document.getElementById('productProjectId').value;
+        const id = document.getElementById('productId').value;
+        const payload = {
+            name_ar: document.getElementById('productNameAr').value,
+            name_en: document.getElementById('productNameEn').value,
+            main_image: document.getElementById('productMainImage').value,
+            images: document.getElementById('productImages').value.split(',').map(s => s.trim()).filter(Boolean),
+            price_ar: document.getElementById('productPriceAr').value,
+            price_en: document.getElementById('productPriceEn').value,
+            category_ar: document.getElementById('productCategory').value,
+            category_en: document.getElementById('productCategory').value,
+            description_ar: document.getElementById('productDescAr').value,
+            description_en: document.getElementById('productDescEn').value,
+            details_ar: document.getElementById('productDetailsAr').value.split('\n').filter(l => l.trim()),
+            project_id: projId
+        };
+        if (id) {
+            await supabase.from('products').update(payload).eq('id', id);
+        } else {
+            payload.id = crypto.randomUUID();
+            await supabase.from('products').insert(payload);
+        }
+        closeModal('productModal');
+        loadProducts();
+        loadStats();
+        showToast('تم حفظ المنتج');
+    });
+
+    // ==================== DEALS ====================
+    async function loadDeals() {
+        const pid = document.getElementById('dealProjectFilter').value;
+        if (!pid) { document.getElementById('dealsTableContainer').innerHTML = '<p class="text-center py-8 text-gray-500">اختر مشروعاً</p>'; return; }
+        const { data } = await supabase.from('deals').select('*').eq('project_id', pid);
+        document.getElementById('dealsTableContainer').innerHTML = `
+            <table class="w-full text-sm">
+                <thead><tr class="border-b"><th class="py-3">صورة</th><th class="py-3">العنوان</th><th class="py-3">الشارة</th><th class="py-3">إجراءات</th></tr></thead>
+                <tbody>${(data||[]).map(d => `
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="py-2">${d.image ? `<img src="${d.image}" class="thumb-img">` : '-'}</td>
+                        <td class="py-2 font-bold" style="color:#0F3D2E;">${d.title_ar || '-'}</td>
+                        <td class="py-2">${d.badge_ar ? `<span class="badge" style="background:#C41E3A;color:white;">${d.badge_ar}</span>` : '-'}</td>
+                        <td class="py-2 flex gap-2">
+                            <button onclick="window.editDeal('${d.id}')" class="text-blue-600 hover:bg-blue-100 p-2 rounded-lg"><i class="fas fa-edit"></i></button>
+                            <button onclick="window.deleteItem('deals','${d.id}')" class="text-red-600 hover:bg-red-100 p-2 rounded-lg"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `).join('')}</tbody>
+            </table>`;
+    }
+
+    window.editDeal = async (id) => {
+        const { data } = await supabase.from('deals').select('*').eq('id', id).single();
+        if (!data) return;
+        document.getElementById('dealId').value = data.id;
+        document.getElementById('dealProjectId').value = data.project_id;
+        document.getElementById('dealTitleAr').value = data.title_ar || '';
+        document.getElementById('dealTitleEn').value = data.title_en || '';
+        document.getElementById('dealImage').value = data.image || '';
+        document.getElementById('dealDescAr').value = data.description_ar || '';
+        document.getElementById('dealDescEn').value = data.description_en || '';
+        document.getElementById('dealBadgeAr').value = data.badge_ar || '';
+        document.getElementById('dealExpiry').value = data.expiry_date || '';
+        openModal('dealModal');
+    };
+
+    document.getElementById('dealForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const projId = document.getElementById('dealProjectId').value;
+        const id = document.getElementById('dealId').value;
+        const payload = {
+            title_ar: document.getElementById('dealTitleAr').value,
+            title_en: document.getElementById('dealTitleEn').value,
+            image: document.getElementById('dealImage').value,
+            description_ar: document.getElementById('dealDescAr').value,
+            description_en: document.getElementById('dealDescEn').value,
+            badge_ar: document.getElementById('dealBadgeAr').value,
+            expiry_date: document.getElementById('dealExpiry').value,
+            project_id: projId
+        };
+        if (id) {
+            await supabase.from('deals').update(payload).eq('id', id);
+        } else {
+            payload.id = crypto.randomUUID();
+            await supabase.from('deals').insert(payload);
+        }
+        closeModal('dealModal');
+        loadDeals();
+        loadStats();
+        showToast('تم حفظ العرض');
+    });
+
+    // ==================== CONTACTS ====================
+    async function loadContacts() {
+        const pid = document.getElementById('contactProjectFilter').value;
+        if (!pid) { document.getElementById('contactsTableContainer').innerHTML = '<p class="text-center py-8 text-gray-500">اختر مشروعاً</p>'; return; }
+        let { data } = await supabase.from('contacts').select('*').eq('project_id', pid);
+        if (!data?.length) data = [{ project_id: pid }];
+        const c = data[0];
+        const fields = ['whatsapp', 'phone', 'email', 'instagram', 'telegram', 'snapchat', 'tiktok', 'facebook', 'twitter', 'website'];
+        document.getElementById('contactsTableContainer').innerHTML = `
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                ${fields.map(f => `
+                    <div><label class="font-bold block mb-1" style="color:#0F3D2E;">${f === 'twitter' ? 'X (تويتر)' : f}</label><input id="edit_${f}" value="${c[f] || ''}" class="w-full"></div>
+                `).join('')}
+            </div>
+            <button id="saveContactBtn" class="btn-primary w-full mt-6 py-3">حفظ التغييرات</button>
+        `;
+        document.getElementById('saveContactBtn').onclick = async () => {
+            const payload = { project_id: parseInt(pid) };
+            fields.forEach(f => { payload[f] = document.getElementById(`edit_${f}`).value; });
+            await supabase.from('contacts').upsert(payload);
+            showToast('تم الحفظ');
+        };
+    }
+
+    // ==================== FEEDBACKS ====================
+    async function loadFeedbacks() {
+        const status = document.getElementById('feedbackStatusFilter').value;
+        let query = supabase.from('feedbacks').select('*').order('created_at', { ascending: false });
+        if (status) query = query.eq('status', status);
+        const { data } = await query;
+        document.getElementById('feedbacksTableContainer').innerHTML = `
+            <table class="w-full text-sm">
+                <thead><tr class="border-b"><th class="py-3">#</th><th class="py-3">النوع</th><th class="py-3">الرسالة</th><th class="py-3">البريد</th><th class="py-3">الحالة</th><th class="py-3">التاريخ</th><th class="py-3">إجراءات</th></tr></thead>
+                <tbody>${(data||[]).map(f => `
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="py-2">${f.id}</td>
+                        <td class="py-2">${f.type === 'complaint' ? 'شكوى' : 'اقتراح'}</td>
+                        <td class="py-2">${f.message?.substring(0, 50) || '-'}...</td>
+                        <td class="py-2">${f.reporter_email || '-'}</td>
+                        <td class="py-2"><span class="badge ${f.status==='resolved'?'badge-resolved':f.status==='reviewed'?'badge-approved':'badge-pending'}">${f.status}</span></td>
+                        <td class="py-2 text-xs">${f.created_at ? new Date(f.created_at).toLocaleString('ar-SA') : '-'}</td>
+                        <td class="py-2 flex gap-2">
+                            <select onchange="window.updateFeedbackStatus(${f.id}, this.value)" class="text-xs py-1 px-2 rounded-lg border">
+                                <option ${f.status==='pending'?'selected':''} value="pending">معلق</option>
+                                <option ${f.status==='reviewed'?'selected':''} value="reviewed">مراجَع</option>
+                                <option ${f.status==='resolved'?'selected':''} value="resolved">محلول</option>
+                                <option ${f.status==='rejected'?'selected':''} value="rejected">مرفوض</option>
+                            </select>
+                            <button onclick="window.deleteItem('feedbacks',${f.id})" class="text-red-600 hover:bg-red-100 p-2 rounded-lg"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `).join('')}</tbody>
+            </table>`;
+    }
+    window.updateFeedbackStatus = async (id, status) => {
+        await supabase.from('feedbacks').update({ status }).eq('id', id);
+        showToast('تم تحديث الحالة');
+        loadFeedbacks();
+    };
+
+    // ==================== INIT ====================
+    async function initSelects() {
+        const { data: projects } = await supabase.from('projects').select('id, name_ar').order('id');
+        if (projects) {
+            const opts = projects.map(p => `<option value="${p.id}">${p.name_ar}</option>`).join('');
+            ['productProjectFilter', 'dealProjectFilter', 'contactProjectFilter'].forEach(id => {
+                document.getElementById(id).innerHTML = '<option value="">اختر مشروعاً</option>' + opts;
             });
-
-            // الجدول الزمني
-            document.querySelector('#recentVisitsTable tbody').innerHTML = events.slice(0,20).map(ev => `
-                <tr class="border-b hover:bg-gray-50"><td class="py-2">${ev.page || '-'}</td><td>${ev.referrer || 'مباشر'}</td><td>${ev.device || '-'}</td><td>${new Date(ev.created_at).toLocaleString()}</td></tr>
-            `).join('');
         }
+        const { data: emirates } = await supabase.from('projects').select('emirate');
+        const unique = [...new Set((emirates || []).map(e => e.emirate).filter(Boolean))];
+        document.getElementById('projectEmirateFilter').innerHTML = '<option value="">كل الإمارات</option>' + unique.map(e => `<option>${e}</option>`).join('');
+    }
 
-        // ============ REGISTRATIONS ============
-        async function loadRegistrations() {
-            const status = document.getElementById('regStatusFilter').value;
-            let query = supabase.from('project_registrations').select('*').order('created_at', { ascending: false });
-            if (status !== 'all') query = query.eq('status', status);
-            const { data } = await query;
-            const container = document.getElementById('registrationsTableContainer');
-            if (!data?.length) { container.innerHTML = '<p class="text-gray-500 p-4">لا توجد طلبات.</p>'; return; }
-            container.innerHTML = `<table class="w-full text-sm"><thead><tr class="border-b"><th>اسم المشروع</th><th>الإمارة</th><th>الحالة</th><th>التاريخ</th><th>إجراءات</th></tr></thead><tbody>${data.map(reg => `
-                <tr class="border-b"><td>${reg.project_name}</td><td>${reg.emirate}</td><td><span class="px-2 py-1 rounded-full text-xs ${reg.status==='approved'?'bg-green-100 text-green-700':reg.status==='rejected'?'bg-red-100 text-red-700':'bg-yellow-100 text-yellow-700'}">${reg.status}</span></td><td>${new Date(reg.created_at).toLocaleString()}</td>
-                <td class="flex gap-2"><button class="text-green-600" onclick="window.updateRegStatus(${reg.id}, 'approved')"><i class="fas fa-check"></i></button><button class="text-red-600" onclick="window.updateRegStatus(${reg.id}, 'rejected')"><i class="fas fa-times"></i></button></td></tr>
-            `).join('')}</tbody></table>`;
-        }
-        window.updateRegStatus = async (id, status) => { await supabase.from('project_registrations').update({ status }).eq('id', id); loadRegistrations(); loadStats(); };
-
-        // ============ PROJECTS ============
-        let projectsPage = 1;
-        async function loadProjects(page = 1) {
-            projectsPage = page;
-            const search = document.getElementById('projectSearch').value;
-            const emirate = document.getElementById('projectEmirateFilter').value;
-            let query = supabase.from('projects').select('*', { count: 'exact' }).order('id', { ascending: false }).range((page-1)*10, page*10-1);
-            if (search) query = query.or(`name_ar.ilike.%${search}%,name_en.ilike.%${search}%`);
-            if (emirate) query = query.eq('emirate', emirate);
-            const { data, count } = await query;
-            const container = document.getElementById('projectsTableContainer');
-            container.innerHTML = `<table class="w-full text-sm"><thead><tr class="border-b"><th>ID</th><th>صورة</th><th>الاسم</th><th>الإمارة</th><th>إجراءات</th></tr></thead><tbody>${(data||[]).map(p => `
-                <tr class="border-b"><td>${p.id}</td><td>${p.image?`<img src="${p.image}" class="w-10 h-10 rounded-lg object-cover">`:'-'}</td><td>${p.name_ar}</td><td>${p.emirate}</td>
-                <td class="flex gap-2"><button class="text-blue-600" onclick="window.editProject(${p.id})"><i class="fas fa-edit"></i></button><button class="text-red-600" onclick="window.deleteItem('projects',${p.id})"><i class="fas fa-trash"></i></button></td></tr>
-            `).join('')}</tbody></table>`;
-            document.getElementById('projectsPagination').innerHTML = Array.from({length: Math.ceil(count/10)}, (_,i)=> `<button class="px-3 py-1 rounded ${i+1===page?'bg-teal-700 text-white':'bg-gray-200'}" onclick="window.loadProjects(${i+1})">${i+1}</button>`).join('');
-        }
-        window.loadProjects = loadProjects;
-        window.editProject = async (id) => {
-            const { data } = await supabase.from('projects').select('*').eq('id', id).single();
-            if (data) {
-                document.getElementById('projectId').value = data.id;
-                document.getElementById('projectNameAr').value = data.name_ar;
-                document.getElementById('projectNameEn').value = data.name_en;
-                document.getElementById('projectEmirate').value = data.emirate;
-                document.getElementById('projectImage').value = data.image||'';
-                document.getElementById('projectLicense').checked = data.adra_license;
-                document.getElementById('projectStatus').value = data.status;
-                openModal('projectModal');
-            }
-        };
-        document.getElementById('projectForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const id = document.getElementById('projectId').value;
-            const payload = {
-                name_ar: document.getElementById('projectNameAr').value,
-                name_en: document.getElementById('projectNameEn').value,
-                emirate: document.getElementById('projectEmirate').value,
-                image: document.getElementById('projectImage').value,
-                adra_license: document.getElementById('projectLicense').checked,
-                status: document.getElementById('projectStatus').value
+    // ==================== EVENTS ====================
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+            const tabId = btn.dataset.tab + 'Tab';
+            document.getElementById(tabId).classList.remove('hidden');
+            const loaders = {
+                dashboard: loadAnalytics,
+                projects: () => loadProjects(1),
+                products: loadProducts,
+                deals: loadDeals,
+                contacts: loadContacts,
+                feedbacks: loadFeedbacks,
+                registrations: loadRegistrations
             };
-            if (id) {
-                await supabase.from('projects').update(payload).eq('id', id);
-            } else {
-                // إذا كان id bigint غير تلقائي، نرسل null وسيحدث خطأ. الحل: نتحقق إن كان bigserial أم لا.
-                // لكن لتجنب التعقيد، نستخدم supabase ونعتمد على auto-increment إن وجد.
-                const { error } = await supabase.from('projects').insert(payload);
-                if (error) showToast(error.message, true);
-            }
-            closeModal('projectModal');
-            loadProjects(projectsPage);
-            loadStats();
-            showToast('تم الحفظ');
+            if (loaders[btn.dataset.tab]) loaders[btn.dataset.tab]();
         });
+    });
 
-        // ============ DELETE ============
-        window.deleteItem = async (table, id) => {
-            if (confirm('تأكيد الحذف؟')) {
-                await supabase.from(table).delete().eq('id', id);
-                showToast('تم الحذف');
-                if (table === 'projects') loadProjects(projectsPage);
-                else if (table === 'products') loadProducts();
-                else if (table === 'deals') loadDeals();
-                loadStats();
-            }
-        };
+    document.getElementById('refreshProjectsBtn')?.addEventListener('click', () => loadProjects(projectsPage));
+    document.getElementById('refreshProductsBtn')?.addEventListener('click', loadProducts);
+    document.getElementById('refreshDealsBtn')?.addEventListener('click', loadDeals);
+    document.getElementById('refreshFeedbacksBtn')?.addEventListener('click', loadFeedbacks);
+    document.getElementById('refreshRegsBtn')?.addEventListener('click', loadRegistrations);
+    document.getElementById('refreshAnalyticsBtn')?.addEventListener('click', loadAnalytics);
+    document.getElementById('projectSearch')?.addEventListener('input', () => loadProjects(1));
+    document.getElementById('projectEmirateFilter')?.addEventListener('change', () => loadProjects(1));
+    document.getElementById('projectStatusFilter')?.addEventListener('change', () => loadProjects(1));
+    document.getElementById('regStatusFilter')?.addEventListener('change', loadRegistrations);
+    document.getElementById('feedbackStatusFilter')?.addEventListener('change', loadFeedbacks);
 
-        // ============ PRODUCTS ============
-        async function loadProducts() {
-            const projectId = document.getElementById('productProjectFilter').value;
-            if (!projectId) return;
-            const { data } = await supabase.from('products').select('*').eq('project_id', projectId);
-            document.getElementById('productsTableContainer').innerHTML = `<table class="w-full text-sm"><thead><tr class="border-b"><th>صورة</th><th>الاسم</th><th>السعر</th><th>إجراءات</th></tr></thead><tbody>${(data||[]).map(p => `
-                <tr class="border-b"><td>${p.main_image?`<img src="${p.main_image}" class="w-10 h-10 rounded-lg">`:'-'}</td><td>${p.name_ar}</td><td>${p.price_ar||'-'}</td>
-                <td class="flex gap-2"><button class="text-blue-600" onclick="window.editProduct('${p.id}')"><i class="fas fa-edit"></i></button><button class="text-red-600" onclick="window.deleteItem('products','${p.id}')"><i class="fas fa-trash"></i></button></td></tr>
-            `).join('')}</tbody></table>`;
+    document.getElementById('addProjectBtn').onclick = () => {
+        document.getElementById('projectForm').reset();
+        document.getElementById('projectId').value = '';
+        document.getElementById('projectStatus').value = 'pending';
+        openModal('projectModal');
+    };
+    document.getElementById('addProductBtn').onclick = () => {
+        const pid = document.getElementById('productProjectFilter').value;
+        if (!pid) { showToast('اختر مشروعاً أولاً', true); return; }
+        document.getElementById('productForm').reset();
+        document.getElementById('productId').value = '';
+        document.getElementById('productProjectId').value = pid;
+        openModal('productModal');
+    };
+    document.getElementById('addDealBtn').onclick = () => {
+        const pid = document.getElementById('dealProjectFilter').value;
+        if (!pid) { showToast('اختر مشروعاً أولاً', true); return; }
+        document.getElementById('dealForm').reset();
+        document.getElementById('dealId').value = '';
+        document.getElementById('dealProjectId').value = pid;
+        openModal('dealModal');
+    };
+
+    document.getElementById('forgotPasswordLink').onclick = async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('adminEmail').value;
+        if (!email.includes('@')) { showToast('أدخل بريداً صحيحاً', true); return; }
+        const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + '/reset-password.html' });
+        if (error) showToast(error.message, true);
+        else showToast('تم الإرسال، تحقق من بريدك');
+    };
+
+    // ==================== AUTH ====================
+    async function checkSession() {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session && session.user.email === ALLOWED_EMAIL) {
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('adminContent').classList.remove('hidden');
+            await initSelects();
+            await loadStats();
+            await loadAnalytics();
+            await loadProjects(1);
         }
-        window.editProduct = async (id) => {
-            const { data } = await supabase.from('products').select('*').eq('id', id).single();
-            if (data) {
-                document.getElementById('productId').value = data.id;
-                document.getElementById('productProjectId').value = data.project_id;
-                document.getElementById('productNameAr').value = data.name_ar;
-                document.getElementById('productNameEn').value = data.name_en;
-                document.getElementById('productMainImage').value = data.main_image||'';
-                document.getElementById('productImages').value = (data.images||[]).join(',');
-                document.getElementById('productPriceAr').value = data.price_ar||'';
-                document.getElementById('productPriceEn').value = data.price_en||'';
-                document.getElementById('productDetailsAr').value = (data.details_ar||[]).join('\n');
-                openModal('productModal');
-            }
-        };
-        document.getElementById('productForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const id = document.getElementById('productId').value;
-            const projectId = document.getElementById('productProjectId').value;
-            const payload = {
-                name_ar: document.getElementById('productNameAr').value,
-                name_en: document.getElementById('productNameEn').value,
-                main_image: document.getElementById('productMainImage').value,
-                images: document.getElementById('productImages').value.split(',').map(s=>s.trim()).filter(Boolean),
-                price_ar: document.getElementById('productPriceAr').value,
-                price_en: document.getElementById('productPriceEn').value,
-                details_ar: document.getElementById('productDetailsAr').value.split('\n'),
-                project_id: projectId
-            };
-            if (id) {
-                await supabase.from('products').update(payload).eq('id', id);
-            } else {
-                // توليد ID فريد تلقائياً لتجنب null
-                payload.id = crypto.randomUUID();
-                await supabase.from('products').insert(payload);
-            }
-            closeModal('productModal');
-            loadProducts();
-            loadStats();
-            showToast('تم الحفظ');
+    }
+
+    document.getElementById('loginBtn').onclick = async () => {
+        const { error, data } = await supabase.auth.signInWithPassword({
+            email: document.getElementById('adminEmail').value,
+            password: document.getElementById('adminPassword').value
         });
-
-        // ============ DEALS ============
-        async function loadDeals() {
-            const projectId = document.getElementById('dealProjectFilter').value;
-            if (!projectId) return;
-            const { data } = await supabase.from('deals').select('*').eq('project_id', projectId);
-            document.getElementById('dealsTableContainer').innerHTML = `<table class="w-full text-sm"><thead><tr class="border-b"><th>صورة</th><th>العنوان</th><th>إجراءات</th></tr></thead><tbody>${(data||[]).map(d => `
-                <tr class="border-b"><td>${d.image?`<img src="${d.image}" class="w-10 h-10 rounded-lg">`:'-'}</td><td>${d.title_ar}</td>
-                <td class="flex gap-2"><button class="text-blue-600" onclick="window.editDeal('${d.id}')"><i class="fas fa-edit"></i></button><button class="text-red-600" onclick="window.deleteItem('deals','${d.id}')"><i class="fas fa-trash"></i></button></td></tr>
-            `).join('')}</tbody></table>`;
+        if (error || data.user.email !== ALLOWED_EMAIL) {
+            document.getElementById('loginError').innerText = 'بيانات الدخول غير صحيحة';
+        } else {
+            checkSession();
         }
-        window.editDeal = async (id) => {
-            const { data } = await supabase.from('deals').select('*').eq('id', id).single();
-            if (data) {
-                document.getElementById('dealId').value = data.id;
-                document.getElementById('dealProjectId').value = data.project_id;
-                document.getElementById('dealTitleAr').value = data.title_ar;
-                document.getElementById('dealTitleEn').value = data.title_en;
-                document.getElementById('dealImage').value = data.image||'';
-                document.getElementById('dealDescAr').value = data.description_ar||'';
-                openModal('dealModal');
-            }
-        };
-        document.getElementById('dealForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const id = document.getElementById('dealId').value;
-            const projectId = document.getElementById('dealProjectId').value;
-            const payload = {
-                title_ar: document.getElementById('dealTitleAr').value,
-                title_en: document.getElementById('dealTitleEn').value,
-                image: document.getElementById('dealImage').value,
-                description_ar: document.getElementById('dealDescAr').value,
-                project_id: projectId
-            };
-            if (id) {
-                await supabase.from('deals').update(payload).eq('id', id);
-            } else {
-                payload.id = crypto.randomUUID();
-                await supabase.from('deals').insert(payload);
-            }
-            closeModal('dealModal');
-            loadDeals();
-            loadStats();
-            showToast('تم الحفظ');
-        });
+    };
+    document.getElementById('logoutBtn').onclick = async () => {
+        await supabase.auth.signOut();
+        location.reload();
+    };
 
-        // ============ CONTACTS ============
-        async function loadContacts() {
-            const projectId = document.getElementById('contactProjectFilter').value;
-            if (!projectId) return;
-            let { data } = await supabase.from('contacts').select('*').eq('project_id', projectId);
-            if (!data || !data.length) data = [{ project_id: projectId }];
-            const c = data[0];
-            document.getElementById('contactsTableContainer').innerHTML = `
-                <div class="grid grid-cols-2 gap-4">
-                    ${['whatsapp','phone','email','instagram','telegram','snapchat','tiktok','facebook','twitter','website'].map(f => `
-                        <div><label class="block font-semibold mb-1">${f}</label><input id="edit_${f}" value="${c[f]||''}" class="w-full border rounded-xl p-3"></div>
-                    `).join('')}
-                </div>
-                <button id="saveContactBtn" class="mt-6 w-full bg-teal-700 text-white py-3 rounded-xl font-bold">حفظ التغييرات</button>
-            `;
-            document.getElementById('saveContactBtn').onclick = async () => {
-                const newContact = { project_id: parseInt(projectId) };
-                ['whatsapp','phone','email','instagram','telegram','snapchat','tiktok','facebook','twitter','website'].forEach(f => {
-                    newContact[f] = document.getElementById(`edit_${f}`).value;
-                });
-                await supabase.from('contacts').upsert(newContact);
-                showToast('تم حفظ بيانات التواصل');
-            };
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.modal-overlay').forEach(m => m.classList.add('hidden'));
         }
+    });
 
-        // ============ FEEDBACKS ============
-        async function loadFeedbacks() {
-            const status = document.getElementById('feedbackStatusFilter').value;
-            let query = supabase.from('feedbacks').select('*').order('created_at', { ascending: false });
-            if (status) query = query.eq('status', status);
-            const { data } = await query;
-            document.getElementById('feedbacksTableContainer').innerHTML = `<table class="w-full text-sm"><thead><tr class="border-b"><th>النوع</th><th>الرسالة</th><th>الحالة</th><th>التاريخ</th></tr></thead><tbody>${(data||[]).map(f => `
-                <tr class="border-b"><td>${f.type}</td><td>${f.message}</td><td>${f.status}</td><td>${new Date(f.created_at).toLocaleString()}</td></tr>
-            `).join('')}</tbody></table>`;
-        }
-
-        // ============ INIT ============
-        async function initSelects() {
-            const { data: projects } = await supabase.from('projects').select('id, name_ar');
-            if (projects) {
-                const options = projects.map(p => `<option value="${p.id}">${p.name_ar}</option>`).join('');
-                document.getElementById('productProjectFilter').innerHTML = '<option value="">اختر مشروعاً</option>' + options;
-                document.getElementById('dealProjectFilter').innerHTML = '<option value="">اختر مشروعاً</option>' + options;
-                document.getElementById('contactProjectFilter').innerHTML = '<option value="">اختر مشروعاً</option>' + options;
-            }
-            const { data: emirates } = await supabase.from('projects').select('emirate');
-            const unique = [...new Set((emirates||[]).map(e=>e.emirate))];
-            document.getElementById('projectEmirateFilter').innerHTML = '<option value="">كل الإمارات</option>' + unique.map(e => `<option>${e}</option>`).join('');
-        }
-
-        // تبويبات
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
-                document.getElementById(btn.dataset.tab + 'Tab').classList.remove('hidden');
-                if (btn.dataset.tab === 'projects') loadProjects(1);
-                else if (btn.dataset.tab === 'products') loadProducts();
-                else if (btn.dataset.tab === 'deals') loadDeals();
-                else if (btn.dataset.tab === 'contacts') loadContacts();
-                else if (btn.dataset.tab === 'feedbacks') loadFeedbacks();
-                else if (btn.dataset.tab === 'registrations') loadRegistrations();
-                else if (btn.dataset.tab === 'dashboard') loadAnalytics();
-            });
-        });
-
-        // أزرار إضافية
-        document.getElementById('addProjectBtn').onclick = () => { document.getElementById('projectForm').reset(); document.getElementById('projectId').value=''; openModal('projectModal'); };
-        document.getElementById('addProductBtn').onclick = () => {
-            const pid = document.getElementById('productProjectFilter').value;
-            if (!pid) return showToast('اختر مشروعاً أولاً', true);
-            document.getElementById('productForm').reset();
-            document.getElementById('productId').value='';
-            document.getElementById('productProjectId').value = pid;
-            openModal('productModal');
-        };
-        document.getElementById('addDealBtn').onclick = () => {
-            const pid = document.getElementById('dealProjectFilter').value;
-            if (!pid) return showToast('اختر مشروعاً أولاً', true);
-            document.getElementById('dealForm').reset();
-            document.getElementById('dealId').value='';
-            document.getElementById('dealProjectId').value = pid;
-            openModal('dealModal');
-        };
-
-        // تصدير CSV (مبسط)
-        document.getElementById('exportAnalyticsBtn').onclick = () => showToast('جاري التصدير...');
-
-        // حدث إعادة تعيين كلمة المرور
-        document.getElementById('forgotPasswordLink').onclick = async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('adminEmail').value;
-            if (!email) return showToast('أدخل البريد الإلكتروني أولاً', true);
-            const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: `${window.location.origin}/reset-password.html` });
-            if (error) showToast(error.message, true);
-            else showToast('تم إرسال رابط إعادة التعيين إلى بريدك الإلكتروني');
-        };
-
-        // الدخول
-        async function checkSession() {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session && session.user.email === ALLOWED_EMAIL) {
-                document.getElementById('loginSection').classList.add('hidden');
-                document.getElementById('adminContent').classList.remove('hidden');
-                await initSelects();
-                await loadStats();
-                await loadAnalytics();
-                await loadProjects(1);
-            }
-        }
-
-        document.getElementById('loginBtn').onclick = async () => {
-            const email = document.getElementById('adminEmail').value;
-            const pwd = document.getElementById('adminPassword').value;
-            const { error, data } = await supabase.auth.signInWithPassword({ email, password: pwd });
-            if (error || data.user.email !== ALLOWED_EMAIL) {
-                document.getElementById('loginError').innerText = 'بيانات الدخول غير صحيحة';
-            } else {
-                checkSession();
-            }
-        };
-        document.getElementById('logoutBtn').onclick = async () => { await supabase.auth.signOut(); location.reload(); };
-
-        checkSession();
-    </script>
+    checkSession();
+</script>
 </body>
 </html>
