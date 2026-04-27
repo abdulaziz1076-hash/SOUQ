@@ -1,4 +1,4 @@
-// main.js - كامل مع التعديلات المطلوبة
+// main.js - كامل مع التصحيحات الاحترافية (نسخة 2026-04-27)
 import { APP_CONFIG } from './config.js';
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
@@ -26,6 +26,7 @@ const appState = {
     currentZoomIndex: 0
 };
 console.log("main.js is loaded successfully");
+
 // ==================== Helper: Build Sell Points ====================
 function buildSellPoints(contact) {
     const points = [];
@@ -77,22 +78,22 @@ async function loadProjectsFromSupabase() {
             category: project.category_ar,
             categoryEn: project.category_en,
             products: (project.products || []).map(p => ({
-    id: p.id,
-    name: p.name_ar,
-    nameEn: p.name_en,
-    description: p.description_ar,
-    descriptionEn: p.description_en,
-    longDescription: p.long_description_ar,
-    longDescriptionEn: p.long_description_en,
-    mainImage: p.main_image,
-    images: p.images || [],
-    details: p.details_ar || [],
-    detailsEn: p.details_en || [],
-    category: p.category_ar,
-    categoryEn: p.category_en,
-    price_ar: p.price_ar,
-    price_en: p.price_en
-})),
+                id: p.id,
+                name: p.name_ar,
+                nameEn: p.name_en,
+                description: p.description_ar,
+                descriptionEn: p.description_en,
+                longDescription: p.long_description_ar,
+                longDescriptionEn: p.long_description_en,
+                mainImage: p.main_image,
+                images: p.images || [],
+                details: p.details_ar || [],
+                detailsEn: p.details_en || [],
+                category: p.category_ar,
+                categoryEn: p.category_en,
+                price_ar: p.price_ar,
+                price_en: p.price_en
+            })),
             deals: (project.deals || []).map(d => ({
                 id: d.id,
                 title: d.title_ar,
@@ -344,7 +345,8 @@ function parseSellPoints(sellPoints) {
     return sellPoints.map(sp => {
         let type = sp.type;
         let value = sp.value;
-        let cleanValue = value.replace(/^@/, '');
+        if (!value) return null; // ⚠️ تجاهل العناصر الفارغة
+        let cleanValue = String(value).replace(/^@/, '');
         let url = '', icon = '', bg = '';
         switch (type) {
             case 'instagram': url = `https://instagram.com/${cleanValue}`; icon = 'fa-instagram'; bg = 'instagram-bg'; break;
@@ -357,7 +359,7 @@ function parseSellPoints(sellPoints) {
             default: url = value; icon = 'fa-globe'; bg = 'website-bg';
         }
         return { url, icon, bg, type };
-    });
+    }).filter(Boolean);
 }
 
 // ==================== Translations ====================
@@ -832,7 +834,6 @@ function showDealDetails(familyId, dealId) {
 }
 
 // ==================== Show Family Products ====================
-// ==================== Show Family Products (المعدلة) ====================
 function showFamilyProducts(id, updateHash = true) {
     hideLoader();
     const family = projectsData.find(f => f.id == id);
@@ -899,7 +900,6 @@ function showFamilyProducts(id, updateHash = true) {
             const tCat = translations[appState.currentLanguage].categories;
             const categoryDisplay = tCat[p.category] || productCategory;
             const isFav = isFavorite(p.id, 'product');
-            // ✅ السعر يضاف هنا لكل منتج
             const priceText = getPriceDisplay(p);
             const priceHtml = priceText ? `<div class="product-price">${priceText}</div>` : '';
             return `
@@ -918,20 +918,20 @@ function showFamilyProducts(id, updateHash = true) {
     let contactHtml = '';
     if (family.whatsapp) {
         const whatsappUrl = `https://wa.me/${String(family.whatsapp).replace(/[^0-9]/g, '')}`;
-        contactHtml += `<a href="#" onclick="handleContact('${whatsappUrl}', 'whatsapp'); return false;" class="contact-item"><div class="contact-icon whatsapp-bg"><i class="fab fa-whatsapp"></i></div></a>`;
+        contactHtml += `<a href="#" onclick="handleContact(event, '${whatsappUrl}', 'whatsapp'); return false;" class="contact-item"><div class="contact-icon whatsapp-bg"><i class="fab fa-whatsapp"></i></div></a>`;
     }
     if (family.phone) {
         const phoneUrl = `tel:${family.phone}`;
-        contactHtml += `<a href="#" onclick="handleContact('${phoneUrl}', 'phone'); return false;" class="contact-item"><div class="contact-icon phone-bg"><i class="fas fa-phone"></i></div></a>`;
+        contactHtml += `<a href="#" onclick="handleContact(event, '${phoneUrl}', 'phone'); return false;" class="contact-item"><div class="contact-icon phone-bg"><i class="fas fa-phone"></i></div></a>`;
     }
     if (family.email) {
         const emailUrl = `mailto:${family.email}`;
-        contactHtml += `<a href="#" onclick="handleContact('${emailUrl}', 'email'); return false;" class="contact-item"><div class="contact-icon email-bg"><i class="fas fa-envelope"></i></div></a>`;
+        contactHtml += `<a href="#" onclick="handleContact(event, '${emailUrl}', 'email'); return false;" class="contact-item"><div class="contact-icon email-bg"><i class="fas fa-envelope"></i></div></a>`;
     }
     if (family.sell_points && Array.isArray(family.sell_points)) {
         const parsed = parseSellPoints(family.sell_points);
         parsed.forEach(p => {
-            contactHtml += `<a href="#" onclick="handleContact('${p.url}', '${p.type}'); return false;" class="contact-item"><div class="contact-icon ${p.bg}"><i class="fab ${p.icon}"></i></div></a>`;
+            contactHtml += `<a href="#" onclick="handleContact(event, '${p.url}', '${p.type}'); return false;" class="contact-item"><div class="contact-icon ${p.bg}"><i class="fab ${p.icon}"></i></div></a>`;
         });
     }
     const contactSection = document.getElementById('contactSectionBottom');
@@ -948,14 +948,14 @@ function getPriceDisplay(product) {
     const lang = appState.currentLanguage;
     let price = null;
     if (lang === 'ar') {
-        price = product.price_ar || product.priceAr; // قد يكون الاسم مختلفًا
+        price = product.price_ar || product.priceAr;
     } else {
         price = product.price_en || product.priceEn;
     }
-    if (!price || price.trim() === '') {
+    if (!price || String(price).trim() === '') {
         return lang === 'ar' ? 'السعر عند الطلب' : 'Price on request';
     }
-    // إذا كان السعر موجودًا، نضيف "AED" إذا لم يكن موجودًا
+    price = String(price);
     if (!price.includes('AED') && !price.includes('درهم')) {
         price += ' AED';
     }
@@ -963,7 +963,7 @@ function getPriceDisplay(product) {
 }
 
 // ==================== Show Product Detail ====================
-function showProductDetail(familyId, productId, updateHash = true) {
+async function showProductDetail(familyId, productId, updateHash = true) {
     hideLoader();
     const family = projectsData.find(f => f.id == familyId);
     if (!family) return;
@@ -972,7 +972,7 @@ function showProductDetail(familyId, productId, updateHash = true) {
     family.phone = contactInfo.phone || null;
     family.email = contactInfo.email || null;
     family.sell_points = contactInfo.sell_points || [];
-    const product = family.products.find(p => p.id === productId);
+    const product = family.products.find(p => p.id == productId);
     if (!product) return;
     appState.currentFamilyId = familyId;
     appState.currentProductId = productId;
@@ -1004,7 +1004,7 @@ function showProductDetail(familyId, productId, updateHash = true) {
     const detailsHtml = details && details.length ? details.map(d => `<li><i class="fas fa-check-circle"></i> ${d}</li>`).join('') : '';
     const specsHtml = detailsHtml ? `<h3 class="product-details-title"><i class="fas fa-list-ul"></i> ${t.specifications}</h3><ul class="product-details-list">${detailsHtml}</ul>` : '';
 
-    const similarProducts = family.products.filter(p => p.id !== productId).slice(0, 4);
+    const similarProducts = family.products.filter(p => p.id != productId).slice(0, 4);
     const similarHtml = similarProducts.map(p => {
         const similarName = appState.currentLanguage === 'ar' ? p.name : p.nameEn;
         return `<div class="similar-product-card" onclick="showProductDetail(${familyId}, '${p.id}')"><div class="similar-product-image"><img src="${p.mainImage || p.image}" loading="lazy"></div><div class="similar-product-info"><h4>${similarName}</h4></div></div>`;
@@ -1015,32 +1015,30 @@ function showProductDetail(familyId, productId, updateHash = true) {
     let sellerContactHtml = '';
     if (family.whatsapp) {
         const whatsappUrl = `https://wa.me/${String(family.whatsapp).replace(/[^0-9]/g, '')}`;
-        sellerContactHtml += `<a href="#" onclick="handleContact('${whatsappUrl}', 'whatsapp'); return false;" class="seller-contact-item"><div class="seller-contact-icon whatsapp-bg"><i class="fab fa-whatsapp"></i></div></a>`;
+        sellerContactHtml += `<a href="#" onclick="handleContact(event, '${whatsappUrl}', 'whatsapp'); return false;" class="seller-contact-item"><div class="seller-contact-icon whatsapp-bg"><i class="fab fa-whatsapp"></i></div></a>`;
     }
     if (family.phone) {
         const phoneUrl = `tel:${family.phone}`;
-        sellerContactHtml += `<a href="#" onclick="handleContact('${phoneUrl}', 'phone'); return false;" class="seller-contact-item"><div class="seller-contact-icon phone-bg"><i class="fas fa-phone"></i></div></a>`;
+        sellerContactHtml += `<a href="#" onclick="handleContact(event, '${phoneUrl}', 'phone'); return false;" class="seller-contact-item"><div class="seller-contact-icon phone-bg"><i class="fas fa-phone"></i></div></a>`;
     }
     if (family.email) {
         const emailUrl = `mailto:${family.email}`;
-        sellerContactHtml += `<a href="#" onclick="handleContact('${emailUrl}', 'email'); return false;" class="seller-contact-item"><div class="seller-contact-icon email-bg"><i class="fas fa-envelope"></i></div></a>`;
+        sellerContactHtml += `<a href="#" onclick="handleContact(event, '${emailUrl}', 'email'); return false;" class="seller-contact-item"><div class="seller-contact-icon email-bg"><i class="fas fa-envelope"></i></div></a>`;
     }
     if (family.sell_points && Array.isArray(family.sell_points)) {
         const parsed = parseSellPoints(family.sell_points);
         parsed.forEach(p => {
-            sellerContactHtml += `<a href="#" onclick="handleContact('${p.url}', '${p.type}'); return false;" class="seller-contact-item"><div class="seller-contact-icon ${p.bg}"><i class="fab ${p.icon}"></i></div></a>`;
+            sellerContactHtml += `<a href="#" onclick="handleContact(event, '${p.url}', '${p.type}'); return false;" class="seller-contact-item"><div class="seller-contact-icon ${p.bg}"><i class="fab ${p.icon}"></i></div></a>`;
         });
     }
 
     const isFav = isFavorite(product.id, 'product');
 
-    // جلب خيارات المنتج من قاعدة البيانات
     const { data: variants, error: varErr } = await supabase
         .from('product_variants')
         .select('*')
         .eq('product_id', product.id);
     
-    // تحديث المتغير العام
     currentVariants = variants || [];
     const hasVariants = currentVariants.length > 0;
     const defaultVariant = currentVariants.find(v => v.is_default) || currentVariants[0];
@@ -1054,7 +1052,9 @@ function showProductDetail(familyId, productId, updateHash = true) {
                 <div class="main-image" onclick="openZoomFromMainImage()">
                     <img src="${images[0]}" alt="${productName}" id="currentMainImage" loading="lazy">
                 </div>
-                <div class="action-btn favorite-btn ${isFav ? 'active' : ''}" data-id="${product.id}" data-type="product" onclick="event.stopPropagation(); toggleFavorite('${product.id}', 'product')"><i class="fas fa-heart"></i></div>
+                <div class="action-btn favorite-btn ${isFav ? 'active' : ''}" data-id="${product.id}" data-type="product" onclick="(function(e){ e.stopPropagation(); toggleFavorite('${product.id}', 'product'); })(event)">
+                    <i class="fas fa-heart"></i>
+                </div>
                 <div class="action-btn share-btn" data-family-id="${familyId}" data-product-id="${productId}"><i class="fas fa-share-alt"></i></div>
             </div>
             <div class="product-thumbnails" id="productThumbnails">${thumbnailsHtml}</div>
@@ -1103,9 +1103,11 @@ function showProductDetail(familyId, productId, updateHash = true) {
         }, 50);
     });
 }
+
+// ==================== Variant Selector ====================
 window.selectVariant = (event, variantId) => {
     event.stopPropagation();
-    const variant = currentVariants.find(v => v.id === variantId);
+    const variant = currentVariants.find(v => v.id == variantId);
     if (!variant) return;
     const priceEl = document.getElementById('dynamicPrice');
     if (priceEl) {
@@ -1115,6 +1117,7 @@ window.selectVariant = (event, variantId) => {
     const targetLabel = document.querySelector(`.variant-option input[value="${variantId}"]`)?.closest('.variant-option');
     if (targetLabel) targetLabel.classList.add('active');
 };
+
 // ==================== Hash Change Handler ====================
 function handleHashChange() {
     const hash = window.location.hash.slice(1) || '/';
@@ -1169,7 +1172,6 @@ function handleHashChange() {
 function showSharePopup(event, familyId, productId) {
     if (event) event.stopPropagation();
     
-    // التأكد من تحميل البيانات
     if (!projectsData || projectsData.length === 0) {
         console.warn('projectsData not loaded yet');
         showToast('يرجى الانتظار قليلاً ثم المحاولة مرة أخرى');
@@ -1181,7 +1183,7 @@ function showSharePopup(event, familyId, productId) {
         console.error('Family not found', familyId);
         return;
     }
-    const product = family.products.find(p => p.id === productId);
+    const product = family.products.find(p => p.id == productId);
     if (!product) {
         console.error('Product not found', productId);
         return;
@@ -1196,7 +1198,6 @@ function showSharePopup(event, familyId, productId) {
         return;
     }
     
-    // إعادة تعيين المحتوى
     popup.classList.remove('show');
     popup.innerHTML = `
         <h3>${t.shareTitle}</h3>
@@ -1288,11 +1289,11 @@ function copyProfileLink() {
 function shareVia(platform) {}
 function shareProfileVia(platform) {}
 
-// ==================== Contact Confirmation Modal (NEW) ====================
+// ==================== Contact Confirmation Modal ====================
 let contactPendingUrl = null;
 
-function handleContact(url, type) {
-    if (event) event.preventDefault();
+function handleContact(e, url, type) {
+    if (e) e.preventDefault();
     const modal = document.getElementById('contactConfirmModal');
     if (!modal) {
         console.error('Modal not found');
@@ -1335,7 +1336,7 @@ function proceedToContact() {
     closeContactConfirmModal();
 }
 
-// ==================== Social Contact Popup (already exists but ensure it's shown) ====================
+// ==================== Social Contact Popup ====================
 function showSocialContact() {
     const currentLang = appState.currentLanguage || 'ar';
     const t = translations[currentLang];
@@ -1345,7 +1346,6 @@ function showSocialContact() {
         popup.id = 'socialContactPopup';
         popup.className = 'instruction-popup';
         document.body.appendChild(popup);
-        // Ensure styles exist (they are in style.css)
     }
     const registerUrl = 'registerr.html';
     popup.innerHTML = `
@@ -1483,11 +1483,8 @@ document.addEventListener('click', function(e) {
     if (familyId && productId) {
         showSharePopup(e, familyId, productId);
     } else {
-        // إذا لم يجد البيانات، قد يكون زر المشاركة في صفحة المشروع (يعمل بالطريقة القديمة)
-        // نحتفظ بالتوافق مع الأزرار القديمة التي لا تحمل data attributes
         const onclickAttr = shareBtn.getAttribute('onclick');
         if (onclickAttr && onclickAttr.includes('showSharePopup')) {
-            // تنفيذ الدالة بشكل مباشر (لن يحدث تعارض)
             eval(onclickAttr);
         }
     }
@@ -1532,7 +1529,7 @@ window.addEventListener('load', async function() {
     setTimeout(() => hideLoader(), 100);
     const feedbackForm = document.getElementById('feedbackFormModal');
     if (feedbackForm) {
-        feedbackForm.removeEventListener('submit', submitFeedback); // تجنب التكرار
+        feedbackForm.removeEventListener('submit', submitFeedback);
         feedbackForm.addEventListener('submit', submitFeedback);
     }
 });
@@ -1555,21 +1552,6 @@ window.addEventListener('pageshow', function(event) {
         ensureLoaderHidden();
     }
 });
-            // دوال الخيارات
-    window.selectVariant = (event, variantId) => {
-    event.stopPropagation();
-    const variant = currentVariants.find(v => v.id === variantId);
-    if (!variant) return;
-    // تحديث السعر
-    const priceEl = document.getElementById('dynamicPrice');
-    if (priceEl) {
-        priceEl.textContent = appState.currentLanguage === 'ar' ? variant.price_ar : variant.price_en;
-    }
-    // تغيير الكلاس النشط
-    document.querySelectorAll('.variant-option').forEach(el => el.classList.remove('active'));
-    const targetLabel = document.querySelector(`.variant-option input[value="${variantId}"]`)?.closest('.variant-option');
-    if (targetLabel) targetLabel.classList.add('active');
-};
 
 window.addEventListener('hashchange', handleHashChange);
 
@@ -1617,7 +1599,7 @@ window.openFeedbackModal = openFeedbackModal;
 window.closeFeedbackModal = closeFeedbackModal;
 window.submitFeedback = submitFeedback;
 
-// فتح مودال الشكاوى والاقتراحات
+// ==================== Feedback Modal Functions ====================
 function openFeedbackModal(projectId, projectName) {
     document.getElementById('feedbackTargetIdModal').value = projectId;
     document.getElementById('feedbackTargetNameModal').value = projectName;
@@ -1630,14 +1612,13 @@ function closeFeedbackModal() {
     document.body.style.overflow = '';
 }
 
-// إرسال البيانات إلى Supabase
 async function submitFeedback(event) {
     event.preventDefault();
     const type = document.getElementById('feedbackTypeModal').value;
     const reporter_email = document.getElementById('feedbackEmailModal').value || null;
     const message = document.getElementById('feedbackMessageModal').value;
     const target_id = document.getElementById('feedbackTargetIdModal').value;
-    const target_type = 'project'; // لأن الزر داخل صفحة المشروع
+    const target_type = 'project';
 
     const { data, error } = await supabase.from('feedbacks').insert([{
         type,
@@ -1658,6 +1639,7 @@ async function submitFeedback(event) {
     }
 }
 
+// ==================== Analytics Tracking ====================
 function trackPageView() {
     const supabaseUrl = "https://xyepcwptfihnztgghimx.supabase.co";
     const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5ZXBjd3B0Zmlobnp0Z2doaW14Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0ODA2OTcsImV4cCI6MjA5MjA1NjY5N30.SZvZjWpih1JiUlv24xLhNwjTvzo9RNsrTiI9fchWldE";
@@ -1682,9 +1664,7 @@ function trackPageView() {
     }).catch(e => console.warn("Tracking error:", e));
 }
 
-// استدعاء عند تحميل الصفحة وعند كل change hash
 window.addEventListener('load', () => setTimeout(trackPageView, 100));
 window.addEventListener('hashchange', () => setTimeout(trackPageView, 100));
 
-// ربط الحدث
-document.getElementById('feedbackFormModal')?.addEventListener('submit', submitFeedback);
+// تم إزالة تكرار مستمع submitFeedback في نهاية الملف
