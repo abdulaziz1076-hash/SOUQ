@@ -65,6 +65,8 @@ async function loadProjectsFromSupabase() {
             name: project.name_ar,
             nameEn: project.name_en,
             is_paid: project.is_paid,
+            price_ar: p.price_ar,
+            price_en: p.price_en,
             emirate: project.emirate,
             description: project.description_ar,
             descriptionEn: project.description_en,
@@ -80,6 +82,8 @@ async function loadProjectsFromSupabase() {
                 name: p.name_ar,
                 nameEn: p.name_en,
                 description: p.description_ar,
+                price_ar: p.price_ar,
+                price_en: p.price_en,
                 descriptionEn: p.description_en,
                 longDescription: p.long_description_ar,
                 longDescriptionEn: p.long_description_en,
@@ -96,6 +100,8 @@ async function loadProjectsFromSupabase() {
                 titleEn: d.title_en,
                 description: d.description_ar,
                 descriptionEn: d.description_en,
+                price_ar: p.price_ar,
+                price_en: p.price_en,
                 image: d.image,
                 images: d.images || [],
                 badge: d.badge_ar,
@@ -831,6 +837,8 @@ function showDealDetails(familyId, dealId) {
 function showFamilyProducts(id, updateHash = true) {
     hideLoader();
     const family = projectsData.find(f => f.id == id);
+    const priceText = getPriceDisplay(product);
+    const priceHtml = priceText ? `<div class="product-price">${priceText}</div>` : '';
     if (!family) return;
     const contactInfo = contactsData[id] || {};
     family.whatsapp = contactInfo.whatsapp || null;
@@ -943,10 +951,31 @@ function showFamilyProducts(id, updateHash = true) {
     setTimeout(() => ensureLoaderHidden(), 100);
 }
 
+function getPriceDisplay(product) {
+    const lang = appState.currentLanguage;
+    let price = null;
+    if (lang === 'ar') {
+        price = product.price_ar || product.priceAr; // قد يكون الاسم مختلفًا
+    } else {
+        price = product.price_en || product.priceEn;
+    }
+    if (!price || price.trim() === '') {
+        return lang === 'ar' ? 'السعر عند الطلب' : 'Price on request';
+    }
+    // إذا كان السعر موجودًا، نضيف "AED" إذا لم يكن موجودًا
+    if (!price.includes('AED') && !price.includes('درهم')) {
+        price += ' AED';
+    }
+    return price;
+}
+
 // ==================== Show Product Detail ====================
 function showProductDetail(familyId, productId, updateHash = true) {
     hideLoader();
     const family = projectsData.find(f => f.id == familyId);
+    const priceText = getPriceDisplay(product);
+    const priceHtml = priceText ? `<div class="product-price">${priceText}</div>` : '';
+    const priceDisplay = getPriceDisplay(product);
     if (!family) return;
     const contactInfo = contactsData[familyId] || {};
     family.whatsapp = contactInfo.whatsapp || null;
@@ -1014,6 +1043,7 @@ function showProductDetail(familyId, productId, updateHash = true) {
                 <div class="action-btn favorite-btn ${isFav ? 'active' : ''}" data-id="${product.id}" data-type="product" onclick="event.stopPropagation(); toggleFavorite('${product.id}', 'product')"><i class="fas fa-heart"></i></div>
                 <div class="action-btn share-btn" data-family-id="${familyId}" data-product-id="${productId}"><i class="fas fa-share-alt"></i></div>
             </div>
+            <div class="product-price-display">${priceDisplay}</div>
             <div class="product-thumbnails" id="productThumbnails">${thumbnailsHtml}</div>
         </div>
         <div class="product-detail-info">
