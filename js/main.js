@@ -4,6 +4,7 @@ import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
 let projectsData = [];
 let contactsData = {};
+let currentVariants = []; 
 
 // ==================== App State ====================
 const appState = {
@@ -11,7 +12,6 @@ const appState = {
     currentEmirate: 'all',
     currentCategory: 'all',
     currentFamilyId: null,
-    let currentVariants = [];
     currentProductId: null,
     searchQuery: '',
     currentLanguage: 'ar',
