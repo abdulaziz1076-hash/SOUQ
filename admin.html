@@ -572,8 +572,38 @@
 <!-- مودالات المشروع والمنتج والعرض -->
 <div id="projectModal" class="modal"><div class="modal-content"><div class="modal-header"><h3 id="projectModalTitle">مشروع</h3><button class="modal-close" data-modal="projectModal"><i class="fas fa-times"></i></button></div><div class="modal-body"><form id="projectForm"><input type="hidden" id="projectId"><div class="form-row"><label>الاسم (عربي)</label><input id="projectNameAr" required></div><div class="form-row"><label>الاسم (إنجليزي)</label><input id="projectNameEn" required></div><div class="form-row"><label>الإمارة</label><select id="projectEmirate"><option>أبوظبي</option><option>دبي</option><option>الشارقة</option><option>عجمان</option><option>رأس الخيمة</option><option>الفجيرة</option><option>أم القيوين</option></select></div><div class="form-row"><label>الصورة (URL)</label><input id="projectImage" placeholder="رابط الصورة"></div><div class="checkbox-row"><input type="checkbox" id="projectLicense"><label>رخصة أدريا</label></div><div class="form-row"><label>الحالة</label><select id="projectStatus"><option value="pending">معلق</option><option value="approved">موافق</option><option value="rejected">مرفوض</option></select></div><button class="btn-save">حفظ</button></form></div></div></div>
 
-<div id="productModal" class="modal"><div class="modal-content"><div class="modal-header"><h3>منتج</h3><button class="modal-close" data-modal="productModal"><i class="fas fa-times"></i></button></div><div class="modal-body"><form id="productForm"><input type="hidden" id="productId"><input type="hidden" id="productProjectId"><div class="form-row"><label>الاسم (عربي)</label><input id="productNameAr" required></div><div class="form-row"><label>الاسم (إنجليزي)</label><input id="productNameEn" required></div><div class="form-row"><label>الصورة الرئيسية (URL)</label><input id="productMainImage"></div><div class="form-row"><label>صور إضافية (فاصلة)</label><input id="productImages" placeholder="url1,url2"></div><div class="form-row"><label>التفاصيل (عربي)</label><textarea id="productDetailsAr" rows="3"></textarea></div><button class="btn-save">حفظ</button></form></div></div> <div class="form-row">
-    <label>السعر (عربي)</label>
+<div id="productModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>منتج</h3>
+      <button class="modal-close" data-modal="productModal"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <form id="productForm">
+        <input type="hidden" id="productId">
+        <input type="hidden" id="productProjectId">
+        <div class="form-row"><label>الاسم (عربي)</label><input id="productNameAr" required></div>
+        <div class="form-row"><label>الاسم (إنجليزي)</label><input id="productNameEn" required></div>
+        <div class="form-row"><label>الصورة الرئيسية (URL)</label><input id="productMainImage"></div>
+        <div class="form-row"><label>صور إضافية (فاصلة)</label><input id="productImages" placeholder="url1,url2"></div>
+        <div class="form-row"><label>التفاصيل (عربي)</label><textarea id="productDetailsAr" rows="3"></textarea></div>
+        <!-- ✅ إضافة حقلي السعر هنا -->
+        <div class="form-row">
+          <label>السعر (عربي)</label>
+          <input type="text" id="productPriceAr" placeholder="مثل: 50 درهم">
+        </div>
+        <div class="form-row">
+          <label>السعر (إنجليزي)</label>
+          <input type="text" id="productPriceEn" placeholder="e.g. 50 AED">
+        </div>
+        <button class="btn-save">حفظ</button>
+      </form>
+    </div>
+  </div>
+</div>
+وفي كود JavaScript داخل admin.html، تم تعديل:
+
+دالة     <label>السعر (عربي)</label>
     <input type="text" id="productPriceAr" placeholder="مثل: 50 درهم">
 </div>
 <div class="form-row">
