@@ -1193,7 +1193,14 @@
     document.getElementById('analyticsPeriod').onchange = loadAnalytics;
     document.getElementById('exportRegBtn').onclick = () => { showToast('تصدير CSV قيد التطوير'); };
     document.getElementById('exportProjectsBtn').onclick = () => { showToast('تصدير CSV قيد التطوير'); };
-    
+    document.getElementById('productProjectFilter').addEventListener('change', () => { loadProducts(); });
+    document.getElementById('dealProjectFilter').addEventListener('change', () => { loadDeals(); });
+    document.getElementById('contactProjectFilter').addEventListener('change', () => { loadContacts(); });
+    document.getElementById('projectSearch').addEventListener('input', () => { loadProjects(1); });
+    document.getElementById('projectEmirateFilter').addEventListener('change', () => { loadProjects(1); });
+    document.getElementById('projectStatusFilter').addEventListener('change', () => { loadProjects(1); });
+    document.getElementById('feedbackStatusFilter').addEventListener('change', () => { loadFeedbacks(); });
+    document.getElementById('regStatusFilter').addEventListener('change', () => { loadRegistrations(); });
     document.querySelectorAll('.modal-close').forEach(btn => btn.addEventListener('click', () => { document.getElementById(btn.dataset.modal).classList.remove('active'); }));
     window.onclick = (e) => { if(e.target.classList.contains('modal')) e.target.classList.remove('active'); };
     
@@ -1269,6 +1276,7 @@
         if (error) alert('حدث خطأ: ' + error.message);
         else alert('تم إرسال رابط إعادة التعيين إلى بريدك الإلكتروني');
     });
+    
 </script>
 </body>
 </html>
