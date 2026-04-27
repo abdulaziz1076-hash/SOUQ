@@ -693,7 +693,7 @@
     let charts = {};
     let currentProjectsPage = 1;
     let projectsTotal = 0;
-    let currentVariants = []; // للمنتج
+    let currentVariants = [];
 
     function showToast(msg, isErr = false) {
         let toast = document.createElement('div');
@@ -719,7 +719,8 @@
         `;
     }
 
-    // تحليلات محسنة
+    // (باقي الدوال بدون تغيير، لكن سأدرجها كاملة للتأكيد)
+
     async function loadAnalytics() {
         const period = document.getElementById('analyticsPeriod').value;
         let since = new Date();
@@ -729,7 +730,6 @@
         const { data: events, error } = await supabase.from('analytics_events').select('*').gte('created_at', since.toISOString()).order('created_at', { ascending: false });
         if (error || !events) return;
         
-        // الزيارات لكل ساعة
         const byHour = {};
         events.forEach(ev => { let hour = ev.created_at.slice(0,13); byHour[hour] = (byHour[hour] || 0) + 1; });
         const labels = Object.keys(byHour).slice(-12).map(k => k.slice(11,13) + ':00');
@@ -737,7 +737,6 @@
         if (charts.visitsChart) charts.visitsChart.destroy();
         charts.visitsChart = new Chart(document.getElementById('visitsChart'), { type: 'line', data: { labels, datasets: [{ label: 'الزيارات', data: dataPoints, borderColor: '#D4AF37', backgroundColor: 'rgba(212,175,55,0.1)', fill: true, tension: 0.3 }] } });
         
-        // المصادر
         const sources = { 'مباشر':0, 'جوجل':0, 'وسائل تواصل':0, 'آخر':0 };
         events.forEach(ev => {
             let ref = (ev.referrer || '').toLowerCase();
@@ -749,7 +748,6 @@
         if (charts.sourcesChart) charts.sourcesChart.destroy();
         charts.sourcesChart = new Chart(document.getElementById('sourcesChart'), { type: 'doughnut', data: { labels: Object.keys(sources), datasets: [{ data: Object.values(sources), backgroundColor: ['#0a2e25','#D4AF37','#2b7a5c','#8b7355'] }] } });
         
-        // الأجهزة
         const devices = { 'حاسوب':0, 'جوال':0, 'تابلت':0 };
         events.forEach(ev => {
             let ua = (ev.user_agent || '').toLowerCase();
@@ -760,13 +758,11 @@
         if (charts.devicesChart) charts.devicesChart.destroy();
         charts.devicesChart = new Chart(document.getElementById('devicesChart'), { type: 'bar', data: { labels: Object.keys(devices), datasets: [{ label: 'الزيارات', data: Object.values(devices), backgroundColor: '#1a5f44', borderRadius: 10 }] } });
         
-        // الإمارات (تقدير)
         const total = events.length || 1;
         const geo = { 'دبي': Math.round(total*0.45), 'أبوظبي': Math.round(total*0.28), 'الشارقة': Math.round(total*0.15), 'أخرى': total - Math.round(total*0.88) };
         if (charts.geoChart) charts.geoChart.destroy();
         charts.geoChart = new Chart(document.getElementById('geoChart'), { type: 'pie', data: { labels: Object.keys(geo), datasets: [{ data: Object.values(geo), backgroundColor: ['#D4AF37','#0a2e25','#2b7a5c','#a0a0a0'] }] } });
         
-        // آخر الزيارات
         const tbody = document.querySelector('#recentVisitsTable tbody');
         tbody.innerHTML = events.slice(0,20).map(ev => `<tr><td>${ev.page || '-'}</td><td>${ev.referrer || 'مباشر'}</td><td>${ev.device || '-'}</td><td>${new Date(ev.created_at).toLocaleString()}</td></tr>`).join('');
     }
@@ -804,7 +800,7 @@
         loadRegistrations(); loadStats();
     };
 
-    // المشاريع مع pagination
+    // المشاريع
     async function loadProjects(page = 1) {
         currentProjectsPage = page;
         let query = supabase.from('projects').select('*', { count: 'exact' }).order('id', { ascending: false }).range((page-1)*10, page*10-1);
@@ -849,6 +845,7 @@
             const { error } = await supabase.from(table).delete().eq('id', id);
             if (error) showToast(error.message, true);
             else { showToast('تم الحذف بنجاح'); if (table === 'projects') loadProjects(); else if (table === 'products') loadProducts(); else if (table === 'deals') loadDeals(); loadStats(); }
+        }
     };
 
     window.editProject = async (id) => {
@@ -869,7 +866,7 @@
         }
     };
 
-    // دوال المتغيرات
+    // المتغيرات
     function renderVariants() {
         const container = document.getElementById('variantsContainer');
         container.innerHTML = currentVariants.map((v, idx) => `
@@ -896,34 +893,30 @@
         renderVariants();
     });
 
-async function saveProject(e) {
-    e.preventDefault();
-    const id = document.getElementById('projectId').value;
-    const payload = {
-        name_ar: document.getElementById('projectNameAr').value,
-        name_en: document.getElementById('projectNameEn').value,
-        emirate: document.getElementById('projectEmirate').value,
-        image: document.getElementById('projectImage').value,
-        description_ar: document.getElementById('projectDescAr').value,
-        description_en: document.getElementById('projectDescEn').value,
-        long_description_ar: document.getElementById('projectLongDescAr').value,
-        long_description_en: document.getElementById('projectLongDescEn').value,
-        adra_license: document.getElementById('projectLicense').checked,
-        status: document.getElementById('projectStatus').value
-    };
-    let error;
-    if (id) {
-        error = (await supabase.from('projects').update(payload).eq('id', id)).error;
-    } else {
-        // لا ترسل id، لأن قاعدة البيانات تولدها تلقائياً
-        error = (await supabase.from('projects').insert(payload)).error;
-    }
-    if (error) showToast(error.message, true);
-    else { showToast('تم حفظ المشروع'); document.getElementById('projectModal').classList.remove('active'); loadProjects(); loadStats(); }
-
+    async function saveProject(e) {
+        e.preventDefault();
+        const id = document.getElementById('projectId').value;
+        const payload = {
+            name_ar: document.getElementById('projectNameAr').value,
+            name_en: document.getElementById('projectNameEn').value,
+            emirate: document.getElementById('projectEmirate').value,
+            image: document.getElementById('projectImage').value,
+            description_ar: document.getElementById('projectDescAr').value,
+            description_en: document.getElementById('projectDescEn').value,
+            long_description_ar: document.getElementById('projectLongDescAr').value,
+            long_description_en: document.getElementById('projectLongDescEn').value,
+            adra_license: document.getElementById('projectLicense').checked,
+            status: document.getElementById('projectStatus').value
+        };
+        let error;
+        if (id) {
+            error = (await supabase.from('projects').update(payload).eq('id', id)).error;
+        } else {
+            error = (await supabase.from('projects').insert(payload)).error;
+        }
         if (error) showToast(error.message, true);
         else { showToast('تم حفظ المشروع'); document.getElementById('projectModal').classList.remove('active'); loadProjects(); loadStats(); }
-    
+    }
 
     async function saveProduct(e) {
         e.preventDefault();
@@ -1014,7 +1007,6 @@ async function saveProject(e) {
             document.getElementById('productDetailsEn').value = (data.details_en || []).join('\n');
             document.getElementById('productPriceAr').value = data.price_ar || '';
             document.getElementById('productPriceEn').value = data.price_en || '';
-            // تحميل المتغيرات
             const { data: variants } = await supabase.from('product_variants').select('*').eq('product_id', id);
             currentVariants = variants || [];
             renderVariants();
@@ -1078,7 +1070,6 @@ async function saveProject(e) {
         if (id) {
             error = (await supabase.from('deals').update(payload).eq('id', id)).error;
         } else {
-            // توليد ID عشوائي إذا لم يكن موجوداً
             payload.id = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2);
             error = (await supabase.from('deals').insert(payload)).error;
         }
@@ -1086,7 +1077,7 @@ async function saveProject(e) {
         else { showToast('تم حفظ العرض'); document.getElementById('dealModal').classList.remove('active'); loadDeals(); loadStats(); }
     }
 
-    // جهات التواصل (جميع الحقول)
+    // جهات التواصل
     async function loadContacts() {
         const projectId = document.getElementById('contactProjectFilter').value;
         if (!projectId) { document.getElementById('contactsTableContainer').innerHTML = '<p>اختر مشروعاً لعرض بيانات التواصل</p>'; return; }
@@ -1170,6 +1161,7 @@ async function saveProject(e) {
         select.innerHTML = '<option value="">كل الإمارات</option>';
         unique.forEach(e => { let opt = document.createElement('option'); opt.value = e; opt.textContent = e; select.appendChild(opt); });
     }
+
     async function initProjectSelects() {
         const { data } = await supabase.from('projects').select('id, name_ar');
         if (!data) return;
@@ -1183,7 +1175,7 @@ async function saveProject(e) {
         fillSelect('contactProjectFilter');
     }
 
-    // ربط الأزرار (بدون أزرار تحديث)
+    // ربط الأزرار
     document.getElementById('addProjectBtn').onclick = () => { document.getElementById('projectForm').reset(); document.getElementById('projectId').value = ''; document.getElementById('projectModal').classList.add('active'); };
     document.getElementById('addProductBtn').onclick = () => { let pid = document.getElementById('productProjectFilter').value; if(!pid){ showToast('اختر مشروعاً أولاً', true); return; } document.getElementById('productForm').reset(); document.getElementById('productId').value = ''; document.getElementById('productProjectId').value = pid; currentVariants = []; renderVariants(); document.getElementById('productModal').classList.add('active'); };
     document.getElementById('addDealBtn').onclick = () => { let pid = document.getElementById('dealProjectFilter').value; if(!pid){ showToast('اختر مشروعاً', true); return; } document.getElementById('dealForm').reset(); document.getElementById('dealId').value = ''; document.getElementById('dealProjectId').value = pid; document.getElementById('dealModal').classList.add('active'); };
