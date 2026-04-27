@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>لوحة التحكم المتقدمة | سوق المشاريع</title>
     
-    <script src="https://cdn.tailwindcss.com">
-    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js">
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     
     <script>
         tailwind.config = {
@@ -35,7 +33,7 @@
         * { font-family: 'Tajawal', sans-serif; }
         body { background: #F8F5F0; }
         
-        .tab-btn { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .tab-btn { transition: all 0.3s; }
         .tab-btn.active {
             background: linear-gradient(135deg, #0F3D2E, #1A5F44);
             color: white;
@@ -135,44 +133,21 @@
             cursor: pointer;
             transition: 0.3s;
         }
-        .btn-danger:hover {
-            background: #a01830;
-            transform: translateY(-2px);
-        }
+        .btn-danger:hover { background: #a01830; transform: translateY(-2px); }
         
-        .modal-overlay {
-            background: rgba(15, 61, 46, 0.7);
-            backdrop-filter: blur(4px);
-        }
+        .modal-overlay { background: rgba(15, 61, 46, 0.7); backdrop-filter: blur(4px); }
         
         .thumb-img {
-            width: 45px;
-            height: 45px;
-            object-fit: cover;
-            border-radius: 10px;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: 0.2s;
+            width: 45px; height: 45px; object-fit: cover; border-radius: 10px;
+            cursor: pointer; border: 2px solid transparent; transition: 0.2s;
         }
-        .thumb-img:hover {
-            border-color: #D4AF37;
-            transform: scale(1.05);
-        }
+        .thumb-img:hover { border-color: #D4AF37; transform: scale(1.05); }
         
         .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #0F3D2E;
-            color: white;
-            padding: 12px 28px;
-            border-radius: 60px;
-            z-index: 9999;
-            font-weight: 500;
-            box-shadow: 0 6px 14px rgba(0,0,0,0.2);
-            animation: slideUp 0.3s ease;
-            border: 2px solid #D4AF37;
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: #0F3D2E; color: white; padding: 12px 28px; border-radius: 60px;
+            z-index: 9999; font-weight: 500; box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+            animation: slideUp 0.3s ease; border: 2px solid #D4AF37;
         }
         @keyframes slideUp {
             from { opacity: 0; transform: translateX(-50%) translateY(20px); }
@@ -182,6 +157,11 @@
         table { border-collapse: separate; border-spacing: 0; }
         th { background: #F8F5F0; color: #0F3D2E; font-weight: 800; }
         tr:hover td { background: #faf9f7; }
+        
+        .no-data {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 40px; color: #8A8A8A; font-size: 16px;
+        }
     </style>
 </head>
 <body class="rtl">
@@ -197,9 +177,7 @@
         <div class="space-y-4">
             <input type="email" id="adminEmail" placeholder="البريد الإلكتروني" value="abdulaziz1076@gmail.com" class="w-full py-3">
             <input type="password" id="adminPassword" placeholder="كلمة المرور" class="w-full py-3">
-            <button id="loginBtn" class="btn-primary w-full py-3 text-lg">
-                <i class="fas fa-sign-in-alt ml-2"></i> دخول
-            </button>
+            <button id="loginBtn" class="btn-primary w-full py-3 text-lg"><i class="fas fa-sign-in-alt ml-2"></i> دخول</button>
             <div id="loginError" class="text-red-500 text-sm text-center"></div>
             <div class="text-center mt-3">
                 <a href="#" id="forgotPasswordLink" style="color: #D4AF37;" class="hover:underline text-sm">نسيت كلمة المرور؟</a>
@@ -262,15 +240,26 @@
         <!-- Dashboard -->
         <div id="dashboardTab" class="tab-content space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="card p-6"><h3 class="font-bold mb-4 flex items-center gap-2" style="color:#0F3D2E;"><i class="fas fa-chart-line" style="color:#D4AF37;"></i> الزيارات (آخر 30 دقيقة)</h3><div style="height:250px;"><canvas id="visitsChart"></canvas></div></div>
-                <div class="card p-6"><h3 class="font-bold mb-4 flex items-center gap-2" style="color:#0F3D2E;"><i class="fas fa-globe" style="color:#D4AF37;"></i> مصادر الزيارات</h3><div style="height:250px;"><canvas id="sourcesChart"></canvas></div></div>
-                <div class="card p-6"><h3 class="font-bold mb-4 flex items-center gap-2" style="color:#0F3D2E;"><i class="fas fa-mobile-alt" style="color:#D4AF37;"></i> الأجهزة</h3><div style="height:250px;"><canvas id="devicesChart"></canvas></div></div>
-                <div class="card p-6"><h3 class="font-bold mb-4 flex items-center gap-2" style="color:#0F3D2E;"><i class="fas fa-map-marker-alt" style="color:#D4AF37;"></i> الإمارات (من الصفحات)</h3><div style="height:250px;"><canvas id="geoChart"></canvas></div></div>
+                <div class="card p-6">
+                    <h3 class="font-bold mb-4 flex items-center gap-2" style="color:#0F3D2E;"><i class="fas fa-chart-line" style="color:#D4AF37;"></i> الزيارات (آخر 10 فترات)</h3>
+                    <div style="height:250px;"><canvas id="visitsChart"></canvas></div>
+                </div>
+                <div class="card p-6">
+                    <h3 class="font-bold mb-4 flex items-center gap-2" style="color:#0F3D2E;"><i class="fas fa-globe" style="color:#D4AF37;"></i> مصادر الزيارات</h3>
+                    <div style="height:250px;"><canvas id="sourcesChart"></canvas></div>
+                </div>
+                <div class="card p-6">
+                    <h3 class="font-bold mb-4 flex items-center gap-2" style="color:#0F3D2E;"><i class="fas fa-mobile-alt" style="color:#D4AF37;"></i> الأجهزة</h3>
+                    <div style="height:250px;"><canvas id="devicesChart"></canvas></div>
+                </div>
+                <div class="card p-6">
+                    <h3 class="font-bold mb-4 flex items-center gap-2" style="color:#0F3D2E;"><i class="fas fa-map-marker-alt" style="color:#D4AF37;"></i> الإمارات (من الصفحات)</h3>
+                    <div style="height:250px;"><canvas id="geoChart"></canvas></div>
+                </div>
             </div>
             <div class="card p-6">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="font-bold flex items-center gap-2" style="color:#0F3D2E;"><i class="fas fa-history" style="color:#D4AF37;"></i> آخر 20 نشاط</h3>
-                    <button id="refreshAnalyticsBtn" class="btn-primary text-sm px-4 py-2"><i class="fas fa-sync-alt ml-2"></i>تحديث</button>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm" id="recentVisitsTable">
@@ -285,8 +274,12 @@
         <div id="registrationsTab" class="tab-content hidden">
             <div class="card p-6">
                 <div class="flex flex-wrap gap-4 mb-4 items-center">
-                    <select id="regStatusFilter" class="py-2"><option value="all">كل الحالات</option><option value="pending">معلق</option><option value="approved">موافق</option><option value="rejected">مرفوض</option></select>
-                    <button id="refreshRegsBtn" class="btn-primary text-sm"><i class="fas fa-sync-alt ml-2"></i>تحديث</button>
+                    <select id="regStatusFilter" class="py-2">
+                        <option value="all">كل الحالات</option>
+                        <option value="pending">معلق</option>
+                        <option value="approved">موافق</option>
+                        <option value="rejected">مرفوض</option>
+                    </select>
                 </div>
                 <div id="registrationsTableContainer" class="overflow-x-auto"></div>
             </div>
@@ -299,7 +292,6 @@
                     <input type="text" id="projectSearch" placeholder="بحث بالاسم..." class="flex-1 min-w-[200px]">
                     <select id="projectEmirateFilter" class="py-2"><option value="">كل الإمارات</option></select>
                     <select id="projectStatusFilter" class="py-2"><option value="">كل الحالات</option><option value="approved">موافق</option><option value="pending">معلق</option><option value="rejected">مرفوض</option></select>
-                    <button id="refreshProjectsBtn" class="btn-primary text-sm"><i class="fas fa-sync-alt ml-2"></i>تحديث</button>
                     <button id="addProjectBtn" class="btn-primary text-sm" style="background:#D4AF37;color:#0F3D2E;"><i class="fas fa-plus ml-2"></i>مشروع جديد</button>
                 </div>
                 <div id="projectsTableContainer" class="overflow-x-auto"></div>
@@ -312,7 +304,6 @@
             <div class="card p-6">
                 <div class="flex flex-wrap gap-4 mb-4 items-center">
                     <select id="productProjectFilter" class="py-2 flex-1 min-w-[200px]"><option value="">اختر مشروعاً أولاً</option></select>
-                    <button id="refreshProductsBtn" class="btn-primary text-sm"><i class="fas fa-sync-alt ml-2"></i>تحديث</button>
                     <button id="addProductBtn" class="btn-primary text-sm" style="background:#D4AF37;color:#0F3D2E;"><i class="fas fa-plus ml-2"></i>منتج جديد</button>
                 </div>
                 <div id="productsTableContainer" class="overflow-x-auto"></div>
@@ -324,7 +315,6 @@
             <div class="card p-6">
                 <div class="flex flex-wrap gap-4 mb-4 items-center">
                     <select id="dealProjectFilter" class="py-2 flex-1 min-w-[200px]"><option value="">اختر مشروعاً</option></select>
-                    <button id="refreshDealsBtn" class="btn-primary text-sm"><i class="fas fa-sync-alt ml-2"></i>تحديث</button>
                     <button id="addDealBtn" class="btn-primary text-sm" style="background:#D4AF37;color:#0F3D2E;"><i class="fas fa-plus ml-2"></i>عرض جديد</button>
                 </div>
                 <div id="dealsTableContainer" class="overflow-x-auto"></div>
@@ -344,7 +334,6 @@
             <div class="card p-6">
                 <div class="flex flex-wrap gap-4 mb-4 items-center">
                     <select id="feedbackStatusFilter" class="py-2"><option value="">كل الحالات</option><option value="pending">معلق</option><option value="reviewed">مراجَع</option><option value="resolved">محلول</option><option value="rejected">مرفوض</option></select>
-                    <button id="refreshFeedbacksBtn" class="btn-primary text-sm"><i class="fas fa-sync-alt ml-2"></i>تحديث</button>
                 </div>
                 <div id="feedbacksTableContainer" class="overflow-x-auto"></div>
             </div>
@@ -465,15 +454,14 @@
         setTimeout(() => toast.remove(), 3000);
     }
 
-    function closeModal(id) {
-        document.getElementById(id).classList.add('hidden');
-    }
-
-    function openModal(id) {
-        document.getElementById(id).classList.remove('hidden');
-    }
-
+    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
     window.closeModal = closeModal;
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    }
 
     // ==================== STATS ====================
     async function loadStats() {
@@ -484,15 +472,13 @@
             supabase.from('project_registrations').select('*', { count: 'exact', head: true }),
             supabase.from('project_registrations').select('*', { count: 'exact', head: true }).eq('status', 'pending')
         ]);
-        
         const stats = [
-            { icon: 'fa-store', count: proj.count || 0, label: 'المشاريع', color: '#0F3D2E' },
-            { icon: 'fa-box', count: prod.count || 0, label: 'المنتجات', color: '#1A5F44' },
-            { icon: 'fa-clipboard-list', count: regs.count || 0, label: 'طلبات التسجيل', color: '#8B7355' },
-            { icon: 'fa-clock', count: pend.count || 0, label: 'معلقة', color: '#c47a2e' },
-            { icon: 'fa-comment-dots', count: fb.count || 0, label: 'الشكاوى', color: '#C41E3A' }
+            { icon: 'fa-store', count: proj.count||0, label: 'المشاريع', color: '#0F3D2E' },
+            { icon: 'fa-box', count: prod.count||0, label: 'المنتجات', color: '#1A5F44' },
+            { icon: 'fa-clipboard-list', count: regs.count||0, label: 'طلبات التسجيل', color: '#8B7355' },
+            { icon: 'fa-clock', count: pend.count||0, label: 'معلقة', color: '#c47a2e' },
+            { icon: 'fa-comment-dots', count: fb.count||0, label: 'الشكاوى', color: '#C41E3A' }
         ];
-        
         document.getElementById('statsContainer').innerHTML = stats.map(s => `
             <div class="stat-card">
                 <i class="fas ${s.icon} text-2xl mb-2" style="color:${s.color};"></i>
@@ -504,124 +490,81 @@
 
     // ==================== ANALYTICS ====================
     async function loadAnalytics() {
-        const { data: events, error } = await supabase.from('analytics_events').select('*').order('created_at', { ascending: false }).limit(300);
-        if (error || !events?.length) {
-            console.warn('No analytics data');
+        const { data: events, error } = await supabase.from('analytics_events').select('*').order('created_at', { ascending: false }).limit(500);
+        
+        // إذا لم توجد بيانات
+        if (!events || events.length === 0) {
+            document.querySelector('#recentVisitsTable tbody').innerHTML = '';
+            ['visitsChart','sourcesChart','devicesChart','geoChart'].forEach(id => { if(charts[id]) charts[id].destroy(); });
+            const emptyMsg = '<div class="no-data"><i class="fas fa-chart-bar text-4xl mb-4" style="color:#D4AF37;"></i><p>لا توجد بيانات تحليلية حتى الآن. تأكد من تفعيل تتبع الزوار.</p></div>';
+            document.querySelectorAll('#dashboardTab .card [style*="height:250px"]').forEach(el => el.innerHTML = emptyMsg);
             return;
         }
 
-        // الزيارات لكل دقيقة (آخر 10 فترات)
+        // الزيارات لكل دقيقة
         const byMinute = {};
-        events.forEach(ev => {
-            if (ev.created_at) {
-                const key = ev.created_at.slice(0, 16);
-                byMinute[key] = (byMinute[key] || 0) + 1;
-            }
-        });
-        const sortedMinutes = Object.keys(byMinute).sort().slice(-10);
-        const minuteLabels = sortedMinutes.map(k => k.slice(11, 16));
-        const minuteData = sortedMinutes.map(k => byMinute[k]);
+        events.forEach(ev => { if(ev.created_at){ let k = ev.created_at.slice(0,16); byMinute[k]=(byMinute[k]||0)+1; } });
+        const sorted = Object.keys(byMinute).sort().slice(-10);
+        const labels = sorted.map(k => k.slice(11,16));
+        const dataPoints = sorted.map(k => byMinute[k]);
 
         if (charts.visitsChart) charts.visitsChart.destroy();
         charts.visitsChart = new Chart(document.getElementById('visitsChart'), {
-            type: 'line',
-            data: {
-                labels: minuteLabels,
-                datasets: [{
-                    label: 'زيارات',
-                    data: minuteData,
-                    borderColor: '#D4AF37',
-                    backgroundColor: 'rgba(212,175,55,0.1)',
-                    fill: true,
-                    tension: 0.3,
-                    pointBackgroundColor: '#0F3D2E'
-                }]
-            },
-            options: { responsive: true, maintainAspectRatio: false }
+            type: 'line', data: { labels, datasets: [{ label:'زيارات', data:dataPoints, borderColor:'#D4AF37', backgroundColor:'rgba(212,175,55,0.1)', fill:true, tension:0.3 }] },
+            options: { responsive:true, maintainAspectRatio:false }
         });
 
         // المصادر
-        const sources = { 'مباشر': 0, 'جوجل': 0, 'وسائل تواصل': 0, 'أخرى': 0 };
+        const sources = { 'مباشر':0, 'جوجل':0, 'وسائل تواصل':0, 'أخرى':0 };
         events.forEach(ev => {
-            const ref = (ev.referrer || '').toLowerCase();
-            if (!ref || ref === 'direct') sources['مباشر']++;
-            else if (ref.includes('google')) sources['جوجل']++;
-            else if (ref.includes('facebook') || ref.includes('instagram') || ref.includes('x.com') || ref.includes('twitter') || ref.includes('t.co')) sources['وسائل تواصل']++;
+            let ref = (ev.referrer||'').toLowerCase();
+            if(!ref || ref==='direct') sources['مباشر']++;
+            else if(ref.includes('google')) sources['جوجل']++;
+            else if(ref.includes('facebook')||ref.includes('instagram')||ref.includes('x.com')||ref.includes('t.co')) sources['وسائل تواصل']++;
             else sources['أخرى']++;
         });
-        if (charts.sourcesChart) charts.sourcesChart.destroy();
+        if(charts.sourcesChart) charts.sourcesChart.destroy();
         charts.sourcesChart = new Chart(document.getElementById('sourcesChart'), {
-            type: 'doughnut',
-            data: {
-                labels: Object.keys(sources),
-                datasets: [{
-                    data: Object.values(sources),
-                    backgroundColor: ['#0F3D2E', '#D4AF37', '#1A5F44', '#8B7355'],
-                    borderWidth: 2,
-                    borderColor: '#fff'
-                }]
-            },
-            options: { responsive: true, maintainAspectRatio: false }
+            type:'doughnut', data:{ labels:Object.keys(sources), datasets:[{ data:Object.values(sources), backgroundColor:['#0F3D2E','#D4AF37','#1A5F44','#8B7355'] }] },
+            options:{ responsive:true, maintainAspectRatio:false }
         });
 
         // الأجهزة
-        const devices = { 'حاسوب': 0, 'جوال': 0, 'تابلت': 0 };
+        const devices = { 'حاسوب':0, 'جوال':0, 'تابلت':0 };
         events.forEach(ev => {
-            const d = ev.device || '';
-            if (d.includes('Mobile') || d.includes('Android') || d.includes('iPhone')) devices['جوال']++;
-            else if (d.includes('Tablet') || d.includes('iPad')) devices['تابلت']++;
+            let d = ev.device||'';
+            if(d.includes('Mobile')||d.includes('Android')||d.includes('iPhone')) devices['جوال']++;
+            else if(d.includes('Tablet')||d.includes('iPad')) devices['تابلت']++;
             else devices['حاسوب']++;
         });
-        if (charts.devicesChart) charts.devicesChart.destroy();
+        if(charts.devicesChart) charts.devicesChart.destroy();
         charts.devicesChart = new Chart(document.getElementById('devicesChart'), {
-            type: 'bar',
-            data: {
-                labels: Object.keys(devices),
-                datasets: [{
-                    label: 'الزيارات',
-                    data: Object.values(devices),
-                    backgroundColor: ['#0F3D2E', '#1A5F44', '#D4AF37'],
-                    borderRadius: 8
-                }]
-            },
-            options: { responsive: true, maintainAspectRatio: false }
+            type:'bar', data:{ labels:Object.keys(devices), datasets:[{ data:Object.values(devices), backgroundColor:['#0F3D2E','#1A5F44','#D4AF37'], borderRadius:8 }] },
+            options:{ responsive:true, maintainAspectRatio:false }
         });
 
-        // تحليل الإمارات من الصفحات (دقيق)
-        const emiratesMap = {};
-        const emiratePatterns = ['أبوظبي', 'دبي', 'الشارقة', 'عجمان', 'رأس الخيمة', 'الفجيرة', 'أم القيوين'];
+        // الإمارات من الصفحات
+        const emMap = {};
+        const emiratesList = ['أبوظبي','دبي','الشارقة','عجمان','رأس الخيمة','الفجيرة','أم القيوين'];
         events.forEach(ev => {
-            const page = ev.page || '';
-            emiratePatterns.forEach(em => {
-                if (page.includes(encodeURIComponent(em)) || page.includes(em)) {
-                    emiratesMap[em] = (emiratesMap[em] || 0) + 1;
-                }
-            });
+            let page = decodeURIComponent(ev.page||'');
+            emiratesList.forEach(em => { if(page.includes(em)) emMap[em]=(emMap[em]||0)+1; });
         });
-        const geoLabels = Object.keys(emiratesMap);
-        const geoData = Object.values(emiratesMap);
-        if (charts.geoChart) charts.geoChart.destroy();
+        const geoLabels = Object.keys(emMap);
+        const geoData = Object.values(emMap);
+        if(charts.geoChart) charts.geoChart.destroy();
         charts.geoChart = new Chart(document.getElementById('geoChart'), {
-            type: 'pie',
-            data: {
-                labels: geoLabels.length ? geoLabels : ['لا توجد بيانات كافية'],
-                datasets: [{
-                    data: geoData.length ? geoData : [1],
-                    backgroundColor: ['#D4AF37', '#0F3D2E', '#1A5F44', '#8B7355', '#f5d06b', '#C41E3A', '#3b82f6'],
-                    borderWidth: 2,
-                    borderColor: '#fff'
-                }]
-            },
-            options: { responsive: true, maintainAspectRatio: false }
+            type:'pie', data:{ labels:geoLabels.length?geoLabels:['غير محدد'], datasets:[{ data:geoData.length?geoData:[1], backgroundColor:['#D4AF37','#0F3D2E','#1A5F44','#8B7355','#f5d06b','#C41E3A','#3b82f6'] }] },
+            options:{ responsive:true, maintainAspectRatio:false }
         });
 
-        // آخر النشاطات
-        document.querySelector('#recentVisitsTable tbody').innerHTML = events.slice(0, 20).map(ev => `
+        // جدول النشاطات
+        document.querySelector('#recentVisitsTable tbody').innerHTML = events.slice(0,20).map(ev => `
             <tr class="border-b hover:bg-gray-50">
-                <td class="py-2 text-sm">${ev.page || '-'}</td>
-                <td class="py-2 text-sm">${ev.referrer || 'مباشر'}</td>
-                <td class="py-2 text-sm">${ev.device || '-'}</td>
-                <td class="py-2 text-sm">${new Date(ev.created_at).toLocaleString('ar-SA')}</td>
+                <td class="py-2 text-sm">${escapeHtml(ev.page) || '-'}</td>
+                <td class="py-2 text-sm">${escapeHtml(ev.referrer) || 'مباشر'}</td>
+                <td class="py-2 text-sm">${escapeHtml(ev.device) || '-'}</td>
+                <td class="py-2 text-sm">${ev.created_at ? new Date(ev.created_at).toLocaleString('ar-SA') : '-'}</td>
             </tr>
         `).join('');
     }
@@ -639,10 +582,7 @@
                 <thead><tr class="border-b"><th class="py-3">#</th><th class="py-3">المشروع</th><th class="py-3">الإمارة</th><th class="py-3">واتساب</th><th class="py-3">الحالة</th><th class="py-3">التاريخ</th><th class="py-3">إجراءات</th></tr></thead>
                 <tbody>${data.map(r => `
                     <tr class="border-b hover:bg-gray-50">
-                        <td class="py-2">${r.id}</td>
-                        <td class="py-2 font-bold">${r.project_name || '-'}</td>
-                        <td class="py-2">${r.emirate || '-'}</td>
-                        <td class="py-2">${r.whatsapp || '-'}</td>
+                        <td class="py-2">${r.id}</td><td class="py-2 font-bold">${escapeHtml(r.project_name)||'-'}</td><td class="py-2">${r.emirate||'-'}</td><td class="py-2">${r.whatsapp||'-'}</td>
                         <td class="py-2"><span class="badge ${r.status==='approved'?'badge-approved':r.status==='rejected'?'badge-rejected':'badge-pending'}">${r.status==='approved'?'موافق':r.status==='rejected'?'مرفوض':'معلق'}</span></td>
                         <td class="py-2 text-xs">${new Date(r.created_at).toLocaleString('ar-SA')}</td>
                         <td class="py-2 flex gap-2">
@@ -656,8 +596,7 @@
     window.updateRegStatus = async (id, status) => {
         await supabase.from('project_registrations').update({ status }).eq('id', id);
         showToast('تم تحديث الحالة');
-        loadRegistrations();
-        loadStats();
+        loadRegistrations(); loadStats();
     };
 
     // ==================== PROJECTS ====================
@@ -666,54 +605,47 @@
         const search = document.getElementById('projectSearch')?.value || '';
         const emirate = document.getElementById('projectEmirateFilter')?.value || '';
         const status = document.getElementById('projectStatusFilter')?.value || '';
-        let query = supabase.from('projects').select('*', { count: 'exact' }).order('is_paid', { ascending: false }).order('id', { ascending: false }).range((page - 1) * 10, page * 10 - 1);
+        let query = supabase.from('projects').select('*', { count: 'exact' }).order('is_paid', { ascending: false }).order('id', { ascending: false }).range((page-1)*10, page*10-1);
         if (search) query = query.or(`name_ar.ilike.%${search}%,name_en.ilike.%${search}%`);
         if (emirate) query = query.eq('emirate', emirate);
         if (status) query = query.eq('status', status);
         const { data, count } = await query;
-        const cont = document.getElementById('projectsTableContainer');
-        cont.innerHTML = `
+        document.getElementById('projectsTableContainer').innerHTML = `
             <table class="w-full text-sm">
-                <thead><tr class="border-b"><th class="py-3">ID</th><th class="py-3">صورة</th><th class="py-3">الاسم</th><th class="py-3">الإمارة</th><th class="py-3">التصنيف</th><th class="py-3">مميز</th><th class="py-3">الحالة</th><th class="py-3">إجراءات</th></tr></thead>
+                <thead><tr class="border-b"><th>ID</th><th>صورة</th><th>الاسم</th><th>الإمارة</th><th>تصنيف</th><th>مميز</th><th>حالة</th><th>إجراءات</th></tr></thead>
                 <tbody>${(data||[]).map(p => `
                     <tr class="border-b hover:bg-gray-50">
-                        <td class="py-2">${p.id}</td>
-                        <td class="py-2">${p.image ? `<img src="${p.image}" class="thumb-img" onclick="window.open('${p.image}')">` : '-'}</td>
-                        <td class="py-2 font-bold" style="color:#0F3D2E;">${p.name_ar || '-'}</td>
-                        <td class="py-2">${p.emirate || '-'}</td>
-                        <td class="py-2">${p.category_ar || '-'}</td>
-                        <td class="py-2">${p.is_paid ? '<span class="badge badge-featured">مميز</span>' : '-'}</td>
-                        <td class="py-2"><span class="badge ${p.status==='approved'?'badge-approved':p.status==='rejected'?'badge-rejected':'badge-pending'}">${p.status==='approved'?'موافق':p.status==='rejected'?'مرفوض':'معلق'}</span></td>
-                        <td class="py-2 flex gap-2">
+                        <td>${p.id}</td><td>${p.image?`<img src="${p.image}" class="thumb-img" onclick="window.open('${p.image}')">`:'-'}</td>
+                        <td class="font-bold" style="color:#0F3D2E;">${escapeHtml(p.name_ar)||'-'}</td><td>${p.emirate||'-'}</td><td>${p.category_ar||'-'}</td>
+                        <td>${p.is_paid?'<span class="badge badge-featured">مميز</span>':'-'}</td>
+                        <td><span class="badge ${p.status==='approved'?'badge-approved':p.status==='rejected'?'badge-rejected':'badge-pending'}">${p.status==='approved'?'موافق':p.status==='rejected'?'مرفوض':'معلق'}</span></td>
+                        <td class="flex gap-2">
                             <button onclick="window.editProject(${p.id})" class="text-blue-600 hover:bg-blue-100 p-2 rounded-lg"><i class="fas fa-edit"></i></button>
                             <button onclick="window.deleteItem('projects',${p.id})" class="text-red-600 hover:bg-red-100 p-2 rounded-lg"><i class="fas fa-trash"></i></button>
                         </td>
                     </tr>
                 `).join('')}</tbody>
             </table>`;
-        const totalPages = Math.ceil((count || 0) / 10);
-        document.getElementById('projectsPagination').innerHTML = totalPages > 1 ? Array.from({ length: totalPages }, (_, i) => `
-            <button onclick="window.loadProjects(${i + 1})" class="px-4 py-2 rounded-xl font-bold border-2 transition ${i + 1 === page ? 'text-white border-transparent' : 'border-gray-300 hover:border-gray-400'}" 
-                style="${i + 1 === page ? 'background:linear-gradient(135deg,#0F3D2E,#1A5F44);' : ''}">${i + 1}</button>
-        `).join('') : '';
+        const tp = Math.ceil((count||0)/10);
+        document.getElementById('projectsPagination').innerHTML = tp>1 ? Array.from({length:tp},(_,i)=>`<button onclick="window.loadProjects(${i+1})" class="px-4 py-2 rounded-xl font-bold border-2 ${i+1===page?'text-white border-transparent':'border-gray-300'}" style="${i+1===page?'background:linear-gradient(135deg,#0F3D2E,#1A5F44);':''}">${i+1}</button>`).join('') : '';
     }
     window.loadProjects = loadProjects;
 
     window.editProject = async (id) => {
         const { data } = await supabase.from('projects').select('*').eq('id', id).single();
-        if (!data) return;
+        if(!data) return;
         document.getElementById('projectId').value = data.id;
-        document.getElementById('projectNameAr').value = data.name_ar || '';
-        document.getElementById('projectNameEn').value = data.name_en || '';
-        document.getElementById('projectEmirate').value = data.emirate || '';
-        document.getElementById('projectCategory').value = data.category_ar || '';
-        document.getElementById('projectStatus').value = data.status || 'pending';
-        document.getElementById('projectImage').value = data.image || '';
-        document.getElementById('projectCoverage').value = data.coverage || 'الإمارة فقط';
-        document.getElementById('projectLicense').checked = data.adra_license || false;
-        document.getElementById('projectPaid').checked = data.is_paid || false;
-        document.getElementById('projectDescAr').value = data.description_ar || '';
-        document.getElementById('projectDescEn').value = data.description_en || '';
+        document.getElementById('projectNameAr').value = data.name_ar||'';
+        document.getElementById('projectNameEn').value = data.name_en||'';
+        document.getElementById('projectEmirate').value = data.emirate||'';
+        document.getElementById('projectCategory').value = data.category_ar||'';
+        document.getElementById('projectStatus').value = data.status||'pending';
+        document.getElementById('projectImage').value = data.image||'';
+        document.getElementById('projectCoverage').value = data.coverage||'الإمارة فقط';
+        document.getElementById('projectLicense').checked = data.adra_license||false;
+        document.getElementById('projectPaid').checked = data.is_paid||false;
+        document.getElementById('projectDescAr').value = data.description_ar||'';
+        document.getElementById('projectDescEn').value = data.description_en||'';
         openModal('projectModal');
     };
 
@@ -734,47 +666,36 @@
             description_ar: document.getElementById('projectDescAr').value,
             description_en: document.getElementById('projectDescEn').value
         };
-        if (id) {
-            const { error } = await supabase.from('projects').update(payload).eq('id', id);
-            if (error) { showToast(error.message, true); return; }
-        } else {
-            const { error } = await supabase.from('projects').insert(payload);
-            if (error) { showToast(error.message, true); return; }
-        }
-        closeModal('projectModal');
-        loadProjects(projectsPage);
-        loadStats();
-        showToast('تم حفظ المشروع بنجاح');
+        const { error } = id ? await supabase.from('projects').update(payload).eq('id',id) : await supabase.from('projects').insert(payload);
+        if(error) { showToast(error.message, true); return; }
+        closeModal('projectModal'); loadProjects(projectsPage); loadStats(); showToast('تم الحفظ');
     });
 
-    // ==================== DELETE ====================
     window.deleteItem = async (table, id) => {
-        if (!confirm('هل أنت متأكد من الحذف؟')) return;
-        const { error } = await supabase.from(table).delete().eq('id', id);
-        if (error) { showToast(error.message, true); return; }
+        if(!confirm('تأكيد الحذف؟')) return;
+        const { error } = await supabase.from(table).delete().eq('id',id);
+        if(error) { showToast(error.message, true); return; }
         showToast('تم الحذف');
-        if (table === 'projects') loadProjects(projectsPage);
-        else if (table === 'products') loadProducts();
-        else if (table === 'deals') loadDeals();
-        else if (table === 'feedbacks') loadFeedbacks();
+        if(table==='projects') loadProjects(projectsPage);
+        else if(table==='products') loadProducts();
+        else if(table==='deals') loadDeals();
+        else if(table==='feedbacks') loadFeedbacks();
         loadStats();
     };
 
     // ==================== PRODUCTS ====================
     async function loadProducts() {
         const pid = document.getElementById('productProjectFilter').value;
-        if (!pid) { document.getElementById('productsTableContainer').innerHTML = '<p class="text-center py-8 text-gray-500">اختر مشروعاً أولاً</p>'; return; }
-        const { data } = await supabase.from('products').select('*').eq('project_id', pid);
+        if(!pid) { document.getElementById('productsTableContainer').innerHTML='<p class="text-center py-8 text-gray-500">اختر مشروعاً أولاً</p>'; return; }
+        const { data } = await supabase.from('products').select('*').eq('project_id',pid);
         document.getElementById('productsTableContainer').innerHTML = `
             <table class="w-full text-sm">
-                <thead><tr class="border-b"><th class="py-3">صورة</th><th class="py-3">الاسم</th><th class="py-3">السعر</th><th class="py-3">التصنيف</th><th class="py-3">إجراءات</th></tr></thead>
+                <thead><tr class="border-b"><th>صورة</th><th>الاسم</th><th>السعر</th><th>تصنيف</th><th>إجراءات</th></tr></thead>
                 <tbody>${(data||[]).map(p => `
                     <tr class="border-b hover:bg-gray-50">
-                        <td class="py-2">${p.main_image ? `<img src="${p.main_image}" class="thumb-img">` : '-'}</td>
-                        <td class="py-2 font-bold" style="color:#0F3D2E;">${p.name_ar || '-'}</td>
-                        <td class="py-2">${p.price_ar || '-'}</td>
-                        <td class="py-2">${p.category_ar || '-'}</td>
-                        <td class="py-2 flex gap-2">
+                        <td>${p.main_image?`<img src="${p.main_image}" class="thumb-img">`:'-'}</td>
+                        <td class="font-bold" style="color:#0F3D2E;">${escapeHtml(p.name_ar)||'-'}</td><td>${p.price_ar||'-'}</td><td>${p.category_ar||'-'}</td>
+                        <td class="flex gap-2">
                             <button onclick="window.editProduct('${p.id}')" class="text-blue-600 hover:bg-blue-100 p-2 rounded-lg"><i class="fas fa-edit"></i></button>
                             <button onclick="window.deleteItem('products','${p.id}')" class="text-red-600 hover:bg-red-100 p-2 rounded-lg"><i class="fas fa-trash"></i></button>
                         </td>
@@ -782,25 +703,23 @@
                 `).join('')}</tbody>
             </table>`;
     }
-
     window.editProduct = async (id) => {
-        const { data } = await supabase.from('products').select('*').eq('id', id).single();
-        if (!data) return;
+        const { data } = await supabase.from('products').select('*').eq('id',id).single();
+        if(!data) return;
         document.getElementById('productId').value = data.id;
         document.getElementById('productProjectId').value = data.project_id;
-        document.getElementById('productNameAr').value = data.name_ar || '';
-        document.getElementById('productNameEn').value = data.name_en || '';
-        document.getElementById('productMainImage').value = data.main_image || '';
-        document.getElementById('productImages').value = (data.images || []).join(',');
-        document.getElementById('productPriceAr').value = data.price_ar || '';
-        document.getElementById('productPriceEn').value = data.price_en || '';
-        document.getElementById('productCategory').value = data.category_ar || '';
-        document.getElementById('productDescAr').value = data.description_ar || '';
-        document.getElementById('productDescEn').value = data.description_en || '';
-        document.getElementById('productDetailsAr').value = (data.details_ar || []).join('\n');
+        document.getElementById('productNameAr').value = data.name_ar||'';
+        document.getElementById('productNameEn').value = data.name_en||'';
+        document.getElementById('productMainImage').value = data.main_image||'';
+        document.getElementById('productImages').value = (data.images||[]).join(',');
+        document.getElementById('productPriceAr').value = data.price_ar||'';
+        document.getElementById('productPriceEn').value = data.price_en||'';
+        document.getElementById('productCategory').value = data.category_ar||'';
+        document.getElementById('productDescAr').value = data.description_ar||'';
+        document.getElementById('productDescEn').value = data.description_en||'';
+        document.getElementById('productDetailsAr').value = (data.details_ar||[]).join('\n');
         openModal('productModal');
     };
-
     document.getElementById('productForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const projId = document.getElementById('productProjectId').value;
@@ -809,42 +728,35 @@
             name_ar: document.getElementById('productNameAr').value,
             name_en: document.getElementById('productNameEn').value,
             main_image: document.getElementById('productMainImage').value,
-            images: document.getElementById('productImages').value.split(',').map(s => s.trim()).filter(Boolean),
+            images: document.getElementById('productImages').value.split(',').map(s=>s.trim()).filter(Boolean),
             price_ar: document.getElementById('productPriceAr').value,
             price_en: document.getElementById('productPriceEn').value,
             category_ar: document.getElementById('productCategory').value,
             category_en: document.getElementById('productCategory').value,
             description_ar: document.getElementById('productDescAr').value,
             description_en: document.getElementById('productDescEn').value,
-            details_ar: document.getElementById('productDetailsAr').value.split('\n').filter(l => l.trim()),
+            details_ar: document.getElementById('productDetailsAr').value.split('\n').filter(l=>l.trim()),
             project_id: projId
         };
-        if (id) {
-            await supabase.from('products').update(payload).eq('id', id);
-        } else {
-            payload.id = crypto.randomUUID();
-            await supabase.from('products').insert(payload);
-        }
-        closeModal('productModal');
-        loadProducts();
-        loadStats();
-        showToast('تم حفظ المنتج');
+        if (id) { await supabase.from('products').update(payload).eq('id',id); }
+        else { payload.id = crypto.randomUUID(); await supabase.from('products').insert(payload); }
+        closeModal('productModal'); loadProducts(); loadStats(); showToast('تم الحفظ');
     });
 
     // ==================== DEALS ====================
     async function loadDeals() {
         const pid = document.getElementById('dealProjectFilter').value;
-        if (!pid) { document.getElementById('dealsTableContainer').innerHTML = '<p class="text-center py-8 text-gray-500">اختر مشروعاً</p>'; return; }
-        const { data } = await supabase.from('deals').select('*').eq('project_id', pid);
+        if(!pid) { document.getElementById('dealsTableContainer').innerHTML='<p class="text-center py-8 text-gray-500">اختر مشروعاً</p>'; return; }
+        const { data } = await supabase.from('deals').select('*').eq('project_id',pid);
         document.getElementById('dealsTableContainer').innerHTML = `
             <table class="w-full text-sm">
-                <thead><tr class="border-b"><th class="py-3">صورة</th><th class="py-3">العنوان</th><th class="py-3">الشارة</th><th class="py-3">إجراءات</th></tr></thead>
+                <thead><tr class="border-b"><th>صورة</th><th>العنوان</th><th>الشارة</th><th>إجراءات</th></tr></thead>
                 <tbody>${(data||[]).map(d => `
                     <tr class="border-b hover:bg-gray-50">
-                        <td class="py-2">${d.image ? `<img src="${d.image}" class="thumb-img">` : '-'}</td>
-                        <td class="py-2 font-bold" style="color:#0F3D2E;">${d.title_ar || '-'}</td>
-                        <td class="py-2">${d.badge_ar ? `<span class="badge" style="background:#C41E3A;color:white;">${d.badge_ar}</span>` : '-'}</td>
-                        <td class="py-2 flex gap-2">
+                        <td>${d.image?`<img src="${d.image}" class="thumb-img">`:'-'}</td>
+                        <td class="font-bold" style="color:#0F3D2E;">${escapeHtml(d.title_ar)||'-'}</td>
+                        <td>${d.badge_ar?`<span class="badge" style="background:#C41E3A;color:white;">${escapeHtml(d.badge_ar)}</span>`:'-'}</td>
+                        <td class="flex gap-2">
                             <button onclick="window.editDeal('${d.id}')" class="text-blue-600 hover:bg-blue-100 p-2 rounded-lg"><i class="fas fa-edit"></i></button>
                             <button onclick="window.deleteItem('deals','${d.id}')" class="text-red-600 hover:bg-red-100 p-2 rounded-lg"><i class="fas fa-trash"></i></button>
                         </td>
@@ -852,22 +764,20 @@
                 `).join('')}</tbody>
             </table>`;
     }
-
     window.editDeal = async (id) => {
-        const { data } = await supabase.from('deals').select('*').eq('id', id).single();
-        if (!data) return;
+        const { data } = await supabase.from('deals').select('*').eq('id',id).single();
+        if(!data) return;
         document.getElementById('dealId').value = data.id;
         document.getElementById('dealProjectId').value = data.project_id;
-        document.getElementById('dealTitleAr').value = data.title_ar || '';
-        document.getElementById('dealTitleEn').value = data.title_en || '';
-        document.getElementById('dealImage').value = data.image || '';
-        document.getElementById('dealDescAr').value = data.description_ar || '';
-        document.getElementById('dealDescEn').value = data.description_en || '';
-        document.getElementById('dealBadgeAr').value = data.badge_ar || '';
-        document.getElementById('dealExpiry').value = data.expiry_date || '';
+        document.getElementById('dealTitleAr').value = data.title_ar||'';
+        document.getElementById('dealTitleEn').value = data.title_en||'';
+        document.getElementById('dealImage').value = data.image||'';
+        document.getElementById('dealDescAr').value = data.description_ar||'';
+        document.getElementById('dealDescEn').value = data.description_en||'';
+        document.getElementById('dealBadgeAr').value = data.badge_ar||'';
+        document.getElementById('dealExpiry').value = data.expiry_date||'';
         openModal('dealModal');
     };
-
     document.getElementById('dealForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const projId = document.getElementById('dealProjectId').value;
@@ -882,37 +792,28 @@
             expiry_date: document.getElementById('dealExpiry').value,
             project_id: projId
         };
-        if (id) {
-            await supabase.from('deals').update(payload).eq('id', id);
-        } else {
-            payload.id = crypto.randomUUID();
-            await supabase.from('deals').insert(payload);
-        }
-        closeModal('dealModal');
-        loadDeals();
-        loadStats();
-        showToast('تم حفظ العرض');
+        if (id) { await supabase.from('deals').update(payload).eq('id',id); }
+        else { payload.id = crypto.randomUUID(); await supabase.from('deals').insert(payload); }
+        closeModal('dealModal'); loadDeals(); loadStats(); showToast('تم الحفظ');
     });
 
     // ==================== CONTACTS ====================
     async function loadContacts() {
         const pid = document.getElementById('contactProjectFilter').value;
-        if (!pid) { document.getElementById('contactsTableContainer').innerHTML = '<p class="text-center py-8 text-gray-500">اختر مشروعاً</p>'; return; }
-        let { data } = await supabase.from('contacts').select('*').eq('project_id', pid);
-        if (!data?.length) data = [{ project_id: pid }];
+        if(!pid) { document.getElementById('contactsTableContainer').innerHTML='<p class="text-center py-8 text-gray-500">اختر مشروعاً</p>'; return; }
+        let { data } = await supabase.from('contacts').select('*').eq('project_id',pid);
+        if(!data?.length) data = [{project_id:pid}];
         const c = data[0];
-        const fields = ['whatsapp', 'phone', 'email', 'instagram', 'telegram', 'snapchat', 'tiktok', 'facebook', 'twitter', 'website'];
+        const fields = ['whatsapp','phone','email','instagram','telegram','snapchat','tiktok','facebook','twitter','website'];
         document.getElementById('contactsTableContainer').innerHTML = `
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                ${fields.map(f => `
-                    <div><label class="font-bold block mb-1" style="color:#0F3D2E;">${f === 'twitter' ? 'X (تويتر)' : f}</label><input id="edit_${f}" value="${c[f] || ''}" class="w-full"></div>
-                `).join('')}
+                ${fields.map(f => `<div><label class="font-bold block mb-1" style="color:#0F3D2E;">${f==='twitter'?'X (تويتر)':f}</label><input id="edit_${f}" value="${escapeHtml(c[f]||'')}" class="w-full"></div>`).join('')}
             </div>
             <button id="saveContactBtn" class="btn-primary w-full mt-6 py-3">حفظ التغييرات</button>
         `;
         document.getElementById('saveContactBtn').onclick = async () => {
             const payload = { project_id: parseInt(pid) };
-            fields.forEach(f => { payload[f] = document.getElementById(`edit_${f}`).value; });
+            fields.forEach(f => payload[f] = document.getElementById(`edit_${f}`).value);
             await supabase.from('contacts').upsert(payload);
             showToast('تم الحفظ');
         };
@@ -922,21 +823,19 @@
     async function loadFeedbacks() {
         const status = document.getElementById('feedbackStatusFilter').value;
         let query = supabase.from('feedbacks').select('*').order('created_at', { ascending: false });
-        if (status) query = query.eq('status', status);
+        if(status) query = query.eq('status', status);
         const { data } = await query;
         document.getElementById('feedbacksTableContainer').innerHTML = `
             <table class="w-full text-sm">
-                <thead><tr class="border-b"><th class="py-3">#</th><th class="py-3">النوع</th><th class="py-3">الرسالة</th><th class="py-3">البريد</th><th class="py-3">الحالة</th><th class="py-3">التاريخ</th><th class="py-3">إجراءات</th></tr></thead>
+                <thead><tr><th>#</th><th>النوع</th><th>الرسالة</th><th>البريد</th><th>الحالة</th><th>التاريخ</th><th>إجراءات</th></tr></thead>
                 <tbody>${(data||[]).map(f => `
                     <tr class="border-b hover:bg-gray-50">
-                        <td class="py-2">${f.id}</td>
-                        <td class="py-2">${f.type === 'complaint' ? 'شكوى' : 'اقتراح'}</td>
-                        <td class="py-2">${f.message?.substring(0, 50) || '-'}...</td>
-                        <td class="py-2">${f.reporter_email || '-'}</td>
-                        <td class="py-2"><span class="badge ${f.status==='resolved'?'badge-resolved':f.status==='reviewed'?'badge-approved':'badge-pending'}">${f.status}</span></td>
-                        <td class="py-2 text-xs">${f.created_at ? new Date(f.created_at).toLocaleString('ar-SA') : '-'}</td>
-                        <td class="py-2 flex gap-2">
-                            <select onchange="window.updateFeedbackStatus(${f.id}, this.value)" class="text-xs py-1 px-2 rounded-lg border">
+                        <td>${f.id}</td><td>${f.type==='complaint'?'شكوى':'اقتراح'}</td><td>${escapeHtml(f.message?.substring(0,50))||'-'}...</td>
+                        <td>${f.reporter_email||'-'}</td>
+                        <td><span class="badge ${f.status==='resolved'?'badge-resolved':f.status==='reviewed'?'badge-approved':'badge-pending'}">${f.status}</span></td>
+                        <td class="text-xs">${f.created_at?new Date(f.created_at).toLocaleString('ar-SA'):'-'}</td>
+                        <td class="flex gap-2">
+                            <select onchange="window.updateFeedbackStatus(${f.id},this.value)" class="text-xs py-1 px-2 rounded-lg border">
                                 <option ${f.status==='pending'?'selected':''} value="pending">معلق</option>
                                 <option ${f.status==='reviewed'?'selected':''} value="reviewed">مراجَع</option>
                                 <option ${f.status==='resolved'?'selected':''} value="resolved">محلول</option>
@@ -948,27 +847,31 @@
                 `).join('')}</tbody>
             </table>`;
     }
-    window.updateFeedbackStatus = async (id, status) => {
-        await supabase.from('feedbacks').update({ status }).eq('id', id);
-        showToast('تم تحديث الحالة');
-        loadFeedbacks();
-    };
+    window.updateFeedbackStatus = async (id, status) => { await supabase.from('feedbacks').update({status}).eq('id',id); showToast('تم التحديث'); loadFeedbacks(); };
 
-    // ==================== INIT ====================
+    // ==================== INITIAL DATA ====================
     async function initSelects() {
-        const { data: projects } = await supabase.from('projects').select('id, name_ar').order('id');
+        const { data: projects } = await supabase.from('projects').select('id,name_ar').order('id');
         if (projects) {
-            const opts = projects.map(p => `<option value="${p.id}">${p.name_ar}</option>`).join('');
-            ['productProjectFilter', 'dealProjectFilter', 'contactProjectFilter'].forEach(id => {
-                document.getElementById(id).innerHTML = '<option value="">اختر مشروعاً</option>' + opts;
-            });
+            const opts = projects.map(p => `<option value="${p.id}">${escapeHtml(p.name_ar)}</option>`).join('');
+            ['productProjectFilter','dealProjectFilter','contactProjectFilter'].forEach(id => document.getElementById(id).innerHTML = '<option value="">اختر مشروعاً</option>'+opts);
         }
         const { data: emirates } = await supabase.from('projects').select('emirate');
-        const unique = [...new Set((emirates || []).map(e => e.emirate).filter(Boolean))];
-        document.getElementById('projectEmirateFilter').innerHTML = '<option value="">كل الإمارات</option>' + unique.map(e => `<option>${e}</option>`).join('');
+        const unique = [...new Set((emirates||[]).map(e=>e.emirate).filter(Boolean))];
+        document.getElementById('projectEmirateFilter').innerHTML = '<option value="">كل الإمارات</option>'+unique.map(e=>`<option>${e}</option>`).join('');
     }
 
-    // ==================== EVENTS ====================
+    // ==================== AUTO LOAD ON FILTER CHANGE ====================
+    document.getElementById('regStatusFilter').addEventListener('change', loadRegistrations);
+    document.getElementById('projectSearch').addEventListener('input', () => loadProjects(1));
+    document.getElementById('projectEmirateFilter').addEventListener('change', () => loadProjects(1));
+    document.getElementById('projectStatusFilter').addEventListener('change', () => loadProjects(1));
+    document.getElementById('productProjectFilter').addEventListener('change', loadProducts);
+    document.getElementById('dealProjectFilter').addEventListener('change', loadDeals);
+    document.getElementById('contactProjectFilter').addEventListener('change', loadContacts);
+    document.getElementById('feedbackStatusFilter').addEventListener('change', loadFeedbacks);
+
+    // ==================== TABS ====================
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -976,6 +879,7 @@
             document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
             const tabId = btn.dataset.tab + 'Tab';
             document.getElementById(tabId).classList.remove('hidden');
+            // تحميل بيانات التبويب تلقائياً
             const loaders = {
                 dashboard: loadAnalytics,
                 projects: () => loadProjects(1),
@@ -989,18 +893,7 @@
         });
     });
 
-    document.getElementById('refreshProjectsBtn')?.addEventListener('click', () => loadProjects(projectsPage));
-    document.getElementById('refreshProductsBtn')?.addEventListener('click', loadProducts);
-    document.getElementById('refreshDealsBtn')?.addEventListener('click', loadDeals);
-    document.getElementById('refreshFeedbacksBtn')?.addEventListener('click', loadFeedbacks);
-    document.getElementById('refreshRegsBtn')?.addEventListener('click', loadRegistrations);
-    document.getElementById('refreshAnalyticsBtn')?.addEventListener('click', loadAnalytics);
-    document.getElementById('projectSearch')?.addEventListener('input', () => loadProjects(1));
-    document.getElementById('projectEmirateFilter')?.addEventListener('change', () => loadProjects(1));
-    document.getElementById('projectStatusFilter')?.addEventListener('change', () => loadProjects(1));
-    document.getElementById('regStatusFilter')?.addEventListener('change', loadRegistrations);
-    document.getElementById('feedbackStatusFilter')?.addEventListener('change', loadFeedbacks);
-
+    // ==================== BUTTONS ====================
     document.getElementById('addProjectBtn').onclick = () => {
         document.getElementById('projectForm').reset();
         document.getElementById('projectId').value = '';
@@ -1027,7 +920,7 @@
     document.getElementById('forgotPasswordLink').onclick = async (e) => {
         e.preventDefault();
         const email = document.getElementById('adminEmail').value;
-        if (!email.includes('@')) { showToast('أدخل بريداً صحيحاً', true); return; }
+        if (!email.includes('@')) { showToast('بريد غير صحيح', true); return; }
         const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + '/reset-password.html' });
         if (error) showToast(error.message, true);
         else showToast('تم الإرسال، تحقق من بريدك');
@@ -1051,22 +944,11 @@
             email: document.getElementById('adminEmail').value,
             password: document.getElementById('adminPassword').value
         });
-        if (error || data.user.email !== ALLOWED_EMAIL) {
-            document.getElementById('loginError').innerText = 'بيانات الدخول غير صحيحة';
-        } else {
-            checkSession();
-        }
+        if (error || data.user.email !== ALLOWED_EMAIL) document.getElementById('loginError').innerText = 'بيانات الدخول غير صحيحة';
+        else checkSession();
     };
-    document.getElementById('logoutBtn').onclick = async () => {
-        await supabase.auth.signOut();
-        location.reload();
-    };
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            document.querySelectorAll('.modal-overlay').forEach(m => m.classList.add('hidden'));
-        }
-    });
+    document.getElementById('logoutBtn').onclick = async () => { await supabase.auth.signOut(); location.reload(); };
+    document.addEventListener('keydown', e => { if(e.key==='Escape') document.querySelectorAll('.modal-overlay').forEach(m=>m.classList.add('hidden')); });
 
     checkSession();
 </script>
