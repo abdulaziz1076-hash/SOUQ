@@ -11,6 +11,7 @@ const appState = {
     currentEmirate: 'all',
     currentCategory: 'all',
     currentFamilyId: null,
+    let currentVariants = [];
     currentProductId: null,
     searchQuery: '',
     currentLanguage: 'ar',
@@ -972,6 +973,7 @@ function showProductDetail(familyId, productId, updateHash = true) {
     const product = family.products.find(p => p.id === productId);
     if (!product) return;
     appState.currentFamilyId = familyId;
+    currentVariants = variants || [];
     appState.currentProductId = productId;
     if (updateHash) {
         navigateTo(`/product/${familyId}/${productId}`);
@@ -1023,6 +1025,17 @@ function showProductDetail(familyId, productId, updateHash = true) {
     const isFav = isFavorite(product.id, 'product');
     // ✅ السعر هنا بشكل منفصل
     const priceDisplay = getPriceDisplay(product);
+        // جلب خيارات المنتج من قاعدة البيانات
+    const { data: variants, error: varErr } = await supabase
+        .from('product_variants')
+        .select('*')
+        .eq('product_id', product.id);
+    const hasVariants = variants && variants.length > 0;
+    const currentVariants = variants || [];
+    const defaultVariant = currentVariants.find(v => v.is_default) || currentVariants[0];
+    const initialPrice = defaultVariant 
+        ? (appState.currentLanguage === 'ar' ? defaultVariant.price_ar : defaultVariant.price_en)
+        : getPriceDisplay(product);
     const html = `
         <div class="product-gallery">
             <div class="product-main-image-container">
@@ -1037,8 +1050,21 @@ function showProductDetail(familyId, productId, updateHash = true) {
         <div class="product-detail-info">
             <span class="product-detail-category"><i class="fas fa-tag"></i> ${categoryDisplay}</span>
             <h1 class="product-detail-name">${productName}</h1>
-            <div class="product-price-display">${priceDisplay}</div>
-            <p class="product-detail-description">${productDesc}</p>
+            <div class="product-price-display" id="dynamicPrice">${escapeHtml(initialPrice)}</div>
+            ${hasVariants ? `
+            <div class="product-variants mt-4">
+                <h3 class="product-details-title"><i class="fas fa-list-ul"></i> ${t.variantsTitle || 'الخيارات'}</h3>
+                <div class="variants-selector" id="variantsSelector">
+                    ${currentVariants.map(v => `
+                        <label class="variant-option ${v.id === defaultVariant.id ? 'active' : ''}" onclick="window.selectVariant(event, '${v.id}')">
+                            <input type="radio" name="variant" value="${v.id}" ${v.id === defaultVariant.id ? 'checked' : ''} hidden>
+                            <span class="variant-label">${appState.currentLanguage === 'ar' ? v.label_ar : v.label_en}</span>
+                            <span class="variant-price">${appState.currentLanguage === 'ar' ? v.price_ar : v.price_en}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            </div>
+            ` : ''}            <p class="product-detail-description">${productDesc}</p>
             ${specsHtml}
         </div>
         <div class="seller-info-card">
@@ -1501,7 +1527,23 @@ window.addEventListener('pageshow', function(event) {
         else if (appState.currentPage === 'offers') renderOffers();
         hideLoader();
         ensureLoaderHidden();
-    }
+            // دوال الخيارات
+    let currentSelectedVariantData = null;
+    window.selectVariant = (event, variantId) => {
+        event.stopPropagation();
+        const variant = currentVariants.find(v => v.id === variantId);
+        if (!variant) return;
+        currentSelectedVariantData = variant;
+        // تحديث السعر
+        const priceEl = document.getElementById('dynamicPrice');
+        if (priceEl) {
+            priceEl.textContent = appState.currentLanguage === 'ar' ? variant.price_ar : variant.price_en;
+        }
+        // تغيير الكلاس النشط
+        document.querySelectorAll('.variant-option').forEach(el => el.classList.remove('active'));
+        const targetLabel = document.querySelector(`.variant-option input[value="${variantId}"]`)?.closest('.variant-option');
+        if (targetLabel) targetLabel.classList.add('active');
+    };
 });
 
 window.addEventListener('hashchange', handleHashChange);
