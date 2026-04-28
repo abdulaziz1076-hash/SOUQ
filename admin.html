@@ -1070,7 +1070,7 @@
         if (id) {
             error = (await supabase.from('deals').update(payload).eq('id', id)).error;
         } else {
-            payload.id = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2);
+        const newId = Date.now().toString() + Math.random().toString(36).substring(2);
             error = (await supabase.from('deals').insert(payload)).error;
         }
         if (error) showToast(error.message, true);
