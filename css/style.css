@@ -5018,3 +5018,52 @@ body.en-mode .product-detail-info .product-price-display:empty::before {
     border-radius: 50px;
 }
 
+/* تجميع المنتجات حسب الفئة */
+.category-group {
+    margin-bottom: 30px;
+}
+.product-category-title {
+    font-family: 'El Messiri', serif;
+    font-size: 1.4rem;
+    color: var(--primary-dark);
+    border-right: 4px solid var(--secondary);
+    padding-right: 12px;
+    margin-bottom: 15px;
+}
+
+/* خيارات المنتج (variants) */
+.product-variants {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 20px;
+}
+.variants-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+.variant-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    border: 1px solid var(--light-gray);
+    border-radius: 40px;
+    padding: 8px 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.variant-option.active {
+    background: var(--gradient-gold);
+    border-color: var(--secondary);
+    box-shadow: 0 3px 10px rgba(212,175,55,0.3);
+}
+.variant-label {
+    font-weight: 700;
+    color: var(--primary-dark);
+}
+.variant-price {
+    font-weight: 800;
+    color: var(--secondary);
+}
