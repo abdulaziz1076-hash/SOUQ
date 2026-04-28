@@ -57,9 +57,10 @@ function renderProductTypeFilter(familyId) {
     const t = translations[appState.currentLanguage];
     const types = [
         { id: 'all', name: t.productTypeAll || (appState.currentLanguage === 'ar' ? 'الكل' : 'All'), icon: 'fas fa-th-large' },
-        { id: 'main', name: t.productTypeMain || (appState.currentLanguage === 'ar' ? '🍽️ أطباق رئيسية' : '🍽️ Main Dishes'), icon: 'fas fa-utensils' },
-        { id: 'drinks', name: t.productTypeDrinks || (appState.currentLanguage === 'ar' ? '🥤 مشروبات' : '🥤 Drinks'), icon: 'fas fa-mug-hot' },
-        { id: 'desserts', name: t.productTypeDesserts || (appState.currentLanguage === 'ar' ? '🍰 حلويات' : '🍰 Desserts'), icon: 'fas fa-cake-candles' }
+        { id: 'main', name: t.productTypeMain || (appState.currentLanguage === 'ar' ? ' أطباق رئيسية' : ' Main Dishes'), icon: 'fas fa-utensils' },
+        { id: 'drinks', name: t.productTypeDrinks || (appState.currentLanguage === 'ar' ? ' مشروبات' : ' Drinks'), icon: 'fas fa-mug-hot' },
+        { id: 'desserts', name: t.productTypeDesserts || (appState.currentLanguage === 'ar' ? ' حلويات' : ' Desserts'), icon: 'fas fa-cake-candles' },
+        { id: 'other', name: t.productTypeOther || (appState.currentLanguage === 'ar' ? 'أخرى' : 'Other'), icon: 'fas fa-box' }
     ];
     
     container.innerHTML = `
@@ -1035,35 +1036,30 @@ function renderProductsByType(family) {
     
     let filteredProducts = [...family.products];
     
-    // التصفية حسب نوع المنتج (أطباق رئيسية، مشروبات، حلويات) باستخدام product.type
+    // تطبيق الفلتر حسب النوع المختار
     if (appState.currentProductType !== 'all') {
-        let targetType = '';
-        if (appState.currentProductType === 'main') targetType = 'أطباق رئيسية';
-        else if (appState.currentProductType === 'drinks') targetType = 'مشروبات';
-        else if (appState.currentProductType === 'desserts') targetType = 'حلويات';
-        
-        // المقارنة مع product.type (أو product.typeEn لو كانت اللغة إنجليزية)
-        filteredProducts = filteredProducts.filter(p => {
-            if (appState.currentLanguage === 'ar') {
-                return p.type === targetType;
-            } else {
-                // للغة الإنجليزية: ترجمة الأنواع
-                const typeEnMap = {
-                    'أطباق رئيسية': 'Main Dishes',
-                    'مشروبات': 'Drinks',
-                    'حلويات': 'Desserts'
-                };
-                return p.typeEn === typeEnMap[targetType];
-            }
-        });
+        if (appState.currentProductType === 'main') {
+            filteredProducts = filteredProducts.filter(p => p.category === 'أطباق رئيسية');
+        } else if (appState.currentProductType === 'drinks') {
+            filteredProducts = filteredProducts.filter(p => p.category === 'مشروبات');
+        } else if (appState.currentProductType === 'desserts') {
+            filteredProducts = filteredProducts.filter(p => p.category === 'حلويات');
+        } else if (appState.currentProductType === 'other') {
+            // ✅ "أخرى": المنتجات التي ليس تصنيفها ضمن (أطباق رئيسية، مشروبات، حلويات)
+            filteredProducts = filteredProducts.filter(p => {
+                const cat = p.category;
+                return cat !== 'أطباق رئيسية' && cat !== 'مشروبات' && cat !== 'حلويات';
+            });
+        }
     }
     
     const t = translations[appState.currentLanguage];
     productsGrid.innerHTML = filteredProducts.map(p => {
         const productName = appState.currentLanguage === 'ar' ? p.name : p.nameEn;
         const productDesc = appState.currentLanguage === 'ar' ? p.description : p.descriptionEn;
-        const productType = appState.currentLanguage === 'ar' ? p.type : p.typeEn;
-        const typeDisplay = productType || (appState.currentLanguage === 'ar' ? 'غير مصنف' : 'Uncategorized');
+        const productCategory = appState.currentLanguage === 'ar' ? p.category : p.categoryEn;
+        const tCat = translations[appState.currentLanguage].categories;
+        const categoryDisplay = tCat[p.category] || productCategory;
         const isFav = isFavorite(p.id, 'product');
         const priceText = getPriceDisplay(p);
         const priceHtml = priceText ? `<div class="product-price">${priceText}</div>` : '';
@@ -1075,7 +1071,7 @@ function renderProductsByType(family) {
                     <h3 class="product-name">${productName}</h3>
                     <div class="product-description">${productDesc}</div>
                     ${priceHtml}
-                    <div class="product-category">${typeDisplay}</div>
+                    <div class="product-category">${categoryDisplay}</div>
                 </div>
             </div>
         `;
