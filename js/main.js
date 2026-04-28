@@ -84,6 +84,7 @@ async function loadProjectsFromSupabase() {
         showLoader();
         console.log('🔄 Loading data from Supabase...');
 
+        // جلب المشاريع مع المنتجات والعروض والجهات المتصلة
         const { data: projects, error } = await supabase
             .from('projects')
             .select(`
@@ -100,56 +101,81 @@ async function loadProjectsFromSupabase() {
             return;
         }
 
-        projectsData = projects.map(project => ({
-            id: project.id,
-            name: project.name_ar,
-            nameEn: project.name_en,
-            is_paid: project.is_paid,
-            emirate: project.emirate,
-            description: project.description_ar,
-            descriptionEn: project.description_en,
-            longDescription: project.long_description_ar,
-            longDescriptionEn: project.long_description_en,
-            image: project.image,
-            adra_license: project.adra_license ? "نعم" : "لا",
-            coverage: project.coverage,
-            category: project.category_ar,
-            categoryEn: project.category_en,
-            products: (project.products || []).map(p => ({
-                id: p.id,
-                name: p.name_ar,
-                nameEn: p.name_en,
-                description: p.description_ar,
-                descriptionEn: p.description_en,
-                longDescription: p.long_description_ar,
-                longDescriptionEn: p.long_description_en,
-                mainImage: p.main_image,
-                images: p.images || [],
-                details: p.details_ar || [],
-                detailsEn: p.details_en || [],
-                category: p.category_ar,
-                categoryEn: p.category_en,
-                price_ar: p.price_ar,
-                price_en: p.price_en
-            })),
-            deals: (project.deals || []).map(d => ({
-                id: d.id,
-                title: d.title_ar,
-                titleEn: d.title_en,
-                description: d.description_ar,
-                descriptionEn: d.description_en,
-                image: d.image,
-                images: d.images || [],
-                badge: d.badge_ar,
-                badgeEn: d.badge_en,
-                expiry: d.expiry_date
-            })),
-            whatsapp: null,
-            phone: null,
-            email: null,
-            sell_points: []
-        }));
+        // جلب جميع المتغيرات من جدول product_variants
+        const { data: allVariants, error: variantsError } = await supabase
+            .from('product_variants')
+            .select('*');
+        if (variantsError) console.warn('Failed to load variants:', variantsError);
+        const variantsMap = new Map(); // product_id -> array of variants
+        if (allVariants) {
+            allVariants.forEach(v => {
+                if (!variantsMap.has(v.product_id)) variantsMap.set(v.product_id, []);
+                variantsMap.get(v.product_id).push(v);
+            });
+        }
 
+        projectsData = projects.map(project => {
+            // تحويل المنتجات مع ربط المتغيرات
+            const productsWithVariants = (project.products || []).map(p => {
+                const productVariants = variantsMap.get(p.id) || [];
+                return {
+                    id: p.id,
+                    name: p.name_ar,
+                    nameEn: p.name_en,
+                    description: p.description_ar,
+                    descriptionEn: p.description_en,
+                    longDescription: p.long_description_ar,
+                    longDescriptionEn: p.long_description_en,
+                    mainImage: p.main_image,
+                    images: p.images || [],
+                    details: p.details_ar || [],
+                    detailsEn: p.details_en || [],
+                    category: p.category_ar,
+                    categoryEn: p.category_en,
+                    type_ar: p.type_ar,
+                    type_en: p.type_en,
+                    price_ar: p.price_ar,
+                    price_en: p.price_en,
+                    variants: productVariants
+                };
+            });
+
+            return {
+                id: project.id,
+                name: project.name_ar,
+                nameEn: project.name_en,
+                is_paid: project.is_paid,
+                emirate: project.emirate,
+                description: project.description_ar,
+                descriptionEn: project.description_en,
+                longDescription: project.long_description_ar,
+                longDescriptionEn: project.long_description_en,
+                image: project.image,
+                adra_license: project.adra_license ? "نعم" : "لا",
+                coverage: project.coverage,
+                category: project.category_ar,
+                categoryEn: project.category_en,
+                products: productsWithVariants,
+                deals: (project.deals || []).map(d => ({
+                    id: d.id,
+                    title: d.title_ar,
+                    titleEn: d.title_en,
+                    description: d.description_ar,
+                    descriptionEn: d.description_en,
+                    image: d.image,
+                    images: d.images || [],
+                    badge: d.badge_ar,
+                    badgeEn: d.badge_en,
+                    expiry: d.expiry_date
+                })),
+                whatsapp: null,
+                phone: null,
+                email: null,
+                sell_points: []
+            };
+        });
+
+        // بناء contactsData وربطها بالمشاريع (نفس الكود القديم)
         contactsData = {};
         projects.forEach(project => {
             const contact = project.contacts;
@@ -184,8 +210,9 @@ async function loadProjectsFromSupabase() {
             }
         });
 
-        console.log(`✅ Loaded ${projectsData.length} projects`);
+        console.log(`✅ Loaded ${projectsData.length} projects with variants`);
 
+        // تحديث الصفحة الحالية إذا لزم الأمر
         if (appState.currentPage === 'families') renderFamilies();
         else if (appState.currentPage === 'products' && appState.currentFamilyId) showFamilyProducts(appState.currentFamilyId, false);
         else if (appState.currentPage === 'product-detail' && appState.currentFamilyId && appState.currentProductId) showProductDetail(appState.currentFamilyId, appState.currentProductId, false);
@@ -986,28 +1013,27 @@ function showFamilyProducts(id, updateHash = true) {
 function renderProductsByType(family) {
     const productsGrid = document.getElementById('productsGrid');
     if (!productsGrid) return;
-    
+
     let filteredProducts = [...family.products];
     if (appState.currentProductType !== 'all') {
-        let targetCategory = '';
-        if (appState.currentProductType === 'main') targetCategory = 'أطباق رئيسية';
-        else if (appState.currentProductType === 'drinks') targetCategory = 'مشروبات';
-        else if (appState.currentProductType === 'desserts') targetCategory = 'حلويات';
-        
-        filteredProducts = filteredProducts.filter(p => p.category === targetCategory);
+        let targetType = '';
+        if (appState.currentProductType === 'main') targetType = 'أطباق رئيسية';
+        else if (appState.currentProductType === 'drinks') targetType = 'مشروبات';
+        else if (appState.currentProductType === 'desserts') targetType = 'حلويات';
+
+        // التصفية الآن تعتمد على type_ar وليس category
+        filteredProducts = filteredProducts.filter(p => p.type_ar === targetType);
     }
-    
+
     const t = translations[appState.currentLanguage];
     productsGrid.innerHTML = filteredProducts.map(p => {
         const productName = appState.currentLanguage === 'ar' ? p.name : p.nameEn;
         const productDesc = appState.currentLanguage === 'ar' ? p.description : p.descriptionEn;
-        const productCategory = appState.currentLanguage === 'ar' ? p.category : p.categoryEn;
-        const tCat = translations[appState.currentLanguage].categories;
-        const categoryDisplay = tCat[p.category] || productCategory;
+        const productType = appState.currentLanguage === 'ar' ? p.type_ar : p.type_en;
         const isFav = isFavorite(p.id, 'product');
-        const priceText = getPriceDisplay(p);
+        const priceText = getPriceDisplay(p);  // سيتم تعديل هذه الدالة أيضاً
         const priceHtml = priceText ? `<div class="product-price">${priceText}</div>` : '';
-        
+
         return `
             <div class="product-card ${isFav ? 'favorite-active' : ''}" data-product-id="${p.id}" onclick="navigateTo('/product/${family.id}/${p.id}')">
                 <div class="product-image"><img src="${p.mainImage || p.image}" alt="${productName}" loading="lazy"></div>
@@ -1015,7 +1041,7 @@ function renderProductsByType(family) {
                     <h3 class="product-name">${productName}</h3>
                     <div class="product-description">${productDesc}</div>
                     ${priceHtml}
-                    <div class="product-category">${categoryDisplay}</div>
+                    <div class="product-category">${productType}</div>
                 </div>
             </div>
         `;
@@ -1024,12 +1050,20 @@ function renderProductsByType(family) {
 
 function getPriceDisplay(product) {
     const lang = appState.currentLanguage;
-    let price = null;
-    if (lang === 'ar') {
-        price = product.price_ar || product.priceAr;
-    } else {
-        price = product.price_en || product.priceEn;
+    
+    // 1. استخدام المتغيرات المضافة مسبقاً من loadProjectsFromSupabase
+    if (product.variants && product.variants.length > 0) {
+        const defaultVariant = product.variants.find(v => v.is_default) || product.variants[0];
+        let price = lang === 'ar' ? defaultVariant.price_ar : defaultVariant.price_en;
+        if (price && price.trim() !== '') {
+            price = String(price);
+            if (!price.includes('AED') && !price.includes('درهم')) price += ' AED';
+            return price;
+        }
     }
+    
+    // 2. السعر الثابت
+    let price = lang === 'ar' ? product.price_ar : product.price_en;
     if (!price || String(price).trim() === '') {
         return lang === 'ar' ? 'السعر عند الطلب' : 'Price on request';
     }
@@ -1039,7 +1073,6 @@ function getPriceDisplay(product) {
     }
     return price;
 }
-
 // ==================== Show Product Detail ====================
 async function showProductDetail(familyId, productId, updateHash = true) {
     hideLoader();
@@ -1111,13 +1144,8 @@ async function showProductDetail(familyId, productId, updateHash = true) {
     }
 
     const isFav = isFavorite(product.id, 'product');
+    currentVariants = product.variants || [];
 
-    const { data: variants, error: varErr } = await supabase
-        .from('product_variants')
-        .select('*')
-        .eq('product_id', product.id);
-    
-    currentVariants = variants || [];
     const hasVariants = currentVariants.length > 0;
     const defaultVariant = currentVariants.find(v => v.is_default) || currentVariants[0];
     const initialPrice = defaultVariant 
