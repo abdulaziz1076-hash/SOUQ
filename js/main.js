@@ -41,40 +41,70 @@ function buildSellPoints(contact) {
     return points;
 }
 
-function renderProductTypeFilter(familyId) {
-    const container = document.getElementById('productTypeFilterContainer');
-    if (!container) return;
+function renderProductsByType(family) {
+    const productsGrid = document.getElementById('productsGrid');
+    if (!productsGrid) return;
     
-    // ✅ تحقق إضافي: المشروع يجب أن يكون من تصنيف "أطعمة ومشروبات"
-    const family = projectsData.find(f => f.id == familyId);
-    if (!family) return;
-    const isFoodOrBeverages = (family.category === 'أطعمة ومشروبات') || (family.categoryEn === 'Food & Beverages');
-    if (!isFoodOrBeverages) {
-        container.innerHTML = '';
-        return;
+    let filteredProducts = [...family.products];
+    
+    // ✅ التصفية بناءً على type_ar / type_en (وليس category)
+    const currentLang = appState.currentLanguage;
+    
+    if (appState.currentProductType !== 'all') {
+        if (appState.currentProductType === 'main') {
+            filteredProducts = filteredProducts.filter(p => 
+                (currentLang === 'ar' && (p.type_ar === 'أطباق رئيسية')) ||
+                (currentLang === 'en' && (p.type_en === 'Main Dishes'))
+            );
+        } 
+        else if (appState.currentProductType === 'drinks') {
+            filteredProducts = filteredProducts.filter(p => 
+                (currentLang === 'ar' && (p.type_ar === 'مشروبات')) ||
+                (currentLang === 'en' && (p.type_en === 'Drinks'))
+            );
+        }
+        else if (appState.currentProductType === 'desserts') {
+            filteredProducts = filteredProducts.filter(p => 
+                (currentLang === 'ar' && (p.type_ar === 'حلويات')) ||
+                (currentLang === 'en' && (p.type_en === 'Desserts'))
+            );
+        }
+        else if (appState.currentProductType === 'other') {
+            // ✅ الأخرى: المنتجات التي ليس لها type_ar أو type_en ضمن الأنواع الثلاثة
+            filteredProducts = filteredProducts.filter(p => {
+                const typeAr = p.type_ar;
+                const typeEn = p.type_en;
+                const isMain = (typeAr === 'أطباق رئيسية' || typeEn === 'Main Dishes');
+                const isDrinks = (typeAr === 'مشروبات' || typeEn === 'Drinks');
+                const isDesserts = (typeAr === 'حلويات' || typeEn === 'Desserts');
+                return !isMain && !isDrinks && !isDesserts;
+            });
+        }
     }
     
     const t = translations[appState.currentLanguage];
-    const types = [
-        { id: 'all', name: t.productTypeAll || (appState.currentLanguage === 'ar' ? 'الكل' : 'All'), icon: 'fas fa-th-large' },
-        { id: 'main', name: t.productTypeMain || (appState.currentLanguage === 'ar' ? ' أطباق رئيسية' : ' Main Dishes'), icon: 'fas fa-utensils' },
-        { id: 'drinks', name: t.productTypeDrinks || (appState.currentLanguage === 'ar' ? ' مشروبات' : ' Drinks'), icon: 'fas fa-mug-hot' },
-        { id: 'desserts', name: t.productTypeDesserts || (appState.currentLanguage === 'ar' ? ' حلويات' : ' Desserts'), icon: 'fas fa-cake-candles' },
-        { id: 'other', name: t.productTypeOther || (appState.currentLanguage === 'ar' ? 'أخرى' : 'Other'), icon: 'fas fa-box' }
-    ];
-    
-    container.innerHTML = `
-        <div class="scroll-container" style="margin-bottom: 15px;" id="productTypeScroll">
-            ${types.map(type => `
-                <div class="filter-chip ${appState.currentProductType === type.id ? 'active' : ''}" 
-                     data-type="${type.id}" 
-                     onclick="filterProductsByType('${type.id}', ${familyId})">
-                    <i class="${type.icon}"></i>
-                    <span>${type.name}</span>
+    productsGrid.innerHTML = filteredProducts.map(p => {
+        const productName = currentLang === 'ar' ? p.name : p.nameEn;
+        const productDesc = currentLang === 'ar' ? p.description : p.descriptionEn;
+        const productCategory = currentLang === 'ar' ? p.category : p.categoryEn;
+        const tCat = translations[currentLang].categories;
+        const categoryDisplay = tCat[p.category] || productCategory;
+        const isFav = isFavorite(p.id, 'product');
+        const priceText = getPriceDisplay(p);
+        const priceHtml = priceText ? `<div class="product-price">${priceText}</div>` : '';
+        
+        return `
+            <div class="product-card ${isFav ? 'favorite-active' : ''}" data-product-id="${p.id}" onclick="navigateTo('/product/${family.id}/${p.id}')">
+                <div class="product-image"><img src="${p.mainImage || p.image}" alt="${productName}" loading="lazy"></div>
+                <div class="product-content">
+                    <h3 class="product-name">${productName}</h3>
+                    <div class="product-description">${productDesc}</div>
+                    ${priceHtml}
+                    <div class="product-category">${categoryDisplay}</div>
                 </div>
-            `).join('')}
-        </div>
-    `;
+            </div>
+        `;
+    }).join('');
 }
 
 function filterProductsByType(typeId, familyId) {
