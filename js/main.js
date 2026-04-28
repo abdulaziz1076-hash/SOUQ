@@ -11,6 +11,7 @@ const appState = {
     currentPage: 'home',
     currentEmirate: 'all',
     currentCategory: 'all',
+    currentProductType: 'all', 
     currentFamilyId: null,
     currentProductId: null,
     searchQuery: '',
@@ -38,6 +39,43 @@ function buildSellPoints(contact) {
     if (contact.twitter) points.push({ type: 'twitter', value: contact.twitter });
     if (contact.website) points.push({ type: 'website', value: contact.website });
     return points;
+}
+
+function renderProductTypeFilter(familyId) {
+    const container = document.getElementById('productTypeFilterContainer');
+    if (!container) return;
+    
+    const t = translations[appState.currentLanguage];
+    const types = [
+        { id: 'all', name: t.productTypeAll || (appState.currentLanguage === 'ar' ? 'الكل' : 'All'), icon: 'fas fa-th-large' },
+        { id: 'main', name: t.productTypeMain || (appState.currentLanguage === 'ar' ? '🍽️ أطباق رئيسية' : '🍽️ Main Dishes'), icon: 'fas fa-utensils' },
+        { id: 'drinks', name: t.productTypeDrinks || (appState.currentLanguage === 'ar' ? '🥤 مشروبات' : '🥤 Drinks'), icon: 'fas fa-mug-hot' },
+        { id: 'desserts', name: t.productTypeDesserts || (appState.currentLanguage === 'ar' ? '🍰 حلويات' : '🍰 Desserts'), icon: 'fas fa-cake-candles' }
+    ];
+    
+    container.innerHTML = `
+        <div class="scroll-container" style="margin-bottom: 15px;" id="productTypeScroll">
+            ${types.map(type => `
+                <div class="filter-chip ${appState.currentProductType === type.id ? 'active' : ''}" 
+                     data-type="${type.id}" 
+                     onclick="filterProductsByType('${type.id}', ${familyId})">
+                    <i class="${type.icon}"></i>
+                    <span>${type.name}</span>
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
+function filterProductsByType(typeId, familyId) {
+    appState.currentProductType = typeId;
+    // Re-render the filter buttons to show active state
+    renderProductTypeFilter(familyId);
+    // Re-render products based on new filter
+    const family = projectsData.find(f => f.id == familyId);
+    if (family) {
+        renderProductsByType(family);
+    }
 }
 
 // ==================== Load Data from Supabase ====================
@@ -835,19 +873,26 @@ function showDealDetails(familyId, dealId) {
 
 // ==================== Show Family Products ====================
 function showFamilyProducts(id, updateHash = true) {
+    // reset product type filter when opening a project
+    appState.currentProductType = 'all';
     hideLoader();
+    
     const family = projectsData.find(f => f.id == id);
     if (!family) return;
+    
+    // contact info
     const contactInfo = contactsData[id] || {};
     family.whatsapp = contactInfo.whatsapp || null;
     family.phone = contactInfo.phone || null;
     family.email = contactInfo.email || null;
     family.sell_points = contactInfo.sell_points || [];
     appState.currentFamilyId = id;
+    
     if (updateHash) {
         navigateTo(`/family/${id}`);
         return;
     }
+    
     const t = translations[appState.currentLanguage];
     const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
     const longDescription = appState.currentLanguage === 'ar' ? (family.longDescription || family.description) : (family.longDescriptionEn || family.descriptionEn);
@@ -858,7 +903,8 @@ function showFamilyProducts(id, updateHash = true) {
     const licenseBadgeHtml = family.adra_license === 'نعم' ? `<div class="license-badge-large"><i class="fas fa-check-circle"></i> ${t.licensed}</div>` : '';
     const feedbackButtonHtml = `<div class="action-btn feedback-btn" onclick="event.stopPropagation(); openFeedbackModal(${family.id}, '${familyName}')" title="شكوى أو اقتراح"><i class="fas fa-comment-dots"></i></div>`;
     const shareButtonHtml = `<div class="action-btn share-btn" onclick="event.stopPropagation(); showProfileSharePopup(event, ${family.id})" title="${t.shareProfile}"><i class="fas fa-share-alt"></i></div>`;
-
+    
+    // Profile container
     const profileContainer = document.getElementById('familyProfileContainer');
     if (profileContainer) {
         profileContainer.innerHTML = `
@@ -890,31 +936,23 @@ function showFamilyProducts(id, updateHash = true) {
             </div>
         `;
     }
-    renderFamilyDeals(family);
-    const productsGrid = document.getElementById('productsGrid');
-    if (productsGrid) {
-        productsGrid.innerHTML = family.products.map(p => {
-            const productName = appState.currentLanguage === 'ar' ? p.name : p.nameEn;
-            const productDesc = appState.currentLanguage === 'ar' ? p.description : p.descriptionEn;
-            const productCategory = appState.currentLanguage === 'ar' ? p.category : p.categoryEn;
-            const tCat = translations[appState.currentLanguage].categories;
-            const categoryDisplay = tCat[p.category] || productCategory;
-            const isFav = isFavorite(p.id, 'product');
-            const priceText = getPriceDisplay(p);
-            const priceHtml = priceText ? `<div class="product-price">${priceText}</div>` : '';
-            return `
-                <div class="product-card ${isFav ? 'favorite-active' : ''}" data-product-id="${p.id}" onclick="navigateTo('/product/${family.id}/${p.id}')">
-                    <div class="product-image"><img src="${p.mainImage || p.image}" alt="${productName}" loading="lazy"></div>
-                    <div class="product-content">
-                        <h3 class="product-name">${productName}</h3>
-                        <div class="product-description">${productDesc}</div>
-                        ${priceHtml}
-                        <div class="product-category">${categoryDisplay}</div>
-                    </div>
-                </div>
-            `;
-        }).join('');
+    
+    // Create filter container if not exists (only once)
+    let filterContainer = document.getElementById('productTypeFilterContainer');
+    if (!filterContainer) {
+        const productsHeader = document.querySelector('#products-page .products-header');
+        if (productsHeader) {
+            const div = document.createElement('div');
+            div.id = 'productTypeFilterContainer';
+            productsHeader.after(div);
+        }
     }
+    renderProductTypeFilter(family.id);
+    
+    renderFamilyDeals(family);
+    renderProductsByType(family);   // use the filtering function instead of direct map
+    
+    // Contact section (only once)
     let contactHtml = '';
     if (family.whatsapp) {
         const whatsappUrl = `https://wa.me/${String(family.whatsapp).replace(/[^0-9]/g, '')}`;
@@ -938,10 +976,50 @@ function showFamilyProducts(id, updateHash = true) {
     if (contactSection) {
         contactSection.innerHTML = `<h3 class="contact-title"><i class="fas fa-phone-alt"></i> ${t.contactSeller}</h3><div class="contact-grid">${contactHtml || `<p>${t.noContact}</p>`}</div>`;
     }
+    
     showPage('products');
     showInstructionPopupOnce();
     setTimeout(() => restoreScrollPosition(), 200);
     setTimeout(() => ensureLoaderHidden(), 100);
+}
+
+function renderProductsByType(family) {
+    const productsGrid = document.getElementById('productsGrid');
+    if (!productsGrid) return;
+    
+    let filteredProducts = [...family.products];
+    if (appState.currentProductType !== 'all') {
+        let targetCategory = '';
+        if (appState.currentProductType === 'main') targetCategory = 'أطباق رئيسية';
+        else if (appState.currentProductType === 'drinks') targetCategory = 'مشروبات';
+        else if (appState.currentProductType === 'desserts') targetCategory = 'حلويات';
+        
+        filteredProducts = filteredProducts.filter(p => p.category === targetCategory);
+    }
+    
+    const t = translations[appState.currentLanguage];
+    productsGrid.innerHTML = filteredProducts.map(p => {
+        const productName = appState.currentLanguage === 'ar' ? p.name : p.nameEn;
+        const productDesc = appState.currentLanguage === 'ar' ? p.description : p.descriptionEn;
+        const productCategory = appState.currentLanguage === 'ar' ? p.category : p.categoryEn;
+        const tCat = translations[appState.currentLanguage].categories;
+        const categoryDisplay = tCat[p.category] || productCategory;
+        const isFav = isFavorite(p.id, 'product');
+        const priceText = getPriceDisplay(p);
+        const priceHtml = priceText ? `<div class="product-price">${priceText}</div>` : '';
+        
+        return `
+            <div class="product-card ${isFav ? 'favorite-active' : ''}" data-product-id="${p.id}" onclick="navigateTo('/product/${family.id}/${p.id}')">
+                <div class="product-image"><img src="${p.mainImage || p.image}" alt="${productName}" loading="lazy"></div>
+                <div class="product-content">
+                    <h3 class="product-name">${productName}</h3>
+                    <div class="product-description">${productDesc}</div>
+                    ${priceHtml}
+                    <div class="product-category">${categoryDisplay}</div>
+                </div>
+            </div>
+        `;
+    }).join('');
 }
 
 function getPriceDisplay(product) {
@@ -1663,6 +1741,8 @@ function trackPageView() {
         })
     }).catch(e => console.warn("Tracking error:", e));
 }
+
+
 
 window.addEventListener('load', () => setTimeout(trackPageView, 100));
 window.addEventListener('hashchange', () => setTimeout(trackPageView, 100));
