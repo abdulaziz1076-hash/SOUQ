@@ -1680,4 +1680,12 @@ async function trackPageView() {
 window.addEventListener('load', () => setTimeout(trackPageView, 100));
 window.addEventListener('hashchange', () => setTimeout(trackPageView, 100));
 
-// تم إزالة تكرار مستمع submitFeedback في نهاية الملف
+function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+    });
+}
