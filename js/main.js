@@ -48,7 +48,7 @@ function renderProductTypeFilter(familyId) {
     // ✅ تحقق إضافي: المشروع يجب أن يكون من تصنيف "أطعمة ومشروبات"
     const family = projectsData.find(f => f.id == familyId);
     if (!family) return;
-    const isFoodOrBeverages = (family.category === 'أطعمة ومشروبات') || (family.categoryEn === 'Food & Beverages');
+    const isFoodOrBeverages = (family.type === 'أطعمة ومشروبات') || (family.categoryEn === 'Food & Beverages');
     if (!isFoodOrBeverages) {
         container.innerHTML = '';
         return;
@@ -1035,47 +1035,51 @@ function renderProductsByType(family) {
     if (!productsGrid) return;
     
     let filteredProducts = [...family.products];
+    const currentLang = appState.currentLanguage;
     
-    // تطبيق الفلتر حسب نوع المنتج (وليس التصنيف)
+    // ✅ التصفية بناءً على type_ar / type_en مع التحقق من وجود القيم
     if (appState.currentProductType !== 'all') {
-        // تحديد القيم المستهدفة حسب اللغة
-        const targetTypeAr = 
-            appState.currentProductType === 'main' ? 'أطباق رئيسية' :
-            appState.currentProductType === 'drinks' ? 'مشروبات' :
-            appState.currentProductType === 'desserts' ? 'حلويات' : null;
-        
-        const targetTypeEn = 
-            appState.currentProductType === 'main' ? 'Main Dishes' :
-            appState.currentProductType === 'drinks' ? 'Drinks' :
-            appState.currentProductType === 'desserts' ? 'Desserts' : null;
-        
-        if (appState.currentProductType === 'other') {
-            // ✅ "أخرى": المنتجات التي ليس نوعها ضمن (أطباق رئيسية، مشروبات، حلويات)
+        if (appState.currentProductType === 'main') {
             filteredProducts = filteredProducts.filter(p => {
-                const typeAr = p.type_ar || p.category; // fallback للمنتجات القديمة
-                const typeEn = p.type_en || p.categoryEn;
-                return typeAr !== 'أطباق رئيسية' && typeAr !== 'مشروبات' && typeAr !== 'حلويات' &&
-                       typeEn !== 'Main Dishes' && typeEn !== 'Drinks' && typeEn !== 'Desserts';
+                const typeVal = currentLang === 'ar' ? p.type_ar : p.type_en;
+                const target = currentLang === 'ar' ? 'أطباق رئيسية' : 'Main Dishes';
+                return typeVal === target;
             });
-        } else if (targetTypeAr && targetTypeEn) {
-            // تصفية حسب النوع المطابق للغة الحالية
+        } 
+        else if (appState.currentProductType === 'drinks') {
             filteredProducts = filteredProducts.filter(p => {
-                const productType = appState.currentLanguage === 'ar' ? p.type_ar : p.type_en;
-                const fallbackCategory = appState.currentLanguage === 'ar' ? p.category : p.categoryEn;
-                const compareValue = productType || fallbackCategory;
-                return compareValue === (appState.currentLanguage === 'ar' ? targetTypeAr : targetTypeEn);
+                const typeVal = currentLang === 'ar' ? p.type_ar : p.type_en;
+                const target = currentLang === 'ar' ? 'مشروبات' : 'Drinks';
+                return typeVal === target;
+            });
+        }
+        else if (appState.currentProductType === 'desserts') {
+            filteredProducts = filteredProducts.filter(p => {
+                const typeVal = currentLang === 'ar' ? p.type_ar : p.type_en;
+                const target = currentLang === 'ar' ? 'حلويات' : 'Desserts';
+                return typeVal === target;
+            });
+        }
+        else if (appState.currentProductType === 'other') {
+            filteredProducts = filteredProducts.filter(p => {
+                const typeAr = p.type_ar;
+                const typeEn = p.type_en;
+                // إذا كانت القيم غير موجودة، نعتبرها "أخرى"
+                const isMain = (typeAr === 'أطباق رئيسية' || typeEn === 'Main Dishes');
+                const isDrinks = (typeAr === 'مشروبات' || typeEn === 'Drinks');
+                const isDesserts = (typeAr === 'حلويات' || typeEn === 'Desserts');
+                return !isMain && !isDrinks && !isDesserts;
             });
         }
     }
     
     const t = translations[appState.currentLanguage];
     productsGrid.innerHTML = filteredProducts.map(p => {
-        const productName = appState.currentLanguage === 'ar' ? p.name : p.nameEn;
-        const productDesc = appState.currentLanguage === 'ar' ? p.description : p.descriptionEn;
-        // عرض التصنيف القديم (category) كما هو للمستخدم (لا علاقة له بالفلتر)
-        const productCategory = appState.currentLanguage === 'ar' ? p.category : p.categoryEn;
-        const tCat = translations[appState.currentLanguage].categories;
-        const categoryDisplay = tCat[p.category] || productCategory;
+        const productName = currentLang === 'ar' ? p.name : p.nameEn;
+        const productDesc = currentLang === 'ar' ? p.description : p.descriptionEn;
+        const productCategory = currentLang === 'ar' ? p.category : p.categoryEn;
+        const tCat = translations[currentLang].categories;
+        const categoryDisplay = tCat[p.category] || productCategory || '-';
         const isFav = isFavorite(p.id, 'product');
         const priceText = getPriceDisplay(p);
         const priceHtml = priceText ? `<div class="product-price">${priceText}</div>` : '';
@@ -1085,7 +1089,7 @@ function renderProductsByType(family) {
                 <div class="product-image"><img src="${p.mainImage || p.image}" alt="${productName}" loading="lazy"></div>
                 <div class="product-content">
                     <h3 class="product-name">${productName}</h3>
-                    <div class="product-description">${productDesc}</div>
+                    <div class="product-description">${productDesc || ''}</div>
                     ${priceHtml}
                     <div class="product-category">${categoryDisplay}</div>
                 </div>
