@@ -249,31 +249,35 @@
     </div>
 
     <div id="products-page" class="page products-page" style="display: none;">
-        <div class="products-header">
-    <h2 class="products-title" id="productsTitle">المنتجات</h2>
-</div>
-<div class="products-grid" id="productsGrid"></div>
-        <div class="container" style="padding-top: 12px;">
-            <div class="back-button" onclick="goBack()" style="margin-bottom: 12px;">
-                <i class="fas fa-arrow-right"></i>
-            </div>
-            <div id="familyProfileContainer"></div>
-            <div class="deals-section" id="dealsSection" style="display: none;">
-                <h3 class="deals-title">
-                    <i class="fas fa-tags"></i>
-                    <span id="dealsTitle">العروض والباقات:</span>
-                </h3>
-                <div class="deals-grid" id="dealsGrid"></div>
-            </div>
-            <div id="productTypeFilterContainer" style="margin: 10px 0;"></div>
-            <div class="products-header">
-                <h2 class="products-title" id="productsTitle">المنتجات</h2>
-            </div>
-
-            <div class="products-grid" id="productsGrid"></div>
-            <div id="contactSectionBottom" class="contact-section-bottom"></div>
+    <div class="container" style="padding-top: 12px;">
+        <div class="back-button" onclick="goBack()" style="margin-bottom: 12px;">
+            <i class="fas fa-arrow-right"></i>
         </div>
+        
+        <!-- 1. معلومات المشروع (في الأعلى) -->
+        <div id="familyProfileContainer"></div>
+        
+        <!-- 2. العروض (إن وجدت) -->
+        <div class="deals-section" id="dealsSection" style="display: none;">
+            <h3 class="deals-title"><i class="fas fa-tags"></i> <span id="dealsTitle">العروض والباقات:</span></h3>
+            <div class="deals-grid" id="dealsGrid"></div>
+        </div>
+        
+        <!-- 3. أزرار فلترة المنتجات -->
+        <div id="productTypeFilterContainer" style="margin: 10px 0;"></div>
+        
+        <!-- 4. عنوان المنتجات -->
+        <div class="products-header">
+            <h2 class="products-title" id="productsTitle">المنتجات</h2>
+        </div>
+        
+        <!-- 5. شبكة المنتجات -->
+        <div class="products-grid" id="productsGrid"></div>
+        
+        <!-- 6. قسم التواصل -->
+        <div id="contactSectionBottom" class="contact-section-bottom"></div>
     </div>
+</div>
 
     <div id="product-detail-page" class="page product-detail-page" style="display: none;">
         <div class="container">
@@ -512,4 +516,3 @@
 
 </body>
 </html>
-
