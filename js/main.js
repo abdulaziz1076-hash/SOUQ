@@ -147,7 +147,7 @@ async function loadProjectsFromSupabase() {
                 typeEn: p.type_en,
                 price_ar: p.price_ar,
                 price_en: p.price_en,
-                variants: variantsByProduct[p.id] || []   // ← إضافة المتغيرات
+                variants: variantsByProduct[p.id] || []  
             }));
 
             return {
