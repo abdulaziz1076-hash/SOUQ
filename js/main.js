@@ -1036,19 +1036,34 @@ function renderProductsByType(family) {
     
     let filteredProducts = [...family.products];
     
-    // تطبيق الفلتر حسب النوع المختار
+    // تطبيق الفلتر حسب نوع المنتج (وليس التصنيف)
     if (appState.currentProductType !== 'all') {
-        if (appState.currentProductType === 'main') {
-            filteredProducts = filteredProducts.filter(p => p.category === 'أطباق رئيسية');
-        } else if (appState.currentProductType === 'drinks') {
-            filteredProducts = filteredProducts.filter(p => p.category === 'مشروبات');
-        } else if (appState.currentProductType === 'desserts') {
-            filteredProducts = filteredProducts.filter(p => p.category === 'حلويات');
-        } else if (appState.currentProductType === 'other') {
-            // ✅ "أخرى": المنتجات التي ليس تصنيفها ضمن (أطباق رئيسية، مشروبات، حلويات)
+        // تحديد القيم المستهدفة حسب اللغة
+        const targetTypeAr = 
+            appState.currentProductType === 'main' ? 'أطباق رئيسية' :
+            appState.currentProductType === 'drinks' ? 'مشروبات' :
+            appState.currentProductType === 'desserts' ? 'حلويات' : null;
+        
+        const targetTypeEn = 
+            appState.currentProductType === 'main' ? 'Main Dishes' :
+            appState.currentProductType === 'drinks' ? 'Drinks' :
+            appState.currentProductType === 'desserts' ? 'Desserts' : null;
+        
+        if (appState.currentProductType === 'other') {
+            // ✅ "أخرى": المنتجات التي ليس نوعها ضمن (أطباق رئيسية، مشروبات، حلويات)
             filteredProducts = filteredProducts.filter(p => {
-                const cat = p.category;
-                return cat !== 'أطباق رئيسية' && cat !== 'مشروبات' && cat !== 'حلويات';
+                const typeAr = p.type_ar || p.category; // fallback للمنتجات القديمة
+                const typeEn = p.type_en || p.categoryEn;
+                return typeAr !== 'أطباق رئيسية' && typeAr !== 'مشروبات' && typeAr !== 'حلويات' &&
+                       typeEn !== 'Main Dishes' && typeEn !== 'Drinks' && typeEn !== 'Desserts';
+            });
+        } else if (targetTypeAr && targetTypeEn) {
+            // تصفية حسب النوع المطابق للغة الحالية
+            filteredProducts = filteredProducts.filter(p => {
+                const productType = appState.currentLanguage === 'ar' ? p.type_ar : p.type_en;
+                const fallbackCategory = appState.currentLanguage === 'ar' ? p.category : p.categoryEn;
+                const compareValue = productType || fallbackCategory;
+                return compareValue === (appState.currentLanguage === 'ar' ? targetTypeAr : targetTypeEn);
             });
         }
     }
@@ -1057,6 +1072,7 @@ function renderProductsByType(family) {
     productsGrid.innerHTML = filteredProducts.map(p => {
         const productName = appState.currentLanguage === 'ar' ? p.name : p.nameEn;
         const productDesc = appState.currentLanguage === 'ar' ? p.description : p.descriptionEn;
+        // عرض التصنيف القديم (category) كما هو للمستخدم (لا علاقة له بالفلتر)
         const productCategory = appState.currentLanguage === 'ar' ? p.category : p.categoryEn;
         const tCat = translations[appState.currentLanguage].categories;
         const categoryDisplay = tCat[p.category] || productCategory;
