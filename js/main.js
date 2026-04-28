@@ -45,6 +45,15 @@ function renderProductTypeFilter(familyId) {
     const container = document.getElementById('productTypeFilterContainer');
     if (!container) return;
     
+    // ✅ تحقق إضافي: المشروع يجب أن يكون من تصنيف "أطعمة ومشروبات"
+    const family = projectsData.find(f => f.id == familyId);
+    if (!family) return;
+    const isFoodOrBeverages = (family.category === 'أطعمة ومشروبات') || (family.categoryEn === 'Food & Beverages');
+    if (!isFoodOrBeverages) {
+        container.innerHTML = '';
+        return;
+    }
+    
     const t = translations[appState.currentLanguage];
     const types = [
         { id: 'all', name: t.productTypeAll || (appState.currentLanguage === 'ar' ? 'الكل' : 'All'), icon: 'fas fa-th-large' },
@@ -900,6 +909,7 @@ function showDealDetails(familyId, dealId) {
 }
 
 // ==================== Show Family Products ====================
+// ==================== Show Family Products ====================
 function showFamilyProducts(id, updateHash = true) {
     // reset product type filter when opening a project
     appState.currentProductType = 'all';
@@ -965,9 +975,8 @@ function showFamilyProducts(id, updateHash = true) {
         `;
     }
     
-    // Create filter container if not exists (only once)
-    let filterContainer = document.getElementById('productTypeFilterContainer');
-    if (!filterContainer) {
+    // إنشاء حاوية الفلتر إذا لم تكن موجودة (لجميع المشاريع، لكن سنملأها فقط للغذائية)
+    if (!document.getElementById('productTypeFilterContainer')) {
         const productsHeader = document.querySelector('#products-page .products-header');
         if (productsHeader) {
             const div = document.createElement('div');
@@ -975,10 +984,19 @@ function showFamilyProducts(id, updateHash = true) {
             productsHeader.after(div);
         }
     }
-    renderProductTypeFilter(family.id);
+    
+    // ✅ التحقق من أن المشروع من تصنيف "أطعمة ومشروبات" (أو Food & Beverages)
+    const isFoodOrBeverages = (family.category === 'أطعمة ومشروبات') || (family.categoryEn === 'Food & Beverages');
+    
+    if (isFoodOrBeverages) {
+        renderProductTypeFilter(family.id);
+    } else {
+        const filterContainer = document.getElementById('productTypeFilterContainer');
+        if (filterContainer) filterContainer.innerHTML = '';
+    }
     
     renderFamilyDeals(family);
-    renderProductsByType(family);   // use the filtering function instead of direct map
+    renderProductsByType(family);   // تستخدم الفلتر الداخلي حسب appState.currentProductType
     
     // Contact section (only once)
     let contactHtml = '';
