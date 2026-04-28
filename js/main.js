@@ -84,7 +84,7 @@ async function loadProjectsFromSupabase() {
         showLoader();
         console.log('🔄 Loading data from Supabase...');
 
-        // جلب المشاريع مع المنتجات والعروض والجهات المتصلة
+        // 1. جلب المشاريع مع المنتجات والعروض وبيانات التواصل
         const { data: projects, error } = await supabase
             .from('projects')
             .select(`
@@ -101,44 +101,44 @@ async function loadProjectsFromSupabase() {
             return;
         }
 
-        // جلب جميع المتغيرات من جدول product_variants
-        const { data: allVariants, error: variantsError } = await supabase
+        // 2. جلب جميع المتغيرات مرة واحدة
+        const { data: allVariants, error: varError } = await supabase
             .from('product_variants')
             .select('*');
-        if (variantsError) console.warn('Failed to load variants:', variantsError);
-        const variantsMap = new Map(); // product_id -> array of variants
+        
+        if (varError) console.warn('⚠️ Could not load variants:', varError);
+        
+        // 3. تجميع المتغيرات حسب product_id
+        const variantsByProduct = {};
         if (allVariants) {
             allVariants.forEach(v => {
-                if (!variantsMap.has(v.product_id)) variantsMap.set(v.product_id, []);
-                variantsMap.get(v.product_id).push(v);
+                if (!variantsByProduct[v.product_id]) variantsByProduct[v.product_id] = [];
+                variantsByProduct[v.product_id].push(v);
             });
         }
 
+        // 4. تحويل البيانات مع إضافة المتغيرات لكل منتج
         projectsData = projects.map(project => {
-            // تحويل المنتجات مع ربط المتغيرات
-            const productsWithVariants = (project.products || []).map(p => {
-                const productVariants = variantsMap.get(p.id) || [];
-                return {
-                    id: p.id,
-                    name: p.name_ar,
-                    nameEn: p.name_en,
-                    description: p.description_ar,
-                    descriptionEn: p.description_en,
-                    longDescription: p.long_description_ar,
-                    longDescriptionEn: p.long_description_en,
-                    mainImage: p.main_image,
-                    images: p.images || [],
-                    details: p.details_ar || [],
-                    detailsEn: p.details_en || [],
-                    category: p.category_ar,
-                    categoryEn: p.category_en,
-                    type_ar: p.type_ar,
-                    type_en: p.type_en,
-                    price_ar: p.price_ar,
-                    price_en: p.price_en,
-                    variants: productVariants
-                };
-            });
+            const products = (project.products || []).map(p => ({
+                id: p.id,
+                name: p.name_ar,
+                nameEn: p.name_en,
+                description: p.description_ar,
+                descriptionEn: p.description_en,
+                longDescription: p.long_description_ar,
+                longDescriptionEn: p.long_description_en,
+                mainImage: p.main_image,
+                images: p.images || [],
+                details: p.details_ar || [],
+                detailsEn: p.details_en || [],
+                category: p.category_ar,
+                categoryEn: p.category_en,
+                type: p.type_ar,
+                typeEn: p.type_en,
+                price_ar: p.price_ar,
+                price_en: p.price_en,
+                variants: variantsByProduct[p.id] || []   // ← إضافة المتغيرات
+            }));
 
             return {
                 id: project.id,
@@ -155,7 +155,7 @@ async function loadProjectsFromSupabase() {
                 coverage: project.coverage,
                 category: project.category_ar,
                 categoryEn: project.category_en,
-                products: productsWithVariants,
+                products: products,
                 deals: (project.deals || []).map(d => ({
                     id: d.id,
                     title: d.title_ar,
@@ -175,7 +175,7 @@ async function loadProjectsFromSupabase() {
             };
         });
 
-        // بناء contactsData وربطها بالمشاريع (نفس الكود القديم)
+        // 5. بناء contactsData (بدون تغيير)
         contactsData = {};
         projects.forEach(project => {
             const contact = project.contacts;
@@ -200,6 +200,7 @@ async function loadProjectsFromSupabase() {
             }
         });
 
+        // ربط بيانات التواصل بكل مشروع
         projectsData.forEach(project => {
             const contact = contactsData[project.id];
             if (contact) {
@@ -210,9 +211,9 @@ async function loadProjectsFromSupabase() {
             }
         });
 
-        console.log(`✅ Loaded ${projectsData.length} projects with variants`);
+        console.log(`✅ Loaded ${projectsData.length} projects`);
 
-        // تحديث الصفحة الحالية إذا لزم الأمر
+        // تحديث الصفحات المعروضة
         if (appState.currentPage === 'families') renderFamilies();
         else if (appState.currentPage === 'products' && appState.currentFamilyId) showFamilyProducts(appState.currentFamilyId, false);
         else if (appState.currentPage === 'product-detail' && appState.currentFamilyId && appState.currentProductId) showProductDetail(appState.currentFamilyId, appState.currentProductId, false);
@@ -1013,27 +1014,42 @@ function showFamilyProducts(id, updateHash = true) {
 function renderProductsByType(family) {
     const productsGrid = document.getElementById('productsGrid');
     if (!productsGrid) return;
-
+    
     let filteredProducts = [...family.products];
+    
+    // التصفية حسب نوع المنتج (أطباق رئيسية، مشروبات، حلويات) باستخدام product.type
     if (appState.currentProductType !== 'all') {
         let targetType = '';
         if (appState.currentProductType === 'main') targetType = 'أطباق رئيسية';
         else if (appState.currentProductType === 'drinks') targetType = 'مشروبات';
         else if (appState.currentProductType === 'desserts') targetType = 'حلويات';
-
-        // التصفية الآن تعتمد على type_ar وليس category
-        filteredProducts = filteredProducts.filter(p => p.type_ar === targetType);
+        
+        // المقارنة مع product.type (أو product.typeEn لو كانت اللغة إنجليزية)
+        filteredProducts = filteredProducts.filter(p => {
+            if (appState.currentLanguage === 'ar') {
+                return p.type === targetType;
+            } else {
+                // للغة الإنجليزية: ترجمة الأنواع
+                const typeEnMap = {
+                    'أطباق رئيسية': 'Main Dishes',
+                    'مشروبات': 'Drinks',
+                    'حلويات': 'Desserts'
+                };
+                return p.typeEn === typeEnMap[targetType];
+            }
+        });
     }
-
+    
     const t = translations[appState.currentLanguage];
     productsGrid.innerHTML = filteredProducts.map(p => {
         const productName = appState.currentLanguage === 'ar' ? p.name : p.nameEn;
         const productDesc = appState.currentLanguage === 'ar' ? p.description : p.descriptionEn;
-        const productType = appState.currentLanguage === 'ar' ? p.type_ar : p.type_en;
+        const productType = appState.currentLanguage === 'ar' ? p.type : p.typeEn;
+        const typeDisplay = productType || (appState.currentLanguage === 'ar' ? 'غير مصنف' : 'Uncategorized');
         const isFav = isFavorite(p.id, 'product');
-        const priceText = getPriceDisplay(p);  // سيتم تعديل هذه الدالة أيضاً
+        const priceText = getPriceDisplay(p);
         const priceHtml = priceText ? `<div class="product-price">${priceText}</div>` : '';
-
+        
         return `
             <div class="product-card ${isFav ? 'favorite-active' : ''}" data-product-id="${p.id}" onclick="navigateTo('/product/${family.id}/${p.id}')">
                 <div class="product-image"><img src="${p.mainImage || p.image}" alt="${productName}" loading="lazy"></div>
@@ -1041,7 +1057,7 @@ function renderProductsByType(family) {
                     <h3 class="product-name">${productName}</h3>
                     <div class="product-description">${productDesc}</div>
                     ${priceHtml}
-                    <div class="product-category">${productType}</div>
+                    <div class="product-category">${typeDisplay}</div>
                 </div>
             </div>
         `;
@@ -1051,15 +1067,29 @@ function renderProductsByType(family) {
 function getPriceDisplay(product) {
     const lang = appState.currentLanguage;
     
-    // 1. استخدام المتغيرات المضافة مسبقاً من loadProjectsFromSupabase
+    // 1. إذا كان للمنتج متغيرات، اعرض أقل سعر مع عبارة "يبدأ من"
     if (product.variants && product.variants.length > 0) {
-        const defaultVariant = product.variants.find(v => v.is_default) || product.variants[0];
-        let price = lang === 'ar' ? defaultVariant.price_ar : defaultVariant.price_en;
-        if (price && price.trim() !== '') {
-            price = String(price);
-            if (!price.includes('AED') && !price.includes('درهم')) price += ' AED';
-            return price;
+        let minPriceObj = null;
+        for (let v of product.variants) {
+            let priceStr = lang === 'ar' ? v.price_ar : v.price_en;
+            if (priceStr && priceStr.trim() !== '') {
+                let numeric = parseFloat(priceStr.replace(/[^0-9.-]/g, ''));
+                if (!isNaN(numeric)) {
+                    if (minPriceObj === null || numeric < minPriceObj.value) {
+                        minPriceObj = { value: numeric, text: priceStr.trim() };
+                    }
+                } else if (minPriceObj === null) {
+                    minPriceObj = { value: Infinity, text: priceStr.trim() };
+                }
+            }
         }
+        if (minPriceObj && minPriceObj.value !== Infinity) {
+            const prefix = lang === 'ar' ? 'يبدأ من ' : 'Starting from ';
+            return prefix + minPriceObj.text;
+        } else if (minPriceObj) {
+            return minPriceObj.text;
+        }
+        // إذا لم نجد أي سعر رقمي، نعرض نص عام
     }
     
     // 2. السعر الثابت
@@ -1097,9 +1127,8 @@ async function showProductDetail(familyId, productId, updateHash = true) {
     const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
     const productName = appState.currentLanguage === 'ar' ? product.name : product.nameEn;
     const productDesc = appState.currentLanguage === 'ar' ? (product.longDescription || product.description) : (product.longDescriptionEn || product.descriptionEn);
-    const productCategory = appState.currentLanguage === 'ar' ? product.category : product.categoryEn;
-    const tCat = translations[appState.currentLanguage].categories;
-    const categoryDisplay = tCat[product.category] || productCategory;
+    const productType = appState.currentLanguage === 'ar' ? product.type : product.typeEn;
+    const typeDisplay = productType || (appState.currentLanguage === 'ar' ? 'منتج' : 'Product');
 
     const images = product.images && product.images.length > 0 ? product.images : [product.mainImage || product.image];
     currentProductImagesArray = images;
@@ -1144,13 +1173,47 @@ async function showProductDetail(familyId, productId, updateHash = true) {
     }
 
     const isFav = isFavorite(product.id, 'product');
-    currentVariants = product.variants || [];
 
+    // جلب المتغيرات من قاعدة البيانات
+    const { data: variants, error: varErr } = await supabase
+        .from('product_variants')
+        .select('*')
+        .eq('product_id', product.id);
+    
+    currentVariants = variants || [];
     const hasVariants = currentVariants.length > 0;
-    const defaultVariant = currentVariants.find(v => v.is_default) || currentVariants[0];
-    const initialPrice = defaultVariant 
-        ? (appState.currentLanguage === 'ar' ? defaultVariant.price_ar : defaultVariant.price_en)
-        : getPriceDisplay(product);
+    
+    // تحديد المتغير الافتراضي أو الأول
+    let defaultVariant = null;
+    if (hasVariants) {
+        defaultVariant = currentVariants.find(v => v.is_default === true) || currentVariants[0];
+    }
+    
+    // حساب السعر الابتدائي
+    let initialPrice = '';
+    if (hasVariants && defaultVariant) {
+        initialPrice = appState.currentLanguage === 'ar' ? defaultVariant.price_ar : defaultVariant.price_en;
+    } else {
+        initialPrice = getPriceDisplay(product);
+    }
+    
+    // إنشاء HTML لعنصر اختيار المتغيرات
+    let variantsHtml = '';
+    if (hasVariants) {
+        variantsHtml = `
+            <div class="product-variants mt-4">
+                <h3 class="product-details-title"><i class="fas fa-list-ul"></i> ${t.variantsTitle || (appState.currentLanguage === 'ar' ? 'الخيارات' : 'Options')}</h3>
+                <div class="variants-selector" id="variantsSelector">
+                    ${currentVariants.map(v => `
+                        <div class="variant-option ${v.id === defaultVariant?.id ? 'active' : ''}" data-variant-id="${v.id}">
+                            <span class="variant-label">${appState.currentLanguage === 'ar' ? v.label_ar : v.label_en}</span>
+                            <span class="variant-price">${appState.currentLanguage === 'ar' ? v.price_ar : v.price_en}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
 
     const html = `
         <div class="product-gallery">
@@ -1166,23 +1229,10 @@ async function showProductDetail(familyId, productId, updateHash = true) {
             <div class="product-thumbnails" id="productThumbnails">${thumbnailsHtml}</div>
         </div>
         <div class="product-detail-info">
-            <span class="product-detail-category"><i class="fas fa-tag"></i> ${categoryDisplay}</span>
+            <span class="product-detail-category"><i class="fas fa-tag"></i> ${typeDisplay}</span>
             <h1 class="product-detail-name">${productName}</h1>
             <div class="product-price-display" id="dynamicPrice">${initialPrice}</div>
-            ${hasVariants ? `
-            <div class="product-variants mt-4">
-                <h3 class="product-details-title"><i class="fas fa-list-ul"></i> ${t.variantsTitle || 'الخيارات'}</h3>
-                <div class="variants-selector" id="variantsSelector">
-                    ${currentVariants.map(v => `
-                        <label class="variant-option ${v.id === defaultVariant.id ? 'active' : ''}" onclick="window.selectVariant(event, '${v.id}')">
-                            <input type="radio" name="variant" value="${v.id}" ${v.id === defaultVariant.id ? 'checked' : ''} hidden>
-                            <span class="variant-label">${appState.currentLanguage === 'ar' ? v.label_ar : v.label_en}</span>
-                            <span class="variant-price">${appState.currentLanguage === 'ar' ? v.price_ar : v.price_en}</span>
-                        </label>
-                    `).join('')}
-                </div>
-            </div>
-            ` : ''}
+            ${variantsHtml}
             <p class="product-detail-description">${productDesc}</p>
             ${specsHtml}
         </div>
@@ -1201,6 +1251,29 @@ async function showProductDetail(familyId, productId, updateHash = true) {
     const container = document.getElementById('productDetailContainer');
     if (container) container.innerHTML = html;
     showPage('product-detail');
+    
+    // ربط أحداث اختيار المتغيرات بعد إضافة الـ HTML إلى DOM
+    if (hasVariants) {
+        const variantOptions = document.querySelectorAll('.variant-option');
+        variantOptions.forEach(option => {
+            option.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const variantId = this.getAttribute('data-variant-id');
+                const variant = currentVariants.find(v => v.id == variantId);
+                if (variant) {
+                    // تحديث السعر المعروض
+                    const priceEl = document.getElementById('dynamicPrice');
+                    if (priceEl) {
+                        priceEl.textContent = appState.currentLanguage === 'ar' ? variant.price_ar : variant.price_en;
+                    }
+                    // تحديث الحالة النشطة للخيارات
+                    variantOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+    }
+    
     requestAnimationFrame(() => {
         setTimeout(() => {
             hideLoader();
