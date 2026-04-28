@@ -45,10 +45,11 @@ function renderProductTypeFilter(familyId) {
     const container = document.getElementById('productTypeFilterContainer');
     if (!container) return;
     
-    // ✅ تحقق إضافي: المشروع يجب أن يكون من تصنيف "أطعمة ومشروبات"
     const family = projectsData.find(f => f.id == familyId);
     if (!family) return;
-    const isFoodOrBeverages = (family.type === 'أطعمة ومشروبات') || (family.categoryEn === 'Food & Beverages');
+    
+    // ✅ التحقق من أن المشروع من تصنيف "أطعمة ومشروبات"
+    const isFoodOrBeverages = (family.category === 'أطعمة ومشروبات') || (family.categoryEn === 'Food & Beverages');
     if (!isFoodOrBeverages) {
         container.innerHTML = '';
         return;
@@ -57,9 +58,9 @@ function renderProductTypeFilter(familyId) {
     const t = translations[appState.currentLanguage];
     const types = [
         { id: 'all', name: t.productTypeAll || (appState.currentLanguage === 'ar' ? 'الكل' : 'All'), icon: 'fas fa-th-large' },
-        { id: 'main', name: t.productTypeMain || (appState.currentLanguage === 'ar' ? ' أطباق رئيسية' : ' Main Dishes'), icon: 'fas fa-utensils' },
-        { id: 'drinks', name: t.productTypeDrinks || (appState.currentLanguage === 'ar' ? ' مشروبات' : ' Drinks'), icon: 'fas fa-mug-hot' },
-        { id: 'desserts', name: t.productTypeDesserts || (appState.currentLanguage === 'ar' ? ' حلويات' : ' Desserts'), icon: 'fas fa-cake-candles' },
+        { id: 'main', name: t.productTypeMain || (appState.currentLanguage === 'ar' ? 'أطباق رئيسية' : 'Main Dishes'), icon: 'fas fa-utensils' },
+        { id: 'drinks', name: t.productTypeDrinks || (appState.currentLanguage === 'ar' ? 'مشروبات' : 'Drinks'), icon: 'fas fa-mug-hot' },
+        { id: 'desserts', name: t.productTypeDesserts || (appState.currentLanguage === 'ar' ? 'حلويات' : 'Desserts'), icon: 'fas fa-cake-candles' },
         { id: 'other', name: t.productTypeOther || (appState.currentLanguage === 'ar' ? 'أخرى' : 'Other'), icon: 'fas fa-box' }
     ];
     
@@ -79,9 +80,7 @@ function renderProductTypeFilter(familyId) {
 
 function filterProductsByType(typeId, familyId) {
     appState.currentProductType = typeId;
-    // Re-render the filter buttons to show active state
     renderProductTypeFilter(familyId);
-    // Re-render products based on new filter
     const family = projectsData.find(f => f.id == familyId);
     if (family) {
         renderProductsByType(family);
@@ -912,14 +911,13 @@ function showDealDetails(familyId, dealId) {
 // ==================== Show Family Products ====================
 // ==================== Show Family Products ====================
 function showFamilyProducts(id, updateHash = true) {
-    // reset product type filter when opening a project
+    // إعادة تعيين الفلتر إلى "الكل" عند فتح المشروع
     appState.currentProductType = 'all';
     hideLoader();
     
     const family = projectsData.find(f => f.id == id);
     if (!family) return;
     
-    // contact info
     const contactInfo = contactsData[id] || {};
     family.whatsapp = contactInfo.whatsapp || null;
     family.phone = contactInfo.phone || null;
@@ -976,7 +974,7 @@ function showFamilyProducts(id, updateHash = true) {
         `;
     }
     
-    // إنشاء حاوية الفلتر إذا لم تكن موجودة (لجميع المشاريع، لكن سنملأها فقط للغذائية)
+    // إنشاء حاوية الفلتر إذا لم تكن موجودة
     if (!document.getElementById('productTypeFilterContainer')) {
         const productsHeader = document.querySelector('#products-page .products-header');
         if (productsHeader) {
@@ -986,9 +984,8 @@ function showFamilyProducts(id, updateHash = true) {
         }
     }
     
-    // ✅ التحقق من أن المشروع من تصنيف "أطعمة ومشروبات" (أو Food & Beverages)
+    // عرض الفلتر فقط للمشاريع الغذائية
     const isFoodOrBeverages = (family.category === 'أطعمة ومشروبات') || (family.categoryEn === 'Food & Beverages');
-    
     if (isFoodOrBeverages) {
         renderProductTypeFilter(family.id);
     } else {
@@ -997,9 +994,9 @@ function showFamilyProducts(id, updateHash = true) {
     }
     
     renderFamilyDeals(family);
-    renderProductsByType(family);   // تستخدم الفلتر الداخلي حسب appState.currentProductType
+    renderProductsByType(family);
     
-    // Contact section (only once)
+    // Contact section
     let contactHtml = '';
     if (family.whatsapp) {
         const whatsappUrl = `https://wa.me/${String(family.whatsapp).replace(/[^0-9]/g, '')}`;
@@ -1037,34 +1034,33 @@ function renderProductsByType(family) {
     let filteredProducts = [...family.products];
     const currentLang = appState.currentLanguage;
     
-    // ✅ التصفية بناءً على type_ar / type_en مع التحقق من وجود القيم
+    // ✅ التصفية باستخدام الحقول الصحيحة (type / typeEn)
     if (appState.currentProductType !== 'all') {
         if (appState.currentProductType === 'main') {
             filteredProducts = filteredProducts.filter(p => {
-                const typeVal = currentLang === 'ar' ? p.type_ar : p.type_en;
+                const typeVal = currentLang === 'ar' ? p.type : p.typeEn;
                 const target = currentLang === 'ar' ? 'أطباق رئيسية' : 'Main Dishes';
                 return typeVal === target;
             });
         } 
         else if (appState.currentProductType === 'drinks') {
             filteredProducts = filteredProducts.filter(p => {
-                const typeVal = currentLang === 'ar' ? p.type_ar : p.type_en;
+                const typeVal = currentLang === 'ar' ? p.type : p.typeEn;
                 const target = currentLang === 'ar' ? 'مشروبات' : 'Drinks';
                 return typeVal === target;
             });
         }
         else if (appState.currentProductType === 'desserts') {
             filteredProducts = filteredProducts.filter(p => {
-                const typeVal = currentLang === 'ar' ? p.type_ar : p.type_en;
+                const typeVal = currentLang === 'ar' ? p.type : p.typeEn;
                 const target = currentLang === 'ar' ? 'حلويات' : 'Desserts';
                 return typeVal === target;
             });
         }
         else if (appState.currentProductType === 'other') {
             filteredProducts = filteredProducts.filter(p => {
-                const typeAr = p.type_ar;
-                const typeEn = p.type_en;
-                // إذا كانت القيم غير موجودة، نعتبرها "أخرى"
+                const typeAr = p.type;
+                const typeEn = p.typeEn;
                 const isMain = (typeAr === 'أطباق رئيسية' || typeEn === 'Main Dishes');
                 const isDrinks = (typeAr === 'مشروبات' || typeEn === 'Drinks');
                 const isDesserts = (typeAr === 'حلويات' || typeEn === 'Desserts');
@@ -1123,7 +1119,6 @@ function getPriceDisplay(product) {
         } else if (minPriceObj) {
             return minPriceObj.text;
         }
-        // إذا لم نجد أي سعر رقمي، نعرض نص عام
     }
     
     // 2. السعر الثابت
