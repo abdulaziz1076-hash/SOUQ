@@ -5,7 +5,6 @@ const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey
 let projectsData = [];
 let contactsData = {};
 let currentVariants = []; 
-let currentProductVariantsForDetail = [];
 
 // ==================== App State ====================
 const appState = {
@@ -892,51 +891,30 @@ function showFamilyProducts(id, updateHash = true) {
         `;
     }
     renderFamilyDeals(family);
-    
-    // ========== تجميع المنتجات حسب الفئة ==========
-    const grouped = {};
-    family.products.forEach(product => {
-        let catKey = appState.currentLanguage === 'ar' ? product.category : product.categoryEn;
-        if (!catKey || catKey === 'null') {
-            catKey = appState.currentLanguage === 'ar' ? 'منتجات' : 'Products';
-        }
-        if (!grouped[catKey]) grouped[catKey] = [];
-        grouped[catKey].push(product);
-    });
-    
-    let productsHtml = '';
-    for (const [categoryName, productsList] of Object.entries(grouped)) {
-        productsHtml += `
-            <div class="category-group">
-                <h3 class="product-category-title">${escapeHtml(categoryName)}</h3>
-                <div class="products-grid">
-        `;
-        productsList.forEach(p => {
+    const productsGrid = document.getElementById('productsGrid');
+    if (productsGrid) {
+        productsGrid.innerHTML = family.products.map(p => {
             const productName = appState.currentLanguage === 'ar' ? p.name : p.nameEn;
             const productDesc = appState.currentLanguage === 'ar' ? p.description : p.descriptionEn;
+            const productCategory = appState.currentLanguage === 'ar' ? p.category : p.categoryEn;
+            const tCat = translations[appState.currentLanguage].categories;
+            const categoryDisplay = tCat[p.category] || productCategory;
             const isFav = isFavorite(p.id, 'product');
             const priceText = getPriceDisplay(p);
             const priceHtml = priceText ? `<div class="product-price">${priceText}</div>` : '';
-            productsHtml += `
+            return `
                 <div class="product-card ${isFav ? 'favorite-active' : ''}" data-product-id="${p.id}" onclick="navigateTo('/product/${family.id}/${p.id}')">
                     <div class="product-image"><img src="${p.mainImage || p.image}" alt="${productName}" loading="lazy"></div>
                     <div class="product-content">
                         <h3 class="product-name">${productName}</h3>
-                        <div class="product-description">${productDesc || ''}</div>
+                        <div class="product-description">${productDesc}</div>
                         ${priceHtml}
+                        <div class="product-category">${categoryDisplay}</div>
                     </div>
                 </div>
             `;
-        });
-        productsHtml += `</div></div>`;
+        }).join('');
     }
-    
-    const productsGrid = document.getElementById('productsGrid');
-    if (productsGrid) {
-        productsGrid.innerHTML = productsHtml || `<div class="empty-message">${appState.currentLanguage === 'ar' ? 'لا توجد منتجات' : 'No products'}</div>`;
-    }
-    
-    // باقي الكود (جهات الاتصال) كما هو دون تغيير
     let contactHtml = '';
     if (family.whatsapp) {
         const whatsappUrl = `https://wa.me/${String(family.whatsapp).replace(/[^0-9]/g, '')}`;
@@ -984,6 +962,7 @@ function getPriceDisplay(product) {
     return price;
 }
 
+// ==================== Show Product Detail ====================
 async function showProductDetail(familyId, productId, updateHash = true) {
     hideLoader();
     const family = projectsData.find(f => f.id == familyId);
@@ -1055,7 +1034,6 @@ async function showProductDetail(familyId, productId, updateHash = true) {
 
     const isFav = isFavorite(product.id, 'product');
 
-    // ========== جلب المتغيرات ==========
     const { data: variants, error: varErr } = await supabase
         .from('product_variants')
         .select('*')
@@ -1090,8 +1068,8 @@ async function showProductDetail(familyId, productId, updateHash = true) {
                 <h3 class="product-details-title"><i class="fas fa-list-ul"></i> ${t.variantsTitle || 'الخيارات'}</h3>
                 <div class="variants-selector" id="variantsSelector">
                     ${currentVariants.map(v => `
-                        <label class="variant-option ${v.id === (defaultVariant?.id || '') ? 'active' : ''}" onclick="window.selectVariant(event, '${v.id}')">
-                            <input type="radio" name="variant" value="${v.id}" ${v.id === (defaultVariant?.id || '') ? 'checked' : ''} hidden>
+                        <label class="variant-option ${v.id === defaultVariant.id ? 'active' : ''}" onclick="window.selectVariant(event, '${v.id}')">
+                            <input type="radio" name="variant" value="${v.id}" ${v.id === defaultVariant.id ? 'checked' : ''} hidden>
                             <span class="variant-label">${appState.currentLanguage === 'ar' ? v.label_ar : v.label_en}</span>
                             <span class="variant-price">${appState.currentLanguage === 'ar' ? v.price_ar : v.price_en}</span>
                         </label>
@@ -1099,7 +1077,7 @@ async function showProductDetail(familyId, productId, updateHash = true) {
                 </div>
             </div>
             ` : ''}
-            <p class="product-detail-description">${productDesc || ''}</p>
+            <p class="product-detail-description">${productDesc}</p>
             ${specsHtml}
         </div>
         <div class="seller-info-card">
@@ -1125,6 +1103,7 @@ async function showProductDetail(familyId, productId, updateHash = true) {
         }, 50);
     });
 }
+
 // ==================== Variant Selector ====================
 window.selectVariant = (event, variantId) => {
     event.stopPropagation();
@@ -1661,31 +1640,31 @@ async function submitFeedback(event) {
 }
 
 // ==================== Analytics Tracking ====================
-async function trackPageView() {
+function trackPageView() {
+    const supabaseUrl = "https://xyepcwptfihnztgghimx.supabase.co";
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5ZXBjd3B0Zmlobnp0Z2doaW14Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0ODA2OTcsImV4cCI6MjA5MjA1NjY5N30.SZvZjWpih1JiUlv24xLhNwjTvzo9RNsrTiI9fchWldE";
     let device = 'Desktop';
     const ua = navigator.userAgent;
     if (/Mobile|Android|iPhone|iPad|iPod/i.test(ua)) device = 'Mobile';
     else if (/Tablet/i.test(ua)) device = 'Tablet';
     
-    try {
-        await supabase.from('analytics_events').insert([{
+    fetch(`${supabaseUrl}/rest/v1/analytics_events`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'apikey': supabaseKey,
+            'Authorization': `Bearer ${supabaseKey}`
+        },
+        body: JSON.stringify({
             page: window.location.pathname + window.location.hash,
             referrer: document.referrer || 'direct',
             device: device,
             user_agent: ua.slice(0, 200)
-        }]);
-    } catch(e) { console.warn("Tracking error:", e); }
+        })
+    }).catch(e => console.warn("Tracking error:", e));
 }
 
 window.addEventListener('load', () => setTimeout(trackPageView, 100));
 window.addEventListener('hashchange', () => setTimeout(trackPageView, 100));
 
-function escapeHtml(str) {
-    if (!str) return '';
-    return str.replace(/[&<>]/g, function(m) {
-        if (m === '&') return '&amp;';
-        if (m === '<') return '&lt;';
-        if (m === '>') return '&gt;';
-        return m;
-    });
-}
+// تم إزالة تكرار مستمع submitFeedback في نهاية الملف
