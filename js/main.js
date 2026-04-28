@@ -1777,6 +1777,8 @@ window.changeMainImage = changeMainImage;
 window.openFeedbackModal = openFeedbackModal;
 window.closeFeedbackModal = closeFeedbackModal;
 window.submitFeedback = submitFeedback;
+window.filterProductsByType = filterProductsByType;
+
 
 // ==================== Feedback Modal Functions ====================
 function openFeedbackModal(projectId, projectName) {
