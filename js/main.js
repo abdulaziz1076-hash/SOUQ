@@ -800,7 +800,15 @@ function renderFamilies() {
             });
         }
     }
-    const sortedProjects = [...filtered].sort((a, b) => (a.is_paid && !b.is_paid) ? -1 : (!a.is_paid && b.is_paid) ? 1 : 0);
+    const sortedProjects = [...filtered].sort((a, b) => {
+    // أولاً حسب display_order (الأصغر أولاً)
+    if (a.display_order !== b.display_order) {
+        return (a.display_order ?? 0) - (b.display_order ?? 0);
+    }
+    // ثم حسب is_paid (المدفوع أولاً)
+    if (a.is_paid !== b.is_paid) return a.is_paid ? -1 : 1;
+    return 0;
+});
     const grid = document.getElementById('familiesGrid');
     if (sortedProjects.length === 0) {
         grid.innerHTML = `<div style="grid-column: span 2; text-align: center; padding: 30px;">${t.noProjects}</div>`;
