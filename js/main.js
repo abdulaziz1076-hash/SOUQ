@@ -1862,27 +1862,59 @@ async function submitFeedback(event) {
 
 // ==================== Analytics Tracking ====================
 function trackPageView() {
-    const supabaseUrl = "https://xyepcwptfihnztgghimx.supabase.co";
-    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5ZXBjd3B0Zmlobnp0Z2doaW14Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0ODA2OTcsImV4cCI6MjA5MjA1NjY5N30.SZvZjWpih1JiUlv24xLhNwjTvzo9RNsrTiI9fchWldE";
-    let device = 'Desktop';
-    const ua = navigator.userAgent;
-    if (/Mobile|Android|iPhone|iPad|iPod/i.test(ua)) device = 'Mobile';
-    else if (/Tablet/i.test(ua)) device = 'Tablet';
-    
-    fetch(`${supabaseUrl}/rest/v1/analytics_events`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'apikey': supabaseKey,
-            'Authorization': `Bearer ${supabaseKey}`
-        },
-        body: JSON.stringify({
-            page: window.location.pathname + window.location.hash,
-            referrer: document.referrer || 'direct',
-            device: device,
-            user_agent: ua.slice(0, 200)
-        })
-    }).catch(e => console.warn("Tracking error:", e));
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'page_view', {
+            page_title: document.title,
+            page_location: window.location.href,
+            page_path: window.location.pathname + window.location.hash
+        });
+    } else {
+        console.warn("GA4 not loaded yet");
+    }
+}
+
+// تتبع عرض منتج (view_item)
+function trackViewItem(product, family) {
+    if (typeof gtag === 'undefined') return;
+    const price = parseFloat(product.price_ar?.replace(/[^0-9.-]/g, '')) || 
+                  parseFloat(product.price_en?.replace(/[^0-9.-]/g, '')) || 0;
+    gtag('event', 'view_item', {
+        currency: 'AED',
+        value: price,
+        items: [{
+            item_id: product.id,
+            item_name: product.name,
+            item_category: product.category_ar || product.category,
+            affiliation: family.name
+        }]
+    });
+}
+
+// تتبع بدء التواصل (contact)
+function trackContact(method, projectName) {
+    if (typeof gtag === 'undefined') return;
+    gtag('event', 'contact', {
+        event_category: 'engagement',
+        event_label: method,
+        project_name: projectName
+    });
+}
+
+// تتبع بدء عملية الشراء (begin_checkout)
+function trackBeginCheckout(product, family) {
+    if (typeof gtag === 'undefined') return;
+    const price = parseFloat(product.price_ar?.replace(/[^0-9.-]/g, '')) || 
+                  parseFloat(product.price_en?.replace(/[^0-9.-]/g, '')) || 0;
+    gtag('event', 'begin_checkout', {
+        currency: 'AED',
+        value: price,
+        items: [{
+            item_id: product.id,
+            item_name: product.name,
+            item_category: product.category_ar || product.category,
+            item_brand: family.name
+        }]
+    });
 }
 
 
