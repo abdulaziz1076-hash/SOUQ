@@ -473,6 +473,23 @@ async function loadStats() {
     `;
 }
 
+// ================= دوال إعادة الترتيب (لحل مشكلة التجزئة) =================
+async function reorderProjects() {
+    const { data: all } = await supabase.from('projects').select('id').order('display_order', { ascending: true, nullsFirst: false });
+    if (!all) return;
+    for (let i = 0; i < all.length; i++) {
+        await supabase.from('projects').update({ display_order: i + 1 }).eq('id', all[i].id);
+    }
+}
+
+async function reorderProducts(projectId) {
+    const { data: all } = await supabase.from('products').select('id').eq('project_id', projectId).order('display_order', { ascending: true, nullsFirst: false });
+    if (!all) return;
+    for (let i = 0; i < all.length; i++) {
+        await supabase.from('products').update({ display_order: i + 1 }).eq('id', all[i].id);
+    }
+}
+
 // ------------------- المشاريع مع خيارات الترتيب -------------------
 async function loadProjects(page = 1) {
     currentProjectsPage = page;
@@ -514,17 +531,19 @@ async function loadProjects(page = 1) {
     paginationHtml += '</div>';
     document.getElementById('projectsPagination').innerHTML = totalPages > 1 ? paginationHtml : '';
 }
+
 window.moveProject = async (id, direction) => {
-    // جلب جميع المشاريع مرتبة
     const { data: all } = await supabase.from('projects').select('id, display_order').order('display_order', { ascending: true, nullsFirst: false });
     if (!all || all.length < 2) return;
     const idx = all.findIndex(p => p.id === id);
-    if ((direction === 'up' && idx === 0) || (direction === 'down' && idx === all.length-1)) return;
-    const otherIdx = direction === 'up' ? idx-1 : idx+1;
-    const currentOrder = all[idx].display_order ?? idx;
-    const otherOrder = all[otherIdx].display_order ?? otherIdx;
-    await supabase.from('projects').update({ display_order: otherOrder }).eq('id', id);
-    await supabase.from('projects').update({ display_order: currentOrder }).eq('id', all[otherIdx].id);
+    if ((direction === 'up' && idx === 0) || (direction === 'down' && idx === all.length - 1)) return;
+    const otherIdx = direction === 'up' ? idx - 1 : idx + 1;
+    // مبادلة القيم
+    const temp = all[idx].display_order;
+    await supabase.from('projects').update({ display_order: all[otherIdx].display_order }).eq('id', all[idx].id);
+    await supabase.from('projects').update({ display_order: temp }).eq('id', all[otherIdx].id);
+    // إعادة ترتيب كامل لضمان تسلسل 1,2,3...
+    await reorderProjects();
     loadProjects(currentProjectsPage);
     showToast('تم تحديث الترتيب');
 };
@@ -584,18 +603,19 @@ async function loadProducts() {
     html += `</tbody></table>`;
     document.getElementById('productsTableContainer').innerHTML = html;
 }
+
 window.moveProduct = async (id, direction) => {
     const projectId = document.getElementById('productProjectFilter').value;
     if (!projectId) return;
-    const { data: all } = await supabase.from('products').select('id, display_order').eq('project_id', projectId).order('display_order', { ascending: true });
+    const { data: all } = await supabase.from('products').select('id, display_order').eq('project_id', projectId).order('display_order', { ascending: true, nullsFirst: false });
     if (!all || all.length < 2) return;
     const idx = all.findIndex(p => p.id === id);
-    if ((direction === 'up' && idx === 0) || (direction === 'down' && idx === all.length-1)) return;
-    const otherIdx = direction === 'up' ? idx-1 : idx+1;
-    const currentOrder = all[idx].display_order ?? idx;
-    const otherOrder = all[otherIdx].display_order ?? otherIdx;
-    await supabase.from('products').update({ display_order: otherOrder }).eq('id', id);
-    await supabase.from('products').update({ display_order: currentOrder }).eq('id', all[otherIdx].id);
+    if ((direction === 'up' && idx === 0) || (direction === 'down' && idx === all.length - 1)) return;
+    const otherIdx = direction === 'up' ? idx - 1 : idx + 1;
+    const temp = all[idx].display_order;
+    await supabase.from('products').update({ display_order: all[otherIdx].display_order }).eq('id', all[idx].id);
+    await supabase.from('products').update({ display_order: temp }).eq('id', all[otherIdx].id);
+    await reorderProducts(projectId);
     loadProducts();
     showToast('تم تحديث ترتيب المنتجات');
 };
@@ -704,7 +724,7 @@ async function saveProduct(e) {
     loadStats();
 }
 
-// ------------------- باقي الوظائف (مختصرة) -------------------
+// ------------------- باقي الوظائف -------------------
 async function saveProject(e) {
     e.preventDefault();
     const id = document.getElementById('projectId').value;
@@ -726,7 +746,7 @@ async function saveProject(e) {
     if (id) error = (await supabase.from('projects').update(payload).eq('id', id)).error;
     else error = (await supabase.from('projects').insert(payload)).error;
     if (error) showToast(error.message, true);
-    else { showToast('تم حفظ المشروع'); document.getElementById('projectModal').classList.remove('active'); loadProjects(); loadStats(); }
+    else { showToast('تم حفظ المشروع'); document.getElementById('projectModal').classList.remove('active'); loadProjects(); loadStats(); await reorderProjects(); }
 }
 
 async function loadRegistrations() {
@@ -738,7 +758,18 @@ async function loadRegistrations() {
     let html = `<table class="data-table"><thead><tr><th>#</th><th>اسم المشروع</th><th>الإمارة</th><th>واتساب</th><th>الحالة</th><th>تاريخ التسجيل</th><th>إجراءات</th></tr></thead><tbody>`;
     data.forEach(reg => {
         let statusClass = reg.status === 'pending' ? 'badge-pending' : (reg.status === 'approved' ? 'badge-approved' : 'badge-rejected');
-        html += `<tr><td>${reg.id}</td><td>${escapeHtml(reg.project_name)}</td><td>${reg.emirate}</td><td>${reg.whatsapp}</td><td><span class="badge ${statusClass}">${reg.status}</span></td><td>${new Date(reg.created_at).toLocaleString()}</td><td class="action-buttons"><button class="action-btn edit" onclick="window.updateRegStatus(${reg.id}, 'approved')"><i class="fas fa-check-circle"></i></button><button class="action-btn delete" onclick="window.updateRegStatus(${reg.id}, 'rejected')"><i class="fas fa-times-circle"></i></button></td></tr>`;
+        html += `<tr>
+            <td>${reg.id}</td>
+            <td>${escapeHtml(reg.project_name)}</td>
+            <td>${reg.emirate}</td>
+            <td>${reg.whatsapp}</td>
+            <td><span class="badge ${statusClass}">${reg.status}</span></td>
+            <td>${new Date(reg.created_at).toLocaleString()}</td>
+            <td class="action-buttons">
+                <button class="action-btn edit" onclick="window.updateRegStatus(${reg.id}, 'approved')"><i class="fas fa-check-circle"></i></button>
+                <button class="action-btn delete" onclick="window.updateRegStatus(${reg.id}, 'rejected')"><i class="fas fa-times-circle"></i></button>
+            </td>
+        </tr>`;
     });
     html += `</tbody></table>`;
     document.getElementById('registrationsTableContainer').innerHTML = html;
@@ -755,7 +786,15 @@ async function loadDeals() {
     const { data } = await supabase.from('deals').select('*').eq('project_id', projectId);
     let html = `<table class="data-table"><thead><tr><th>ID</th><th>الصورة</th><th>العنوان</th><th>الإجراءات</th></tr></thead><tbody>`;
     (data || []).forEach(d => {
-        html += `<tr><td>${d.id}</td><td>${d.image ? `<img src="${d.image}" class="thumb-preview">` : '-'}</td><td>${escapeHtml(d.title_ar)}</td><td class="action-buttons"><button class="action-btn edit" onclick="window.editDeal('${d.id}')"><i class="fas fa-edit"></i></button><button class="action-btn delete" onclick="window.deleteItem('deals','${d.id}')"><i class="fas fa-trash"></i></button></td></tr>`;
+        html += `<tr>
+            <td>${d.id}</td>
+            <td>${d.image ? `<img src="${d.image}" class="thumb-preview">` : '-'}</td>
+            <td>${escapeHtml(d.title_ar)}</td>
+            <td class="action-buttons">
+                <button class="action-btn edit" onclick="window.editDeal('${d.id}')"><i class="fas fa-edit"></i></button>
+                <button class="action-btn delete" onclick="window.deleteItem('deals','${d.id}')"><i class="fas fa-trash"></i></button>
+            </td>
+        </tr>`;
     });
     document.getElementById('dealsTableContainer').innerHTML = html;
 }
@@ -801,7 +840,8 @@ async function loadContacts() {
     if (!projectId) { document.getElementById('contactsTableContainer').innerHTML = '<p>اختر مشروعاً لعرض بيانات التواصل</p>'; return; }
     let { data } = await supabase.from('contacts').select('*').eq('project_id', projectId);
     const contact = (data && data[0]) || { project_id: projectId };
-    let html = `<div style="display:grid; gap:16px;"><div class="form-row"><label>واتساب</label><input id="editWhatsapp" value="${contact.whatsapp || ''}"></div>
+    let html = `<div style="display:grid; gap:16px;">
+        <div class="form-row"><label>واتساب</label><input id="editWhatsapp" value="${contact.whatsapp || ''}"></div>
         <div class="form-row"><label>هاتف</label><input id="editPhone" value="${contact.phone || ''}"></div>
         <div class="form-row"><label>البريد الإلكتروني</label><input id="editEmail" value="${contact.email || ''}"></div>
         <div class="form-row"><label>إنستغرام</label><input id="editInstagram" value="${contact.instagram || ''}"></div>
@@ -811,10 +851,23 @@ async function loadContacts() {
         <div class="form-row"><label>فيسبوك</label><input id="editFacebook" value="${contact.facebook || ''}"></div>
         <div class="form-row"><label>تويتر / X</label><input id="editTwitter" value="${contact.twitter || ''}"></div>
         <div class="form-row"><label>الموقع الإلكتروني</label><input id="editWebsite" value="${contact.website || ''}"></div>
-        <button id="saveContactBtn" class="btn-save">حفظ التغييرات</button></div>`;
+        <button id="saveContactBtn" class="btn-save">حفظ التغييرات</button>
+    </div>`;
     document.getElementById('contactsTableContainer').innerHTML = html;
     document.getElementById('saveContactBtn').onclick = async () => {
-        await supabase.from('contacts').upsert({ project_id: parseInt(projectId), whatsapp: document.getElementById('editWhatsapp').value, phone: document.getElementById('editPhone').value, email: document.getElementById('editEmail').value, instagram: document.getElementById('editInstagram').value, telegram: document.getElementById('editTelegram').value, snapchat: document.getElementById('editSnapchat').value, tiktok: document.getElementById('editTiktok').value, facebook: document.getElementById('editFacebook').value, twitter: document.getElementById('editTwitter').value, website: document.getElementById('editWebsite').value });
+        await supabase.from('contacts').upsert({ 
+            project_id: parseInt(projectId), 
+            whatsapp: document.getElementById('editWhatsapp').value,
+            phone: document.getElementById('editPhone').value,
+            email: document.getElementById('editEmail').value,
+            instagram: document.getElementById('editInstagram').value,
+            telegram: document.getElementById('editTelegram').value,
+            snapchat: document.getElementById('editSnapchat').value,
+            tiktok: document.getElementById('editTiktok').value,
+            facebook: document.getElementById('editFacebook').value,
+            twitter: document.getElementById('editTwitter').value,
+            website: document.getElementById('editWebsite').value
+        });
         showToast('تم حفظ بيانات التواصل');
     };
 }
@@ -827,7 +880,20 @@ async function loadFeedbacks() {
     let html = `<table class="data-table"><thead><tr><th>ID</th><th>النوع</th><th>الرسالة</th><th>البريد</th><th>الحالة</th><th>التاريخ</th><th>تغيير الحالة</th></tr></thead><tbody>`;
     data.forEach(f => {
         let badgeClass = f.status === 'pending' ? 'badge-pending' : (f.status === 'resolved' ? 'badge-resolved' : 'badge-reviewed');
-        html += `<tr><td>${f.id}</td><td>${f.type}</td><td>${escapeHtml(f.message)}</td><td>${f.reporter_email || '-'}</td><td><span class="badge ${badgeClass}">${f.status}</span></td><td>${new Date(f.created_at).toLocaleString()}</td><td><select onchange="window.updateFeedbackStatus(${f.id}, this.value)" style="padding:6px 12px; border-radius:30px;"><option ${f.status==='pending'?'selected':''} value="pending">معلق</option><option ${f.status==='reviewed'?'selected':''} value="reviewed">مراجَع</option><option ${f.status==='resolved'?'selected':''} value="resolved">محلول</option><option ${f.status==='rejected'?'selected':''} value="rejected">مرفوض</option></select></td></tr>`;
+        html += `<tr>
+            <td>${f.id}</td>
+            <td>${f.type}</td>
+            <td>${escapeHtml(f.message)}</td>
+            <td>${f.reporter_email || '-'}</td>
+            <td><span class="badge ${badgeClass}">${f.status}</span></td>
+            <td>${new Date(f.created_at).toLocaleString()}</td>
+            <td><select onchange="window.updateFeedbackStatus(${f.id}, this.value)" style="padding:6px 12px; border-radius:30px;">
+                <option ${f.status==='pending'?'selected':''} value="pending">معلق</option>
+                <option ${f.status==='reviewed'?'selected':''} value="reviewed">مراجَع</option>
+                <option ${f.status==='resolved'?'selected':''} value="resolved">محلول</option>
+                <option ${f.status==='rejected'?'selected':''} value="rejected">مرفوض</option>
+            </select></td>
+        </tr>`;
     });
     html += `</tbody></table>`;
     document.getElementById('feedbacksTableContainer').innerHTML = html;
@@ -899,6 +965,12 @@ async function checkSession() {
         await loadContacts();
         await loadFeedbacks();
         attachTabs();
+        // إعادة ترتيب أولي لضمان تسلسل صحيح
+        await reorderProjects();
+        const { data: allProjects } = await supabase.from('projects').select('id');
+        for (let p of allProjects) {
+            await reorderProducts(p.id);
+        }
     }
 }
 document.getElementById('addProjectBtn').onclick = () => { document.getElementById('projectForm').reset(); document.getElementById('projectId').value = ''; document.getElementById('projectModal').classList.add('active'); };
