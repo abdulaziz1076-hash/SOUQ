@@ -128,26 +128,28 @@ async function loadProjectsFromSupabase() {
 
         // 4. تحويل البيانات مع إضافة المتغيرات لكل منتج
         projectsData = projects.map(project => {
-            const products = (project.products || []).map(p => ({
-                id: p.id,
-                name: p.name_ar,
-                nameEn: p.name_en,
-                description: p.description_ar,
-                descriptionEn: p.description_en,
-                longDescription: p.long_description_ar,
-                longDescriptionEn: p.long_description_en,
-                mainImage: p.main_image,
-                images: p.images || [],
-                details: p.details_ar || [],
-                detailsEn: p.details_en || [],
-                category: p.category_ar,
-                categoryEn: p.category_en,
-                type: p.type_ar,
-                typeEn: p.type_en,
-                price_ar: p.price_ar,
-                price_en: p.price_en,
-                variants: variantsByProduct[p.id] || []  
-            }));
+            const products = (project.products || [])
+                .sort((a, b) => (a.display_order ?? 0) - (b.display_order ?? 0))
+                .map(p => ({
+                    id: p.id,
+                    name: p.name_ar,
+                    nameEn: p.name_en,
+                    description: p.description_ar,
+                    descriptionEn: p.description_en,
+                    longDescription: p.long_description_ar,
+                    longDescriptionEn: p.long_description_en,
+                    mainImage: p.main_image,
+                    images: p.images || [],
+                    details: p.details_ar || [],
+                    detailsEn: p.details_en || [],
+                    category: p.category_ar,
+                    categoryEn: p.category_en,
+                    type: p.type_ar,
+                    typeEn: p.type_en,
+                    price_ar: p.price_ar,
+                    price_en: p.price_en,
+                    variants: variantsByProduct[p.id] || []
+                }));
 
             return {
                 id: project.id,
