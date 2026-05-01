@@ -166,6 +166,7 @@ async function loadProjectsFromSupabase() {
                 coverage: project.coverage,
                 category: project.category_ar,
                 categoryEn: project.category_en,
+                display_order: project.display_order ?? 0,
                 products: products,
                 deals: (project.deals || []).map(d => ({
                     id: d.id,
