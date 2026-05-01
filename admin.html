@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>لوحة تحكم المشرف | سوق المشاريع (نسخة متطورة)</title>
+    
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P5YLDRQQGE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-P5YLDRQQGE');
+    </script>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -45,7 +55,7 @@
         }
         .logout-btn:hover { background: #c53030; transform: translateY(-2px); }
         
-        /* إحصائيات بسيطة */
+        /* البطاقات الإحصائية */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -178,8 +188,6 @@
         .action-btn.edit:hover { background: #c9e6f5; transform: scale(1.05); }
         .action-btn.delete { color: #e53e3e; background: #fee9e9; }
         .action-btn.delete:hover { background: #fccaca; transform: scale(1.05); }
-        .action-btn.move-up, .action-btn.move-down { color: #0a2e25; background: #e9f0f5; }
-        .action-btn.move-up:hover, .action-btn.move-down:hover { background: #D4AF37; transform: scale(1.05); }
         
         /* النماذج المنبثقة */
         .modal {
@@ -398,6 +406,10 @@
                 <div class="form-row"><label>التفاصيل (إنجليزي)</label><textarea id="productDetailsEn" rows="3"></textarea></div>
                 <div class="form-row"><label>نوع المنتج (عربي)</label><select id="productTypeAr"><option value="">-- اختر --</option><option value="أطباق رئيسية">أطباق رئيسية</option><option value="مشروبات">مشروبات</option><option value="حلويات">حلويات</option></select></div>
                 <div class="form-row"><label>نوع المنتج (إنجليزي)</label><select id="productTypeEn"><option value="">-- Select --</option><option value="Main Dishes">Main Dishes</option><option value="Drinks">Drinks</option><option value="Desserts">Desserts</option></select></div>
+                <!-- حقول التصنيف الجديدة -->
+                <div class="form-row"><label>تصنيف المنتج (عربي)</label><select id="productCategoryAr"></select></div>
+                <div class="form-row"><label>تصنيف المنتج (إنجليزي)</label><select id="productCategoryEn"></select></div>
+                <!-- نهاية حقول التصنيف -->
                 <div class="form-row"><label>السعر (عربي)</label><input id="productPriceAr" placeholder="مثل: 50 درهم"></div>
                 <div class="form-row"><label>السعر (إنجليزي)</label><input id="productPriceEn" placeholder="e.g. 50 AED"></div>
                 <div class="form-row"><label>خيارات المنتج (مثل: كبير/صغير)</label><div id="variantsContainer"></div><button type="button" id="addVariantBtn" class="btn-outline" style="margin-top:10px;"><i class="fas fa-plus"></i> إضافة خيار</button></div>
@@ -439,7 +451,7 @@ let currentProjectsPage = 1;
 let projectsTotal = 0;
 let currentVariants = [];
 
-// قائمة التصنيفات المتاحة (للقوائم المنسدلة)
+// قائمة التصنيفات المتاحة (مطابقة للقوائم في الموقع)
 const CATEGORIES_AR = [
     "أطعمة ومشروبات", "الرقميات", "روائح وعطور", "عناية", "حلويات", 
     "تجميل", "ملابس", "يدويات", "هدايا", "عطارة", "فنون", "نباتات", "ترفيه"
@@ -458,6 +470,7 @@ function showToast(msg, isErr = false) {
     setTimeout(() => toast.remove(), 3000);
 }
 
+// ==================== الإحصائيات ====================
 async function loadStats() {
     const { count: projectsCount } = await supabase.from('projects').select('*', { count: 'exact', head: true });
     const { count: productsCount } = await supabase.from('products').select('*', { count: 'exact', head: true });
@@ -473,24 +486,7 @@ async function loadStats() {
     `;
 }
 
-// ================= دوال إعادة الترتيب (لحل مشكلة التجزئة) =================
-async function reorderProjects() {
-    const { data: all } = await supabase.from('projects').select('id').order('display_order', { ascending: true, nullsFirst: false });
-    if (!all) return;
-    for (let i = 0; i < all.length; i++) {
-        await supabase.from('projects').update({ display_order: i + 1 }).eq('id', all[i].id);
-    }
-}
-
-async function reorderProducts(projectId) {
-    const { data: all } = await supabase.from('products').select('id').eq('project_id', projectId).order('display_order', { ascending: true, nullsFirst: false });
-    if (!all) return;
-    for (let i = 0; i < all.length; i++) {
-        await supabase.from('products').update({ display_order: i + 1 }).eq('id', all[i].id);
-    }
-}
-
-// ------------------- المشاريع مع خيارات الترتيب -------------------
+// ==================== المشاريع ====================
 async function loadProjects(page = 1) {
     currentProjectsPage = page;
     let query = supabase.from('projects').select('*', { count: 'exact' }).order('display_order', { ascending: true, nullsFirst: false }).order('id', { ascending: false }).range((page-1)*10, page*10-1);
@@ -503,19 +499,13 @@ async function loadProjects(page = 1) {
     const { data, error, count } = await query;
     projectsTotal = count || 0;
     if (error) { showToast(error.message, true); return; }
-    let html = `<table class="data-table"><thead><tr><th>الترتيب</th><th>ID</th><th>الصورة</th><th>الاسم (عربي)</th><th>التصنيف</th><th>الإمارة</th><th>الحالة</th><th>الإجراءات</th></tr></thead><tbody>`;
+    let html = `<table class="data-table"><thead><tr><th>ID</th><th>الصورة</th><th>الاسم (عربي)</th><th>التصنيف</th><th>الإمارة</th><th>الحالة</th><th>الإجراءات</th></tr></thead><tbody>`;
     (data || []).forEach(p => {
         let statusBadge = p.status === 'approved' ? 'badge-approved' : (p.status === 'rejected' ? 'badge-rejected' : 'badge-pending');
         html += `<tr>
-            <td style="white-space:nowrap">
-                <button class="action-btn move-up" onclick="window.moveProject(${p.id}, 'up')"><i class="fas fa-arrow-up"></i></button>
-                <button class="action-btn move-down" onclick="window.moveProject(${p.id}, 'down')"><i class="fas fa-arrow-down"></i></button>
-            </td>
             <td>${p.id}</td>
             <td>${p.image ? `<img src="${p.image}" class="thumb-preview" onclick="window.open('${p.image}')">` : '-'}</td>
-            <td>${escapeHtml(p.name_ar)}</td>
-            <td>${p.category_ar || '-'}</td>
-            <td>${p.emirate}</td>
+            <td>${escapeHtml(p.name_ar)}</td><td>${p.category_ar || '-'}</td><td>${p.emirate}</td>
             <td><span class="badge ${statusBadge}">${p.status === 'approved' ? 'موافق' : (p.status === 'rejected' ? 'مرفوض' : 'معلق')}</span></td>
             <td class="action-buttons">
                 <button class="action-btn edit" onclick="window.editProject(${p.id})"><i class="fas fa-edit"></i></button>
@@ -531,22 +521,6 @@ async function loadProjects(page = 1) {
     paginationHtml += '</div>';
     document.getElementById('projectsPagination').innerHTML = totalPages > 1 ? paginationHtml : '';
 }
-
-window.moveProject = async (id, direction) => {
-    const { data: all } = await supabase.from('projects').select('id, display_order').order('display_order', { ascending: true, nullsFirst: false });
-    if (!all || all.length < 2) return;
-    const idx = all.findIndex(p => p.id === id);
-    if ((direction === 'up' && idx === 0) || (direction === 'down' && idx === all.length - 1)) return;
-    const otherIdx = direction === 'up' ? idx - 1 : idx + 1;
-    // مبادلة القيم
-    const temp = all[idx].display_order;
-    await supabase.from('projects').update({ display_order: all[otherIdx].display_order }).eq('id', all[idx].id);
-    await supabase.from('projects').update({ display_order: temp }).eq('id', all[otherIdx].id);
-    // إعادة ترتيب كامل لضمان تسلسل 1,2,3...
-    await reorderProjects();
-    loadProjects(currentProjectsPage);
-    showToast('تم تحديث الترتيب');
-};
 
 window.editProject = async (id) => {
     const { data } = await supabase.from('projects').select('*').eq('id', id).single();
@@ -568,7 +542,7 @@ window.editProject = async (id) => {
     }
 };
 
-// ------------------- حذف عام -------------------
+// ==================== حذف عام ====================
 window.deleteItem = async (table, id) => {
     if (confirm('هل أنت متأكد من الحذف؟')) {
         const { error } = await supabase.from(table).delete().eq('id', id);
@@ -577,21 +551,18 @@ window.deleteItem = async (table, id) => {
     }
 };
 
-// ------------------- المنتجات مع ترتيب داخل المشروع -------------------
+// ==================== المنتجات مع إظهار التصنيف وإمكانية تعديله ====================
 async function loadProducts() {
     const projectId = document.getElementById('productProjectFilter').value;
     if (!projectId) { document.getElementById('productsTableContainer').innerHTML = '<p style="padding:20px;">✏️ اختر مشروعاً أولاً من القائمة</p>'; return; }
     const { data } = await supabase.from('products').select('*').eq('project_id', projectId).order('display_order', { ascending: true, nullsFirst: false });
-    let html = `<table class="data-table"><thead><tr><th>الترتيب</th><th>ID</th><th>الصورة</th><th>الاسم (عربي)</th><th>النوع</th><th>السعر</th><th>الإجراءات</th></tr></thead><tbody>`;
+    let html = `<table class="data-table"><thead><tr><th>ID</th><th>الصورة</th><th>الاسم (عربي)</th><th>التصنيف (عربي)</th><th>النوع</th><th>السعر</th><th>الإجراءات</th></td></thead><tbody>`;
     (data || []).forEach(p => {
         html += `<tr>
-            <td style="white-space:nowrap">
-                <button class="action-btn move-up" onclick="window.moveProduct('${p.id}', 'up')"><i class="fas fa-arrow-up"></i></button>
-                <button class="action-btn move-down" onclick="window.moveProduct('${p.id}', 'down')"><i class="fas fa-arrow-down"></i></button>
-            </td>
             <td>${p.id}</td>
             <td>${p.main_image ? `<img src="${p.main_image}" class="thumb-preview">` : '-'}</td>
             <td>${escapeHtml(p.name_ar)}</td>
+            <td>${p.category_ar || '-'}</td>
             <td>${p.type_ar || '-'}</td>
             <td>${p.price_ar || '-'}</td>
             <td class="action-buttons">
@@ -603,22 +574,6 @@ async function loadProducts() {
     html += `</tbody></table>`;
     document.getElementById('productsTableContainer').innerHTML = html;
 }
-
-window.moveProduct = async (id, direction) => {
-    const projectId = document.getElementById('productProjectFilter').value;
-    if (!projectId) return;
-    const { data: all } = await supabase.from('products').select('id, display_order').eq('project_id', projectId).order('display_order', { ascending: true, nullsFirst: false });
-    if (!all || all.length < 2) return;
-    const idx = all.findIndex(p => p.id === id);
-    if ((direction === 'up' && idx === 0) || (direction === 'down' && idx === all.length - 1)) return;
-    const otherIdx = direction === 'up' ? idx - 1 : idx + 1;
-    const temp = all[idx].display_order;
-    await supabase.from('products').update({ display_order: all[otherIdx].display_order }).eq('id', all[idx].id);
-    await supabase.from('products').update({ display_order: temp }).eq('id', all[otherIdx].id);
-    await reorderProducts(projectId);
-    loadProducts();
-    showToast('تم تحديث ترتيب المنتجات');
-};
 
 window.editProduct = async (id) => {
     const { data } = await supabase.from('products').select('*').eq('id', id).single();
@@ -637,6 +592,9 @@ window.editProduct = async (id) => {
         document.getElementById('productDetailsEn').value = (data.details_en || []).join('\n');
         if (document.getElementById('productTypeAr')) document.getElementById('productTypeAr').value = data.type_ar || '';
         if (document.getElementById('productTypeEn')) document.getElementById('productTypeEn').value = data.type_en || '';
+        // تعبئة حقول التصنيف
+        if (document.getElementById('productCategoryAr')) document.getElementById('productCategoryAr').value = data.category_ar || '';
+        if (document.getElementById('productCategoryEn')) document.getElementById('productCategoryEn').value = data.category_en || '';
         document.getElementById('productPriceAr').value = data.price_ar || '';
         document.getElementById('productPriceEn').value = data.price_en || '';
         const { data: variants } = await supabase.from('product_variants').select('*').eq('product_id', id);
@@ -694,6 +652,8 @@ async function saveProduct(e) {
         price_en: document.getElementById('productPriceEn').value,
         type_ar: document.getElementById('productTypeAr').value,
         type_en: document.getElementById('productTypeEn').value,
+        category_ar: document.getElementById('productCategoryAr').value,
+        category_en: document.getElementById('productCategoryEn').value,
         project_id: projectId
     };
     let productId = id;
@@ -724,7 +684,7 @@ async function saveProduct(e) {
     loadStats();
 }
 
-// ------------------- باقي الوظائف -------------------
+// ==================== وظائف أخرى (التسجيلات، العروض، جهات الاتصال، الشكاوى) ====================
 async function saveProject(e) {
     e.preventDefault();
     const id = document.getElementById('projectId').value;
@@ -746,7 +706,7 @@ async function saveProject(e) {
     if (id) error = (await supabase.from('projects').update(payload).eq('id', id)).error;
     else error = (await supabase.from('projects').insert(payload)).error;
     if (error) showToast(error.message, true);
-    else { showToast('تم حفظ المشروع'); document.getElementById('projectModal').classList.remove('active'); loadProjects(); loadStats(); await reorderProjects(); }
+    else { showToast('تم حفظ المشروع'); document.getElementById('projectModal').classList.remove('active'); loadProjects(); loadStats(); }
 }
 
 async function loadRegistrations() {
@@ -907,10 +867,15 @@ window.updateFeedbackStatus = async (id, newStatus) => {
 function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, function(m) { if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m; }); }
 
 function fillCategoryDropdowns() {
-    const selectAr = document.getElementById('projectCategoryAr');
-    const selectEn = document.getElementById('projectCategoryEn');
-    selectAr.innerHTML = '<option value="">-- اختر --</option>' + CATEGORIES_AR.map(c => `<option value="${c}">${c}</option>`).join('');
-    selectEn.innerHTML = '<option value="">-- Select --</option>' + CATEGORIES_EN.map(c => `<option value="${c}">${c}</option>`).join('');
+    const projectCatAr = document.getElementById('projectCategoryAr');
+    const projectCatEn = document.getElementById('projectCategoryEn');
+    if (projectCatAr) projectCatAr.innerHTML = '<option value="">-- اختر --</option>' + CATEGORIES_AR.map(c => `<option value="${c}">${c}</option>`).join('');
+    if (projectCatEn) projectCatEn.innerHTML = '<option value="">-- Select --</option>' + CATEGORIES_EN.map(c => `<option value="${c}">${c}</option>`).join('');
+
+    const prodCatAr = document.getElementById('productCategoryAr');
+    const prodCatEn = document.getElementById('productCategoryEn');
+    if (prodCatAr) prodCatAr.innerHTML = '<option value="">-- اختر --</option>' + CATEGORIES_AR.map(c => `<option value="${c}">${c}</option>`).join('');
+    if (prodCatEn) prodCatEn.innerHTML = '<option value="">-- Select --</option>' + CATEGORIES_EN.map(c => `<option value="${c}">${c}</option>`).join('');
 }
 
 async function initEmirateFilter() {
@@ -965,12 +930,6 @@ async function checkSession() {
         await loadContacts();
         await loadFeedbacks();
         attachTabs();
-        // إعادة ترتيب أولي لضمان تسلسل صحيح
-        await reorderProjects();
-        const { data: allProjects } = await supabase.from('projects').select('id');
-        for (let p of allProjects) {
-            await reorderProducts(p.id);
-        }
     }
 }
 document.getElementById('addProjectBtn').onclick = () => { document.getElementById('projectForm').reset(); document.getElementById('projectId').value = ''; document.getElementById('projectModal').classList.add('active'); };
