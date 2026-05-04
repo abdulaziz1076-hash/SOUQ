@@ -244,49 +244,61 @@
         }
         
         window.checkoutProject = async function(projectGroup) {
-            let customerPhone = prompt(t('enterWhatsapp'), '');
-            if (!customerPhone?.trim()) { alert(t('required')); return; }
-            let raw = customerPhone.replace(/\s/g, '');
-            if (!raw.startsWith('+')) raw = '+' + raw.replace(/^0+/, '');
-            if (!raw.match(/^\+[0-9]{7,15}$/)) { alert(t('invalidWhatsapp')); return; }
-            
-            const contact = await getProjectContact(projectGroup.projectId);
-            if (!contact.value) { alert(currentLang === 'ar' ? 'لا توجد وسيلة تواصل لهذا المشروع' : 'No contact method'); return; }
-            
-            const message = buildMessage(projectGroup, raw);
-            const encodedMsg = encodeURIComponent(message);
-            let url = '';
-            let needCopy = false;
-            
-            if (contact.type === 'whatsapp') {
-                url = `https://wa.me/${contact.value.replace(/[^0-9]/g, '')}?text=${encodedMsg}`;
-            } else if (contact.type === 'instagram') {
-                url = `https://instagram.com/${contact.value.replace('@', '')}`;
-                needCopy = true;
-            } else if (contact.type === 'telegram') {
-                url = `https://t.me/${contact.value.replace('@', '')}?text=${encodedMsg}`;
-            } else if (contact.type === 'snapchat') {
-                url = `https://snapchat.com/add/${contact.value}`;
-                needCopy = true;
-            } else {
-                url = contact.value.startsWith('http') ? contact.value : 'https://' + contact.value;
-                needCopy = true;
-            }
-            
-            if (needCopy) {
-                alert(currentLang === 'ar' ? 'انسخ الرسالة التالية وأرسلها:' : 'Copy the message below:');
-                await navigator.clipboard.writeText(decodeURIComponent(encodedMsg));
-                window.open(url, '_blank');
-            } else {
-                window.open(url, '_blank');
-            }
-            
-            await logOrderForAdmin(projectGroup, raw, calcTotal(projectGroup.items));
-            let cart = getCart();
-            cart = cart.filter(i => i.projectId !== projectGroup.projectId);
-            saveCart(cart);
-            renderCart();
-        };
+    let customerPhone = prompt(t('enterWhatsapp'), '');
+    if (!customerPhone?.trim()) { alert(t('required')); return; }
+    let raw = customerPhone.replace(/\s/g, '');
+    if (!raw.startsWith('+')) raw = '+' + raw.replace(/^0+/, '');
+    if (!raw.match(/^\+[0-9]{7,15}$/)) { alert(t('invalidWhatsapp')); return; }
+    
+    const contact = await getProjectContact(projectGroup.projectId);
+    if (!contact.value) { alert(currentLang === 'ar' ? 'لا توجد وسيلة تواصل لهذا المشروع' : 'No contact method'); return; }
+    
+    const message = buildMessage(projectGroup, raw);
+    const encodedMsg = encodeURIComponent(message);
+    let url = '';
+    let needCopy = false;
+    
+    if (contact.type === 'whatsapp') {
+        url = `https://wa.me/${contact.value.replace(/[^0-9]/g, '')}?text=${encodedMsg}`;
+    } else if (contact.type === 'instagram') {
+        url = `https://instagram.com/${contact.value.replace('@', '')}`;
+        needCopy = true;
+    } else if (contact.type === 'telegram') {
+        url = `https://t.me/${contact.value.replace('@', '')}?text=${encodedMsg}`;
+    } else if (contact.type === 'snapchat') {
+        url = `https://snapchat.com/add/${contact.value}`;
+        needCopy = true;
+    } else {
+        url = contact.value.startsWith('http') ? contact.value : 'https://' + contact.value;
+        needCopy = true;
+    }
+    
+    if (needCopy) {
+        alert(currentLang === 'ar' ? 'انسخ الرسالة التالية وأرسلها:' : 'Copy the message below:');
+        await navigator.clipboard.writeText(decodeURIComponent(encodedMsg));
+        window.open(url, '_blank');
+    } else {
+        window.open(url, '_blank');
+    }
+    
+    await logOrderForAdmin(projectGroup, raw, calcTotal(projectGroup.items));
+    
+    // ✅ تصحيح: مقارنة projectId كـ String لمنع الحذف الخاطئ
+    let cart = getCart();
+    const projectIdStr = String(projectGroup.projectId);
+    const newCart = cart.filter(item => String(item.projectId) !== projectIdStr);
+    saveCart(newCart);
+    
+    // ✅ إعادة عرض السلة بعد الحذف
+    renderCart();
+    
+    // ✅ إشعار المستخدم بأن السلة تم تحديثها (وليس فارغة بالكامل)
+    if (newCart.length === 0) {
+        alert(currentLang === 'ar' ? 'سلتك الآن فارغة. يمكنك إضافة منتجات جديدة.' : 'Your cart is now empty. You can add new products.');
+    } else {
+        alert(currentLang === 'ar' ? 'تم إرسال طلبك بنجاح. تم حذف منتجات هذا المشروع من سلتك، وبقيت المنتجات الأخرى.' : 'Your order has been sent. Items from this project have been removed from your cart, other items remain.');
+    }
+};
         
         async function renderCart() {
             const cart = getCart();
