@@ -5067,3 +5067,55 @@ body.en-mode .product-detail-info .product-price-display:empty::before {
     font-weight: 800;
     color: var(--secondary);
 }
+/* أزرار إضافة إلى السلة */
+.add-to-cart-btn, .add-to-cart-detail {
+    background: var(--secondary);
+    color: var(--primary-dark);
+    border: none;
+    padding: 8px 12px;
+    border-radius: 40px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 8px;
+    width: 100%;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+.add-to-cart-btn:hover, .add-to-cart-detail:hover {
+    background: var(--secondary-light);
+    transform: translateY(-2px);
+}
+.cart-icon {
+    position: relative;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.cart-icon i { font-size: 18px; color: white; }
+.cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #C41E3A;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+[dir="ltr"] .cart-badge { right: auto; left: -5px; }
