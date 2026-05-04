@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlTag">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>سلة التسوق - سوق المشاريع</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=El+Messiri:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .cart-vendor-card {
+            background: white;
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 24px;
+            border: 1px solid var(--light-gray);
+            box-shadow: var(--card-shadow);
+        }
+        .vendor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        .vendor-name {
+            font-family: 'El Messiri', serif;
+            font-size: 1.3rem;
+            color: var(--primary-dark);
+            font-weight: 700;
+        }
+        .cart-items-table {
+            width: 100%;
+            font-size: 14px;
+        }
+        .cart-items-table td {
+            padding: 10px 4px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        .quantity-input {
+            width: 65px;
+            padding: 6px;
+            border-radius: 30px;
+            border: 1px solid var(--light-gray);
+            text-align: center;
+            font-family: inherit;
+        }
+        .vendor-total {
+            text-align: left;
+            font-weight: 800;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 2px dashed var(--secondary);
+            font-size: 18px;
+            color: var(--primary-dark);
+        }
+        .contact-checkout {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+        .contact-checkout:hover { transform: translateY(-2px); filter: brightness(1.05); }
+        .contact-checkout.instagram-bg { background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D); }
+        .contact-checkout.telegram-bg { background: #0088cc; }
+        .contact-checkout.snapchat-bg { background: #FFFC00; color: #000; }
+        .contact-checkout.tiktok-bg { background: #000; }
+        .contact-checkout.facebook-bg { background: #4267B2; }
+        .contact-checkout.website-bg { background: #3656e4; }
+        .contact-checkout.x-bg { background: #000; }
+        .cart-empty {
+            text-align: center;
+            padding: 50px 20px;
+            background: white;
+            border-radius: 28px;
+            border: 1px solid var(--light-gray);
+        }
+        .cart-empty i { font-size: 60px; color: var(--light-gray); margin-bottom: 15px; }
+        .delete-icon { color: var(--danger); cursor: pointer; font-size: 18px; transition: 0.2s; }
+        .delete-icon:hover { transform: scale(1.1); }
+        @media (max-width: 600px) {
+            .cart-items-table td { font-size: 12px; }
+            .quantity-input { width: 50px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    <div class="page-header">
+        <h1 id="cartPageTitle">سلة التسوق</h1>
+        <p id="cartPageSubtitle">مراجعة المنتجات وإتمام الطلب</p>
+    </div>
+    <div class="container" id="cartContainer" style="margin-bottom: 40px;"></div>
+    <div id="footer-placeholder"></div>
+
+    <script type="module">
+        import { APP_CONFIG } from './config.js';
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+        const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
+        
+        const translations = {
+            ar: {
+                cartTitle: "سلة التسوق", cartSubtitle: "مراجعة المنتجات وإتمام الطلب",
+                total: "المجموع", checkout: "إتمام الطلب عبر", emptyCart: "سلتك فارغة",
+                backShop: "العودة للتسوق", enterWhatsapp: "أدخل رقم واتسابك للتواصل مع البائع",
+                invalidWhatsapp: "رقم واتساب غير صحيح", required: "رقم الواتساب مطلوب",
+                notePrefix: "يرجى التواصل معي لتحديد طريقة الدفع والشحن",
+                orderItem: "طلب جديد من سوق المشاريع", thankYou: "شكراً"
+            },
+            en: {
+                cartTitle: "Shopping Cart", cartSubtitle: "Review products and complete order",
+                total: "Total", checkout: "Complete order via", emptyCart: "Your cart is empty",
+                backShop: "Back to shop", enterWhatsapp: "Enter your WhatsApp number for the seller",
+                invalidWhatsapp: "Invalid WhatsApp number", required: "WhatsApp number is required",
+                notePrefix: "Please advise on payment method and delivery",
+                orderItem: "New order from Souq Almasharie", thankYou: "Thank you"
+            }
+        };
+        
+        let currentLang = localStorage.getItem('projectSouqLang') || 'ar';
+        function t(key) { return translations[currentLang][key] || key; }
+        
+        function updateStaticTexts() {
+            document.getElementById('cartPageTitle').innerText = t('cartTitle');
+            document.getElementById('cartPageSubtitle').innerText = t('cartSubtitle');
+        }
+        
+        async function loadComponents() {
+            const headerRes = await fetch('components/header.html');
+            const footerRes = await fetch('components/footer.html');
+            document.getElementById('header-placeholder').innerHTML = await headerRes.text();
+            document.getElementById('footer-placeholder').innerHTML = await footerRes.text();
+            // تحديث النصوص في الهيدر والفوت
+            document.querySelectorAll('[id]').forEach(el => {
+                if (el.id === 'siteTitle') el.innerText = currentLang === 'ar' ? 'سوق المشاريع' : 'Souq Almasharie';
+                if (el.id === 'siteSubtitle') el.innerText = currentLang === 'ar' ? 'المشاريع في الامارات' : 'Projects in UAE';
+                if (el.id === 'langBtnText') el.innerText = currentLang === 'ar' ? 'English' : 'عربي';
+                if (el.id === 'navHome') el.innerText = currentLang === 'ar' ? 'الرئيسية' : 'Home';
+                if (el.id === 'navMarket') el.innerText = currentLang === 'ar' ? 'السوق' : 'Market';
+                if (el.id === 'navFavorites') el.innerText = currentLang === 'ar' ? 'المفضلة' : 'Favorites';
+                if (el.id === 'navCart') el.innerText = currentLang === 'ar' ? 'السلة' : 'Cart';
+                if (el.id === 'navServices') el.innerText = currentLang === 'ar' ? 'الخدمات العامة' : 'Services';
+                if (el.id === 'navRegister') el.innerText = currentLang === 'ar' ? 'سجل مشروعك' : 'Register Project';
+            });
+            updateCartCountDisplay();
+        }
+        
+        function updateCartCountDisplay() {
+            const cart = getCart();
+            const total = cart.reduce((s,i)=>s+i.quantity,0);
+            const badge = document.getElementById('cartCount');
+            if(badge) badge.innerText = total;
+        }
+        
+        function getCart() { return JSON.parse(localStorage.getItem('projectCart') || '[]'); }
+        function saveCart(cart) { localStorage.setItem('projectCart', JSON.stringify(cart)); updateCartCountDisplay(); }
+        
+        function groupByProject(cart) {
+            const groups = {};
+            for (const item of cart) {
+                if (!groups[item.projectId]) groups[item.projectId] = { projectId: item.projectId, projectName: item.projectName, items: [] };
+                groups[item.projectId].items.push(item);
+            }
+            return Object.values(groups);
+        }
+        
+        function calcTotal(items) {
+            let total = 0;
+            for (const it of items) {
+                let price = 0;
+                const match = it.productPrice?.match(/[\d.,]+/);
+                if (match) price = parseFloat(match[0].replace(',', '.'));
+                total += price * it.quantity;
+            }
+            return total.toFixed(2);
+        }
+        
+        window.updateQuantity = function(productId, newQty) {
+            let cart = getCart();
+            const idx = cart.findIndex(i => i.productId === productId);
+            if (idx !== -1) {
+                if (newQty <= 0) cart.splice(idx, 1);
+                else cart[idx].quantity = newQty;
+                saveCart(cart);
+                renderCart();
+            }
+        };
+        
+        window.removeItem = function(productId) {
+            let cart = getCart();
+            cart = cart.filter(i => i.productId !== productId);
+            saveCart(cart);
+            renderCart();
+        };
+        
+        async function getProjectContact(projectId) {
+            const { data, error } = await supabase.from('contacts').select('whatsapp, instagram, telegram, snapchat, tiktok, facebook, twitter, website').eq('project_id', projectId).single();
+            if (error || !data) return { type: 'whatsapp', value: null };
+            if (data.whatsapp) return { type: 'whatsapp', value: data.whatsapp };
+            if (data.instagram) return { type: 'instagram', value: data.instagram };
+            if (data.telegram) return { type: 'telegram', value: data.telegram };
+            if (data.snapchat) return { type: 'snapchat', value: data.snapchat };
+            if (data.tiktok) return { type: 'tiktok', value: data.tiktok };
+            if (data.facebook) return { type: 'facebook', value: data.facebook };
+            if (data.twitter) return { type: 'twitter', value: data.twitter };
+            if (data.website) return { type: 'website', value: data.website };
+            return { type: 'whatsapp', value: null };
+        }
+        
+        function buildMessage(projectGroup, customerWhatsapp) {
+            const itemsText = projectGroup.items.map(it => `▫️ ${it.productName} × ${it.quantity}${it.productPrice ? ` (${it.productPrice})` : ''}`).join('\n');
+            const total = calcTotal(projectGroup.items);
+            if (currentLang === 'ar') {
+                return `🛍️ *طلب جديد من سوق المشاريع*\n\nمن مشروعكم "${projectGroup.projectName}":\n\n${itemsText}\n\n💰 *المجموع:* ${total} درهم\n\n📦 *${t('notePrefix')}*\n📞 *رقم العميل (واتساب):* ${customerWhatsapp}\n\n${t('thankYou')}`;
+            } else {
+                return `🛍️ *New order from Souq Almasharie*\n\nFrom project "${projectGroup.projectName}":\n\n${itemsText}\n\n💰 *Total:* AED ${total}\n\n📦 *${t('notePrefix')}*\n📞 *Customer WhatsApp:* ${customerWhatsapp}\n\n${t('thankYou')}`;
+            }
+        }
+        
+        async function logOrderForAdmin(projectGroup, customerWhatsapp, total) {
+            try {
+                await supabase.from('admin_order_logs').insert([{
+                    order_number: 'ORD-' + Date.now(),
+                    project_id: projectGroup.projectId,
+                    project_name: projectGroup.projectName,
+                    customer_session: localStorage.getItem('projectSessionId') || 'guest',
+                    customer_whatsapp: customerWhatsapp,
+                    items: projectGroup.items,
+                    total_price: total + ' AED'
+                }]);
+            } catch(err) { console.warn(err); }
+        }
+        
+        window.checkoutProject = async function(projectGroup) {
+            let customerPhone = prompt(t('enterWhatsapp'), '');
+            if (!customerPhone?.trim()) { alert(t('required')); return; }
+            let raw = customerPhone.replace(/\s/g, '');
+            if (!raw.startsWith('+')) raw = '+' + raw.replace(/^0+/, '');
+            if (!raw.match(/^\+[0-9]{7,15}$/)) { alert(t('invalidWhatsapp')); return; }
+            
+            const contact = await getProjectContact(projectGroup.projectId);
+            if (!contact.value) { alert(currentLang === 'ar' ? 'لا توجد وسيلة تواصل لهذا المشروع' : 'No contact method'); return; }
+            
+            const message = buildMessage(projectGroup, raw);
+            const encodedMsg = encodeURIComponent(message);
+            let url = '';
+            let needCopy = false;
+            
+            if (contact.type === 'whatsapp') {
+                url = `https://wa.me/${contact.value.replace(/[^0-9]/g, '')}?text=${encodedMsg}`;
+            } else if (contact.type === 'instagram') {
+                url = `https://instagram.com/${contact.value.replace('@', '')}`;
+                needCopy = true;
+            } else if (contact.type === 'telegram') {
+                url = `https://t.me/${contact.value.replace('@', '')}?text=${encodedMsg}`;
+            } else if (contact.type === 'snapchat') {
+                url = `https://snapchat.com/add/${contact.value}`;
+                needCopy = true;
+            } else {
+                url = contact.value.startsWith('http') ? contact.value : 'https://' + contact.value;
+                needCopy = true;
+            }
+            
+            if (needCopy) {
+                alert(currentLang === 'ar' ? 'انسخ الرسالة التالية وأرسلها:' : 'Copy the message below:');
+                navigator.clipboard.writeText(decodeURIComponent(encodedMsg));
+                window.open(url, '_blank');
+            } else {
+                window.open(url, '_blank');
+            }
+            
+            await logOrderForAdmin(projectGroup, raw, calcTotal(projectGroup.items));
+            let cart = getCart();
+            cart = cart.filter(i => i.projectId !== projectGroup.projectId);
+            saveCart(cart);
+            renderCart();
+        };
+        
+        async function renderCart() {
+            const cart = getCart();
+            const container = document.getElementById('cartContainer');
+            if (!cart.length) {
+                container.innerHTML = `<div class="cart-empty"><i class="fas fa-shopping-cart"></i><p>${t('emptyCart')}</p><a href="index.html" class="btn-generate" style="display: inline-block; margin-top: 15px; text-decoration: none;">${t('backShop')}</a></div>`;
+                return;
+            }
+            const groups = groupByProject(cart);
+            let html = '';
+            for (const group of groups) {
+                const contact = await getProjectContact(group.projectId);
+                let buttonText = t('checkout');
+                let buttonClass = 'contact-checkout';
+                let buttonIcon = '<i class="fab fa-whatsapp"></i>';
+                if (contact.type === 'whatsapp') { buttonText += ' واتساب'; buttonClass += ' whatsapp-bg'; }
+                else if (contact.type === 'instagram') { buttonText += ' إنستغرام'; buttonClass += ' instagram-bg'; buttonIcon = '<i class="fab fa-instagram"></i>'; }
+                else if (contact.type === 'telegram') { buttonText += ' تليجرام'; buttonClass += ' telegram-bg'; buttonIcon = '<i class="fab fa-telegram"></i>'; }
+                else if (contact.type === 'snapchat') { buttonText += ' سناب شات'; buttonClass += ' snapchat-bg'; buttonIcon = '<i class="fab fa-snapchat"></i>'; }
+                else if (contact.type === 'tiktok') { buttonText += ' تيك توك'; buttonClass += ' tiktok-bg'; buttonIcon = '<i class="fab fa-tiktok"></i>'; }
+                else if (contact.type === 'facebook') { buttonText += ' فيسبوك'; buttonClass += ' facebook-bg'; buttonIcon = '<i class="fab fa-facebook"></i>'; }
+                else if (contact.type === 'twitter') { buttonText += ' X'; buttonClass += ' x-bg'; buttonIcon = '<i class="fa-brands fa-x-twitter"></i>'; }
+                else { buttonText += ' الموقع'; buttonClass += ' website-bg'; buttonIcon = '<i class="fas fa-globe"></i>'; }
+                
+                html += `
+                    <div class="cart-vendor-card">
+                        <div class="vendor-header"><div class="vendor-name">${group.projectName}</div></div>
+                        <table class="cart-items-table"><tbody>
+                            ${group.items.map(item => `
+                                <tr>
+                                    <td style="width:45%">${item.productName}</td>
+                                    <td style="width:20%"><input type="number" min="1" value="${item.quantity}" class="quantity-input" onchange="updateQuantity('${item.productId}', this.value)"></td>
+                                    <td style="width:25%">${item.productPrice || (currentLang==='ar'?'السعر عند الطلب':'Price on request')}</td>
+                                    <td style="width:10%"><i class="fas fa-trash delete-icon" onclick="removeItem('${item.productId}')"></i></td>
+                                </tr>
+                            `).join('')}
+                        </tbody></table>
+                        <div class="vendor-total">${t('total')}: ${calcTotal(group.items)} AED</div>
+                        <button class="${buttonClass}" onclick="checkoutProject(${JSON.stringify(group).replace(/"/g, '&quot;')})">${buttonIcon} ${buttonText}</button>
+                    </div>
+                `;
+            }
+            container.innerHTML = html;
+        }
+        
+        window.toggleLanguage = function() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            localStorage.setItem('projectSouqLang', currentLang);
+            document.documentElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+            document.documentElement.setAttribute('lang', currentLang);
+            if (currentLang === 'en') document.body.classList.add('en-mode');
+            else document.body.classList.remove('en-mode');
+            updateStaticTexts();
+            loadComponents().then(() => renderCart());
+        };
+        
+        document.addEventListener('click', (e) => { if (e.target.closest('#langToggleBtn')) { e.preventDefault(); window.toggleLanguage(); } });
+        
+        if (!localStorage.getItem('projectSessionId')) localStorage.setItem('projectSessionId', 'guest_' + Date.now() + '_' + Math.random().toString(36));
+        
+        await loadComponents();
+        updateStaticTexts();
+        await renderCart();
+    </script>
+</body>
+</html>
