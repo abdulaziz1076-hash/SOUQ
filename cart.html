@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=El+Messiri:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <style>
+        /* تنسيقات السلة (كما هي) */
         .cart-vendor-card {
             background: white;
             border-radius: 24px;
@@ -91,9 +92,118 @@
         .cart-empty i { font-size: 60px; color: var(--light-gray); margin-bottom: 15px; }
         .delete-icon { color: var(--danger); cursor: pointer; font-size: 18px; transition: 0.2s; }
         .delete-icon:hover { transform: scale(1.1); }
-        @media (max-width: 600px) {
-            .cart-items-table td { font-size: 12px; }
-            .quantity-input { width: 50px; }
+        
+        /* نافذة منبثقة احترافية */
+        .custom-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 61, 46, 0.95);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+        .custom-modal.active {
+            display: flex;
+        }
+        .modal-card {
+            background: white;
+            border-radius: 32px;
+            max-width: 450px;
+            width: 90%;
+            padding: 28px 24px;
+            text-align: center;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.3);
+            animation: fadeSlideUp 0.25s ease;
+            border: 1px solid var(--secondary);
+        }
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal-card h3 {
+            font-family: 'El Messiri', serif;
+            color: var(--primary-dark);
+            margin-bottom: 12px;
+            font-size: 24px;
+        }
+        .modal-card p {
+            color: var(--gray);
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .modal-card input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--light-gray);
+            border-radius: 60px;
+            margin-bottom: 20px;
+            font-family: inherit;
+            font-size: 14px;
+            text-align: center;
+            direction: ltr;
+        }
+        .modal-card input:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+        .modal-card textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 20px;
+            border: 2px solid var(--light-gray);
+            font-family: inherit;
+            font-size: 13px;
+            margin-bottom: 15px;
+            background: var(--light);
+            resize: vertical;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        .modal-btn {
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+        }
+        .modal-btn.primary {
+            background: var(--primary-gradient);
+            color: white;
+            border: 1px solid var(--secondary);
+        }
+        .modal-btn.secondary {
+            background: white;
+            color: var(--primary-dark);
+            border: 1px solid var(--primary-dark);
+        }
+        .modal-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212,175,55,0.3);
+        }
+        .copy-btn {
+            background: var(--secondary);
+            color: var(--primary-dark);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+        @media (max-width: 500px) {
+            .modal-card { padding: 20px; }
+            .modal-card h3 { font-size: 20px; }
         }
     </style>
 </head>
@@ -105,6 +215,16 @@
     </div>
     <div class="container" id="cartContainer" style="margin-bottom: 40px;"></div>
     <div id="footer-placeholder"></div>
+
+    <!-- نافذة منبثقة موحدة -->
+    <div id="customModal" class="custom-modal">
+        <div class="modal-card">
+            <h3 id="modalTitle">عنوان</h3>
+            <p id="modalMessage">نص الرسالة</p>
+            <div id="modalInputArea"></div>
+            <div id="modalButtons" class="modal-buttons"></div>
+        </div>
+    </div>
 
     <script type="module">
         import { APP_CONFIG } from './config.js';
@@ -118,7 +238,17 @@
                 backShop: "العودة للتسوق", enterWhatsapp: "أدخل رقم واتسابك للتواصل مع البائع (مطلوب)",
                 invalidWhatsapp: "رقم واتساب غير صحيح", required: "رقم الواتساب مطلوب",
                 notePrefix: "يرجى التواصل معي لتحديد طريقة الدفع والشحن",
-                orderItem: "طلب جديد من سوق المشاريع", thankYou: "شكراً"
+                orderItem: "طلب جديد من سوق المشاريع", thankYou: "شكراً",
+                confirmTitle: "تأكيد الطلب",
+                confirmMsg: "سيتم إرسال الطلب إلى البائع عبر {{method}}. هل تريد المتابعة؟",
+                successTitle: "تم الإرسال",
+                successMsg: "تم فتح محادثة مع البائع. تم حذف منتجات هذا المشروع من سلتك.",
+                copyTitle: "انسخ الرسالة",
+                copyMsg: "لا يمكن فتح محادثة مباشرة عبر {{method}}. يرجى نسخ الرسالة أدناه ثم لصقها في المحادثة مع البائع.",
+                copyButton: "📋 نسخ الرسالة",
+                openProfile: "فتح الملف الشخصي",
+                cancel: "إلغاء",
+                proceed: "متابعة"
             },
             en: {
                 cartTitle: "Shopping Cart", cartSubtitle: "Review products and complete order",
@@ -126,12 +256,106 @@
                 backShop: "Back to shop", enterWhatsapp: "Enter your WhatsApp number for the seller (required)",
                 invalidWhatsapp: "Invalid WhatsApp number", required: "WhatsApp number is required",
                 notePrefix: "Please advise on payment method and delivery",
-                orderItem: "New order from Souq Almasharie", thankYou: "Thank you"
+                orderItem: "New order from Souq Almasharie", thankYou: "Thank you",
+                confirmTitle: "Confirm order",
+                confirmMsg: "Your order will be sent to seller via {{method}}. Proceed?",
+                successTitle: "Order sent",
+                successMsg: "Chat opened with seller. Items from this project have been removed from your cart.",
+                copyTitle: "Copy message",
+                copyMsg: "Direct chat is not available via {{method}}. Please copy the message below and paste it into your conversation with the seller.",
+                copyButton: "📋 Copy message",
+                openProfile: "Open profile",
+                cancel: "Cancel",
+                proceed: "Proceed"
             }
         };
         
         let currentLang = localStorage.getItem('projectSouqLang') || 'ar';
-        function t(key) { return translations[currentLang][key] || key; }
+        function t(key, params = {}) {
+            let text = translations[currentLang][key] || key;
+            for (const [k, v] of Object.entries(params)) {
+                text = text.replace(`{{${k}}}`, v);
+            }
+            return text;
+        }
+        
+        function showModal(title, message, options = {}) {
+            return new Promise((resolve) => {
+                const modal = document.getElementById('customModal');
+                document.getElementById('modalTitle').innerText = title;
+                document.getElementById('modalMessage').innerText = message;
+                const inputArea = document.getElementById('modalInputArea');
+                const buttonsDiv = document.getElementById('modalButtons');
+                inputArea.innerHTML = '';
+                buttonsDiv.innerHTML = '';
+                
+                if (options.input) {
+                    const input = document.createElement('input');
+                    input.type = options.inputType || 'text';
+                    input.placeholder = options.placeholder || '';
+                    input.id = 'modalInput';
+                    input.value = options.defaultValue || '';
+                    inputArea.appendChild(input);
+                }
+                if (options.textarea) {
+                    const textarea = document.createElement('textarea');
+                    textarea.rows = 5;
+                    textarea.id = 'modalTextarea';
+                    textarea.value = options.textareaValue || '';
+                    inputArea.appendChild(textarea);
+                }
+                if (options.copyButton) {
+                    const copyBtn = document.createElement('button');
+                    copyBtn.className = 'copy-btn';
+                    copyBtn.innerHTML = t('copyButton');
+                    copyBtn.onclick = () => {
+                        const textToCopy = document.getElementById('modalTextarea')?.value || options.textareaValue;
+                        if (textToCopy) {
+                            navigator.clipboard.writeText(textToCopy);
+                            const originalText = copyBtn.innerText;
+                            copyBtn.innerText = currentLang === 'ar' ? '✅ تم النسخ' : '✅ Copied';
+                            setTimeout(() => copyBtn.innerText = originalText, 2000);
+                        }
+                    };
+                    inputArea.appendChild(copyBtn);
+                }
+                if (options.openUrl) {
+                    const openBtn = document.createElement('button');
+                    openBtn.className = 'modal-btn primary';
+                    openBtn.innerHTML = t('openProfile');
+                    openBtn.style.marginRight = '10px';
+                    openBtn.onclick = () => {
+                        window.open(options.openUrl, '_blank');
+                    };
+                    buttonsDiv.appendChild(openBtn);
+                }
+                
+                const cancelBtn = document.createElement('button');
+                cancelBtn.className = 'modal-btn secondary';
+                cancelBtn.innerText = t('cancel');
+                cancelBtn.onclick = () => {
+                    modal.classList.remove('active');
+                    resolve(false);
+                };
+                const confirmBtn = document.createElement('button');
+                confirmBtn.className = 'modal-btn primary';
+                confirmBtn.innerText = t('proceed');
+                confirmBtn.onclick = () => {
+                    const inputVal = document.getElementById('modalInput')?.value || '';
+                    const textareaVal = document.getElementById('modalTextarea')?.value || '';
+                    modal.classList.remove('active');
+                    resolve({ confirmed: true, inputValue: inputVal, textareaValue: textareaVal });
+                };
+                buttonsDiv.appendChild(cancelBtn);
+                buttonsDiv.appendChild(confirmBtn);
+                
+                modal.classList.add('active');
+            });
+        }
+        
+        function showAlert(title, message) {
+            return showModal(title, message, {});
+        }
         
         function updateStaticTexts() {
             document.getElementById('cartPageTitle').innerText = t('cartTitle');
@@ -208,6 +432,12 @@
         async function getProjectContact(projectId) {
             const { data, error } = await supabase.from('contacts').select('whatsapp, instagram, telegram, snapchat, tiktok, facebook, twitter, website').eq('project_id', projectId).single();
             if (error || !data) return { type: 'whatsapp', value: null };
+            // ✅ إذا أردت الاعتماد فقط على الواتساب، قم بإلغاء تعليق الأسطر التالية:
+            /*
+            if (data.whatsapp) return { type: 'whatsapp', value: data.whatsapp };
+            return { type: 'whatsapp', value: null };
+            */
+            // الوضع الطبيعي (يدعم جميع الوسائل):
             if (data.whatsapp) return { type: 'whatsapp', value: data.whatsapp };
             if (data.instagram) return { type: 'instagram', value: data.instagram };
             if (data.telegram) return { type: 'telegram', value: data.telegram };
@@ -243,62 +473,105 @@
             } catch(err) { console.warn(err); }
         }
         
+        // دالة إتمام الطلب الرئيسية
         window.checkoutProject = async function(projectGroup) {
-    let customerPhone = prompt(t('enterWhatsapp'), '');
-    if (!customerPhone?.trim()) { alert(t('required')); return; }
-    let raw = customerPhone.replace(/\s/g, '');
-    if (!raw.startsWith('+')) raw = '+' + raw.replace(/^0+/, '');
-    if (!raw.match(/^\+[0-9]{7,15}$/)) { alert(t('invalidWhatsapp')); return; }
-    
-    const contact = await getProjectContact(projectGroup.projectId);
-    if (!contact.value) { alert(currentLang === 'ar' ? 'لا توجد وسيلة تواصل لهذا المشروع' : 'No contact method'); return; }
-    
-    const message = buildMessage(projectGroup, raw);
-    const encodedMsg = encodeURIComponent(message);
-    let url = '';
-    let needCopy = false;
-    
-    if (contact.type === 'whatsapp') {
-        url = `https://wa.me/${contact.value.replace(/[^0-9]/g, '')}?text=${encodedMsg}`;
-    } else if (contact.type === 'instagram') {
-        url = `https://instagram.com/${contact.value.replace('@', '')}`;
-        needCopy = true;
-    } else if (contact.type === 'telegram') {
-        url = `https://t.me/${contact.value.replace('@', '')}?text=${encodedMsg}`;
-    } else if (contact.type === 'snapchat') {
-        url = `https://snapchat.com/add/${contact.value}`;
-        needCopy = true;
-    } else {
-        url = contact.value.startsWith('http') ? contact.value : 'https://' + contact.value;
-        needCopy = true;
-    }
-    
-    if (needCopy) {
-        alert(currentLang === 'ar' ? 'انسخ الرسالة التالية وأرسلها:' : 'Copy the message below:');
-        await navigator.clipboard.writeText(decodeURIComponent(encodedMsg));
-        window.open(url, '_blank');
-    } else {
-        window.open(url, '_blank');
-    }
-    
-    await logOrderForAdmin(projectGroup, raw, calcTotal(projectGroup.items));
-    
-    // ✅ تصحيح: مقارنة projectId كـ String لمنع الحذف الخاطئ
-    let cart = getCart();
-    const projectIdStr = String(projectGroup.projectId);
-    const newCart = cart.filter(item => String(item.projectId) !== projectIdStr);
-    saveCart(newCart);
-    
-    // ✅ إعادة عرض السلة بعد الحذف
-    renderCart();
-    
-    // ✅ إشعار المستخدم بأن السلة تم تحديثها (وليس فارغة بالكامل)
-    if (newCart.length === 0) {
-        alert(currentLang === 'ar' ? 'سلتك الآن فارغة. يمكنك إضافة منتجات جديدة.' : 'Your cart is now empty. You can add new products.');
-    } else {
-        alert(currentLang === 'ar' ? 'تم إرسال طلبك بنجاح. تم حذف منتجات هذا المشروع من سلتك، وبقيت المنتجات الأخرى.' : 'Your order has been sent. Items from this project have been removed from your cart, other items remain.');
-    }
-};
+            // 1. طلب رقم واتساب العميل
+            const phoneResult = await showModal(t('enterWhatsapp'), '', {
+                input: true,
+                inputType: 'tel',
+                placeholder: '971501234567',
+                defaultValue: ''
+            });
+            if (!phoneResult.confirmed) return;
+            let customerPhone = phoneResult.inputValue.trim();
+            if (!customerPhone) {
+                await showAlert(t('required'), '');
+                return;
+            }
+            let raw = customerPhone.replace(/\s/g, '');
+            if (!raw.startsWith('+')) raw = '+' + raw.replace(/^0+/, '');
+            if (!raw.match(/^\+[0-9]{7,15}$/)) {
+                await showAlert(t('invalidWhatsapp'), '');
+                return;
+            }
+            
+            // 2. الحصول على وسيلة تواصل المشروع
+            const contact = await getProjectContact(projectGroup.projectId);
+            if (!contact.value) {
+                await showAlert(currentLang === 'ar' ? 'لا توجد وسيلة تواصل لهذا المشروع' : 'No contact method', '');
+                return;
+            }
+            
+            // 3. بناء الرسالة
+            const message = buildMessage(projectGroup, raw);
+            const encodedMsg = encodeURIComponent(message);
+            let url = '';
+            let needCopy = false;
+            let methodName = '';
+            
+            if (contact.type === 'whatsapp') {
+                methodName = 'WhatsApp';
+                url = `https://wa.me/${contact.value.replace(/[^0-9]/g, '')}?text=${encodedMsg}`;
+            } else if (contact.type === 'instagram') {
+                methodName = 'Instagram';
+                url = `https://instagram.com/${contact.value.replace('@', '')}`;
+                needCopy = true;
+            } else if (contact.type === 'telegram') {
+                methodName = 'Telegram';
+                url = `https://t.me/${contact.value.replace('@', '')}?text=${encodedMsg}`;
+            } else if (contact.type === 'snapchat') {
+                methodName = 'Snapchat';
+                url = `https://snapchat.com/add/${contact.value}`;
+                needCopy = true;
+            } else if (contact.type === 'tiktok') {
+                methodName = 'TikTok';
+                url = `https://tiktok.com/@${contact.value}`;
+                needCopy = true;
+            } else if (contact.type === 'facebook') {
+                methodName = 'Facebook';
+                url = `https://facebook.com/${contact.value}`;
+                needCopy = true;
+            } else if (contact.type === 'twitter') {
+                methodName = 'X';
+                url = `https://x.com/${contact.value}`;
+                needCopy = true;
+            } else {
+                methodName = currentLang === 'ar' ? 'الموقع' : 'Website';
+                url = contact.value.startsWith('http') ? contact.value : 'https://' + contact.value;
+                needCopy = true;
+            }
+            
+            // 4. تأكيد الإرسال
+            const confirm = await showModal(t('confirmTitle'), t('confirmMsg', { method: methodName }), {});
+            if (!confirm.confirmed) return;
+            
+            // 5. تنفيذ الإرسال
+            if (needCopy) {
+                // عرض نافذة تحتوي على الرسالة وزر نسخ وفتح الملف الشخصي
+                await showModal(t('copyTitle'), t('copyMsg', { method: methodName }), {
+                    textarea: true,
+                    textareaValue: decodeURIComponent(encodedMsg),
+                    copyButton: true,
+                    openUrl: url
+                });
+            } else {
+                // واتساب: فتح المحادثة مباشرة
+                window.open(url, '_blank');
+            }
+            
+            // 6. تسجيل الطلب للمشرف
+            await logOrderForAdmin(projectGroup, raw, calcTotal(projectGroup.items));
+            
+            // 7. حذف منتجات هذا المشروع من السلة
+            let cart = getCart();
+            const projectIdStr = String(projectGroup.projectId);
+            const newCart = cart.filter(item => String(item.projectId) !== projectIdStr);
+            saveCart(newCart);
+            renderCart();
+            
+            // 8. عرض رسالة نجاح
+            await showAlert(t('successTitle'), t('successMsg'));
+        };
         
         async function renderCart() {
             const cart = getCart();
