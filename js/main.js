@@ -1285,7 +1285,7 @@ async function showProductDetail(familyId, productId, updateHash = true) {
             <span class="product-detail-category"><i class="fas fa-tag"></i> ${typeDisplay}</span>
             <h1 class="product-detail-name">${productName}</h1>
             <div class="product-price-display" id="dynamicPrice">${initialPrice}</div>
-            <button class="add-to-cart-detail" onclick="addToCart(product, family)">➕ ${appState.currentLanguage === 'ar' ? 'أضف إلى السلة' : 'Add to cart'}</button>
+           <button class="add-to-cart-detail" onclick="addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')}, ${JSON.stringify(family).replace(/"/g, '&quot;')})">➕ ${appState.currentLanguage === 'ar' ? 'أضف إلى السلة' : 'Add to cart'}</button>
             ${variantsHtml}
             <p class="product-detail-description">${productDesc}</p>
             ${specsHtml}
