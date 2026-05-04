@@ -115,7 +115,7 @@
             ar: {
                 cartTitle: "سلة التسوق", cartSubtitle: "مراجعة المنتجات وإتمام الطلب",
                 total: "المجموع", checkout: "إتمام الطلب عبر", emptyCart: "سلتك فارغة",
-                backShop: "العودة للتسوق", enterWhatsapp: "أدخل رقم واتسابك للتواصل مع البائع",
+                backShop: "العودة للتسوق", enterWhatsapp: "أدخل رقم واتسابك للتواصل مع البائع (مطلوب)",
                 invalidWhatsapp: "رقم واتساب غير صحيح", required: "رقم الواتساب مطلوب",
                 notePrefix: "يرجى التواصل معي لتحديد طريقة الدفع والشحن",
                 orderItem: "طلب جديد من سوق المشاريع", thankYou: "شكراً"
@@ -123,7 +123,7 @@
             en: {
                 cartTitle: "Shopping Cart", cartSubtitle: "Review products and complete order",
                 total: "Total", checkout: "Complete order via", emptyCart: "Your cart is empty",
-                backShop: "Back to shop", enterWhatsapp: "Enter your WhatsApp number for the seller",
+                backShop: "Back to shop", enterWhatsapp: "Enter your WhatsApp number for the seller (required)",
                 invalidWhatsapp: "Invalid WhatsApp number", required: "WhatsApp number is required",
                 notePrefix: "Please advise on payment method and delivery",
                 orderItem: "New order from Souq Almasharie", thankYou: "Thank you"
@@ -143,7 +143,6 @@
             const footerRes = await fetch('components/footer.html');
             document.getElementById('header-placeholder').innerHTML = await headerRes.text();
             document.getElementById('footer-placeholder').innerHTML = await footerRes.text();
-            // تحديث النصوص في الهيدر والفوت
             document.querySelectorAll('[id]').forEach(el => {
                 if (el.id === 'siteTitle') el.innerText = currentLang === 'ar' ? 'سوق المشاريع' : 'Souq Almasharie';
                 if (el.id === 'siteSubtitle') el.innerText = currentLang === 'ar' ? 'المشاريع في الامارات' : 'Projects in UAE';
@@ -276,7 +275,7 @@
             
             if (needCopy) {
                 alert(currentLang === 'ar' ? 'انسخ الرسالة التالية وأرسلها:' : 'Copy the message below:');
-                navigator.clipboard.writeText(decodeURIComponent(encodedMsg));
+                await navigator.clipboard.writeText(decodeURIComponent(encodedMsg));
                 window.open(url, '_blank');
             } else {
                 window.open(url, '_blank');
