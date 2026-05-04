@@ -28,6 +28,33 @@ const appState = {
 };
 console.log("main.js is loaded successfully");
 
+// ========== سلة التسوق ==========
+function getCart() { return JSON.parse(localStorage.getItem('projectCart') || '[]'); }
+function saveCart(cart) { localStorage.setItem('projectCart', JSON.stringify(cart)); updateCartCount(); }
+function updateCartCount() {
+    const cart = getCart();
+    const total = cart.reduce((s,i)=>s+i.quantity,0);
+    const badge = document.getElementById('cartCount');
+    if(badge) badge.innerText = total;
+}
+window.addToCart = function(product, project) {
+    let cart = getCart();
+    const existing = cart.find(i => i.productId === product.id);
+    if(existing) existing.quantity += 1;
+    else {
+        cart.push({
+            productId: product.id,
+            productName: appState.currentLanguage === 'ar' ? product.name : product.nameEn,
+            productPrice: getPriceDisplay(product),
+            quantity: 1,
+            projectId: project.id,
+            projectName: appState.currentLanguage === 'ar' ? project.name : project.nameEn
+        });
+    }
+    saveCart(cart);
+    showToast(translations[appState.currentLanguage].addToCart || "تمت الإضافة إلى السلة");
+};
+
 // ==================== Helper: Build Sell Points ====================
 function buildSellPoints(contact) {
     const points = [];
@@ -444,6 +471,8 @@ function parseSellPoints(sellPoints) {
 const translations = {
     ar: {
         siteTitle: "سوق المشاريع", 
+        addToCart: "تمت الإضافة إلى السلة",
+        navCart: "السلة",
         variantsTitle: "الخيارات",
         paidBadge: "مميز", 
         privacy: "سياسة الخصوصية", 
@@ -531,6 +560,8 @@ const translations = {
     },
     en: {
         siteTitle: "Souq Almasharie", 
+        navCart: "cart",
+        addToCart: "Added to cart",
         variantsTitle: "Options",
         registerTitle: "Register Your Project Now", 
         registerViaX: "Message us on X",
@@ -1084,6 +1115,7 @@ function renderProductsByType(family) {
     productsGrid.innerHTML = filteredProducts.map(p => {
         const productName = currentLang === 'ar' ? p.name : p.nameEn;
         const productDesc = currentLang === 'ar' ? p.description : p.descriptionEn;
+        const addToCartBtn = `<button class="add-to-cart-btn" onclick="event.stopPropagation(); addToCart(${JSON.stringify(p).replace(/"/g, '&quot;')}, ${JSON.stringify(family).replace(/"/g, '&quot;')})">➕ ${appState.currentLanguage === 'ar' ? 'أضف للسلة' : 'Add to cart'}</button>`;
         const productCategory = currentLang === 'ar' ? p.category : p.categoryEn;
         const tCat = translations[currentLang].categories;
         const categoryDisplay = tCat[p.category] || productCategory || '-';
@@ -1272,6 +1304,7 @@ async function showProductDetail(familyId, productId, updateHash = true) {
             <span class="product-detail-category"><i class="fas fa-tag"></i> ${typeDisplay}</span>
             <h1 class="product-detail-name">${productName}</h1>
             <div class="product-price-display" id="dynamicPrice">${initialPrice}</div>
+            <button class="add-to-cart-detail" onclick="addToCart(product, family)">➕ ${appState.currentLanguage === 'ar' ? 'أضف إلى السلة' : 'Add to cart'}</button>
             ${variantsHtml}
             <p class="product-detail-description">${productDesc}</p>
             ${specsHtml}
