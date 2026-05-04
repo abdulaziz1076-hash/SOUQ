@@ -1,4 +1,4 @@
-// main.js - كامل مع التصحيحات الاحترافية (نسخة 2026-04-27)
+// main.js - كامل مع نظام السلة (نسخة 2026-05-04)
 import { APP_CONFIG } from './config.js';
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
@@ -75,7 +75,6 @@ function renderProductTypeFilter(familyId) {
     const family = projectsData.find(f => f.id == familyId);
     if (!family) return;
     
-    // ✅ التحقق من أن المشروع من تصنيف "أطعمة ومشروبات"
     const isFoodOrBeverages = (family.category === 'أطعمة ومشروبات') || (family.categoryEn === 'Food & Beverages');
     if (!isFoodOrBeverages) {
         container.innerHTML = '';
@@ -120,7 +119,6 @@ async function loadProjectsFromSupabase() {
         showLoader();
         console.log('🔄 Loading data from Supabase...');
 
-        // 1. جلب المشاريع مع المنتجات والعروض وبيانات التواصل
         const { data: projects, error } = await supabase
             .from('projects')
             .select(`
@@ -137,14 +135,12 @@ async function loadProjectsFromSupabase() {
             return;
         }
 
-        // 2. جلب جميع المتغيرات مرة واحدة
         const { data: allVariants, error: varError } = await supabase
             .from('product_variants')
             .select('*');
         
         if (varError) console.warn('⚠️ Could not load variants:', varError);
         
-        // 3. تجميع المتغيرات حسب product_id
         const variantsByProduct = {};
         if (allVariants) {
             allVariants.forEach(v => {
@@ -153,7 +149,6 @@ async function loadProjectsFromSupabase() {
             });
         }
 
-        // 4. تحويل البيانات مع إضافة المتغيرات لكل منتج
         projectsData = projects.map(project => {
             const products = (project.products || [])
                 .sort((a, b) => (a.display_order ?? 0) - (b.display_order ?? 0))
@@ -214,7 +209,6 @@ async function loadProjectsFromSupabase() {
             };
         });
 
-        // 5. بناء contactsData (بدون تغيير)
         contactsData = {};
         projects.forEach(project => {
             const contact = project.contacts;
@@ -239,7 +233,6 @@ async function loadProjectsFromSupabase() {
             }
         });
 
-        // ربط بيانات التواصل بكل مشروع
         projectsData.forEach(project => {
             const contact = contactsData[project.id];
             if (contact) {
@@ -252,7 +245,6 @@ async function loadProjectsFromSupabase() {
 
         console.log(`✅ Loaded ${projectsData.length} projects`);
 
-        // تحديث الصفحات المعروضة
         if (appState.currentPage === 'families') renderFamilies();
         else if (appState.currentPage === 'products' && appState.currentFamilyId) showFamilyProducts(appState.currentFamilyId, false);
         else if (appState.currentPage === 'product-detail' && appState.currentFamilyId && appState.currentProductId) showProductDetail(appState.currentFamilyId, appState.currentProductId, false);
@@ -450,7 +442,7 @@ function parseSellPoints(sellPoints) {
     return sellPoints.map(sp => {
         let type = sp.type;
         let value = sp.value;
-        if (!value) return null; // ⚠️ تجاهل العناصر الفارغة
+        if (!value) return null;
         let cleanValue = String(value).replace(/^@/, '');
         let url = '', icon = '', bg = '';
         switch (type) {
@@ -560,7 +552,7 @@ const translations = {
     },
     en: {
         siteTitle: "Souq Almasharie", 
-        navCart: "cart",
+        navCart: "Cart",
         addToCart: "Added to cart",
         variantsTitle: "Options",
         registerTitle: "Register Your Project Now", 
@@ -832,11 +824,9 @@ function renderFamilies() {
         }
     }
     const sortedProjects = [...filtered].sort((a, b) => {
-    // أولاً حسب display_order (الأصغر أولاً)
     if (a.display_order !== b.display_order) {
         return (a.display_order ?? 0) - (b.display_order ?? 0);
     }
-    // ثم حسب is_paid (المدفوع أولاً)
     if (a.is_paid !== b.is_paid) return a.is_paid ? -1 : 1;
     return 0;
 });
@@ -951,9 +941,7 @@ function showDealDetails(familyId, dealId) {
 }
 
 // ==================== Show Family Products ====================
-// ==================== Show Family Products ====================
 function showFamilyProducts(id, updateHash = true) {
-    // إعادة تعيين الفلتر إلى "الكل" عند فتح المشروع
     appState.currentProductType = 'all';
     hideLoader();
     
@@ -983,7 +971,6 @@ function showFamilyProducts(id, updateHash = true) {
     const feedbackButtonHtml = `<div class="action-btn feedback-btn" onclick="event.stopPropagation(); openFeedbackModal(${family.id}, '${familyName}')" title="شكوى أو اقتراح"><i class="fas fa-comment-dots"></i></div>`;
     const shareButtonHtml = `<div class="action-btn share-btn" onclick="event.stopPropagation(); showProfileSharePopup(event, ${family.id})" title="${t.shareProfile}"><i class="fas fa-share-alt"></i></div>`;
     
-    // Profile container
     const profileContainer = document.getElementById('familyProfileContainer');
     if (profileContainer) {
         profileContainer.innerHTML = `
@@ -1016,7 +1003,6 @@ function showFamilyProducts(id, updateHash = true) {
         `;
     }
     
-    // إنشاء حاوية الفلتر إذا لم تكن موجودة
     if (!document.getElementById('productTypeFilterContainer')) {
         const productsHeader = document.querySelector('#products-page .products-header');
         if (productsHeader) {
@@ -1026,7 +1012,6 @@ function showFamilyProducts(id, updateHash = true) {
         }
     }
     
-    // عرض الفلتر فقط للمشاريع الغذائية
     const isFoodOrBeverages = (family.category === 'أطعمة ومشروبات') || (family.categoryEn === 'Food & Beverages');
     if (isFoodOrBeverages) {
         renderProductTypeFilter(family.id);
@@ -1038,7 +1023,6 @@ function showFamilyProducts(id, updateHash = true) {
     renderFamilyDeals(family);
     renderProductsByType(family);
     
-    // Contact section
     let contactHtml = '';
     if (family.whatsapp) {
         const whatsappUrl = `https://wa.me/${String(family.whatsapp).replace(/[^0-9]/g, '')}`;
@@ -1076,7 +1060,6 @@ function renderProductsByType(family) {
     let filteredProducts = [...family.products];
     const currentLang = appState.currentLanguage;
     
-    // ✅ التصفية باستخدام الحقول الصحيحة (type / typeEn)
     if (appState.currentProductType !== 'all') {
         if (appState.currentProductType === 'main') {
             filteredProducts = filteredProducts.filter(p => {
@@ -1115,13 +1098,15 @@ function renderProductsByType(family) {
     productsGrid.innerHTML = filteredProducts.map(p => {
         const productName = currentLang === 'ar' ? p.name : p.nameEn;
         const productDesc = currentLang === 'ar' ? p.description : p.descriptionEn;
-        const addToCartBtn = `<button class="add-to-cart-btn" onclick="event.stopPropagation(); addToCart(${JSON.stringify(p).replace(/"/g, '&quot;')}, ${JSON.stringify(family).replace(/"/g, '&quot;')})">➕ ${appState.currentLanguage === 'ar' ? 'أضف للسلة' : 'Add to cart'}</button>`;
         const productCategory = currentLang === 'ar' ? p.category : p.categoryEn;
         const tCat = translations[currentLang].categories;
         const categoryDisplay = tCat[p.category] || productCategory || '-';
         const isFav = isFavorite(p.id, 'product');
         const priceText = getPriceDisplay(p);
         const priceHtml = priceText ? `<div class="product-price">${priceText}</div>` : '';
+        
+        // ✅ تم إضافة زر الإضافة هنا بشكل صحيح
+        const addToCartBtn = `<button class="add-to-cart-btn" onclick="event.stopPropagation(); addToCart(${JSON.stringify(p).replace(/"/g, '&quot;')}, ${JSON.stringify(family).replace(/"/g, '&quot;')})">➕ ${appState.currentLanguage === 'ar' ? 'أضف للسلة' : 'Add to cart'}</button>`;
         
         return `
             <div class="product-card ${isFav ? 'favorite-active' : ''}" data-product-id="${p.id}" onclick="navigateTo('/product/${family.id}/${p.id}')">
@@ -1130,6 +1115,7 @@ function renderProductsByType(family) {
                     <h3 class="product-name">${productName}</h3>
                     <div class="product-description">${productDesc || ''}</div>
                     ${priceHtml}
+                    ${addToCartBtn}
                     <div class="product-category">${categoryDisplay}</div>
                 </div>
             </div>
@@ -1140,7 +1126,6 @@ function renderProductsByType(family) {
 function getPriceDisplay(product) {
     const lang = appState.currentLanguage;
     
-    // 1. إذا كان للمنتج متغيرات، اعرض أقل سعر مع عبارة "يبدأ من"
     if (product.variants && product.variants.length > 0) {
         let minPriceObj = null;
         for (let v of product.variants) {
@@ -1164,7 +1149,6 @@ function getPriceDisplay(product) {
         }
     }
     
-    // 2. السعر الثابت
     let price = lang === 'ar' ? product.price_ar : product.price_en;
     if (!price || String(price).trim() === '') {
         return lang === 'ar' ? 'السعر عند الطلب' : 'Price on request';
@@ -1175,6 +1159,7 @@ function getPriceDisplay(product) {
     }
     return price;
 }
+
 // ==================== Show Product Detail ====================
 async function showProductDetail(familyId, productId, updateHash = true) {
     hideLoader();
@@ -1246,7 +1231,6 @@ async function showProductDetail(familyId, productId, updateHash = true) {
 
     const isFav = isFavorite(product.id, 'product');
 
-    // جلب المتغيرات من قاعدة البيانات
     const { data: variants, error: varErr } = await supabase
         .from('product_variants')
         .select('*')
@@ -1255,13 +1239,11 @@ async function showProductDetail(familyId, productId, updateHash = true) {
     currentVariants = variants || [];
     const hasVariants = currentVariants.length > 0;
     
-    // تحديد المتغير الافتراضي أو الأول
     let defaultVariant = null;
     if (hasVariants) {
         defaultVariant = currentVariants.find(v => v.is_default === true) || currentVariants[0];
     }
     
-    // حساب السعر الابتدائي
     let initialPrice = '';
     if (hasVariants && defaultVariant) {
         initialPrice = appState.currentLanguage === 'ar' ? defaultVariant.price_ar : defaultVariant.price_en;
@@ -1269,7 +1251,6 @@ async function showProductDetail(familyId, productId, updateHash = true) {
         initialPrice = getPriceDisplay(product);
     }
     
-    // إنشاء HTML لعنصر اختيار المتغيرات
     let variantsHtml = '';
     if (hasVariants) {
         variantsHtml = `
@@ -1325,7 +1306,6 @@ async function showProductDetail(familyId, productId, updateHash = true) {
     if (container) container.innerHTML = html;
     showPage('product-detail');
     
-    // ربط أحداث اختيار المتغيرات بعد إضافة الـ HTML إلى DOM
     if (hasVariants) {
         const variantOptions = document.querySelectorAll('.variant-option');
         variantOptions.forEach(option => {
@@ -1334,12 +1314,10 @@ async function showProductDetail(familyId, productId, updateHash = true) {
                 const variantId = this.getAttribute('data-variant-id');
                 const variant = currentVariants.find(v => v.id == variantId);
                 if (variant) {
-                    // تحديث السعر المعروض
                     const priceEl = document.getElementById('dynamicPrice');
                     if (priceEl) {
                         priceEl.textContent = appState.currentLanguage === 'ar' ? variant.price_ar : variant.price_en;
                     }
-                    // تحديث الحالة النشطة للخيارات
                     variantOptions.forEach(opt => opt.classList.remove('active'));
                     this.classList.add('active');
                 }
@@ -1779,6 +1757,7 @@ window.addEventListener('load', async function() {
     await loadProjectsFromSupabase();
     handleHashChange();
     setTimeout(() => hideLoader(), 100);
+    updateCartCount();
     const feedbackForm = document.getElementById('feedbackFormModal');
     if (feedbackForm) {
         feedbackForm.removeEventListener('submit', submitFeedback);
@@ -1802,6 +1781,7 @@ window.addEventListener('pageshow', function(event) {
         else if (appState.currentPage === 'offers') renderOffers();
         hideLoader();
         ensureLoaderHidden();
+        updateCartCount();
     }
 });
 
@@ -1906,7 +1886,6 @@ function trackPageView() {
     }
 }
 
-// تتبع عرض منتج (view_item)
 function trackViewItem(product, family) {
     if (typeof gtag === 'undefined') return;
     const price = parseFloat(product.price_ar?.replace(/[^0-9.-]/g, '')) || 
@@ -1923,7 +1902,6 @@ function trackViewItem(product, family) {
     });
 }
 
-// تتبع بدء التواصل (contact)
 function trackContact(method, projectName) {
     if (typeof gtag === 'undefined') return;
     gtag('event', 'contact', {
@@ -1933,7 +1911,6 @@ function trackContact(method, projectName) {
     });
 }
 
-// تتبع بدء عملية الشراء (begin_checkout)
 function trackBeginCheckout(product, family) {
     if (typeof gtag === 'undefined') return;
     const price = parseFloat(product.price_ar?.replace(/[^0-9.-]/g, '')) || 
@@ -1949,8 +1926,6 @@ function trackBeginCheckout(product, family) {
         }]
     });
 }
-
-
 
 window.addEventListener('load', () => setTimeout(trackPageView, 100));
 window.addEventListener('hashchange', () => setTimeout(trackPageView, 100));
