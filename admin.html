@@ -175,11 +175,11 @@
             justify-content: center;
             transition: 0.2s;
         }
-        .action-btn.move-up, .action-btn.move-down, .action-btn.save-order {
+        .action-btn.move-up, .action-btn.move-down {
             color: #D4AF37;
             background: #fff8e7;
         }
-        .action-btn.move-up:hover, .action-btn.move-down:hover, .action-btn.save-order:hover {
+        .action-btn.move-up:hover, .action-btn.move-down:hover {
             background: #0a2e25;
             color: white;
             transform: scale(1.05);
@@ -194,6 +194,8 @@
             font-size: 12px;
             line-height: 1.4;
         }
+        .order-id { font-family: monospace; font-size: 12px; }
+        .order-total { font-weight: 800; color: #0a2e25; }
         
         /* النماذج المنبثقة */
         .modal {
@@ -253,9 +255,6 @@
         .pagination button { padding: 8px 16px; border-radius: 30px; border: 1px solid #cfdfe9; background: white; cursor: pointer; transition: 0.2s; }
         .pagination button:hover { background: #0a2e25; color: white; border-color: #0a2e25; }
         
-        .order-id { font-family: monospace; font-size: 12px; }
-        .order-total { font-weight: 800; color: #0a2e25; }
-        
         @media (max-width: 700px) {
             .tab-btn { padding: 8px 16px; font-size: 12px; }
             .filter-group { width: 100%; }
@@ -294,11 +293,10 @@
             <button class="tab-btn" data-tab="deals"><i class="fas fa-tags"></i> العروض</button>
             <button class="tab-btn" data-tab="contacts"><i class="fas fa-address-card"></i> بيانات التواصل</button>
             <button class="tab-btn" data-tab="feedbacks"><i class="fas fa-comment-dots"></i> الشكاوى</button>
-            <!-- التبويب الجديد: الطلبات -->
             <button class="tab-btn" data-tab="orders"><i class="fas fa-truck"></i> الطلبات</button>
         </div>
 
-        <!-- Registrations (نفس القديم) -->
+        <!-- Registrations -->
         <div id="registrationsTab" class="content-card active">
             <div class="filter-bar">
                 <div class="filter-group">
@@ -314,7 +312,7 @@
             <div id="registrationsTableContainer"></div>
         </div>
 
-        <!-- Projects (مع إضافة عمود الترتيب وأزرار التحريك) -->
+        <!-- Projects -->
         <div id="projectsTab" class="content-card">
             <div class="filter-bar">
                 <div class="filter-group">
@@ -331,7 +329,7 @@
             <div id="projectsPagination" class="pagination"></div>
         </div>
 
-        <!-- Products (مع إضافة عمود الترتيب وأزرار) -->
+        <!-- Products -->
         <div id="productsTab" class="content-card">
             <div class="filter-bar">
                 <select id="productProjectFilter"><option value="">اختر المشروع أولاً</option></select>
@@ -340,7 +338,7 @@
             <div id="productsTableContainer"></div>
         </div>
 
-        <!-- Deals (نفس القديم) -->
+        <!-- Deals -->
         <div id="dealsTab" class="content-card">
             <div class="filter-bar">
                 <select id="dealProjectFilter"><option value="">اختر المشروع</option></select>
@@ -349,7 +347,7 @@
             <div id="dealsTableContainer"></div>
         </div>
 
-        <!-- Contacts (نفس القديم) -->
+        <!-- Contacts -->
         <div id="contactsTab" class="content-card">
             <div class="filter-bar">
                 <select id="contactProjectFilter"><option value="">اختر المشروع</option></select>
@@ -357,7 +355,7 @@
             <div id="contactsTableContainer"></div>
         </div>
 
-        <!-- Feedbacks (نفس القديم) -->
+        <!-- Feedbacks -->
         <div id="feedbacksTab" class="content-card">
             <div class="filter-bar">
                 <select id="feedbackStatusFilter">
@@ -371,7 +369,7 @@
             <div id="feedbacksTableContainer"></div>
         </div>
 
-        <!-- ========== تبويب الطلبات (جديد) ========== -->
+        <!-- Orders tab -->
         <div id="ordersTab" class="content-card">
             <div class="filter-bar">
                 <div class="filter-group">
@@ -387,7 +385,7 @@
     </div>
 </div>
 
-<!-- مودال المشروع (نفس القديم) -->
+<!-- Project Modal -->
 <div id="projectModal" class="modal">
     <div class="modal-content">
         <div class="modal-header"><h3>مشروع</h3><button class="modal-close" data-modal="projectModal"><i class="fas fa-times"></i></button></div>
@@ -412,7 +410,7 @@
     </div>
 </div>
 
-<!-- مودال المنتج (مع إضافة حقول الترتيب) -->
+<!-- Product Modal -->
 <div id="productModal" class="modal">
     <div class="modal-content">
         <div class="modal-header"><h3>منتج</h3><button class="modal-close" data-modal="productModal"><i class="fas fa-times"></i></button></div>
@@ -443,7 +441,7 @@
     </div>
 </div>
 
-<!-- مودال العرض (نفس القديم) -->
+<!-- Deal Modal -->
 <div id="dealModal" class="modal">
     <div class="modal-content">
         <div class="modal-header"><h3>عرض</h3><button class="modal-close" data-modal="dealModal"><i class="fas fa-times"></i></button></div>
@@ -507,7 +505,7 @@ async function loadStats() {
     `;
 }
 
-// ==================== المشاريع مع إعادة الترتيب ====================
+// ==================== المشاريع مع حفظ تلقائي ====================
 async function loadProjects(page = 1) {
     currentProjectsPage = page;
     let query = supabase.from('projects').select('*', { count: 'exact' }).order('display_order', { ascending: true, nullsFirst: false }).order('id', { ascending: false }).range((page-1)*10, page*10-1);
@@ -525,14 +523,15 @@ async function loadProjects(page = 1) {
         let statusBadge = p.status === 'approved' ? 'badge-approved' : (p.status === 'rejected' ? 'badge-rejected' : 'badge-pending');
         html += `<tr>
             <td style="white-space: nowrap;">
-                <input type="number" value="${p.display_order ?? 0}" style="width:65px;" class="project-order-input" data-id="${p.id}">
+                <input type="number" value="${p.display_order ?? 0}" style="width:70px;" class="project-order-input" data-id="${p.id}" data-field="display_order">
                 <button class="action-btn move-up" onclick="window.moveProjectUp(${p.id})"><i class="fas fa-arrow-up"></i></button>
                 <button class="action-btn move-down" onclick="window.moveProjectDown(${p.id})"><i class="fas fa-arrow-down"></i></button>
-                <button class="action-btn save-order" onclick="window.saveProjectOrder(${p.id})"><i class="fas fa-save"></i></button>
             </td>
             <td>${p.id}</td>
             <td>${p.image ? `<img src="${p.image}" class="thumb-preview" onclick="window.open('${p.image}')">` : '-'}</td>
-            <td>${escapeHtml(p.name_ar)}</td><td>${p.category_ar || '-'}</td><td>${p.emirate}</td>
+            <td>${escapeHtml(p.name_ar)}</td>
+            <td>${p.category_ar || '-'}</td>
+            <td>${p.emirate}</td>
             <td><span class="badge ${statusBadge}">${p.status === 'approved' ? 'موافق' : (p.status === 'rejected' ? 'مرفوض' : 'معلق')}</span></td>
             <td class="action-buttons">
                 <button class="action-btn edit" onclick="window.editProject(${p.id})"><i class="fas fa-edit"></i></button>
@@ -542,22 +541,22 @@ async function loadProjects(page = 1) {
     });
     html += `</tbody></table>`;
     document.getElementById('projectsTableContainer').innerHTML = html;
+    // attach auto-save on input change
+    document.querySelectorAll('.project-order-input').forEach(input => {
+        input.addEventListener('change', function() {
+            const id = this.dataset.id;
+            const newOrder = parseInt(this.value);
+            if (!isNaN(newOrder)) {
+                updateProjectOrder(id, newOrder);
+            }
+        });
+    });
     let totalPages = Math.ceil(projectsTotal / 10);
     let paginationHtml = '<div class="pagination">';
     for (let i = 1; i <= totalPages; i++) paginationHtml += `<button onclick="window.loadProjects(${i})" ${i === page ? 'style="background:#0a2e25;color:#fff;"' : ''}>${i}</button>`;
     paginationHtml += '</div>';
     document.getElementById('projectsPagination').innerHTML = totalPages > 1 ? paginationHtml : '';
 }
-
-window.saveProjectOrder = async (id) => {
-    const input = document.querySelector(`.project-order-input[data-id="${id}"]`);
-    if (!input) return;
-    const newOrder = parseInt(input.value);
-    if (isNaN(newOrder)) return showToast('قيمة غير صالحة', true);
-    const { error } = await supabase.from('projects').update({ display_order: newOrder }).eq('id', id);
-    if (error) showToast(error.message, true);
-    else { showToast('تم حفظ الترتيب'); loadProjects(currentProjectsPage); }
-};
 
 window.moveProjectUp = async (id) => {
     const { data } = await supabase.from('projects').select('display_order').eq('id', id).single();
@@ -599,7 +598,7 @@ window.editProject = async (id) => {
     }
 };
 
-// ==================== المنتجات مع إعادة الترتيب ====================
+// ==================== المنتجات مع حفظ تلقائي ====================
 async function loadProducts() {
     const projectId = document.getElementById('productProjectFilter').value;
     if (!projectId) { document.getElementById('productsTableContainer').innerHTML = '<p style="padding:20px;">✏️ اختر مشروعاً أولاً من القائمة</p>'; return; }
@@ -608,11 +607,10 @@ async function loadProducts() {
     (data || []).forEach(p => {
         html += `<tr>
             <td style="white-space: nowrap;">
-                <input type="number" value="${p.display_order ?? 0}" style="width:65px;" class="product-order-input" data-id="${p.id}">
+                <input type="number" value="${p.display_order ?? 0}" style="width:70px;" class="product-order-input" data-id="${p.id}" data-field="display_order">
                 <button class="action-btn move-up" onclick="window.moveProductUp('${p.id}')"><i class="fas fa-arrow-up"></i></button>
                 <button class="action-btn move-down" onclick="window.moveProductDown('${p.id}')"><i class="fas fa-arrow-down"></i></button>
-                <button class="action-btn save-order" onclick="window.saveProductOrder('${p.id}')"><i class="fas fa-save"></i></button>
-            </td>
+             </td>
             <td>${p.id}</td>
             <td>${p.main_image ? `<img src="${p.main_image}" class="thumb-preview">` : '-'}</td>
             <td>${escapeHtml(p.name_ar)}</td>
@@ -627,17 +625,17 @@ async function loadProducts() {
     });
     html += `</tbody></table>`;
     document.getElementById('productsTableContainer').innerHTML = html;
+    // attach auto-save on input change
+    document.querySelectorAll('.product-order-input').forEach(input => {
+        input.addEventListener('change', function() {
+            const id = this.dataset.id;
+            const newOrder = parseInt(this.value);
+            if (!isNaN(newOrder)) {
+                updateProductOrder(id, newOrder);
+            }
+        });
+    });
 }
-
-window.saveProductOrder = async (id) => {
-    const input = document.querySelector(`.product-order-input[data-id="${id}"]`);
-    if (!input) return;
-    const newOrder = parseInt(input.value);
-    if (isNaN(newOrder)) return showToast('قيمة غير صالحة', true);
-    const { error } = await supabase.from('products').update({ display_order: newOrder }).eq('id', id);
-    if (error) showToast(error.message, true);
-    else { showToast('تم حفظ الترتيب'); loadProducts(); }
-};
 
 window.moveProductUp = async (id) => {
     const { data } = await supabase.from('products').select('display_order').eq('id', id).single();
@@ -713,7 +711,6 @@ document.getElementById('addVariantBtn')?.addEventListener('click', () => {
     renderVariants();
 });
 
-// حفظ المنتج (مع دعم display_order)
 async function saveProduct(e) {
     e.preventDefault();
     const id = document.getElementById('productId').value;
@@ -957,7 +954,7 @@ window.updateFeedbackStatus = async (id, newStatus) => {
     loadFeedbacks();
 };
 
-// ==================== الطلبات (الجدول الجديد) ====================
+// ==================== الطلبات ====================
 async function loadOrders(page = 1) {
     currentOrdersPage = page;
     let query = supabase.from('admin_order_logs').select('*', { count: 'exact' }).order('created_at', { ascending: false }).range((page-1)*10, page*10-1);
@@ -1146,6 +1143,10 @@ window.updateFeedbackStatus = updateFeedbackStatus;
 window.editProject = editProject;
 window.editProduct = editProduct;
 window.editDeal = editDeal;
+window.moveProjectUp = moveProjectUp;
+window.moveProjectDown = moveProjectDown;
+window.moveProductUp = moveProductUp;
+window.moveProductDown = moveProductDown;
 </script>
 </body>
 </html>
