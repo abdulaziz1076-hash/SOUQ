@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>لوحة تحكم المشرف</title>
+    <title>لوحة تحكم المشرف – سوق المشاريع</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
@@ -175,10 +175,25 @@
             justify-content: center;
             transition: 0.2s;
         }
+        .action-btn.move-up, .action-btn.move-down, .action-btn.save-order {
+            color: #D4AF37;
+            background: #fff8e7;
+        }
+        .action-btn.move-up:hover, .action-btn.move-down:hover, .action-btn.save-order:hover {
+            background: #0a2e25;
+            color: white;
+            transform: scale(1.05);
+        }
         .action-btn.edit { color: #2c7da0; background: #eef6fc; }
         .action-btn.edit:hover { background: #c9e6f5; transform: scale(1.05); }
         .action-btn.delete { color: #e53e3e; background: #fee9e9; }
         .action-btn.delete:hover { background: #fccaca; transform: scale(1.05); }
+        .order-items-preview {
+            max-width: 300px;
+            white-space: normal;
+            font-size: 12px;
+            line-height: 1.4;
+        }
         
         /* النماذج المنبثقة */
         .modal {
@@ -238,10 +253,14 @@
         .pagination button { padding: 8px 16px; border-radius: 30px; border: 1px solid #cfdfe9; background: white; cursor: pointer; transition: 0.2s; }
         .pagination button:hover { background: #0a2e25; color: white; border-color: #0a2e25; }
         
+        .order-id { font-family: monospace; font-size: 12px; }
+        .order-total { font-weight: 800; color: #0a2e25; }
+        
         @media (max-width: 700px) {
             .tab-btn { padding: 8px 16px; font-size: 12px; }
             .filter-group { width: 100%; }
             .filter-bar input, .filter-bar select { width: 100%; }
+            .data-table th, .data-table td { font-size: 12px; padding: 8px 6px; }
         }
     </style>
 </head>
@@ -275,9 +294,11 @@
             <button class="tab-btn" data-tab="deals"><i class="fas fa-tags"></i> العروض</button>
             <button class="tab-btn" data-tab="contacts"><i class="fas fa-address-card"></i> بيانات التواصل</button>
             <button class="tab-btn" data-tab="feedbacks"><i class="fas fa-comment-dots"></i> الشكاوى</button>
+            <!-- التبويب الجديد: الطلبات -->
+            <button class="tab-btn" data-tab="orders"><i class="fas fa-truck"></i> الطلبات</button>
         </div>
 
-        <!-- Registrations -->
+        <!-- Registrations (نفس القديم) -->
         <div id="registrationsTab" class="content-card active">
             <div class="filter-bar">
                 <div class="filter-group">
@@ -293,7 +314,7 @@
             <div id="registrationsTableContainer"></div>
         </div>
 
-        <!-- Projects -->
+        <!-- Projects (مع إضافة عمود الترتيب وأزرار التحريك) -->
         <div id="projectsTab" class="content-card">
             <div class="filter-bar">
                 <div class="filter-group">
@@ -310,7 +331,7 @@
             <div id="projectsPagination" class="pagination"></div>
         </div>
 
-        <!-- Products -->
+        <!-- Products (مع إضافة عمود الترتيب وأزرار) -->
         <div id="productsTab" class="content-card">
             <div class="filter-bar">
                 <select id="productProjectFilter"><option value="">اختر المشروع أولاً</option></select>
@@ -319,7 +340,7 @@
             <div id="productsTableContainer"></div>
         </div>
 
-        <!-- Deals -->
+        <!-- Deals (نفس القديم) -->
         <div id="dealsTab" class="content-card">
             <div class="filter-bar">
                 <select id="dealProjectFilter"><option value="">اختر المشروع</option></select>
@@ -328,7 +349,7 @@
             <div id="dealsTableContainer"></div>
         </div>
 
-        <!-- Contacts -->
+        <!-- Contacts (نفس القديم) -->
         <div id="contactsTab" class="content-card">
             <div class="filter-bar">
                 <select id="contactProjectFilter"><option value="">اختر المشروع</option></select>
@@ -336,7 +357,7 @@
             <div id="contactsTableContainer"></div>
         </div>
 
-        <!-- Feedbacks -->
+        <!-- Feedbacks (نفس القديم) -->
         <div id="feedbacksTab" class="content-card">
             <div class="filter-bar">
                 <select id="feedbackStatusFilter">
@@ -349,10 +370,24 @@
             </div>
             <div id="feedbacksTableContainer"></div>
         </div>
+
+        <!-- ========== تبويب الطلبات (جديد) ========== -->
+        <div id="ordersTab" class="content-card">
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <input type="text" id="ordersSearch" placeholder="بحث: مشروع، واتساب...">
+                    <select id="ordersProjectFilter"><option value="">كل المشاريع</option></select>
+                </div>
+                <button id="exportOrdersBtn" class="btn-outline"><i class="fas fa-file-csv"></i> تصدير CSV</button>
+            </div>
+            <div id="ordersTableContainer"></div>
+            <div id="ordersPagination" class="pagination"></div>
+        </div>
+
     </div>
 </div>
 
-<!-- مودال المشروع -->
+<!-- مودال المشروع (نفس القديم) -->
 <div id="projectModal" class="modal">
     <div class="modal-content">
         <div class="modal-header"><h3>مشروع</h3><button class="modal-close" data-modal="projectModal"><i class="fas fa-times"></i></button></div>
@@ -377,7 +412,7 @@
     </div>
 </div>
 
-<!-- مودال المنتج -->
+<!-- مودال المنتج (مع إضافة حقول الترتيب) -->
 <div id="productModal" class="modal">
     <div class="modal-content">
         <div class="modal-header"><h3>منتج</h3><button class="modal-close" data-modal="productModal"><i class="fas fa-times"></i></button></div>
@@ -397,10 +432,8 @@
                 <div class="form-row"><label>التفاصيل (إنجليزي)</label><textarea id="productDetailsEn" rows="3"></textarea></div>
                 <div class="form-row"><label>نوع المنتج (عربي)</label><select id="productTypeAr"><option value="">-- اختر --</option><option value="أطباق رئيسية">أطباق رئيسية</option><option value="مشروبات">مشروبات</option><option value="حلويات">حلويات</option></select></div>
                 <div class="form-row"><label>نوع المنتج (إنجليزي)</label><select id="productTypeEn"><option value="">-- Select --</option><option value="Main Dishes">Main Dishes</option><option value="Drinks">Drinks</option><option value="Desserts">Desserts</option></select></div>
-                <!-- حقول التصنيف الجديدة -->
                 <div class="form-row"><label>تصنيف المنتج (عربي)</label><select id="productCategoryAr"></select></div>
                 <div class="form-row"><label>تصنيف المنتج (إنجليزي)</label><select id="productCategoryEn"></select></div>
-                <!-- نهاية حقول التصنيف -->
                 <div class="form-row"><label>السعر (عربي)</label><input id="productPriceAr" placeholder="مثل: 50 درهم"></div>
                 <div class="form-row"><label>السعر (إنجليزي)</label><input id="productPriceEn" placeholder="e.g. 50 AED"></div>
                 <div class="form-row"><label>خيارات المنتج (مثل: كبير/صغير)</label><div id="variantsContainer"></div><button type="button" id="addVariantBtn" class="btn-outline" style="margin-top:10px;"><i class="fas fa-plus"></i> إضافة خيار</button></div>
@@ -410,7 +443,7 @@
     </div>
 </div>
 
-<!-- مودال العرض -->
+<!-- مودال العرض (نفس القديم) -->
 <div id="dealModal" class="modal">
     <div class="modal-content">
         <div class="modal-header"><h3>عرض</h3><button class="modal-close" data-modal="dealModal"><i class="fas fa-times"></i></button></div>
@@ -441,16 +474,11 @@ const ALLOWED_EMAIL = 'abdulaziz1076@gmail.com';
 let currentProjectsPage = 1;
 let projectsTotal = 0;
 let currentVariants = [];
+let currentOrdersPage = 1;
+let ordersTotal = 0;
 
-// قائمة التصنيفات المتاحة (مطابقة للقوائم في الموقع)
-const CATEGORIES_AR = [
-    "أطعمة ومشروبات", "الرقميات", "روائح وعطور", "عناية", "حلويات", 
-    "تجميل", "ملابس", "يدويات", "هدايا", "عطارة", "فنون", "نباتات", "ترفيه"
-];
-const CATEGORIES_EN = [
-    "Food & Beverages", "IT", "Scents & Perfumes", "Care", "Sweets",
-    "Beauty", "Clothes", "Handmade", "Gifts", "Apothecary", "Arts", "Plants", "Entertainment"
-];
+const CATEGORIES_AR = ["أطعمة ومشروبات","الرقميات","روائح وعطور","عناية","حلويات","تجميل","ملابس","يدويات","هدايا","عطارة","فنون","نباتات","ترفيه"];
+const CATEGORIES_EN = ["Food & Beverages","IT","Scents & Perfumes","Care","Sweets","Beauty","Clothes","Handmade","Gifts","Apothecary","Arts","Plants","Entertainment"];
 
 function showToast(msg, isErr = false) {
     let toast = document.createElement('div');
@@ -468,16 +496,18 @@ async function loadStats() {
     const { count: feedbacksCount } = await supabase.from('feedbacks').select('*', { count: 'exact', head: true });
     const { count: totalRegs } = await supabase.from('project_registrations').select('*', { count: 'exact', head: true });
     const { count: pendingRegs } = await supabase.from('project_registrations').select('*', { count: 'exact', head: true }).eq('status', 'pending');
+    const { count: ordersCount } = await supabase.from('admin_order_logs').select('*', { count: 'exact', head: true });
     document.getElementById('statsContainer').innerHTML = `
         <div class="stat-card"><div class="stat-icon"><i class="fas fa-store"></i></div><div class="stat-number">${projectsCount||0}</div><div class="stat-label">المشاريع</div></div>
         <div class="stat-card"><div class="stat-icon"><i class="fas fa-box"></i></div><div class="stat-number">${productsCount||0}</div><div class="stat-label">المنتجات</div></div>
         <div class="stat-card"><div class="stat-icon"><i class="fas fa-clipboard-list"></i></div><div class="stat-number">${totalRegs||0}</div><div class="stat-label">إجمالي الطلبات</div></div>
         <div class="stat-card"><div class="stat-icon"><i class="fas fa-clock"></i></div><div class="stat-number">${pendingRegs||0}</div><div class="stat-label">طلبات معلقة</div></div>
         <div class="stat-card"><div class="stat-icon"><i class="fas fa-comment-dots"></i></div><div class="stat-number">${feedbacksCount||0}</div><div class="stat-label">الشكاوى</div></div>
+        <div class="stat-card"><div class="stat-icon"><i class="fas fa-truck"></i></div><div class="stat-number">${ordersCount||0}</div><div class="stat-label">الطلبات (السلة)</div></div>
     `;
 }
 
-// ==================== المشاريع ====================
+// ==================== المشاريع مع إعادة الترتيب ====================
 async function loadProjects(page = 1) {
     currentProjectsPage = page;
     let query = supabase.from('projects').select('*', { count: 'exact' }).order('display_order', { ascending: true, nullsFirst: false }).order('id', { ascending: false }).range((page-1)*10, page*10-1);
@@ -490,10 +520,16 @@ async function loadProjects(page = 1) {
     const { data, error, count } = await query;
     projectsTotal = count || 0;
     if (error) { showToast(error.message, true); return; }
-    let html = `<table class="data-table"><thead><tr><th>ID</th><th>الصورة</th><th>الاسم (عربي)</th><th>التصنيف</th><th>الإمارة</th><th>الحالة</th><th>الإجراءات</th></tr></thead><tbody>`;
+    let html = `<table class="data-table"><thead><tr><th>الترتيب</th><th>ID</th><th>الصورة</th><th>الاسم (عربي)</th><th>التصنيف</th><th>الإمارة</th><th>الحالة</th><th>الإجراءات</th></tr></thead><tbody>`;
     (data || []).forEach(p => {
         let statusBadge = p.status === 'approved' ? 'badge-approved' : (p.status === 'rejected' ? 'badge-rejected' : 'badge-pending');
         html += `<tr>
+            <td style="white-space: nowrap;">
+                <input type="number" value="${p.display_order ?? 0}" style="width:65px;" class="project-order-input" data-id="${p.id}">
+                <button class="action-btn move-up" onclick="window.moveProjectUp(${p.id})"><i class="fas fa-arrow-up"></i></button>
+                <button class="action-btn move-down" onclick="window.moveProjectDown(${p.id})"><i class="fas fa-arrow-down"></i></button>
+                <button class="action-btn save-order" onclick="window.saveProjectOrder(${p.id})"><i class="fas fa-save"></i></button>
+            </td>
             <td>${p.id}</td>
             <td>${p.image ? `<img src="${p.image}" class="thumb-preview" onclick="window.open('${p.image}')">` : '-'}</td>
             <td>${escapeHtml(p.name_ar)}</td><td>${p.category_ar || '-'}</td><td>${p.emirate}</td>
@@ -511,6 +547,36 @@ async function loadProjects(page = 1) {
     for (let i = 1; i <= totalPages; i++) paginationHtml += `<button onclick="window.loadProjects(${i})" ${i === page ? 'style="background:#0a2e25;color:#fff;"' : ''}>${i}</button>`;
     paginationHtml += '</div>';
     document.getElementById('projectsPagination').innerHTML = totalPages > 1 ? paginationHtml : '';
+}
+
+window.saveProjectOrder = async (id) => {
+    const input = document.querySelector(`.project-order-input[data-id="${id}"]`);
+    if (!input) return;
+    const newOrder = parseInt(input.value);
+    if (isNaN(newOrder)) return showToast('قيمة غير صالحة', true);
+    const { error } = await supabase.from('projects').update({ display_order: newOrder }).eq('id', id);
+    if (error) showToast(error.message, true);
+    else { showToast('تم حفظ الترتيب'); loadProjects(currentProjectsPage); }
+};
+
+window.moveProjectUp = async (id) => {
+    const { data } = await supabase.from('projects').select('display_order').eq('id', id).single();
+    if (!data) return;
+    const newOrder = (data.display_order || 0) - 1;
+    await updateProjectOrder(id, newOrder);
+};
+
+window.moveProjectDown = async (id) => {
+    const { data } = await supabase.from('projects').select('display_order').eq('id', id).single();
+    if (!data) return;
+    const newOrder = (data.display_order || 0) + 1;
+    await updateProjectOrder(id, newOrder);
+};
+
+async function updateProjectOrder(id, newOrder) {
+    const { error } = await supabase.from('projects').update({ display_order: newOrder }).eq('id', id);
+    if (error) showToast(error.message, true);
+    else { showToast('تم تحديث الترتيب'); loadProjects(currentProjectsPage); }
 }
 
 window.editProject = async (id) => {
@@ -533,23 +599,20 @@ window.editProject = async (id) => {
     }
 };
 
-// ==================== حذف عام ====================
-window.deleteItem = async (table, id) => {
-    if (confirm('هل أنت متأكد من الحذف؟')) {
-        const { error } = await supabase.from(table).delete().eq('id', id);
-        if (error) showToast(error.message, true);
-        else { showToast('تم الحذف بنجاح'); if (table === 'projects') loadProjects(); else if (table === 'products') loadProducts(); else if (table === 'deals') loadDeals(); loadStats(); }
-    }
-};
-
-// ==================== المنتجات مع إظهار التصنيف وإمكانية تعديله ====================
+// ==================== المنتجات مع إعادة الترتيب ====================
 async function loadProducts() {
     const projectId = document.getElementById('productProjectFilter').value;
     if (!projectId) { document.getElementById('productsTableContainer').innerHTML = '<p style="padding:20px;">✏️ اختر مشروعاً أولاً من القائمة</p>'; return; }
     const { data } = await supabase.from('products').select('*').eq('project_id', projectId).order('display_order', { ascending: true, nullsFirst: false });
-    let html = `<table class="data-table"><thead><tr><th>ID</th><th>الصورة</th><th>الاسم (عربي)</th><th>التصنيف (عربي)</th><th>النوع</th><th>السعر</th><th>الإجراءات</th></td></thead><tbody>`;
+    let html = `<table class="data-table"><thead><tr><th>الترتيب</th><th>ID</th><th>الصورة</th><th>الاسم (عربي)</th><th>التصنيف</th><th>النوع</th><th>السعر</th><th>الإجراءات</th></tr></thead><tbody>`;
     (data || []).forEach(p => {
         html += `<tr>
+            <td style="white-space: nowrap;">
+                <input type="number" value="${p.display_order ?? 0}" style="width:65px;" class="product-order-input" data-id="${p.id}">
+                <button class="action-btn move-up" onclick="window.moveProductUp('${p.id}')"><i class="fas fa-arrow-up"></i></button>
+                <button class="action-btn move-down" onclick="window.moveProductDown('${p.id}')"><i class="fas fa-arrow-down"></i></button>
+                <button class="action-btn save-order" onclick="window.saveProductOrder('${p.id}')"><i class="fas fa-save"></i></button>
+            </td>
             <td>${p.id}</td>
             <td>${p.main_image ? `<img src="${p.main_image}" class="thumb-preview">` : '-'}</td>
             <td>${escapeHtml(p.name_ar)}</td>
@@ -564,6 +627,36 @@ async function loadProducts() {
     });
     html += `</tbody></table>`;
     document.getElementById('productsTableContainer').innerHTML = html;
+}
+
+window.saveProductOrder = async (id) => {
+    const input = document.querySelector(`.product-order-input[data-id="${id}"]`);
+    if (!input) return;
+    const newOrder = parseInt(input.value);
+    if (isNaN(newOrder)) return showToast('قيمة غير صالحة', true);
+    const { error } = await supabase.from('products').update({ display_order: newOrder }).eq('id', id);
+    if (error) showToast(error.message, true);
+    else { showToast('تم حفظ الترتيب'); loadProducts(); }
+};
+
+window.moveProductUp = async (id) => {
+    const { data } = await supabase.from('products').select('display_order').eq('id', id).single();
+    if (!data) return;
+    const newOrder = (data.display_order || 0) - 1;
+    await updateProductOrder(id, newOrder);
+};
+
+window.moveProductDown = async (id) => {
+    const { data } = await supabase.from('products').select('display_order').eq('id', id).single();
+    if (!data) return;
+    const newOrder = (data.display_order || 0) + 1;
+    await updateProductOrder(id, newOrder);
+};
+
+async function updateProductOrder(id, newOrder) {
+    const { error } = await supabase.from('products').update({ display_order: newOrder }).eq('id', id);
+    if (error) showToast(error.message, true);
+    else { showToast('تم تحديث الترتيب'); loadProducts(); }
 }
 
 window.editProduct = async (id) => {
@@ -583,7 +676,6 @@ window.editProduct = async (id) => {
         document.getElementById('productDetailsEn').value = (data.details_en || []).join('\n');
         if (document.getElementById('productTypeAr')) document.getElementById('productTypeAr').value = data.type_ar || '';
         if (document.getElementById('productTypeEn')) document.getElementById('productTypeEn').value = data.type_en || '';
-        // تعبئة حقول التصنيف
         if (document.getElementById('productCategoryAr')) document.getElementById('productCategoryAr').value = data.category_ar || '';
         if (document.getElementById('productCategoryEn')) document.getElementById('productCategoryEn').value = data.category_en || '';
         document.getElementById('productPriceAr').value = data.price_ar || '';
@@ -621,6 +713,7 @@ document.getElementById('addVariantBtn')?.addEventListener('click', () => {
     renderVariants();
 });
 
+// حفظ المنتج (مع دعم display_order)
 async function saveProduct(e) {
     e.preventDefault();
     const id = document.getElementById('productId').value;
@@ -674,6 +767,15 @@ async function saveProduct(e) {
     loadProducts();
     loadStats();
 }
+
+// ==================== حذف عام ====================
+window.deleteItem = async (table, id) => {
+    if (confirm('هل أنت متأكد من الحذف؟')) {
+        const { error } = await supabase.from(table).delete().eq('id', id);
+        if (error) showToast(error.message, true);
+        else { showToast('تم الحذف بنجاح'); if (table === 'projects') loadProjects(); else if (table === 'products') loadProducts(); else if (table === 'deals') loadDeals(); loadStats(); }
+    }
+};
 
 // ==================== وظائف أخرى (التسجيلات، العروض، جهات الاتصال، الشكاوى) ====================
 async function saveProject(e) {
@@ -855,20 +957,72 @@ window.updateFeedbackStatus = async (id, newStatus) => {
     loadFeedbacks();
 };
 
-function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, function(m) { if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m; }); }
-
-function fillCategoryDropdowns() {
-    const projectCatAr = document.getElementById('projectCategoryAr');
-    const projectCatEn = document.getElementById('projectCategoryEn');
-    if (projectCatAr) projectCatAr.innerHTML = '<option value="">-- اختر --</option>' + CATEGORIES_AR.map(c => `<option value="${c}">${c}</option>`).join('');
-    if (projectCatEn) projectCatEn.innerHTML = '<option value="">-- Select --</option>' + CATEGORIES_EN.map(c => `<option value="${c}">${c}</option>`).join('');
-
-    const prodCatAr = document.getElementById('productCategoryAr');
-    const prodCatEn = document.getElementById('productCategoryEn');
-    if (prodCatAr) prodCatAr.innerHTML = '<option value="">-- اختر --</option>' + CATEGORIES_AR.map(c => `<option value="${c}">${c}</option>`).join('');
-    if (prodCatEn) prodCatEn.innerHTML = '<option value="">-- Select --</option>' + CATEGORIES_EN.map(c => `<option value="${c}">${c}</option>`).join('');
+// ==================== الطلبات (الجدول الجديد) ====================
+async function loadOrders(page = 1) {
+    currentOrdersPage = page;
+    let query = supabase.from('admin_order_logs').select('*', { count: 'exact' }).order('created_at', { ascending: false }).range((page-1)*10, page*10-1);
+    const search = document.getElementById('ordersSearch').value;
+    if (search) {
+        query = query.or(`project_name.ilike.%${search}%,customer_whatsapp.ilike.%${search}%,order_number.ilike.%${search}%`);
+    }
+    const projectFilter = document.getElementById('ordersProjectFilter').value;
+    if (projectFilter) query = query.eq('project_id', parseInt(projectFilter));
+    const { data, error, count } = await query;
+    ordersTotal = count || 0;
+    if (error) { showToast(error.message, true); return; }
+    let html = `<table class="data-table"><thead><tr><th>رقم الطلب</th><th>المشروع</th><th>العميل (واتساب)</th><th>المواد المطلوبة</th><th>الإجمالي</th><th>التاريخ</th><th>الجلسة</th></tr></thead><tbody>`;
+    (data || []).forEach(order => {
+        let itemsPreview = '';
+        if (order.items && Array.isArray(order.items)) {
+            itemsPreview = order.items.map(it => `${it.productName} × ${it.quantity}`).join(', ');
+        }
+        html += `<tr>
+            <td class="order-id">${escapeHtml(order.order_number)}</td>
+            <td>${escapeHtml(order.project_name)}</td>
+            <td>${escapeHtml(order.customer_whatsapp)}</td>
+            <td class="order-items-preview">${escapeHtml(itemsPreview)}</td>
+            <td class="order-total">${escapeHtml(order.total_price)}</td>
+            <td>${new Date(order.created_at).toLocaleString()}</td>
+            <td style="font-size:11px;">${escapeHtml(order.customer_session)}</td>
+        </tr>`;
+    });
+    html += `</tbody></table>`;
+    document.getElementById('ordersTableContainer').innerHTML = html;
+    let totalPages = Math.ceil(ordersTotal / 10);
+    let paginationHtml = '<div class="pagination">';
+    for (let i = 1; i <= totalPages; i++) paginationHtml += `<button onclick="window.loadOrders(${i})" ${i === page ? 'style="background:#0a2e25;color:#fff;"' : ''}>${i}</button>`;
+    paginationHtml += '</div>';
+    document.getElementById('ordersPagination').innerHTML = totalPages > 1 ? paginationHtml : '';
 }
 
+async function exportOrdersCSV() {
+    const { data } = await supabase.from('admin_order_logs').select('*').order('created_at', { ascending: false });
+    if (!data) return;
+    let csvRows = [['رقم الطلب','اسم المشروع','رقم العميل','المواد (JSON)','الإجمالي','التاريخ','جلسة العميل']];
+    data.forEach(order => {
+        csvRows.push([
+            order.order_number,
+            order.project_name,
+            order.customer_whatsapp,
+            JSON.stringify(order.items),
+            order.total_price,
+            order.created_at,
+            order.customer_session
+        ]);
+    });
+    const csvContent = csvRows.map(row => row.join(',')).join('\n');
+    const blob = new Blob(["\uFEFF" + csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.href = url;
+    link.setAttribute('download', 'orders_export.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+}
+
+// ==================== تهيئة القوائم المنسدلة ====================
 async function initEmirateFilter() {
     const { data } = await supabase.from('projects').select('emirate');
     const unique = [...new Set((data||[]).map(p=>p.emirate).filter(Boolean))];
@@ -887,7 +1041,25 @@ async function initProjectSelects() {
     fillSelect('productProjectFilter');
     fillSelect('dealProjectFilter');
     fillSelect('contactProjectFilter');
+    const ordersFilter = document.getElementById('ordersProjectFilter');
+    if (ordersFilter) {
+        ordersFilter.innerHTML = '<option value="">كل المشاريع</option>';
+        data.forEach(p => { let opt = document.createElement('option'); opt.value = p.id; opt.textContent = p.name_ar; ordersFilter.appendChild(opt); });
+    }
 }
+function fillCategoryDropdowns() {
+    const projectCatAr = document.getElementById('projectCategoryAr');
+    const projectCatEn = document.getElementById('projectCategoryEn');
+    if (projectCatAr) projectCatAr.innerHTML = '<option value="">-- اختر --</option>' + CATEGORIES_AR.map(c => `<option value="${c}">${c}</option>`).join('');
+    if (projectCatEn) projectCatEn.innerHTML = '<option value="">-- Select --</option>' + CATEGORIES_EN.map(c => `<option value="${c}">${c}</option>`).join('');
+    const prodCatAr = document.getElementById('productCategoryAr');
+    const prodCatEn = document.getElementById('productCategoryEn');
+    if (prodCatAr) prodCatAr.innerHTML = '<option value="">-- اختر --</option>' + CATEGORIES_AR.map(c => `<option value="${c}">${c}</option>`).join('');
+    if (prodCatEn) prodCatEn.innerHTML = '<option value="">-- Select --</option>' + CATEGORIES_EN.map(c => `<option value="${c}">${c}</option>`).join('');
+}
+
+function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, function(m) { if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m; }); }
+
 function attachTabs() {
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -902,9 +1074,11 @@ function attachTabs() {
             else if (tabId === 'contacts') loadContacts();
             else if (tabId === 'feedbacks') loadFeedbacks();
             else if (tabId === 'registrations') loadRegistrations();
+            else if (tabId === 'orders') loadOrders(1);
         });
     });
 }
+
 async function checkSession() {
     const { data: { session } } = await supabase.auth.getSession();
     if (session && session.user.email === ALLOWED_EMAIL) {
@@ -920,9 +1094,11 @@ async function checkSession() {
         await loadDeals();
         await loadContacts();
         await loadFeedbacks();
+        await loadOrders(1);
         attachTabs();
     }
 }
+
 document.getElementById('addProjectBtn').onclick = () => { document.getElementById('projectForm').reset(); document.getElementById('projectId').value = ''; document.getElementById('projectModal').classList.add('active'); };
 document.getElementById('addProductBtn').onclick = () => { let pid = document.getElementById('productProjectFilter').value; if(!pid){ showToast('اختر مشروعاً أولاً', true); return; } document.getElementById('productForm').reset(); document.getElementById('productId').value = ''; document.getElementById('productProjectId').value = pid; currentVariants = []; renderVariants(); document.getElementById('productModal').classList.add('active'); };
 document.getElementById('addDealBtn').onclick = () => { let pid = document.getElementById('dealProjectFilter').value; if(!pid){ showToast('اختر مشروعاً', true); return; } document.getElementById('dealForm').reset(); document.getElementById('dealId').value = ''; document.getElementById('dealProjectId').value = pid; document.getElementById('dealModal').classList.add('active'); };
@@ -934,6 +1110,10 @@ document.getElementById('projectEmirateFilter').addEventListener('change', () =>
 document.getElementById('projectStatusFilter').addEventListener('change', () => { loadProjects(1); });
 document.getElementById('feedbackStatusFilter').addEventListener('change', () => { loadFeedbacks(); });
 document.getElementById('regStatusFilter').addEventListener('change', () => { loadRegistrations(); });
+document.getElementById('ordersSearch').addEventListener('input', () => { loadOrders(1); });
+document.getElementById('ordersProjectFilter').addEventListener('change', () => { loadOrders(1); });
+document.getElementById('exportOrdersBtn').addEventListener('click', exportOrdersCSV);
+
 document.querySelectorAll('.modal-close').forEach(btn => btn.addEventListener('click', () => { document.getElementById(btn.dataset.modal).classList.remove('active'); }));
 window.onclick = (e) => { if(e.target.classList.contains('modal')) e.target.classList.remove('active'); };
 document.getElementById('projectForm').addEventListener('submit', saveProject);
@@ -956,8 +1136,16 @@ document.getElementById('forgotPasswordLink')?.addEventListener('click', async (
     else alert('تم إرسال رابط إعادة التعيين إلى بريدك الإلكتروني');
 });
 checkSession();
+
 window.loadProjects = loadProjects;
 window.loadProducts = loadProducts;
+window.loadOrders = loadOrders;
+window.exportOrdersCSV = exportOrdersCSV;
+window.updateRegStatus = updateRegStatus;
+window.updateFeedbackStatus = updateFeedbackStatus;
+window.editProject = editProject;
+window.editProduct = editProduct;
+window.editDeal = editDeal;
 </script>
 </body>
 </html>
