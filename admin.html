@@ -16,8 +16,6 @@
             direction: rtl;
         }
         .admin-wrapper { max-width: 1600px; margin: 0 auto; padding: 24px 20px; }
-        
-        /* شريط علوي */
         .top-bar {
             display: flex;
             justify-content: space-between;
@@ -46,7 +44,6 @@
         }
         .logout-btn:hover { background: #c53030; transform: translateY(-2px); }
         
-        /* البطاقات الإحصائية */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -76,7 +73,6 @@
         .stat-number { font-size: 38px; font-weight: 800; color: #0a2e25; line-height: 1.2; }
         .stat-label { font-size: 14px; color: #5f7f9a; margin-top: 8px; font-weight: 500; }
         
-        /* تبويبات */
         .tabs-container {
             background: white;
             border-radius: 60px;
@@ -110,7 +106,6 @@
         .content-card.active { display: block; animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* شريط الفلترة والبحث */
         .filter-bar {
             display: flex;
             flex-wrap: wrap;
@@ -147,7 +142,6 @@
         .filter-bar button.btn-outline:hover { background: #0a2e25; color: white; transform: translateY(-2px); }
         .filter-bar button:hover { transform: translateY(-2px); background: #1a5f44; }
         
-        /* الجداول */
         .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
         .data-table th, .data-table td { padding: 16px 12px; text-align: right; border-bottom: 1px solid #edf2f7; vertical-align: middle; }
         .data-table th { background: #fafcfd; font-weight: 800; color: #0a2e25; }
@@ -160,7 +154,7 @@
         .badge-resolved { background: #d9f99d; color: #3f6212; }
         
         .thumb-preview { width: 45px; height: 45px; object-fit: cover; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); cursor: pointer; }
-        .action-buttons { display: flex; gap: 10px; }
+        .action-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
         .action-btn {
             background: none;
             border: none;
@@ -189,15 +183,24 @@
         .action-btn.delete { color: #e53e3e; background: #fee9e9; }
         .action-btn.delete:hover { background: #fccaca; transform: scale(1.05); }
         .order-items-preview {
-            max-width: 300px;
-            white-space: normal;
+            max-width: 250px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
             font-size: 12px;
-            line-height: 1.4;
         }
         .order-id { font-family: monospace; font-size: 12px; }
         .order-total { font-weight: 800; color: #0a2e25; }
+        .view-details-btn {
+            background: #D4AF37;
+            color: #0a2e25;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            cursor: pointer;
+        }
         
-        /* النماذج المنبثقة */
         .modal {
             display: none;
             position: fixed;
@@ -323,6 +326,7 @@
                 <div class="filter-group">
                     <button id="addProjectBtn" class="btn-outline"><i class="fas fa-plus"></i> مشروع جديد</button>
                     <button id="exportProjectsBtn" class="btn-outline"><i class="fas fa-file-csv"></i> تصدير</button>
+                    <button id="reorderProjectsBtn" class="btn-outline"><i class="fas fa-sort-amount-down"></i> إعادة ترتيب</button>
                 </div>
             </div>
             <div id="projectsTableContainer"></div>
@@ -334,6 +338,7 @@
             <div class="filter-bar">
                 <select id="productProjectFilter"><option value="">اختر المشروع أولاً</option></select>
                 <button id="addProductBtn" class="btn-outline"><i class="fas fa-plus"></i> منتج جديد</button>
+                <button id="reorderProductsBtn" class="btn-outline"><i class="fas fa-sort-amount-down"></i> إعادة ترتيب</button>
             </div>
             <div id="productsTableContainer"></div>
         </div>
@@ -369,11 +374,11 @@
             <div id="feedbacksTableContainer"></div>
         </div>
 
-        <!-- Orders tab -->
+        <!-- Orders -->
         <div id="ordersTab" class="content-card">
             <div class="filter-bar">
                 <div class="filter-group">
-                    <input type="text" id="ordersSearch" placeholder="بحث: مشروع، واتساب...">
+                    <input type="text" id="ordersSearch" placeholder="بحث: مشروع، واتساب، رقم طلب...">
                     <select id="ordersProjectFilter"><option value="">كل المشاريع</option></select>
                 </div>
                 <button id="exportOrdersBtn" class="btn-outline"><i class="fas fa-file-csv"></i> تصدير CSV</button>
@@ -381,7 +386,6 @@
             <div id="ordersTableContainer"></div>
             <div id="ordersPagination" class="pagination"></div>
         </div>
-
     </div>
 </div>
 
@@ -463,6 +467,14 @@
     </div>
 </div>
 
+<!-- Order Details Modal -->
+<div id="orderDetailsModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><h3>تفاصيل الطلب</h3><button class="modal-close" data-modal="orderDetailsModal"><i class="fas fa-times"></i></button></div>
+        <div class="modal-body" id="orderDetailsBody"></div>
+    </div>
+</div>
+
 <script type="module">
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 import { APP_CONFIG } from './config.js';
@@ -505,7 +517,7 @@ async function loadStats() {
     `;
 }
 
-// ==================== المشاريع مع حفظ تلقائي ====================
+// ==================== المشاريع مع ترتيب ذكي (تبادل القيم) ====================
 async function loadProjects(page = 1) {
     currentProjectsPage = page;
     let query = supabase.from('projects').select('*', { count: 'exact' }).order('display_order', { ascending: true, nullsFirst: false }).order('id', { ascending: false }).range((page-1)*10, page*10-1);
@@ -523,31 +535,31 @@ async function loadProjects(page = 1) {
         let statusBadge = p.status === 'approved' ? 'badge-approved' : (p.status === 'rejected' ? 'badge-rejected' : 'badge-pending');
         html += `<tr>
             <td style="white-space: nowrap;">
-                <input type="number" value="${p.display_order ?? 0}" style="width:70px;" class="project-order-input" data-id="${p.id}" data-field="display_order">
-                <button class="action-btn move-up" onclick="window.moveProjectUp(${p.id})"><i class="fas fa-arrow-up"></i></button>
-                <button class="action-btn move-down" onclick="window.moveProjectDown(${p.id})"><i class="fas fa-arrow-down"></i></button>
-            </td>
-            <td>${p.id}</td>
-            <td>${p.image ? `<img src="${p.image}" class="thumb-preview" onclick="window.open('${p.image}')">` : '-'}</td>
-            <td>${escapeHtml(p.name_ar)}</td>
-            <td>${p.category_ar || '-'}</td>
-            <td>${p.emirate}</td>
-            <td><span class="badge ${statusBadge}">${p.status === 'approved' ? 'موافق' : (p.status === 'rejected' ? 'مرفوض' : 'معلق')}</span></td>
+                <input type="number" value="${p.display_order ?? 0}" style="width:70px;" class="project-order-input" data-id="${p.id}">
+                <button class="action-btn move-up" onclick="window.swapProjectOrder(${p.id}, 'up')"><i class="fas fa-arrow-up"></i></button>
+                <button class="action-btn move-down" onclick="window.swapProjectOrder(${p.id}, 'down')"><i class="fas fa-arrow-down"></i></button>
+             </td>
+             <td>${p.id}</td>
+             <td>${p.image ? `<img src="${p.image}" class="thumb-preview" onclick="window.open('${p.image}')">` : '-'}</td>
+             <td>${escapeHtml(p.name_ar)}</td>
+             <td>${p.category_ar || '-'}</td>
+             <td>${p.emirate}</td>
+             <td><span class="badge ${statusBadge}">${p.status === 'approved' ? 'موافق' : (p.status === 'rejected' ? 'مرفوض' : 'معلق')}</span></td>
             <td class="action-buttons">
                 <button class="action-btn edit" onclick="window.editProject(${p.id})"><i class="fas fa-edit"></i></button>
                 <button class="action-btn delete" onclick="window.deleteItem('projects',${p.id})"><i class="fas fa-trash"></i></button>
             </td>
-        </tr>`;
+         `;
     });
-    html += `</tbody></table>`;
+    html += `</tbody>`;
     document.getElementById('projectsTableContainer').innerHTML = html;
-    // attach auto-save on input change
+    // auto-save on manual order change
     document.querySelectorAll('.project-order-input').forEach(input => {
         input.addEventListener('change', function() {
             const id = this.dataset.id;
             const newOrder = parseInt(this.value);
             if (!isNaN(newOrder)) {
-                updateProjectOrder(id, newOrder);
+                updateProjectOrderDirect(id, newOrder);
             }
         });
     });
@@ -558,25 +570,53 @@ async function loadProjects(page = 1) {
     document.getElementById('projectsPagination').innerHTML = totalPages > 1 ? paginationHtml : '';
 }
 
-window.moveProjectUp = async (id) => {
-    const { data } = await supabase.from('projects').select('display_order').eq('id', id).single();
-    if (!data) return;
-    const newOrder = (data.display_order || 0) - 1;
-    await updateProjectOrder(id, newOrder);
+// تبديل الترتيب بين المشروع الحالي والمشروع الذي قبله/بعده
+window.swapProjectOrder = async (id, direction) => {
+    // جلب المشروع الحالي
+    const { data: current, error: err1 } = await supabase.from('projects').select('id, display_order').eq('id', id).single();
+    if (err1 || !current) return showToast('خطأ في جلب البيانات', true);
+    let currentOrder = current.display_order ?? 0;
+    
+    // جلب المشروع المجاور (الذي يسبقه أو يليه حسب الاتجاه)
+    let query;
+    if (direction === 'up') {
+        query = supabase.from('projects').select('id, display_order').lt('display_order', currentOrder).order('display_order', { ascending: false }).limit(1);
+    } else {
+        query = supabase.from('projects').select('id, display_order').gt('display_order', currentOrder).order('display_order', { ascending: true }).limit(1);
+    }
+    const { data: neighbor, error: err2 } = await query;
+    if (err2 || !neighbor || neighbor.length === 0) {
+        showToast(direction === 'up' ? 'هذا بالفعل الأعلى' : 'هذا بالفعل الأسفل');
+        return;
+    }
+    const target = neighbor[0];
+    // تبديل القيم
+    const { error: swapErr1 } = await supabase.from('projects').update({ display_order: target.display_order }).eq('id', current.id);
+    const { error: swapErr2 } = await supabase.from('projects').update({ display_order: currentOrder }).eq('id', target.id);
+    if (swapErr1 || swapErr2) {
+        showToast('فشل التبديل', true);
+    } else {
+        showToast('تم تبديل الترتيب');
+        loadProjects(currentProjectsPage);
+    }
 };
 
-window.moveProjectDown = async (id) => {
-    const { data } = await supabase.from('projects').select('display_order').eq('id', id).single();
-    if (!data) return;
-    const newOrder = (data.display_order || 0) + 1;
-    await updateProjectOrder(id, newOrder);
-};
-
-async function updateProjectOrder(id, newOrder) {
+async function updateProjectOrderDirect(id, newOrder) {
     const { error } = await supabase.from('projects').update({ display_order: newOrder }).eq('id', id);
     if (error) showToast(error.message, true);
-    else { showToast('تم تحديث الترتيب'); loadProjects(currentProjectsPage); }
+    else { showToast('تم حفظ الترتيب'); loadProjects(currentProjectsPage); }
 }
+
+// إعادة ترتيب جميع المشاريع تلقائياً (1,2,3,... حسب الترتيب الحالي)
+window.reorderAllProjects = async () => {
+    const { data, error } = await supabase.from('projects').select('id').order('display_order', { ascending: true, nullsFirst: false }).order('id', { ascending: true });
+    if (error) return showToast(error.message, true);
+    for (let i = 0; i < data.length; i++) {
+        await supabase.from('projects').update({ display_order: i + 1 }).eq('id', data[i].id);
+    }
+    showToast('تم إعادة ترتيب المشاريع');
+    loadProjects(1);
+};
 
 window.editProject = async (id) => {
     const { data } = await supabase.from('projects').select('*').eq('id', id).single();
@@ -598,7 +638,7 @@ window.editProject = async (id) => {
     }
 };
 
-// ==================== المنتجات مع حفظ تلقائي ====================
+// ==================== المنتجات مع ترتيب ذكي (تبادل القيم) ====================
 async function loadProducts() {
     const projectId = document.getElementById('productProjectFilter').value;
     if (!projectId) { document.getElementById('productsTableContainer').innerHTML = '<p style="padding:20px;">✏️ اختر مشروعاً أولاً من القائمة</p>'; return; }
@@ -607,10 +647,10 @@ async function loadProducts() {
     (data || []).forEach(p => {
         html += `<tr>
             <td style="white-space: nowrap;">
-                <input type="number" value="${p.display_order ?? 0}" style="width:70px;" class="product-order-input" data-id="${p.id}" data-field="display_order">
-                <button class="action-btn move-up" onclick="window.moveProductUp('${p.id}')"><i class="fas fa-arrow-up"></i></button>
-                <button class="action-btn move-down" onclick="window.moveProductDown('${p.id}')"><i class="fas fa-arrow-down"></i></button>
-             </td>
+                <input type="number" value="${p.display_order ?? 0}" style="width:70px;" class="product-order-input" data-id="${p.id}">
+                <button class="action-btn move-up" onclick="window.swapProductOrder('${p.id}', 'up')"><i class="fas fa-arrow-up"></i></button>
+                <button class="action-btn move-down" onclick="window.swapProductOrder('${p.id}', 'down')"><i class="fas fa-arrow-down"></i></button>
+            </td>
             <td>${p.id}</td>
             <td>${p.main_image ? `<img src="${p.main_image}" class="thumb-preview">` : '-'}</td>
             <td>${escapeHtml(p.name_ar)}</td>
@@ -623,39 +663,61 @@ async function loadProducts() {
             </td>
         </tr>`;
     });
-    html += `</tbody></table>`;
+    html += `</tbody>`;
     document.getElementById('productsTableContainer').innerHTML = html;
-    // attach auto-save on input change
+    // auto-save on manual change
     document.querySelectorAll('.product-order-input').forEach(input => {
         input.addEventListener('change', function() {
             const id = this.dataset.id;
             const newOrder = parseInt(this.value);
             if (!isNaN(newOrder)) {
-                updateProductOrder(id, newOrder);
+                updateProductOrderDirect(id, newOrder);
             }
         });
     });
 }
 
-window.moveProductUp = async (id) => {
-    const { data } = await supabase.from('products').select('display_order').eq('id', id).single();
-    if (!data) return;
-    const newOrder = (data.display_order || 0) - 1;
-    await updateProductOrder(id, newOrder);
+window.swapProductOrder = async (id, direction) => {
+    const projectId = document.getElementById('productProjectFilter').value;
+    if (!projectId) return;
+    const { data: current, error: err1 } = await supabase.from('products').select('id, display_order').eq('id', id).single();
+    if (err1 || !current) return showToast('خطأ', true);
+    let currentOrder = current.display_order ?? 0;
+    let query;
+    if (direction === 'up') {
+        query = supabase.from('products').select('id, display_order').eq('project_id', projectId).lt('display_order', currentOrder).order('display_order', { ascending: false }).limit(1);
+    } else {
+        query = supabase.from('products').select('id, display_order').eq('project_id', projectId).gt('display_order', currentOrder).order('display_order', { ascending: true }).limit(1);
+    }
+    const { data: neighbor, error: err2 } = await query;
+    if (err2 || !neighbor || neighbor.length === 0) {
+        showToast(direction === 'up' ? 'هذا بالفعل الأعلى' : 'هذا بالفعل الأسفل');
+        return;
+    }
+    const target = neighbor[0];
+    await supabase.from('products').update({ display_order: target.display_order }).eq('id', current.id);
+    await supabase.from('products').update({ display_order: currentOrder }).eq('id', target.id);
+    showToast('تم تبديل الترتيب');
+    loadProducts();
 };
 
-window.moveProductDown = async (id) => {
-    const { data } = await supabase.from('products').select('display_order').eq('id', id).single();
-    if (!data) return;
-    const newOrder = (data.display_order || 0) + 1;
-    await updateProductOrder(id, newOrder);
-};
-
-async function updateProductOrder(id, newOrder) {
+async function updateProductOrderDirect(id, newOrder) {
     const { error } = await supabase.from('products').update({ display_order: newOrder }).eq('id', id);
     if (error) showToast(error.message, true);
-    else { showToast('تم تحديث الترتيب'); loadProducts(); }
+    else { showToast('تم حفظ الترتيب'); loadProducts(); }
 }
+
+window.reorderAllProducts = async () => {
+    const projectId = document.getElementById('productProjectFilter').value;
+    if (!projectId) return showToast('اختر مشروعاً أولاً', true);
+    const { data, error } = await supabase.from('products').select('id').eq('project_id', projectId).order('display_order', { ascending: true, nullsFirst: false }).order('id', { ascending: true });
+    if (error) return showToast(error.message, true);
+    for (let i = 0; i < data.length; i++) {
+        await supabase.from('products').update({ display_order: i + 1 }).eq('id', data[i].id);
+    }
+    showToast('تم إعادة ترتيب المنتجات');
+    loadProducts();
+};
 
 window.editProduct = async (id) => {
     const { data } = await supabase.from('products').select('*').eq('id', id).single();
@@ -821,7 +883,7 @@ async function loadRegistrations() {
             </td>
         </tr>`;
     });
-    html += `</tbody></table>`;
+    html += `</tbody>`;
     document.getElementById('registrationsTableContainer').innerHTML = html;
 }
 window.updateRegStatus = async (id, newStatus) => {
@@ -945,7 +1007,7 @@ async function loadFeedbacks() {
             </select></td>
         </tr>`;
     });
-    html += `</tbody></table>`;
+    html += `</tbody>`;
     document.getElementById('feedbacksTableContainer').innerHTML = html;
 }
 window.updateFeedbackStatus = async (id, newStatus) => {
@@ -954,7 +1016,7 @@ window.updateFeedbackStatus = async (id, newStatus) => {
     loadFeedbacks();
 };
 
-// ==================== الطلبات ====================
+// ==================== الطلبات (تحسين العرض) ====================
 async function loadOrders(page = 1) {
     currentOrdersPage = page;
     let query = supabase.from('admin_order_logs').select('*', { count: 'exact' }).order('created_at', { ascending: false }).range((page-1)*10, page*10-1);
@@ -967,7 +1029,7 @@ async function loadOrders(page = 1) {
     const { data, error, count } = await query;
     ordersTotal = count || 0;
     if (error) { showToast(error.message, true); return; }
-    let html = `<table class="data-table"><thead><tr><th>رقم الطلب</th><th>المشروع</th><th>العميل (واتساب)</th><th>المواد المطلوبة</th><th>الإجمالي</th><th>التاريخ</th><th>الجلسة</th></tr></thead><tbody>`;
+    let html = `<table class="data-table"><thead><tr><th>رقم الطلب</th><th>المشروع</th><th>واتساب العميل</th><th>المواد المطلوبة</th><th>الإجمالي</th><th>التاريخ</th><th></th></tr></thead><tbody>`;
     (data || []).forEach(order => {
         let itemsPreview = '';
         if (order.items && Array.isArray(order.items)) {
@@ -977,13 +1039,13 @@ async function loadOrders(page = 1) {
             <td class="order-id">${escapeHtml(order.order_number)}</td>
             <td>${escapeHtml(order.project_name)}</td>
             <td>${escapeHtml(order.customer_whatsapp)}</td>
-            <td class="order-items-preview">${escapeHtml(itemsPreview)}</td>
+            <td class="order-items-preview" title="${escapeHtml(itemsPreview)}">${escapeHtml(itemsPreview)}</td>
             <td class="order-total">${escapeHtml(order.total_price)}</td>
             <td>${new Date(order.created_at).toLocaleString()}</td>
-            <td style="font-size:11px;">${escapeHtml(order.customer_session)}</td>
+            <td><button class="view-details-btn" onclick="window.showOrderDetails('${order.order_number}')">تفاصيل</button></td>
         </tr>`;
     });
-    html += `</tbody></table>`;
+    html += `</tbody>`;
     document.getElementById('ordersTableContainer').innerHTML = html;
     let totalPages = Math.ceil(ordersTotal / 10);
     let paginationHtml = '<div class="pagination">';
@@ -992,10 +1054,36 @@ async function loadOrders(page = 1) {
     document.getElementById('ordersPagination').innerHTML = totalPages > 1 ? paginationHtml : '';
 }
 
+window.showOrderDetails = async (orderNumber) => {
+    const { data, error } = await supabase.from('admin_order_logs').select('*').eq('order_number', orderNumber).single();
+    if (error || !data) { showToast('خطأ في جلب التفاصيل', true); return; }
+    let itemsHtml = '<ul style="list-style: none; padding: 0;">';
+    if (data.items && Array.isArray(data.items)) {
+        data.items.forEach(item => {
+            itemsHtml += `<li style="padding: 8px 0; border-bottom:1px solid #eee;"><strong>${escapeHtml(item.productName)}</strong> - الكمية: ${item.quantity} - السعر: ${item.productPrice || 'غير محدد'}</li>`;
+        });
+    } else {
+        itemsHtml += '<li>لا توجد بيانات مواد</li>';
+    }
+    itemsHtml += '</ul>';
+    const detailsHtml = `
+        <p><strong>رقم الطلب:</strong> ${escapeHtml(data.order_number)}</p>
+        <p><strong>المشروع:</strong> ${escapeHtml(data.project_name)} (ID: ${data.project_id})</p>
+        <p><strong>رقم واتساب العميل:</strong> ${escapeHtml(data.customer_whatsapp)}</p>
+        <p><strong>جلسة العميل:</strong> ${escapeHtml(data.customer_session)}</p>
+        <p><strong>الإجمالي:</strong> ${escapeHtml(data.total_price)}</p>
+        <p><strong>تاريخ الطلب:</strong> ${new Date(data.created_at).toLocaleString()}</p>
+        <h4>المنتجات المطلوبة:</h4>
+        ${itemsHtml}
+    `;
+    document.getElementById('orderDetailsBody').innerHTML = detailsHtml;
+    document.getElementById('orderDetailsModal').classList.add('active');
+};
+
 async function exportOrdersCSV() {
     const { data } = await supabase.from('admin_order_logs').select('*').order('created_at', { ascending: false });
     if (!data) return;
-    let csvRows = [['رقم الطلب','اسم المشروع','رقم العميل','المواد (JSON)','الإجمالي','التاريخ','جلسة العميل']];
+    let csvRows = [['رقم الطلب','اسم المشروع','رقم واتساب العميل','المواد (JSON)','الإجمالي','التاريخ','جلسة العميل']];
     data.forEach(order => {
         csvRows.push([
             order.order_number,
@@ -1099,6 +1187,9 @@ async function checkSession() {
 document.getElementById('addProjectBtn').onclick = () => { document.getElementById('projectForm').reset(); document.getElementById('projectId').value = ''; document.getElementById('projectModal').classList.add('active'); };
 document.getElementById('addProductBtn').onclick = () => { let pid = document.getElementById('productProjectFilter').value; if(!pid){ showToast('اختر مشروعاً أولاً', true); return; } document.getElementById('productForm').reset(); document.getElementById('productId').value = ''; document.getElementById('productProjectId').value = pid; currentVariants = []; renderVariants(); document.getElementById('productModal').classList.add('active'); };
 document.getElementById('addDealBtn').onclick = () => { let pid = document.getElementById('dealProjectFilter').value; if(!pid){ showToast('اختر مشروعاً', true); return; } document.getElementById('dealForm').reset(); document.getElementById('dealId').value = ''; document.getElementById('dealProjectId').value = pid; document.getElementById('dealModal').classList.add('active'); };
+document.getElementById('reorderProjectsBtn').onclick = () => window.reorderAllProjects();
+document.getElementById('reorderProductsBtn').onclick = () => window.reorderAllProducts();
+
 document.getElementById('productProjectFilter').addEventListener('change', () => { loadProducts(); });
 document.getElementById('dealProjectFilter').addEventListener('change', () => { loadDeals(); });
 document.getElementById('contactProjectFilter').addEventListener('change', () => { loadContacts(); });
@@ -1143,10 +1234,11 @@ window.updateFeedbackStatus = updateFeedbackStatus;
 window.editProject = editProject;
 window.editProduct = editProduct;
 window.editDeal = editDeal;
-window.moveProjectUp = moveProjectUp;
-window.moveProjectDown = moveProjectDown;
-window.moveProductUp = moveProductUp;
-window.moveProductDown = moveProductDown;
+window.swapProjectOrder = swapProjectOrder;
+window.swapProductOrder = swapProductOrder;
+window.reorderAllProjects = reorderAllProjects;
+window.reorderAllProducts = reorderAllProducts;
+window.showOrderDetails = showOrderDetails;
 </script>
 </body>
 </html>
