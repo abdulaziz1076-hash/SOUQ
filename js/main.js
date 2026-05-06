@@ -1106,7 +1106,7 @@ function renderProductsByType(family) {
         const priceHtml = priceText ? `<div class="product-price">${priceText}</div>` : '';
         
         // ✅ تم إضافة زر الإضافة هنا بشكل صحيح
-        const addToCartBtn = `<button class="add-to-cart-btn" onclick="event.stopPropagation(); addToCart(${JSON.stringify(p).replace(/"/g, '&quot;')}, ${JSON.stringify(family).replace(/"/g, '&quot;')})">➕ ${appState.currentLanguage === 'ar' ? 'أضف للسلة' : 'Add to cart'}</button>`;
+        const addToCartBtn = `<button class="add-to-cart-btn" onclick="event.stopPropagation(); addToCart(${JSON.stringify(p).replace(/"/g, '&quot;')}, ${JSON.stringify(family).replace(/"/g, '&quot;')})"> ${appState.currentLanguage === 'ar' ? 'أضف للسلة' : 'Add to cart'}</button>`;
         
         return `
             <div class="product-card ${isFav ? 'favorite-active' : ''}" data-product-id="${p.id}" onclick="navigateTo('/product/${family.id}/${p.id}')">
@@ -1285,7 +1285,7 @@ async function showProductDetail(familyId, productId, updateHash = true) {
             <span class="product-detail-category"><i class="fas fa-tag"></i> ${typeDisplay}</span>
             <h1 class="product-detail-name">${productName}</h1>
             <div class="product-price-display" id="dynamicPrice">${initialPrice}</div>
-           <button class="add-to-cart-detail" onclick="addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')}, ${JSON.stringify(family).replace(/"/g, '&quot;')})">➕ ${appState.currentLanguage === 'ar' ? 'أضف إلى السلة' : 'Add to cart'}</button>
+           <button class="add-to-cart-detail" onclick="addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')}, ${JSON.stringify(family).replace(/"/g, '&quot;')})"> ${appState.currentLanguage === 'ar' ? 'أضف إلى السلة' : 'Add to cart'}</button>
             ${variantsHtml}
             <p class="product-detail-description">${productDesc}</p>
             ${specsHtml}
