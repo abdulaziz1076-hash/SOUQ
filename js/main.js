@@ -452,8 +452,8 @@ function parseSellPoints(sellPoints) {
             case 'snapchat': url = `https://snapchat.com/add/${cleanValue}`; icon = 'fa-snapchat'; bg = 'snapchat-bg'; break;
             case 'tiktok': url = `https://tiktok.com/@${cleanValue}`; icon = 'fa-tiktok'; bg = 'tiktok-bg'; break;
             case 'facebook': url = `https://facebook.com/${cleanValue}`; icon = 'fa-facebook'; bg = 'facebook-bg'; break;
-            case 'website': url = value.startsWith('http') ? value : `https://${value}`; icon = 'fa-globe'; bg = 'website-bg'; break;
-            default: url = value; icon = 'fa-globe'; bg = 'website-bg';
+            case 'website': url = value.startsWith('http') ? value : `https://${value}`; icon = 'fas fa-globe'; bg = 'website-bg'; break;
+            default: url = value; icon = 'fas fa-globe'; bg = 'website-bg';
         }
         return { url, icon, bg, type };
     }).filter(Boolean);
