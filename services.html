@@ -45,20 +45,32 @@
         <i class="fas fa-home"></i>
         <span id="navHome">الرئيسية</span>
     </div>
-    <div class="nav-item" onclick="window.location.href='index.html#projects/emirate/all'">
-        <i class="fas fa-store"></i>
-        <span id="navMarket">السوق</span>
+    <div class="nav-menu" id="navMenu">
+        <div class="nav-item" onclick="window.location.href='index.html'">
+            <i class="fas fa-home"></i>
+            <span id="navHome">الرئيسية</span>
+        </div>
+        <div class="nav-item" onclick="window.location.hash='/projects/emirate/all'; window.location.reload();">
+            <i class="fas fa-store"></i>
+            <span id="navMarket">السوق</span>
+        </div>
+        <div class="nav-item" onclick="window.location.hash='/favorites'; window.location.reload();">
+            <i class="fas fa-heart"></i>
+            <span id="navFavorites">المفضلة</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='cart.html'">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="navCart">السلة</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='services.html'">
+            <i class="fas fa-cogs"></i>
+            <span id="navServices">الخدمات العامة</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='registerr.html'">
+            <i class="fas fa-user-plus"></i>
+            <span id="navRegister">سجل مشروعك</span>
+        </div>
     </div>
-    <div class="nav-item" onclick="window.location.href='index.html#/favorites'"><i class="fas fa-heart"></i><span id="navFavorites">المفضلة</span></div>
-    <div class="nav-item" onclick="window.location.href='services.html'">
-        <i class="fas fa-cogs"></i>
-        <span id="navServices">الخدمات العامة</span>
-    </div>
-    <div class="nav-item" onclick="window.location.href='registerr.html'">
-        <i class="fas fa-user-plus"></i>
-        <span id="navRegister">تسجيل مشروع</span>
-    </div>
-</div>
 </header>
 
 <div class="services-container">
