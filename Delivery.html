@@ -31,6 +31,10 @@
         <i class="fas fa-globe"></i>
         <span id="langBtnText">English</span>
     </div>
+               <div class="cart-icon" onclick="window.location.href='cart.html'">
+    <i class="fas fa-shopping-cart"></i>
+    <span id="cartCount" class="cart-badge">0</span>
+</div>
     <div class="cart-icon" onclick="window.location.href='cart.html'">
         <i class="fas fa-shopping-cart"></i>
         <span id="cartCount" class="cart-badge">0</span>
@@ -261,6 +265,22 @@
                 });
             });
         }
+
+        function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('projectCart') || '[]');
+    const total = cart.reduce((s,i)=>s+i.quantity,0);
+    const badge = document.getElementById('cartCount');
+    if(badge) badge.innerText = total;
+}
+window.addEventListener('DOMContentLoaded', updateCartCount);
+// كما يتم تحديث العداد عند تغيير اللغة (اختياري)
+if(window.toggleLanguage) {
+    const originalToggle = window.toggleLanguage;
+    window.toggleLanguage = function() {
+        originalToggle();
+        updateCartCount();
+    };
+}
 
         function filterCompanies() {
             return deliveryCompanies.filter(company => {
