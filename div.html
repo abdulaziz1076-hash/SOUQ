@@ -272,6 +272,21 @@ const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 2500);
         }
+        function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('projectCart') || '[]');
+    const total = cart.reduce((s,i)=>s+i.quantity,0);
+    const badge = document.getElementById('cartCount');
+    if(badge) badge.innerText = total;
+}
+window.addEventListener('DOMContentLoaded', updateCartCount);
+// كما يتم تحديث العداد عند تغيير اللغة (اختياري)
+if(window.toggleLanguage) {
+    const originalToggle = window.toggleLanguage;
+    window.toggleLanguage = function() {
+        originalToggle();
+        updateCartCount();
+    };
+}
 
         function updateLanguageUI() {
             const t = translations[currentLang];
