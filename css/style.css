@@ -5122,3 +5122,26 @@ body.en-mode .product-detail-info .product-price-display:empty::before {
     font-weight: bold;
 }
 [dir="ltr"] .cart-badge { right: auto; left: -5px; }
+/* ========== إصلاح نهائي لظهور القائمة فوق زر الرجوع ========== */
+.nav-menu {
+    z-index: 999999 !important;      /* أعلى قيمة ممكنة */
+    position: fixed !important;      /* تغيير من absolute إلى fixed */
+    top: 70px !important;            /* أسفل الهيدر مباشرة */
+    right: 16px;
+    left: 16px;
+    width: auto;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+}
+
+/* خفض مستوى زر الرجوع بشكل قاطع */
+.back-button {
+    z-index: 100 !important;
+}
+
+/* التأكد من أن أي عنصر آخر لا يتجاوز القائمة */
+.products-page .back-button,
+.product-detail-page .back-button,
+.page-header.with-back .back-button {
+    z-index: 100 !important;
+}
