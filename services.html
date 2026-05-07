@@ -276,6 +276,48 @@ if (savedLang === 'en') {
     document.getElementById('langBtnText').innerText = 'English';
 }
 updateLanguage();
+
+    // إصلاح ظهور القائمة فوق زر الرجوع (يعمل مع fixed positioning)
+(function fixNavMenuOverBackButton() {
+    const menuToggle = document.getElementById('menuToggleBtn');
+    const navMenu = document.getElementById('navMenu');
+    const backButton = document.querySelector('.back-button');
+    
+    if (!menuToggle || !navMenu) return;
+    
+    // عند فتح القائمة، نضمن أنها تظهر فوق كل شيء
+    menuToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        navMenu.classList.toggle('active');
+        
+        if (navMenu.classList.contains('active')) {
+            // إخفاء زر الرجوع مؤقتاً عند فتح القائمة
+            if (backButton) {
+                backButton.style.opacity = '0';
+                backButton.style.pointerEvents = 'none';
+            }
+        } else {
+            if (backButton) {
+                backButton.style.opacity = '';
+                backButton.style.pointerEvents = '';
+            }
+        }
+    });
+    
+    // عند إغلاق القائمة بالنقر خارجها
+    document.addEventListener('click', function(event) {
+        if (navMenu.classList.contains('active') && 
+            !navMenu.contains(event.target) && 
+            !menuToggle.contains(event.target)) {
+            navMenu.classList.remove('active');
+            if (backButton) {
+                backButton.style.opacity = '';
+                backButton.style.pointerEvents = '';
+            }
+        }
+    });
+})();
 </script>
+    
 </body>
 </html>
