@@ -44,15 +44,13 @@ window.addToCart = function(product, project) {
     else {
         cart.push({
             productId: product.id,
-            productName: appState.currentLanguage === 'ar' ? product.name : product.nameEn,
-            productPrice: getPriceDisplay(product),
             quantity: 1,
             projectId: project.id,
-            projectName: appState.currentLanguage === 'ar' ? project.name : project.nameEn
+            productPrice: getPriceDisplay(product)
         });
     }
     saveCart(cart);
-    showToast(translations[appState.currentLanguage].addToCart || "تمت الإضافة إلى السلة");
+    showToast(translations[appState.currentLanguage].addToCart);
 };
 
 // ==================== Helper: Build Sell Points ====================
