@@ -229,7 +229,7 @@ function toggleLanguage() {
         document.body.classList.remove('en-mode');
     }
     
-    document.getElementById('langBtnText').innerText = currentLang === 'ar' ? 'En' : 'Ar';
+    document.getElementById('langBtnText').innerText = currentLang === 'ar' ? 'En' : 'ع';
     updateLanguage();
 }
 
@@ -252,11 +252,11 @@ if (savedLang === 'en') {
     document.documentElement.setAttribute('dir', 'ltr');
     document.documentElement.setAttribute('lang', 'en');
     document.body.classList.add('en-mode');
-    document.getElementById('langBtnText').innerText = 'عربي';
+    document.getElementById('langBtnText').innerText = 'ع';
 } else {
     currentLang = 'ar';
     document.documentElement.setAttribute('dir', 'rtl');
-    document.documentElement.setAttribute('lang', 'ar');
+    document.documentElement.setAttribute('lang', 'ع');
     document.body.classList.remove('en-mode');
     document.getElementById('langBtnText').innerText = 'English';
 }
