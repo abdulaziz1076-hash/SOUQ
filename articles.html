@@ -26,7 +26,11 @@
             </div>
         </div>
         <div class="header-actions">
-            <div class="lang-toggle" id="langToggleBtn"><i class="fas fa-globe"></i><span id="langBtnText">English</span></div>
+            <div class="lang-toggle" id="langToggleBtn"><i class="fas fa-globe"></i><span id="langBtnText">En</span></div>
+            <div class="cart-icon" onclick="window.location.href='cart.html'">
+    <i class="fas fa-shopping-cart"></i>
+    <span id="cartCount" class="cart-badge">0</span>
+</div>
             <div class="menu-toggle" id="menuToggleBtn"><i class="fas fa-bars"></i></div>
         </div>
     </div>
@@ -1675,7 +1679,7 @@
             privacyLink: "سياسة الخصوصية",
             termsLink: "شروط الاستخدام",
             copyright: "© 2026 سوق المشاريع - جميع الحقوق محفوظة",
-            langBtnText: "English"
+            langBtnText: "En"
         } : {
             siteTitle: "Souq Almasharie",
             siteSubtitle: "Projects in UAE",
@@ -1692,7 +1696,7 @@
             privacyLink: "Privacy Policy",
             termsLink: "Terms of Use",
             copyright: "© 2026 Souq Almasharie - All Rights Reserved",
-            langBtnText: "عربي"
+            langBtnText: "ع"
         };
 
         document.getElementById('siteTitle').innerText = t.siteTitle;
