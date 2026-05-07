@@ -118,8 +118,12 @@
             <div class="header-actions">
                 <div class="lang-toggle" id="langToggleBtn">
                     <i class="fas fa-globe"></i>
-                    <span id="langBtnText">English</span>
+                    <span id="langBtnText">En</span>
                 </div>
+                <div class="cart-icon" onclick="window.location.href='cart.html'">
+    <i class="fas fa-shopping-cart"></i>
+    <span id="cartCount" class="cart-badge">0</span>
+</div>
                 <div class="menu-toggle" id="menuToggleBtn">
                     <i class="fas fa-bars"></i>
                 </div>
@@ -217,7 +221,7 @@ const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey
             ar: {
                 siteTitle: "سوق المشاريع",
                 siteSubtitle: "المشاريع في الامارات",
-                langBtnText: "English",
+                langBtnText: "En",
                 navHome: "الرئيسية",
                 navMarket: "السوق",
                 navServices: "الخدمات العامة",
@@ -240,7 +244,7 @@ const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey
             en: {
                 siteTitle: "Souq Almasharie",
                 siteSubtitle: "Projects in UAE",
-                langBtnText: "عربي",
+                langBtnText: "ع",
                 navHome: "Home",
                 navMarket: "Market",
                 navServices: "Services",
