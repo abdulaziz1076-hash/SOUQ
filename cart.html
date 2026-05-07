@@ -216,25 +216,25 @@
     <div class="container" id="cartContainer" style="margin-bottom: 40px;"></div>
     <div id="footer-placeholder"></div>
 
-        <div class="nav-menu" id="navMenu">
-    <div class="nav-item" onclick="window.location.href='index.html'">
-        <i class="fas fa-home"></i>
-        <span id="navHome">الرئيسية</span>
+    <div class="nav-menu" id="navMenu">
+        <div class="nav-item" onclick="window.location.href='index.html'">
+            <i class="fas fa-home"></i>
+            <span id="navHome">الرئيسية</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='index.html#projects/emirate/all'">
+            <i class="fas fa-store"></i>
+            <span id="navMarket">السوق</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='index.html#/favorites'"><i class="fas fa-heart"></i><span id="navFavorites">المفضلة</span></div>
+        <div class="nav-item" onclick="window.location.href='services.html'">
+            <i class="fas fa-cogs"></i>
+            <span id="navServices">الخدمات العامة</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='registerr.html'">
+            <i class="fas fa-user-plus"></i>
+            <span id="navRegister">تسجيل مشروع</span>
+        </div>
     </div>
-    <div class="nav-item" onclick="window.location.href='index.html#projects/emirate/all'">
-        <i class="fas fa-store"></i>
-        <span id="navMarket">السوق</span>
-    </div>
-    <div class="nav-item" onclick="window.location.href='index.html#/favorites'"><i class="fas fa-heart"></i><span id="navFavorites">المفضلة</span></div>
-    <div class="nav-item" onclick="window.location.href='services.html'">
-        <i class="fas fa-cogs"></i>
-        <span id="navServices">الخدمات العامة</span>
-    </div>
-    <div class="nav-item" onclick="window.location.href='registerr.html'">
-        <i class="fas fa-user-plus"></i>
-        <span id="navRegister">تسجيل مشروع</span>
-    </div>
-</div>
 
     <!-- نافذة منبثقة موحدة -->
     <div id="customModal" class="custom-modal">
@@ -251,6 +251,7 @@
         import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
         const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
         
+        // -------------------- translations --------------------
         const translations = {
             ar: {
                 cartTitle: "سلة التسوق", cartSubtitle: "مراجعة المنتجات وإتمام الطلب",
@@ -299,6 +300,7 @@
             return text;
         }
         
+        // -------------------- modal helpers --------------------
         function showModal(title, message, options = {}) {
             return new Promise((resolve) => {
                 const modal = document.getElementById('customModal');
@@ -377,29 +379,9 @@
             return showModal(title, message, {});
         }
         
-        function updateStaticTexts() {
-            document.getElementById('cartPageTitle').innerText = t('cartTitle');
-            document.getElementById('cartPageSubtitle').innerText = t('cartSubtitle');
-        }
-        
-        async function loadComponents() {
-            const headerRes = await fetch('components/header.html');
-            const footerRes = await fetch('components/footer.html');
-            document.getElementById('header-placeholder').innerHTML = await headerRes.text();
-            document.getElementById('footer-placeholder').innerHTML = await footerRes.text();
-            document.querySelectorAll('[id]').forEach(el => {
-                if (el.id === 'siteTitle') el.innerText = currentLang === 'ar' ? 'سوق المشاريع' : 'Souq Almasharie';
-                if (el.id === 'siteSubtitle') el.innerText = currentLang === 'ar' ? 'المشاريع في الامارات' : 'Projects in UAE';
-                if (el.id === 'langBtnText') el.innerText = currentLang === 'ar' ? '' : '';
-                if (el.id === 'navHome') el.innerText = currentLang === 'ar' ? 'الرئيسية' : 'Home';
-                if (el.id === 'navMarket') el.innerText = currentLang === 'ar' ? 'السوق' : 'Market';
-                if (el.id === 'navFavorites') el.innerText = currentLang === 'ar' ? 'المفضلة' : 'Favorites';
-                if (el.id === 'navCart') el.innerText = currentLang === 'ar' ? 'السلة' : 'Cart';
-                if (el.id === 'navServices') el.innerText = currentLang === 'ar' ? 'الخدمات العامة' : 'Services';
-                if (el.id === 'navRegister') el.innerText = currentLang === 'ar' ? 'سجل مشروعك' : 'Register Project';
-            });
-            updateCartCountDisplay();
-        }
+        // -------------------- cart storage --------------------
+        function getCart() { return JSON.parse(localStorage.getItem('projectCart') || '[]'); }
+        function saveCart(cart) { localStorage.setItem('projectCart', JSON.stringify(cart)); updateCartCountDisplay(); }
         
         function updateCartCountDisplay() {
             const cart = getCart();
@@ -408,14 +390,74 @@
             if(badge) badge.innerText = total;
         }
         
-        function getCart() { return JSON.parse(localStorage.getItem('projectCart') || '[]'); }
-        function saveCart(cart) { localStorage.setItem('projectCart', JSON.stringify(cart)); updateCartCountDisplay(); }
+        // -------------------- fetch all projects and products for dynamic names --------------------
+        let projectsData = []; // { id, name_ar, name_en, products: [{ id, name_ar, name_en, price_ar, price_en }] }
         
-        function groupByProject(cart) {
+        async function loadAllProjectsData() {
+            const { data, error } = await supabase
+                .from('projects')
+                .select(`
+                    id,
+                    name_ar,
+                    name_en,
+                    products (id, name_ar, name_en, price_ar, price_en)
+                `);
+            if (error) {
+                console.error('Failed to load projects data:', error);
+                return;
+            }
+            projectsData = data || [];
+        }
+        
+        function getProductName(productId, lang) {
+            for (const proj of projectsData) {
+                const prod = proj.products?.find(p => p.id == productId);
+                if (prod) {
+                    return lang === 'ar' ? prod.name_ar : prod.name_en;
+                }
+            }
+            return '?';
+        }
+        
+        function getProjectName(projectId, lang) {
+            const proj = projectsData.find(p => p.id == projectId);
+            if (proj) {
+                return lang === 'ar' ? proj.name_ar : proj.name_en;
+            }
+            return '?';
+        }
+        
+        function getProductPriceDisplay(productId, lang) {
+            for (const proj of projectsData) {
+                const prod = proj.products?.find(p => p.id == productId);
+                if (prod) {
+                    const price = lang === 'ar' ? prod.price_ar : prod.price_en;
+                    if (price && price.trim() !== '') return price;
+                    return lang === 'ar' ? 'السعر عند الطلب' : 'Price on request';
+                }
+            }
+            return lang === 'ar' ? 'السعر عند الطلب' : 'Price on request';
+        }
+        
+        // -------------------- group cart items dynamically --------------------
+        async function groupByProjectDynamic(cart) {
             const groups = {};
             for (const item of cart) {
-                if (!groups[item.projectId]) groups[item.projectId] = { projectId: item.projectId, projectName: item.projectName, items: [] };
-                groups[item.projectId].items.push(item);
+                const projectId = item.projectId;
+                if (!groups[projectId]) {
+                    groups[projectId] = {
+                        projectId: projectId,
+                        projectName: getProjectName(projectId, currentLang),
+                        items: []
+                    };
+                }
+                // enrich item with dynamic name and price
+                const enrichedItem = {
+                    ...item,
+                    productName: getProductName(item.productId, currentLang),
+                    productPrice: item.productPrice || getProductPriceDisplay(item.productId, currentLang)
+                };
+                groups[projectId].items.push(enrichedItem);
             }
             return Object.values(groups);
         }
@@ -431,33 +473,10 @@
             return total.toFixed(2);
         }
         
-        window.updateQuantity = function(productId, newQty) {
-            let cart = getCart();
-            const idx = cart.findIndex(i => i.productId === productId);
-            if (idx !== -1) {
-                if (newQty <= 0) cart.splice(idx, 1);
-                else cart[idx].quantity = newQty;
-                saveCart(cart);
-                renderCart();
-            }
-        };
-        
-        window.removeItem = function(productId) {
-            let cart = getCart();
-            cart = cart.filter(i => i.productId !== productId);
-            saveCart(cart);
-            renderCart();
-        };
-        
+        // -------------------- contact helpers --------------------
         async function getProjectContact(projectId) {
             const { data, error } = await supabase.from('contacts').select('whatsapp, instagram, telegram, snapchat, tiktok, facebook, twitter, website').eq('project_id', projectId).single();
             if (error || !data) return { type: 'whatsapp', value: null };
-            // ✅ إذا أردت الاعتماد فقط على الواتساب، قم بإلغاء تعليق الأسطر التالية:
-            /*
-            if (data.whatsapp) return { type: 'whatsapp', value: data.whatsapp };
-            return { type: 'whatsapp', value: null };
-            */
-            // الوضع الطبيعي (يدعم جميع الوسائل):
             if (data.whatsapp) return { type: 'whatsapp', value: data.whatsapp };
             if (data.instagram) return { type: 'instagram', value: data.instagram };
             if (data.telegram) return { type: 'telegram', value: data.telegram };
@@ -493,9 +512,8 @@
             } catch(err) { console.warn(err); }
         }
         
-        // دالة إتمام الطلب الرئيسية
+        // -------------------- checkout --------------------
         window.checkoutProject = async function(projectGroup) {
-            // 1. طلب رقم واتساب العميل
             const phoneResult = await showModal(t('enterWhatsapp'), '', {
                 input: true,
                 inputType: 'tel',
@@ -515,14 +533,12 @@
                 return;
             }
             
-            // 2. الحصول على وسيلة تواصل المشروع
             const contact = await getProjectContact(projectGroup.projectId);
             if (!contact.value) {
                 await showAlert(currentLang === 'ar' ? 'لا توجد وسيلة تواصل لهذا المشروع' : 'No contact method', '');
                 return;
             }
             
-            // 3. بناء الرسالة
             const message = buildMessage(projectGroup, raw);
             const encodedMsg = encodeURIComponent(message);
             let url = '';
@@ -561,13 +577,10 @@
                 needCopy = true;
             }
             
-            // 4. تأكيد الإرسال
             const confirm = await showModal(t('confirmTitle'), t('confirmMsg', { method: methodName }), {});
             if (!confirm.confirmed) return;
             
-            // 5. تنفيذ الإرسال
             if (needCopy) {
-                // عرض نافذة تحتوي على الرسالة وزر نسخ وفتح الملف الشخصي
                 await showModal(t('copyTitle'), t('copyMsg', { method: methodName }), {
                     textarea: true,
                     textareaValue: decodeURIComponent(encodedMsg),
@@ -575,22 +588,35 @@
                     openUrl: url
                 });
             } else {
-                // واتساب: فتح المحادثة مباشرة
                 window.open(url, '_blank');
             }
             
-            // 6. تسجيل الطلب للمشرف
             await logOrderForAdmin(projectGroup, raw, calcTotal(projectGroup.items));
             
-            // 7. حذف منتجات هذا المشروع من السلة
             let cart = getCart();
-            const projectIdStr = String(projectGroup.projectId);
-            const newCart = cart.filter(item => String(item.projectId) !== projectIdStr);
+            const newCart = cart.filter(item => String(item.projectId) !== String(projectGroup.projectId));
             saveCart(newCart);
-            renderCart();
-            
-            // 8. عرض رسالة نجاح
+            await renderCart();
             await showAlert(t('successTitle'), t('successMsg'));
+        };
+        
+        // -------------------- render cart dynamically --------------------
+        window.updateQuantity = async function(productId, newQty) {
+            let cart = getCart();
+            const idx = cart.findIndex(i => i.productId === productId);
+            if (idx !== -1) {
+                if (newQty <= 0) cart.splice(idx, 1);
+                else cart[idx].quantity = newQty;
+                saveCart(cart);
+                await renderCart();
+            }
+        };
+        
+        window.removeItem = async function(productId) {
+            let cart = getCart();
+            cart = cart.filter(i => i.productId !== productId);
+            saveCart(cart);
+            await renderCart();
         };
         
         async function renderCart() {
@@ -600,7 +626,9 @@
                 container.innerHTML = `<div class="cart-empty"><i class="fas fa-shopping-cart"></i><p>${t('emptyCart')}</p><a href="index.html" class="btn-generate" style="display: inline-block; margin-top: 15px; text-decoration: none;">${t('backShop')}</a></div>`;
                 return;
             }
-            const groups = groupByProject(cart);
+            // Ensure projects data is loaded
+            if (projectsData.length === 0) await loadAllProjectsData();
+            const groups = await groupByProjectDynamic(cart);
             let html = '';
             for (const group of groups) {
                 const contact = await getProjectContact(group.projectId);
@@ -637,7 +665,8 @@
             container.innerHTML = html;
         }
         
-        window.toggleLanguage = function() {
+        // -------------------- language toggle without reload --------------------
+        window.toggleLanguage = async function() {
             currentLang = currentLang === 'ar' ? 'en' : 'ar';
             localStorage.setItem('projectSouqLang', currentLang);
             document.documentElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
@@ -645,16 +674,49 @@
             if (currentLang === 'en') document.body.classList.add('en-mode');
             else document.body.classList.remove('en-mode');
             updateStaticTexts();
-            loadComponents().then(() => renderCart());
+            await renderCart();  // re-render with new language
         };
         
-        document.addEventListener('click', (e) => { if (e.target.closest('#langToggleBtn')) { e.preventDefault(); window.toggleLanguage(); } });
+        function updateStaticTexts() {
+            document.getElementById('cartPageTitle').innerText = t('cartTitle');
+            document.getElementById('cartPageSubtitle').innerText = t('cartSubtitle');
+        }
         
+        // -------------------- load header/footer --------------------
+        async function loadComponents() {
+            const headerRes = await fetch('components/header.html');
+            const footerRes = await fetch('components/footer.html');
+            document.getElementById('header-placeholder').innerHTML = await headerRes.text();
+            document.getElementById('footer-placeholder').innerHTML = await footerRes.text();
+            document.querySelectorAll('[id]').forEach(el => {
+                if (el.id === 'siteTitle') el.innerText = currentLang === 'ar' ? 'سوق المشاريع' : 'Souq Almasharie';
+                if (el.id === 'siteSubtitle') el.innerText = currentLang === 'ar' ? 'المشاريع في الامارات' : 'Projects in UAE';
+                if (el.id === 'langBtnText') el.innerText = currentLang === 'ar' ? 'English' : 'عربي';
+                if (el.id === 'navHome') el.innerText = currentLang === 'ar' ? 'الرئيسية' : 'Home';
+                if (el.id === 'navMarket') el.innerText = currentLang === 'ar' ? 'السوق' : 'Market';
+                if (el.id === 'navFavorites') el.innerText = currentLang === 'ar' ? 'المفضلة' : 'Favorites';
+                if (el.id === 'navCart') el.innerText = currentLang === 'ar' ? 'السلة' : 'Cart';
+                if (el.id === 'navServices') el.innerText = currentLang === 'ar' ? 'الخدمات العامة' : 'Services';
+                if (el.id === 'navRegister') el.innerText = currentLang === 'ar' ? 'سجل مشروعك' : 'Register Project';
+            });
+            updateCartCountDisplay();
+        }
+        
+        // -------------------- initialization --------------------
         if (!localStorage.getItem('projectSessionId')) localStorage.setItem('projectSessionId', 'guest_' + Date.now() + '_' + Math.random().toString(36));
         
         await loadComponents();
+        await loadAllProjectsData();   // load once at start
         updateStaticTexts();
         await renderCart();
+        
+        // rebind language button after header loaded
+        document.addEventListener('click', (e) => { if (e.target.closest('#langToggleBtn')) { e.preventDefault(); window.toggleLanguage(); } });
+        
+        // expose functions globally for inline onclick
+        window.updateQuantity = window.updateQuantity;
+        window.removeItem = window.removeItem;
+        window.checkoutProject = window.checkoutProject;
     </script>
 </body>
 </html>
