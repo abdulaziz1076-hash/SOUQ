@@ -1786,6 +1786,21 @@
 
         document.getElementById('emptyState').style.display = hasGlobalResults ? 'none' : 'block';
     }
+    function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('projectCart') || '[]');
+    const total = cart.reduce((s,i)=>s+i.quantity,0);
+    const badge = document.getElementById('cartCount');
+    if(badge) badge.innerText = total;
+}
+window.addEventListener('DOMContentLoaded', updateCartCount);
+// كما يتم تحديث العداد عند تغيير اللغة (اختياري)
+if(window.toggleLanguage) {
+    const originalToggle = window.toggleLanguage;
+    window.toggleLanguage = function() {
+        originalToggle();
+        updateCartCount();
+    };
+}
 
     // فتح/إغلاق الأكورديون
     window.toggleAccordion = function(headerElement, event) {
