@@ -161,8 +161,12 @@
         <div class="header-actions">
             <div class="lang-toggle" id="langToggleBtn">
                 <i class="fas fa-globe"></i>
-                <span id="langBtnText">English</span>
+                <span id="langBtnText">En</span>
             </div>
+            <div class="cart-icon" onclick="window.location.href='cart.html'">
+    <i class="fas fa-shopping-cart"></i>
+    <span id="cartCount" class="cart-badge">0</span>
+</div>
             <div class="menu-toggle" id="menuToggleBtn">
                 <i class="fas fa-bars"></i>
             </div>
@@ -331,7 +335,7 @@
             selectDefault: "-- اختر --",
             siteTitle: "سوق المشاريع",
             siteSubtitle: "المشاريع في الامارات",
-            langBtnText: "English",
+            langBtnText: "En",
             footerLogo: "سوق المشاريع",
             footerText: "منصة المشاريع الإماراتية",
             footerPrivacyLink: "سياسة الخصوصية",
@@ -371,7 +375,7 @@
             selectDefault: "-- Select --",
             siteTitle: "Souq Almasharie",
             siteSubtitle: "Projects in UAE",
-            langBtnText: "عربي",
+            langBtnText: "ع",
             footerLogo: "Souq Almasharie",
             footerText: "UAE Home-Based Business Platform",
             footerPrivacyLink: "Privacy Policy",
@@ -500,6 +504,21 @@
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
     }
+    function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('projectCart') || '[]');
+    const total = cart.reduce((s,i)=>s+i.quantity,0);
+    const badge = document.getElementById('cartCount');
+    if(badge) badge.innerText = total;
+}
+window.addEventListener('DOMContentLoaded', updateCartCount);
+// كما يتم تحديث العداد عند تغيير اللغة (اختياري)
+if(window.toggleLanguage) {
+    const originalToggle = window.toggleLanguage;
+    window.toggleLanguage = function() {
+        originalToggle();
+        updateCartCount();
+    };
+}
     
     function closeThankyouAndGoHome() {
         const modal = document.getElementById('thankyouModal');
