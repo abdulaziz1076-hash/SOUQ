@@ -249,6 +249,7 @@ html {
     transform: rotate(90deg);
 }
 
+/* ========== إصلاح مشكلة ظهور القائمة فوق زر الرجوع ========== */
 .nav-menu {
     display: none;
     position: absolute;
@@ -262,8 +263,10 @@ html {
     padding: 12px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(212, 175, 55, 0.2);
-    z-index: 1001;
+    z-index: 9999 !important;      /* رفع القائمة فوق كل العناصر */
     transform-origin: top;
+    overflow-y: auto;              /* تمكين التمرير العمودي */
+    max-height: 80vh;             /* الحد الأقصى للارتفاع */
 }
 
 .nav-menu.active {
@@ -432,7 +435,7 @@ html {
     cursor: pointer;
     font-size: 15px;
     transition: var(--transition);
-    z-index: 1010;
+    z-index: 1000;          /* أقل من z-index القائمة (9999) */
     backdrop-filter: blur(5px);
     text-decoration: none;
 }
