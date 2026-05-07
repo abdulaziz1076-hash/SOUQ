@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=El+Messiri:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <style>
-        /* تنسيقات السلة (كما هي) */
+        /* تنسيقات إضافية للسلة */
         .cart-vendor-card {
             background: white;
             border-radius: 24px;
@@ -75,6 +75,7 @@
             transition: 0.2s;
         }
         .contact-checkout:hover { transform: translateY(-2px); filter: brightness(1.05); }
+        .contact-checkout.whatsapp-bg { background: #25D366; }
         .contact-checkout.instagram-bg { background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D); }
         .contact-checkout.telegram-bg { background: #0088cc; }
         .contact-checkout.snapchat-bg { background: #FFFC00; color: #000; }
@@ -92,8 +93,6 @@
         .cart-empty i { font-size: 60px; color: var(--light-gray); margin-bottom: 15px; }
         .delete-icon { color: var(--danger); cursor: pointer; font-size: 18px; transition: 0.2s; }
         .delete-icon:hover { transform: scale(1.1); }
-        
-        /* نافذة منبثقة احترافية */
         .custom-modal {
             display: none;
             position: fixed;
@@ -107,9 +106,7 @@
             align-items: center;
             justify-content: center;
         }
-        .custom-modal.active {
-            display: flex;
-        }
+        .custom-modal.active { display: flex; }
         .modal-card {
             background: white;
             border-radius: 32px;
@@ -147,10 +144,6 @@
             font-size: 14px;
             text-align: center;
             direction: ltr;
-        }
-        .modal-card input:focus {
-            outline: none;
-            border-color: var(--secondary);
         }
         .modal-card textarea {
             width: 100%;
@@ -208,515 +201,463 @@
     </style>
 </head>
 <body>
-    <div id="header-placeholder"></div>
-    <div class="page-header">
-        <h1 id="cartPageTitle">سلة التسوق</h1>
-        <p id="cartPageSubtitle">مراجعة المنتجات وإتمام الطلب</p>
+
+<!-- ===================== هيدر مدمج ===================== -->
+<header class="app-header">
+    <div class="header-container">
+        <div class="logo-section" onclick="window.location.href='index.html'">
+            <div class="logo-icon">
+                <img src="images/logo.png" alt="سوق المشاريع" onerror="this.src='https://placehold.co/60x60/0F3D2E/white?text=SM'">
+            </div>
+            <div class="logo-text">
+                <h1 id="siteTitle">سوق المشاريع</h1>
+                <p id="siteSubtitle">المشاريع في الامارات</p>
+            </div>
+        </div>
+        <div class="header-actions">
+            <div class="lang-toggle" id="langToggleBtn">
+                <i class="fas fa-globe"></i>
+                <span id="langBtnText">English</span>
+            </div>
+            <div class="cart-icon" onclick="window.location.href='cart.html'">
+                <i class="fas fa-shopping-cart"></i>
+                <span id="cartCount" class="cart-badge">0</span>
+            </div>
+            <div class="menu-toggle" id="menuToggleBtn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
     </div>
-    <div class="container" id="cartContainer" style="margin-bottom: 40px;"></div>
-    <div id="footer-placeholder"></div>
 
     <div class="nav-menu" id="navMenu">
         <div class="nav-item" onclick="window.location.href='index.html'">
             <i class="fas fa-home"></i>
             <span id="navHome">الرئيسية</span>
         </div>
-        <div class="nav-item" onclick="window.location.href='index.html#projects/emirate/all'">
+        <div class="nav-item" onclick="window.location.href='index.html#/projects/emirate/all'">
             <i class="fas fa-store"></i>
             <span id="navMarket">السوق</span>
         </div>
-        <div class="nav-item" onclick="window.location.href='index.html#/favorites'"><i class="fas fa-heart"></i><span id="navFavorites">المفضلة</span></div>
+        <div class="nav-item" onclick="window.location.href='index.html#/favorites'">
+            <i class="fas fa-heart"></i>
+            <span id="navFavorites">المفضلة</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='cart.html'">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="navCart">السلة</span>
+        </div>
         <div class="nav-item" onclick="window.location.href='services.html'">
             <i class="fas fa-cogs"></i>
             <span id="navServices">الخدمات العامة</span>
         </div>
         <div class="nav-item" onclick="window.location.href='registerr.html'">
             <i class="fas fa-user-plus"></i>
-            <span id="navRegister">تسجيل مشروع</span>
+            <span id="navRegister">سجل مشروعك</span>
         </div>
     </div>
+</header>
 
-    <!-- نافذة منبثقة موحدة -->
-    <div id="customModal" class="custom-modal">
-        <div class="modal-card">
-            <h3 id="modalTitle">عنوان</h3>
-            <p id="modalMessage">نص الرسالة</p>
-            <div id="modalInputArea"></div>
-            <div id="modalButtons" class="modal-buttons"></div>
+<!-- ===================== محتوى الصفحة ===================== -->
+<div class="page-header">
+    <h1 id="cartPageTitle">سلة التسوق</h1>
+    <p id="cartPageSubtitle">مراجعة المنتجات وإتمام الطلب</p>
+</div>
+<div class="container" id="cartContainer" style="margin-bottom: 40px;"></div>
+
+<!-- ===================== فوتر مدمج ===================== -->
+<footer class="app-footer">
+    <div class="footer-content">
+        <div class="footer-logo" id="footerLogo">سوق المشاريع</div>
+        <p style="font-size: 11px; opacity: 0.9; margin-bottom: 15px;" id="footerText">منصة المشاريع الإماراتية</p>
+        <div id="footerKeywords" style="font-size: 10px; color: #aaa; margin-top: 15px; text-align: center; direction: rtl;">
+            سوق المشاريع | منصة المشاريع المنزلية في الإمارات | دليل الأسر المنتجة
         </div>
+        <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 15px; flex-wrap: wrap;">
+            <a href="privacy.html" style="color: var(--secondary); text-decoration: none; font-size: 12px;"><i class="fas fa-lock"></i> <span id="privacyLink">سياسة الخصوصية</span></a>
+            <span style="color: var(--gray);">|</span>
+            <a href="terms.html" style="color: var(--secondary); text-decoration: none; font-size: 12px;"><i class="fas fa-file-contract"></i> <span id="termsLink">شروط الاستخدام</span></a>
+        </div>
+        <div class="copyright" id="copyright">© 2026 سوق المشاريع - جميع الحقوق محفوظة</div>
     </div>
+</footer>
 
-    <script type="module">
-        import { APP_CONFIG } from './config.js';
-        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-        const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
-        
-        // -------------------- translations --------------------
-        const translations = {
-            ar: {
-                cartTitle: "سلة التسوق", cartSubtitle: "مراجعة المنتجات وإتمام الطلب",
-                total: "المجموع", checkout: "إتمام الطلب عبر", emptyCart: "سلتك فارغة",
-                backShop: "العودة للتسوق", enterWhatsapp: "أدخل رقم واتسابك للتواصل مع البائع (مطلوب)",
-                invalidWhatsapp: "رقم واتساب غير صحيح", required: "رقم الواتساب مطلوب",
-                notePrefix: "يرجى التواصل معي لتحديد طريقة الدفع والشحن",
-                orderItem: "طلب جديد من سوق المشاريع", thankYou: "شكراً",
-                confirmTitle: "تأكيد الطلب",
-                confirmMsg: "سيتم إرسال الطلب إلى البائع عبر {{method}}. هل تريد المتابعة؟",
-                successTitle: "تم الإرسال",
-                successMsg: "تم فتح محادثة مع البائع. تم حذف منتجات هذا المشروع من سلتك.",
-                copyTitle: "انسخ الرسالة",
-                copyMsg: "لا يمكن فتح محادثة مباشرة عبر {{method}}. يرجى نسخ الرسالة أدناه ثم لصقها في المحادثة مع البائع.",
-                copyButton: "📋 نسخ الرسالة",
-                openProfile: "فتح الملف الشخصي",
-                cancel: "إلغاء",
-                proceed: "متابعة"
-            },
-            en: {
-                cartTitle: "Shopping Cart", cartSubtitle: "Review products and complete order",
-                total: "Total", checkout: "Complete order via", emptyCart: "Your cart is empty",
-                backShop: "Back to shop", enterWhatsapp: "Enter your WhatsApp number for the seller (required)",
-                invalidWhatsapp: "Invalid WhatsApp number", required: "WhatsApp number is required",
-                notePrefix: "Please advise on payment method and delivery",
-                orderItem: "New order from Souq Almasharie", thankYou: "Thank you",
-                confirmTitle: "Confirm order",
-                confirmMsg: "Your order will be sent to seller via {{method}}. Proceed?",
-                successTitle: "Order sent",
-                successMsg: "Chat opened with seller. Items from this project have been removed from your cart.",
-                copyTitle: "Copy message",
-                copyMsg: "Direct chat is not available via {{method}}. Please copy the message below and paste it into your conversation with the seller.",
-                copyButton: "📋 Copy message",
-                openProfile: "Open profile",
-                cancel: "Cancel",
-                proceed: "Proceed"
-            }
-        };
-        
-        let currentLang = localStorage.getItem('projectSouqLang') || 'ar';
-        function t(key, params = {}) {
-            let text = translations[currentLang][key] || key;
-            for (const [k, v] of Object.entries(params)) {
-                text = text.replace(`{{${k}}}`, v);
-            }
-            return text;
+<!-- ===================== مودال موحد ===================== -->
+<div id="customModal" class="custom-modal">
+    <div class="modal-card">
+        <h3 id="modalTitle"></h3>
+        <p id="modalMessage"></p>
+        <div id="modalInputArea"></div>
+        <div id="modalButtons" class="modal-buttons"></div>
+    </div>
+</div>
+
+<script type="module">
+    import { APP_CONFIG } from './config.js';
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+    const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
+
+    // -------------------- الترجمات --------------------
+    const translations = {
+        ar: {
+            siteTitle: "سوق المشاريع", siteSubtitle: "المشاريع في الامارات", langBtnText: "English",
+            navHome: "الرئيسية", navMarket: "السوق", navFavorites: "المفضلة", navCart: "السلة", navServices: "الخدمات العامة", navRegister: "سجل مشروعك",
+            cartTitle: "سلة التسوق", cartSubtitle: "مراجعة المنتجات وإتمام الطلب",
+            total: "المجموع", checkout: "إتمام الطلب عبر", emptyCart: "سلتك فارغة",
+            backShop: "العودة للتسوق", enterWhatsapp: "أدخل رقم واتسابك للتواصل مع البائع (مطلوب)",
+            invalidWhatsapp: "رقم واتساب غير صحيح", required: "رقم الواتساب مطلوب",
+            notePrefix: "يرجى التواصل معي لتحديد طريقة الدفع والشحن",
+            orderItem: "طلب جديد من سوق المشاريع", thankYou: "شكراً",
+            confirmTitle: "تأكيد الطلب",
+            confirmMsg: "سيتم إرسال الطلب إلى البائع عبر {{method}}. هل تريد المتابعة؟",
+            successTitle: "تم الإرسال",
+            successMsg: "تم فتح محادثة مع البائع. تم حذف منتجات هذا المشروع من سلتك.",
+            copyTitle: "انسخ الرسالة",
+            copyMsg: "لا يمكن فتح محادثة مباشرة عبر {{method}}. يرجى نسخ الرسالة أدناه ثم لصقها في المحادثة مع البائع.",
+            copyButton: "📋 نسخ الرسالة",
+            openProfile: "فتح الملف الشخصي",
+            cancel: "إلغاء",
+            proceed: "متابعة",
+            footerLogo: "سوق المشاريع", footerText: "منصة المشاريع الإماراتية", privacyLink: "سياسة الخصوصية", termsLink: "شروط الاستخدام", copyright: "© 2026 سوق المشاريع - جميع الحقوق محفوظة"
+        },
+        en: {
+            siteTitle: "Souq Almasharie", siteSubtitle: "Projects in UAE", langBtnText: "عربي",
+            navHome: "Home", navMarket: "Market", navFavorites: "Favorites", navCart: "Cart", navServices: "Services", navRegister: "Register Project",
+            cartTitle: "Shopping Cart", cartSubtitle: "Review products and complete order",
+            total: "Total", checkout: "Complete order via", emptyCart: "Your cart is empty",
+            backShop: "Back to shop", enterWhatsapp: "Enter your WhatsApp number for the seller (required)",
+            invalidWhatsapp: "Invalid WhatsApp number", required: "WhatsApp number is required",
+            notePrefix: "Please advise on payment method and delivery",
+            orderItem: "New order from Souq Almasharie", thankYou: "Thank you",
+            confirmTitle: "Confirm order",
+            confirmMsg: "Your order will be sent to seller via {{method}}. Proceed?",
+            successTitle: "Order sent",
+            successMsg: "Chat opened with seller. Items from this project have been removed from your cart.",
+            copyTitle: "Copy message",
+            copyMsg: "Direct chat is not available via {{method}}. Please copy the message below and paste it into your conversation with the seller.",
+            copyButton: "📋 Copy message",
+            openProfile: "Open profile",
+            cancel: "Cancel",
+            proceed: "Proceed",
+            footerLogo: "Souq Almasharie", footerText: "UAE Projects Platform", privacyLink: "Privacy Policy", termsLink: "Terms of Use", copyright: "© 2026 Souq Almasharie - All Rights Reserved"
         }
-        
-        // -------------------- modal helpers --------------------
-        function showModal(title, message, options = {}) {
-            return new Promise((resolve) => {
-                const modal = document.getElementById('customModal');
-                document.getElementById('modalTitle').innerText = title;
-                document.getElementById('modalMessage').innerText = message;
-                const inputArea = document.getElementById('modalInputArea');
-                const buttonsDiv = document.getElementById('modalButtons');
-                inputArea.innerHTML = '';
-                buttonsDiv.innerHTML = '';
-                
-                if (options.input) {
-                    const input = document.createElement('input');
-                    input.type = options.inputType || 'text';
-                    input.placeholder = options.placeholder || '';
-                    input.id = 'modalInput';
-                    input.value = options.defaultValue || '';
-                    inputArea.appendChild(input);
-                }
-                if (options.textarea) {
-                    const textarea = document.createElement('textarea');
-                    textarea.rows = 5;
-                    textarea.id = 'modalTextarea';
-                    textarea.value = options.textareaValue || '';
-                    inputArea.appendChild(textarea);
-                }
-                if (options.copyButton) {
-                    const copyBtn = document.createElement('button');
-                    copyBtn.className = 'copy-btn';
-                    copyBtn.innerHTML = t('copyButton');
-                    copyBtn.onclick = () => {
-                        const textToCopy = document.getElementById('modalTextarea')?.value || options.textareaValue;
-                        if (textToCopy) {
-                            navigator.clipboard.writeText(textToCopy);
-                            const originalText = copyBtn.innerText;
-                            copyBtn.innerText = currentLang === 'ar' ? '✅ تم النسخ' : '✅ Copied';
-                            setTimeout(() => copyBtn.innerText = originalText, 2000);
-                        }
-                    };
-                    inputArea.appendChild(copyBtn);
-                }
-                if (options.openUrl) {
-                    const openBtn = document.createElement('button');
-                    openBtn.className = 'modal-btn primary';
-                    openBtn.innerHTML = t('openProfile');
-                    openBtn.style.marginRight = '10px';
-                    openBtn.onclick = () => {
-                        window.open(options.openUrl, '_blank');
-                    };
-                    buttonsDiv.appendChild(openBtn);
-                }
-                
-                const cancelBtn = document.createElement('button');
-                cancelBtn.className = 'modal-btn secondary';
-                cancelBtn.innerText = t('cancel');
-                cancelBtn.onclick = () => {
-                    modal.classList.remove('active');
-                    resolve(false);
+    };
+
+    let currentLang = localStorage.getItem('projectSouqLang') || 'ar';
+    function t(key, params = {}) {
+        let text = translations[currentLang][key] || key;
+        for (const [k, v] of Object.entries(params)) text = text.replace(`{{${k}}}`, v);
+        return text;
+    }
+
+    // تحديث النصوص الثابتة في الهيدر والفوتر والصفحة
+    function updateStaticTexts() {
+        document.title = currentLang === 'ar' ? 'سلة التسوق - سوق المشاريع' : 'Shopping Cart - Souq Almasharie';
+        document.getElementById('siteTitle').innerText = t('siteTitle');
+        document.getElementById('siteSubtitle').innerText = t('siteSubtitle');
+        document.getElementById('langBtnText').innerText = t('langBtnText');
+        document.getElementById('navHome').innerText = t('navHome');
+        document.getElementById('navMarket').innerText = t('navMarket');
+        document.getElementById('navFavorites').innerText = t('navFavorites');
+        document.getElementById('navCart').innerText = t('navCart');
+        document.getElementById('navServices').innerText = t('navServices');
+        document.getElementById('navRegister').innerText = t('navRegister');
+        document.getElementById('cartPageTitle').innerText = t('cartTitle');
+        document.getElementById('cartPageSubtitle').innerText = t('cartSubtitle');
+        document.getElementById('footerLogo').innerText = t('footerLogo');
+        document.getElementById('footerText').innerText = t('footerText');
+        document.getElementById('privacyLink').innerText = t('privacyLink');
+        document.getElementById('termsLink').innerText = t('termsLink');
+        document.getElementById('copyright').innerHTML = t('copyright');
+        const footerKeywords = document.getElementById('footerKeywords');
+        if (footerKeywords) {
+            footerKeywords.style.direction = currentLang === 'ar' ? 'rtl' : 'ltr';
+            footerKeywords.innerText = currentLang === 'ar' 
+                ? "سوق المشاريع | منصة المشاريع المنزلية في الإمارات | دليل الأسر المنتجة"
+                : "Souq Almasharie | Home Projects Platform in UAE | Productive Families Directory";
+        }
+        // تحديث عداد السلة
+        updateCartCountDisplay();
+    }
+
+    // دوال المودال
+    function showModal(title, message, options = {}) {
+        return new Promise((resolve) => {
+            const modal = document.getElementById('customModal');
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalMessage').innerText = message;
+            const inputArea = document.getElementById('modalInputArea');
+            const buttonsDiv = document.getElementById('modalButtons');
+            inputArea.innerHTML = '';
+            buttonsDiv.innerHTML = '';
+            
+            if (options.input) {
+                const input = document.createElement('input');
+                input.type = options.inputType || 'text';
+                input.placeholder = options.placeholder || '';
+                input.id = 'modalInput';
+                input.value = options.defaultValue || '';
+                inputArea.appendChild(input);
+            }
+            if (options.textarea) {
+                const textarea = document.createElement('textarea');
+                textarea.rows = 5;
+                textarea.id = 'modalTextarea';
+                textarea.value = options.textareaValue || '';
+                inputArea.appendChild(textarea);
+            }
+            if (options.copyButton) {
+                const copyBtn = document.createElement('button');
+                copyBtn.className = 'copy-btn';
+                copyBtn.innerHTML = t('copyButton');
+                copyBtn.onclick = () => {
+                    const textToCopy = document.getElementById('modalTextarea')?.value || options.textareaValue;
+                    if (textToCopy) {
+                        navigator.clipboard.writeText(textToCopy);
+                        copyBtn.innerText = currentLang === 'ar' ? '✅ تم النسخ' : '✅ Copied';
+                        setTimeout(() => copyBtn.innerText = t('copyButton'), 2000);
+                    }
                 };
-                const confirmBtn = document.createElement('button');
-                confirmBtn.className = 'modal-btn primary';
-                confirmBtn.innerText = t('proceed');
-                confirmBtn.onclick = () => {
-                    const inputVal = document.getElementById('modalInput')?.value || '';
-                    const textareaVal = document.getElementById('modalTextarea')?.value || '';
-                    modal.classList.remove('active');
-                    resolve({ confirmed: true, inputValue: inputVal, textareaValue: textareaVal });
-                };
-                buttonsDiv.appendChild(cancelBtn);
-                buttonsDiv.appendChild(confirmBtn);
-                
-                modal.classList.add('active');
-            });
-        }
-        
-        function showAlert(title, message) {
-            return showModal(title, message, {});
-        }
-        
-        // -------------------- cart storage --------------------
-        function getCart() { return JSON.parse(localStorage.getItem('projectCart') || '[]'); }
-        function saveCart(cart) { localStorage.setItem('projectCart', JSON.stringify(cart)); updateCartCountDisplay(); }
-        
-        function updateCartCountDisplay() {
-            const cart = getCart();
-            const total = cart.reduce((s,i)=>s+i.quantity,0);
-            const badge = document.getElementById('cartCount');
-            if(badge) badge.innerText = total;
-        }
-        
-        // -------------------- fetch all projects and products for dynamic names --------------------
-        let projectsData = []; // { id, name_ar, name_en, products: [{ id, name_ar, name_en, price_ar, price_en }] }
-        
-        async function loadAllProjectsData() {
-            const { data, error } = await supabase
-                .from('projects')
-                .select(`
-                    id,
-                    name_ar,
-                    name_en,
-                    products (id, name_ar, name_en, price_ar, price_en)
-                `);
-            if (error) {
-                console.error('Failed to load projects data:', error);
-                return;
+                inputArea.appendChild(copyBtn);
             }
-            projectsData = data || [];
-        }
-        
-        function getProductName(productId, lang) {
-            for (const proj of projectsData) {
-                const prod = proj.products?.find(p => p.id == productId);
-                if (prod) {
-                    return lang === 'ar' ? prod.name_ar : prod.name_en;
-                }
+            if (options.openUrl) {
+                const openBtn = document.createElement('button');
+                openBtn.className = 'modal-btn primary';
+                openBtn.innerHTML = t('openProfile');
+                openBtn.onclick = () => { window.open(options.openUrl, '_blank'); };
+                buttonsDiv.appendChild(openBtn);
             }
-            return '?';
+            const cancelBtn = document.createElement('button');
+            cancelBtn.className = 'modal-btn secondary';
+            cancelBtn.innerText = t('cancel');
+            cancelBtn.onclick = () => { modal.classList.remove('active'); resolve(false); };
+            const confirmBtn = document.createElement('button');
+            confirmBtn.className = 'modal-btn primary';
+            confirmBtn.innerText = t('proceed');
+            confirmBtn.onclick = () => {
+                const inputVal = document.getElementById('modalInput')?.value || '';
+                const textareaVal = document.getElementById('modalTextarea')?.value || '';
+                modal.classList.remove('active');
+                resolve({ confirmed: true, inputValue: inputVal, textareaValue: textareaVal });
+            };
+            buttonsDiv.appendChild(cancelBtn);
+            buttonsDiv.appendChild(confirmBtn);
+            modal.classList.add('active');
+        });
+    }
+    function showAlert(title, message) { return showModal(title, message, {}); }
+
+    // دوال السلة
+    function getCart() { return JSON.parse(localStorage.getItem('projectCart') || '[]'); }
+    function saveCart(cart) { localStorage.setItem('projectCart', JSON.stringify(cart)); updateCartCountDisplay(); }
+    function updateCartCountDisplay() {
+        const cart = getCart();
+        const total = cart.reduce((s,i)=>s+i.quantity,0);
+        const badge = document.getElementById('cartCount');
+        if(badge) badge.innerText = total;
+    }
+
+    let projectsData = []; // { id, name_ar, name_en, products: [{ id, name_ar, name_en, price_ar, price_en }] }
+    async function loadAllProjectsData() {
+        const { data, error } = await supabase.from('projects').select(`id, name_ar, name_en, products (id, name_ar, name_en, price_ar, price_en)`);
+        if (!error) projectsData = data || [];
+    }
+    function getProjectName(projectId, lang) { const p = projectsData.find(p => p.id == projectId); return p ? (lang === 'ar' ? p.name_ar : p.name_en) : '?'; }
+    function getProductName(productId, lang) {
+        for (const proj of projectsData) {
+            const prod = proj.products?.find(p => p.id == productId);
+            if (prod) return lang === 'ar' ? prod.name_ar : prod.name_en;
         }
-        
-        function getProjectName(projectId, lang) {
-            const proj = projectsData.find(p => p.id == projectId);
-            if (proj) {
-                return lang === 'ar' ? proj.name_ar : proj.name_en;
-            }
-            return '?';
-        }
-        
-        function getProductPriceDisplay(productId, lang) {
-            for (const proj of projectsData) {
-                const prod = proj.products?.find(p => p.id == productId);
-                if (prod) {
-                    const price = lang === 'ar' ? prod.price_ar : prod.price_en;
-                    if (price && price.trim() !== '') return price;
-                    return lang === 'ar' ? 'السعر عند الطلب' : 'Price on request';
-                }
-            }
-            return lang === 'ar' ? 'السعر عند الطلب' : 'Price on request';
-        }
-        
-        // -------------------- group cart items dynamically --------------------
-        async function groupByProjectDynamic(cart) {
-            const groups = {};
-            for (const item of cart) {
-                const projectId = item.projectId;
-                if (!groups[projectId]) {
-                    groups[projectId] = {
-                        projectId: projectId,
-                        projectName: getProjectName(projectId, currentLang),
-                        items: []
-                    };
-                }
-                // enrich item with dynamic name and price
-                const enrichedItem = {
-                    ...item,
-                    productName: getProductName(item.productId, currentLang),
-                    productPrice: item.productPrice || getProductPriceDisplay(item.productId, currentLang)
-                };
-                groups[projectId].items.push(enrichedItem);
-            }
-            return Object.values(groups);
-        }
-        
-        function calcTotal(items) {
-            let total = 0;
-            for (const it of items) {
-                let price = 0;
-                const match = it.productPrice?.match(/[\d.,]+/);
-                if (match) price = parseFloat(match[0].replace(',', '.'));
-                total += price * it.quantity;
-            }
-            return total.toFixed(2);
-        }
-        
-        // -------------------- contact helpers --------------------
-        async function getProjectContact(projectId) {
-            const { data, error } = await supabase.from('contacts').select('whatsapp, instagram, telegram, snapchat, tiktok, facebook, twitter, website').eq('project_id', projectId).single();
-            if (error || !data) return { type: 'whatsapp', value: null };
-            if (data.whatsapp) return { type: 'whatsapp', value: data.whatsapp };
-            if (data.instagram) return { type: 'instagram', value: data.instagram };
-            if (data.telegram) return { type: 'telegram', value: data.telegram };
-            if (data.snapchat) return { type: 'snapchat', value: data.snapchat };
-            if (data.tiktok) return { type: 'tiktok', value: data.tiktok };
-            if (data.facebook) return { type: 'facebook', value: data.facebook };
-            if (data.twitter) return { type: 'twitter', value: data.twitter };
-            if (data.website) return { type: 'website', value: data.website };
-            return { type: 'whatsapp', value: null };
-        }
-        
-        function buildMessage(projectGroup, customerWhatsapp) {
-            const itemsText = projectGroup.items.map(it => `▫️ ${it.productName} × ${it.quantity}${it.productPrice ? ` (${it.productPrice})` : ''}`).join('\n');
-            const total = calcTotal(projectGroup.items);
-            if (currentLang === 'ar') {
-                return `🛍️ *طلب جديد من سوق المشاريع*\n\nمن مشروعكم "${projectGroup.projectName}":\n\n${itemsText}\n\n💰 *المجموع:* ${total} درهم\n\n📦 *${t('notePrefix')}*\n📞 *رقم العميل (واتساب):* ${customerWhatsapp}\n\n${t('thankYou')}`;
-            } else {
-                return `🛍️ *New order from Souq Almasharie*\n\nFrom project "${projectGroup.projectName}":\n\n${itemsText}\n\n💰 *Total:* AED ${total}\n\n📦 *${t('notePrefix')}*\n📞 *Customer WhatsApp:* ${customerWhatsapp}\n\n${t('thankYou')}`;
+        return '?';
+    }
+    function getProductPriceDisplay(productId, lang) {
+        for (const proj of projectsData) {
+            const prod = proj.products?.find(p => p.id == productId);
+            if (prod) {
+                const price = lang === 'ar' ? prod.price_ar : prod.price_en;
+                if (price && price.trim() !== '') return price;
+                return lang === 'ar' ? 'السعر عند الطلب' : 'Price on request';
             }
         }
-        
-        async function logOrderForAdmin(projectGroup, customerWhatsapp, total) {
-            try {
-                await supabase.from('admin_order_logs').insert([{
-                    order_number: 'ORD-' + Date.now(),
-                    project_id: projectGroup.projectId,
-                    project_name: projectGroup.projectName,
-                    customer_session: localStorage.getItem('projectSessionId') || 'guest',
-                    customer_whatsapp: customerWhatsapp,
-                    items: projectGroup.items,
-                    total_price: total + ' AED'
-                }]);
-            } catch(err) { console.warn(err); }
+        return lang === 'ar' ? 'السعر عند الطلب' : 'Price on request';
+    }
+
+    async function groupByProjectDynamic(cart) {
+        const groups = {};
+        for (const item of cart) {
+            const projectId = item.projectId;
+            if (!groups[projectId]) groups[projectId] = { projectId, projectName: getProjectName(projectId, currentLang), items: [] };
+            const enrichedItem = { ...item, productName: getProductName(item.productId, currentLang), productPrice: item.productPrice || getProductPriceDisplay(item.productId, currentLang) };
+            groups[projectId].items.push(enrichedItem);
         }
-        
-        // -------------------- checkout --------------------
-        window.checkoutProject = async function(projectGroup) {
-            const phoneResult = await showModal(t('enterWhatsapp'), '', {
-                input: true,
-                inputType: 'tel',
-                placeholder: '971501234567',
-                defaultValue: ''
-            });
-            if (!phoneResult.confirmed) return;
-            let customerPhone = phoneResult.inputValue.trim();
-            if (!customerPhone) {
-                await showAlert(t('required'), '');
-                return;
-            }
-            let raw = customerPhone.replace(/\s/g, '');
-            if (!raw.startsWith('+')) raw = '+' + raw.replace(/^0+/, '');
-            if (!raw.match(/^\+[0-9]{7,15}$/)) {
-                await showAlert(t('invalidWhatsapp'), '');
-                return;
-            }
-            
-            const contact = await getProjectContact(projectGroup.projectId);
-            if (!contact.value) {
-                await showAlert(currentLang === 'ar' ? 'لا توجد وسيلة تواصل لهذا المشروع' : 'No contact method', '');
-                return;
-            }
-            
-            const message = buildMessage(projectGroup, raw);
-            const encodedMsg = encodeURIComponent(message);
-            let url = '';
-            let needCopy = false;
-            let methodName = '';
-            
-            if (contact.type === 'whatsapp') {
-                methodName = 'WhatsApp';
-                url = `https://wa.me/${contact.value.replace(/[^0-9]/g, '')}?text=${encodedMsg}`;
-            } else if (contact.type === 'instagram') {
-                methodName = 'Instagram';
-                url = `https://instagram.com/${contact.value.replace('@', '')}`;
-                needCopy = true;
-            } else if (contact.type === 'telegram') {
-                methodName = 'Telegram';
-                url = `https://t.me/${contact.value.replace('@', '')}?text=${encodedMsg}`;
-            } else if (contact.type === 'snapchat') {
-                methodName = 'Snapchat';
-                url = `https://snapchat.com/add/${contact.value}`;
-                needCopy = true;
-            } else if (contact.type === 'tiktok') {
-                methodName = 'TikTok';
-                url = `https://tiktok.com/@${contact.value}`;
-                needCopy = true;
-            } else if (contact.type === 'facebook') {
-                methodName = 'Facebook';
-                url = `https://facebook.com/${contact.value}`;
-                needCopy = true;
-            } else if (contact.type === 'twitter') {
-                methodName = 'X';
-                url = `https://x.com/${contact.value}`;
-                needCopy = true;
-            } else {
-                methodName = currentLang === 'ar' ? 'الموقع' : 'Website';
-                url = contact.value.startsWith('http') ? contact.value : 'https://' + contact.value;
-                needCopy = true;
-            }
-            
-            const confirm = await showModal(t('confirmTitle'), t('confirmMsg', { method: methodName }), {});
-            if (!confirm.confirmed) return;
-            
-            if (needCopy) {
-                await showModal(t('copyTitle'), t('copyMsg', { method: methodName }), {
-                    textarea: true,
-                    textareaValue: decodeURIComponent(encodedMsg),
-                    copyButton: true,
-                    openUrl: url
-                });
-            } else {
-                window.open(url, '_blank');
-            }
-            
-            await logOrderForAdmin(projectGroup, raw, calcTotal(projectGroup.items));
-            
-            let cart = getCart();
-            const newCart = cart.filter(item => String(item.projectId) !== String(projectGroup.projectId));
-            saveCart(newCart);
-            await renderCart();
-            await showAlert(t('successTitle'), t('successMsg'));
-        };
-        
-        // -------------------- render cart dynamically --------------------
-        window.updateQuantity = async function(productId, newQty) {
-            let cart = getCart();
-            const idx = cart.findIndex(i => i.productId === productId);
-            if (idx !== -1) {
-                if (newQty <= 0) cart.splice(idx, 1);
-                else cart[idx].quantity = newQty;
-                saveCart(cart);
-                await renderCart();
-            }
-        };
-        
-        window.removeItem = async function(productId) {
-            let cart = getCart();
-            cart = cart.filter(i => i.productId !== productId);
+        return Object.values(groups);
+    }
+    function calcTotal(items) {
+        let total = 0;
+        for (const it of items) {
+            let price = 0;
+            const match = it.productPrice?.match(/[\d.,]+/);
+            if (match) price = parseFloat(match[0].replace(',', '.'));
+            total += price * it.quantity;
+        }
+        return total.toFixed(2);
+    }
+
+    async function getProjectContact(projectId) {
+        const { data, error } = await supabase.from('contacts').select('whatsapp, instagram, telegram, snapchat, tiktok, facebook, twitter, website').eq('project_id', projectId).single();
+        if (error || !data) return { type: 'whatsapp', value: null };
+        if (data.whatsapp) return { type: 'whatsapp', value: data.whatsapp };
+        if (data.instagram) return { type: 'instagram', value: data.instagram };
+        if (data.telegram) return { type: 'telegram', value: data.telegram };
+        if (data.snapchat) return { type: 'snapchat', value: data.snapchat };
+        if (data.tiktok) return { type: 'tiktok', value: data.tiktok };
+        if (data.facebook) return { type: 'facebook', value: data.facebook };
+        if (data.twitter) return { type: 'twitter', value: data.twitter };
+        if (data.website) return { type: 'website', value: data.website };
+        return { type: 'whatsapp', value: null };
+    }
+
+    function buildMessage(projectGroup, customerWhatsapp) {
+        const itemsText = projectGroup.items.map(it => `▫️ ${it.productName} × ${it.quantity}${it.productPrice ? ` (${it.productPrice})` : ''}`).join('\n');
+        const total = calcTotal(projectGroup.items);
+        if (currentLang === 'ar') {
+            return `🛍️ *طلب جديد من سوق المشاريع*\n\nمن مشروعكم "${projectGroup.projectName}":\n\n${itemsText}\n\n💰 *المجموع:* ${total} درهم\n\n📦 *${t('notePrefix')}*\n📞 *رقم العميل (واتساب):* ${customerWhatsapp}\n\n${t('thankYou')}`;
+        } else {
+            return `🛍️ *New order from Souq Almasharie*\n\nFrom project "${projectGroup.projectName}":\n\n${itemsText}\n\n💰 *Total:* AED ${total}\n\n📦 *${t('notePrefix')}*\n📞 *Customer WhatsApp:* ${customerWhatsapp}\n\n${t('thankYou')}`;
+        }
+    }
+    async function logOrderForAdmin(projectGroup, customerWhatsapp, total) {
+        try {
+            await supabase.from('admin_order_logs').insert([{
+                order_number: 'ORD-' + Date.now(),
+                project_id: projectGroup.projectId,
+                project_name: projectGroup.projectName,
+                customer_session: localStorage.getItem('projectSessionId') || 'guest',
+                customer_whatsapp: customerWhatsapp,
+                items: projectGroup.items,
+                total_price: total + ' AED'
+            }]);
+        } catch(err) { console.warn(err); }
+    }
+
+    window.checkoutProject = async function(projectGroup) {
+        const phoneResult = await showModal(t('enterWhatsapp'), '', { input: true, inputType: 'tel', placeholder: '971501234567', defaultValue: '' });
+        if (!phoneResult.confirmed) return;
+        let customerPhone = phoneResult.inputValue.trim();
+        if (!customerPhone) { await showAlert(t('required'), ''); return; }
+        let raw = customerPhone.replace(/\s/g, '');
+        if (!raw.startsWith('+')) raw = '+' + raw.replace(/^0+/, '');
+        if (!raw.match(/^\+[0-9]{7,15}$/)) { await showAlert(t('invalidWhatsapp'), ''); return; }
+        const contact = await getProjectContact(projectGroup.projectId);
+        if (!contact.value) { await showAlert(currentLang === 'ar' ? 'لا توجد وسيلة تواصل لهذا المشروع' : 'No contact method', ''); return; }
+        const message = buildMessage(projectGroup, raw);
+        const encodedMsg = encodeURIComponent(message);
+        let url = '', needCopy = false, methodName = '';
+        if (contact.type === 'whatsapp') { methodName = 'WhatsApp'; url = `https://wa.me/${contact.value.replace(/[^0-9]/g, '')}?text=${encodedMsg}`; }
+        else if (contact.type === 'instagram') { methodName = 'Instagram'; url = `https://instagram.com/${contact.value.replace('@', '')}`; needCopy = true; }
+        else if (contact.type === 'telegram') { methodName = 'Telegram'; url = `https://t.me/${contact.value.replace('@', '')}?text=${encodedMsg}`; }
+        else if (contact.type === 'snapchat') { methodName = 'Snapchat'; url = `https://snapchat.com/add/${contact.value}`; needCopy = true; }
+        else if (contact.type === 'tiktok') { methodName = 'TikTok'; url = `https://tiktok.com/@${contact.value}`; needCopy = true; }
+        else if (contact.type === 'facebook') { methodName = 'Facebook'; url = `https://facebook.com/${contact.value}`; needCopy = true; }
+        else if (contact.type === 'twitter') { methodName = 'X'; url = `https://x.com/${contact.value}`; needCopy = true; }
+        else { methodName = currentLang === 'ar' ? 'الموقع' : 'Website'; url = contact.value.startsWith('http') ? contact.value : 'https://' + contact.value; needCopy = true; }
+        const confirm = await showModal(t('confirmTitle'), t('confirmMsg', { method: methodName }), {});
+        if (!confirm.confirmed) return;
+        if (needCopy) {
+            await showModal(t('copyTitle'), t('copyMsg', { method: methodName }), { textarea: true, textareaValue: decodeURIComponent(encodedMsg), copyButton: true, openUrl: url });
+        } else window.open(url, '_blank');
+        await logOrderForAdmin(projectGroup, raw, calcTotal(projectGroup.items));
+        let cart = getCart();
+        const newCart = cart.filter(item => String(item.projectId) !== String(projectGroup.projectId));
+        saveCart(newCart);
+        await renderCart();
+        await showAlert(t('successTitle'), t('successMsg'));
+    };
+
+    window.updateQuantity = async function(productId, newQty) {
+        let cart = getCart();
+        const idx = cart.findIndex(i => i.productId === productId);
+        if (idx !== -1) {
+            if (newQty <= 0) cart.splice(idx, 1);
+            else cart[idx].quantity = newQty;
             saveCart(cart);
             await renderCart();
-        };
-        
-        async function renderCart() {
-            const cart = getCart();
-            const container = document.getElementById('cartContainer');
-            if (!cart.length) {
-                container.innerHTML = `<div class="cart-empty"><i class="fas fa-shopping-cart"></i><p>${t('emptyCart')}</p><a href="index.html" class="btn-generate" style="display: inline-block; margin-top: 15px; text-decoration: none;">${t('backShop')}</a></div>`;
-                return;
-            }
-            // Ensure projects data is loaded
-            if (projectsData.length === 0) await loadAllProjectsData();
-            const groups = await groupByProjectDynamic(cart);
-            let html = '';
-            for (const group of groups) {
-                const contact = await getProjectContact(group.projectId);
-                let buttonText = t('checkout');
-                let buttonClass = 'contact-checkout';
-                let buttonIcon = '<i class="fab fa-whatsapp"></i>';
-                if (contact.type === 'whatsapp') { buttonText += ' واتساب'; buttonClass += ' whatsapp-bg'; }
-                else if (contact.type === 'instagram') { buttonText += ' إنستغرام'; buttonClass += ' instagram-bg'; buttonIcon = '<i class="fab fa-instagram"></i>'; }
-                else if (contact.type === 'telegram') { buttonText += ' تليجرام'; buttonClass += ' telegram-bg'; buttonIcon = '<i class="fab fa-telegram"></i>'; }
-                else if (contact.type === 'snapchat') { buttonText += ' سناب شات'; buttonClass += ' snapchat-bg'; buttonIcon = '<i class="fab fa-snapchat"></i>'; }
-                else if (contact.type === 'tiktok') { buttonText += ' تيك توك'; buttonClass += ' tiktok-bg'; buttonIcon = '<i class="fab fa-tiktok"></i>'; }
-                else if (contact.type === 'facebook') { buttonText += ' فيسبوك'; buttonClass += ' facebook-bg'; buttonIcon = '<i class="fab fa-facebook"></i>'; }
-                else if (contact.type === 'twitter') { buttonText += ' X'; buttonClass += ' x-bg'; buttonIcon = '<i class="fa-brands fa-x-twitter"></i>'; }
-                else { buttonText += ' الموقع'; buttonClass += ' website-bg'; buttonIcon = '<i class="fas fa-globe"></i>'; }
-                
-                html += `
-                    <div class="cart-vendor-card">
-                        <div class="vendor-header"><div class="vendor-name">${group.projectName}</div></div>
-                        <table class="cart-items-table"><tbody>
-                            ${group.items.map(item => `
-                                <tr>
-                                    <td style="width:45%">${item.productName}</td>
-                                    <td style="width:20%"><input type="number" min="1" value="${item.quantity}" class="quantity-input" onchange="updateQuantity('${item.productId}', this.value)"></td>
-                                    <td style="width:25%">${item.productPrice || (currentLang==='ar'?'السعر عند الطلب':'Price on request')}</td>
-                                    <td style="width:10%"><i class="fas fa-trash delete-icon" onclick="removeItem('${item.productId}')"></i></td>
-                                </tr>
-                            `).join('')}
-                        </tbody></table>
-                        <div class="vendor-total">${t('total')}: ${calcTotal(group.items)} AED</div>
-                        <button class="${buttonClass}" onclick="checkoutProject(${JSON.stringify(group).replace(/"/g, '&quot;')})">${buttonIcon} ${buttonText}</button>
-                    </div>
-                `;
-            }
-            container.innerHTML = html;
         }
-        
-        // -------------------- language toggle without reload --------------------
-        window.toggleLanguage = async function() {
-            currentLang = currentLang === 'ar' ? 'en' : 'ar';
-            localStorage.setItem('projectSouqLang', currentLang);
-            document.documentElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
-            document.documentElement.setAttribute('lang', currentLang);
-            if (currentLang === 'en') document.body.classList.add('en-mode');
-            else document.body.classList.remove('en-mode');
-            updateStaticTexts();
-            await renderCart();  // re-render with new language
-        };
-        
-        function updateStaticTexts() {
-            document.getElementById('cartPageTitle').innerText = t('cartTitle');
-            document.getElementById('cartPageSubtitle').innerText = t('cartSubtitle');
+    };
+    window.removeItem = async function(productId) {
+        let cart = getCart();
+        cart = cart.filter(i => i.productId !== productId);
+        saveCart(cart);
+        await renderCart();
+    };
+
+    async function renderCart() {
+        const cart = getCart();
+        const container = document.getElementById('cartContainer');
+        if (!cart.length) {
+            container.innerHTML = `<div class="cart-empty"><i class="fas fa-shopping-cart"></i><p>${t('emptyCart')}</p><a href="index.html#/projects/emirate/all" class="btn-generate" style="display: inline-block; margin-top: 15px; text-decoration: none;">${t('backShop')}</a></div>`;
+            return;
         }
-        
-        // -------------------- load header/footer --------------------
-        async function loadComponents() {
-            const headerRes = await fetch('components/header.html');
-            const footerRes = await fetch('components/footer.html');
-            document.getElementById('header-placeholder').innerHTML = await headerRes.text();
-            document.getElementById('footer-placeholder').innerHTML = await footerRes.text();
-            document.querySelectorAll('[id]').forEach(el => {
-                if (el.id === 'siteTitle') el.innerText = currentLang === 'ar' ? 'سوق المشاريع' : 'Souq Almasharie';
-                if (el.id === 'siteSubtitle') el.innerText = currentLang === 'ar' ? 'المشاريع في الامارات' : 'Projects in UAE';
-                if (el.id === 'langBtnText') el.innerText = currentLang === 'ar' ? 'English' : 'عربي';
-                if (el.id === 'navHome') el.innerText = currentLang === 'ar' ? 'الرئيسية' : 'Home';
-                if (el.id === 'navMarket') el.innerText = currentLang === 'ar' ? 'السوق' : 'Market';
-                if (el.id === 'navFavorites') el.innerText = currentLang === 'ar' ? 'المفضلة' : 'Favorites';
-                if (el.id === 'navCart') el.innerText = currentLang === 'ar' ? 'السلة' : 'Cart';
-                if (el.id === 'navServices') el.innerText = currentLang === 'ar' ? 'الخدمات العامة' : 'Services';
-                if (el.id === 'navRegister') el.innerText = currentLang === 'ar' ? 'سجل مشروعك' : 'Register Project';
-            });
-            updateCartCountDisplay();
+        if (projectsData.length === 0) await loadAllProjectsData();
+        const groups = await groupByProjectDynamic(cart);
+        let html = '';
+        for (const group of groups) {
+            const contact = await getProjectContact(group.projectId);
+            let buttonText = t('checkout');
+            let buttonClass = 'contact-checkout';
+            let buttonIcon = '<i class="fab fa-whatsapp"></i>';
+            if (contact.type === 'whatsapp') { buttonText += ' واتساب'; buttonClass += ' whatsapp-bg'; }
+            else if (contact.type === 'instagram') { buttonText += ' إنستغرام'; buttonClass += ' instagram-bg'; buttonIcon = '<i class="fab fa-instagram"></i>'; }
+            else if (contact.type === 'telegram') { buttonText += ' تليجرام'; buttonClass += ' telegram-bg'; buttonIcon = '<i class="fab fa-telegram"></i>'; }
+            else if (contact.type === 'snapchat') { buttonText += ' سناب شات'; buttonClass += ' snapchat-bg'; buttonIcon = '<i class="fab fa-snapchat"></i>'; }
+            else if (contact.type === 'tiktok') { buttonText += ' تيك توك'; buttonClass += ' tiktok-bg'; buttonIcon = '<i class="fab fa-tiktok"></i>'; }
+            else if (contact.type === 'facebook') { buttonText += ' فيسبوك'; buttonClass += ' facebook-bg'; buttonIcon = '<i class="fab fa-facebook"></i>'; }
+            else if (contact.type === 'twitter') { buttonText += ' X'; buttonClass += ' x-bg'; buttonIcon = '<i class="fa-brands fa-x-twitter"></i>'; }
+            else { buttonText += ' الموقع'; buttonClass += ' website-bg'; buttonIcon = '<i class="fas fa-globe"></i>'; }
+            html += `
+                <div class="cart-vendor-card">
+                    <div class="vendor-header"><div class="vendor-name">${group.projectName}</div></div>
+                    <table class="cart-items-table"><tbody>
+                        ${group.items.map(item => `<tr><td style="width:45%">${item.productName}</td><td style="width:20%"><input type="number" min="1" value="${item.quantity}" class="quantity-input" onchange="updateQuantity('${item.productId}', this.value)"></td><td style="width:25%">${item.productPrice || (currentLang==='ar'?'السعر عند الطلب':'Price on request')}</td><td style="width:10%"><i class="fas fa-trash delete-icon" onclick="removeItem('${item.productId}')"></i></td></tr>`).join('')}
+                    </tbody></table>
+                    <div class="vendor-total">${t('total')}: ${calcTotal(group.items)} AED</div>
+                    <button class="${buttonClass}" onclick="checkoutProject(${JSON.stringify(group).replace(/"/g, '&quot;')})">${buttonIcon} ${buttonText}</button>
+                </div>
+            `;
         }
-        
-        // -------------------- initialization --------------------
-        if (!localStorage.getItem('projectSessionId')) localStorage.setItem('projectSessionId', 'guest_' + Date.now() + '_' + Math.random().toString(36));
-        
-        await loadComponents();
-        await loadAllProjectsData();   // load once at start
+        container.innerHTML = html;
+    }
+
+    // تبديل اللغة
+    window.toggleLanguage = async function() {
+        currentLang = currentLang === 'ar' ? 'en' : 'ar';
+        localStorage.setItem('projectSouqLang', currentLang);
+        document.documentElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+        document.documentElement.setAttribute('lang', currentLang);
+        if (currentLang === 'en') document.body.classList.add('en-mode');
+        else document.body.classList.remove('en-mode');
         updateStaticTexts();
         await renderCart();
-        
-        // rebind language button after header loaded
-        document.addEventListener('click', (e) => { if (e.target.closest('#langToggleBtn')) { e.preventDefault(); window.toggleLanguage(); } });
-        
-        // expose functions globally for inline onclick
-        window.updateQuantity = window.updateQuantity;
-        window.removeItem = window.removeItem;
-        window.checkoutProject = window.checkoutProject;
-    </script>
+    };
+
+    // ربط أحداث القائمة واللغة
+    document.getElementById('menuToggleBtn').addEventListener('click', () => document.getElementById('navMenu').classList.toggle('active'));
+    document.addEventListener('click', (e) => {
+        const menu = document.getElementById('navMenu');
+        const btn = document.getElementById('menuToggleBtn');
+        if (menu && menu.classList.contains('active') && !menu.contains(e.target) && !btn.contains(e.target)) menu.classList.remove('active');
+    });
+    document.getElementById('langToggleBtn').addEventListener('click', (e) => { e.preventDefault(); window.toggleLanguage(); });
+
+    // تهيئة الجلسة والبيانات
+    if (!localStorage.getItem('projectSessionId')) localStorage.setItem('projectSessionId', 'guest_' + Date.now() + '_' + Math.random().toString(36));
+    await loadAllProjectsData();
+    updateStaticTexts();
+    await renderCart();
+
+    // ربط الدوال عالمياً
+    window.updateQuantity = window.updateQuantity;
+    window.removeItem = window.removeItem;
+    window.checkoutProject = window.checkoutProject;
+</script>
 </body>
 </html>
