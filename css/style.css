@@ -5119,3 +5119,11 @@ body.en-mode .product-detail-info .product-price-display:empty::before {
     font-weight: bold;
 }
 [dir="ltr"] .cart-badge { right: auto; left: -5px; }
+
+/* رفع مستوى القائمة فوق زر الرجوع */
+.nav-menu {
+    z-index: 1100 !important;
+}
+.back-button {
+    z-index: 1000; /* أقل من القائمة */
+}
