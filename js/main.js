@@ -573,7 +573,7 @@ const translations = {
         forProjectOwnerTitle: "For Project Owners",
         forProjectOwnerDesc: "Register your project for free...",
         copyright: "© 2026 Souq Almasharie - All Rights Reserved", 
-        langBtn: "Ar",
+        langBtn: "ع",
         heroTitle: "Souq Almasharie", 
         heroSubtitle: "A specialized platform supporting projects in the UAE",
         discoverBtn: "Enter the market", 
