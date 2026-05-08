@@ -65,7 +65,8 @@
             color: var(--gray);
             line-height: 1.6;
         }
-        /* جعل زر الرجوع فوق القائمة مع ضمان عدم تداخل */
+        
+        /* جعل زر الرجوع ثابتاً تماماً - إزالة أي حركة عند hover */
         .page-header.with-back {
             position: relative;
             margin-top: 0;
@@ -85,7 +86,7 @@
             justify-content: center;
             color: white;
             cursor: pointer;
-            transition: 0.2s;
+            transition: background 0.2s, color 0.2s; /* فقط تغيير اللون، لا حركة */
             border: 1px solid rgba(255,255,255,0.3);
             backdrop-filter: blur(5px);
             text-decoration: none;
@@ -98,7 +99,9 @@
             background: var(--secondary);
             color: var(--primary-dark);
             border-color: var(--primary-dark);
+            /* لا توجد خاصية transform هنا، وبالتالي لن يتحرك */
         }
+        
         /* ضمان ظهور القائمة كاملة */
         .nav-menu {
             z-index: 1000;
@@ -183,7 +186,7 @@
 </header>
 
 <div class="services-container">
-    <!-- عنوان الصفحة مع زر رجوع -->
+    <!-- عنوان الصفحة مع زر رجوع (ثابت) -->
     <div class="page-header with-back">
         <a href="index.html" class="back-button"><i class="fas fa-arrow-right"></i></a>
         <h1 id="heroTitle" class="page-title">الخدمات العامة</h1>
@@ -356,10 +359,9 @@
 
     function updateCartCount() {
         const cart = getCart();
-        // **إصلاح المشكلة: جمع الكميات بشكل صحيح (ليس سلاسل نصية)**
+        // إصلاح الجمع: التأكد من أن الكمية رقم
         let total = 0;
         for (let item of cart) {
-            // التأكد من أن الكمية رقم وليس نصاً
             let qty = typeof item.quantity === 'number' ? item.quantity : parseInt(item.quantity, 10);
             if (isNaN(qty)) qty = 0;
             total += qty;
