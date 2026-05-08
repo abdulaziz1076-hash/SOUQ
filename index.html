@@ -66,9 +66,9 @@
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-        /* ===== إصلاحات حاسمة للصفحة ===== */
+        /* ===== إصلاحات حاسمة وحدة ===== */
         
-        /* 1. منع أي حركة لزر الرجوع نهائياً - إلغاء أي transform و transition */
+        /* 1. إلغاء أي حركة لزر الرجوع نهائياً (مثل زر QR code) */
         .back-button,
         .back-button:hover,
         .back-button:focus,
@@ -76,26 +76,25 @@
         .page-header .back-button,
         .products-page .back-button,
         .product-detail-page .back-button,
-        .back-button *,
-        .back-button *:hover {
-            transform: translateY(-50%) !important;
+        .favorites-page .back-button,
+        .offers-page .back-button,
+        .families-page .back-button {
+            transform: none !important;
             scale: 1 !important;
             transition: none !important;
-            -webkit-transition: none !important;
             animation: none !important;
+            -webkit-transform: none !important;
+            -moz-transform: none !important;
         }
         
-        /* إزالة أي تأثير hover إضافي */
+        /* 2. إلغاء أي تأثير تحريك عند المرور (فقط تغيير الخلفية بلطف) */
         .back-button:hover {
-            background: rgba(255,255,255,0.25) !important;
+            background: rgba(255, 255, 255, 0.25) !important;
             transform: none !important;
-            border-color: var(--secondary) !important;
-        }
-        [dir="ltr"] .back-button:hover {
-            transform: none !important;
+            scale: 1 !important;
         }
         
-        /* 2. إصلاح أيقونة الشكوى لتتكيف مع الاتجاه */
+        /* 3. إصلاح أيقونة الشكوى لتتكيف مع الاتجاه */
         .feedback-btn {
             position: absolute !important;
             bottom: 60px !important;
@@ -111,7 +110,7 @@
             left: auto !important;
         }
         
-        /* 3. عدادات السلة */
+        /* 4. عدادات السلة */
         .cart-badge {
             position: absolute;
             top: -5px;
@@ -136,14 +135,9 @@
             cursor: pointer;
         }
         
-        /* 4. ضمان ظهور القائمة فوق كل العناصر */
+        /* 5. ضمان ظهور القائمة فوق كل العناصر */
         .nav-menu {
-            z-index: 10000 !important;
-        }
-        
-        /* 5. أزرار المشاركة والمفضلة تظل كما هي */
-        .action-btn {
-            transition: background-color 0.2s, color 0.2s;
+            z-index: 99999 !important;
         }
     </style>
 
@@ -163,9 +157,7 @@
 </head>
 <body>
 
-<div class="loader-wrapper" id="loader">
-    <div class="loader"></div>
-</div>
+<!-- تم إزالة شاشة التحميل (loader-wrapper) نهائياً بناءً على طلبك -->
 
 <div id="instructionPopup" class="instruction-popup">
     <div class="popup-header">
@@ -430,7 +422,7 @@
 <script type="module" src="js/main.js"></script>
 
 <script>
-    // ==================== دوال القائمة الموحدة ====================
+    // ==================== دوال التنقل والقائمة (بدون تعارض) ====================
     function closeNavMenu() {
         const menu = document.getElementById('navMenu');
         if (menu) menu.classList.remove('active');
@@ -462,7 +454,7 @@
     window.showOffersPage = function() { goToHash('/offers'); };
     window.navigateTo = goToHash;
 
-    // ==================== إصلاح عداد السلة (جمع الأرقام الصحيح) ====================
+    // ==================== عداد السلة (جمع دقيق) ====================
     function updateCartCountCorrect() {
         try {
             let cart = JSON.parse(localStorage.getItem('projectCart') || '[]');
@@ -480,11 +472,29 @@
     window.addEventListener('storage', function(e) { if (e.key === 'projectCart') updateCartCountCorrect(); });
     setInterval(updateCartCountCorrect, 2000);
 
-    // ==================== الترجمة الكاملة للصفحة (جميع النصوص الثابتة) ====================
-    const translations = {
+    // ==================== إصلاح أيقونة الشكوى (إزالة التنسيقات المباشرة) ====================
+    function enforceFeedbackButtonPosition() {
+        const observer = new MutationObserver(function() {
+            document.querySelectorAll('.feedback-btn').forEach(btn => {
+                if (btn.style.left || btn.style.right) {
+                    btn.style.removeProperty('left');
+                    btn.style.removeProperty('right');
+                }
+            });
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+        document.querySelectorAll('.feedback-btn').forEach(btn => {
+            if (btn.style.left || btn.style.right) {
+                btn.style.removeProperty('left');
+                btn.style.removeProperty('right');
+            }
+        });
+    }
+    setTimeout(enforceFeedbackButtonPosition, 300);
+
+    // ==================== تبديل اللغة (دعم main.js وترجمة النصوص الثابتة) ====================
+    const staticTranslations = {
         ar: {
-            siteTitle: "سوق المشاريع",
-            siteSubtitle: "المشاريع في الامارات",
             langBtn: "English",
             navHome: "الرئيسية",
             navMarket: "السوق",
@@ -531,8 +541,6 @@
             footerKeywords: "سوق المشاريع | منصة المشاريع المنزلية في الإمارات | دليل الأسر المنتجة"
         },
         en: {
-            siteTitle: "Souq Almasharie",
-            siteSubtitle: "Projects in UAE",
             langBtn: "عربي",
             navHome: "Home",
             navMarket: "Market",
@@ -580,13 +588,13 @@
         }
     };
 
-    function updatePageLanguage() {
+    function updateStaticTexts() {
         const lang = localStorage.getItem('projectSouqLang') || 'ar';
-        const t = translations[lang];
+        const t = staticTranslations[lang];
         
-        // تحديث جميع النصوص الثابتة
-        document.getElementById('siteTitle').innerText = t.siteTitle;
-        document.getElementById('siteSubtitle').innerText = t.siteSubtitle;
+        // تحديث جميع العناصر الثابتة
+        document.getElementById('siteTitle').innerText = lang === 'ar' ? 'سوق المشاريع' : 'Souq Almasharie';
+        document.getElementById('siteSubtitle').innerText = lang === 'ar' ? 'المشاريع في الامارات' : 'Projects in UAE';
         document.getElementById('langBtn').innerText = t.langBtn;
         document.getElementById('navHome').innerText = t.navHome;
         document.getElementById('navMarket').innerText = t.navMarket;
@@ -620,7 +628,8 @@
         document.getElementById('familiesPageTitle').innerText = t.familiesPageTitle;
         document.getElementById('familiesPageSubtitle').innerText = t.familiesPageSubtitle;
         document.getElementById('offersBtnText').innerText = t.offersBtnText;
-        document.getElementById('dealsTitle').innerHTML = '<i class="fas fa-tags"></i> ' + t.dealsTitle;
+        const dealsTitleSpan = document.getElementById('dealsTitle');
+        if (dealsTitleSpan) dealsTitleSpan.innerHTML = t.dealsTitle;
         document.getElementById('favoritesPageTitle').innerText = t.favoritesPageTitle;
         document.getElementById('favoritesPageSubtitle').innerText = t.favoritesPageSubtitle;
         document.getElementById('offersPageTitle').innerText = t.offersPageTitle;
@@ -636,43 +645,23 @@
             footerKeywords.style.direction = lang === 'ar' ? 'rtl' : 'ltr';
             footerKeywords.innerText = t.footerKeywords;
         }
-        
-        // تحديث اتجاه الصفحة والكلاسات
-        if (lang === 'ar') {
-            document.documentElement.setAttribute('dir', 'rtl');
-            document.documentElement.setAttribute('lang', 'ar');
-            document.body.classList.remove('en-mode');
-        } else {
-            document.documentElement.setAttribute('dir', 'ltr');
-            document.documentElement.setAttribute('lang', 'en');
-            document.body.classList.add('en-mode');
-        }
     }
 
-    // استدعاء الترجمة عند تحميل الصفحة
-    updatePageLanguage();
-    
-    // مراقبة تغيير اللغة من localStorage (في حالة تغييرها من main.js)
+    // تحديث النصوص عند تحميل الصفحة وعند تغيير اللغة عبر التخزين
+    updateStaticTexts();
     window.addEventListener('storage', function(e) {
-        if (e.key === 'projectSouqLang') {
-            updatePageLanguage();
-        }
+        if (e.key === 'projectSouqLang') updateStaticTexts();
     });
 
-    // ==================== تبديل اللغة ====================
+    // دالة تبديل اللغة (تستدعي main.js إذا وجدت، وإلا تعيد تحميل الصفحة)
     window.toggleLanguage = function() {
         const currentLang = localStorage.getItem('projectSouqLang') || 'ar';
         const newLang = currentLang === 'ar' ? 'en' : 'ar';
         localStorage.setItem('projectSouqLang', newLang);
-        
-        // تحديث واجهة الصفحة الثابتة
-        updatePageLanguage();
-        
-        // تحديث اللغة في main.js إذا كان موجوداً
+        updateStaticTexts();
         if (typeof window.mainToggleLanguage === 'function') {
             window.mainToggleLanguage();
         } else {
-            // إعادة تحميل الصفحة لتحديث المحتوى الديناميكي من main.js
             window.location.reload();
         }
     };
@@ -684,26 +673,6 @@
             window.toggleLanguage();
         });
     }
-
-    // ==================== إصلاح أيقونة الشكوى (إزالة أي تنسيق مباشر) ====================
-    function enforceFeedbackButtonPosition() {
-        const observer = new MutationObserver(function() {
-            document.querySelectorAll('.feedback-btn').forEach(btn => {
-                if (btn.style.left || btn.style.right) {
-                    btn.style.removeProperty('left');
-                    btn.style.removeProperty('right');
-                }
-            });
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
-        document.querySelectorAll('.feedback-btn').forEach(btn => {
-            if (btn.style.left || btn.style.right) {
-                btn.style.removeProperty('left');
-                btn.style.removeProperty('right');
-            }
-        });
-    }
-    setTimeout(enforceFeedbackButtonPosition, 300);
 </script>
 
 <!-- مودال الشكاوى والاقتراحات -->
