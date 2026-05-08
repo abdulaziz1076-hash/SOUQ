@@ -66,35 +66,38 @@
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-        /* إصلاحات حاسمة للصفحة */
-        .nav-menu { z-index: 1050 !important; }
-        .back-button, .page-header .back-button { z-index: 1020 !important; }
-        .back-button:hover {
-          transform: translateY(-50%) !important;
-          scale: 1 !important;
-          transition: none !important;
-         }
+        /* ===== إصلاحات حاسمة للصفحة ===== */
         
-        /* إصلاح أيقونة الشكوى (feedback-btn) لتعمل مع العربية والإنجليزية */
+        /* 1. منع أي حركة لزر الرجوع مهما كانت الأولوية */
+        .back-button,
+        .back-button:hover,
+        .back-button:focus,
+        .back-button:active,
+        .page-header .back-button,
+        .products-page .back-button,
+        .product-detail-page .back-button {
+            transform: translateY(-50%) !important;
+            scale: 1 !important;
+            transition: background-color 0.2s ease, color 0.2s ease !important;
+        }
+        
+        /* 2. إصلاح أيقونة الشكوى لتتكيف مع الاتجاه */
         .feedback-btn {
             position: absolute !important;
             bottom: 60px !important;
-            /* إزالة أي left/right ثابتة */
             left: auto !important;
             right: auto !important;
         }
-        /* الوضع العربي (rtl) */
         html[dir="rtl"] .feedback-btn {
             left: 15px !important;
             right: auto !important;
         }
-        /* الوضع الإنجليزي (ltr) */
         html[dir="ltr"] .feedback-btn {
             right: 15px !important;
             left: auto !important;
         }
         
-        /* عدادات السلة */
+        /* 3. عدادات السلة */
         .cart-badge {
             position: absolute;
             top: -5px;
@@ -119,9 +122,31 @@
             cursor: pointer;
         }
         
-        /* ضمان أن الأزرار الأخرى لا تتأثر */
+        /* 4. ضمان ظهور القائمة فوق كل العناصر */
+        .nav-menu {
+            z-index: 10000 !important;
+        }
+        
+        /* 5. أزرار المشاركة والمفضلة تظل كما هي */
         .action-btn {
             transition: background-color 0.2s, color 0.2s;
+        }
+        
+        /* 6. إزالة أي تأثير hover إضافي من style.css */
+        .back-button:hover {
+            background: rgba(255,255,255,0.25) !important;
+            transform: none !important;
+            border-color: var(--secondary) !important;
+        }
+        [dir="ltr"] .back-button:hover {
+            transform: none !important;
+        }
+        
+        /* 7. تثبيت جميع أزرار الرجوع في أي مكان */
+        .page-header .back-button:hover,
+        .products-page .back-button:hover,
+        .product-detail-page .back-button:hover {
+            transform: none !important;
         }
     </style>
 
@@ -440,7 +465,7 @@
     window.showOffersPage = function() { goToHash('/offers'); };
     window.navigateTo = goToHash;
 
-    // ==================== إصلاح عداد السلة ====================
+    // ==================== إصلاح عداد السلة (جمع الأرقام الصحيح) ====================
     function updateCartCountCorrect() {
         try {
             let cart = JSON.parse(localStorage.getItem('projectCart') || '[]');
@@ -458,7 +483,7 @@
     window.addEventListener('storage', function(e) { if (e.key === 'projectCart') updateCartCountCorrect(); });
     setInterval(updateCartCountCorrect, 2000);
 
-    // ==================== ترجمة القائمة ====================
+    // ==================== ترجمة القائمة يدوياً ====================
     const translationsNav = {
         ar: { navHome: "الرئيسية", navMarket: "السوق", navFavorites: "المفضلة", navCart: "السلة", navServices: "الخدمات العامة", navRegister: "سجل مشروعك" },
         en: { navHome: "Home", navMarket: "Market", navFavorites: "Favorites", navCart: "Cart", navServices: "Services", navRegister: "Register Project" }
@@ -476,7 +501,7 @@
     updateNavLanguage();
     window.addEventListener('storage', function(e) { if (e.key === 'projectSouqLang') updateNavLanguage(); });
 
-    // ==================== دوال اللغة ====================
+    // ==================== تبديل اللغة ====================
     window.toggleLanguage = function() {
         if (typeof window.mainToggleLanguage === 'function') {
             window.mainToggleLanguage();
@@ -505,25 +530,17 @@
         langBtn.addEventListener('click', function(e) { e.stopPropagation(); window.toggleLanguage(); });
     }
 
-    // ==================== إصلاح أيقونة الشكوى (التأكد من تطبيق CSS) ====================
+    // ==================== إصلاح أيقونة الشكوى (إزالة أي تنسيق مباشر) ====================
     function enforceFeedbackButtonPosition() {
-        // إزالة أي left/right مضافة من main.js وإعادة تطبيق التوجيه عبر CSS
-        const observer = new MutationObserver(function(mutations) {
-            const btns = document.querySelectorAll('.feedback-btn');
-            btns.forEach(btn => {
-                // إزالة أي تنسيق داخلي قد يسبب مشكلة
+        const observer = new MutationObserver(function() {
+            document.querySelectorAll('.feedback-btn').forEach(btn => {
                 if (btn.style.left || btn.style.right) {
                     btn.style.removeProperty('left');
                     btn.style.removeProperty('right');
                 }
-                // التأكد من وجود class المناسب
-                if (!btn.classList.contains('feedback-fixed')) {
-                    btn.classList.add('feedback-fixed');
-                }
             });
         });
         observer.observe(document.body, { childList: true, subtree: true });
-        // تطبيق فوري
         document.querySelectorAll('.feedback-btn').forEach(btn => {
             if (btn.style.left || btn.style.right) {
                 btn.style.removeProperty('left');
