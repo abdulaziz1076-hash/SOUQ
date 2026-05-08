@@ -34,6 +34,7 @@
 </script>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-P5YLDRQQGE"></script>
+    
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -66,87 +67,23 @@
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-        /* ===== إصلاحات حاسمة للصفحة ===== */
-        
-        /* 1. منع أي حركة لزر الرجوع مهما كانت الأولوية */
-        .back-button,
-        .back-button:hover,
-        .back-button:focus,
-        .back-button:active,
-        .page-header .back-button,
-        .products-page .back-button,
-        .product-detail-page .back-button {
-            transform: translateY(-50%) !important;
-            scale: 1 !important;
-            transition: background-color 0.2s ease, color 0.2s ease !important;
-        }
-        
-        /* 2. إصلاح أيقونة الشكوى لتتكيف مع الاتجاه */
-        .feedback-btn {
-            position: absolute !important;
-            bottom: 60px !important;
-            left: auto !important;
-            right: auto !important;
-        }
-        html[dir="rtl"] .feedback-btn {
-            left: 15px !important;
-            right: auto !important;
-        }
-        html[dir="ltr"] .feedback-btn {
-            right: 15px !important;
-            left: auto !important;
-        }
-        
-        /* 3. عدادات السلة */
-        .cart-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: #C41E3A;
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            font-size: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-        html[dir="ltr"] .cart-badge {
-            right: auto;
-            left: -5px;
-        }
-        .cart-icon {
-            position: relative;
-            cursor: pointer;
-        }
-        
-        /* 4. ضمان ظهور القائمة فوق كل العناصر */
-        .nav-menu {
-            z-index: 10000 !important;
-        }
-        
-        /* 5. أزرار المشاركة والمفضلة تظل كما هي */
-        .action-btn {
-            transition: background-color 0.2s, color 0.2s;
-        }
-        
-        /* 6. إزالة أي تأثير hover إضافي من style.css */
+        /* إصلاح زر الرجوع: منع الحركة عند التمرير */
         .back-button:hover {
-            background: rgba(255,255,255,0.25) !important;
             transform: none !important;
-            border-color: var(--secondary) !important;
+            transition: background 0.2s ease, box-shadow 0.2s ease !important;
         }
-        [dir="ltr"] .back-button:hover {
+        /* إزالة أي حركة غير مرغوب فيها */
+        .back-button {
             transform: none !important;
         }
-        
-        /* 7. تثبيت جميع أزرار الرجوع في أي مكان */
-        .page-header .back-button:hover,
-        .products-page .back-button:hover,
-        .product-detail-page .back-button:hover {
-            transform: none !important;
+        /* التأكد من ثباته في مكانه المثالي */
+        html[dir="rtl"] .back-button {
+            right: 12px;
+            left: auto;
+        }
+        html[dir="ltr"] .back-button {
+            left: 12px;
+            right: auto;
         }
     </style>
 
@@ -166,9 +103,8 @@
 </head>
 <body>
 
-<div class="loader-wrapper" id="loader">
-    <div class="loader"></div>
-</div>
+<!-- تعطيل شاشة التحميل نهائياً (إزالة العنصر بالكامل) -->
+<!-- لم يعد هناك <div class="loader-wrapper"> -->
 
 <div id="instructionPopup" class="instruction-popup">
     <div class="popup-header">
@@ -346,16 +282,22 @@
             <div class="back-button" onclick="goBack()" style="margin-bottom: 12px;">
                 <i class="fas fa-arrow-right"></i>
             </div>
+            
             <div id="familyProfileContainer"></div>
+            
             <div class="deals-section" id="dealsSection" style="display: none;">
                 <h3 class="deals-title"><i class="fas fa-tags"></i> <span id="dealsTitle">العروض والباقات:</span></h3>
                 <div class="deals-grid" id="dealsGrid"></div>
             </div>
+            
             <div id="productTypeFilterContainer" style="margin: 10px 0;"></div>
+            
             <div class="products-header">
                 <h2 class="products-title" id="productsTitle">المنتجات</h2>
             </div>
+            
             <div class="products-grid" id="productsGrid"></div>
+            
             <div id="contactSectionBottom" class="contact-section-bottom"></div>
         </div>
     </div>
@@ -429,11 +371,43 @@
     </div>
 </footer>
 
+<!-- مودال الشكاوى والاقتراحات -->
+<div id="feedbackModal" class="modal-overlay">
+    <div class="modal-container" style="max-width: 500px;">
+        <div class="modal-close" onclick="closeFeedbackModal()"><i class="fas fa-times"></i></div>
+        <div class="modal-body">
+            <h3 id="feedbackModalTitle">إرسال شكوى أو اقتراح</h3>
+            <form id="feedbackFormModal">
+                <div class="form-group">
+                    <label>نوع الرسالة *</label>
+                    <select id="feedbackTypeModal" required>
+                        <option value="complaint">شكوى</option>
+                        <option value="suggestion">اقتراح</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>بريدك الإلكتروني (للرد)</label>
+                    <input type="email" id="feedbackEmailModal" placeholder="example@domain.com">
+                </div>
+                <div class="form-group">
+                    <label>نص الرسالة *</label>
+                    <textarea id="feedbackMessageModal" rows="4" required></textarea>
+                </div>
+                <input type="hidden" id="feedbackTargetIdModal">
+                <input type="hidden" id="feedbackTargetNameModal">
+                <button type="submit" class="btn-generate" style="width:100%;">إرسال</button>
+            </form>
+            <div id="feedbackResultModal" style="margin-top:15px; text-align:center;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- تحميل الملفات الأساسية -->
 <script src="js/supabase.js"></script>
 <script type="module" src="js/main.js"></script>
 
 <script>
-    // ==================== دوال القائمة الموحدة ====================
+    // دوال مساعدة للقائمة المنسدلة وتنظيف الـ loader
     function closeNavMenu() {
         const menu = document.getElementById('navMenu');
         if (menu) menu.classList.remove('active');
@@ -442,13 +416,30 @@
         const menu = document.getElementById('navMenu');
         if (menu) menu.classList.toggle('active');
     }
-    function goToPage(url) { closeNavMenu(); window.location.href = url; }
-    function goToHash(hash) { closeNavMenu(); window.location.hash = hash; }
+    window.goBack = function() {
+        closeNavMenu();
+        window.history.back();
+    };
+    window.scrollToTop = function() {
+        closeNavMenu();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    window.navigateTo = function(hash) {
+        closeNavMenu();
+        window.location.hash = hash;
+    };
+    window.showOffersPage = function() {
+        window.navigateTo('/offers');
+    };
+    window.showFavorites = function() {
+        window.navigateTo('/favorites');
+    };
 
-    const menuBtn = document.getElementById('menuToggleBtn');
-    if (menuBtn) {
-        menuBtn.addEventListener('click', function(e) { e.stopPropagation(); toggleMenu(); });
-    }
+    // ربط أحداث القائمة
+    document.getElementById('menuToggleBtn').addEventListener('click', function(e) {
+        e.stopPropagation();
+        toggleMenu();
+    });
     document.addEventListener('click', function(event) {
         const menu = document.getElementById('navMenu');
         const btn = document.getElementById('menuToggleBtn');
@@ -456,118 +447,15 @@
             menu.classList.remove('active');
         }
     });
-    window.addEventListener('hashchange', closeNavMenu);
-    window.addEventListener('load', closeNavMenu);
-
-    window.scrollToTop = function() { closeNavMenu(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
-    window.goBack = function() { closeNavMenu(); window.history.back(); };
-    window.showFavorites = function() { goToHash('/favorites'); };
-    window.showOffersPage = function() { goToHash('/offers'); };
-    window.navigateTo = goToHash;
-
-    // ==================== إصلاح عداد السلة (جمع الأرقام الصحيح) ====================
-    function updateCartCountCorrect() {
-        try {
-            let cart = JSON.parse(localStorage.getItem('projectCart') || '[]');
-            let total = 0;
-            for (let item of cart) {
-                let qty = typeof item.quantity === 'number' ? item.quantity : parseInt(item.quantity, 10);
-                if (isNaN(qty)) qty = 0;
-                total += qty;
-            }
-            const badge = document.getElementById('cartCount');
-            if (badge) badge.innerText = total;
-        } catch(e) {}
-    }
-    updateCartCountCorrect();
-    window.addEventListener('storage', function(e) { if (e.key === 'projectCart') updateCartCountCorrect(); });
-    setInterval(updateCartCountCorrect, 2000);
-
-    // ==================== ترجمة القائمة يدوياً ====================
-    const translationsNav = {
-        ar: { navHome: "الرئيسية", navMarket: "السوق", navFavorites: "المفضلة", navCart: "السلة", navServices: "الخدمات العامة", navRegister: "سجل مشروعك" },
-        en: { navHome: "Home", navMarket: "Market", navFavorites: "Favorites", navCart: "Cart", navServices: "Services", navRegister: "Register Project" }
-    };
-    function updateNavLanguage() {
-        const lang = localStorage.getItem('projectSouqLang') || 'ar';
-        const t = translationsNav[lang];
-        document.getElementById('navHome').innerText = t.navHome;
-        document.getElementById('navMarket').innerText = t.navMarket;
-        document.getElementById('navFavorites').innerText = t.navFavorites;
-        document.getElementById('navCart').innerText = t.navCart;
-        document.getElementById('navServices').innerText = t.navServices;
-        document.getElementById('navRegister').innerText = t.navRegister;
-    }
-    updateNavLanguage();
-    window.addEventListener('storage', function(e) { if (e.key === 'projectSouqLang') updateNavLanguage(); });
-
-    // ==================== تبديل اللغة ====================
-    window.toggleLanguage = function() {
-        if (typeof window.mainToggleLanguage === 'function') {
-            window.mainToggleLanguage();
-            setTimeout(updateNavLanguage, 100);
-        } else {
-            const currentLang = localStorage.getItem('projectSouqLang') || 'ar';
-            const newLang = currentLang === 'ar' ? 'en' : 'ar';
-            localStorage.setItem('projectSouqLang', newLang);
-            document.documentElement.setAttribute('dir', newLang === 'ar' ? 'rtl' : 'ltr');
-            document.documentElement.setAttribute('lang', newLang);
-            if (newLang === 'en') {
-                document.documentElement.classList.add('en-mode');
-                document.body.classList.add('en-mode');
-            } else {
-                document.documentElement.classList.remove('en-mode');
-                document.body.classList.remove('en-mode');
-            }
-            const langBtn = document.getElementById('langBtn');
-            if (langBtn) langBtn.innerText = newLang === 'ar' ? 'English' : 'عربي';
-            updateNavLanguage();
-            window.location.reload();
-        }
-    };
-    const langBtn = document.getElementById('langToggleBtn');
-    if (langBtn) {
-        langBtn.addEventListener('click', function(e) { e.stopPropagation(); window.toggleLanguage(); });
-    }
-
-    // ==================== إصلاح أيقونة الشكوى (إزالة أي تنسيق مباشر) ====================
-    function enforceFeedbackButtonPosition() {
-        const observer = new MutationObserver(function() {
-            document.querySelectorAll('.feedback-btn').forEach(btn => {
-                if (btn.style.left || btn.style.right) {
-                    btn.style.removeProperty('left');
-                    btn.style.removeProperty('right');
-                }
-            });
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
-        document.querySelectorAll('.feedback-btn').forEach(btn => {
-            if (btn.style.left || btn.style.right) {
-                btn.style.removeProperty('left');
-                btn.style.removeProperty('right');
-            }
-        });
-    }
-    setTimeout(enforceFeedbackButtonPosition, 300);
+    window.addEventListener('hashchange', function() {
+        closeNavMenu();
+    });
+    window.addEventListener('load', function() {
+        closeNavMenu();
+        // إضافة جلسة عشوائية للتتبع
+        if (!localStorage.getItem('projectSessionId')) localStorage.setItem('projectSessionId', 'guest_' + Date.now() + '_' + Math.random().toString(36));
+    });
 </script>
-
-<!-- مودال الشكاوى والاقتراحات -->
-<div id="feedbackModal" class="modal-overlay">
-    <div class="modal-container" style="max-width: 500px;">
-        <div class="modal-close" onclick="closeFeedbackModal()"><i class="fas fa-times"></i></div>
-        <div class="modal-body">
-            <h3 id="feedbackModalTitle">إرسال شكوى أو اقتراح</h3>
-            <form id="feedbackFormModal">
-                <div class="form-group"><label>نوع الرسالة *</label><select id="feedbackTypeModal" required><option value="complaint">شكوى</option><option value="suggestion">اقتراح</option></select></div>
-                <div class="form-group"><label>بريدك الإلكتروني (للرد)</label><input type="email" id="feedbackEmailModal" placeholder="example@domain.com"></div>
-                <div class="form-group"><label>نص الرسالة *</label><textarea id="feedbackMessageModal" rows="4" required></textarea></div>
-                <input type="hidden" id="feedbackTargetIdModal"><input type="hidden" id="feedbackTargetNameModal">
-                <button type="submit" class="btn-generate" style="width:100%;">إرسال</button>
-            </form>
-            <div id="feedbackResultModal" style="margin-top:15px; text-align:center;"></div>
-        </div>
-    </div>
-</div>
 
 </body>
 </html>
