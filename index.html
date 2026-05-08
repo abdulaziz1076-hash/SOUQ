@@ -673,6 +673,35 @@
             window.toggleLanguage();
         });
     }
+    function forceFooterTranslation() {
+            const lang = localStorage.getItem('projectSouqLang') || 'ar';
+            const t = staticTranslations[lang];
+            const privacySpan = document.getElementById('privacyLink');
+            const termsSpan = document.getElementById('termsLink');
+            const footerKeywordsDiv = document.getElementById('footerKeywords');
+            if (privacySpan && privacySpan.innerText !== t.privacyLink) {
+                privacySpan.innerText = t.privacyLink;
+                termsSpan.innerText = t.termsLink;
+                if (footerKeywordsDiv) {
+                    footerKeywordsDiv.style.direction = lang === 'ar' ? 'rtl' : 'ltr';
+                    footerKeywordsDiv.innerText = t.footerKeywords;
+                }
+            }
+        }
+
+        // مراقبة التغييرات كل ثانية (للتغلب على أي تداخل من main.js)
+        setInterval(forceFooterTranslation, 1000);
+        
+        // أيضاً عند تغيير اللغة يدوياً
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'projectSouqLang') {
+                updateStaticTexts();
+                forceFooterTranslation();
+            }
+        });
+        
+        // استدعاء أولي
+        forceFooterTranslation();
 </script>
 
 <!-- مودال الشكاوى والاقتراحات -->
