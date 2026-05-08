@@ -448,10 +448,15 @@
 
     // دوال السلة
     function getCart() { return JSON.parse(localStorage.getItem('projectCart') || '[]'); }
-    function saveCart(cart) { localStorage.setItem('projectCart', JSON.stringify(cart)); updateCartCountDisplay(); }
+    function saveCart(cart) { 
+        localStorage.setItem('projectCart', JSON.stringify(cart)); 
+        updateCartCountDisplay(); 
+        // إرسال حدث للتحديث الفوري في الصفحات الأخرى (مثل index.html)
+        window.dispatchEvent(new Event('cartUpdated'));
+    }
     function updateCartCountDisplay() {
         const cart = getCart();
-        const total = cart.reduce((s,i)=>s+i.quantity,0);
+        const total = cart.reduce((s,i)=>s + (typeof i.quantity === 'number' ? i.quantity : parseInt(i.quantity,10) || 0), 0);
         const badge = document.getElementById('cartCount');
         if(badge) badge.innerText = total;
     }
@@ -647,6 +652,19 @@
         if (menu && menu.classList.contains('active') && !menu.contains(e.target) && !btn.contains(e.target)) menu.classList.remove('active');
     });
     document.getElementById('langToggleBtn').addEventListener('click', (e) => { e.preventDefault(); window.toggleLanguage(); });
+
+    // الاستماع لتحديثات السلة من localStorage (مثلاً عند الإضافة من index.html)
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'projectCart') {
+            updateCartCountDisplay();
+            renderCart();
+        }
+    });
+    // استماع لحدث مخصص للإضافة الفورية
+    window.addEventListener('cartUpdated', () => {
+        updateCartCountDisplay();
+        renderCart();
+    });
 
     // تهيئة الجلسة والبيانات
     if (!localStorage.getItem('projectSessionId')) localStorage.setItem('projectSessionId', 'guest_' + Date.now() + '_' + Math.random().toString(36));
