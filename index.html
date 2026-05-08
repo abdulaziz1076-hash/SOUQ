@@ -66,36 +66,31 @@
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-        /* إصلاحات إضافية حاسمة */
-        /* 1. جعل القائمة فوق أي شيء */
+        /* إصلاحات حاسمة للصفحة */
         .nav-menu { z-index: 1050 !important; }
         .back-button, .page-header .back-button { z-index: 1020 !important; }
+        .back-button:hover { transform: translateY(-50%) !important; scale: 1 !important; }
         
-        /* 2. منع أي حركة لزر الرجوع */
-        .back-button:hover {
-            transform: translateY(-50%) !important;
-            scale: 1 !important;
-        }
-        
-        /* 3. إصلاح أيقونة الشكوى (feedback-btn) لتتكيف مع الاتجاه */
+        /* إصلاح أيقونة الشكوى (feedback-btn) لتعمل مع العربية والإنجليزية */
         .feedback-btn {
             position: absolute !important;
             bottom: 60px !important;
-            /* استخدام inset-inline-start/end للتكيف مع اللغة */
-            inset-inline-start: 15px !important;
-            inset-inline-end: auto !important;
-        }
-        html[dir="ltr"] .feedback-btn {
-            inset-inline-start: auto !important;
-            inset-inline-end: 15px !important;
-        }
-        /* التأكد من عدم وجود تعارض مع left/right */
-        .feedback-btn[style*="left"], .feedback-btn[style*="right"] {
+            /* إزالة أي left/right ثابتة */
             left: auto !important;
             right: auto !important;
         }
+        /* الوضع العربي (rtl) */
+        html[dir="rtl"] .feedback-btn {
+            left: 15px !important;
+            right: auto !important;
+        }
+        /* الوضع الإنجليزي (ltr) */
+        html[dir="ltr"] .feedback-btn {
+            right: 15px !important;
+            left: auto !important;
+        }
         
-        /* 4. عدادات السلة */
+        /* عدادات السلة */
         .cart-badge {
             position: absolute;
             top: -5px;
@@ -120,9 +115,9 @@
             cursor: pointer;
         }
         
-        /* 5. ضمان أن share-btn و favorite-btn لا تتأثر */
+        /* ضمان أن الأزرار الأخرى لا تتأثر */
         .action-btn {
-            transition: background-color 0.2s, color 0.2s, transform 0.2s;
+            transition: background-color 0.2s, color 0.2s;
         }
     </style>
 
@@ -186,7 +181,7 @@
         <div class="header-actions">
             <div class="lang-toggle" id="langToggleBtn">
                 <i class="fas fa-globe"></i>
-                <span id="langBtn">En</span>
+                <span id="langBtn">English</span>
             </div>
             <div class="cart-icon" onclick="window.location.href='cart.html'">
                 <i class="fas fa-shopping-cart"></i>
@@ -441,7 +436,7 @@
     window.showOffersPage = function() { goToHash('/offers'); };
     window.navigateTo = goToHash;
 
-    // ==================== إصلاح عداد السلة (جمع الأرقام) ====================
+    // ==================== إصلاح عداد السلة ====================
     function updateCartCountCorrect() {
         try {
             let cart = JSON.parse(localStorage.getItem('projectCart') || '[]');
@@ -459,7 +454,7 @@
     window.addEventListener('storage', function(e) { if (e.key === 'projectCart') updateCartCountCorrect(); });
     setInterval(updateCartCountCorrect, 2000);
 
-    // ==================== ترجمة القائمة يدوياً ====================
+    // ==================== ترجمة القائمة ====================
     const translationsNav = {
         ar: { navHome: "الرئيسية", navMarket: "السوق", navFavorites: "المفضلة", navCart: "السلة", navServices: "الخدمات العامة", navRegister: "سجل مشروعك" },
         en: { navHome: "Home", navMarket: "Market", navFavorites: "Favorites", navCart: "Cart", navServices: "Services", navRegister: "Register Project" }
@@ -496,7 +491,7 @@
                 document.body.classList.remove('en-mode');
             }
             const langBtn = document.getElementById('langBtn');
-            if (langBtn) langBtn.innerText = newLang === 'ar' ? 'En' : 'ع';
+            if (langBtn) langBtn.innerText = newLang === 'ar' ? 'English' : 'عربي';
             updateNavLanguage();
             window.location.reload();
         }
@@ -506,21 +501,33 @@
         langBtn.addEventListener('click', function(e) { e.stopPropagation(); window.toggleLanguage(); });
     }
 
-    // ==================== معالجة أيقونات الشكوى بعد تحميل main.js ====================
-    function fixFeedbackButtonPosition() {
-        // يتم تطبيق CSS بالفعل، ولكن نضمن إزالة أي خصائص left/right مباشرة عند إضافة الأيقونة
+    // ==================== إصلاح أيقونة الشكوى (التأكد من تطبيق CSS) ====================
+    function enforceFeedbackButtonPosition() {
+        // إزالة أي left/right مضافة من main.js وإعادة تطبيق التوجيه عبر CSS
         const observer = new MutationObserver(function(mutations) {
-            const feedbackBtns = document.querySelectorAll('.feedback-btn');
-            feedbackBtns.forEach(btn => {
+            const btns = document.querySelectorAll('.feedback-btn');
+            btns.forEach(btn => {
+                // إزالة أي تنسيق داخلي قد يسبب مشكلة
                 if (btn.style.left || btn.style.right) {
                     btn.style.removeProperty('left');
                     btn.style.removeProperty('right');
                 }
+                // التأكد من وجود class المناسب
+                if (!btn.classList.contains('feedback-fixed')) {
+                    btn.classList.add('feedback-fixed');
+                }
             });
         });
         observer.observe(document.body, { childList: true, subtree: true });
+        // تطبيق فوري
+        document.querySelectorAll('.feedback-btn').forEach(btn => {
+            if (btn.style.left || btn.style.right) {
+                btn.style.removeProperty('left');
+                btn.style.removeProperty('right');
+            }
+        });
     }
-    setTimeout(fixFeedbackButtonPosition, 500);
+    setTimeout(enforceFeedbackButtonPosition, 300);
 </script>
 
 <!-- مودال الشكاوى والاقتراحات -->
