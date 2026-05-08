@@ -66,9 +66,7 @@
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-        /* ===== إصلاحات حاسمة وحدة ===== */
-        
-        /* 1. إلغاء أي حركة لزر الرجوع نهائياً (مثل زر QR code) */
+        /* ===== إصلاحات حاسمة: إلغاء أي حركة لزر الرجوع ===== */
         .back-button,
         .back-button:hover,
         .back-button:focus,
@@ -77,40 +75,26 @@
         .products-page .back-button,
         .product-detail-page .back-button,
         .favorites-page .back-button,
-        .offers-page .back-button,
-        .families-page .back-button {
+        .offers-page .back-button {
             transform: none !important;
             scale: 1 !important;
             transition: none !important;
             animation: none !important;
-            -webkit-transform: none !important;
-            -moz-transform: none !important;
         }
-        
-        /* 2. إلغاء أي تأثير تحريك عند المرور (فقط تغيير الخلفية بلطف) */
+        /* تغيير لون الخلفية فقط عند المرور (بدون حركة) */
         .back-button:hover {
             background: rgba(255, 255, 255, 0.25) !important;
-            transform: none !important;
-            scale: 1 !important;
         }
         
-        /* 3. إصلاح أيقونة الشكوى لتتكيف مع الاتجاه */
+        /* تثبيت أيقونة الشكوى */
         .feedback-btn {
             position: absolute !important;
             bottom: 60px !important;
-            left: auto !important;
-            right: auto !important;
         }
-        html[dir="rtl"] .feedback-btn {
-            left: 15px !important;
-            right: auto !important;
-        }
-        html[dir="ltr"] .feedback-btn {
-            right: 15px !important;
-            left: auto !important;
-        }
+        html[dir="rtl"] .feedback-btn { left: 15px !important; right: auto !important; }
+        html[dir="ltr"] .feedback-btn { right: 15px !important; left: auto !important; }
         
-        /* 4. عدادات السلة */
+        /* عداد السلة */
         .cart-badge {
             position: absolute;
             top: -5px;
@@ -126,38 +110,19 @@
             justify-content: center;
             font-weight: bold;
         }
-        html[dir="ltr"] .cart-badge {
-            right: auto;
-            left: -5px;
-        }
-        .cart-icon {
-            position: relative;
-            cursor: pointer;
-        }
+        html[dir="ltr"] .cart-badge { right: auto; left: -5px; }
+        .cart-icon { position: relative; cursor: pointer; }
         
-        /* 5. ضمان ظهور القائمة فوق كل العناصر */
-        .nav-menu {
-            z-index: 99999 !important;
-        }
+        /* القائمة أعلى من أي شيء */
+        .nav-menu { z-index: 99999 !important; }
+        
+        /* منع main.js من التأثير على الفوتر */
+        [data-no-translate] { transition: none !important; }
     </style>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "سوق المشاريع",
-        "url": "https://souqalmasharie.onrender.com",
-        "potentialAction": {
-            "@type": "SearchAction",
-            "target": "https://souqalmasharie.onrender.com/?q={search_term_string}",
-            "query-input": "required name=search_term_string"
-        }
-    }
-    </script>
 </head>
 <body>
 
-<!-- تم إزالة شاشة التحميل (loader-wrapper) نهائياً بناءً على طلبك -->
+<!-- تم إزالة شاشة التحميل (loader) نهائياً -->
 
 <div id="instructionPopup" class="instruction-popup">
     <div class="popup-header">
@@ -165,18 +130,9 @@
         <h3 id="popupTitle">كيف تطلب؟</h3>
     </div>
     <div class="steps">
-        <div class="step">
-            <div class="step-icon"><i class="fas fa-search"></i></div>
-            <span id="step1">تصفح المنتجات</span>
-        </div>
-        <div class="step">
-            <div class="step-icon"><i class="fas fa-comment-dots"></i></div>
-            <span id="step2">واختر ما يعجبك</span>
-        </div>
-        <div class="step">
-            <div class="step-icon"><i class="fab fa-whatsapp"></i></div>
-            <span id="step3">تواصل مع البائع</span>
-        </div>
+        <div class="step"><div class="step-icon"><i class="fas fa-search"></i></div><span id="step1">تصفح المنتجات</span></div>
+        <div class="step"><div class="step-icon"><i class="fas fa-comment-dots"></i></div><span id="step2">واختر ما يعجبك</span></div>
+        <div class="step"><div class="step-icon"><i class="fab fa-whatsapp"></i></div><span id="step3">تواصل مع البائع</span></div>
     </div>
     <button class="close-btn" onclick="closeInstructionPopup()"><i class="fas fa-check-circle"></i> <span id="gotItBtn">إغلاق</span></button>
 </div>
@@ -188,58 +144,27 @@
 <header class="app-header">
     <div class="header-container">
         <div class="logo-section" onclick="scrollToTop()">
-            <div class="logo-icon">
-                <img src="images/logo.png" alt="سوق المشاريع" loading="lazy">
-            </div>
-            <div class="logo-text">
-                <h1 id="siteTitle">سوق المشاريع</h1>
-                <p id="siteSubtitle">المشاريع في الامارات</p>
-            </div>
+            <div class="logo-icon"><img src="images/logo.png" alt="سوق المشاريع" loading="lazy"></div>
+            <div class="logo-text"><h1 id="siteTitle">سوق المشاريع</h1><p id="siteSubtitle">المشاريع في الامارات</p></div>
         </div>
         <div class="header-actions">
-            <div class="lang-toggle" id="langToggleBtn">
-                <i class="fas fa-globe"></i>
-                <span id="langBtn">En</span>
-            </div>
-            <div class="cart-icon" onclick="window.location.href='cart.html'">
-                <i class="fas fa-shopping-cart"></i>
-                <span id="cartCount" class="cart-badge">0</span>
-            </div>  
-            <div class="menu-toggle" id="menuToggleBtn">
-                <i class="fas fa-bars"></i>
-            </div>
+            <div class="lang-toggle" id="langToggleBtn"><i class="fas fa-globe"></i><span id="langBtn">English</span></div>
+            <div class="cart-icon" onclick="window.location.href='cart.html'"><i class="fas fa-shopping-cart"></i><span id="cartCount" class="cart-badge">0</span></div>
+            <div class="menu-toggle" id="menuToggleBtn"><i class="fas fa-bars"></i></div>
         </div>
     </div>
-
     <div class="nav-menu" id="navMenu">
-        <div class="nav-item" onclick="window.location.href='index.html'">
-            <i class="fas fa-home"></i>
-            <span id="navHome">الرئيسية</span>
-        </div>
-        <div class="nav-item" onclick="navigateTo('/projects/emirate/all')">
-            <i class="fas fa-store"></i>
-            <span id="navMarket">السوق</span>
-        </div>
-        <div class="nav-item" onclick="window.location.href='index.html#/favorites'">
-            <i class="fas fa-heart"></i>
-            <span id="navFavorites">المفضلة</span>
-        </div>
-        <div class="nav-item" onclick="window.location.href='cart.html'">
-            <i class="fas fa-shopping-cart"></i>
-            <span id="navCart">السلة</span>
-        </div>
-        <div class="nav-item" onclick="window.location.href='services.html'">
-            <i class="fas fa-cogs"></i>
-            <span id="navServices">الخدمات العامة</span>
-        </div>
-        <div class="nav-item" onclick="window.location.href='registerr.html'">
-            <i class="fas fa-user-plus"></i>
-            <span id="navRegister">سجل مشروعك</span>
-        </div>
+        <div class="nav-item" onclick="window.location.href='index.html'"><i class="fas fa-home"></i><span id="navHome">الرئيسية</span></div>
+        <div class="nav-item" onclick="navigateTo('/projects/emirate/all')"><i class="fas fa-store"></i><span id="navMarket">السوق</span></div>
+        <div class="nav-item" onclick="window.location.href='index.html#/favorites'"><i class="fas fa-heart"></i><span id="navFavorites">المفضلة</span></div>
+        <div class="nav-item" onclick="window.location.href='cart.html'"><i class="fas fa-shopping-cart"></i><span id="navCart">السلة</span></div>
+        <div class="nav-item" onclick="window.location.href='services.html'"><i class="fas fa-cogs"></i><span id="navServices">الخدمات العامة</span></div>
+        <div class="nav-item" onclick="window.location.href='registerr.html'"><i class="fas fa-user-plus"></i><span id="navRegister">سجل مشروعك</span></div>
     </div>
 </header>
 
 <div class="page-container">
+    <!-- الصفحة الرئيسية -->
     <div id="home-page" class="page">
         <section class="hero-section">
             <div class="hero-content">
@@ -249,18 +174,9 @@
                     <input type="text" class="hero-search-input" placeholder="" id="homeSearch" onkeydown="if(event.key==='Enter') performHomeSearch()">
                     <i class="fas fa-search hero-search-icon" onclick="performHomeSearch()"></i>
                 </div>
-                <button class="market-big-btn" onclick="navigateTo('/projects/emirate/all')">
-                    <i class="fas fa-store"></i>
-                    <span id="discoverBtn">ادخل السوق</span>
-                </button>
-                <button class="services-hero-btn" onclick="window.location.href='services.html'">
-                    <i class="fa-brands fa-whmcs"></i>
-                    <span id="servicesBtn">الخدمات العامة</span>
-                </button>
-                <button class="join-hero-btn" onclick="showSocialContact()">
-                    <i class="fas fa-envelope"></i>
-                    <span id="joinBtn">تسجل مشروعك</span>
-                </button>
+                <button class="market-big-btn" onclick="navigateTo('/projects/emirate/all')"><i class="fas fa-store"></i><span id="discoverBtn">ادخل السوق</span></button>
+                <button class="services-hero-btn" onclick="window.location.href='services.html'"><i class="fa-brands fa-whmcs"></i><span id="servicesBtn">الخدمات العامة</span></button>
+                <button class="join-hero-btn" onclick="showSocialContact()"><i class="fas fa-envelope"></i><span id="joinBtn">تسجل مشروعك</span></button>
             </div>
         </section>
 
@@ -270,7 +186,7 @@
                 <div class="about-card" style="background: var(--light); padding: 20px; border-radius: 20px; text-align: center;">
                     <i class="fas fa-search" style="font-size: 32px; color: var(--secondary); margin-bottom: 10px;"></i>
                     <h3 id="forShopperTitle" style="color: var(--primary-dark); margin-bottom: 10px;">للباحث عن منتج</h3>
-                    <p id="forShopperDesc" style="font-size: 13px; line-height: 1.6;">اكتشف منتجات محلية بإيدين إماراتية ومقيمة. أكل بيتي، حلويات، عطور، هدايا، مشغولات يدوية. تواصل مباشر مع البائع بدون وسيط.</p>
+                    <p id="forShopperDesc" style="font-size: 13px; line-height: 1.6;">اكتشف منتجات محلية بأيادٍ إماراتية ومقيمة. أكل بيتي، حلويات، عطور، هدايا، مشغولات يدوية. تواصل مباشر مع البائع بدون وسيط.</p>
                 </div>
                 <div class="about-card" style="background: var(--light); padding: 20px; border-radius: 20px; text-align: center;">
                     <i class="fas fa-store" style="font-size: 32px; color: var(--secondary); margin-bottom: 10px;"></i>
@@ -279,45 +195,21 @@
                 </div>
             </div>
             <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-store"></i></div>
-                    <div class="stat-number"><i class="fas fa-hourglass-half"></i></div>
-                    <div class="stat-label" id="stat1">مشاريع</div>
-                    <div class="stat-badge" id="badge1">قريباً</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-box"></i></div>
-                    <div class="stat-number"><i class="fas fa-hourglass-half"></i></div>
-                    <div class="stat-label" id="stat2">منتجات متنوعة</div>
-                    <div class="stat-badge" id="badge2">قريباً</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-handshake"></i></div>
-                    <div class="stat-number"><i class="fas fa-hourglass-half"></i></div>
-                    <div class="stat-label" id="stat3">طلبات تواصل</div>
-                    <div class="stat-badge" id="badge3">قريباً</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-heart"></i></div>
-                    <div class="stat-number"><i class="fas fa-hourglass-half"></i></div>
-                    <div class="stat-label" id="stat4">شركاء داعمين</div>
-                    <div class="stat-badge" id="badge4">قريباً</div>
-                </div>
+                <div class="stat-card"><div class="stat-icon"><i class="fas fa-store"></i></div><div class="stat-number"><i class="fas fa-hourglass-half"></i></div><div class="stat-label" id="stat1">مشاريع</div><div class="stat-badge" id="badge1">قريباً</div></div>
+                <div class="stat-card"><div class="stat-icon"><i class="fas fa-box"></i></div><div class="stat-number"><i class="fas fa-hourglass-half"></i></div><div class="stat-label" id="stat2">منتجات متنوعة</div><div class="stat-badge" id="badge2">قريباً</div></div>
+                <div class="stat-card"><div class="stat-icon"><i class="fas fa-handshake"></i></div><div class="stat-number"><i class="fas fa-hourglass-half"></i></div><div class="stat-label" id="stat3">طلبات تواصل</div><div class="stat-badge" id="badge3">قريباً</div></div>
+                <div class="stat-card"><div class="stat-icon"><i class="fas fa-heart"></i></div><div class="stat-number"><i class="fas fa-hourglass-half"></i></div><div class="stat-label" id="stat4">شركاء داعمين</div><div class="stat-badge" id="badge4">قريباً</div></div>
             </div>
         </section>
     </div>
 
+    <!-- صفحة المشاريع -->
     <div id="families-page" class="page families-page" style="display: none;">
         <div class="page-header with-back">
-            <div class="back-button" onclick="goBack()">
-                <i class="fas fa-arrow-right"></i>
-            </div>
+            <div class="back-button" onclick="goBack()"><i class="fas fa-arrow-right"></i></div>
             <h1 class="page-title" id="familiesPageTitle">المشاريع</h1>
             <p class="page-subtitle" id="familiesPageSubtitle">استعرض المشاريع في الإمارات</p>
-            <div class="offers-header-btn inside-header" onclick="showOffersPage()">
-                <i class="fas fa-tags"></i>
-                <span id="offersBtnText">العروض</span>
-            </div>
+            <div class="offers-header-btn inside-header" onclick="showOffersPage()"><i class="fas fa-tags"></i><span id="offersBtnText">العروض</span></div>
         </div>
         <div class="container">
             <div class="families-search-box">
@@ -330,58 +222,48 @@
         </div>
     </div>
 
+    <!-- صفحة المنتجات -->
     <div id="products-page" class="page products-page" style="display: none;">
         <div class="container" style="padding-top: 12px;">
-            <div class="back-button" onclick="goBack()" style="margin-bottom: 12px;">
-                <i class="fas fa-arrow-right"></i>
-            </div>
+            <div class="back-button" onclick="goBack()" style="margin-bottom: 12px;"><i class="fas fa-arrow-right"></i></div>
             <div id="familyProfileContainer"></div>
             <div class="deals-section" id="dealsSection" style="display: none;">
                 <h3 class="deals-title"><i class="fas fa-tags"></i> <span id="dealsTitle">العروض والباقات:</span></h3>
                 <div class="deals-grid" id="dealsGrid"></div>
             </div>
             <div id="productTypeFilterContainer" style="margin: 10px 0;"></div>
-            <div class="products-header">
-                <h2 class="products-title" id="productsTitle">المنتجات</h2>
-            </div>
+            <div class="products-header"><h2 class="products-title" id="productsTitle">المنتجات</h2></div>
             <div class="products-grid" id="productsGrid"></div>
             <div id="contactSectionBottom" class="contact-section-bottom"></div>
         </div>
     </div>
 
+    <!-- صفحة تفاصيل المنتج -->
     <div id="product-detail-page" class="page product-detail-page" style="display: none;">
         <div class="container">
-            <div class="back-button" onclick="goBack()" style="margin-bottom: 12px;">
-                <i class="fas fa-arrow-right"></i>
-            </div>
+            <div class="back-button" onclick="goBack()" style="margin-bottom: 12px;"><i class="fas fa-arrow-right"></i></div>
             <div id="productDetailContainer"></div>
         </div>
     </div>
 
+    <!-- صفحة المفضلة -->
     <div id="favorites-page" class="page favorites-page" style="display: none;">
         <div class="page-header with-back">
-            <div class="back-button" onclick="goBack()">
-                <i class="fas fa-arrow-right"></i>
-            </div>
+            <div class="back-button" onclick="goBack()"><i class="fas fa-arrow-right"></i></div>
             <h1 class="page-title" id="favoritesPageTitle">المفضلة</h1>
             <p class="page-subtitle" id="favoritesPageSubtitle">المنتجات التي أضفتها</p>
         </div>
-        <div class="container">
-            <div class="favorites-content" id="favoritesContent"></div>
-        </div>
+        <div class="container"><div class="favorites-content" id="favoritesContent"></div></div>
     </div>
 
+    <!-- صفحة العروض -->
     <div id="offers-page" class="page offers-page" style="display: none;">
         <div class="page-header with-back">
-            <div class="back-button" onclick="goBack()">
-                <i class="fas fa-arrow-right"></i>
-            </div>
+            <div class="back-button" onclick="goBack()"><i class="fas fa-arrow-right"></i></div>
             <h1 class="page-title" id="offersPageTitle">العروض الخاصة</h1>
             <p class="page-subtitle" id="offersPageSubtitle">أحدث العروض والباقات</p>
         </div>
-        <div class="container">
-            <div class="favorites-content" id="offersContent"></div>
-        </div>
+        <div class="container"><div class="favorites-content" id="offersContent"></div></div>
     </div>
 </div>
 
@@ -398,23 +280,16 @@
     <div class="footer-content">
         <div class="footer-logo" id="footerLogo">سوق المشاريع</div>
         <p style="font-size: 11px; opacity: 0.9; margin-bottom: 15px;" id="footerText">منصة المشاريع الإماراتية</p>
-        <div id="footerKeywords" style="font-size: 10px; color: #aaa; margin-top: 15px; text-align: center; direction: rtl;">
+        <!-- هذا العنصر به مشكلة الترجمة -> تم إضافة data-no-translate لمنع التدخل -->
+        <div id="footerKeywords" data-no-translate style="font-size: 10px; color: #aaa; margin-top: 15px; text-align: center;">
             سوق المشاريع | منصة المشاريع المنزلية في الإمارات | دليل الأسر المنتجة
         </div>
         <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 15px; flex-wrap: wrap;">
-            <a href="privacy.html" style="color: var(--secondary); text-decoration: none; font-size: 12px;">
-                <i class="fas fa-lock"></i>
-                <span id="privacyLink">سياسة الخصوصية</span>
-            </a>
+            <a href="privacy.html" style="color: var(--secondary); text-decoration: none; font-size: 12px;"><i class="fas fa-lock"></i> <span id="privacyLink">سياسة الخصوصية</span></a>
             <span style="color: var(--gray);">|</span>
-            <a href="terms.html" style="color: var(--secondary); text-decoration: none; font-size: 12px;">
-                <i class="fas fa-file-contract"></i>
-                <span id="termsLink">شروط الاستخدام</span>
-            </a>
+            <a href="terms.html" style="color: var(--secondary); text-decoration: none; font-size: 12px;"><i class="fas fa-file-contract"></i> <span id="termsLink">شروط الاستخدام</span></a>
         </div>
-        <div class="copyright" id="copyright">
-            © 2026 سوق المشاريع - جميع الحقوق محفوظة
-        </div>
+        <div class="copyright" id="copyright">© 2026 سوق المشاريع - جميع الحقوق محفوظة</div>
     </div>
 </footer>
 
@@ -422,179 +297,149 @@
 <script type="module" src="js/main.js"></script>
 
 <script>
-    // ==================== دوال التنقل والقائمة (بدون تعارض) ====================
-    function closeNavMenu() {
-        const menu = document.getElementById('navMenu');
-        if (menu) menu.classList.remove('active');
-    }
-    function toggleMenu() {
-        const menu = document.getElementById('navMenu');
-        if (menu) menu.classList.toggle('active');
-    }
-    function goToPage(url) { closeNavMenu(); window.location.href = url; }
+    // ==================== دوال القائمة والتنقل الأساسية ====================
+    function closeNavMenu() { const m = document.getElementById('navMenu'); if(m) m.classList.remove('active'); }
+    function toggleMenu() { const m = document.getElementById('navMenu'); if(m) m.classList.toggle('active'); }
     function goToHash(hash) { closeNavMenu(); window.location.hash = hash; }
-
-    const menuBtn = document.getElementById('menuToggleBtn');
-    if (menuBtn) {
-        menuBtn.addEventListener('click', function(e) { e.stopPropagation(); toggleMenu(); });
-    }
-    document.addEventListener('click', function(event) {
+    
+    document.getElementById('menuToggleBtn')?.addEventListener('click', e => { e.stopPropagation(); toggleMenu(); });
+    document.addEventListener('click', e => {
         const menu = document.getElementById('navMenu');
         const btn = document.getElementById('menuToggleBtn');
-        if (menu && menu.classList.contains('active') && !menu.contains(event.target) && !btn.contains(event.target)) {
-            menu.classList.remove('active');
-        }
+        if(menu?.classList.contains('active') && !menu.contains(e.target) && !btn?.contains(e.target)) menu.classList.remove('active');
     });
     window.addEventListener('hashchange', closeNavMenu);
     window.addEventListener('load', closeNavMenu);
-
-    window.scrollToTop = function() { closeNavMenu(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
-    window.goBack = function() { closeNavMenu(); window.history.back(); };
-    window.showFavorites = function() { goToHash('/favorites'); };
-    window.showOffersPage = function() { goToHash('/offers'); };
+    
+    window.scrollToTop = () => { closeNavMenu(); window.scrollTo({ top:0, behavior:'smooth' }); };
+    window.goBack = () => { closeNavMenu(); window.history.back(); };
+    window.showFavorites = () => goToHash('/favorites');
+    window.showOffersPage = () => goToHash('/offers');
     window.navigateTo = goToHash;
-
-    // ==================== عداد السلة (جمع دقيق) ====================
-    function updateCartCountCorrect() {
+    
+    // ==================== عداد السلة (تحسين) ====================
+    function updateCartCount() {
         try {
-            let cart = JSON.parse(localStorage.getItem('projectCart') || '[]');
+            const cart = JSON.parse(localStorage.getItem('projectCart') || '[]');
             let total = 0;
-            for (let item of cart) {
-                let qty = typeof item.quantity === 'number' ? item.quantity : parseInt(item.quantity, 10);
-                if (isNaN(qty)) qty = 0;
-                total += qty;
-            }
+            for(const item of cart) total += (typeof item.quantity === 'number' ? item.quantity : parseInt(item.quantity,10) || 0);
             const badge = document.getElementById('cartCount');
-            if (badge) badge.innerText = total;
+            if(badge) badge.innerText = total;
         } catch(e) {}
     }
-    updateCartCountCorrect();
-    window.addEventListener('storage', function(e) { if (e.key === 'projectCart') updateCartCountCorrect(); });
-    setInterval(updateCartCountCorrect, 2000);
-
-    // ==================== إصلاح أيقونة الشكوى (إزالة التنسيقات المباشرة) ====================
-    function enforceFeedbackButtonPosition() {
-        const observer = new MutationObserver(function() {
-            document.querySelectorAll('.feedback-btn').forEach(btn => {
-                if (btn.style.left || btn.style.right) {
-                    btn.style.removeProperty('left');
-                    btn.style.removeProperty('right');
-                }
-            });
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
-        document.querySelectorAll('.feedback-btn').forEach(btn => {
-            if (btn.style.left || btn.style.right) {
-                btn.style.removeProperty('left');
-                btn.style.removeProperty('right');
-            }
-        });
-    }
-    setTimeout(enforceFeedbackButtonPosition, 300);
-
-    // ==================== تبديل اللغة (دعم main.js وترجمة النصوص الثابتة) ====================
-    const staticTranslations = {
+    updateCartCount();
+    window.addEventListener('storage', e => { if(e.key === 'projectCart') updateCartCount(); });
+    setInterval(updateCartCount, 2000);
+    
+    // ==================== ترجمة مستقلة للفوتر (لحل مشكلة النص الطويل) ====================
+    const footerTranslations = {
         ar: {
-            langBtn: "En",
-            navHome: "الرئيسية",
-            navMarket: "السوق",
-            navFavorites: "المفضلة",
-            navCart: "السلة",
-            navServices: "الخدمات العامة",
-            navRegister: "سجل مشروعك",
-            heroTitle: "سوق المشاريع",
-            heroSubtitle: "منصة متخصصة في المشاريع المنزلية",
-            discoverBtn: "ادخل السوق",
-            servicesBtn: "الخدمات العامة",
-            joinBtn: "سجل مشروعك",
-            aboutTitle: "من نحن",
-            forShopperTitle: "للباحث عن منتج",
-            forShopperDesc: "اكتشف منتجات محلية بإيدين إماراتية ومقيمة. أكل بيتي، حلويات، عطور، هدايا، مشغولات يدوية. تواصل مباشر مع البائع بدون وسيط.",
-            forProjectOwnerTitle: "لصاحب المشروع",
-            forProjectOwnerDesc: "سجل مشروعك مجاناً. واصل آلاف الزوار شهرياً. بدون عمولات ولا رسوم خفيفة. دعم مجتمعي للأسر المنتجة في الإمارات.",
-            stat1: "مشاريع",
-            stat2: "منتجات متنوعة",
-            stat3: "طلبات تواصل",
-            stat4: "شركاء داعمين",
-            badge1: "قريباً",
-            badge2: "قريباً",
-            badge3: "قريباً",
-            badge4: "قريباً",
-            popupTitle: "كيف تطلب؟",
-            step1: "تصفح المنتجات",
-            step2: "واختر ما يعجبك",
-            step3: "تواصل مع البائع",
-            gotItBtn: "إغلاق",
-            familiesPageTitle: "المشاريع",
-            familiesPageSubtitle: "استعرض المشاريع في الإمارات",
-            offersBtnText: "العروض",
-            dealsTitle: "العروض والباقات:",
-            favoritesPageTitle: "المفضلة",
-            favoritesPageSubtitle: "المنتجات التي أضفتها",
-            offersPageTitle: "العروض الخاصة",
-            offersPageSubtitle: "أحدث العروض والباقات",
-            footerLogo: "سوق المشاريع",
-            footerText: "منصة المشاريع الإماراتية",
+            footerKeywords: "سوق المشاريع | منصة المشاريع المنزلية في الإمارات | دليل الأسر المنتجة",
             privacyLink: "سياسة الخصوصية",
             termsLink: "شروط الاستخدام",
-            copyright: "© 2026 سوق المشاريع - جميع الحقوق محفوظة",
-            footerKeywords: "سوق المشاريع | منصة المشاريع المنزلية في الإمارات | دليل الأسر المنتجة"
+            footerText: "منصة المشاريع الإماراتية",
+            footerLogo: "سوق المشاريع",
+            copyright: "© 2026 سوق المشاريع - جميع الحقوق محفوظة"
         },
         en: {
-            langBtn: "ع",
-            navHome: "Home",
-            navMarket: "Market",
-            navFavorites: "Favorites",
-            navCart: "Cart",
-            navServices: "Services",
-            navRegister: "Register Project",
-            heroTitle: "Souq Almasharie",
-            heroSubtitle: "Specialized platform for home projects",
-            discoverBtn: "Enter Market",
-            servicesBtn: "Public Services",
-            joinBtn: "Register Project",
-            aboutTitle: "About Us",
-            forShopperTitle: "For Product Seekers",
-            forShopperDesc: "Discover local products made by Emirati and resident hands. Homemade food, sweets, perfumes, gifts, handicrafts. Direct contact with the seller without intermediaries.",
-            forProjectOwnerTitle: "For Project Owners",
-            forProjectOwnerDesc: "Register your project for free. Reach thousands of visitors monthly. No commissions, no hidden fees. Community support for productive families in the UAE.",
-            stat1: "Projects",
-            stat2: "Diverse Products",
-            stat3: "Contact Requests",
-            stat4: "Supporting Partners",
-            badge1: "Coming Soon",
-            badge2: "Coming Soon",
-            badge3: "Coming Soon",
-            badge4: "Coming Soon",
-            popupTitle: "How to Order?",
-            step1: "Browse Products",
-            step2: "Choose what you like",
-            step3: "Contact the Seller",
-            gotItBtn: "Close",
-            familiesPageTitle: "Projects",
-            familiesPageSubtitle: "Browse projects in the UAE",
-            offersBtnText: "Offers",
-            dealsTitle: "Offers & Packages:",
-            favoritesPageTitle: "Favorites",
-            favoritesPageSubtitle: "Products you saved",
-            offersPageTitle: "Special Offers",
-            offersPageSubtitle: "Latest offers and packages",
-            footerLogo: "Souq Almasharie",
-            footerText: "UAE Home-Based Business Platform",
+            footerKeywords: "Souq Almasharie | Home Projects Platform in UAE | Productive Families Directory",
             privacyLink: "Privacy Policy",
             termsLink: "Terms of Use",
-            copyright: "© 2026 Souq Almasharie - All Rights Reserved",
-            footerKeywords: "Souq Almasharie | Home Projects Platform in UAE | Productive Families Directory"
+            footerText: "UAE Home-Based Business Platform",
+            footerLogo: "Souq Almasharie",
+            copyright: "© 2026 Souq Almasharie - All Rights Reserved"
         }
     };
-
+    
+    function updateFooterLanguage() {
+        const lang = localStorage.getItem('projectSouqLang') || 'ar';
+        const t = footerTranslations[lang];
+        const keywordsDiv = document.getElementById('footerKeywords');
+        const privacySpan = document.getElementById('privacyLink');
+        const termsSpan = document.getElementById('termsLink');
+        const footerTextP = document.getElementById('footerText');
+        const footerLogoDiv = document.getElementById('footerLogo');
+        const copyrightDiv = document.getElementById('copyright');
+        
+        if(keywordsDiv) {
+            keywordsDiv.innerText = t.footerKeywords;
+            keywordsDiv.style.direction = lang === 'ar' ? 'rtl' : 'ltr';
+        }
+        if(privacySpan) privacySpan.innerText = t.privacyLink;
+        if(termsSpan) termsSpan.innerText = t.termsLink;
+        if(footerTextP) footerTextP.innerText = t.footerText;
+        if(footerLogoDiv) footerLogoDiv.innerText = t.footerLogo;
+        if(copyrightDiv) copyrightDiv.innerHTML = t.copyright;
+    }
+    
+    updateFooterLanguage();
+    window.addEventListener('storage', e => { if(e.key === 'projectSouqLang') updateFooterLanguage(); });
+    
+    // مراقبة قوية للتأكد من بقاء الترجمة الصحيحة (لأن main.js قد يغيرها)
+    let lastFooterLang = localStorage.getItem('projectSouqLang');
+    setInterval(() => {
+        const current = localStorage.getItem('projectSouqLang');
+        if(current !== lastFooterLang) {
+            lastFooterLang = current;
+            updateFooterLanguage();
+        } else {
+            // حتى لو لم يتغير، نتحقق من النص الحالي ونتأكد
+            const keywordsDiv = document.getElementById('footerKeywords');
+            const expected = footerTranslations[current || 'ar']?.footerKeywords;
+            if(keywordsDiv && keywordsDiv.innerText !== expected) updateFooterLanguage();
+        }
+    }, 500);
+    
+    // منع main.js من التعديل على العنصر الذي يحمل data-no-translate
+    const observerFooter = new MutationObserver((mutations) => {
+        mutations.forEach(m => {
+            if(m.target.id === 'footerKeywords' || m.target.parentElement?.id === 'footerKeywords') {
+                updateFooterLanguage();
+            }
+        });
+    });
+    const footerElem = document.getElementById('footerKeywords');
+    if(footerElem) observerFooter.observe(footerElem, { childList: true, subtree: true, characterData: true });
+    
+    // ==================== ترجمة باقي العناصر الثابتة (للتكامل مع main.js) ====================
+    const staticTranslations = {
+        ar: {
+            siteTitle: "سوق المشاريع", siteSubtitle: "المشاريع في الامارات", langBtn: "English",
+            navHome: "الرئيسية", navMarket: "السوق", navFavorites: "المفضلة", navCart: "السلة", navServices: "الخدمات العامة", navRegister: "سجل مشروعك",
+            heroTitle: "سوق المشاريع", heroSubtitle: "منصة متخصصة في المشاريع المنزلية",
+            discoverBtn: "ادخل السوق", servicesBtn: "الخدمات العامة", joinBtn: "سجل مشروعك",
+            aboutTitle: "من نحن", forShopperTitle: "للباحث عن منتج", forShopperDesc: "اكتشف منتجات محلية بأيادٍ إماراتية ومقيمة. أكل بيتي، حلويات، عطور، هدايا، مشغولات يدوية. تواصل مباشر مع البائع بدون وسيط.",
+            forProjectOwnerTitle: "لصاحب المشروع", forProjectOwnerDesc: "سجل مشروعك مجاناً. واصل آلاف الزوار شهرياً. بدون عمولات ولا رسوم خفيفة. دعم مجتمعي للأسر المنتجة في الإمارات.",
+            stat1: "مشاريع", stat2: "منتجات متنوعة", stat3: "طلبات تواصل", stat4: "شركاء داعمين",
+            badge1: "قريباً", badge2: "قريباً", badge3: "قريباً", badge4: "قريباً",
+            popupTitle: "كيف تطلب؟", step1: "تصفح المنتجات", step2: "واختر ما يعجبك", step3: "تواصل مع البائع", gotItBtn: "إغلاق",
+            familiesPageTitle: "المشاريع", familiesPageSubtitle: "استعرض المشاريع في الإمارات",
+            offersBtnText: "العروض", dealsTitle: "العروض والباقات:",
+            favoritesPageTitle: "المفضلة", favoritesPageSubtitle: "المنتجات التي أضفتها",
+            offersPageTitle: "العروض الخاصة", offersPageSubtitle: "أحدث العروض والباقات"
+        },
+        en: {
+            siteTitle: "Souq Almasharie", siteSubtitle: "Projects in UAE", langBtn: "عربي",
+            navHome: "Home", navMarket: "Market", navFavorites: "Favorites", navCart: "Cart", navServices: "Services", navRegister: "Register Project",
+            heroTitle: "Souq Almasharie", heroSubtitle: "Specialized platform for home projects",
+            discoverBtn: "Enter Market", servicesBtn: "Public Services", joinBtn: "Register Project",
+            aboutTitle: "About Us", forShopperTitle: "For Product Seekers", forShopperDesc: "Discover local products made by Emirati and resident hands. Homemade food, sweets, perfumes, gifts, handicrafts. Direct contact with the seller without intermediaries.",
+            forProjectOwnerTitle: "For Project Owners", forProjectOwnerDesc: "Register your project for free. Reach thousands of visitors monthly. No commissions, no hidden fees. Community support for productive families in the UAE.",
+            stat1: "Projects", stat2: "Diverse Products", stat3: "Contact Requests", stat4: "Supporting Partners",
+            badge1: "Coming Soon", badge2: "Coming Soon", badge3: "Coming Soon", badge4: "Coming Soon",
+            popupTitle: "How to Order?", step1: "Browse Products", step2: "Choose what you like", step3: "Contact the Seller", gotItBtn: "Close",
+            familiesPageTitle: "Projects", familiesPageSubtitle: "Browse projects in the UAE",
+            offersBtnText: "Offers", dealsTitle: "Offers & Packages:",
+            favoritesPageTitle: "Favorites", favoritesPageSubtitle: "Products you saved",
+            offersPageTitle: "Special Offers", offersPageSubtitle: "Latest offers and packages"
+        }
+    };
+    
     function updateStaticTexts() {
         const lang = localStorage.getItem('projectSouqLang') || 'ar';
         const t = staticTranslations[lang];
-        
-        // تحديث جميع العناصر الثابتة
-        document.getElementById('siteTitle').innerText = lang === 'ar' ? 'سوق المشاريع' : 'Souq Almasharie';
-        document.getElementById('siteSubtitle').innerText = lang === 'ar' ? 'المشاريع في الامارات' : 'Projects in UAE';
+        document.getElementById('siteTitle').innerText = t.siteTitle;
+        document.getElementById('siteSubtitle').innerText = t.siteSubtitle;
         document.getElementById('langBtn').innerText = t.langBtn;
         document.getElementById('navHome').innerText = t.navHome;
         document.getElementById('navMarket').innerText = t.navMarket;
@@ -628,80 +473,36 @@
         document.getElementById('familiesPageTitle').innerText = t.familiesPageTitle;
         document.getElementById('familiesPageSubtitle').innerText = t.familiesPageSubtitle;
         document.getElementById('offersBtnText').innerText = t.offersBtnText;
-        const dealsTitleSpan = document.getElementById('dealsTitle');
-        if (dealsTitleSpan) dealsTitleSpan.innerHTML = t.dealsTitle;
+        const dealsSpan = document.getElementById('dealsTitle');
+        if(dealsSpan) dealsSpan.innerHTML = t.dealsTitle;
         document.getElementById('favoritesPageTitle').innerText = t.favoritesPageTitle;
         document.getElementById('favoritesPageSubtitle').innerText = t.favoritesPageSubtitle;
         document.getElementById('offersPageTitle').innerText = t.offersPageTitle;
         document.getElementById('offersPageSubtitle').innerText = t.offersPageSubtitle;
-        document.getElementById('footerLogo').innerText = t.footerLogo;
-        document.getElementById('footerText').innerText = t.footerText;
-        document.getElementById('privacyLink').innerText = t.privacyLink;
-        document.getElementById('termsLink').innerText = t.termsLink;
-        document.getElementById('copyright').innerHTML = t.copyright;
-        
-        const footerKeywords = document.getElementById('footerKeywords');
-        if (footerKeywords) {
-            footerKeywords.style.direction = lang === 'ar' ? 'rtl' : 'ltr';
-            footerKeywords.innerText = t.footerKeywords;
-        }
     }
-
-    // تحديث النصوص عند تحميل الصفحة وعند تغيير اللغة عبر التخزين
+    
     updateStaticTexts();
-    window.addEventListener('storage', function(e) {
-        if (e.key === 'projectSouqLang') updateStaticTexts();
-    });
-
-    // دالة تبديل اللغة (تستدعي main.js إذا وجدت، وإلا تعيد تحميل الصفحة)
+    window.addEventListener('storage', e => { if(e.key === 'projectSouqLang') updateStaticTexts(); });
+    
+    // ربط زر اللغة مع الحفاظ على الترجمة المستقلة للفوتر
     window.toggleLanguage = function() {
-        const currentLang = localStorage.getItem('projectSouqLang') || 'ar';
-        const newLang = currentLang === 'ar' ? 'en' : 'ar';
+        const current = localStorage.getItem('projectSouqLang') || 'ar';
+        const newLang = current === 'ar' ? 'en' : 'ar';
         localStorage.setItem('projectSouqLang', newLang);
         updateStaticTexts();
-        if (typeof window.mainToggleLanguage === 'function') {
-            window.mainToggleLanguage();
-        } else {
-            window.location.reload();
-        }
+        updateFooterLanguage();
+        if(typeof window.mainToggleLanguage === 'function') window.mainToggleLanguage();
+        else window.location.reload();
     };
+    document.getElementById('langToggleBtn')?.addEventListener('click', e => { e.stopPropagation(); window.toggleLanguage(); });
     
-    const langBtn = document.getElementById('langToggleBtn');
-    if (langBtn) {
-        langBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            window.toggleLanguage();
+    // إصلاح أيقونة الشكوى (إزالة التنسيقات المباشرة)
+    setTimeout(() => {
+        document.querySelectorAll('.feedback-btn').forEach(btn => {
+            btn.style.removeProperty('left');
+            btn.style.removeProperty('right');
         });
-    }
-    function forceFooterTranslation() {
-            const lang = localStorage.getItem('projectSouqLang') || 'ar';
-            const t = staticTranslations[lang];
-            const privacySpan = document.getElementById('privacyLink');
-            const termsSpan = document.getElementById('termsLink');
-            const footerKeywordsDiv = document.getElementById('footerKeywords');
-            if (privacySpan && privacySpan.innerText !== t.privacyLink) {
-                privacySpan.innerText = t.privacyLink;
-                termsSpan.innerText = t.termsLink;
-                if (footerKeywordsDiv) {
-                    footerKeywordsDiv.style.direction = lang === 'ar' ? 'rtl' : 'ltr';
-                    footerKeywordsDiv.innerText = t.footerKeywords;
-                }
-            }
-        }
-
-        // مراقبة التغييرات كل ثانية (للتغلب على أي تداخل من main.js)
-        setInterval(forceFooterTranslation, 1000);
-        
-        // أيضاً عند تغيير اللغة يدوياً
-        window.addEventListener('storage', function(e) {
-            if (e.key === 'projectSouqLang') {
-                updateStaticTexts();
-                forceFooterTranslation();
-            }
-        });
-        
-        // استدعاء أولي
-        forceFooterTranslation();
+    }, 300);
 </script>
 
 <!-- مودال الشكاوى والاقتراحات -->
