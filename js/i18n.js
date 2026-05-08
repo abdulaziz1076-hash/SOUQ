@@ -19,7 +19,7 @@ export const translations = {
     forShopperTitle: "للباحث عن منتج",
     forShopperDesc: "اكتشف منتجات محلية بإيدين إماراتية ومقيمة...",
     forProjectOwnerTitle: "لصاحب المشروع",
-    forProjectOwnerDesc: "سجل مشروعك مجاناً...",
+    forProjectOwnerDesc: "سجل مشروعك مجاناً. واصل آلاف الزوار شهرياً. بدون عمولات ولا رسوم خفيفة. دعم مجتمعي للأسر المنتجة في الإمارات.",
     stat1: "مشاريع",
     stat2: "منتجات متنوعة",
     stat3: "طلبات تواصل",
