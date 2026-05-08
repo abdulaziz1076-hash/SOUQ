@@ -14,9 +14,56 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=El+Messiri:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- نستخدم style.css ولكن سنقوم بتجاوز تأثيرات hover على زر الرجوع -->
     <link rel="stylesheet" href="css/style.css">
     
     <style>
+        /* ===== تجاوز أي حركة لزر الرجوع نهائياً ===== */
+        .back-button,
+        .back-button:hover,
+        .back-button:active,
+        .back-button:focus {
+            transform: translateY(-50%) !important;  /* يبقى في المنتصف عمودياً فقط */
+            scale: 1 !important;                    /* يمنع أي تكبير */
+            transition: background-color 0.2s ease, color 0.2s ease !important; /* حركة فقط للون */
+        }
+        
+        /* إعادة تعريف الزر بشكل آمن */
+        .page-header.with-back {
+            position: relative;
+        }
+        .back-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 12px;
+            z-index: 15;
+            background: rgba(0,0,0,0.5);
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(5px);
+            text-decoration: none;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        [dir="ltr"] .back-button {
+            right: auto;
+            left: 12px;
+        }
+        .back-button:hover {
+            background: var(--secondary);
+            color: var(--primary-dark);
+            border-color: var(--primary-dark);
+            /* لا توجد أي خاصية transform أو scale هنا */
+        }
+        
         /* تحسينات إضافية للصفحة */
         .services-container {
             max-width: 1200px;
@@ -66,43 +113,7 @@
             line-height: 1.6;
         }
         
-        /* جعل زر الرجوع ثابتاً تماماً - إزالة أي حركة عند hover */
-        .page-header.with-back {
-            position: relative;
-            margin-top: 0;
-        }
-        .back-button {
-            position: absolute;
-            top: 50%;
-            transition: background 0.2s, color 0.2s;
-            right: 12px;
-            z-index: 15;
-            background: rgba(0,0,0,0.5);
-            width: 38px;
-            height: 38px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            cursor: pointer;
-            transition: background 0.2s, color 0.2s; /* فقط تغيير اللون، لا حركة */
-            border: 1px solid rgba(255,255,255,0.3);
-            backdrop-filter: blur(5px);
-            text-decoration: none;
-        }
-        [dir="ltr"] .back-button {
-            right: auto;
-            left: 12px;
-        }
-        .back-button:hover {
-            background: var(--secondary);
-            color: var(--primary-dark);
-            border-color: var(--primary-dark);
-             transform: translateY(-50%) !important;
-        }
-        
-        /* ضمان ظهور القائمة كاملة */
+        /* ضمان ظهور القائمة بشكل كامل */
         .nav-menu {
             z-index: 1000;
         }
@@ -186,7 +197,7 @@
 </header>
 
 <div class="services-container">
-    <!-- عنوان الصفحة مع زر رجوع (ثابت) -->
+    <!-- عنوان الصفحة مع زر رجوع (ثابت تماماً) -->
     <div class="page-header with-back">
         <a href="index.html" class="back-button"><i class="fas fa-arrow-right"></i></a>
         <h1 id="heroTitle" class="page-title">الخدمات العامة</h1>
@@ -345,7 +356,7 @@
         currentLang = currentLang === 'ar' ? 'en' : 'ar';
         localStorage.setItem('projectSouqLang', currentLang);
         updateLanguageUI();
-        updateCartCount(); // تحديث عداد السلة بعد تغيير اللغة (لن يتغير الرقم لكن نضمن)
+        updateCartCount();
     }
 
     // ==================== عداد السلة (إصلاح مشكلة الجمع الخاطئ) ====================
@@ -359,7 +370,6 @@
 
     function updateCartCount() {
         const cart = getCart();
-        // إصلاح الجمع: التأكد من أن الكمية رقم
         let total = 0;
         for (let item of cart) {
             let qty = typeof item.quantity === 'number' ? item.quantity : parseInt(item.quantity, 10);
@@ -370,14 +380,11 @@
         if (badge) badge.innerText = total;
     }
 
-    // الاستماع لتغييرات التخزين المحلي (في حال أضاف منتج من نافذة أخرى)
     window.addEventListener('storage', function(e) {
-        if (e.key === 'projectCart') {
-            updateCartCount();
-        }
+        if (e.key === 'projectCart') updateCartCount();
     });
 
-    // ==================== قائمة التنقل (فتح/إغلاق) ====================
+    // ==================== قائمة التنقل ====================
     function toggleMenu() {
         const menu = document.getElementById('navMenu');
         if (menu) menu.classList.toggle('active');
@@ -405,8 +412,6 @@
     // ==================== تهيئة الصفحة ====================
     updateLanguageUI();
     updateCartCount();
-
-    // تحديث العداد كل 2 ثانية للتأكد (اختياري)
     setInterval(updateCartCount, 2000);
 </script>
 
