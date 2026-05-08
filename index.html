@@ -66,18 +66,27 @@
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-        /* منع أي حركة لزر الرجوع نهائياً */
+        /* ===== إصلاحات حاسمة للصفحة ===== */
+        
+        /* 1. منع أي حركة لزر الرجوع مهما كانت الأولوية */
         .back-button,
         .back-button:hover,
         .back-button:focus,
-        .back-button:active {
-            transform: none !important;
+        .back-button:active,
+        .page-header .back-button,
+        .products-page .back-button,
+        .product-detail-page .back-button {
+            transform: translateY(-50%) !important;
+            scale: 1 !important;
             transition: background-color 0.2s ease, color 0.2s ease !important;
         }
-        /* تثبيت أيقونة الشكوى */
+        
+        /* 2. إصلاح أيقونة الشكوى لتتكيف مع الاتجاه */
         .feedback-btn {
             position: absolute !important;
             bottom: 60px !important;
+            left: auto !important;
+            right: auto !important;
         }
         html[dir="rtl"] .feedback-btn {
             left: 15px !important;
@@ -87,7 +96,8 @@
             right: 15px !important;
             left: auto !important;
         }
-        /* عداد السلة */
+        
+        /* 3. عدادات السلة */
         .cart-badge {
             position: absolute;
             top: -5px;
@@ -111,9 +121,32 @@
             position: relative;
             cursor: pointer;
         }
-        /* ضمان ظهور القائمة فوق كل العناصر */
+        
+        /* 4. ضمان ظهور القائمة فوق كل العناصر */
         .nav-menu {
             z-index: 10000 !important;
+        }
+        
+        /* 5. أزرار المشاركة والمفضلة تظل كما هي */
+        .action-btn {
+            transition: background-color 0.2s, color 0.2s;
+        }
+        
+        /* 6. إزالة أي تأثير hover إضافي من style.css */
+        .back-button:hover {
+            background: rgba(255,255,255,0.25) !important;
+            transform: none !important;
+            border-color: var(--secondary) !important;
+        }
+        [dir="ltr"] .back-button:hover {
+            transform: none !important;
+        }
+        
+        /* 7. تثبيت جميع أزرار الرجوع في أي مكان */
+        .page-header .back-button:hover,
+        .products-page .back-button:hover,
+        .product-detail-page .back-button:hover {
+            transform: none !important;
         }
     </style>
 
@@ -133,7 +166,9 @@
 </head>
 <body>
 
-<!-- تم إزالة شاشة التحميل (loader-wrapper) نهائياً بناءً على طلبك -->
+<div class="loader-wrapper" id="loader">
+    <div class="loader"></div>
+</div>
 
 <div id="instructionPopup" class="instruction-popup">
     <div class="popup-header">
@@ -394,12 +429,11 @@
     </div>
 </footer>
 
-<!-- تحميل المكتبات الأساسية -->
 <script src="js/supabase.js"></script>
 <script type="module" src="js/main.js"></script>
 
 <script>
-    // ==================== دوال القائمة والتنقل (بدون تعارض مع main.js) ====================
+    // ==================== دوال القائمة الموحدة ====================
     function closeNavMenu() {
         const menu = document.getElementById('navMenu');
         if (menu) menu.classList.remove('active');
@@ -408,32 +442,12 @@
         const menu = document.getElementById('navMenu');
         if (menu) menu.classList.toggle('active');
     }
-    window.goBack = function() {
-        closeNavMenu();
-        window.history.back();
-    };
-    window.scrollToTop = function() {
-        closeNavMenu();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
-    window.navigateTo = function(hash) {
-        closeNavMenu();
-        window.location.hash = hash;
-    };
-    window.showOffersPage = function() {
-        window.navigateTo('/offers');
-    };
-    window.showFavorites = function() {
-        window.navigateTo('/favorites');
-    };
+    function goToPage(url) { closeNavMenu(); window.location.href = url; }
+    function goToHash(hash) { closeNavMenu(); window.location.hash = hash; }
 
-    // ربط زر القائمة
     const menuBtn = document.getElementById('menuToggleBtn');
     if (menuBtn) {
-        menuBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            toggleMenu();
-        });
+        menuBtn.addEventListener('click', function(e) { e.stopPropagation(); toggleMenu(); });
     }
     document.addEventListener('click', function(event) {
         const menu = document.getElementById('navMenu');
@@ -445,8 +459,14 @@
     window.addEventListener('hashchange', closeNavMenu);
     window.addEventListener('load', closeNavMenu);
 
-    // ==================== عداد السلة (جمع موحد) ====================
-    function updateCartCount() {
+    window.scrollToTop = function() { closeNavMenu(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+    window.goBack = function() { closeNavMenu(); window.history.back(); };
+    window.showFavorites = function() { goToHash('/favorites'); };
+    window.showOffersPage = function() { goToHash('/offers'); };
+    window.navigateTo = goToHash;
+
+    // ==================== إصلاح عداد السلة (جمع الأرقام الصحيح) ====================
+    function updateCartCountCorrect() {
         try {
             let cart = JSON.parse(localStorage.getItem('projectCart') || '[]');
             let total = 0;
@@ -459,11 +479,58 @@
             if (badge) badge.innerText = total;
         } catch(e) {}
     }
-    updateCartCount();
-    window.addEventListener('storage', function(e) { if (e.key === 'projectCart') updateCartCount(); });
-    setInterval(updateCartCount, 2000);
+    updateCartCountCorrect();
+    window.addEventListener('storage', function(e) { if (e.key === 'projectCart') updateCartCountCorrect(); });
+    setInterval(updateCartCountCorrect, 2000);
 
-    // ==================== إصلاح أيقونة الشكوى (إزالة التنسيق المباشر) ====================
+    // ==================== ترجمة القائمة يدوياً ====================
+    const translationsNav = {
+        ar: { navHome: "الرئيسية", navMarket: "السوق", navFavorites: "المفضلة", navCart: "السلة", navServices: "الخدمات العامة", navRegister: "سجل مشروعك" },
+        en: { navHome: "Home", navMarket: "Market", navFavorites: "Favorites", navCart: "Cart", navServices: "Services", navRegister: "Register Project" }
+    };
+    function updateNavLanguage() {
+        const lang = localStorage.getItem('projectSouqLang') || 'ar';
+        const t = translationsNav[lang];
+        document.getElementById('navHome').innerText = t.navHome;
+        document.getElementById('navMarket').innerText = t.navMarket;
+        document.getElementById('navFavorites').innerText = t.navFavorites;
+        document.getElementById('navCart').innerText = t.navCart;
+        document.getElementById('navServices').innerText = t.navServices;
+        document.getElementById('navRegister').innerText = t.navRegister;
+    }
+    updateNavLanguage();
+    window.addEventListener('storage', function(e) { if (e.key === 'projectSouqLang') updateNavLanguage(); });
+
+    // ==================== تبديل اللغة ====================
+    window.toggleLanguage = function() {
+        if (typeof window.mainToggleLanguage === 'function') {
+            window.mainToggleLanguage();
+            setTimeout(updateNavLanguage, 100);
+        } else {
+            const currentLang = localStorage.getItem('projectSouqLang') || 'ar';
+            const newLang = currentLang === 'ar' ? 'en' : 'ar';
+            localStorage.setItem('projectSouqLang', newLang);
+            document.documentElement.setAttribute('dir', newLang === 'ar' ? 'rtl' : 'ltr');
+            document.documentElement.setAttribute('lang', newLang);
+            if (newLang === 'en') {
+                document.documentElement.classList.add('en-mode');
+                document.body.classList.add('en-mode');
+            } else {
+                document.documentElement.classList.remove('en-mode');
+                document.body.classList.remove('en-mode');
+            }
+            const langBtn = document.getElementById('langBtn');
+            if (langBtn) langBtn.innerText = newLang === 'ar' ? 'English' : 'عربي';
+            updateNavLanguage();
+            window.location.reload();
+        }
+    };
+    const langBtn = document.getElementById('langToggleBtn');
+    if (langBtn) {
+        langBtn.addEventListener('click', function(e) { e.stopPropagation(); window.toggleLanguage(); });
+    }
+
+    // ==================== إصلاح أيقونة الشكوى (إزالة أي تنسيق مباشر) ====================
     function enforceFeedbackButtonPosition() {
         const observer = new MutationObserver(function() {
             document.querySelectorAll('.feedback-btn').forEach(btn => {
@@ -482,10 +549,6 @@
         });
     }
     setTimeout(enforceFeedbackButtonPosition, 300);
-
-    // ==================== ضمان أن زر اللغة يعمل عبر main.js (لا نعترض عليه) ====================
-    // main.js سيتولى التعامل مع اللغة، وهنا فقط نضمن عدم إضافة مستمع يتعارض
-    // نترك زر اللغة كما هو، وmain.js سيربطه عند تحميله.
 </script>
 
 <!-- مودال الشكاوى والاقتراحات -->
