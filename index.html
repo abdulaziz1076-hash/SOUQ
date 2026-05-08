@@ -68,17 +68,31 @@
     <style>
         /* ===== إصلاحات حاسمة للصفحة ===== */
         
-        /* 1. منع أي حركة لزر الرجوع مهما كانت الأولوية */
+        /* 1. منع أي حركة لزر الرجوع نهائياً - إلغاء أي transform و transition */
         .back-button,
         .back-button:hover,
         .back-button:focus,
         .back-button:active,
         .page-header .back-button,
         .products-page .back-button,
-        .product-detail-page .back-button {
+        .product-detail-page .back-button,
+        .back-button *,
+        .back-button *:hover {
             transform: translateY(-50%) !important;
             scale: 1 !important;
-            transition: background-color 0.2s ease, color 0.2s ease !important;
+            transition: none !important;
+            -webkit-transition: none !important;
+            animation: none !important;
+        }
+        
+        /* إزالة أي تأثير hover إضافي */
+        .back-button:hover {
+            background: rgba(255,255,255,0.25) !important;
+            transform: none !important;
+            border-color: var(--secondary) !important;
+        }
+        [dir="ltr"] .back-button:hover {
+            transform: none !important;
         }
         
         /* 2. إصلاح أيقونة الشكوى لتتكيف مع الاتجاه */
@@ -130,23 +144,6 @@
         /* 5. أزرار المشاركة والمفضلة تظل كما هي */
         .action-btn {
             transition: background-color 0.2s, color 0.2s;
-        }
-        
-        /* 6. إزالة أي تأثير hover إضافي من style.css */
-        .back-button:hover {
-            background: rgba(255,255,255,0.25) !important;
-            transform: none !important;
-            border-color: var(--secondary) !important;
-        }
-        [dir="ltr"] .back-button:hover {
-            transform: none !important;
-        }
-        
-        /* 7. تثبيت جميع أزرار الرجوع في أي مكان */
-        .page-header .back-button:hover,
-        .products-page .back-button:hover,
-        .product-detail-page .back-button:hover {
-            transform: none !important;
         }
     </style>
 
@@ -483,51 +480,209 @@
     window.addEventListener('storage', function(e) { if (e.key === 'projectCart') updateCartCountCorrect(); });
     setInterval(updateCartCountCorrect, 2000);
 
-    // ==================== ترجمة القائمة يدوياً ====================
-    const translationsNav = {
-        ar: { navHome: "الرئيسية", navMarket: "السوق", navFavorites: "المفضلة", navCart: "السلة", navServices: "الخدمات العامة", navRegister: "سجل مشروعك" },
-        en: { navHome: "Home", navMarket: "Market", navFavorites: "Favorites", navCart: "Cart", navServices: "Services", navRegister: "Register Project" }
+    // ==================== الترجمة الكاملة للصفحة (جميع النصوص الثابتة) ====================
+    const translations = {
+        ar: {
+            siteTitle: "سوق المشاريع",
+            siteSubtitle: "المشاريع في الامارات",
+            langBtn: "English",
+            navHome: "الرئيسية",
+            navMarket: "السوق",
+            navFavorites: "المفضلة",
+            navCart: "السلة",
+            navServices: "الخدمات العامة",
+            navRegister: "سجل مشروعك",
+            heroTitle: "سوق المشاريع",
+            heroSubtitle: "منصة متخصصة في المشاريع المنزلية",
+            discoverBtn: "ادخل السوق",
+            servicesBtn: "الخدمات العامة",
+            joinBtn: "سجل مشروعك",
+            aboutTitle: "من نحن",
+            forShopperTitle: "للباحث عن منتج",
+            forShopperDesc: "اكتشف منتجات محلية بإيدين إماراتية ومقيمة. أكل بيتي، حلويات، عطور، هدايا، مشغولات يدوية. تواصل مباشر مع البائع بدون وسيط.",
+            forProjectOwnerTitle: "لصاحب المشروع",
+            forProjectOwnerDesc: "سجل مشروعك مجاناً. واصل آلاف الزوار شهرياً. بدون عمولات ولا رسوم خفيفة. دعم مجتمعي للأسر المنتجة في الإمارات.",
+            stat1: "مشاريع",
+            stat2: "منتجات متنوعة",
+            stat3: "طلبات تواصل",
+            stat4: "شركاء داعمين",
+            badge1: "قريباً",
+            badge2: "قريباً",
+            badge3: "قريباً",
+            badge4: "قريباً",
+            popupTitle: "كيف تطلب؟",
+            step1: "تصفح المنتجات",
+            step2: "واختر ما يعجبك",
+            step3: "تواصل مع البائع",
+            gotItBtn: "إغلاق",
+            familiesPageTitle: "المشاريع",
+            familiesPageSubtitle: "استعرض المشاريع في الإمارات",
+            offersBtnText: "العروض",
+            dealsTitle: "العروض والباقات:",
+            favoritesPageTitle: "المفضلة",
+            favoritesPageSubtitle: "المنتجات التي أضفتها",
+            offersPageTitle: "العروض الخاصة",
+            offersPageSubtitle: "أحدث العروض والباقات",
+            footerLogo: "سوق المشاريع",
+            footerText: "منصة المشاريع الإماراتية",
+            privacyLink: "سياسة الخصوصية",
+            termsLink: "شروط الاستخدام",
+            copyright: "© 2026 سوق المشاريع - جميع الحقوق محفوظة",
+            footerKeywords: "سوق المشاريع | منصة المشاريع المنزلية في الإمارات | دليل الأسر المنتجة"
+        },
+        en: {
+            siteTitle: "Souq Almasharie",
+            siteSubtitle: "Projects in UAE",
+            langBtn: "عربي",
+            navHome: "Home",
+            navMarket: "Market",
+            navFavorites: "Favorites",
+            navCart: "Cart",
+            navServices: "Services",
+            navRegister: "Register Project",
+            heroTitle: "Souq Almasharie",
+            heroSubtitle: "Specialized platform for home projects",
+            discoverBtn: "Enter Market",
+            servicesBtn: "Public Services",
+            joinBtn: "Register Project",
+            aboutTitle: "About Us",
+            forShopperTitle: "For Product Seekers",
+            forShopperDesc: "Discover local products made by Emirati and resident hands. Homemade food, sweets, perfumes, gifts, handicrafts. Direct contact with the seller without intermediaries.",
+            forProjectOwnerTitle: "For Project Owners",
+            forProjectOwnerDesc: "Register your project for free. Reach thousands of visitors monthly. No commissions, no hidden fees. Community support for productive families in the UAE.",
+            stat1: "Projects",
+            stat2: "Diverse Products",
+            stat3: "Contact Requests",
+            stat4: "Supporting Partners",
+            badge1: "Coming Soon",
+            badge2: "Coming Soon",
+            badge3: "Coming Soon",
+            badge4: "Coming Soon",
+            popupTitle: "How to Order?",
+            step1: "Browse Products",
+            step2: "Choose what you like",
+            step3: "Contact the Seller",
+            gotItBtn: "Close",
+            familiesPageTitle: "Projects",
+            familiesPageSubtitle: "Browse projects in the UAE",
+            offersBtnText: "Offers",
+            dealsTitle: "Offers & Packages:",
+            favoritesPageTitle: "Favorites",
+            favoritesPageSubtitle: "Products you saved",
+            offersPageTitle: "Special Offers",
+            offersPageSubtitle: "Latest offers and packages",
+            footerLogo: "Souq Almasharie",
+            footerText: "UAE Home-Based Business Platform",
+            privacyLink: "Privacy Policy",
+            termsLink: "Terms of Use",
+            copyright: "© 2026 Souq Almasharie - All Rights Reserved",
+            footerKeywords: "Souq Almasharie | Home Projects Platform in UAE | Productive Families Directory"
+        }
     };
-    function updateNavLanguage() {
+
+    function updatePageLanguage() {
         const lang = localStorage.getItem('projectSouqLang') || 'ar';
-        const t = translationsNav[lang];
+        const t = translations[lang];
+        
+        // تحديث جميع النصوص الثابتة
+        document.getElementById('siteTitle').innerText = t.siteTitle;
+        document.getElementById('siteSubtitle').innerText = t.siteSubtitle;
+        document.getElementById('langBtn').innerText = t.langBtn;
         document.getElementById('navHome').innerText = t.navHome;
         document.getElementById('navMarket').innerText = t.navMarket;
         document.getElementById('navFavorites').innerText = t.navFavorites;
         document.getElementById('navCart').innerText = t.navCart;
         document.getElementById('navServices').innerText = t.navServices;
         document.getElementById('navRegister').innerText = t.navRegister;
+        document.getElementById('heroTitle').innerText = t.heroTitle;
+        document.getElementById('heroSubtitle').innerText = t.heroSubtitle;
+        document.getElementById('discoverBtn').innerText = t.discoverBtn;
+        document.getElementById('servicesBtn').innerText = t.servicesBtn;
+        document.getElementById('joinBtn').innerText = t.joinBtn;
+        document.getElementById('aboutTitle').innerText = t.aboutTitle;
+        document.getElementById('forShopperTitle').innerText = t.forShopperTitle;
+        document.getElementById('forShopperDesc').innerText = t.forShopperDesc;
+        document.getElementById('forProjectOwnerTitle').innerText = t.forProjectOwnerTitle;
+        document.getElementById('forProjectOwnerDesc').innerText = t.forProjectOwnerDesc;
+        document.getElementById('stat1').innerText = t.stat1;
+        document.getElementById('stat2').innerText = t.stat2;
+        document.getElementById('stat3').innerText = t.stat3;
+        document.getElementById('stat4').innerText = t.stat4;
+        document.getElementById('badge1').innerText = t.badge1;
+        document.getElementById('badge2').innerText = t.badge2;
+        document.getElementById('badge3').innerText = t.badge3;
+        document.getElementById('badge4').innerText = t.badge4;
+        document.getElementById('popupTitle').innerText = t.popupTitle;
+        document.getElementById('step1').innerText = t.step1;
+        document.getElementById('step2').innerText = t.step2;
+        document.getElementById('step3').innerText = t.step3;
+        document.getElementById('gotItBtn').innerText = t.gotItBtn;
+        document.getElementById('familiesPageTitle').innerText = t.familiesPageTitle;
+        document.getElementById('familiesPageSubtitle').innerText = t.familiesPageSubtitle;
+        document.getElementById('offersBtnText').innerText = t.offersBtnText;
+        document.getElementById('dealsTitle').innerHTML = '<i class="fas fa-tags"></i> ' + t.dealsTitle;
+        document.getElementById('favoritesPageTitle').innerText = t.favoritesPageTitle;
+        document.getElementById('favoritesPageSubtitle').innerText = t.favoritesPageSubtitle;
+        document.getElementById('offersPageTitle').innerText = t.offersPageTitle;
+        document.getElementById('offersPageSubtitle').innerText = t.offersPageSubtitle;
+        document.getElementById('footerLogo').innerText = t.footerLogo;
+        document.getElementById('footerText').innerText = t.footerText;
+        document.getElementById('privacyLink').innerText = t.privacyLink;
+        document.getElementById('termsLink').innerText = t.termsLink;
+        document.getElementById('copyright').innerHTML = t.copyright;
+        
+        const footerKeywords = document.getElementById('footerKeywords');
+        if (footerKeywords) {
+            footerKeywords.style.direction = lang === 'ar' ? 'rtl' : 'ltr';
+            footerKeywords.innerText = t.footerKeywords;
+        }
+        
+        // تحديث اتجاه الصفحة والكلاسات
+        if (lang === 'ar') {
+            document.documentElement.setAttribute('dir', 'rtl');
+            document.documentElement.setAttribute('lang', 'ar');
+            document.body.classList.remove('en-mode');
+        } else {
+            document.documentElement.setAttribute('dir', 'ltr');
+            document.documentElement.setAttribute('lang', 'en');
+            document.body.classList.add('en-mode');
+        }
     }
-    updateNavLanguage();
-    window.addEventListener('storage', function(e) { if (e.key === 'projectSouqLang') updateNavLanguage(); });
+
+    // استدعاء الترجمة عند تحميل الصفحة
+    updatePageLanguage();
+    
+    // مراقبة تغيير اللغة من localStorage (في حالة تغييرها من main.js)
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'projectSouqLang') {
+            updatePageLanguage();
+        }
+    });
 
     // ==================== تبديل اللغة ====================
     window.toggleLanguage = function() {
+        const currentLang = localStorage.getItem('projectSouqLang') || 'ar';
+        const newLang = currentLang === 'ar' ? 'en' : 'ar';
+        localStorage.setItem('projectSouqLang', newLang);
+        
+        // تحديث واجهة الصفحة الثابتة
+        updatePageLanguage();
+        
+        // تحديث اللغة في main.js إذا كان موجوداً
         if (typeof window.mainToggleLanguage === 'function') {
             window.mainToggleLanguage();
-            setTimeout(updateNavLanguage, 100);
         } else {
-            const currentLang = localStorage.getItem('projectSouqLang') || 'ar';
-            const newLang = currentLang === 'ar' ? 'en' : 'ar';
-            localStorage.setItem('projectSouqLang', newLang);
-            document.documentElement.setAttribute('dir', newLang === 'ar' ? 'rtl' : 'ltr');
-            document.documentElement.setAttribute('lang', newLang);
-            if (newLang === 'en') {
-                document.documentElement.classList.add('en-mode');
-                document.body.classList.add('en-mode');
-            } else {
-                document.documentElement.classList.remove('en-mode');
-                document.body.classList.remove('en-mode');
-            }
-            const langBtn = document.getElementById('langBtn');
-            if (langBtn) langBtn.innerText = newLang === 'ar' ? 'English' : 'عربي';
-            updateNavLanguage();
+            // إعادة تحميل الصفحة لتحديث المحتوى الديناميكي من main.js
             window.location.reload();
         }
     };
+    
     const langBtn = document.getElementById('langToggleBtn');
     if (langBtn) {
-        langBtn.addEventListener('click', function(e) { e.stopPropagation(); window.toggleLanguage(); });
+        langBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            window.toggleLanguage();
+        });
     }
 
     // ==================== إصلاح أيقونة الشكوى (إزالة أي تنسيق مباشر) ====================
