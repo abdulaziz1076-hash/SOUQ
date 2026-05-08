@@ -458,7 +458,7 @@ html {
 }
 
 [dir="ltr"] .back-button:hover {
-    transform: scale(1.05) translateX(3px);
+    transform: none;
 }
 
 /* ========== 5. HERO SECTION (homepage) ========== */
