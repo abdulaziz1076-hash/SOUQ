@@ -588,64 +588,64 @@
         }
     };
 
-    function updateStaticTexts() {
-        const lang = localStorage.getItem('projectSouqLang') || 'ar';
-        const t = staticTranslations[lang];
-        
-        // تحديث جميع العناصر الثابتة
-        document.getElementById('siteTitle').innerText = lang === 'ar' ? 'سوق المشاريع' : 'Souq Almasharie';
-        document.getElementById('siteSubtitle').innerText = lang === 'ar' ? 'المشاريع في الامارات' : 'Projects in UAE';
-        document.getElementById('langBtn').innerText = t.langBtn;
-        document.getElementById('navHome').innerText = t.navHome;
-        document.getElementById('navMarket').innerText = t.navMarket;
-        document.getElementById('navFavorites').innerText = t.navFavorites;
-        document.getElementById('navCart').innerText = t.navCart;
-        document.getElementById('navServices').innerText = t.navServices;
-        document.getElementById('navRegister').innerText = t.navRegister;
-        document.getElementById('heroTitle').innerText = t.heroTitle;
-        document.getElementById('heroSubtitle').innerText = t.heroSubtitle;
-        document.getElementById('discoverBtn').innerText = t.discoverBtn;
-        document.getElementById('servicesBtn').innerText = t.servicesBtn;
-        document.getElementById('joinBtn').innerText = t.joinBtn;
-        document.getElementById('aboutTitle').innerText = t.aboutTitle;
-        document.getElementById('forShopperTitle').innerText = t.forShopperTitle;
-        document.getElementById('forShopperDesc').innerText = t.forShopperDesc;
-        document.getElementById('forProjectOwnerTitle').innerText = t.forProjectOwnerTitle;
-        document.getElementById('forProjectOwnerDesc').innerText = t.forProjectOwnerDesc;
-        document.getElementById('stat1').innerText = t.stat1;
-        document.getElementById('stat2').innerText = t.stat2;
-        document.getElementById('stat3').innerText = t.stat3;
-        document.getElementById('stat4').innerText = t.stat4;
-        document.getElementById('badge1').innerText = t.badge1;
-        document.getElementById('badge2').innerText = t.badge2;
-        document.getElementById('badge3').innerText = t.badge3;
-        document.getElementById('badge4').innerText = t.badge4;
-        document.getElementById('popupTitle').innerText = t.popupTitle;
-        document.getElementById('step1').innerText = t.step1;
-        document.getElementById('step2').innerText = t.step2;
-        document.getElementById('step3').innerText = t.step3;
-        document.getElementById('gotItBtn').innerText = t.gotItBtn;
-        document.getElementById('familiesPageTitle').innerText = t.familiesPageTitle;
-        document.getElementById('familiesPageSubtitle').innerText = t.familiesPageSubtitle;
-        document.getElementById('offersBtnText').innerText = t.offersBtnText;
-        const dealsTitleSpan = document.getElementById('dealsTitle');
-        if (dealsTitleSpan) dealsTitleSpan.innerHTML = t.dealsTitle;
-        document.getElementById('favoritesPageTitle').innerText = t.favoritesPageTitle;
-        document.getElementById('favoritesPageSubtitle').innerText = t.favoritesPageSubtitle;
-        document.getElementById('offersPageTitle').innerText = t.offersPageTitle;
-        document.getElementById('offersPageSubtitle').innerText = t.offersPageSubtitle;
-        document.getElementById('footerLogo').innerText = t.footerLogo;
-        document.getElementById('footerText').innerText = t.footerText;
-        document.getElementById('privacyLink').innerText = t.privacyLink;
-        document.getElementById('termsLink').innerText = t.termsLink;
-        document.getElementById('copyright').innerHTML = t.copyright;
-        
-        const footerKeywords = document.getElementById('footerKeywords');
-        if (footerKeywords) {
-            footerKeywords.style.direction = lang === 'ar' ? 'rtl' : 'ltr';
-            footerKeywords.innerText = t.footerKeywords;
-        }
+function updateStaticTexts() {
+    const lang = localStorage.getItem('projectSouqLang') || 'ar';
+    const t = staticTranslations[lang];
+    
+    // تحديث جميع العناصر الثابتة
+    document.getElementById('siteTitle').innerText = lang === 'ar' ? 'سوق المشاريع' : 'Souq Almasharie';
+    document.getElementById('siteSubtitle').innerText = lang === 'ar' ? 'المشاريع في الامارات' : 'Projects in UAE';
+    document.getElementById('langBtn').innerText = t.langBtn;
+    document.getElementById('navHome').innerText = t.navHome;
+    document.getElementById('navMarket').innerText = t.navMarket;
+    document.getElementById('navFavorites').innerText = t.navFavorites;
+    document.getElementById('navCart').innerText = t.navCart;          // ✅ تمت الإضافة
+    document.getElementById('navServices').innerText = t.navServices;
+    document.getElementById('navRegister').innerText = t.navRegister;
+    document.getElementById('heroTitle').innerText = t.heroTitle;
+    document.getElementById('heroSubtitle').innerText = t.heroSubtitle;
+    document.getElementById('discoverBtn').innerText = t.discoverBtn;
+    document.getElementById('servicesBtn').innerText = t.servicesBtn;
+    document.getElementById('joinBtn').innerText = t.joinBtn;
+    document.getElementById('aboutTitle').innerText = t.aboutTitle;
+    document.getElementById('forShopperTitle').innerText = t.forShopperTitle;
+    document.getElementById('forShopperDesc').innerText = t.forShopperDesc;
+    document.getElementById('forProjectOwnerTitle').innerText = t.forProjectOwnerTitle;
+    document.getElementById('forProjectOwnerDesc').innerText = t.forProjectOwnerDesc;
+    document.getElementById('stat1').innerText = t.stat1;
+    document.getElementById('stat2').innerText = t.stat2;
+    document.getElementById('stat3').innerText = t.stat3;
+    document.getElementById('stat4').innerText = t.stat4;
+    document.getElementById('badge1').innerText = t.badge1;
+    document.getElementById('badge2').innerText = t.badge2;
+    document.getElementById('badge3').innerText = t.badge3;
+    document.getElementById('badge4').innerText = t.badge4;
+    document.getElementById('popupTitle').innerText = t.popupTitle;
+    document.getElementById('step1').innerText = t.step1;
+    document.getElementById('step2').innerText = t.step2;
+    document.getElementById('step3').innerText = t.step3;
+    document.getElementById('gotItBtn').innerText = t.gotItBtn;
+    document.getElementById('familiesPageTitle').innerText = t.familiesPageTitle;
+    document.getElementById('familiesPageSubtitle').innerText = t.familiesPageSubtitle;
+    document.getElementById('offersBtnText').innerText = t.offersBtnText;
+    const dealsTitleSpan = document.getElementById('dealsTitle');
+    if (dealsTitleSpan) dealsTitleSpan.innerHTML = t.dealsTitle;
+    document.getElementById('favoritesPageTitle').innerText = t.favoritesPageTitle;
+    document.getElementById('favoritesPageSubtitle').innerText = t.favoritesPageSubtitle;
+    document.getElementById('offersPageTitle').innerText = t.offersPageTitle;
+    document.getElementById('offersPageSubtitle').innerText = t.offersPageSubtitle;
+    document.getElementById('footerLogo').innerText = t.footerLogo;
+    document.getElementById('footerText').innerText = t.footerText;
+    document.getElementById('privacyLink').innerText = t.privacyLink;
+    document.getElementById('termsLink').innerText = t.termsLink;
+    document.getElementById('copyright').innerHTML = t.copyright;
+    
+    const footerKeywords = document.getElementById('footerKeywords');
+    if (footerKeywords) {
+        footerKeywords.style.direction = lang === 'ar' ? 'rtl' : 'ltr';
+        footerKeywords.innerText = t.footerKeywords;
     }
+}
 
     // تحديث النصوص عند تحميل الصفحة وعند تغيير اللغة عبر التخزين
     updateStaticTexts();
