@@ -158,7 +158,6 @@
         }
         .modal-buttons {
             display: flex;
-            flex-direction: column;
             gap: 12px;
             justify-content: center;
         }
@@ -169,7 +168,6 @@
             cursor: pointer;
             border: none;
             transition: 0.2s;
-            width: 100%;
         }
         .modal-btn.primary {
             background: var(--primary-gradient);
@@ -317,8 +315,6 @@
             copyMsg: "لا يمكن فتح محادثة مباشرة عبر {{method}}. يرجى نسخ الرسالة أدناه ثم لصقها في المحادثة مع البائع.",
             copyButton: "📋 نسخ الرسالة",
             openProfile: "فتح الملف الشخصي",
-            sendMessage: "✅ تم إرسال الرسالة",
-            sendConfirm: "هل قمت بإرسال الرسالة إلى البائع؟",
             cancel: "إلغاء",
             proceed: "متابعة",
             footerLogo: "سوق المشاريع", footerText: "منصة المشاريع الإماراتية", privacyLink: "سياسة الخصوصية", termsLink: "شروط الاستخدام", copyright: "© 2026 سوق المشاريع - جميع الحقوق محفوظة"
@@ -340,8 +336,6 @@
             copyMsg: "Direct chat is not available via {{method}}. Please copy the message below and paste it into your conversation with the seller.",
             copyButton: "📋 Copy message",
             openProfile: "Open profile",
-            sendMessage: "✅ Message Sent",
-            sendConfirm: "Have you sent the message to the seller?",
             cancel: "Cancel",
             proceed: "Proceed",
             footerLogo: "Souq Almasharie", footerText: "UAE Projects Platform", privacyLink: "Privacy Policy", termsLink: "Terms of Use", copyright: "© 2026 Souq Almasharie - All Rights Reserved"
@@ -381,10 +375,11 @@
                 ? "سوق المشاريع | منصة المشاريع المنزلية في الإمارات | دليل الأسر المنتجة"
                 : "Souq Almasharie | Home Projects Platform in UAE | Productive Families Directory";
         }
+        // تحديث عداد السلة
         updateCartCountDisplay();
     }
 
-    // دوال المودال (للاستخدام العام)
+    // دوال المودال
     function showModal(title, message, options = {}) {
         return new Promise((resolve) => {
             const modal = document.getElementById('customModal');
@@ -456,6 +451,7 @@
     function saveCart(cart) { 
         localStorage.setItem('projectCart', JSON.stringify(cart)); 
         updateCartCountDisplay(); 
+        // إرسال حدث للتحديث الفوري في الصفحات الأخرى (مثل index.html)
         window.dispatchEvent(new Event('cartUpdated'));
     }
     function updateCartCountDisplay() {
@@ -465,7 +461,7 @@
         if(badge) badge.innerText = total;
     }
 
-    let projectsData = [];
+    let projectsData = []; // { id, name_ar, name_en, products: [{ id, name_ar, name_en, price_ar, price_en }] }
     async function loadAllProjectsData() {
         const { data, error } = await supabase.from('projects').select(`id, name_ar, name_en, products (id, name_ar, name_en, price_ar, price_en)`);
         if (!error) projectsData = data || [];
@@ -569,80 +565,11 @@
         else if (contact.type === 'facebook') { methodName = 'Facebook'; url = `https://facebook.com/${contact.value}`; needCopy = true; }
         else if (contact.type === 'twitter') { methodName = 'X'; url = `https://x.com/${contact.value}`; needCopy = true; }
         else { methodName = currentLang === 'ar' ? 'الموقع' : 'Website'; url = contact.value.startsWith('http') ? contact.value : 'https://' + contact.value; needCopy = true; }
-        
         const confirm = await showModal(t('confirmTitle'), t('confirmMsg', { method: methodName }), {});
         if (!confirm.confirmed) return;
-        
         if (needCopy) {
-            // مودال مخصص بدون أزرار إلغاء/متابعة، مع زر تأكيد الإرسال
-            const modal = document.getElementById('customModal');
-            document.getElementById('modalTitle').innerText = t('copyTitle');
-            document.getElementById('modalMessage').innerText = t('copyMsg', { method: methodName });
-            const inputArea = document.getElementById('modalInputArea');
-            const buttonsDiv = document.getElementById('modalButtons');
-            inputArea.innerHTML = '';
-            buttonsDiv.innerHTML = '';
-            
-            // منطقة النص
-            const textarea = document.createElement('textarea');
-            textarea.rows = 5;
-            textarea.id = 'modalTextarea';
-            textarea.value = decodeURIComponent(encodedMsg);
-            inputArea.appendChild(textarea);
-            
-            // زر نسخ الرسالة
-            const copyBtn = document.createElement('button');
-            copyBtn.className = 'copy-btn';
-            copyBtn.innerHTML = t('copyButton');
-            copyBtn.onclick = () => {
-                navigator.clipboard.writeText(decodeURIComponent(encodedMsg));
-                copyBtn.innerText = currentLang === 'ar' ? '✅ تم النسخ' : '✅ Copied';
-                setTimeout(() => copyBtn.innerText = t('copyButton'), 2000);
-            };
-            inputArea.appendChild(copyBtn);
-            
-            // زر فتح الملف الشخصي
-            const openBtn = document.createElement('button');
-            openBtn.className = 'modal-btn primary';
-            openBtn.innerHTML = t('openProfile');
-            openBtn.onclick = () => { window.open(url, '_blank'); };
-            buttonsDiv.appendChild(openBtn);
-            
-            // زر تأكيد الإرسال
-            const sendBtn = document.createElement('button');
-            sendBtn.className = 'modal-btn primary';
-            sendBtn.innerHTML = t('sendMessage');
-            sendBtn.onclick = async () => {
-                const userConfirmed = confirm(t('sendConfirm'));
-                if (!userConfirmed) return;
-                // تسجيل الطلب في قاعدة البيانات
-                await logOrderForAdmin(projectGroup, raw, calcTotal(projectGroup.items));
-                // حذف منتجات هذا المشروع من السلة
-                let cart = getCart();
-                const newCart = cart.filter(item => String(item.projectId) !== String(projectGroup.projectId));
-                saveCart(newCart);
-                // إغلاق المودال
-                modal.classList.remove('active');
-                await renderCart();
-                await showAlert(t('successTitle'), t('successMsg'));
-            };
-            buttonsDiv.appendChild(sendBtn);
-            
-            // زر إلغاء (اختياري ولكن مفيد)
-            const cancelBtn = document.createElement('button');
-            cancelBtn.className = 'modal-btn secondary';
-            cancelBtn.innerText = t('cancel');
-            cancelBtn.onclick = () => {
-                modal.classList.remove('active');
-            };
-            buttonsDiv.appendChild(cancelBtn);
-            
-            modal.classList.add('active');
-            return; // ننهي الدالة هنا لأننا تعاملنا مع needCopy يدوياً
-        }
-        
-        // للحالات التي لا تحتاج نسخ (واتساب، تيليجرام)
-        window.open(url, '_blank');
+            await showModal(t('copyTitle'), t('copyMsg', { method: methodName }), { textarea: true, textareaValue: decodeURIComponent(encodedMsg), copyButton: true, openUrl: url });
+        } else window.open(url, '_blank');
         await logOrderForAdmin(projectGroup, raw, calcTotal(projectGroup.items));
         let cart = getCart();
         const newCart = cart.filter(item => String(item.projectId) !== String(projectGroup.projectId));
@@ -726,22 +653,26 @@
     });
     document.getElementById('langToggleBtn').addEventListener('click', (e) => { e.preventDefault(); window.toggleLanguage(); });
 
+    // الاستماع لتحديثات السلة من localStorage (مثلاً عند الإضافة من index.html)
     window.addEventListener('storage', (e) => {
         if (e.key === 'projectCart') {
             updateCartCountDisplay();
             renderCart();
         }
     });
+    // استماع لحدث مخصص للإضافة الفورية
     window.addEventListener('cartUpdated', () => {
         updateCartCountDisplay();
         renderCart();
     });
 
+    // تهيئة الجلسة والبيانات
     if (!localStorage.getItem('projectSessionId')) localStorage.setItem('projectSessionId', 'guest_' + Date.now() + '_' + Math.random().toString(36));
     await loadAllProjectsData();
     updateStaticTexts();
     await renderCart();
 
+    // ربط الدوال عالمياً
     window.updateQuantity = window.updateQuantity;
     window.removeItem = window.removeItem;
     window.checkoutProject = window.checkoutProject;
