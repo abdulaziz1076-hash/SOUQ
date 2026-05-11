@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل مشروع جديد | سوق المشاريع</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background: linear-gradient(145deg, #0F3D2E, #1A5F44);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .register-card {
+            background: white;
+            border-radius: 48px;
+            max-width: 750px;
+            width: 100%;
+            padding: 40px 35px;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.2);
+        }
+        .register-card h2 { color: #0F3D2E; font-size: 28px; margin-bottom: 8px; text-align: center; }
+        .register-card p { color: #64748b; margin-bottom: 30px; text-align: center; }
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        .step {
+            text-align: center;
+            flex: 1;
+        }
+        .step .circle {
+            width: 40px;
+            height: 40px;
+            background: #E2E8F0;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #64748b;
+        }
+        .step.active .circle {
+            background: #D4AF37;
+            color: #0F3D2E;
+        }
+        .step .label { font-size: 12px; margin-top: 6px; color: #64748b; }
+        .step.active .label { color: #0F3D2E; font-weight: bold; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { font-weight: 700; display: block; margin-bottom: 8px; color: #0F3D2E; }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #E2E8F0;
+            border-radius: 30px;
+            font-family: inherit;
+            background: #F8FAFC;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #D4AF37;
+            background: white;
+        }
+        .row-2cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .checkbox-group { display: flex; align-items: center; gap: 12px; margin: 20px 0; }
+        button {
+            background: #0F3D2E;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 60px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 16px;
+        }
+        button:hover { background: #1A5F44; transform: translateY(-2px); }
+        .next-btn, .prev-btn { width: 100%; margin-top: 15px; }
+        .error { color: #dc2626; margin-top: 8px; display: none; }
+        .info-note { font-size: 12px; color: #64748b; margin-top: 20px; text-align: center; }
+    </style>
+</head>
+<body>
+<div class="register-card">
+    <i class="fas fa-store" style="font-size: 60px; color: #D4AF37; display: block; text-align: center; margin-bottom: 15px;"></i>
+    <h2 id="registerTitle">انضم إلى سوق المشاريع</h2>
+    <p id="registerSubtitle">أنشئ مشروعك المنزلي وابدأ البيع اليوم</p>
+
+    <div class="step-indicator">
+        <div class="step active" id="step1Indicator"><div class="circle">1</div><div class="label" id="step1Label">بيانات المشروع</div></div>
+        <div class="step" id="step2Indicator"><div class="circle">2</div><div class="label" id="step2Label">الحساب والتواصل</div></div>
+    </div>
+
+    <form id="registerForm">
+        <!-- الخطوة 1 -->
+        <div id="step1">
+            <div class="form-group"><label id="labelNameAr">اسم المشروع (عربي)</label><input type="text" id="nameAr" required></div>
+            <div class="form-group"><label id="labelNameEn">اسم المشروع (إنجليزي)</label><input type="text" id="nameEn" required></div>
+            <div class="row-2cols">
+                <div><label id="labelEmirate">الإمارة</label><select id="emirate"><option>أبوظبي</option><option>دبي</option><option>الشارقة</option><option>عجمان</option><option>رأس الخيمة</option><option>الفجيرة</option><option>أم القيوين</option></select></div>
+                <div><label id="labelCategory">التصنيف الرئيسي</label><select id="category"><option>أطعمة ومشروبات</option><option>الرقميات</option><option>روائح وعطور</option><option>عناية</option><option>حلويات</option><option>تجميل</option><option>ملابس</option><option>يدويات</option><option>هدايا</option><option>عطارة</option><option>فنون</option><option>نباتات</option><option>ترفيه</option></select></div>
+            </div>
+            <div class="form-group"><label id="labelShortAr">وصف قصير (عربي) - 250 حرف</label><textarea id="descAr" rows="2" maxlength="250"></textarea></div>
+            <div class="form-group"><label id="labelShortEn">وصف قصير (إنجليزي)</label><textarea id="descEn" rows="2" maxlength="250"></textarea></div>
+            <div class="form-group"><label id="labelLongAr">وصف طويل (عربي) - اختياري</label><textarea id="longDescAr" rows="3"></textarea></div>
+            <div class="form-group"><label id="labelLongEn">وصف طويل (إنجليزي)</label><textarea id="longDescEn" rows="3"></textarea></div>
+            <div class="form-group"><label id="labelCoverage">نطاق التغطية</label><select id="coverage"><option>الإمارة فقط</option><option>جميع إمارات الدولة</option><option>دول الخليج</option><option>العالم</option></select></div>
+            <div class="form-group"><label id="labelLogo">صورة المشروع (لوجو)</label><input type="file" id="logoImage" accept="image/*" required></div>
+            <button type="button" id="nextStepBtn" class="next-btn"><span id="nextText">التالي</span> <i class="fas fa-arrow-left"></i></button>
+        </div>
+
+        <!-- الخطوة 2 -->
+        <div id="step2" style="display:none;">
+            <div class="form-group"><label id="labelEmail">البريد الإلكتروني (تسجيل الدخول)</label><input type="email" id="email" required></div>
+            <div class="row-2cols">
+                <div><label id="labelPassword">كلمة المرور</label><input type="password" id="password" required></div>
+                <div><label id="labelConfirmPassword">تأكيد كلمة المرور</label><input type="password" id="confirmPassword" required></div>
+            </div>
+            <div class="form-group"><label id="labelWhatsapp">رقم واتساب (للتواصل)</label><input type="tel" id="whatsapp" required></div>
+            <div class="form-group"><label id="labelInstagram">حساب إنستغرام (اختياري)</label><input type="text" id="instagram"></div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="consent" required>
+                <label id="consentLabel">أوافق على <a href="consent-publish.html" target="_blank">شروط النشر</a> و <a href="terms.html" target="_blank">الاستخدام</a> و <a href="privacy.html" target="_blank">سياسة الخصوصية</a></label>
+            </div>
+            <div class="row-2cols">
+                <button type="button" id="prevStepBtn" class="prev-btn"><span id="prevText">السابق</span></button>
+                <button type="submit" id="submitBtn"><span id="submitText">إنشاء حساب المشروع</span></button>
+            </div>
+        </div>
+        <div id="formError" class="error"></div>
+    </form>
+    <div class="info-note" id="trialNote">خلال 7 أيام تجريبية، سيظهر مشروعك في السوق بدون رخصة. بعدها يجب رفع الرخصة التجارية لاستمرار الظهور.</div>
+</div>
+
+<script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+    import { APP_CONFIG } from './config.js';
+    const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
+
+    const translations = {
+        ar: { /* نفس المحتوى السابق مع كل المفاتيح */ 
+            registerTitle: "انضم إلى سوق المشاريع", registerSubtitle: "أنشئ مشروعك المنزلي وابدأ البيع اليوم",
+            step1Label: "بيانات المشروع", step2Label: "الحساب والتواصل",
+            labelNameAr: "اسم المشروع (عربي)", labelNameEn: "اسم المشروع (إنجليزي)", labelEmirate: "الإمارة", labelCategory: "التصنيف الرئيسي",
+            labelShortAr: "وصف قصير (عربي) - 250 حرف", labelShortEn: "وصف قصير (إنجليزي)", labelLongAr: "وصف طويل (عربي) - اختياري", labelLongEn: "وصف طويل (إنجليزي)",
+            labelCoverage: "نطاق التغطية", labelLogo: "صورة المشروع (لوجو)", nextText: "التالي", labelEmail: "البريد الإلكتروني (تسجيل الدخول)",
+            labelPassword: "كلمة المرور", labelConfirmPassword: "تأكيد كلمة المرور", labelWhatsapp: "رقم واتساب (للتواصل)", labelInstagram: "حساب إنستغرام (اختياري)",
+            consentLabel: "أوافق على شروط النشر والاستخدام وسياسة الخصوصية", prevText: "السابق", submitText: "إنشاء حساب المشروع",
+            trialNote: "خلال 7 أيام تجريبية، سيظهر مشروعك في السوق بدون رخصة. بعدها يجب رفع الرخصة التجارية لاستمرار الظهور.",
+            passwordMismatch: "كلمتا المرور غير متطابقتين", registerSuccess: "تم إنشاء حساب المشروع بنجاح! جارٍ تحويلك...",
+            emailRequired: "البريد الإلكتروني مطلوب", invalidEmail: "صيغة بريد إلكتروني غير صالحة", consentRequired: "يجب الموافقة على الشروط"
+        },
+        en: {
+            registerTitle: "Join Souq Almasharie", registerSubtitle: "Create your home project and start selling today",
+            step1Label: "Project Info", step2Label: "Account & Contact",
+            labelNameAr: "Project Name (Arabic)", labelNameEn: "Project Name (English)", labelEmirate: "Emirate", labelCategory: "Main Category",
+            labelShortAr: "Short Description (Arabic) - 250 chars", labelShortEn: "Short Description (English)", labelLongAr: "Long Description (Arabic) - optional", labelLongEn: "Long Description (English)",
+            labelCoverage: "Coverage", labelLogo: "Project Logo", nextText: "Next", labelEmail: "Email (for login)",
+            labelPassword: "Password", labelConfirmPassword: "Confirm Password", labelWhatsapp: "WhatsApp Number", labelInstagram: "Instagram Account (optional)",
+            consentLabel: "I agree to the Terms of Publishing, Terms of Use, and Privacy Policy", prevText: "Previous", submitText: "Create Project Account",
+            trialNote: "During a 7-day trial, your project will appear without a license. After that, you must upload your commercial license.",
+            passwordMismatch: "Passwords do not match", registerSuccess: "Project account created successfully! Redirecting...",
+            emailRequired: "Email is required", invalidEmail: "Invalid email format", consentRequired: "You must agree to the terms"
+        }
+    };
+
+    let currentLang = localStorage.getItem('projectSouqLang') === 'en' ? 'en' : 'ar';
+    function t(key) { return translations[currentLang][key] || key; }
+
+    function updateUI() {
+        document.getElementById('registerTitle').innerText = t('registerTitle');
+        document.getElementById('registerSubtitle').innerText = t('registerSubtitle');
+        document.getElementById('step1Label').innerText = t('step1Label');
+        document.getElementById('step2Label').innerText = t('step2Label');
+        document.getElementById('labelNameAr').innerText = t('labelNameAr');
+        document.getElementById('labelNameEn').innerText = t('labelNameEn');
+        document.getElementById('labelEmirate').innerText = t('labelEmirate');
+        document.getElementById('labelCategory').innerText = t('labelCategory');
+        document.getElementById('labelShortAr').innerText = t('labelShortAr');
+        document.getElementById('labelShortEn').innerText = t('labelShortEn');
+        document.getElementById('labelLongAr').innerText = t('labelLongAr');
+        document.getElementById('labelLongEn').innerText = t('labelLongEn');
+        document.getElementById('labelCoverage').innerText = t('labelCoverage');
+        document.getElementById('labelLogo').innerText = t('labelLogo');
+        document.getElementById('nextText').innerText = t('nextText');
+        document.getElementById('labelEmail').innerText = t('labelEmail');
+        document.getElementById('labelPassword').innerText = t('labelPassword');
+        document.getElementById('labelConfirmPassword').innerText = t('labelConfirmPassword');
+        document.getElementById('labelWhatsapp').innerText = t('labelWhatsapp');
+        document.getElementById('labelInstagram').innerText = t('labelInstagram');
+        document.getElementById('consentLabel').innerHTML = t('consentLabel');
+        document.getElementById('prevText').innerText = t('prevText');
+        document.getElementById('submitText').innerText = t('submitText');
+        document.getElementById('trialNote').innerText = t('trialNote');
+    }
+
+    // التنقل بين الخطوات
+    document.getElementById('nextStepBtn').onclick = () => {
+        document.getElementById('step1').style.display = 'none';
+        document.getElementById('step2').style.display = 'block';
+    };
+    document.getElementById('prevStepBtn').onclick = () => {
+        document.getElementById('step2').style.display = 'none';
+        document.getElementById('step1').style.display = 'block';
+    };
+
+    const form = document.getElementById('registerForm');
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const confirm = document.getElementById('confirmPassword').value;
+        if (password !== confirm) { showError(t('passwordMismatch')); return; }
+        const { data: authData, error: authError } = await supabase.auth.signUp({ email, password, options: { data: { role: 'project_owner' } } });
+        if (authError) { showError(authError.message); return; }
+        const userId = authData.user.id;
+        // رفع الشعار
+        const logoFile = document.getElementById('logoImage').files[0];
+        let logoUrl = '';
+        if (logoFile) {
+            const ext = logoFile.name.split('.').pop();
+            const fileName = `${userId}/logo.${ext}`;
+            await supabase.storage.from('project-logos').upload(fileName, logoFile, { upsert: true });
+            logoUrl = supabase.storage.from('project-logos').getPublicUrl(fileName).data.publicUrl;
+        }
+        const trialEnd = new Date(); trialEnd.setDate(trialEnd.getDate() + 7);
+        const projectData = {
+            name_ar: document.getElementById('nameAr').value,
+            name_en: document.getElementById('nameEn').value,
+            emirate: document.getElementById('emirate').value,
+            description_ar: document.getElementById('descAr').value,
+            description_en: document.getElementById('descEn').value,
+            long_description_ar: document.getElementById('longDescAr').value,
+            long_description_en: document.getElementById('longDescEn').value,
+            image: logoUrl,
+            adra_license: false,
+            coverage: document.getElementById('coverage').value,
+            category_ar: document.getElementById('category').value,
+            category_en: document.getElementById('category').value,
+            owner_user_id: userId,
+            license_status: 'pending_license',
+            status: 'pending',
+            trial_end_date: trialEnd.toISOString()
+        };
+        const { error: insertErr } = await supabase.from('projects').insert(projectData);
+        if (insertErr) { showError(insertErr.message); return; }
+        const { data: proj } = await supabase.from('projects').select('id').eq('owner_user_id', userId).single();
+        if (proj) {
+            await supabase.from('contacts').insert({
+                project_id: proj.id,
+                whatsapp: document.getElementById('whatsapp').value,
+                instagram: document.getElementById('instagram').value
+            });
+        }
+        alert(t('registerSuccess'));
+        window.location.href = 'project-login.html';
+    });
+
+    function showError(msg) { document.getElementById('formError').innerText = msg; document.getElementById('formError').style.display = 'block'; setTimeout(() => document.getElementById('formError').style.display = 'none', 5000); }
+
+    updateUI();
+</script>
+</body>
+</html>

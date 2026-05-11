@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دخول أصحاب المشاريع | سوق المشاريع</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background: linear-gradient(145deg, #0F3D2E, #1A5F44);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .login-card {
+            background: white;
+            border-radius: 48px;
+            max-width: 450px;
+            width: 100%;
+            padding: 40px 35px;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        .login-card h2 { color: #0F3D2E; font-size: 28px; margin-bottom: 8px; }
+        .login-card p { color: #64748b; margin-bottom: 30px; }
+        .input-group { margin-bottom: 20px; text-align: right; }
+        .input-group input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #E2E8F0;
+            border-radius: 60px;
+            font-size: 15px;
+            font-family: inherit;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: #D4AF37;
+        }
+        button {
+            background: #0F3D2E;
+            color: white;
+            width: 100%;
+            padding: 14px;
+            border-radius: 60px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        button:hover {
+            background: #1A5F44;
+            transform: translateY(-2px);
+        }
+        .forgot-link {
+            display: block;
+            margin-top: 15px;
+            color: #D4AF37;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .register-link {
+            margin-top: 25px;
+            border-top: 1px solid #E2E8F0;
+            padding-top: 20px;
+        }
+        .register-link a {
+            color: #D4AF37;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .error-msg {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 10px;
+            border-radius: 30px;
+            margin-bottom: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="login-card">
+    <i class="fas fa-store" style="font-size: 60px; color: #D4AF37; margin-bottom: 15px;"></i>
+    <h2 id="loginTitle">مرحباً بعودتك</h2>
+    <p id="loginSubtitle">سجل الدخول إلى لوحة تحكم مشروعك</p>
+    <div id="errorMsg" class="error-msg"></div>
+    <form id="loginForm">
+        <div class="input-group"><input type="email" id="email" placeholder="البريد الإلكتروني" required></div>
+        <div class="input-group"><input type="password" id="password" placeholder="كلمة المرور" required></div>
+        <button type="submit" id="loginBtn"><span>دخول</span> <i class="fas fa-arrow-left"></i></button>
+        <a href="project-forgot-password.html" class="forgot-link" id="forgotLink">نسيت كلمة المرور؟</a>
+    </form>
+    <div class="register-link">
+        <span id="noAccountText">ليس لديك حساب؟</span> <a href="project-register.html" id="registerLink">سجل مشروعك الآن</a>
+    </div>
+</div>
+
+<script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+    import { APP_CONFIG } from './config.js';
+    const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
+
+    // ترجمة
+    const translations = {
+        ar: {
+            title: "مرحباً بعودتك",
+            subtitle: "سجل الدخول إلى لوحة تحكم مشروعك",
+            emailPlaceholder: "البريد الإلكتروني",
+            passwordPlaceholder: "كلمة المرور",
+            loginBtn: "دخول",
+            forgotLink: "نسيت كلمة المرور؟",
+            noAccount: "ليس لديك حساب؟",
+            registerLink: "سجل مشروعك الآن",
+            errorLogin: "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+            errorNoProject: "لا يوجد مشروع مرتبط بهذا الحساب"
+        },
+        en: {
+            title: "Welcome Back",
+            subtitle: "Log in to your project dashboard",
+            emailPlaceholder: "Email",
+            passwordPlaceholder: "Password",
+            loginBtn: "Login",
+            forgotLink: "Forgot password?",
+            noAccount: "Don't have an account?",
+            registerLink: "Register your project now",
+            errorLogin: "Invalid email or password",
+            errorNoProject: "No project linked to this account"
+        }
+    };
+
+    let currentLang = localStorage.getItem('projectSouqLang') === 'en' ? 'en' : 'ar';
+
+    function t(key) { return translations[currentLang][key] || key; }
+
+    function updateUI() {
+        document.getElementById('loginTitle').innerText = t('title');
+        document.getElementById('loginSubtitle').innerText = t('subtitle');
+        document.getElementById('email').placeholder = t('emailPlaceholder');
+        document.getElementById('password').placeholder = t('passwordPlaceholder');
+        document.getElementById('loginBtn').innerHTML = `<span>${t('loginBtn')}</span> <i class="fas fa-arrow-left"></i>`;
+        document.getElementById('forgotLink').innerText = t('forgotLink');
+        document.getElementById('noAccountText').innerText = t('noAccount');
+        document.getElementById('registerLink').innerText = t('registerLink');
+    }
+
+    const form = document.getElementById('loginForm');
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) {
+            document.getElementById('errorMsg').innerText = t('errorLogin');
+            document.getElementById('errorMsg').style.display = 'block';
+            return;
+        }
+        const { data: project } = await supabase.from('projects').select('id').eq('owner_user_id', data.user.id).single();
+        if (!project) {
+            document.getElementById('errorMsg').innerText = t('errorNoProject');
+            document.getElementById('errorMsg').style.display = 'block';
+            return;
+        }
+        localStorage.setItem('projectOwnerSession', JSON.stringify({ userId: data.user.id, projectId: project.id }));
+        window.location.href = `project-dashboard.html?project_id=${project.id}`;
+    });
+
+    updateUI();
+</script>
+</body>
+</html>
