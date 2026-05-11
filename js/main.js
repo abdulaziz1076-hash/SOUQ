@@ -1,4 +1,4 @@
-// main.js - كامل مع نظام السلة (نسخة 2026-05-04)
+// main.js - كامل مع نظام السلة (نسخة 2026-05-11) - محدث لفلترة المشاريع المعتمدة فقط
 import { APP_CONFIG } from './config.js';
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
@@ -111,12 +111,13 @@ function filterProductsByType(typeId, familyId) {
     }
 }
 
-// ==================== Load Data from Supabase ====================
+// ==================== Load Data from Supabase (مع فلترة المشاريع المعتمدة) ====================
 async function loadProjectsFromSupabase() {
     try {
         showLoader();
         console.log('🔄 Loading data from Supabase...');
 
+        // ✅ فقط المشاريع المعتمدة والتي لديها ترخيص مقبول + حالة المشروع approved
         const { data: projects, error } = await supabase
             .from('projects')
             .select(`
@@ -124,11 +125,13 @@ async function loadProjectsFromSupabase() {
                 products (*),
                 deals (*),
                 contacts (*)
-            `);
+            `)
+            .eq('status', 'approved')
+            .eq('license_status', 'license_approved');
 
         if (error) throw error;
         if (!projects || projects.length === 0) {
-            console.warn('⚠️ No projects found');
+            console.warn('⚠️ No approved projects found');
             projectsData = [];
             return;
         }
@@ -241,7 +244,7 @@ async function loadProjectsFromSupabase() {
             }
         });
 
-        console.log(`✅ Loaded ${projectsData.length} projects`);
+        console.log(`✅ Loaded ${projectsData.length} approved projects`);
 
         if (appState.currentPage === 'families') renderFamilies();
         else if (appState.currentPage === 'products' && appState.currentFamilyId) showFamilyProducts(appState.currentFamilyId, false);
@@ -938,13 +941,17 @@ function showDealDetails(familyId, dealId) {
     showToast(t.viewingDeal);
 }
 
-// ==================== Show Family Products ====================
+// ==================== Show Family Products (مع التحقق من وجود المشروع) ====================
 function showFamilyProducts(id, updateHash = true) {
     appState.currentProductType = 'all';
     hideLoader();
     
     const family = projectsData.find(f => f.id == id);
-    if (!family) return;
+    if (!family) {
+        showToast("هذا المشروع غير متاح حالياً", true);
+        navigateTo('/');
+        return;
+    }
     
     const contactInfo = contactsData[id] || {};
     family.whatsapp = contactInfo.whatsapp || null;
@@ -1158,11 +1165,15 @@ function getPriceDisplay(product) {
     return price;
 }
 
-// ==================== Show Product Detail ====================
+// ==================== Show Product Detail (مع التحقق من وجود المشروع) ====================
 async function showProductDetail(familyId, productId, updateHash = true) {
     hideLoader();
     const family = projectsData.find(f => f.id == familyId);
-    if (!family) return;
+    if (!family) {
+        showToast("هذا المشروع غير متاح حالياً", true);
+        navigateTo('/');
+        return;
+    }
     const contactInfo = contactsData[familyId] || {};
     family.whatsapp = contactInfo.whatsapp || null;
     family.phone = contactInfo.phone || null;
