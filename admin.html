@@ -296,9 +296,11 @@
             <button class="tab-btn" data-tab="contacts"><i class="fas fa-address-card"></i> بيانات التواصل</button>
             <button class="tab-btn" data-tab="feedbacks"><i class="fas fa-comment-dots"></i> الشكاوى</button>
             <button class="tab-btn" data-tab="orders"><i class="fas fa-truck"></i> الطلبات</button>
+            <!-- تبويب إدارة التراخيص (جديد) -->
+            <button class="tab-btn" data-tab="licenses"><i class="fas fa-file-certificate"></i> إدارة التراخيص</button>
         </div>
 
-        <!-- طلبات التسجيل (محسّنة) -->
+        <!-- طلبات التسجيل -->
         <div id="registrationsTab" class="content-card active">
             <div class="filter-bar">
                 <div class="filter-group">
@@ -375,7 +377,7 @@
             <div id="feedbacksTableContainer"></div>
         </div>
 
-        <!-- الطلبات (المشتريات) -->
+        <!-- الطلبات -->
         <div id="ordersTab" class="content-card">
             <div class="filter-bar">
                 <div class="filter-group">
@@ -387,6 +389,23 @@
             <div id="ordersTableContainer"></div>
             <div id="ordersPagination" class="pagination"></div>
         </div>
+
+        <!-- ****************** تبويب إدارة التراخيص ****************** -->
+        <div id="licensesTab" class="content-card">
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <select id="licenseStatusFilter">
+                        <option value="all">كل الحالات</option>
+                        <option value="pending">قيد المراجعة</option>
+                        <option value="approved">موافق</option>
+                        <option value="rejected">مرفوض</option>
+                    </select>
+                </div>
+                <button id="refreshLicensesBtn" class="btn-outline"><i class="fas fa-sync-alt"></i> تحديث</button>
+            </div>
+            <div id="licensesTableContainer"></div>
+        </div>
+        <!-- ********************************************************** -->
 
     </div>
 </div>
@@ -469,7 +488,7 @@
     </div>
 </div>
 
-<!-- مودال تفاصيل الطلب (للمشتريات) -->
+<!-- مودال تفاصيل الطلب -->
 <div id="orderDetailsModal" class="modal">
     <div class="modal-content">
         <div class="modal-header"><h3>تفاصيل الطلب</h3><button class="modal-close" data-modal="orderDetailsModal"><i class="fas fa-times"></i></button></div>
@@ -529,7 +548,7 @@ async function loadStats() {
     `;
 }
 
-// ==================== المشاريع (مع ترتيب ذكي) ====================
+// ==================== المشاريع ====================
 async function loadProjects(page = 1) {
     currentProjectsPage = page;
     let query = supabase.from('projects').select('*', { count: 'exact' }).order('display_order', { ascending: true, nullsFirst: false }).order('id', { ascending: false }).range((page-1)*10, page*10-1);
@@ -632,7 +651,7 @@ window.editProject = async (id) => {
     }
 };
 
-// ==================== المنتجات (مع ترتيب ذكي) ====================
+// ==================== المنتجات ====================
 async function loadProducts() {
     const projectId = document.getElementById('productProjectFilter').value;
     if (!projectId) { document.getElementById('productsTableContainer').innerHTML = '<p style="padding:20px;">✏️ اختر مشروعاً أولاً من القائمة</p>'; return; }
@@ -822,7 +841,7 @@ window.deleteItem = async (table, id) => {
     }
 };
 
-// ==================== طلبات التسجيل (محسّنة) ====================
+// ==================== طلبات التسجيل ====================
 async function loadRegistrations(page = 1) {
     currentRegPage = page;
     let query = supabase.from('project_registrations').select('*', { count: 'exact' }).order('created_at', { ascending: false }).range((page-1)*10, page*10-1);
@@ -889,7 +908,7 @@ window.updateRegStatus = async (id, newStatus) => {
     loadStats();
 };
 
-// ==================== العروض وجهات الاتصال والشكاوى ====================
+// ==================== العروض ====================
 async function loadDeals() {
     const projectId = document.getElementById('dealProjectFilter').value;
     if (!projectId) { document.getElementById('dealsTableContainer').innerHTML = '<p>اختر مشروعاً لعرض عروضه</p>'; return; }
@@ -946,6 +965,8 @@ async function saveDeal(e) {
     if (error) showToast(error.message, true);
     else { showToast('تم حفظ العرض'); document.getElementById('dealModal').classList.remove('active'); loadDeals(); loadStats(); }
 }
+
+// ==================== جهات الاتصال ====================
 async function loadContacts() {
     const projectId = document.getElementById('contactProjectFilter').value;
     if (!projectId) { document.getElementById('contactsTableContainer').innerHTML = '<p>اختر مشروعاً لعرض بيانات التواصل</p>'; return; }
@@ -982,6 +1003,8 @@ async function loadContacts() {
         showToast('تم حفظ بيانات التواصل');
     };
 }
+
+// ==================== الشكاوى ====================
 async function loadFeedbacks() {
     const status = document.getElementById('feedbackStatusFilter').value;
     let query = supabase.from('feedbacks').select('*').order('created_at', { ascending: false });
@@ -1015,7 +1038,7 @@ window.updateFeedbackStatus = async (id, newStatus) => {
     loadFeedbacks();
 };
 
-// ==================== الطلبات (المشتريات) ====================
+// ==================== الطلبات ====================
 async function loadOrders(page = 1) {
     currentOrdersPage = page;
     let query = supabase.from('admin_order_logs').select('*', { count: 'exact' }).order('created_at', { ascending: false }).range((page-1)*10, page*10-1);
@@ -1132,6 +1155,79 @@ async function exportRegistrationsCSV() {
     URL.revokeObjectURL(url);
 }
 
+// ==================== إدارة التراخيص (جديد) ====================
+async function loadLicenseRequests() {
+    const status = document.getElementById('licenseStatusFilter').value;
+    let query = supabase
+        .from('project_license_requests')
+        .select(`
+            *,
+            projects (
+                id,
+                name_ar,
+                name_en,
+                owner_user_id,
+                license_status
+            )
+        `)
+        .order('created_at', { ascending: false });
+    if (status !== 'all') query = query.eq('status', status);
+    const { data, error } = await query;
+    if (error) { console.error(error); showToast('خطأ في تحميل طلبات التراخيص', true); return; }
+    let html = `<table class="data-table"><thead>
+        <table><th>المشروع</th><th>صاحب المشروع</th><th>ملف الرخصة</th><th>الحالة</th><th>تاريخ الرفع</th><th>الإجراءات</th>
+        </tr></thead><tbody>`;
+    for (const req of (data || [])) {
+        const project = req.projects;
+        const projectName = project?.name_ar || 'مشروع محذوف';
+        const ownerId = project?.owner_user_id || 'غير معروف';
+        let statusText = '';
+        let badgeClass = '';
+        if (req.status === 'pending') { statusText = 'قيد المراجعة'; badgeClass = 'badge-pending'; }
+        else if (req.status === 'approved') { statusText = 'موافق'; badgeClass = 'badge-approved'; }
+        else if (req.status === 'rejected') { statusText = 'مرفوض'; badgeClass = 'badge-rejected'; }
+        html += `<tr>
+            <td>${escapeHtml(projectName)}</td>
+            <td>${escapeHtml(ownerId)}</td>
+            <td><a href="${req.license_file_url}" target="_blank" class="btn-outline" style="padding:4px 12px; text-decoration:none;">📄 عرض الملف</a></td>
+            <td><span class="badge ${badgeClass}">${statusText}</span></td>
+            <td>${new Date(req.created_at).toLocaleString()}</td>
+            <td class="action-buttons">
+                <button class="action-btn edit" onclick="window.reviewLicense('${req.id}', 'approve')" title="قبول"><i class="fas fa-check-circle"></i></button>
+                <button class="action-btn delete" onclick="window.reviewLicense('${req.id}', 'reject')" title="رفض"><i class="fas fa-times-circle"></i></button>
+            </td>
+        </tr>`;
+    }
+    html += `</tbody>`;
+    document.getElementById('licensesTableContainer').innerHTML = html;
+}
+
+window.reviewLicense = async (requestId, action) => {
+    const newStatus = (action === 'approve') ? 'approved' : 'rejected';
+    const projectLicenseStatus = (action === 'approve') ? 'license_approved' : 'license_rejected';
+    // تحديث حالة الطلب
+    const { error: updateReq } = await supabase
+        .from('project_license_requests')
+        .update({ status: newStatus })
+        .eq('id', requestId);
+    if (updateReq) { showToast(updateReq.message, true); return; }
+    // الحصول على project_id
+    const { data: reqData } = await supabase
+        .from('project_license_requests')
+        .select('project_id')
+        .eq('id', requestId)
+        .single();
+    if (reqData && reqData.project_id) {
+        await supabase
+            .from('projects')
+            .update({ license_status: projectLicenseStatus })
+            .eq('id', reqData.project_id);
+    }
+    showToast(`تم ${action === 'approve' ? 'قبول' : 'رفض'} الرخصة بنجاح`);
+    loadLicenseRequests();
+    loadStats();  // تحديث الإحصائيات
+};
+
 // ==================== تهيئة القوائم ====================
 async function initEmirateFilter() {
     const { data } = await supabase.from('projects').select('emirate');
@@ -1184,6 +1280,7 @@ function attachTabs() {
             else if (tabId === 'feedbacks') loadFeedbacks();
             else if (tabId === 'registrations') loadRegistrations(1);
             else if (tabId === 'orders') loadOrders(1);
+            else if (tabId === 'licenses') loadLicenseRequests();
         });
     });
 }
@@ -1228,6 +1325,7 @@ async function checkSession() {
         await loadContacts();
         await loadFeedbacks();
         await loadOrders(1);
+        await loadLicenseRequests();
         attachTabs();
     }
 }
@@ -1251,6 +1349,8 @@ document.getElementById('ordersSearch').addEventListener('input', () => loadOrde
 document.getElementById('ordersProjectFilter').addEventListener('change', () => loadOrders(1));
 document.getElementById('exportOrdersBtn').addEventListener('click', exportOrdersCSV);
 document.getElementById('exportRegBtn').addEventListener('click', exportRegistrationsCSV);
+document.getElementById('licenseStatusFilter').addEventListener('change', () => loadLicenseRequests());
+document.getElementById('refreshLicensesBtn').addEventListener('click', () => loadLicenseRequests());
 
 document.querySelectorAll('.modal-close').forEach(btn => btn.addEventListener('click', () => { document.getElementById(btn.dataset.modal).classList.remove('active'); }));
 window.onclick = (e) => { if(e.target.classList.contains('modal')) e.target.classList.remove('active'); };
@@ -1291,6 +1391,8 @@ window.reorderAllProjects = reorderAllProjects;
 window.reorderAllProducts = reorderAllProducts;
 window.showOrderDetails = showOrderDetails;
 window.showRegDetails = showRegDetails;
+window.reviewLicense = reviewLicense;
+window.loadLicenseRequests = loadLicenseRequests;
 </script>
 </body>
 </html>
