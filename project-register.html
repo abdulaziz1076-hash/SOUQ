@@ -357,6 +357,7 @@
             // 3. إدراج مشروع في جدول projects
             const trialEnd = new Date();
             trialEnd.setDate(trialEnd.getDate() + 7);
+            const newId = Date.now() + Math.floor(Math.random() * 10000);
             const projectData = {
                 id: newId,
                 name_ar: document.getElementById('nameAr').value.trim(),
