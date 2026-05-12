@@ -68,7 +68,8 @@
             background: white;
         }
         .row-2cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .checkbox-group { display: flex; align-items: center; gap: 12px; margin: 20px 0; }
+        .checkbox-group { display: flex; align-items: flex-start; gap: 12px; margin: 20px 0; }
+        .checkbox-group input { width: 20px; margin-top: 2px; }
         button {
             background: #0F3D2E;
             color: white;
@@ -82,8 +83,20 @@
         }
         button:hover { background: #1A5F44; transform: translateY(-2px); }
         .next-btn, .prev-btn { width: 100%; margin-top: 15px; }
-        .error { color: #dc2626; margin-top: 8px; display: none; }
+        .error { color: #dc2626; margin-top: 8px; font-size: 13px; display: none; }
         .info-note { font-size: 12px; color: #64748b; margin-top: 20px; text-align: center; }
+        button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .loader-small {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 0.6s linear infinite;
+            margin-right: 8px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
@@ -143,30 +156,75 @@
     import { APP_CONFIG } from './config.js';
     const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
 
+    // ========== ترجمة (بسيطة للتوافق) ==========
     const translations = {
-        ar: { /* نفس المحتوى السابق مع كل المفاتيح */ 
-            registerTitle: "انضم إلى سوق المشاريع", registerSubtitle: "أنشئ مشروعك المنزلي وابدأ البيع اليوم",
-            step1Label: "بيانات المشروع", step2Label: "الحساب والتواصل",
-            labelNameAr: "اسم المشروع (عربي)", labelNameEn: "اسم المشروع (إنجليزي)", labelEmirate: "الإمارة", labelCategory: "التصنيف الرئيسي",
-            labelShortAr: "وصف قصير (عربي) - 250 حرف", labelShortEn: "وصف قصير (إنجليزي)", labelLongAr: "وصف طويل (عربي) - اختياري", labelLongEn: "وصف طويل (إنجليزي)",
-            labelCoverage: "نطاق التغطية", labelLogo: "صورة المشروع (لوجو)", nextText: "التالي", labelEmail: "البريد الإلكتروني (تسجيل الدخول)",
-            labelPassword: "كلمة المرور", labelConfirmPassword: "تأكيد كلمة المرور", labelWhatsapp: "رقم واتساب (للتواصل)", labelInstagram: "حساب إنستغرام (اختياري)",
-            consentLabel: "أوافق على شروط النشر والاستخدام وسياسة الخصوصية", prevText: "السابق", submitText: "إنشاء حساب المشروع",
+        ar: {
+            registerTitle: "انضم إلى سوق المشاريع",
+            registerSubtitle: "أنشئ مشروعك المنزلي وابدأ البيع اليوم",
+            step1Label: "بيانات المشروع",
+            step2Label: "الحساب والتواصل",
+            labelNameAr: "اسم المشروع (عربي)",
+            labelNameEn: "اسم المشروع (إنجليزي)",
+            labelEmirate: "الإمارة",
+            labelCategory: "التصنيف الرئيسي",
+            labelShortAr: "وصف قصير (عربي) - 250 حرف",
+            labelShortEn: "وصف قصير (إنجليزي)",
+            labelLongAr: "وصف طويل (عربي) - اختياري",
+            labelLongEn: "وصف طويل (إنجليزي)",
+            labelCoverage: "نطاق التغطية",
+            labelLogo: "صورة المشروع (لوجو)",
+            nextText: "التالي",
+            labelEmail: "البريد الإلكتروني (تسجيل الدخول)",
+            labelPassword: "كلمة المرور",
+            labelConfirmPassword: "تأكيد كلمة المرور",
+            labelWhatsapp: "رقم واتساب (للتواصل)",
+            labelInstagram: "حساب إنستغرام (اختياري)",
+            consentLabel: "أوافق على شروط النشر والاستخدام وسياسة الخصوصية",
+            prevText: "السابق",
+            submitText: "إنشاء حساب المشروع",
             trialNote: "خلال 7 أيام تجريبية، سيظهر مشروعك في السوق بدون رخصة. بعدها يجب رفع الرخصة التجارية لاستمرار الظهور.",
-            passwordMismatch: "كلمتا المرور غير متطابقتين", registerSuccess: "تم إنشاء حساب المشروع بنجاح! جارٍ تحويلك...",
-            emailRequired: "البريد الإلكتروني مطلوب", invalidEmail: "صيغة بريد إلكتروني غير صالحة", consentRequired: "يجب الموافقة على الشروط"
+            passwordMismatch: "كلمتا المرور غير متطابقتين",
+            registerSuccess: "تم إنشاء حساب المشروع بنجاح! جارٍ تحويلك...",
+            requiredFields: "يرجى ملء جميع الحقول المطلوبة",
+            invalidEmail: "البريد الإلكتروني غير صالح",
+            invalidWhatsapp: "رقم واتساب غير صالح (أدخل رقم صحيح مثل 971501234567)",
+            consentRequired: "يجب الموافقة على الشروط",
+            uploadError: "فشل رفع الشعار، يرجى المحاولة مرة أخرى",
+            genericError: "حدث خطأ، يرجى المحاولة لاحقاً"
         },
         en: {
-            registerTitle: "Join Souq Almasharie", registerSubtitle: "Create your home project and start selling today",
-            step1Label: "Project Info", step2Label: "Account & Contact",
-            labelNameAr: "Project Name (Arabic)", labelNameEn: "Project Name (English)", labelEmirate: "Emirate", labelCategory: "Main Category",
-            labelShortAr: "Short Description (Arabic) - 250 chars", labelShortEn: "Short Description (English)", labelLongAr: "Long Description (Arabic) - optional", labelLongEn: "Long Description (English)",
-            labelCoverage: "Coverage", labelLogo: "Project Logo", nextText: "Next", labelEmail: "Email (for login)",
-            labelPassword: "Password", labelConfirmPassword: "Confirm Password", labelWhatsapp: "WhatsApp Number", labelInstagram: "Instagram Account (optional)",
-            consentLabel: "I agree to the Terms of Publishing, Terms of Use, and Privacy Policy", prevText: "Previous", submitText: "Create Project Account",
+            registerTitle: "Join Souq Almasharie",
+            registerSubtitle: "Create your home project and start selling today",
+            step1Label: "Project Info",
+            step2Label: "Account & Contact",
+            labelNameAr: "Project Name (Arabic)",
+            labelNameEn: "Project Name (English)",
+            labelEmirate: "Emirate",
+            labelCategory: "Main Category",
+            labelShortAr: "Short Description (Arabic) - 250 chars",
+            labelShortEn: "Short Description (English)",
+            labelLongAr: "Long Description (Arabic) - optional",
+            labelLongEn: "Long Description (English)",
+            labelCoverage: "Coverage",
+            labelLogo: "Project Logo",
+            nextText: "Next",
+            labelEmail: "Email (for login)",
+            labelPassword: "Password",
+            labelConfirmPassword: "Confirm Password",
+            labelWhatsapp: "WhatsApp Number",
+            labelInstagram: "Instagram Account (optional)",
+            consentLabel: "I agree to the Terms of Publishing, Terms of Use, and Privacy Policy",
+            prevText: "Previous",
+            submitText: "Create Project Account",
             trialNote: "During a 7-day trial, your project will appear without a license. After that, you must upload your commercial license.",
-            passwordMismatch: "Passwords do not match", registerSuccess: "Project account created successfully! Redirecting...",
-            emailRequired: "Email is required", invalidEmail: "Invalid email format", consentRequired: "You must agree to the terms"
+            passwordMismatch: "Passwords do not match",
+            registerSuccess: "Project account created successfully! Redirecting...",
+            requiredFields: "Please fill all required fields",
+            invalidEmail: "Invalid email address",
+            invalidWhatsapp: "Invalid WhatsApp number (e.g., 971501234567)",
+            consentRequired: "You must agree to the terms",
+            uploadError: "Logo upload failed, please try again",
+            genericError: "An error occurred, please try again later"
         }
     };
 
@@ -199,9 +257,22 @@
         document.getElementById('submitText').innerText = t('submitText');
         document.getElementById('trialNote').innerText = t('trialNote');
     }
+    updateUI();
 
     // التنقل بين الخطوات
     document.getElementById('nextStepBtn').onclick = () => {
+        // التحقق من الحقول الإجبارية في الخطوة 1
+        const nameAr = document.getElementById('nameAr').value.trim();
+        const nameEn = document.getElementById('nameEn').value.trim();
+        const logoFile = document.getElementById('logoImage').files[0];
+        if (!nameAr || !nameEn) {
+            showError(t('requiredFields'));
+            return;
+        }
+        if (!logoFile) {
+            showError(t('requiredFields'));
+            return;
+        }
         document.getElementById('step1').style.display = 'none';
         document.getElementById('step2').style.display = 'block';
     };
@@ -210,61 +281,130 @@
         document.getElementById('step1').style.display = 'block';
     };
 
+    function showError(msg) {
+        const errorDiv = document.getElementById('formError');
+        errorDiv.innerText = msg;
+        errorDiv.style.display = 'block';
+        setTimeout(() => errorDiv.style.display = 'none', 5000);
+    }
+
     const form = document.getElementById('registerForm');
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const email = document.getElementById('email').value;
+        
+        // التحقق من الحقول في الخطوة 2
+        const email = document.getElementById('email').value.trim();
         const password = document.getElementById('password').value;
         const confirm = document.getElementById('confirmPassword').value;
-        if (password !== confirm) { showError(t('passwordMismatch')); return; }
-        const { data: authData, error: authError } = await supabase.auth.signUp({ email, password, options: { data: { role: 'project_owner' } } });
-        if (authError) { showError(authError.message); return; }
-        const userId = authData.user.id;
-        // رفع الشعار
-        const logoFile = document.getElementById('logoImage').files[0];
-        let logoUrl = '';
-        if (logoFile) {
-            const ext = logoFile.name.split('.').pop();
-            const fileName = `${userId}/logo.${ext}`;
-            await supabase.storage.from('project-logos').upload(fileName, logoFile, { upsert: true });
-            logoUrl = supabase.storage.from('project-logos').getPublicUrl(fileName).data.publicUrl;
+        const whatsapp = document.getElementById('whatsapp').value.trim();
+        const consent = document.getElementById('consent').checked;
+
+        if (!email || !password || !whatsapp) {
+            showError(t('requiredFields'));
+            return;
         }
-        const trialEnd = new Date(); trialEnd.setDate(trialEnd.getDate() + 7);
-        const projectData = {
-            name_ar: document.getElementById('nameAr').value,
-            name_en: document.getElementById('nameEn').value,
-            emirate: document.getElementById('emirate').value,
-            description_ar: document.getElementById('descAr').value,
-            description_en: document.getElementById('descEn').value,
-            long_description_ar: document.getElementById('longDescAr').value,
-            long_description_en: document.getElementById('longDescEn').value,
-            image: logoUrl,
-            adra_license: false,
-            coverage: document.getElementById('coverage').value,
-            category_ar: document.getElementById('category').value,
-            category_en: document.getElementById('category').value,
-            owner_user_id: userId,
-            license_status: 'pending_license',
-            status: 'pending',
-            trial_end_date: trialEnd.toISOString()
-        };
-        const { error: insertErr } = await supabase.from('projects').insert(projectData);
-        if (insertErr) { showError(insertErr.message); return; }
-        const { data: proj } = await supabase.from('projects').select('id').eq('owner_user_id', userId).single();
-        if (proj) {
-            await supabase.from('contacts').insert({
-                project_id: proj.id,
-                whatsapp: document.getElementById('whatsapp').value,
-                instagram: document.getElementById('instagram').value
+        if (!/^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/.test(email)) {
+            showError(t('invalidEmail'));
+            return;
+        }
+        if (password !== confirm) {
+            showError(t('passwordMismatch'));
+            return;
+        }
+        if (password.length < 6) {
+            showError("كلمة المرور يجب أن تكون 6 أحرف على الأقل");
+            return;
+        }
+        const whatsappDigits = whatsapp.replace(/\D/g, '');
+        if (whatsappDigits.length < 9 || whatsappDigits.length > 15) {
+            showError(t('invalidWhatsapp'));
+            return;
+        }
+        if (!consent) {
+            showError(t('consentRequired'));
+            return;
+        }
+
+        const submitBtn = document.getElementById('submitBtn');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="loader-small"></span> جاري...';
+
+        try {
+            // 1. رفع الشعار إلى Supabase Storage
+            const logoFile = document.getElementById('logoImage').files[0];
+            let logoUrl = '';
+            if (logoFile) {
+                const fileExt = logoFile.name.split('.').pop();
+                const fileName = `temp_${Date.now()}.${fileExt}`;
+                const { data: uploadData, error: uploadError } = await supabase.storage
+                    .from('project-logos')
+                    .upload(fileName, logoFile);
+                if (uploadError) throw new Error(t('uploadError'));
+                const { data: urlData } = supabase.storage.from('project-logos').getPublicUrl(fileName);
+                logoUrl = urlData.publicUrl;
+            }
+
+            // 2. إنشاء حساب في Auth
+            const { data: authData, error: authError } = await supabase.auth.signUp({
+                email,
+                password,
+                options: { data: { role: 'project_owner' } }
             });
+            if (authError) throw new Error(authError.message);
+            const userId = authData.user.id;
+
+            // 3. إدراج مشروع في جدول projects
+            const trialEnd = new Date();
+            trialEnd.setDate(trialEnd.getDate() + 7);
+            const projectData = {
+                name_ar: document.getElementById('nameAr').value.trim(),
+                name_en: document.getElementById('nameEn').value.trim(),
+                emirate: document.getElementById('emirate').value,
+                description_ar: document.getElementById('descAr').value,
+                description_en: document.getElementById('descEn').value,
+                long_description_ar: document.getElementById('longDescAr').value,
+                long_description_en: document.getElementById('longDescEn').value,
+                image: logoUrl,
+                adra_license: false,
+                coverage: document.getElementById('coverage').value,
+                category_ar: document.getElementById('category').value,
+                category_en: document.getElementById('category').value, // قد تحتاج لترجمة لاحقاً
+                owner_user_id: userId,
+                license_status: 'pending_license',
+                status: 'pending', // سيتم الموافقة عليه يدوياً من الأدمن، لكن يمكن جعله approved مؤقتاً
+                trial_end_date: trialEnd.toISOString(),
+                display_order: 0
+            };
+            const { data: projectInsert, error: projectError } = await supabase
+                .from('projects')
+                .insert(projectData)
+                .select()
+                .single();
+            if (projectError) throw new Error(projectError.message);
+            const projectId = projectInsert.id;
+
+            // 4. إدراج جهة اتصال في جدول contacts
+            const contactData = {
+                project_id: projectId,
+                whatsapp: whatsappDigits,
+                instagram: document.getElementById('instagram').value.trim() || null,
+                phone: null,
+                email: email
+            };
+            const { error: contactError } = await supabase.from('contacts').insert(contactData);
+            if (contactError) console.warn("Contact insert warning:", contactError);
+
+            // نجاح
+            alert(t('registerSuccess'));
+            window.location.href = 'project-login.html';
+        } catch (err) {
+            console.error(err);
+            showError(err.message || t('genericError'));
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
         }
-        alert(t('registerSuccess'));
-        window.location.href = 'project-login.html';
     });
-
-    function showError(msg) { document.getElementById('formError').innerText = msg; document.getElementById('formError').style.display = 'block'; setTimeout(() => document.getElementById('formError').style.display = 'none', 5000); }
-
-    updateUI();
 </script>
 </body>
 </html>
