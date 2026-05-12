@@ -56,7 +56,11 @@
             justify-content: center;
             gap: 8px;
         }
-        button:hover {
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        button:hover:not(:disabled) {
             background: #1A5F44;
             transform: translateY(-2px);
         }
@@ -85,6 +89,17 @@
             margin-bottom: 20px;
             display: none;
         }
+        .loader-small {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 0.6s linear infinite;
+            margin-right: 8px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
@@ -109,7 +124,6 @@
     import { APP_CONFIG } from './config.js';
     const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
 
-    // ترجمة
     const translations = {
         ar: {
             title: "مرحباً بعودتك",
@@ -121,7 +135,8 @@
             noAccount: "ليس لديك حساب؟",
             registerLink: "سجل مشروعك الآن",
             errorLogin: "البريد الإلكتروني أو كلمة المرور غير صحيحة",
-            errorNoProject: "لا يوجد مشروع مرتبط بهذا الحساب"
+            errorNoProject: "لا يوجد مشروع مرتبط بهذا الحساب",
+            errorGeneric: "حدث خطأ، يرجى المحاولة لاحقاً"
         },
         en: {
             title: "Welcome Back",
@@ -133,12 +148,12 @@
             noAccount: "Don't have an account?",
             registerLink: "Register your project now",
             errorLogin: "Invalid email or password",
-            errorNoProject: "No project linked to this account"
+            errorNoProject: "No project linked to this account",
+            errorGeneric: "An error occurred, please try again"
         }
     };
 
     let currentLang = localStorage.getItem('projectSouqLang') === 'en' ? 'en' : 'ar';
-
     function t(key) { return translations[currentLang][key] || key; }
 
     function updateUI() {
@@ -151,29 +166,50 @@
         document.getElementById('noAccountText').innerText = t('noAccount');
         document.getElementById('registerLink').innerText = t('registerLink');
     }
+    updateUI();
 
     const form = document.getElementById('loginForm');
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const email = document.getElementById('email').value;
+        const email = document.getElementById('email').value.trim();
         const password = document.getElementById('password').value;
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) {
-            document.getElementById('errorMsg').innerText = t('errorLogin');
-            document.getElementById('errorMsg').style.display = 'block';
-            return;
-        }
-        const { data: project } = await supabase.from('projects').select('id').eq('owner_user_id', data.user.id).single();
-        if (!project) {
-            document.getElementById('errorMsg').innerText = t('errorNoProject');
-            document.getElementById('errorMsg').style.display = 'block';
-            return;
-        }
-        localStorage.setItem('projectOwnerSession', JSON.stringify({ userId: data.user.id, projectId: project.id }));
-        window.location.href = `project-dashboard.html?project_id=${project.id}`;
-    });
+        const errorDiv = document.getElementById('errorMsg');
+        const loginBtn = document.getElementById('loginBtn');
 
-    updateUI();
+        if (!email || !password) {
+            errorDiv.innerText = t('errorLogin');
+            errorDiv.style.display = 'block';
+            return;
+        }
+
+        loginBtn.disabled = true;
+        loginBtn.innerHTML = '<span class="loader-small"></span> جاري...';
+
+        try {
+            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+            if (error) throw new Error(t('errorLogin'));
+
+            const userId = data.user.id;
+            const { data: project, error: projError } = await supabase
+                .from('projects')
+                .select('id')
+                .eq('owner_user_id', userId)
+                .single();
+
+            if (projError || !project) {
+                throw new Error(t('errorNoProject'));
+            }
+
+            // حفظ معلومات الجلسة محلياً
+            localStorage.setItem('projectOwnerSession', JSON.stringify({ userId, projectId: project.id }));
+            window.location.href = `project-dashboard.html?project_id=${project.id}`;
+        } catch (err) {
+            errorDiv.innerText = err.message;
+            errorDiv.style.display = 'block';
+            loginBtn.disabled = false;
+            loginBtn.innerHTML = `<span>${t('loginBtn')}</span> <i class="fas fa-arrow-left"></i>`;
+        }
+    });
 </script>
 </body>
 </html>
