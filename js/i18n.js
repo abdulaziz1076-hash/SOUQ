@@ -1,400 +1,372 @@
-export const translations = {
-  ar: {
-    siteTitle: "سوق المشاريع", 
-        addToCart: "تمت الإضافة إلى السلة",
-        navCart: "السلة",
-        variantsTitle: "الخيارات",
-        paidBadge: "مميز", 
-        privacy: "سياسة الخصوصية", 
-        terms: "شروط الاستخدام",
-        dealsTitle: "العروض والباقات:", 
-        viewingDeal: "جاري عرض تفاصيل العرض...", 
-        expiryUntil: "ينتهي",
-        siteSubtitle: "المشاريع في الامارات", 
-        navHome: "الرئيسية", 
-        navMarket: "السوق", 
-        navRegister: "تسجيل مشروع",
-        navFavorites: "المفضلة", 
-        footerLogo: "سوق المشاريع", 
-        footerText: "منصة المشاريع الإماراتية",
-        forShopperTitle: "للباحث عن منتج",
-        forShopperDesc: "اكتشف منتجات محلية بإيدين إماراتية ومقيمة. أكل بيتي، حلويات، عطور، هدايا، مشغولات يدوية. تواصل مباشر مع البائع بدون وسيط.",
-        forProjectOwnerTitle: "لصاحب المشروع",
-        forProjectOwnerDesc: "سجل مشروعك مجاناً. واصل آلاف الزوار شهرياً. بدون عمولات ولا رسوم خفيفة. دعم مجتمعي للأسر المنتجة في الإمارات.",
-        copyright: "© 2026 سوق المشاريع - جميع الحقوق محفوظة", 
-        langBtn: "En",
-        heroTitle: "سوق المشاريع", 
-        heroSubtitle: "منصة متخصصة في المشاريع المنزلية",
-        discoverBtn: "ادخل السوق", 
-        joinBtn: "سجل مشروعك", 
-        aboutTitle: "من نحن",
-        stat1: "مشاريع", 
-        stat2: "منتجات متنوعة", 
-        stat3: "طلبات تواصل", 
-        stat4: "شركاء داعمين",
-        badge1: "قريباً", 
-        badge2: "قريباً", 
-        badge3: "قريباً", 
-        badge4: "قريباً",
-        navServices: "الخدمات العامة", 
-        navArticles: "المقالات الإرشادية", 
-        navDelivery: "شركات التوصيل",
-        homeSearchPlaceholder: "ابحث عن منتج أو مشروع...",
-        familiesPageTitle: "المشاريع", 
-        familiesPageSubtitle: "استعرض المشاريع في الامارات",
-        familiesSearchPlaceholder: "ابحث عن مشروع أو منتج...", 
-        productsTitle: "المنتجات",
-        favoritesPageTitle: "المفضلة", 
-        favoritesPageSubtitle: "المنتجات التي أضفتها", 
-        emptyFavoritesProducts: "لا توجد منتجات في المفضلة بعد",
-        sellerInfo: "معلومات البائع", 
-        similarProducts: "منتجات مشابهة", 
-        contactSeller: "تواصل مع البائع",
-        shareProduct: "مشاركة المنتج", 
-        shareProfile: "مشاركة المشروع", 
-        specifications: "المواصفات والتفاصيل",
-        popupTitle: "كيف تطلب؟", 
-        step1: "تصفح المنتجات", 
-        step2: "واختر ما يعجبك", 
-        step3: "تواصل مع البائع", 
-        gotItBtn: "إغلاق",
-        shareTitle: "مشاركة المنتج", 
-        copyLinkText: "نسخ الرابط", 
-        closeShareBtn: "إغلاق",
-        offersBtnText: "العروض", 
-        offersPageTitle: "العروض الخاصة", 
-        offersPageSubtitle: "أحدث العروض والباقات",
-        addToFavorites: "تمت الإضافة للمفضلة", 
-        removeFromFavorites: "تمت الإزالة من المفضلة", 
-        linkCopied: "تم نسخ الرابط!",
-        licensed: "مرخص", 
-        coverage: "التغطية",
-        descriptionLabel: "نبذة عن المشروع", 
-        noContact: "لا توجد معلومات تواصل",
-        noProjects: "لا مشاريع متاحة", 
-        viewProducts: "المنتجات", 
-        call: "اتصال", 
-        email: "البريد الإلكتروني",
-        registerTitle: "سجل مشروعك الآن", 
-        registerViaX: "راسلنا على منصة X", 
-        registerViaInstagram: "راسلنا على انستغرام",
-        registerViaTikTok: "راسلنا على تيك توك",
-        confirmTitle: "تأكيد الخروج",
-        confirmMessage: "سيتم نقلك إلى موقع خارجي للتواصل مع البائع. هل تريد المتابعة؟",
-        cancelBtn: "إلغاء",
-        proceedBtn: "متابعة",
-        servicesButtonCurrent: "الخدمات العامة",
-        emirates: { all: "كل الإمارات", أبوظبي: "أبوظبي", دبي: "دبي", الشارقة: "الشارقة", عجمان: "عجمان", "رأس الخيمة": "رأس الخيمة", الفجيرة: "الفجيرة", "أم القيوين": "أم القيوين" },
-        categories: { all: "الكل", "أطعمة ومشروبات": "أطعمة ومشروبات", "الرقميات": "الرقميات", "روائح وعطور": "روائح وعطور", عناية: "عناية", حلويات: "حلويات", تجميل: "تجميل", ملابس: "ملابس", يدويات: "يدويات", هدايا: "هدايا", عطارة: "عطارة", فنون: "فنون", نباتات: "نباتات", ترفيه: "ترفيه" },
-        coverageOptions: { "الإمارة فقط": "الإمارة فقط", "جميع إمارات الدولة": "جميع إمارات الدولة", "دول الخليج": "دول الخليج", "العالم": "العالم" },
-    langBtn: "En",
-        navHome: "الرئيسية",
-        navMarket: "السوق",
-        navFavorites: "المفضلة",
-        navCart: "السلة",
-        navServices: "الخدمات العامة",
-        navLogin: "تسجيل الدخول",
-        heroTitle: "سوق المشاريع",
-        heroSubtitle: "منصة متخصصة في المشاريع المنزلية",
-        discoverBtn: "ادخل السوق",
-        servicesBtn: "الخدمات العامة",
-        loginBtn: "تسجيل الدخول",
-        signupBtn: "تسجيل جديد",
-        aboutTitle: "من نحن",
-        forShopperTitle: "للباحث عن منتج",
-        forShopperDesc: "اكتشف منتجات محلية بإيدين إماراتية ومقيمة. أكل بيتي، حلويات، عطور، هدايا، مشغولات يدوية. تواصل مباشر مع البائع بدون وسيط.",
-        forProjectOwnerTitle: "لصاحب المشروع",
-        forProjectOwnerDesc: "سجل مشروعك مجاناً. واصل آلاف الزوار شهرياً. بدون عمولات ولا رسوم خفيفة. دعم مجتمعي للأسر المنتجة في الإمارات.",
-        stat1: "مشاريع",
-        stat2: "منتجات متنوعة",
-        stat3: "طلبات تواصل",
-        stat4: "العروض",
-        badge1: "قريباً",
-        badge2: "قريباً",
-        badge3: "قريباً",
-        badge4: "قريباً",
-        popupTitle: "كيف تطلب؟",
-        step1: "تصفح المنتجات",
-        step2: "واختر ما يعجبك",
-        step3: "تواصل مع البائع",
-        gotItBtn: "إغلاق",
-        familiesPageTitle: "المشاريع",
-        familiesPageSubtitle: "استعرض المشاريع في الإمارات",
-        offersBtnText: "العروض",
-        dealsTitle: "العروض والباقات:",
-        favoritesPageTitle: "المفضلة",
-        favoritesPageSubtitle: "المنتجات التي أضفتها",
-        offersPageTitle: "العروض الخاصة",
-        offersPageSubtitle: "أحدث العروض والباقات",
-        footerLogo: "سوق المشاريع",
-        footerText: "منصة المشاريع الإماراتية",
-        privacyLink: "سياسة الخصوصية",
-        termsLink: "شروط الاستخدام",
-        copyright: "© 2026 سوق المشاريع - جميع الحقوق محفوظة",
-        footerKeywords: "سوق المشاريع | منصة المشاريع المنزلية في الإمارات | دليل الأسر المنتجة",
-        featuredTitle: "مشاريع مميزة",
-        contactTitleHome: "تواصل معنا",
-    siteTitle: "سوق المشاريع",
-    navCart: "السلة",
-    siteSubtitle: "المشاريع في الامارات",
-    navHome: "الرئيسية",
-    navMarket: "السوق",
-    navServices: "الخدمات العامة",
-    navRegister: "تسجيل مشروع",
-    footerText: "منصة المشاريع الإماراتية",
-    privacyLink: "سياسة الخصوصية",
-    termsLink: "شروط الاستخدام",
-    copyright: "© 2026 سوق المشاريع - جميع الحقوق محفوظة",
-    heroTitle: "سوق المشاريع",
-    heroSubtitle: "منصة متخصصة في المشاريع المنزلية",
-    discoverBtn: "ادخل السوق",
-    joinBtn: "سجل مشروعك",
-    servicesBtn: "الخدمات العامة",
-    aboutTitle: "من نحن",
-    forShopperTitle: "للباحث عن منتج",
-    forShopperDesc: "اكتشف منتجات محلية بإيدين إماراتية ومقيمة. أكل بيتي، حلويات، عطور، هدايا، مشغولات يدوية. تواصل مباشر مع البائع بدون وسيط.",
-    forProjectOwnerTitle: "لصاحب المشروع",
-    forProjectOwnerDesc: "سجل مشروعك مجاناً. واصل آلاف الزوار شهرياً. بدون عمولات ولا رسوم خفيفة. دعم مجتمعي للأسر المنتجة في الإمارات.",
-    stat1: "مشاريع",
-    stat2: "منتجات متنوعة",
-    stat3: "طلبات تواصل",
-    stat4: "شركاء داعمين",
-    familiesPageTitle: "المشاريع",
-    familiesPageSubtitle: "استعرض المشاريع في الإمارات",
-    productsTitle: "المنتجات",
-    favoritesPageTitle: "المفضلة",
-    emptyFavoritesProducts: "لا توجد منتجات في المفضلة بعد",
-    contactSeller: "تواصل مع البائع",
-    shareProduct: "مشاركة المنتج",
-    specifications: "المواصفات والتفاصيل",
-    popupTitle: "كيف تطلب؟",
-    step1: "تصفح المنتجات",
-    step2: "واختر ما يعجبك",
-    step3: "تواصل مع البائع",
-    gotItBtn: "إغلاق",
-    addToFavorites: "تمت الإضافة للمفضلة",
-    removeFromFavorites: "تمت الإزالة من المفضلة",
-    licensed: "مرخص",
-    servicesButtonCurrent: "الخدمات العامة",
-    coverage: "التغطية",
-    emirates: { all: "كل الإمارات", دبي: "دبي", أبوظبي: "أبوظبي", الشارقة: "الشارقة" },
-    categories: { all: "الكل", "أطعمة ومشروبات": "أطعمة ومشروبات", "روائح وعطور": "روائح وعطور" },
-    feedbackBtn: "شكوى أو اقتراح",
-    productTypeAll: "الكل",
-productTypeMain: "أطباق رئيسية",
-productTypeDrinks: "مشروبات",
-productTypeDesserts: "حلويات",
-productTypeOther: "أخرى",
+// js/i18n.js (ES Module) - CLEAN (no duplicates)
 
-  },
-  en: {
-     siteTitle: "Souq Almasharie", 
-        navCart: "Cart",
-        addToCart: "Added to cart",
-        variantsTitle: "Options",
-        registerTitle: "Register Your Project Now", 
-        registerViaX: "Message us on X",
-        registerViaInstagram: "Message us on Instagram", 
-        registerViaTikTok: "Message us on TikTok", 
-        paidBadge: "Featured",
-        servicesButtonCurrent: "Public Services",
-        dealsTitle: "Offers & Packages", 
-        viewingDeal: "Viewing deal details...", 
-        expiryUntil: "Expires",
-        siteSubtitle: "Projects in UAE", 
-        navHome: "Home", navMarket: "Market", 
-        navRegister: "Register Project",
-        navFavorites: "Favorites", 
-        footerLogo: "Souq Almasharie", 
-        footerText: "UAE Projects Platform",
-        forShopperTitle: "For Product Seekers",
-        forShopperDesc: "Discover local products made by Emirati and resident hands. Homemade food, sweets, perfumes, gifts, handicrafts. Direct contact with the seller without intermediaries.",
-        forProjectOwnerTitle: "For Project Owners",
-        forProjectOwnerDesc: "Register your project for free. Reach thousands of visitors monthly. No commissions, no hidden fees. Community support for productive families in the UAE.",
-        copyright: "© 2026 Souq Almasharie - All Rights Reserved", 
-        langBtn: "ع",
-        heroTitle: "Souq Almasharie", 
-        heroSubtitle: "A specialized platform supporting projects in the UAE",
-        discoverBtn: "Enter the market", 
-        joinBtn: "Register Project", 
-        aboutTitle: "About Us",
-        stat1: "Projects", 
-        stat2: "Diverse Products", 
-        stat3: "Contact Requests", 
-        stat4: "Supporting Partners",
-        badge1: "Coming Soon", 
-        badge2: "Coming Soon", 
-        badge3: "Coming Soon", 
-        badge4: "Coming Soon",
-        navServices: "Services", 
-        navArticles: "Guidance Articles", 
-        navDelivery: "Delivery Companies",
-        homeSearchPlaceholder: "Search for product or project...",
-        familiesPageTitle: "Projects", 
-        familiesPageSubtitle: "Review the projects in the UAE",
-        familiesSearchPlaceholder: "Search for project or product...", 
-        productsTitle: "Products",
-        favoritesPageTitle: "Favorites", 
-        favoritesPageSubtitle: "Your favorite products", 
-        emptyFavoritesProducts: "No favorite products yet",
-        sellerInfo: "Seller Info", 
-        similarProducts: "Similar Products", 
-        offersBtnText: "Offers",
-        offersPageTitle: "Special Offers",
-         offersPageSubtitle: "Latest offers and packages",
-        contactSeller: "Contact Seller", 
-        shareProduct: "Share Product", 
-        shareProfile: "Share Project",
-        specifications: "Specifications & Details", 
-        popupTitle: "How to Order?", 
-        step1: "Browse Products",
-        step2: "Choose what you like", 
-        step3: "Contact the Seller", 
-        gotItBtn: "Got it",
-        shareTitle: "Share Product", 
-        copyLinkText: "Copy Link", 
-        closeShareBtn: "Close",
-        addToFavorites: "Added to favorites", 
-        removeFromFavorites: "Removed from favorites", 
-        linkCopied: "Link copied!",
-        licensed: "Licensed", 
-        coverage: "Coverage", 
-        descriptionLabel: "About the Project", 
-        noContact: "No contact information",
-        noProjects: "No projects available", 
-        viewProducts: "Products", 
-        call: "Call", 
-        email: "Email",
-        confirmTitle: "Confirm redirect",
-        confirmMessage: "You will be redirected to an external site to contact the seller. Proceed?",
-        cancelBtn: "Cancel",
-        proceedBtn: "Proceed",
-        emirates: { all: "All Emirates", أبوظبي: "Abu Dhabi", دبي: "Dubai", الشارقة: "Sharjah", عجمان: "Ajman", "رأس الخيمة": "Ras Al Khaimah", الفجيرة: "Fujairah", "أم القيوين": "Umm Al Quwain" },
-        categories: { all: "All", "أطعمة ومشروبات": "Food & Beverages", "الرقميات": "IT", "روائح وعطور": "Scents & Perfumes", عناية: "Care", حلويات: "Sweets", تجميل: "Beauty", ملابس: "Clothes", يدويات: "Handmade", هدايا: "Gifts", عطارة: "Apothecary", فنون: "Arts", نباتات: "Plants", ترفيه: "Entertainment" },
-        coverageOptions: { "الإمارة فقط": "Emirate only", "جميع إمارات الدولة": "All emirates", "دول الخليج": "GCC", "العالم": "Worldwide" },
-    langBtn: "ع",
-        navHome: "Home",
-        navMarket: "Market",
-        navFavorites: "Favorites",
-        navCart: "Cart",
-        navServices: "Services",
-        navLogin: "Login",
-        heroTitle: "Souq Almasharie",
-        heroSubtitle: "Specialized platform for home projects",
-        discoverBtn: "Enter Market",
-        servicesBtn: "Public Services",
-        loginBtn: "Login",
-        signupBtn: "Sign up",
-        aboutTitle: "About Us",
-        forShopperTitle: "For Product Seekers",
-        forShopperDesc: "Discover local products made by Emirati and resident hands. Direct contact with the seller without intermediaries.",
-        forProjectOwnerTitle: "For Project Owners",
-        forProjectOwnerDesc: "Login to manage your project and update details anytime.",
-        stat1: "Projects",
-        stat2: "Products",
-        stat3: "Contactable",
-        stat4: "Offers",
-        badge1: "Soon",
-        badge2: "Soon",
-        badge3: "Soon",
-        badge4: "Soon",
-        popupTitle: "How to Order?",
-        step1: "Browse Products",
-        step2: "Choose what you like",
-        step3: "Contact the Seller",
-        gotItBtn: "Close",
-        familiesPageTitle: "Projects",
-        familiesPageSubtitle: "Browse projects in the UAE",
-        offersBtnText: "Offers",
-        dealsTitle: "Offers & Packages:",
-        favoritesPageTitle: "Favorites",
-        favoritesPageSubtitle: "Products you saved",
-        offersPageTitle: "Special Offers",
-        offersPageSubtitle: "Latest offers and packages",
-        footerLogo: "Souq Almasharie",
-        footerText: "UAE Home-Based Business Platform",
-        privacyLink: "Privacy Policy",
-        termsLink: "Terms of Use",
-        copyright: "© 2026 Souq Almasharie - All Rights Reserved",
-        footerKeywords: "Souq Almasharie | UAE Home Projects Platform | Productive Families Directory",
-        featuredTitle: "Featured Projects",
-        contactTitleHome: "Contact us",
-    siteTitle: "Souq Almasharie",
-    navCart: "Cart",
-    productTypeAll: "All",
-    productTypeMain: "Main Dishes",
-    productTypeDrinks: "Drinks",
-    productTypeDesserts: "Desserts",
-    productTypeOther: "Other",
-    siteSubtitle: "Projects in UAE",
-    navHome: "Home",
-    navMarket: "Market",
-    navServices: "Services",
-    navRegister: "Register Project",
-    footerText: "UAE Projects Platform",
-    privacyLink: "Privacy Policy",
-    termsLink: "Terms of Use",
-    copyright: "© 2026 Souq Almasharie - All Rights Reserved",
-    servicesButtonCurrent: "Public Services",
-    heroTitle: "Souq Almasharie",
-    heroSubtitle: "A specialized platform supporting projects in the UAE",
-    discoverBtn: "Enter the market",
-    joinBtn: "Register Project",
-    servicesBtn: "Services",
-    aboutTitle: "About Us",
-    forShopperTitle: "For Product Seekers",
-    forShopperDesc: "Discover local products made by Emirati and resident hands. Homemade food, sweets, perfumes, gifts, handicrafts. Direct contact with the seller without intermediaries.",
-    forProjectOwnerTitle: "For Project Owners",
-    forProjectOwnerDesc: "Register your project for free. Reach thousands of visitors monthly. No commissions, no hidden fees. Community support for productive families in the UAE.",
-    stat1: "Projects",
-    stat2: "Diverse Products",
-    stat3: "Contact Requests",
-    stat4: "Supporting Partners",
-    familiesPageTitle: "Projects",
-    familiesPageSubtitle: "Review the projects in the UAE",
-    productsTitle: "Products",
-    favoritesPageTitle: "Favorites",
-    emptyFavoritesProducts: "No favorite products yet",
-    contactSeller: "Contact Seller",
-    shareProduct: "Share Product",
-    specifications: "Specifications & Details",
-    popupTitle: "How to Order?",
-    step1: "Browse Products",
-    step2: "Choose what you like",
-    step3: "Contact the Seller",
-    gotItBtn: "Got it",
-    addToFavorites: "Added to favorites",
-    removeFromFavorites: "Removed from favorites",
-    licensed: "Licensed",
-    coverage: "Coverage",
-    emirates: { all: "All Emirates", دبي: "Dubai", أبوظبي: "Abu Dhabi", الشارقة: "Sharjah" },
-    categories: { all: "All", "أطعمة ومشروبات": "Food & Beverages", "روائح وعطور": "Scents & Perfumes" },
-    feedbackBtn: "Complaint or Suggestion"
-  }
+export const translations = {
+	ar: {
+		// ===== General / Header / Nav =====
+		siteTitle: "سوق المشاريع",
+		siteSubtitle: "المشاريع في الامارات",
+
+		langBtn: "En",
+
+		navHome: "الرئيسية",
+		navMarket: "السوق",
+		navFavorites: "المفضلة",
+		navCart: "السلة",
+		navServices: "الخدمات العامة",
+		navRegister: "تسجيل مشروع",
+		navLogin: "تسجيل الدخول",
+
+		// ===== Home / Hero =====
+		heroTitle: "سوق المشاريع",
+		heroSubtitle: "منصة متخصصة في المشاريع المنزلية",
+		discoverBtn: "ادخل السوق",
+		servicesBtn: "الخدمات العامة",
+		loginBtn: "تسجيل الدخول",
+		signupBtn: "تسجيل جديد",
+
+		aboutTitle: "من نحن",
+		forShopperTitle: "للباحث عن منتج",
+		forShopperDesc:
+			"اكتشف منتجات محلية بإيدين إماراتية ومقيمة. أكل بيتي، حلويات، عطور، هدايا، مشغولات يدوية. تواصل مباشر مع البائع بدون وسيط.",
+		forProjectOwnerTitle: "لصاحب المشروع",
+		forProjectOwnerDesc:
+			"سجل مشروعك مجاناً. واصل آلاف الزوار شهرياً. بدون عمولات ولا رسوم خفيفة. دعم مجتمعي للأسر المنتجة في الإمارات.",
+
+		homeSearchPlaceholder: "ابحث عن منتج أو مشروع...",
+
+		// ===== Stats =====
+		stat1: "مشاريع",
+		stat2: "منتجات متنوعة",
+		stat3: "طلبات تواصل",
+		stat4: "شركاء داعمين",
+
+		badge1: "قريباً",
+		badge2: "قريباً",
+		badge3: "قريباً",
+		badge4: "قريباً",
+
+		// ===== Pages / Titles =====
+		familiesPageTitle: "المشاريع",
+		familiesPageSubtitle: "استعرض المشاريع في الإمارات",
+		productsTitle: "المنتجات",
+		favoritesPageTitle: "المفضلة",
+		favoritesPageSubtitle: "المنتجات التي أضفتها",
+		offersBtnText: "العروض",
+		offersPageTitle: "العروض الخاصة",
+		offersPageSubtitle: "أحدث العروض والباقات",
+
+		// ===== Deals =====
+		dealsTitle: "العروض والباقات:",
+		viewingDeal: "جاري عرض تفاصيل العرض...",
+		expiryUntil: "ينتهي",
+
+		// ===== E-commerce / Cart =====
+		addToCart: "تمت الإضافة إلى السلة",
+		variantsTitle: "الخيارات",
+
+		// ===== Badges / Labels =====
+		paidBadge: "مميز",
+		licensed: "مرخص",
+		coverage: "التغطية",
+		descriptionLabel: "نبذة عن المشروع",
+
+		// ===== Favorites =====
+		emptyFavoritesProducts: "لا توجد منتجات في المفضلة بعد",
+		addToFavorites: "تمت الإضافة للمفضلة",
+		removeFromFavorites: "تمت الإزالة من المفضلة",
+
+		// ===== Product / Project detail =====
+		sellerInfo: "معلومات البائع",
+		similarProducts: "منتجات مشابهة",
+		specifications: "المواصفات والتفاصيل",
+		viewProducts: "المنتجات",
+
+		// ===== Contact =====
+		contactSeller: "تواصل مع البائع",
+		noContact: "لا توجد معلومات تواصل",
+		call: "اتصال",
+		email: "البريد الإلكتروني",
+
+		confirmTitle: "تأكيد الخروج",
+		confirmMessage:
+			"سيتم نقلك إلى موقع خارجي للتواصل مع البائع. هل تريد المتابعة؟",
+		cancelBtn: "إلغاء",
+		proceedBtn: "متابعة",
+
+		// ===== Share =====
+		shareTitle: "مشاركة المنتج",
+		shareProduct: "مشاركة المنتج",
+		shareProfile: "مشاركة المشروع",
+		copyLinkText: "نسخ الرابط",
+		closeShareBtn: "إغلاق",
+		linkCopied: "تم نسخ الرابط!",
+
+		// ===== Register / Social Contact Popup =====
+		registerTitle: "سجل مشروعك الآن",
+		registerViaX: "راسلنا على منصة X",
+		registerViaInstagram: "راسلنا على انستغرام",
+		registerViaTikTok: "راسلنا على تيك توك",
+
+		// ===== Footer =====
+		footerLogo: "سوق المشاريع",
+		footerText: "منصة المشاريع الإماراتية",
+		footerKeywords:
+			"سوق المشاريع | منصة المشاريع المنزلية في الإمارات | دليل الأسر المنتجة",
+		privacyLink: "سياسة الخصوصية",
+		termsLink: "شروط الاستخدام",
+		copyright: "© 2026 سوق المشاريع - جميع الحقوق محفوظة",
+
+		// ===== Home extra sections (حتى لو مخفية الآن) =====
+		featuredTitle: "مشاريع مميزة",
+		contactTitleHome: "تواصل معنا",
+
+		// ===== Filters / Categories / Coverage =====
+		emirates: {
+			all: "كل الإمارات",
+			أبوظبي: "أبوظبي",
+			دبي: "دبي",
+			الشارقة: "الشارقة",
+			عجمان: "عجمان",
+			"رأس الخيمة": "رأس الخيمة",
+			الفجيرة: "الفجيرة",
+			"أم القيوين": "أم القيوين",
+		},
+		categories: {
+			all: "الكل",
+			"أطعمة ومشروبات": "أطعمة ومشروبات",
+			الرقميات: "الرقميات",
+			"روائح وعطور": "روائح وعطور",
+			عناية: "عناية",
+			حلويات: "حلويات",
+			تجميل: "تجميل",
+			ملابس: "ملابس",
+			يدويات: "يدويات",
+			هدايا: "هدايا",
+			عطارة: "عطارة",
+			فنون: "فنون",
+			نباتات: "نباتات",
+			ترفيه: "ترفيه",
+		},
+		coverageOptions: {
+			"الإمارة فقط": "الإمارة فقط",
+			"جميع إمارات الدولة": "جميع إمارات الدولة",
+			"دول الخليج": "دول الخليج",
+			العالم: "العالم",
+		},
+
+		// ===== Product Type Filter =====
+		productTypeAll: "الكل",
+		productTypeMain: "أطباق رئيسية",
+		productTypeDrinks: "مشروبات",
+		productTypeDesserts: "حلويات",
+		productTypeOther: "أخرى",
+
+		// ===== Feedback =====
+		feedbackBtn: "شكوى أو اقتراح",
+
+		// ===== Instruction popup =====
+		popupTitle: "كيف تطلب؟",
+		step1: "تصفح المنتجات",
+		step2: "واختر ما يعجبك",
+		step3: "تواصل مع البائع",
+		gotItBtn: "إغلاق",
+	},
+
+	en: {
+		// ===== General / Header / Nav =====
+		siteTitle: "Souq Almasharie",
+		siteSubtitle: "Projects in UAE",
+
+		langBtn: "ع",
+
+		navHome: "Home",
+		navMarket: "Market",
+		navFavorites: "Favorites",
+		navCart: "Cart",
+		navServices: "Services",
+		navRegister: "Register Project",
+		navLogin: "Login",
+
+		// ===== Home / Hero =====
+		heroTitle: "Souq Almasharie",
+		heroSubtitle: "A specialized platform supporting projects in the UAE",
+		discoverBtn: "Enter the market",
+		servicesBtn: "Public Services",
+		loginBtn: "Login",
+		signupBtn: "Sign up",
+
+		aboutTitle: "About Us",
+		forShopperTitle: "For Product Seekers",
+		forShopperDesc:
+			"Discover local products made by Emirati and resident hands. Homemade food, sweets, perfumes, gifts, handicrafts. Direct contact with the seller without intermediaries.",
+		forProjectOwnerTitle: "For Project Owners",
+		forProjectOwnerDesc:
+			"Register your project for free. Reach thousands of visitors monthly. No commissions, no hidden fees. Community support for productive families in the UAE.",
+
+		homeSearchPlaceholder: "Search for product or project...",
+
+		// ===== Stats =====
+		stat1: "Projects",
+		stat2: "Diverse Products",
+		stat3: "Contact Requests",
+		stat4: "Supporting Partners",
+
+		badge1: "Coming Soon",
+		badge2: "Coming Soon",
+		badge3: "Coming Soon",
+		badge4: "Coming Soon",
+
+		// ===== Pages / Titles =====
+		familiesPageTitle: "Projects",
+		familiesPageSubtitle: "Review the projects in the UAE",
+		productsTitle: "Products",
+		favoritesPageTitle: "Favorites",
+		favoritesPageSubtitle: "Your favorite products",
+		offersBtnText: "Offers",
+		offersPageTitle: "Special Offers",
+		offersPageSubtitle: "Latest offers and packages",
+
+		// ===== Deals =====
+		dealsTitle: "Offers & Packages",
+		viewingDeal: "Viewing deal details...",
+		expiryUntil: "Expires",
+
+		// ===== E-commerce / Cart =====
+		addToCart: "Added to cart",
+		variantsTitle: "Options",
+
+		// ===== Badges / Labels =====
+		paidBadge: "Featured",
+		licensed: "Licensed",
+		coverage: "Coverage",
+		descriptionLabel: "About the Project",
+
+		// ===== Favorites =====
+		emptyFavoritesProducts: "No favorite products yet",
+		addToFavorites: "Added to favorites",
+		removeFromFavorites: "Removed from favorites",
+
+		// ===== Product / Project detail =====
+		sellerInfo: "Seller Info",
+		similarProducts: "Similar Products",
+		specifications: "Specifications & Details",
+		viewProducts: "Products",
+
+		// ===== Contact =====
+		contactSeller: "Contact Seller",
+		noContact: "No contact information",
+		call: "Call",
+		email: "Email",
+
+		confirmTitle: "Confirm redirect",
+		confirmMessage:
+			"You will be redirected to an external site to contact the seller. Proceed?",
+		cancelBtn: "Cancel",
+		proceedBtn: "Proceed",
+
+		// ===== Share =====
+		shareTitle: "Share Product",
+		shareProduct: "Share Product",
+		shareProfile: "Share Project",
+		copyLinkText: "Copy Link",
+		closeShareBtn: "Close",
+		linkCopied: "Link copied!",
+
+		// ===== Register / Social Contact Popup =====
+		registerTitle: "Register Your Project Now",
+		registerViaX: "Message us on X",
+		registerViaInstagram: "Message us on Instagram",
+		registerViaTikTok: "Message us on TikTok",
+
+		// ===== Footer =====
+		footerLogo: "Souq Almasharie",
+		footerText: "UAE Projects Platform",
+		footerKeywords:
+			"Souq Almasharie | UAE Home Projects Platform | Productive Families Directory",
+		privacyLink: "Privacy Policy",
+		termsLink: "Terms of Use",
+		copyright: "© 2026 Souq Almasharie - All Rights Reserved",
+
+		// ===== Home extra sections (حتى لو مخفية الآن) =====
+		featuredTitle: "Featured Projects",
+		contactTitleHome: "Contact us",
+
+		// ===== Filters / Categories / Coverage =====
+		emirates: {
+			all: "All Emirates",
+			أبوظبي: "Abu Dhabi",
+			دبي: "Dubai",
+			الشارقة: "Sharjah",
+			عجمان: "Ajman",
+			"رأس الخيمة": "Ras Al Khaimah",
+			الفجيرة: "Fujairah",
+			"أم القيوين": "Umm Al Quwain",
+		},
+		categories: {
+			all: "All",
+			"أطعمة ومشروبات": "Food & Beverages",
+			الرقميات: "IT",
+			"روائح وعطور": "Scents & Perfumes",
+			عناية: "Care",
+			حلويات: "Sweets",
+			تجميل: "Beauty",
+			ملابس: "Clothes",
+			يدويات: "Handmade",
+			هدايا: "Gifts",
+			عطارة: "Apothecary",
+			فنون: "Arts",
+			نباتات: "Plants",
+			ترفيه: "Entertainment",
+		},
+		coverageOptions: {
+			"الإمارة فقط": "Emirate only",
+			"جميع إمارات الدولة": "All emirates",
+			"دول الخليج": "GCC",
+			العالم: "Worldwide",
+		},
+
+		// ===== Product Type Filter =====
+		productTypeAll: "All",
+		productTypeMain: "Main Dishes",
+		productTypeDrinks: "Drinks",
+		productTypeDesserts: "Desserts",
+		productTypeOther: "Other",
+
+		// ===== Feedback =====
+		feedbackBtn: "Complaint or Suggestion",
+
+		// ===== Instruction popup =====
+		popupTitle: "How to Order?",
+		step1: "Browse Products",
+		step2: "Choose what you like",
+		step3: "Contact the Seller",
+		gotItBtn: "Close",
+	},
 };
 
-let currentLang = localStorage.getItem('projectSouqLang') || 'ar';
+let currentLang = localStorage.getItem("projectSouqLang") || "ar";
 
 export function t(key) {
-  const keys = key.split('.');
-  let val = translations[currentLang];
-  for (let k of keys) {
-    if (val && val[k] !== undefined) val = val[k];
-    else return key;
-  }
-  return val;
+	const keys = key.split(".");
+	let val = translations[currentLang];
+
+	for (const k of keys) {
+		if (val && val[k] !== undefined) val = val[k];
+		else return key;
+	}
+	return val;
 }
 
 export function setLanguage(lang) {
-  if (lang === 'ar' || lang === 'en') {
-    currentLang = lang;
-    localStorage.setItem('projectSouqLang', lang);
-    document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-    document.documentElement.setAttribute('lang', lang);
-    window.dispatchEvent(new Event('languageChanged'));
-  }
+	if (lang === "ar" || lang === "en") {
+		currentLang = lang;
+		localStorage.setItem("projectSouqLang", lang);
+		document.documentElement.setAttribute("dir", lang === "ar" ? "rtl" : "ltr");
+		document.documentElement.setAttribute("lang", lang);
+		window.dispatchEvent(new Event("languageChanged"));
+	}
 }
 
 export function getCurrentLang() {
-  return currentLang;
+	return currentLang;
 }
