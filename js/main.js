@@ -1495,6 +1495,14 @@ function toggleLanguage() {
 		'siteTitle': 'siteTitle',
 		'siteSubtitle': 'siteSubtitle',
 
+		'navLogin': 'navLogin',
+'navSignup': 'navSignup',
+'loginBtn': 'loginBtn',
+'signupBtn': 'signupBtn',
+'contactTitleHome': 'contactTitleHome',
+'contactHomeDesc': 'contactHomeDesc',
+'contactHomeNote': 'contactHomeNote',
+
 		'servicesBtn': 'navServices',
 		'navHome': 'navHome',
 		'navMarket': 'navMarket',
@@ -1625,6 +1633,13 @@ window.addEventListener('load', async function () {
 	const textElements = {
 		siteTitle: 'siteTitle',
 		siteSubtitle: 'siteSubtitle',
+navLogin: 'navLogin',
+navSignup: 'navSignup',
+loginBtn: 'loginBtn',
+signupBtn: 'signupBtn',
+contactTitleHome: 'contactTitleHome',
+contactHomeDesc: 'contactHomeDesc',
+contactHomeNote: 'contactHomeNote',
 		navHome: 'navHome',
 		navMarket: 'navMarket',
 		navFavorites: 'navFavorites',
