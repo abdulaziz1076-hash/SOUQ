@@ -8,6 +8,8 @@ export const translations = {
 
 		langBtn: "En",
 
+		navSignup: "تسجيل جديد",
+
 		navHome: "الرئيسية",
 		navMarket: "السوق",
 		navFavorites: "المفضلة",
@@ -178,6 +180,8 @@ export const translations = {
 		siteSubtitle: "Projects in UAE",
 
 		langBtn: "ع",
+
+		navSignup: "Sign up",
 
 		navHome: "Home",
 		navMarket: "Market",
