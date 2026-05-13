@@ -499,7 +499,7 @@
 
   <!-- Scripts -->
   <script src="js/supabase.js"></script>
-  <script src="js/i18n.js"></script>
+  <script type="module" src="js/i18n.js"></script>
   <script type="module" src="js/main.js"></script>
 
   <script>
@@ -675,6 +675,7 @@
 
     window.addEventListener('hashchange', () => setTimeout(tryHomeEnhancements, 300));
 
+    /* DISABLE_STATIC_TRANSLATIONS_START
     // ==================== دعم ترجمة النصوص الثابتة (ملفك الحالي) ====================
     const staticTranslations = {
       ar: {
@@ -876,6 +877,7 @@
         }
       });
     }
+    DISABLE_STATIC_TRANSLATIONS_END */
   </script>
 
   <!-- مودال الشكاوى والاقتراحات -->
