@@ -10,6 +10,9 @@ export const translations = {
 
 		navSignup: "تسجيل جديد",
 
+		contactHomeDesc: "للاستفسارات أو الشراكات أو الدعم الفني",
+		contactHomeNote: "قد يتم فتح روابط خارجية للتواصل",
+
 		navHome: "الرئيسية",
 		navMarket: "السوق",
 		navFavorites: "المفضلة",
@@ -182,6 +185,9 @@ export const translations = {
 		langBtn: "ع",
 
 		navSignup: "Sign up",
+
+		contactHomeDesc: "For inquiries, partnerships, or technical support",
+		contactHomeNote: "External links may open for contact",
 
 		navHome: "Home",
 		navMarket: "Market",
