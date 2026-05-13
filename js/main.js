@@ -1176,108 +1176,10 @@ function handleHashChange() {
   const hash = window.location.hash.slice(1) || '/';
   const parts = hash.split('/').filter(p => p !== '');
 
-  // ✅ مزامنة اللغة بدون "قلب"
+  // ✅ مزامنة اللغة "بدون قلب" باستخدام applyLanguage فقط
   const savedLang = localStorage.getItem('projectSouqLang') || 'ar';
   if (savedLang !== appState.currentLanguage) {
-    appState.currentLanguage = (savedLang === 'en') ? 'en' : 'ar';
-
-    // i18n.js هو المسؤول عن dir/lang + event
-    setLanguage(appState.currentLanguage);
-
-    // (اختياري) الخط فقط
-    document.body.style.fontFamily =
-      appState.currentLanguage === 'ar'
-        ? "'Almarai', sans-serif"
-        : "'Poppins', 'Almarai', sans-serif";
-
-    // ✅ تحديث النصوص الثابتة بنفس اللغة (بدون قلب)
-    const t = translations[appState.currentLanguage];
-
-    const textElements = {
-      siteTitle: 'siteTitle',
-      siteSubtitle: 'siteSubtitle',
-
-      navHome: 'navHome',
-      navMarket: 'navMarket',
-      navFavorites: 'navFavorites',
-      navCart: 'navCart',          // مهم
-      navServices: 'navServices',  // مهم
-
-      navLogin: 'navLogin',
-      navSignup: 'navSignup',
-      loginBtn: 'loginBtn',
-      signupBtn: 'signupBtn',
-
-      contactTitleHome: 'contactTitleHome',
-      contactHomeDesc: 'contactHomeDesc',
-      contactHomeNote: 'contactHomeNote',
-
-      footerLogo: 'footerLogo',
-      footerText: 'footerText',
-      footerKeywords: 'footerKeywords',
-      copyright: 'copyright',
-      langBtn: 'langBtn',
-
-      heroTitle: 'heroTitle',
-      heroSubtitle: 'heroSubtitle',
-      discoverBtn: 'discoverBtn',
-      servicesBtn: 'servicesBtn',
-
-      aboutTitle: 'aboutTitle',
-      forShopperTitle: 'forShopperTitle',
-      forShopperDesc: 'forShopperDesc',
-      forProjectOwnerTitle: 'forProjectOwnerTitle',
-      forProjectOwnerDesc: 'forProjectOwnerDesc',
-
-      stat1: 'stat1',
-      stat2: 'stat2',
-      stat3: 'stat3',
-      stat4: 'stat4',
-      badge1: 'badge1',
-      badge2: 'badge2',
-      badge3: 'badge3',
-      badge4: 'badge4',
-
-      familiesPageTitle: 'familiesPageTitle',
-      familiesPageSubtitle: 'familiesPageSubtitle',
-      productsTitle: 'productsTitle',
-      favoritesPageTitle: 'favoritesPageTitle',
-      favoritesPageSubtitle: 'favoritesPageSubtitle',
-
-      offersBtnText: 'offersBtnText',
-      offersPageTitle: 'offersPageTitle',
-      offersPageSubtitle: 'offersPageSubtitle',
-      dealsTitle: 'dealsTitle',
-
-      popupTitle: 'popupTitle',
-      step1: 'step1',
-      step2: 'step2',
-      step3: 'step3',
-      gotItBtn: 'gotItBtn',
-
-      shareTitle: 'shareTitle',
-      copyLinkText: 'copyLinkText',
-      closeShareBtn: 'closeShareBtn',
-
-      privacyLink: 'privacyLink',
-      termsLink: 'termsLink'
-    };
-
-    for (const [id, key] of Object.entries(textElements)) {
-      const el = document.getElementById(id);
-      if (el && t[key]) el.textContent = t[key];
-    }
-
-    // placeholders
-    const homeSearch = document.getElementById('homeSearch');
-    if (homeSearch) homeSearch.placeholder = t.homeSearchPlaceholder || '';
-
-    const familiesSearch = document.getElementById('familiesSearch');
-    if (familiesSearch) familiesSearch.placeholder = t.familiesSearchPlaceholder || '';
-
-    // إعادة رسم الشرائح (حتى تكون أسماؤها صح حسب اللغة)
-    initEmiratesChips();
-    initCategoriesChips();
+    applyLanguage(savedLang);
   }
 
   showLoader();
@@ -1326,7 +1228,6 @@ function handleHashChange() {
     ensureLoaderHidden();
   }
 }
-
 // ==================== Share Popups ====================
 function showSharePopup(event, familyId, productId) {
     if (event) event.stopPropagation();
@@ -1697,128 +1598,54 @@ function toggleLanguage() {
 }
 // ==================== Initialization ====================
 window.addEventListener('load', async function () {
-	setupScrollSaveOnUnload();
+  setupScrollSaveOnUnload();
 
-	const savedLang = localStorage.getItem('projectSouqLang');
-	appState.currentLanguage = savedLang === 'en' ? 'en' : 'ar';
+  // 1) اقرأ اللغة المحفوظة
+  const savedLang = localStorage.getItem('projectSouqLang');
+  appState.currentLanguage = (savedLang === 'en') ? 'en' : 'ar';
 
-	// ✅ ربط زر تغيير اللغة في الهيدر
-	const langToggleBtn = document.getElementById('langToggleBtn');
-	if (langToggleBtn) {
-		langToggleBtn.addEventListener('click', function (e) {
-			e.stopPropagation();
-			toggleLanguage();
-		});
-	}
+  // 2) طبق اللغة (dir/lang + النصوص + placeholders + الفلاتر)
+  applyLanguage(appState.currentLanguage);
 
-	if (appState.currentLanguage === 'en') document.body.classList.add('en-mode');
-	else document.body.classList.remove('en-mode');
+  // 3) اربط زر تغيير اللغة
+  const langToggleBtn = document.getElementById('langToggleBtn');
+  if (langToggleBtn) {
+    langToggleBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      toggleLanguage();
+    });
+  }
 
-	const t = translations[appState.currentLanguage];
+  // 4) حمل البيانات ثم اعرض الصفحة حسب الهاش
+  await loadProjectsFromSupabase();
+  handleHashChange();
 
-	const textElements = {
-		siteTitle: 'siteTitle',
-		siteSubtitle: 'siteSubtitle',
-navLogin: 'navLogin',
-navSignup: 'navSignup',
-loginBtn: 'loginBtn',
-signupBtn: 'signupBtn',
-contactTitleHome: 'contactTitleHome',
-contactHomeDesc: 'contactHomeDesc',
-contactHomeNote: 'contactHomeNote',
+  // 5) تنظيفات بسيطة
+  setTimeout(() => hideLoader(), 100);
+  updateCartCount();
 
-		navCart: 'navCart',
-navServices: 'navServices',
-navHome: 'navHome',
-navMarket: 'navMarket',
-navFavorites: 'navFavorites',
-navLogin: 'navLogin',
-navSignup: 'navSignup',
-		
-		navHome: 'navHome',
-		navMarket: 'navMarket',
-		navFavorites: 'navFavorites',
-		navRegister: 'navRegister',
-		footerLogo: 'footerLogo',
-		footerText: 'footerText',
-		copyright: 'copyright',
-		langBtn: 'langBtn',
-		heroTitle: 'heroTitle',
-		heroSubtitle: 'heroSubtitle',
-		discoverBtn: 'discoverBtn',
-		joinBtn: 'joinBtn',
-		aboutTitle: 'aboutTitle',
-		stat1: 'stat1',
-		stat2: 'stat2',
-		stat3: 'stat3',
-		stat4: 'stat4',
-		badge1: 'badge1',
-		badge2: 'badge2',
-		badge3: 'badge3',
-		badge4: 'badge4',
-		familiesPageTitle: 'familiesPageTitle',
-		familiesPageSubtitle: 'familiesPageSubtitle',
-		productsTitle: 'productsTitle',
-		favoritesPageTitle: 'favoritesPageTitle',
-		favoritesPageSubtitle: 'favoritesPageSubtitle',
-		popupTitle: 'popupTitle',
-		step1: 'step1',
-		step2: 'step2',
-		step3: 'step3',
-		gotItBtn: 'gotItBtn',
-		shareTitle: 'shareTitle',
-		copyLinkText: 'copyLinkText',
-		closeShareBtn: 'closeShareBtn',
-		offersBtnText: 'offersBtnText',
-		offersPageTitle: 'offersPageTitle',
-		offersPageSubtitle: 'offersPageSubtitle',
-		dealsTitle: 'dealsTitle'
-	};
-
-	for (const [id, key] of Object.entries(textElements)) {
-		const el = document.getElementById(id);
-		if (el && t[key]) el.textContent = t[key];
-	}
-
-	const homeSearch = document.getElementById('homeSearch');
-	if (homeSearch) homeSearch.placeholder = t.homeSearchPlaceholder;
-
-	const familiesSearch = document.getElementById('familiesSearch');
-	if (familiesSearch) familiesSearch.placeholder = t.familiesSearchPlaceholder;
-
-	initEmiratesChips();
-	initCategoriesChips();
-
-	await loadProjectsFromSupabase();
-	handleHashChange();
-
-	setTimeout(() => hideLoader(), 100);
-	updateCartCount();
-
-	const feedbackForm = document.getElementById('feedbackFormModal');
-	if (feedbackForm) {
-		feedbackForm.removeEventListener('submit', submitFeedback);
-		feedbackForm.addEventListener('submit', submitFeedback);
-	}
+  const feedbackForm = document.getElementById('feedbackFormModal');
+  if (feedbackForm) {
+    feedbackForm.removeEventListener('submit', submitFeedback);
+    feedbackForm.addEventListener('submit', submitFeedback);
+  }
 });
 window.addEventListener('pageshow', function(event) {
-    if (event.persisted) {
-        const savedLang = localStorage.getItem('projectSouqLang');
-        if (savedLang && savedLang !== appState.currentLanguage) {
-            appState.currentLanguage = savedLang;
-            toggleLanguage();
-        } else {
-            toggleLanguage();
-        }
-        if (appState.currentPage === 'families') renderFamilies();
-        else if (appState.currentPage === 'products' && appState.currentFamilyId) showFamilyProducts(appState.currentFamilyId, false);
-        else if (appState.currentPage === 'product-detail' && appState.currentFamilyId && appState.currentProductId) showProductDetail(appState.currentFamilyId, appState.currentProductId, false);
-        else if (appState.currentPage === 'favorites') renderFavorites();
-        else if (appState.currentPage === 'offers') renderOffers();
-        hideLoader();
-        ensureLoaderHidden();
-        updateCartCount();
-    }
+  if (!event.persisted) return;
+
+  const savedLang = localStorage.getItem('projectSouqLang') || 'ar';
+  applyLanguage(savedLang);
+
+  // إعادة رسم حسب الصفحة الحالية
+  if (appState.currentPage === 'families') renderFamilies();
+  else if (appState.currentPage === 'products' && appState.currentFamilyId) showFamilyProducts(appState.currentFamilyId, false);
+  else if (appState.currentPage === 'product-detail' && appState.currentFamilyId && appState.currentProductId) showProductDetail(appState.currentFamilyId, appState.currentProductId, false);
+  else if (appState.currentPage === 'favorites') renderFavorites();
+  else if (appState.currentPage === 'offers') renderOffers();
+
+  hideLoader();
+  ensureLoaderHidden();
+  updateCartCount();
 });
 
 window.addEventListener('hashchange', handleHashChange);
