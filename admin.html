@@ -296,8 +296,10 @@
             <button class="tab-btn" data-tab="contacts"><i class="fas fa-address-card"></i> بيانات التواصل</button>
             <button class="tab-btn" data-tab="feedbacks"><i class="fas fa-comment-dots"></i> الشكاوى</button>
             <button class="tab-btn" data-tab="orders"><i class="fas fa-truck"></i> الطلبات</button>
-            <!-- تبويب إدارة التراخيص (جديد) -->
+            <!-- تبويب إدارة التراخيص -->
             <button class="tab-btn" data-tab="licenses"><i class="fas fa-file-certificate"></i> إدارة التراخيص</button>
+            <!-- تبويب الدعم الفني (جديد) -->
+            <button class="tab-btn" data-tab="support"><i class="fas fa-headset"></i> الدعم الفني</button>
         </div>
 
         <!-- طلبات التسجيل -->
@@ -390,7 +392,7 @@
             <div id="ordersPagination" class="pagination"></div>
         </div>
 
-        <!-- ****************** تبويب إدارة التراخيص ****************** -->
+        <!-- تبويب إدارة التراخيص -->
         <div id="licensesTab" class="content-card">
             <div class="filter-bar">
                 <div class="filter-group">
@@ -404,6 +406,22 @@
                 <button id="refreshLicensesBtn" class="btn-outline"><i class="fas fa-sync-alt"></i> تحديث</button>
             </div>
             <div id="licensesTableContainer"></div>
+        </div>
+
+        <!-- ****************** تبويب الدعم الفني (جديد) ****************** -->
+        <div id="supportTab" class="content-card">
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <select id="supportStatusFilter">
+                        <option value="all">كل الحالات</option>
+                        <option value="open">مفتوحة</option>
+                        <option value="in_progress">قيد المعالجة</option>
+                        <option value="closed">مغلقة</option>
+                    </select>
+                </div>
+                <button id="refreshSupportBtn" class="btn-outline"><i class="fas fa-sync-alt"></i> تحديث</button>
+            </div>
+            <div id="supportTicketsContainer"></div>
         </div>
         <!-- ********************************************************** -->
 
@@ -501,6 +519,14 @@
     <div class="modal-content">
         <div class="modal-header"><h3>تفاصيل طلب التسجيل</h3><button class="modal-close" data-modal="regDetailsModal"><i class="fas fa-times"></i></button></div>
         <div class="modal-body" id="regDetailsBody"></div>
+    </div>
+</div>
+
+<!-- مودال عرض تفاصيل التذكرة والرد عليها -->
+<div id="ticketReplyModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><h3>تفاصيل التذكرة والرد</h3><button class="modal-close" data-modal="ticketReplyModal"><i class="fas fa-times"></i></button></div>
+        <div class="modal-body" id="ticketReplyBody"></div>
     </div>
 </div>
 
@@ -1155,7 +1181,7 @@ async function exportRegistrationsCSV() {
     URL.revokeObjectURL(url);
 }
 
-// ==================== إدارة التراخيص (جديد) ====================
+// ==================== إدارة التراخيص ====================
 async function loadLicenseRequests() {
     const status = document.getElementById('licenseStatusFilter').value;
     let query = supabase
@@ -1175,7 +1201,7 @@ async function loadLicenseRequests() {
     const { data, error } = await query;
     if (error) { console.error(error); showToast('خطأ في تحميل طلبات التراخيص', true); return; }
     let html = `<table class="data-table"><thead>
-        <table><th>المشروع</th><th>صاحب المشروع</th><th>ملف الرخصة</th><th>الحالة</th><th>تاريخ الرفع</th><th>الإجراءات</th>
+        <tr><th>المشروع</th><th>صاحب المشروع</th><th>ملف الرخصة</th><th>الحالة</th><th>تاريخ الرفع</th><th>الإجراءات</th>
         </tr></thead><tbody>`;
     for (const req of (data || [])) {
         const project = req.projects;
@@ -1226,6 +1252,78 @@ window.reviewLicense = async (requestId, action) => {
     showToast(`تم ${action === 'approve' ? 'قبول' : 'رفض'} الرخصة بنجاح`);
     loadLicenseRequests();
     loadStats();  // تحديث الإحصائيات
+};
+
+// ==================== الدعم الفني (جديد) ====================
+async function loadSupportTickets() {
+    const status = document.getElementById('supportStatusFilter').value;
+    let query = supabase
+        .from('support_tickets')
+        .select('*, projects(name_ar)')
+        .order('created_at', { ascending: false });
+    if (status !== 'all') query = query.eq('status', status);
+    const { data, error } = await query;
+    if (error) { showToast(error.message, true); return; }
+    let html = `<table class="data-table"><thead>
+        <tr><th>#</th><th>المشروع</th><th>الموضوع</th><th>الحالة</th><th>التاريخ</th><th>الإجراءات</th>
+        </tr></thead><tbody>`;
+    for (const ticket of (data || [])) {
+        let statusClass = ticket.status === 'open' ? 'badge-pending' : (ticket.status === 'in_progress' ? 'badge-pending' : 'badge-approved');
+        let statusText = ticket.status === 'open' ? 'مفتوحة' : (ticket.status === 'in_progress' ? 'قيد المعالجة' : 'مغلقة');
+        html += `<tr>
+            <td>${ticket.id}</td>
+            <td>${ticket.projects?.name_ar || '?'}</td>
+            <td>${escapeHtml(ticket.subject)}</td>
+            <td><span class="badge ${statusClass}">${statusText}</span></td>
+            <td>${new Date(ticket.created_at).toLocaleString()}</td>
+            <td><button class="view-details-btn" onclick="viewSupportTicket('${ticket.id}')">رد/عرض</button></td>
+        </tr>`;
+    }
+    html += `</tbody>`;
+    document.getElementById('supportTicketsContainer').innerHTML = html;
+}
+
+window.viewSupportTicket = async (id) => {
+    const { data: ticket, error } = await supabase
+        .from('support_tickets')
+        .select('*')
+        .eq('id', id)
+        .single();
+    if (error || !ticket) { showToast('خطأ في جلب التذكرة', true); return; }
+    const replyHtml = `
+        <div style="margin-bottom: 20px;">
+            <p><strong>المشروع:</strong> ${escapeHtml(ticket.projects?.name_ar || '?')}</p>
+            <p><strong>الموضوع:</strong> ${escapeHtml(ticket.subject)}</p>
+            <p><strong>الرسالة:</strong><br>${escapeHtml(ticket.message)}</p>
+            <p><strong>التاريخ:</strong> ${new Date(ticket.created_at).toLocaleString()}</p>
+            ${ticket.admin_reply ? `<div style="background:#f0f0f0; padding:12px; border-radius:16px; margin-top:15px;"><strong>رد الإدارة السابق:</strong><br>${escapeHtml(ticket.admin_reply)}</div>` : ''}
+        </div>
+        <div class="form-row"><label>الرد الجديد (اتركه فارغاً إذا لم ترد)</label><textarea id="ticketReplyText" rows="4"></textarea></div>
+        <div class="form-row"><label>تغيير الحالة</label>
+            <select id="ticketStatusSelect">
+                <option value="open" ${ticket.status === 'open' ? 'selected' : ''}>مفتوحة</option>
+                <option value="in_progress" ${ticket.status === 'in_progress' ? 'selected' : ''}>قيد المعالجة</option>
+                <option value="closed" ${ticket.status === 'closed' ? 'selected' : ''}>مغلقة</option>
+            </select>
+        </div>
+        <div class="action-buttons">
+            <button class="btn-save" onclick="submitTicketReply('${ticket.id}')">حفظ التغييرات</button>
+        </div>
+    `;
+    document.getElementById('ticketReplyBody').innerHTML = replyHtml;
+    document.getElementById('ticketReplyModal').classList.add('active');
+};
+
+window.submitTicketReply = async (id) => {
+    const reply = document.getElementById('ticketReplyText').value;
+    const newStatus = document.getElementById('ticketStatusSelect').value;
+    const updateData = { status: newStatus };
+    if (reply.trim()) updateData.admin_reply = reply;
+    const { error } = await supabase.from('support_tickets').update(updateData).eq('id', id);
+    if (error) { showToast(error.message, true); return; }
+    showToast('تم تحديث التذكرة');
+    document.getElementById('ticketReplyModal').classList.remove('active');
+    loadSupportTickets();
 };
 
 // ==================== تهيئة القوائم ====================
@@ -1281,6 +1379,7 @@ function attachTabs() {
             else if (tabId === 'registrations') loadRegistrations(1);
             else if (tabId === 'orders') loadOrders(1);
             else if (tabId === 'licenses') loadLicenseRequests();
+            else if (tabId === 'support') loadSupportTickets();
         });
     });
 }
@@ -1326,6 +1425,7 @@ async function checkSession() {
         await loadFeedbacks();
         await loadOrders(1);
         await loadLicenseRequests();
+        await loadSupportTickets();
         attachTabs();
     }
 }
@@ -1351,6 +1451,8 @@ document.getElementById('exportOrdersBtn').addEventListener('click', exportOrder
 document.getElementById('exportRegBtn').addEventListener('click', exportRegistrationsCSV);
 document.getElementById('licenseStatusFilter').addEventListener('change', () => loadLicenseRequests());
 document.getElementById('refreshLicensesBtn').addEventListener('click', () => loadLicenseRequests());
+document.getElementById('supportStatusFilter').addEventListener('change', () => loadSupportTickets());
+document.getElementById('refreshSupportBtn').addEventListener('click', () => loadSupportTickets());
 
 document.querySelectorAll('.modal-close').forEach(btn => btn.addEventListener('click', () => { document.getElementById(btn.dataset.modal).classList.remove('active'); }));
 window.onclick = (e) => { if(e.target.classList.contains('modal')) e.target.classList.remove('active'); };
@@ -1393,6 +1495,9 @@ window.showOrderDetails = showOrderDetails;
 window.showRegDetails = showRegDetails;
 window.reviewLicense = reviewLicense;
 window.loadLicenseRequests = loadLicenseRequests;
+window.loadSupportTickets = loadSupportTickets;
+window.viewSupportTicket = viewSupportTicket;
+window.submitTicketReply = submitTicketReply;
 </script>
 </body>
 </html>
