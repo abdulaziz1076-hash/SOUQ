@@ -1173,52 +1173,158 @@ window.selectVariant = (event, variantId) => {
 
 // ==================== Hash Change Handler ====================
 function handleHashChange() {
-    const hash = window.location.hash.slice(1) || '/';
-    const parts = hash.split('/').filter(p => p !== '');
-    const savedLang = localStorage.getItem('projectSouqLang');
-    if (savedLang && savedLang !== appState.currentLanguage) {
-        appState.currentLanguage = savedLang;
-        toggleLanguage();
+  const hash = window.location.hash.slice(1) || '/';
+  const parts = hash.split('/').filter(p => p !== '');
+
+  // ✅ مزامنة اللغة بدون "قلب"
+  const savedLang = localStorage.getItem('projectSouqLang') || 'ar';
+  if (savedLang !== appState.currentLanguage) {
+    appState.currentLanguage = (savedLang === 'en') ? 'en' : 'ar';
+
+    // i18n.js هو المسؤول عن dir/lang + event
+    setLanguage(appState.currentLanguage);
+
+    // (اختياري) الخط فقط
+    document.body.style.fontFamily =
+      appState.currentLanguage === 'ar'
+        ? "'Almarai', sans-serif"
+        : "'Poppins', 'Almarai', sans-serif";
+
+    // ✅ تحديث النصوص الثابتة بنفس اللغة (بدون قلب)
+    const t = translations[appState.currentLanguage];
+
+    const textElements = {
+      siteTitle: 'siteTitle',
+      siteSubtitle: 'siteSubtitle',
+
+      navHome: 'navHome',
+      navMarket: 'navMarket',
+      navFavorites: 'navFavorites',
+      navCart: 'navCart',          // مهم
+      navServices: 'navServices',  // مهم
+
+      navLogin: 'navLogin',
+      navSignup: 'navSignup',
+      loginBtn: 'loginBtn',
+      signupBtn: 'signupBtn',
+
+      contactTitleHome: 'contactTitleHome',
+      contactHomeDesc: 'contactHomeDesc',
+      contactHomeNote: 'contactHomeNote',
+
+      footerLogo: 'footerLogo',
+      footerText: 'footerText',
+      footerKeywords: 'footerKeywords',
+      copyright: 'copyright',
+      langBtn: 'langBtn',
+
+      heroTitle: 'heroTitle',
+      heroSubtitle: 'heroSubtitle',
+      discoverBtn: 'discoverBtn',
+      servicesBtn: 'servicesBtn',
+
+      aboutTitle: 'aboutTitle',
+      forShopperTitle: 'forShopperTitle',
+      forShopperDesc: 'forShopperDesc',
+      forProjectOwnerTitle: 'forProjectOwnerTitle',
+      forProjectOwnerDesc: 'forProjectOwnerDesc',
+
+      stat1: 'stat1',
+      stat2: 'stat2',
+      stat3: 'stat3',
+      stat4: 'stat4',
+      badge1: 'badge1',
+      badge2: 'badge2',
+      badge3: 'badge3',
+      badge4: 'badge4',
+
+      familiesPageTitle: 'familiesPageTitle',
+      familiesPageSubtitle: 'familiesPageSubtitle',
+      productsTitle: 'productsTitle',
+      favoritesPageTitle: 'favoritesPageTitle',
+      favoritesPageSubtitle: 'favoritesPageSubtitle',
+
+      offersBtnText: 'offersBtnText',
+      offersPageTitle: 'offersPageTitle',
+      offersPageSubtitle: 'offersPageSubtitle',
+      dealsTitle: 'dealsTitle',
+
+      popupTitle: 'popupTitle',
+      step1: 'step1',
+      step2: 'step2',
+      step3: 'step3',
+      gotItBtn: 'gotItBtn',
+
+      shareTitle: 'shareTitle',
+      copyLinkText: 'copyLinkText',
+      closeShareBtn: 'closeShareBtn',
+
+      privacyLink: 'privacyLink',
+      termsLink: 'termsLink'
+    };
+
+    for (const [id, key] of Object.entries(textElements)) {
+      const el = document.getElementById(id);
+      if (el && t[key]) el.textContent = t[key];
     }
-    showLoader();
-    if (parts.length === 0 || parts[0] === '') {
-        showPage('home');
-        ensureLoaderHidden();
-    }
-    else if (parts[0] === 'projects' && parts[1] === 'emirate' && parts[2]) {
-        appState.currentEmirate = decodeURIComponent(parts[2]);
-        appState.currentCategory = 'all';
-        updateActiveEmirateChip(appState.currentEmirate);
-        updateActiveCategoryChip('all');
-        showPage('families');
-        renderFamilies();
-        const searchInput = document.getElementById('familiesSearch');
-        if (searchInput && appState.searchQuery) searchInput.value = appState.searchQuery;
-        setTimeout(() => restoreScrollPosition(), 200);
-        ensureLoaderHidden();
-    }
-    else if (parts[0] === 'family' && parts[1]) {
-        showFamilyProducts(parseInt(parts[1]), false);
-    }
-    else if (parts[0] === 'product' && parts[1] && parts[2]) {
-        showProductDetail(parseInt(parts[1]), parts[2], false);
-    }
-    else if (parts[0] === 'favorites') {
-        showPage('favorites');
-        renderFavorites();
-        setTimeout(() => restoreScrollPosition(), 100);
-        ensureLoaderHidden();
-    }
-    else if (parts[0] === 'offers') {
-        showPage('offers');
-        renderOffers();
-        setTimeout(() => restoreScrollPosition(), 100);
-        ensureLoaderHidden();
-    }
-    else {
-        showPage('home');
-        ensureLoaderHidden();
-    }
+
+    // placeholders
+    const homeSearch = document.getElementById('homeSearch');
+    if (homeSearch) homeSearch.placeholder = t.homeSearchPlaceholder || '';
+
+    const familiesSearch = document.getElementById('familiesSearch');
+    if (familiesSearch) familiesSearch.placeholder = t.familiesSearchPlaceholder || '';
+
+    // إعادة رسم الشرائح (حتى تكون أسماؤها صح حسب اللغة)
+    initEmiratesChips();
+    initCategoriesChips();
+  }
+
+  showLoader();
+
+  // ===== Routing =====
+  if (parts.length === 0 || parts[0] === '') {
+    showPage('home');
+    ensureLoaderHidden();
+  }
+  else if (parts[0] === 'projects' && parts[1] === 'emirate' && parts[2]) {
+    appState.currentEmirate = decodeURIComponent(parts[2]);
+    appState.currentCategory = 'all';
+
+    updateActiveEmirateChip(appState.currentEmirate);
+    updateActiveCategoryChip('all');
+
+    showPage('families');
+    renderFamilies();
+
+    const searchInput = document.getElementById('familiesSearch');
+    if (searchInput && appState.searchQuery) searchInput.value = appState.searchQuery;
+
+    setTimeout(() => restoreScrollPosition(), 200);
+    ensureLoaderHidden();
+  }
+  else if (parts[0] === 'family' && parts[1]) {
+    showFamilyProducts(parseInt(parts[1]), false);
+  }
+  else if (parts[0] === 'product' && parts[1] && parts[2]) {
+    showProductDetail(parseInt(parts[1]), parts[2], false);
+  }
+  else if (parts[0] === 'favorites') {
+    showPage('favorites');
+    renderFavorites();
+    setTimeout(() => restoreScrollPosition(), 100);
+    ensureLoaderHidden();
+  }
+  else if (parts[0] === 'offers') {
+    showPage('offers');
+    renderOffers();
+    setTimeout(() => restoreScrollPosition(), 100);
+    ensureLoaderHidden();
+  }
+  else {
+    showPage('home');
+    ensureLoaderHidden();
+  }
 }
 
 // ==================== Share Popups ====================
