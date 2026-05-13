@@ -1576,153 +1576,125 @@ function showInstructionPopupOnce() {
     }
 }
 
+function applyLanguage(lang) {
+  const safeLang = (lang === 'en') ? 'en' : 'ar';
+
+  // 1) i18n.js هو المسؤول عن localStorage + dir/lang + event
+  setLanguage(safeLang);
+
+  // 2) حالة التطبيق
+  appState.currentLanguage = safeLang;
+
+  // 3) الخط (اختياري)
+  document.body.style.fontFamily =
+    safeLang === 'ar'
+      ? "'Almarai', sans-serif"
+      : "'Poppins', 'Almarai', sans-serif";
+
+  // 4) تحديث النصوص الثابتة
+  const t = translations[safeLang];
+
+  const textElements = {
+    siteTitle: 'siteTitle',
+    siteSubtitle: 'siteSubtitle',
+
+    langBtn: 'langBtn',
+
+    navHome: 'navHome',
+    navMarket: 'navMarket',
+    navFavorites: 'navFavorites',
+    navCart: 'navCart',
+    navServices: 'navServices',
+    navLogin: 'navLogin',
+    navSignup: 'navSignup',
+
+    heroTitle: 'heroTitle',
+    heroSubtitle: 'heroSubtitle',
+    discoverBtn: 'discoverBtn',
+    servicesBtn: 'servicesBtn',   // انتبه: لازم يكون موجود في i18n.js كمفتاح servicesBtn
+    loginBtn: 'loginBtn',
+    signupBtn: 'signupBtn',
+
+    aboutTitle: 'aboutTitle',
+    forShopperTitle: 'forShopperTitle',
+    forShopperDesc: 'forShopperDesc',
+    forProjectOwnerTitle: 'forProjectOwnerTitle',
+    forProjectOwnerDesc: 'forProjectOwnerDesc',
+
+    stat1: 'stat1',
+    stat2: 'stat2',
+    stat3: 'stat3',
+    stat4: 'stat4',
+    badge1: 'badge1',
+    badge2: 'badge2',
+    badge3: 'badge3',
+    badge4: 'badge4',
+
+    contactTitleHome: 'contactTitleHome',
+    contactHomeDesc: 'contactHomeDesc',
+    contactHomeNote: 'contactHomeNote',
+
+    familiesPageTitle: 'familiesPageTitle',
+    familiesPageSubtitle: 'familiesPageSubtitle',
+    productsTitle: 'productsTitle',
+    favoritesPageTitle: 'favoritesPageTitle',
+    favoritesPageSubtitle: 'favoritesPageSubtitle',
+
+    offersBtnText: 'offersBtnText',
+    offersPageTitle: 'offersPageTitle',
+    offersPageSubtitle: 'offersPageSubtitle',
+    dealsTitle: 'dealsTitle',
+
+    popupTitle: 'popupTitle',
+    step1: 'step1',
+    step2: 'step2',
+    step3: 'step3',
+    gotItBtn: 'gotItBtn',
+
+    shareTitle: 'shareTitle',
+    copyLinkText: 'copyLinkText',
+    closeShareBtn: 'closeShareBtn',
+
+    footerLogo: 'footerLogo',
+    footerText: 'footerText',
+    footerKeywords: 'footerKeywords',
+    copyright: 'copyright',
+
+    privacyLink: 'privacyLink',
+    termsLink: 'termsLink'
+  };
+
+  for (const [id, key] of Object.entries(textElements)) {
+    const el = document.getElementById(id);
+    if (el && t[key] !== undefined && t[key] !== null) {
+      el.textContent = t[key];
+    }
+  }
+
+  // placeholders
+  const homeSearch = document.getElementById('homeSearch');
+  if (homeSearch) homeSearch.placeholder = t.homeSearchPlaceholder || '';
+
+  const familiesSearch = document.getElementById('familiesSearch');
+  if (familiesSearch) familiesSearch.placeholder = t.familiesSearchPlaceholder || '';
+
+  // إعادة رسم الفلاتر عشان أسماء الشرائح تتحدث
+  initEmiratesChips();
+  initCategoriesChips();
+}
+
 // ==================== Language Toggle ====================
 function toggleLanguage() {
-	// 1) احسب اللغة الجديدة
-	const newLang = appState.currentLanguage === 'ar' ? 'en' : 'ar';
+  const newLang = (appState.currentLanguage === 'ar') ? 'en' : 'ar';
+  applyLanguage(newLang);
 
-	// 2) خل i18n.js هو المسؤول الوحيد عن:
-	//    - حفظ localStorage
-	//    - تغيير dir / lang
-	//    - إطلاق event
-	setLanguage(newLang);
-
-	// 3) حدّث حالة التطبيق محليًا
-	appState.currentLanguage = newLang;
-
-	// 4) (اختياري) الخط فقط
-	document.body.style.fontFamily =
-		newLang === 'ar' ? "'Almarai', sans-serif" : "'Poppins', 'Almarai', sans-serif";
-
-	// 5) حدّث النصوص الثابتة على الصفحة من قاموس i18n
-	const t = translations[newLang];
-
-	const textElements = {
-		'siteTitle': 'siteTitle',
-		'siteSubtitle': 'siteSubtitle',
-
-		'navLogin': 'navLogin',
-'navSignup': 'navSignup',
-'loginBtn': 'loginBtn',
-'signupBtn': 'signupBtn',
-'contactTitleHome': 'contactTitleHome',
-'contactHomeDesc': 'contactHomeDesc',
-'contactHomeNote': 'contactHomeNote',
-
-		'navCart': 'navCart',
-'navServices': 'navServices',
-'navHome': 'navHome',
-'navMarket': 'navMarket',
-'navFavorites': 'navFavorites',
-'navLogin': 'navLogin',
-'navSignup': 'navSignup',
-
-		'servicesBtn': 'navServices',
-		'navHome': 'navHome',
-		'navMarket': 'navMarket',
-
-		'navServices': 'navServices',
-		'navArticles': 'navArticles',
-		'navDelivery': 'navDelivery',
-
-		'navRegister': 'navRegister',
-		'footerKeywords': 'footerKeywords',
-
-		'forShopperTitle': 'forShopperTitle',
-		'forShopperDesc': 'forShopperDesc',
-		'forProjectOwnerTitle': 'forProjectOwnerTitle',
-		'forProjectOwnerDesc': 'forProjectOwnerDesc',
-
-		'navFavorites': 'navFavorites',
-		'footerLogo': 'footerLogo',
-		'footerText': 'footerText',
-
-		'copyright': 'copyright',
-		'langBtn': 'langBtn',
-
-		'heroTitle': 'heroTitle',
-		'heroSubtitle': 'heroSubtitle',
-		'discoverBtn': 'discoverBtn',
-		'joinBtn': 'joinBtn',
-
-		'aboutTitle': 'aboutTitle',
-		'stat1': 'stat1',
-		'stat2': 'stat2',
-		'stat3': 'stat3',
-		'stat4': 'stat4',
-
-		'badge1': 'badge1',
-		'badge2': 'badge2',
-		'badge3': 'badge3',
-		'badge4': 'badge4',
-
-		'familiesPageTitle': 'familiesPageTitle',
-		'familiesPageSubtitle': 'familiesPageSubtitle',
-
-		'productsTitle': 'productsTitle',
-		'favoritesPageTitle': 'favoritesPageTitle',
-		'favoritesPageSubtitle': 'favoritesPageSubtitle',
-
-		'popupTitle': 'popupTitle',
-		'step1': 'step1',
-		'step2': 'step2',
-		'step3': 'step3',
-		'gotItBtn': 'gotItBtn',
-
-		'shareTitle': 'shareTitle',
-		'copyLinkText': 'copyLinkText',
-		'closeShareBtn': 'closeShareBtn',
-
-		'offersBtnText': 'offersBtnText',
-		'offersPageTitle': 'offersPageTitle',
-		'offersPageSubtitle': 'offersPageSubtitle',
-		'dealsTitle': 'dealsTitle',
-
-		// مهم: في i18n.js مفاتيحها privacyLink / termsLink
-		'privacyLink': 'privacyLink',
-		'termsLink': 'termsLink'
-	};
-
-	for (const [id, key] of Object.entries(textElements)) {
-		const el = document.getElementById(id);
-		if (el && t[key]) el.textContent = t[key];
-	}
-
-	// placeholders
-	const homeSearch = document.getElementById('homeSearch');
-	if (homeSearch) homeSearch.placeholder = t.homeSearchPlaceholder || '';
-
-	const familiesSearch = document.getElementById('familiesSearch');
-	if (familiesSearch) familiesSearch.placeholder = t.familiesSearchPlaceholder || '';
-
-	// إعادة رسم الفلاتر والصفحات
-	initEmiratesChips();
-	initCategoriesChips();
-
-	if (appState.currentPage === 'families') renderFamilies();
-	else if (appState.currentPage === 'products' && appState.currentFamilyId) showFamilyProducts(appState.currentFamilyId, false);
-	else if (appState.currentPage === 'product-detail' && appState.currentFamilyId && appState.currentProductId) showProductDetail(appState.currentFamilyId, appState.currentProductId, false);
-	else if (appState.currentPage === 'favorites') renderFavorites();
-	else if (appState.currentPage === 'offers') renderOffers();
+  // إعادة رسم حسب الصفحة الحالية
+  if (appState.currentPage === 'families') renderFamilies();
+  else if (appState.currentPage === 'products' && appState.currentFamilyId) showFamilyProducts(appState.currentFamilyId, false);
+  else if (appState.currentPage === 'product-detail' && appState.currentFamilyId && appState.currentProductId) showProductDetail(appState.currentFamilyId, appState.currentProductId, false);
+  else if (appState.currentPage === 'favorites') renderFavorites();
+  else if (appState.currentPage === 'offers') renderOffers();
 }
-// ==================== معالجة مشاركة المنتج عبر delegation ====================
-document.addEventListener('click', function(e) {
-    const shareBtn = e.target.closest('.share-btn');
-    if (!shareBtn) return;
-    e.stopPropagation();
-    
-    const familyId = shareBtn.dataset.familyId;
-    const productId = shareBtn.dataset.productId;
-    if (familyId && productId) {
-        showSharePopup(e, familyId, productId);
-    } else {
-        const onclickAttr = shareBtn.getAttribute('onclick');
-        if (onclickAttr && onclickAttr.includes('showSharePopup')) {
-            eval(onclickAttr);
-        }
-    }
-});
-
 // ==================== Initialization ====================
 window.addEventListener('load', async function () {
 	setupScrollSaveOnUnload();
