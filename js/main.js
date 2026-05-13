@@ -1472,60 +1472,117 @@ function showInstructionPopupOnce() {
 
 // ==================== Language Toggle ====================
 function toggleLanguage() {
-    const newLang = appState.currentLanguage === 'ar' ? 'en' : 'ar';
-    setLanguage(newLang);
-    appState.currentLanguage = newLang;
-    localStorage.setItem('projectSouqLang', newLang);
-    if (newLang === 'ar') {
-        document.documentElement.setAttribute('dir', 'rtl');
-        document.documentElement.setAttribute('lang', 'ar');
-        document.documentElement.classList.remove('en-mode');
-        document.body.style.fontFamily = "'Almarai', sans-serif";
-    } else {
-        document.documentElement.setAttribute('dir', 'ltr');
-        document.documentElement.setAttribute('lang', 'en');
-        document.documentElement.classList.add('en-mode');
-        document.body.style.fontFamily = "'Poppins', 'Almarai', sans-serif";
-    }
-    const t = translations[newLang];
-    const textElements = {
-        'siteTitle': 'siteTitle', 'siteSubtitle': 'siteSubtitle',
-        'servicesBtn': 'navServices', 'navHome': 'navHome', 'navMarket': 'navMarket',
-        'navServices': 'navServices', 'navArticles': 'navArticles', 'navDelivery': 'navDelivery',
-        'navRegister': 'navRegister', 'footerKeywords': 'footerKeywords',
-        'forShopperTitle': 'forShopperTitle', 'forShopperDesc': 'forShopperDesc',
-        'forProjectOwnerTitle': 'forProjectOwnerTitle', 'forProjectOwnerDesc': 'forProjectOwnerDesc',
-        'navFavorites': 'navFavorites', 'footerLogo': 'footerLogo', 'footerText': 'footerText',
-        'copyright': 'copyright', 'langBtn': 'langBtn', 'heroTitle': 'heroTitle',
-        'heroSubtitle': 'heroSubtitle', 'discoverBtn': 'discoverBtn', 'joinBtn': 'joinBtn',
-        'aboutTitle': 'aboutTitle', 'stat1': 'stat1', 'stat2': 'stat2', 'stat3': 'stat3', 'stat4': 'stat4',
-        'badge1': 'badge1', 'badge2': 'badge2', 'badge3': 'badge3', 'badge4': 'badge4',
-        'familiesPageTitle': 'familiesPageTitle', 'familiesPageSubtitle': 'familiesPageSubtitle',
-        'productsTitle': 'productsTitle', 'favoritesPageTitle': 'favoritesPageTitle',
-        'favoritesPageSubtitle': 'favoritesPageSubtitle', 'popupTitle': 'popupTitle',
-        'step1': 'step1', 'step2': 'step2', 'step3': 'step3', 'gotItBtn': 'gotItBtn',
-        'shareTitle': 'shareTitle', 'copyLinkText': 'copyLinkText', 'closeShareBtn': 'closeShareBtn',
-        'offersBtnText': 'offersBtnText', 'offersPageTitle': 'offersPageTitle',
-        'offersPageSubtitle': 'offersPageSubtitle', 'dealsTitle': 'dealsTitle',
-        'privacyLink': 'privacy', 'termsLink': 'terms'
-    };
-    for (const [id, key] of Object.entries(textElements)) {
-        const el = document.getElementById(id);
-        if (el && t[key]) el.textContent = t[key];
-    }
-    const homeSearch = document.getElementById('homeSearch');
-    if (homeSearch) homeSearch.placeholder = t.homeSearchPlaceholder;
-    const familiesSearch = document.getElementById('familiesSearch');
-    if (familiesSearch) familiesSearch.placeholder = t.familiesSearchPlaceholder;
-    initEmiratesChips();
-    initCategoriesChips();
-    if (appState.currentPage === 'families') renderFamilies();
-    else if (appState.currentPage === 'products' && appState.currentFamilyId) showFamilyProducts(appState.currentFamilyId, false);
-    else if (appState.currentPage === 'product-detail' && appState.currentFamilyId && appState.currentProductId) showProductDetail(appState.currentFamilyId, appState.currentProductId, false);
-    else if (appState.currentPage === 'favorites') renderFavorites();
-    else if (appState.currentPage === 'offers') renderOffers();
-}
+	// 1) احسب اللغة الجديدة
+	const newLang = appState.currentLanguage === 'ar' ? 'en' : 'ar';
 
+	// 2) خل i18n.js هو المسؤول الوحيد عن:
+	//    - حفظ localStorage
+	//    - تغيير dir / lang
+	//    - إطلاق event
+	setLanguage(newLang);
+
+	// 3) حدّث حالة التطبيق محليًا
+	appState.currentLanguage = newLang;
+
+	// 4) (اختياري) الخط فقط
+	document.body.style.fontFamily =
+		newLang === 'ar' ? "'Almarai', sans-serif" : "'Poppins', 'Almarai', sans-serif";
+
+	// 5) حدّث النصوص الثابتة على الصفحة من قاموس i18n
+	const t = translations[newLang];
+
+	const textElements = {
+		'siteTitle': 'siteTitle',
+		'siteSubtitle': 'siteSubtitle',
+
+		'servicesBtn': 'navServices',
+		'navHome': 'navHome',
+		'navMarket': 'navMarket',
+
+		'navServices': 'navServices',
+		'navArticles': 'navArticles',
+		'navDelivery': 'navDelivery',
+
+		'navRegister': 'navRegister',
+		'footerKeywords': 'footerKeywords',
+
+		'forShopperTitle': 'forShopperTitle',
+		'forShopperDesc': 'forShopperDesc',
+		'forProjectOwnerTitle': 'forProjectOwnerTitle',
+		'forProjectOwnerDesc': 'forProjectOwnerDesc',
+
+		'navFavorites': 'navFavorites',
+		'footerLogo': 'footerLogo',
+		'footerText': 'footerText',
+
+		'copyright': 'copyright',
+		'langBtn': 'langBtn',
+
+		'heroTitle': 'heroTitle',
+		'heroSubtitle': 'heroSubtitle',
+		'discoverBtn': 'discoverBtn',
+		'joinBtn': 'joinBtn',
+
+		'aboutTitle': 'aboutTitle',
+		'stat1': 'stat1',
+		'stat2': 'stat2',
+		'stat3': 'stat3',
+		'stat4': 'stat4',
+
+		'badge1': 'badge1',
+		'badge2': 'badge2',
+		'badge3': 'badge3',
+		'badge4': 'badge4',
+
+		'familiesPageTitle': 'familiesPageTitle',
+		'familiesPageSubtitle': 'familiesPageSubtitle',
+
+		'productsTitle': 'productsTitle',
+		'favoritesPageTitle': 'favoritesPageTitle',
+		'favoritesPageSubtitle': 'favoritesPageSubtitle',
+
+		'popupTitle': 'popupTitle',
+		'step1': 'step1',
+		'step2': 'step2',
+		'step3': 'step3',
+		'gotItBtn': 'gotItBtn',
+
+		'shareTitle': 'shareTitle',
+		'copyLinkText': 'copyLinkText',
+		'closeShareBtn': 'closeShareBtn',
+
+		'offersBtnText': 'offersBtnText',
+		'offersPageTitle': 'offersPageTitle',
+		'offersPageSubtitle': 'offersPageSubtitle',
+		'dealsTitle': 'dealsTitle',
+
+		// مهم: في i18n.js مفاتيحها privacyLink / termsLink
+		'privacyLink': 'privacyLink',
+		'termsLink': 'termsLink'
+	};
+
+	for (const [id, key] of Object.entries(textElements)) {
+		const el = document.getElementById(id);
+		if (el && t[key]) el.textContent = t[key];
+	}
+
+	// placeholders
+	const homeSearch = document.getElementById('homeSearch');
+	if (homeSearch) homeSearch.placeholder = t.homeSearchPlaceholder || '';
+
+	const familiesSearch = document.getElementById('familiesSearch');
+	if (familiesSearch) familiesSearch.placeholder = t.familiesSearchPlaceholder || '';
+
+	// إعادة رسم الفلاتر والصفحات
+	initEmiratesChips();
+	initCategoriesChips();
+
+	if (appState.currentPage === 'families') renderFamilies();
+	else if (appState.currentPage === 'products' && appState.currentFamilyId) showFamilyProducts(appState.currentFamilyId, false);
+	else if (appState.currentPage === 'product-detail' && appState.currentFamilyId && appState.currentProductId) showProductDetail(appState.currentFamilyId, appState.currentProductId, false);
+	else if (appState.currentPage === 'favorites') renderFavorites();
+	else if (appState.currentPage === 'offers') renderOffers();
+}
 // ==================== معالجة مشاركة المنتج عبر delegation ====================
 document.addEventListener('click', function(e) {
     const shareBtn = e.target.closest('.share-btn');
@@ -1545,50 +1602,95 @@ document.addEventListener('click', function(e) {
 });
 
 // ==================== Initialization ====================
-window.addEventListener('load', async function() {
-    setupScrollSaveOnUnload();
-    const savedLang = localStorage.getItem('projectSouqLang');
-    appState.currentLanguage = savedLang === 'en' ? 'en' : 'ar';
-    if (appState.currentLanguage === 'en') document.body.classList.add('en-mode');
-    else document.body.classList.remove('en-mode');
-    const t = translations[appState.currentLanguage];
-    const textElements = {
-        'siteTitle': 'siteTitle', 'siteSubtitle': 'siteSubtitle',
-        'navHome': 'navHome', 'navMarket': 'navMarket', 'navFavorites': 'navFavorites',
-        'navRegister': 'navRegister', 'footerLogo': 'footerLogo', 'footerText': 'footerText',
-        'copyright': 'copyright', 'langBtn': 'langBtn', 'heroTitle': 'heroTitle',
-        'heroSubtitle': 'heroSubtitle', 'discoverBtn': 'discoverBtn', 'joinBtn': 'joinBtn',
-        'aboutTitle': 'aboutTitle', 'stat1': 'stat1', 'stat2': 'stat2', 'stat3': 'stat3', 'stat4': 'stat4',
-        'badge1': 'badge1', 'badge2': 'badge2', 'badge3': 'badge3', 'badge4': 'badge4',
-        'familiesPageTitle': 'familiesPageTitle', 'familiesPageSubtitle': 'familiesPageSubtitle',
-        'productsTitle': 'productsTitle', 'favoritesPageTitle': 'favoritesPageTitle',
-        'favoritesPageSubtitle': 'favoritesPageSubtitle', 'popupTitle': 'popupTitle',
-        'step1': 'step1', 'step2': 'step2', 'step3': 'step3', 'gotItBtn': 'gotItBtn',
-        'shareTitle': 'shareTitle', 'copyLinkText': 'copyLinkText', 'closeShareBtn': 'closeShareBtn',
-        'offersBtnText': 'offersBtnText', 'offersPageTitle': 'offersPageTitle',
-        'offersPageSubtitle': 'offersPageSubtitle', 'dealsTitle': 'dealsTitle'
-    };
-    for (const [id, key] of Object.entries(textElements)) {
-        const el = document.getElementById(id);
-        if (el && t[key]) el.textContent = t[key];
-    }
-    const homeSearch = document.getElementById('homeSearch');
-    if (homeSearch) homeSearch.placeholder = t.homeSearchPlaceholder;
-    const familiesSearch = document.getElementById('familiesSearch');
-    if (familiesSearch) familiesSearch.placeholder = t.familiesSearchPlaceholder;
-    initEmiratesChips();
-    initCategoriesChips();
-    await loadProjectsFromSupabase();
-    handleHashChange();
-    setTimeout(() => hideLoader(), 100);
-    updateCartCount();
-    const feedbackForm = document.getElementById('feedbackFormModal');
-    if (feedbackForm) {
-        feedbackForm.removeEventListener('submit', submitFeedback);
-        feedbackForm.addEventListener('submit', submitFeedback);
-    }
-});
+window.addEventListener('load', async function () {
+	setupScrollSaveOnUnload();
 
+	const savedLang = localStorage.getItem('projectSouqLang');
+	appState.currentLanguage = savedLang === 'en' ? 'en' : 'ar';
+
+	// ✅ ربط زر تغيير اللغة في الهيدر
+	const langToggleBtn = document.getElementById('langToggleBtn');
+	if (langToggleBtn) {
+		langToggleBtn.addEventListener('click', function (e) {
+			e.stopPropagation();
+			toggleLanguage();
+		});
+	}
+
+	if (appState.currentLanguage === 'en') document.body.classList.add('en-mode');
+	else document.body.classList.remove('en-mode');
+
+	const t = translations[appState.currentLanguage];
+
+	const textElements = {
+		siteTitle: 'siteTitle',
+		siteSubtitle: 'siteSubtitle',
+		navHome: 'navHome',
+		navMarket: 'navMarket',
+		navFavorites: 'navFavorites',
+		navRegister: 'navRegister',
+		footerLogo: 'footerLogo',
+		footerText: 'footerText',
+		copyright: 'copyright',
+		langBtn: 'langBtn',
+		heroTitle: 'heroTitle',
+		heroSubtitle: 'heroSubtitle',
+		discoverBtn: 'discoverBtn',
+		joinBtn: 'joinBtn',
+		aboutTitle: 'aboutTitle',
+		stat1: 'stat1',
+		stat2: 'stat2',
+		stat3: 'stat3',
+		stat4: 'stat4',
+		badge1: 'badge1',
+		badge2: 'badge2',
+		badge3: 'badge3',
+		badge4: 'badge4',
+		familiesPageTitle: 'familiesPageTitle',
+		familiesPageSubtitle: 'familiesPageSubtitle',
+		productsTitle: 'productsTitle',
+		favoritesPageTitle: 'favoritesPageTitle',
+		favoritesPageSubtitle: 'favoritesPageSubtitle',
+		popupTitle: 'popupTitle',
+		step1: 'step1',
+		step2: 'step2',
+		step3: 'step3',
+		gotItBtn: 'gotItBtn',
+		shareTitle: 'shareTitle',
+		copyLinkText: 'copyLinkText',
+		closeShareBtn: 'closeShareBtn',
+		offersBtnText: 'offersBtnText',
+		offersPageTitle: 'offersPageTitle',
+		offersPageSubtitle: 'offersPageSubtitle',
+		dealsTitle: 'dealsTitle'
+	};
+
+	for (const [id, key] of Object.entries(textElements)) {
+		const el = document.getElementById(id);
+		if (el && t[key]) el.textContent = t[key];
+	}
+
+	const homeSearch = document.getElementById('homeSearch');
+	if (homeSearch) homeSearch.placeholder = t.homeSearchPlaceholder;
+
+	const familiesSearch = document.getElementById('familiesSearch');
+	if (familiesSearch) familiesSearch.placeholder = t.familiesSearchPlaceholder;
+
+	initEmiratesChips();
+	initCategoriesChips();
+
+	await loadProjectsFromSupabase();
+	handleHashChange();
+
+	setTimeout(() => hideLoader(), 100);
+	updateCartCount();
+
+	const feedbackForm = document.getElementById('feedbackFormModal');
+	if (feedbackForm) {
+		feedbackForm.removeEventListener('submit', submitFeedback);
+		feedbackForm.addEventListener('submit', submitFeedback);
+	}
+});
 window.addEventListener('pageshow', function(event) {
     if (event.persisted) {
         const savedLang = localStorage.getItem('projectSouqLang');
