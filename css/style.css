@@ -5247,11 +5247,16 @@ html[dir="ltr"] body,
   font-family: 'Poppins', 'Almarai', sans-serif;
 }
 
-/* Official Site Fonts */
+/* =======================
+   Official Site Fonts
+   ======================= */
+
+/* Arabic / RTL (default) */
 html[dir="rtl"] body {
   font-family: 'Almarai', sans-serif;
 }
 
+/* English / LTR */
 html[dir="ltr"] body,
 .en-mode body {
   font-family: 'Poppins', 'Almarai', sans-serif;
