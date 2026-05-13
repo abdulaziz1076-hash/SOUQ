@@ -5247,7 +5247,17 @@ html[dir="ltr"] body,
   font-family: 'Poppins', 'Almarai', sans-serif;
 }
 
-/* Optional: headings style (Arabic only) */
+/* Official Site Fonts */
+html[dir="rtl"] body {
+  font-family: 'Almarai', sans-serif;
+}
+
+html[dir="ltr"] body,
+.en-mode body {
+  font-family: 'Poppins', 'Almarai', sans-serif;
+}
+
+/* Headings style (Arabic only) */
 html[dir="rtl"] h1,
 html[dir="rtl"] h2,
 html[dir="rtl"] h3,
