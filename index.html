@@ -499,6 +499,7 @@
 
   <!-- Scripts -->
   <script src="js/supabase.js"></script>
+  <script src="js/i18n.js"></script>
   <script type="module" src="js/main.js"></script>
 
   <script>
@@ -666,7 +667,6 @@
     // محاولات تحديث بعد تحميل main.js والبيانات
     function tryHomeEnhancements() {
       computeRealStats();
-      renderFeaturedProjectsHome();
     }
 
     setTimeout(tryHomeEnhancements, 1200);
