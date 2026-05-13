@@ -241,6 +241,9 @@ async function loadProjectsFromSupabase() {
             }
         });
 
+        window.projectsData = projectsData;
+        window.contactsData = contactsData;
+
         console.log(`✅ Loaded ${projectsData.length} projects`);
 
         if (appState.currentPage === 'families') renderFamilies();
