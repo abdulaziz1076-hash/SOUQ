@@ -8,55 +8,91 @@
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #F1F5F9; font-family: 'Almarai', sans-serif; }
-        .dashboard-wrapper { max-width: 1300px; margin: 20px auto; padding: 0 20px; }
-        .tabs-container { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 25px; border-bottom: 2px solid #E2E8F0; padding-bottom: 10px; }
-        .tab-btn { background: transparent; border: none; padding: 12px 24px; border-radius: 40px; font-weight: 800; cursor: pointer; transition: 0.2s; color: #64748B; font-size: 15px; }
-        .tab-btn i { margin-left: 8px; }
-        .tab-btn.active { background: #0F3D2E; color: white; }
-        .tab-pane { display: none; background: white; border-radius: 28px; padding: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .tab-pane.active { display: block; }
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .stat-card { background: white; border-radius: 24px; padding: 20px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid #E2E8F0; }
-        .stat-card i { font-size: 32px; color: #D4AF37; margin-bottom: 10px; }
-        .stat-number { font-size: 32px; font-weight: 800; color: #0F3D2E; }
-        .alert-banner { background: #FEF3C7; border-right: 5px solid #F59E0B; padding: 16px 20px; border-radius: 20px; margin-bottom: 25px; display: flex; align-items: center; gap: 12px; }
-        .alert-banner i { font-size: 22px; color: #F59E0B; }
-        .alert-banner.danger { background: #FEE2E2; border-right-color: #DC2626; }
-        .alert-banner.success { background: #DCFCE7; border-right-color: #22C55E; }
+        /* أنماط إضافية للوحة التحكم */
+        .dashboard-container { max-width: 1400px; margin: 20px auto; padding: 0 20px; }
+        .dashboard-header { background: white; border-radius: 28px; padding: 20px 30px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; box-shadow: var(--card-shadow); border: 1px solid var(--light-gray); }
+        .dashboard-title h1 { font-family: 'El Messiri', serif; color: var(--primary-dark); font-size: 24px; }
+        .dashboard-title p { color: var(--gray); font-size: 13px; }
+        .stats-grid-dash { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card-dash { background: white; border-radius: 24px; padding: 20px; text-align: center; border: 1px solid var(--light-gray); }
+        .stat-card-dash i { font-size: 36px; color: var(--secondary); margin-bottom: 10px; }
+        .stat-number-dash { font-size: 28px; font-weight: 800; color: var(--primary-dark); }
+        .tabs-container-dash { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 25px; background: white; border-radius: 60px; padding: 6px; border: 1px solid var(--light-gray); }
+        .tab-btn-dash { background: transparent; border: none; padding: 12px 28px; border-radius: 50px; font-weight: 700; cursor: pointer; transition: 0.2s; color: var(--gray); display: flex; align-items: center; gap: 8px; }
+        .tab-btn-dash.active { background: var(--primary-gradient); color: white; box-shadow: 0 4px 12px rgba(15,61,46,0.2); }
+        .tab-pane-dash { display: none; background: white; border-radius: 28px; padding: 30px; border: 1px solid var(--light-gray); margin-bottom: 30px; }
+        .tab-pane-dash.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .form-row { margin-bottom: 20px; }
-        label { font-weight: 700; display: block; margin-bottom: 8px; color: #0F3D2E; }
-        input, select, textarea { width: 100%; padding: 12px 16px; border: 2px solid #E2E8F0; border-radius: 30px; font-family: inherit; background: #F8FAFC; }
-        button.btn-save { background: #0F3D2E; color: white; border: none; padding: 12px 24px; border-radius: 40px; font-weight: 800; cursor: pointer; }
-        .btn-sm { background: #D4AF37; color: #0F3D2E; border: none; padding: 6px 14px; border-radius: 30px; font-weight: 700; cursor: pointer; }
-        .product-item { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 20px; padding: 12px 16px; margin-bottom: 12px; display: flex; align-items: center; gap: 15px; }
-        .product-img-thumb { width: 55px; height: 55px; object-fit: cover; border-radius: 16px; }
-        @media (max-width: 700px) { .tab-btn { padding: 8px 16px; font-size: 13px; } }
+        .form-row label { display: block; font-weight: 700; margin-bottom: 8px; color: var(--primary-dark); }
+        .form-row input, .form-row select, .form-row textarea { width: 100%; padding: 12px 16px; border: 2px solid var(--light-gray); border-radius: 30px; font-family: inherit; background: var(--light); }
+        .form-row input:focus, .form-row select:focus, .form-row textarea:focus { outline: none; border-color: var(--secondary); background: white; }
+        .btn-save { background: var(--primary-gradient); color: white; border: none; padding: 12px 24px; border-radius: 40px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+        .btn-save:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(212,175,55,0.3); }
+        .btn-secondary { background: white; color: var(--primary-dark); border: 1px solid var(--primary-dark); padding: 10px 20px; border-radius: 40px; cursor: pointer; }
+        .product-item, .deal-item { background: var(--light); border-radius: 20px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
+        .product-img-thumb { width: 60px; height: 60px; object-fit: cover; border-radius: 16px; background: #f0f0f0; }
+        .product-info { flex: 1; }
+        .product-actions { display: flex; gap: 10px; }
+        .variant-row { display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; align-items: center; }
+        .variant-row input { flex: 1; min-width: 100px; }
+        .status-badge { display: inline-block; padding: 4px 12px; border-radius: 30px; font-size: 12px; font-weight: 700; }
+        .status-pending { background: #FEF3C7; color: #D97706; }
+        .status-approved { background: #DCFCE7; color: #15803D; }
+        .status-rejected { background: #FEE2E2; color: #DC2626; }
+        .help-sidebar { background: #F8FAFC; border-radius: 20px; padding: 20px; margin-top: 30px; border-right: 4px solid var(--secondary); }
+        .help-sidebar h4 { color: var(--primary-dark); margin-bottom: 10px; }
+        .help-sidebar p { font-size: 13px; color: var(--gray); }
+        .preview-img { max-width: 100px; max-height: 100px; margin-top: 5px; border-radius: 12px; border: 1px solid var(--light-gray); }
+        @media (max-width: 700px) { .tab-btn-dash { padding: 8px 16px; font-size: 12px; } .product-item { flex-direction: column; text-align: center; } }
+        .warning-banner { background: #FEF3C7; border-right: 4px solid #F59E0B; padding: 12px 20px; border-radius: 16px; margin-bottom: 20px; font-size: 13px; }
     </style>
 </head>
 <body>
 
-<header style="background: linear-gradient(135deg, #0F3D2E, #1A5F44); padding: 15px 25px; display: flex; justify-content: space-between; align-items: center;">
-    <div style="color:white; font-size:24px; font-weight:800;">سوق المشاريع - لوحة التحكم</div>
-    <button id="logoutBtn" style="background:#C41E3A; border:none; padding:8px 20px; border-radius:40px; color:white; font-weight:bold; cursor:pointer;">خروج</button>
+<header class="app-header">
+    <div class="header-container">
+        <div class="logo-section" onclick="window.location.href='index.html'">
+            <div class="logo-icon"><img src="images/logo.png" alt="سوق المشاريع" onerror="this.src='https://placehold.co/60x60/0F3D2E/white?text=SM'"></div>
+            <div class="logo-text"><h1>سوق المشاريع</h1><p>لوحة التحكم</p></div>
+        </div>
+        <div class="header-actions">
+            <div class="lang-toggle" id="langToggleBtn"><i class="fas fa-globe"></i><span>En</span></div>
+            <div class="menu-toggle" id="menuToggleBtn"><i class="fas fa-bars"></i></div>
+        </div>
+    </div>
+    <div class="nav-menu" id="navMenu">
+        <div class="nav-item" onclick="window.location.href='index.html'"><i class="fas fa-home"></i><span>الرئيسية</span></div>
+        <div class="nav-item" onclick="window.location.href='index.html#/projects/emirate/all'"><i class="fas fa-store"></i><span>السوق</span></div>
+        <div class="nav-item" onclick="window.location.href='services.html'"><i class="fas fa-cogs"></i><span>الخدمات</span></div>
+        <div class="nav-item" onclick="window.location.href='registerr.html'"><i class="fas fa-user-plus"></i><span>تسجيل مشروع</span></div>
+    </div>
 </header>
 
-<div class="dashboard-wrapper">
-    <div id="alertBanner" class="alert-banner"></div>
-    <div class="stats-grid" id="statsDashboard"></div>
-
-    <div class="tabs-container">
-        <button class="tab-btn active" data-tab="profile"><i class="fas fa-user-circle"></i> الملف الشخصي</button>
-        <button class="tab-btn" data-tab="products"><i class="fas fa-box"></i> المنتجات</button>
-        <button class="tab-btn" data-tab="deals"><i class="fas fa-tags"></i> العروض</button>
-        <button class="tab-btn" data-tab="contacts"><i class="fas fa-address-card"></i> بيانات التواصل</button>
-        <button class="tab-btn" data-tab="license"><i class="fas fa-file-certificate"></i> رفع الرخصة</button>
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <div class="dashboard-title">
+            <h1 id="dashboardTitle">لوحة تحكم المشروع</h1>
+            <p id="dashboardSub">إدارة مشروعك ومنتجاتك وبيانات التواصل</p>
+        </div>
+        <button id="logoutBtn" class="btn-secondary" style="background:#C41E3A; color:white; border:none;"><i class="fas fa-sign-out-alt"></i> خروج</button>
     </div>
 
-    <!-- تبويب الملف الشخصي -->
-    <div id="profileTab" class="tab-pane active">
-        <h2><i class="fas fa-edit"></i> تعديل بيانات المشروع</h2>
+    <!-- إحصائيات -->
+    <div class="stats-grid-dash" id="statsDashboard"></div>
+
+    <!-- تبويبات -->
+    <div class="tabs-container-dash">
+        <button class="tab-btn-dash active" data-tab="profile"><i class="fas fa-store"></i> بيانات المشروع</button>
+        <button class="tab-btn-dash" data-tab="products"><i class="fas fa-box"></i> المنتجات</button>
+        <button class="tab-btn-dash" data-tab="deals"><i class="fas fa-tags"></i> العروض</button>
+        <button class="tab-btn-dash" data-tab="contacts"><i class="fas fa-address-card"></i> التواصل</button>
+        <button class="tab-btn-dash" data-tab="license"><i class="fas fa-file-certificate"></i> الرخصة</button>
+        <button class="tab-btn-dash" data-tab="support"><i class="fas fa-headset"></i> الدعم الفني</button>
+    </div>
+
+    <!-- تبويب: بيانات المشروع -->
+    <div id="profileTab" class="tab-pane-dash active">
         <form id="profileForm">
             <div class="form-row"><label>اسم المشروع (عربي)</label><input type="text" id="profileNameAr" required></div>
             <div class="form-row"><label>اسم المشروع (إنجليزي)</label><input type="text" id="profileNameEn" required></div>
@@ -67,27 +103,76 @@
             <div class="form-row"><label>الإمارة</label><select id="profileEmirate"><option>أبوظبي</option><option>دبي</option><option>الشارقة</option><option>عجمان</option><option>رأس الخيمة</option><option>الفجيرة</option><option>أم القيوين</option></select></div>
             <div class="form-row"><label>نطاق التغطية</label><select id="profileCoverage"><option>الإمارة فقط</option><option>جميع إمارات الدولة</option><option>دول الخليج</option><option>العالم</option></select></div>
             <div class="form-row"><label>التصنيف الرئيسي</label><select id="profileCategory"></select></div>
-            <div class="checkbox-group" style="margin:15px 0"><input type="checkbox" id="profileAdraLicense"> <label>رخصة أدريا (إن وجدت)</label></div>
-            <div class="form-row"><label>صورة المشروع (لوجو)</label><input type="file" id="profileLogo" accept="image/*"></div>
+            <div class="checkbox-group"><input type="checkbox" id="profileAdraLicense"> <label>رخصة أدريا (إن وجدت)</label></div>
+            <div class="form-row"><label>شعار المشروع (صورة - حد أقصى 2 ميجابايت)</label><input type="file" id="profileLogo" accept="image/*"><div id="currentLogoHint" class="preview-img"></div></div>
             <button type="submit" class="btn-save">حفظ التغييرات</button>
         </form>
     </div>
 
-    <!-- تبويب المنتجات (مبسط) -->
-    <div id="productsTab" class="tab-pane">
-        <div style="display: flex; justify-content: space-between; margin-bottom:20px;"><h2>المنتجات</h2><button id="addProductBtn" class="btn-sm">+ إضافة منتج</button></div>
+    <!-- تبويب: المنتجات -->
+    <div id="productsTab" class="tab-pane-dash">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+            <h2>المنتجات</h2>
+            <button id="addProductBtn" class="btn-save" style="background: var(--secondary); color: var(--primary-dark);"><i class="fas fa-plus"></i> إضافة منتج</button>
+        </div>
         <div id="productsListContainer"></div>
+        <!-- مودال إضافة/تعديل منتج -->
+        <div id="productModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:2000; align-items:center; justify-content:center;">
+            <div style="background:white; border-radius:32px; max-width:700px; width:90%; padding:25px; max-height:90vh; overflow-y:auto;">
+                <h3 id="productModalTitle">إضافة منتج</h3>
+                <form id="productFormModal">
+                    <input type="hidden" id="productId">
+                    <div class="form-row"><label>الاسم (عربي)</label><input id="productNameAr" required></div>
+                    <div class="form-row"><label>الاسم (إنجليزي)</label><input id="productNameEn" required></div>
+                    <div class="form-row"><label>الصورة الرئيسية (رفع ملف - حد أقصى 2 ميجابايت)</label><input type="file" id="productMainImageFile" accept="image/*"><div id="mainImagePreview" class="preview-img"></div></div>
+                    <div class="form-row"><label>صور إضافية (يمكن رفع عدة صور - كل صورة حد أقصى 2 ميجابايت)</label><input type="file" id="productExtraImages" accept="image/*" multiple><div id="extraImagesPreview" class="preview-img" style="display:flex; gap:5px; flex-wrap:wrap;"></div></div>
+                    <div class="form-row"><label>الوصف القصير (عربي)</label><textarea id="productDescAr" rows="2"></textarea></div>
+                    <div class="form-row"><label>الوصف القصير (إنجليزي)</label><textarea id="productDescEn" rows="2"></textarea></div>
+                    <div class="form-row"><label>السعر (عربي)</label><input id="productPriceAr" placeholder="50 درهم"></div>
+                    <div class="form-row"><label>السعر (إنجليزي)</label><input id="productPriceEn" placeholder="50 AED"></div>
+                    <div class="form-row"><label>نوع المنتج (عربي)</label><select id="productTypeAr"><option value="">-- اختر --</option><option>أطباق رئيسية</option><option>مشروبات</option><option>حلويات</option></select></div>
+                    <div class="form-row"><label>نوع المنتج (إنجليزي)</label><select id="productTypeEn"><option value="">-- Select --</option><option>Main Dishes</option><option>Drinks</option><option>Desserts</option></select></div>
+                    <div class="form-row"><label>تفاصيل إضافية (عربي) - كل سطر نقطة</label><textarea id="productDetailsAr" rows="3"></textarea></div>
+                    <div class="form-row"><label>تفاصيل إضافية (إنجليزي)</label><textarea id="productDetailsEn" rows="3"></textarea></div>
+                    <div class="form-row"><label>خيارات المنتج (Variants)</label><div id="variantsContainer"></div><button type="button" id="addVariantBtn" class="btn-secondary">+ إضافة خيار</button></div>
+                    <div style="display:flex; gap:10px; margin-top:20px;">
+                        <button type="submit" class="btn-save">حفظ</button>
+                        <button type="button" id="closeProductModal" class="btn-secondary">إلغاء</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <!-- تبويب العروض (مبسط) -->
-    <div id="dealsTab" class="tab-pane">
-        <div style="display: flex; justify-content: space-between; margin-bottom:20px;"><h2>العروض</h2><button id="addDealBtn" class="btn-sm">+ إضافة عرض</button></div>
+    <!-- تبويب: العروض (مبسط) -->
+    <div id="dealsTab" class="tab-pane-dash">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 20px;"><h2>العروض</h2><button id="addDealBtn" class="btn-save" style="background: var(--secondary); color: var(--primary-dark);"><i class="fas fa-plus"></i> إضافة عرض</button></div>
         <div id="dealsListContainer"></div>
+        <!-- مودال عرض بسيط (اختصار) -->
+        <div id="dealModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:2000; align-items:center; justify-content:center;">
+            <div style="background:white; border-radius:32px; max-width:500px; width:90%; padding:25px;">
+                <h3 id="dealModalTitle">إضافة عرض</h3>
+                <form id="dealFormModal">
+                    <input type="hidden" id="dealId">
+                    <div class="form-row"><label>العنوان (عربي)</label><input id="dealTitleAr" required></div>
+                    <div class="form-row"><label>العنوان (إنجليزي)</label><input id="dealTitleEn" required></div>
+                    <div class="form-row"><label>الصورة (اختياري - حد أقصى 2 ميجابايت)</label><input type="file" id="dealImageFile" accept="image/*"></div>
+                    <div class="form-row"><label>الوصف (عربي)</label><textarea id="dealDescAr" rows="2"></textarea></div>
+                    <div class="form-row"><label>الوصف (إنجليزي)</label><textarea id="dealDescEn" rows="2"></textarea></div>
+                    <div class="form-row"><label>الشارة (عربي)</label><input id="dealBadgeAr" placeholder="عرض"></div>
+                    <div class="form-row"><label>الشارة (إنجليزي)</label><input id="dealBadgeEn" placeholder="Offer"></div>
+                    <div class="form-row"><label>تاريخ الانتهاء</label><input id="dealExpiry" type="date"></div>
+                    <div style="display:flex; gap:10px;">
+                        <button type="submit" class="btn-save">حفظ</button>
+                        <button type="button" id="closeDealModal" class="btn-secondary">إلغاء</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <!-- تبويب بيانات التواصل -->
-    <div id="contactsTab" class="tab-pane">
-        <h2>وسائل التواصل</h2>
+    <!-- تبويب: التواصل -->
+    <div id="contactsTab" class="tab-pane-dash">
         <form id="contactsForm">
             <div class="form-row"><label>واتساب</label><input type="text" id="contactWhatsapp"></div>
             <div class="form-row"><label>هاتف</label><input type="text" id="contactPhone"></div>
@@ -99,102 +184,121 @@
             <div class="form-row"><label>فيسبوك</label><input type="text" id="contactFacebook"></div>
             <div class="form-row"><label>تويتر (X)</label><input type="text" id="contactTwitter"></div>
             <div class="form-row"><label>موقع إلكتروني</label><input type="text" id="contactWebsite"></div>
-            <button type="submit" class="btn-save">حفظ التواصل</button>
+            <button type="submit" class="btn-save">حفظ بيانات التواصل</button>
         </form>
     </div>
 
-    <!-- تبويب رفع الرخصة -->
-    <div id="licenseTab" class="tab-pane">
+    <!-- تبويب: الرخصة -->
+    <div id="licenseTab" class="tab-pane-dash">
         <h2>رفع الرخصة التجارية</h2>
+        <div id="licenseStatusAlert" class="warning-banner" style="margin-bottom:20px;"></div>
         <form id="licenseForm">
-            <div class="form-row"><label>ملف الرخصة (صورة أو PDF)</label><input type="file" id="licenseFile" accept="image/*,.pdf" required></div>
+            <div class="form-row"><label>ملف الرخصة (صورة أو PDF - حد أقصى 5 ميجابايت)</label><input type="file" id="licenseFile" accept="image/*,.pdf" required></div>
             <button type="submit" class="btn-save">رفع الرخصة</button>
         </form>
+    </div>
+
+    <!-- تبويب: الدعم الفني -->
+    <div id="supportTab" class="tab-pane-dash">
+        <h2>الدعم الفني</h2>
+        <div style="margin-bottom: 20px;">
+            <button id="newTicketBtn" class="btn-save" style="background: var(--secondary); color: var(--primary-dark);"><i class="fas fa-plus"></i> تذكرة جديدة</button>
+        </div>
+        <div id="ticketsListContainer"></div>
+        <div id="ticketModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:2000; align-items:center; justify-content:center;">
+            <div style="background:white; border-radius:32px; max-width:500px; width:90%; padding:25px;">
+                <h3>تذكرة دعم فني جديدة</h3>
+                <form id="ticketForm">
+                    <div class="form-row"><label>الموضوع</label><input id="ticketSubject" required></div>
+                    <div class="form-row"><label>الرسالة</label><textarea id="ticketMessage" rows="5" required></textarea></div>
+                    <div style="display:flex; gap:10px;">
+                        <button type="submit" class="btn-save">إرسال</button>
+                        <button type="button" id="closeTicketModal" class="btn-secondary">إلغاء</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- دليل سريع -->
+    <div class="help-sidebar">
+        <h4><i class="fas fa-life-ring"></i> دليل سريع</h4>
+        <p>• يمكنك إدارة كل شيء من هنا. لرفع صور المنتجات، نوصي بإنشاء bucket إضافي باسم `product-images` في Storage.<br>
+        • الحد الأقصى لحجم الصورة: 2 ميجابايت، للرخصة: 5 ميجابايت.<br>
+        • إذا واجهتك مشكلة في رفع الملفات، تأكد من وجود bucket مناسب وصلاحيات الرفع.</p>
     </div>
 </div>
 
 <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
     import { APP_CONFIG } from './config.js';
+    import { uploadFile, validateFileSize } from './js/project-session.js';
+
     const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
-
     let projectId = null;
-    // الحصول على projectId من URL أو من localStorage
-    const urlParams = new URLSearchParams(window.location.search);
-    projectId = urlParams.get('project_id');
-    if (!projectId) {
-        const session = localStorage.getItem('projectOwnerSession');
-        if (session) projectId = JSON.parse(session).projectId;
-    }
-    if (!projectId) window.location.href = 'project-login.html';
+    let currentVariants = [];
 
-    async function fetchProject() {
-        const { data, error } = await supabase.from('projects').select('*').eq('id', projectId).single();
-        if (error) throw error;
-        return data;
+    // التحقق من الجلسة
+    async function checkSession() {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) { window.location.href = 'project-login.html'; return null; }
+        const { data: project } = await supabase.from('projects').select('id').eq('owner_user_id', session.user.id).single();
+        if (!project) { window.location.href = 'project-login.html'; return null; }
+        projectId = project.id;
+        return session;
     }
 
-    async function loadDashboard() {
-        const proj = await fetchProject();
-        // ملء النموذج
-        document.getElementById('profileNameAr').value = proj.name_ar || '';
-        document.getElementById('profileNameEn').value = proj.name_en || '';
-        document.getElementById('profileDescAr').value = proj.description_ar || '';
-        document.getElementById('profileDescEn').value = proj.description_en || '';
-        document.getElementById('profileLongAr').value = proj.long_description_ar || '';
-        document.getElementById('profileLongEn').value = proj.long_description_en || '';
-        document.getElementById('profileEmirate').value = proj.emirate || 'دبي';
-        document.getElementById('profileCoverage').value = proj.coverage || 'الإمارة فقط';
-        document.getElementById('profileCategory').value = proj.category_ar || '';
-        document.getElementById('profileAdraLicense').checked = proj.adra_license || false;
-
-        // إحصائيات بسيطة
-        const { count: productsCount } = await supabase.from('products').select('*', { count: 'exact', head: true }).eq('project_id', projectId);
-        document.getElementById('statsDashboard').innerHTML = `
-            <div class="stat-card"><i class="fas fa-box"></i><div class="stat-number">${productsCount || 0}</div><div class="stat-label">المنتجات</div></div>
-            <div class="stat-card"><i class="fas fa-tags"></i><div class="stat-number">0</div><div class="stat-label">العروض</div></div>
-            <div class="stat-card"><i class="fas fa-shopping-cart"></i><div class="stat-number">0</div><div class="stat-label">الطلبات</div></div>
-        `;
-
-        // تنبيهات الرخصة
-        const licenseStatus = proj.license_status;
-        const alertDiv = document.getElementById('alertBanner');
-        if (licenseStatus === 'pending_license' || licenseStatus === 'license_rejected') {
-            alertDiv.className = 'alert-banner danger';
-            alertDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> يرجى رفع الرخصة التجارية لاستمرار ظهور مشروعك في السوق.';
-        } else if (licenseStatus === 'license_uploaded') {
-            alertDiv.className = 'alert-banner';
-            alertDiv.innerHTML = '<i class="fas fa-clock"></i> جاري مراجعة الرخصة من قبل الإدارة.';
-        } else if (licenseStatus === 'license_approved') {
-            alertDiv.className = 'alert-banner success';
-            alertDiv.innerHTML = '<i class="fas fa-check-circle"></i> معتمد! مشروعك ظاهر في السوق.';
-        } else {
-            alertDiv.style.display = 'none';
+    // تحميل كل البيانات
+    async function loadProjectData() {
+        const { data: project } = await supabase.from('projects').select('*').eq('id', projectId).single();
+        if (project) {
+            document.getElementById('profileNameAr').value = project.name_ar || '';
+            document.getElementById('profileNameEn').value = project.name_en || '';
+            document.getElementById('profileDescAr').value = project.description_ar || '';
+            document.getElementById('profileDescEn').value = project.description_en || '';
+            document.getElementById('profileLongAr').value = project.long_description_ar || '';
+            document.getElementById('profileLongEn').value = project.long_description_en || '';
+            document.getElementById('profileEmirate').value = project.emirate || 'دبي';
+            document.getElementById('profileCoverage').value = project.coverage || 'الإمارة فقط';
+            document.getElementById('profileAdraLicense').checked = project.adra_license || false;
+            if (project.image) document.getElementById('currentLogoHint').innerHTML = `<img src="${project.image}" class="preview-img" style="max-width:100px;">`;
+            else document.getElementById('currentLogoHint').innerHTML = 'لا يوجد شعار حالياً';
         }
-
-        // تحميل المنتجات
+        await loadStats();
         await loadProducts();
         await loadDeals();
         await loadContacts();
+        await loadTickets();
+        checkLicenseStatus();
+    }
+
+    async function loadStats() {
+        const { count: productsCount } = await supabase.from('products').select('*', { count: 'exact', head: true }).eq('project_id', projectId);
+        const { count: dealsCount } = await supabase.from('deals').select('*', { count: 'exact', head: true }).eq('project_id', projectId);
+        const { count: ordersCount } = await supabase.from('admin_order_logs').select('*', { count: 'exact', head: true }).eq('project_id', projectId);
+        document.getElementById('statsDashboard').innerHTML = `
+            <div class="stat-card-dash"><i class="fas fa-box"></i><div class="stat-number-dash">${productsCount || 0}</div><div>المنتجات</div></div>
+            <div class="stat-card-dash"><i class="fas fa-tags"></i><div class="stat-number-dash">${dealsCount || 0}</div><div>العروض</div></div>
+            <div class="stat-card-dash"><i class="fas fa-shopping-cart"></i><div class="stat-number-dash">${ordersCount || 0}</div><div>الطلبات</div></div>
+        `;
     }
 
     async function loadProducts() {
-        const { data } = await supabase.from('products').select('*').eq('project_id', projectId).order('display_order');
+        const { data } = await supabase.from('products').select('*').eq('project_id', projectId).order('display_order', { ascending: true });
         const container = document.getElementById('productsListContainer');
-        if (!data || data.length === 0) {
-            container.innerHTML = '<p>لا توجد منتجات. أضف منتجك الأول.</p>';
-            return;
-        }
+        if (!data || data.length === 0) { container.innerHTML = '<p>لا توجد منتجات. أضف منتجك الأول.</p>'; return; }
         let html = '';
         for (const p of data) {
-            html += `<div class="product-item">
-                        <img class="product-img-thumb" src="${p.main_image || ''}" onerror="this.src='https://placehold.co/55x55'">
-                        <div><strong>${p.name_ar}</strong><br>${p.price_ar || 'سعر عند الطلب'}</div>
-                        <div style="margin-right: auto;">
-                            <button class="btn-sm" onclick="editProduct('${p.id}')"><i class="fas fa-edit"></i></button>
-                            <button class="btn-sm" style="background:#C41E3A;color:white" onclick="deleteProduct('${p.id}')"><i class="fas fa-trash"></i></button>
-                        </div>
-                    </div>`;
+            html += `
+                <div class="product-item">
+                    <img class="product-img-thumb" src="${p.main_image || 'https://placehold.co/60x60/0F3D2E/white?text=No+Image'}" onerror="this.src='https://placehold.co/60x60'">
+                    <div class="product-info"><strong>${p.name_ar}</strong><br>${p.price_ar || 'سعر عند الطلب'}</div>
+                    <div class="product-actions">
+                        <button class="btn-secondary" onclick="editProduct('${p.id}')"><i class="fas fa-edit"></i></button>
+                        <button class="btn-secondary" style="background:#C41E3A;color:white" onclick="deleteProduct('${p.id}')"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            `;
         }
         container.innerHTML = html;
     }
@@ -205,7 +309,7 @@
         if (!data || data.length === 0) { container.innerHTML = '<p>لا توجد عروض.</p>'; return; }
         let html = '';
         for (const d of data) {
-            html += `<div class="product-item"><div><strong>${d.title_ar}</strong></div><div style="margin-right: auto;"><button class="btn-sm" onclick="editDeal('${d.id}')"><i class="fas fa-edit"></i></button><button class="btn-sm" style="background:#C41E3A;color:white" onclick="deleteDeal('${d.id}')"><i class="fas fa-trash"></i></button></div></div>`;
+            html += `<div class="product-item"><div><strong>${d.title_ar}</strong><br>${d.expiry_date || ''}</div><div class="product-actions"><button class="btn-secondary" onclick="editDeal('${d.id}')"><i class="fas fa-edit"></i></button><button class="btn-secondary" style="background:#C41E3A;color:white" onclick="deleteDeal('${d.id}')"><i class="fas fa-trash"></i></button></div></div>`;
         }
         container.innerHTML = html;
     }
@@ -226,16 +330,47 @@
         }
     }
 
-    // حفظ الملف الشخصي
+    async function loadTickets() {
+        const { data } = await supabase.from('support_tickets').select('*').eq('project_id', projectId).order('created_at', { ascending: false });
+        const container = document.getElementById('ticketsListContainer');
+        if (!data || data.length === 0) { container.innerHTML = '<p>لا توجد تذاكر دعم.</p>'; return; }
+        let html = '<div style="display:flex; flex-direction:column; gap:15px;">';
+        for (const t of data) {
+            let statusClass = t.status === 'open' ? 'status-pending' : (t.status === 'in_progress' ? 'status-pending' : 'status-approved');
+            let statusText = t.status === 'open' ? 'مفتوحة' : (t.status === 'in_progress' ? 'قيد المعالجة' : 'مغلقة');
+            html += `<div style="background:var(--light); border-radius:20px; padding:15px;">
+                        <div><strong>${t.subject}</strong> <span class="status-badge ${statusClass}">${statusText}</span></div>
+                        <div style="font-size:12px; color:var(--gray); margin-top:5px;">${new Date(t.created_at).toLocaleString()}</div>
+                        <div style="margin-top:10px;">${t.message.substring(0, 150)}${t.message.length > 150 ? '...' : ''}</div>
+                        ${t.admin_reply ? `<div style="margin-top:10px; background:white; padding:10px; border-radius:16px;"><strong>رد الإدارة:</strong> ${t.admin_reply}</div>` : ''}
+                    </div>`;
+        }
+        html += '</div>';
+        container.innerHTML = html;
+    }
+
+    function checkLicenseStatus() {
+        supabase.from('projects').select('license_status').eq('id', projectId).single().then(({ data }) => {
+            if (!data) return;
+            const status = data.license_status;
+            const alertDiv = document.getElementById('licenseStatusAlert');
+            if (status === 'pending_license') alertDiv.innerHTML = '<div class="warning-banner"><i class="fas fa-clock"></i> لم يتم رفع الرخصة بعد. يرجى رفعها لاستمرار ظهور مشروعك.</div>';
+            else if (status === 'license_uploaded') alertDiv.innerHTML = '<div class="warning-banner" style="background:#DBEAFE;"><i class="fas fa-hourglass-half"></i> جاري مراجعة الرخصة من قبل الإدارة.</div>';
+            else if (status === 'license_approved') alertDiv.innerHTML = '<div class="warning-banner" style="background:#DCFCE7;"><i class="fas fa-check-circle"></i> معتمد! مشروعك ظاهر في السوق.</div>';
+            else if (status === 'license_rejected') alertDiv.innerHTML = '<div class="warning-banner" style="background:#FEE2E2;"><i class="fas fa-times-circle"></i> مرفوض: يرجى رفع ملف صحيح.</div>';
+        });
+    }
+
+    // حفظ بيانات المشروع
     document.getElementById('profileForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         let logoUrl = null;
         const logoFile = document.getElementById('profileLogo').files[0];
         if (logoFile) {
+            if (!validateFileSize(logoFile, 2)) return;
             const ext = logoFile.name.split('.').pop();
             const fileName = `${projectId}/logo_${Date.now()}.${ext}`;
-            const { error } = await supabase.storage.from('project-logos').upload(fileName, logoFile, { upsert: true });
-            if (!error) logoUrl = supabase.storage.from('project-logos').getPublicUrl(fileName).data.publicUrl;
+            logoUrl = await uploadFile('project-logos', fileName, logoFile, 2);
         }
         const updates = {
             name_ar: document.getElementById('profileNameAr').value,
@@ -252,24 +387,10 @@
         };
         await supabase.from('projects').update(updates).eq('id', projectId);
         alert('تم حفظ البيانات');
+        loadProjectData();
     });
 
-    // رفع الرخصة
-    document.getElementById('licenseForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const file = document.getElementById('licenseFile').files[0];
-        if (!file) return;
-        const fileName = `${projectId}/license_${Date.now()}.${file.name.split('.').pop()}`;
-        const { error: uploadErr } = await supabase.storage.from('licenses').upload(fileName, file);
-        if (uploadErr) { alert(uploadErr.message); return; }
-        const { data: urlData } = supabase.storage.from('licenses').getPublicUrl(fileName);
-        await supabase.from('project_license_requests').insert({ project_id: projectId, license_file_url: urlData.publicUrl, status: 'pending' });
-        await supabase.from('projects').update({ license_status: 'license_uploaded' }).eq('id', projectId);
-        alert('تم رفع الرخصة، جاري المراجعة');
-        loadDashboard();
-    });
-
-    // حفظ بيانات التواصل
+    // حفظ التواصل
     document.getElementById('contactsForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         await supabase.from('contacts').upsert({
@@ -288,31 +409,308 @@
         alert('تم حفظ بيانات التواصل');
     });
 
-    // دوال عامة
-    window.editProduct = (id) => { alert("تعديل المنتج: سيتم فتح نافذة منفصلة في الإصدار الكامل"); };
-    window.deleteProduct = async (id) => { if(confirm('حذف المنتج؟')){ await supabase.from('products').delete().eq('id', id); loadProducts(); } };
-    window.editDeal = (id) => { alert("تعديل العرض"); };
-    window.deleteDeal = async (id) => { if(confirm('حذف العرض؟')){ await supabase.from('deals').delete().eq('id', id); loadDeals(); } };
-    document.getElementById('addProductBtn').onclick = () => alert("إضافة منتج (سيتم فتح مودال)");
-    document.getElementById('addDealBtn').onclick = () => alert("إضافة عرض");
+    // رفع الرخصة
+    document.getElementById('licenseForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const file = document.getElementById('licenseFile').files[0];
+        if (!file) return;
+        if (!validateFileSize(file, 5)) return;
+        const ext = file.name.split('.').pop();
+        const fileName = `${projectId}/license_${Date.now()}.${ext}`;
+        const licenseUrl = await uploadFile('project-logos', fileName, file, 5); // استخدام نفس bucket مؤقتاً
+        if (!licenseUrl) return;
+        await supabase.from('project_license_requests').insert({ project_id: projectId, license_file_url: licenseUrl, status: 'pending' });
+        await supabase.from('projects').update({ license_status: 'license_uploaded' }).eq('id', projectId);
+        alert('تم رفع الرخصة، جاري المراجعة');
+        checkLicenseStatus();
+    });
+
+    // دوال المنتجات
+    window.editProduct = async (id) => {
+        const { data } = await supabase.from('products').select('*').eq('id', id).single();
+        if (data) {
+            document.getElementById('productId').value = data.id;
+            document.getElementById('productNameAr').value = data.name_ar;
+            document.getElementById('productNameEn').value = data.name_en;
+            document.getElementById('productDescAr').value = data.description_ar || '';
+            document.getElementById('productDescEn').value = data.description_en || '';
+            document.getElementById('productPriceAr').value = data.price_ar || '';
+            document.getElementById('productPriceEn').value = data.price_en || '';
+            document.getElementById('productTypeAr').value = data.type_ar || '';
+            document.getElementById('productTypeEn').value = data.type_en || '';
+            document.getElementById('productDetailsAr').value = (data.details_ar || []).join('\n');
+            document.getElementById('productDetailsEn').value = (data.details_en || []).join('\n');
+            const { data: variants } = await supabase.from('product_variants').select('*').eq('product_id', id);
+            currentVariants = variants || [];
+            renderVariants();
+            document.getElementById('productModalTitle').innerText = 'تعديل المنتج';
+            document.getElementById('productModal').style.display = 'flex';
+        }
+    };
+
+    window.deleteProduct = async (id) => {
+        if (confirm('حذف المنتج؟')) {
+            await supabase.from('products').delete().eq('id', id);
+            loadProducts();
+            loadStats();
+        }
+    };
+    window.deleteDeal = async (id) => {
+        if (confirm('حذف العرض؟')) {
+            await supabase.from('deals').delete().eq('id', id);
+            loadDeals();
+            loadStats();
+        }
+    };
+    window.editDeal = async (id) => {
+        const { data } = await supabase.from('deals').select('*').eq('id', id).single();
+        if (data) {
+            document.getElementById('dealId').value = data.id;
+            document.getElementById('dealTitleAr').value = data.title_ar;
+            document.getElementById('dealTitleEn').value = data.title_en;
+            document.getElementById('dealDescAr').value = data.description_ar || '';
+            document.getElementById('dealDescEn').value = data.description_en || '';
+            document.getElementById('dealBadgeAr').value = data.badge_ar || '';
+            document.getElementById('dealBadgeEn').value = data.badge_en || '';
+            document.getElementById('dealExpiry').value = data.expiry_date || '';
+            document.getElementById('dealModalTitle').innerText = 'تعديل عرض';
+            document.getElementById('dealModal').style.display = 'flex';
+        }
+    };
+
+    function renderVariants() {
+        const container = document.getElementById('variantsContainer');
+        container.innerHTML = currentVariants.map((v, idx) => `
+            <div class="variant-row">
+                <input type="text" placeholder="الاسم (عربي)" value="${v.label_ar || ''}" class="variant-label-ar">
+                <input type="text" placeholder="الاسم (En)" value="${v.label_en || ''}" class="variant-label-en">
+                <input type="text" placeholder="السعر (عربي)" value="${v.price_ar || ''}" class="variant-price-ar">
+                <input type="text" placeholder="السعر (En)" value="${v.price_en || ''}" class="variant-price-en">
+                <label><input type="checkbox" ${v.is_default ? 'checked' : ''} class="variant-default"> افتراضي</label>
+                <button type="button" class="remove-variant" data-idx="${idx}"><i class="fas fa-trash"></i></button>
+            </div>
+        `).join('');
+        document.querySelectorAll('.remove-variant').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const idx = parseInt(btn.dataset.idx);
+                currentVariants.splice(idx, 1);
+                renderVariants();
+            });
+        });
+    }
+
+    document.getElementById('addVariantBtn')?.addEventListener('click', () => {
+        currentVariants.push({ label_ar: '', label_en: '', price_ar: '', price_en: '', is_default: false });
+        renderVariants();
+    });
+
+    async function uploadProductImages(productId, mainFile, extraFiles) {
+        let mainImageUrl = null;
+        let extraUrls = [];
+        if (mainFile && validateFileSize(mainFile, 2)) {
+            const ext = mainFile.name.split('.').pop();
+            const fileName = `${projectId}/${productId}/main_${Date.now()}.${ext}`;
+            mainImageUrl = await uploadFile('project-logos', fileName, mainFile, 2);
+        }
+        if (extraFiles && extraFiles.length) {
+            for (let i = 0; i < extraFiles.length; i++) {
+                const f = extraFiles[i];
+                if (validateFileSize(f, 2)) {
+                    const ext = f.name.split('.').pop();
+                    const fileName = `${projectId}/${productId}/extra_${Date.now()}_${i}.${ext}`;
+                    const url = await uploadFile('project-logos', fileName, f, 2);
+                    if (url) extraUrls.push(url);
+                }
+            }
+        }
+        return { mainImageUrl, extraUrls };
+    }
+
+    document.getElementById('productFormModal')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('productId').value;
+        const detailsAr = document.getElementById('productDetailsAr').value.split('\n').filter(l=>l.trim());
+        const detailsEn = document.getElementById('productDetailsEn').value.split('\n').filter(l=>l.trim());
+        let mainImageUrl = null;
+        let extraImages = [];
+
+        const mainFile = document.getElementById('productMainImageFile').files[0];
+        const extraFiles = document.getElementById('productExtraImages').files;
+        if (mainFile || extraFiles.length) {
+            const tempId = id || Date.now().toString();
+            const uploadResult = await uploadProductImages(tempId, mainFile, Array.from(extraFiles));
+            mainImageUrl = uploadResult.mainImageUrl;
+            extraImages = uploadResult.extraUrls;
+        }
+
+        const payload = {
+            name_ar: document.getElementById('productNameAr').value,
+            name_en: document.getElementById('productNameEn').value,
+            main_image: mainImageUrl,
+            images: extraImages,
+            description_ar: document.getElementById('productDescAr').value,
+            description_en: document.getElementById('productDescEn').value,
+            price_ar: document.getElementById('productPriceAr').value,
+            price_en: document.getElementById('productPriceEn').value,
+            type_ar: document.getElementById('productTypeAr').value,
+            type_en: document.getElementById('productTypeEn').value,
+            details_ar: detailsAr,
+            details_en: detailsEn,
+            project_id: projectId
+        };
+        let productId = id;
+        if (!productId) {
+            const { data: newProduct, error } = await supabase.from('products').insert(payload).select().single();
+            if (error) { alert(error.message); return; }
+            productId = newProduct.id;
+        } else {
+            await supabase.from('products').update(payload).eq('id', productId);
+        }
+        await supabase.from('product_variants').delete().eq('product_id', productId);
+        for (let v of currentVariants) {
+            if (v.label_ar || v.label_en) {
+                await supabase.from('product_variants').insert({
+                    product_id: productId,
+                    label_ar: v.label_ar,
+                    label_en: v.label_en,
+                    price_ar: v.price_ar,
+                    price_en: v.price_en,
+                    is_default: v.is_default
+                });
+            }
+        }
+        alert('تم حفظ المنتج');
+        document.getElementById('productModal').style.display = 'none';
+        loadProducts();
+        loadStats();
+    });
+
+    document.getElementById('addProductBtn').onclick = () => {
+        document.getElementById('productFormModal').reset();
+        document.getElementById('productId').value = '';
+        document.getElementById('mainImagePreview').innerHTML = '';
+        document.getElementById('extraImagesPreview').innerHTML = '';
+        currentVariants = [];
+        renderVariants();
+        document.getElementById('productModalTitle').innerText = 'إضافة منتج';
+        document.getElementById('productModal').style.display = 'flex';
+    };
+    document.getElementById('closeProductModal')?.addEventListener('click', () => document.getElementById('productModal').style.display = 'none');
+
+    // عروض
+    document.getElementById('addDealBtn').onclick = () => {
+        document.getElementById('dealFormModal').reset();
+        document.getElementById('dealId').value = '';
+        document.getElementById('dealModalTitle').innerText = 'إضافة عرض';
+        document.getElementById('dealModal').style.display = 'flex';
+    };
+    document.getElementById('closeDealModal')?.addEventListener('click', () => document.getElementById('dealModal').style.display = 'none');
+    document.getElementById('dealFormModal')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('dealId').value;
+        let imageUrl = null;
+        const imageFile = document.getElementById('dealImageFile').files[0];
+        if (imageFile && validateFileSize(imageFile, 2)) {
+            const ext = imageFile.name.split('.').pop();
+            const fileName = `${projectId}/deals/${Date.now()}.${ext}`;
+            imageUrl = await uploadFile('project-logos', fileName, imageFile, 2);
+        }
+        const payload = {
+            title_ar: document.getElementById('dealTitleAr').value,
+            title_en: document.getElementById('dealTitleEn').value,
+            description_ar: document.getElementById('dealDescAr').value,
+            description_en: document.getElementById('dealDescEn').value,
+            badge_ar: document.getElementById('dealBadgeAr').value,
+            badge_en: document.getElementById('dealBadgeEn').value,
+            expiry_date: document.getElementById('dealExpiry').value,
+            image: imageUrl,
+            project_id: projectId
+        };
+        if (id) await supabase.from('deals').update(payload).eq('id', id);
+        else await supabase.from('deals').insert(payload);
+        alert('تم حفظ العرض');
+        document.getElementById('dealModal').style.display = 'none';
+        loadDeals();
+        loadStats();
+    });
+
+    // تذاكر الدعم
+    document.getElementById('newTicketBtn').onclick = () => document.getElementById('ticketModal').style.display = 'flex';
+    document.getElementById('closeTicketModal').onclick = () => document.getElementById('ticketModal').style.display = 'none';
+    document.getElementById('ticketForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const subject = document.getElementById('ticketSubject').value;
+        const message = document.getElementById('ticketMessage').value;
+        await supabase.from('support_tickets').insert({
+            project_id: projectId,
+            subject,
+            message,
+            status: 'open'
+        });
+        alert('تم إرسال التذكرة');
+        document.getElementById('ticketModal').style.display = 'none';
+        loadTickets();
+    });
 
     // التبويبات
-    document.querySelectorAll('.tab-btn').forEach(btn => {
+    document.querySelectorAll('.tab-btn-dash').forEach(btn => {
         btn.addEventListener('click', () => {
-            document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+            document.querySelectorAll('.tab-btn-dash').forEach(b=>b.classList.remove('active'));
             btn.classList.add('active');
-            document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+            document.querySelectorAll('.tab-pane-dash').forEach(p=>p.classList.remove('active'));
             document.getElementById(btn.dataset.tab + 'Tab').classList.add('active');
         });
     });
 
+    // خروج
     document.getElementById('logoutBtn').onclick = async () => {
         await supabase.auth.signOut();
-        localStorage.removeItem('projectOwnerSession');
         window.location.href = 'index.html';
     };
 
-    loadDashboard();
+    // تهيئة
+    await checkSession();
+    await loadProjectData();
+    const categories = ["أطعمة ومشروبات","الرقميات","روائح وعطور","عناية","حلويات","تجميل","ملابس","يدويات","هدايا","عطارة","فنون","نباتات","ترفيه"];
+    const catSelect = document.getElementById('profileCategory');
+    catSelect.innerHTML = categories.map(c => `<option value="${c}">${c}</option>`).join('');
+
+    // معاينة الصور
+    document.getElementById('productMainImageFile').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (ev) => document.getElementById('mainImagePreview').innerHTML = `<img src="${ev.target.result}" class="preview-img" style="max-width:100px;">`;
+            reader.readAsDataURL(file);
+        } else document.getElementById('mainImagePreview').innerHTML = '';
+    });
+    document.getElementById('productExtraImages').addEventListener('change', (e) => {
+        const files = e.target.files;
+        const container = document.getElementById('extraImagesPreview');
+        container.innerHTML = '';
+        Array.from(files).forEach(f => {
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                const img = document.createElement('img');
+                img.src = ev.target.result;
+                img.className = 'preview-img';
+                img.style.maxWidth = '80px';
+                container.appendChild(img);
+            };
+            reader.readAsDataURL(f);
+        });
+    });
+
+    // تبديل اللغة
+    let currentLang = 'ar';
+    function toggleLang() {
+        currentLang = currentLang === 'ar' ? 'en' : 'ar';
+        localStorage.setItem('projectSouqLang', currentLang);
+        document.documentElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+        location.reload();
+    }
+    document.getElementById('langToggleBtn').addEventListener('click', toggleLang);
+    document.getElementById('menuToggleBtn').addEventListener('click', () => document.getElementById('navMenu').classList.toggle('active'));
 </script>
 </body>
 </html>
