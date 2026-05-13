@@ -5232,3 +5232,26 @@ body.en-mode .product-detail-info .product-price-display:empty::before {
         padding: 6px 10px;
     }
 }
+/* =======================
+   Official Site Fonts
+   ======================= */
+
+/* Default (Arabic / RTL) */
+html[dir="rtl"] body {
+  font-family: 'Almarai', sans-serif;
+}
+
+/* English / LTR */
+html[dir="ltr"] body,
+.en-mode body {
+  font-family: 'Poppins', 'Almarai', sans-serif;
+}
+
+/* Optional: headings style (Arabic only) */
+html[dir="rtl"] h1,
+html[dir="rtl"] h2,
+html[dir="rtl"] h3,
+html[dir="rtl"] .section-title,
+html[dir="rtl"] .page-title {
+  font-family: 'El Messiri', 'Almarai', sans-serif;
+}
