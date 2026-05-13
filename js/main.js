@@ -1486,11 +1486,6 @@ function applyLanguage(lang) {
   // 2) حالة التطبيق
   appState.currentLanguage = safeLang;
 
-  // 3) الخط (اختياري)
-  document.body.style.fontFamily =
-    safeLang === 'ar'
-      ? "'Almarai', sans-serif"
-      : "'Poppins', 'Almarai', sans-serif";
 
   // 4) تحديث النصوص الثابتة
   const t = translations[safeLang];
