@@ -227,11 +227,13 @@
         <span id="navServices">الخدمات العامة</span>
       </div>
 
-      <!-- ✅ تم حذف سجل مشروعك -->
-      <!-- ✅ تم إضافة تسجيل الدخول -->
       <div class="nav-item" onclick="window.location.href='project-login.html'">
         <i class="fas fa-right-to-bracket"></i>
         <span id="navLogin">تسجيل الدخول</span>
+      </div>
+      <div class="nav-item" onclick="showSocialContact()">
+        <i class="fas fa-user-plus"></i>
+        <span id="navSignup">تسجيل جديد</span>
       </div>
     </div>
   </header>
@@ -264,6 +266,10 @@
           <button class="join-hero-btn" onclick="window.location.href='project-login.html'">
             <i class="fas fa-right-to-bracket"></i>
             <span id="loginBtn">تسجيل الدخول</span>
+          </button>
+          <button class="join-hero-btn" onclick="showSocialContact()">
+          <i class="fas fa-user-plus"></i>
+          <span id="signupBtn">تسجيل جديد</span>
           </button>
         </div>
       </section>
@@ -345,7 +351,7 @@
 
           <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;">
             <a href="https://x.com/souqalmasharie" target="_blank" class="contact-item" style="width:54px;height:54px;">
-              <div class="contact-icon x-bg"><i class="fa-brands fa-x-twitter"></i></div>
+              <div class="contact-icon x-bg"><i class="fab fa-twitter"></i></div>
             </a>
 
             <a href="https://instagram.com/souqalmasharie" target="_blank" class="contact-item" style="width:54px;height:54px;">
