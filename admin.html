@@ -1067,6 +1067,23 @@ window.updateFeedbackStatus = async (id, newStatus) => {
     loadFeedbacks();
 };
 
+    window.updateProjectLicenseStatus = async (projectId, newStatus) => {
+  const { error } = await supabase
+    .from('projects')
+    .update({
+      license_status: newStatus,
+      license_reviewed_at: new Date().toISOString()
+    })
+    .eq('id', projectId);
+
+  if (error) showToast(error.message, true);
+  else {
+    showToast('تم تحديث حالة الترخيص');
+    loadProjects(currentProjectsPage);
+    loadStats();
+  }
+};
+
 // ==================== الطلبات ====================
 async function loadOrders(page = 1) {
     currentOrdersPage = page;
