@@ -478,26 +478,6 @@
         }
     };
 
-    function renderVariants() {
-        const container = document.getElementById('variantsContainer');
-        container.innerHTML = currentVariants.map((v, idx) => `
-            <div class="variant-row">
-                <input type="text" placeholder="الاسم (عربي)" value="${v.label_ar || ''}" class="variant-label-ar">
-                <input type="text" placeholder="الاسم (En)" value="${v.label_en || ''}" class="variant-label-en">
-                <input type="text" placeholder="السعر (عربي)" value="${v.price_ar || ''}" class="variant-price-ar">
-                <input type="text" placeholder="السعر (En)" value="${v.price_en || ''}" class="variant-price-en">
-                <label><input type="checkbox" ${v.is_default ? 'checked' : ''} class="variant-default"> افتراضي</label>
-                <button type="button" class="remove-variant" data-idx="${idx}"><i class="fas fa-trash"></i></button>
-            </div>
-        `).join('');
-        document.querySelectorAll('.remove-variant').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const idx = parseInt(btn.dataset.idx);
-                currentVariants.splice(idx, 1);
-                renderVariants();
-            });
-        });
-    }
 
     document.getElementById('addVariantBtn')?.addEventListener('click', () => {
         currentVariants.push({ label_ar: '', label_en: '', price_ar: '', price_en: '', is_default: false });
