@@ -5270,3 +5270,11 @@ html[dir="rtl"] .section-title,
 html[dir="rtl"] .page-title {
   font-family: 'El Messiri', 'Almarai', sans-serif;
 }
+.product-card .product-category {
+  display: none !important;
+}
+
+.product-variants,
+.variants-selector,
+.variant-option {
+  display: none !important;
