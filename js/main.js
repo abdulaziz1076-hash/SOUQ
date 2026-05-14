@@ -118,14 +118,14 @@ async function loadProjectsFromSupabase() {
         showLoader();
         console.log('🔄 Loading data from Supabase...');
 
-        const { data: projects, error } = await supabase
-            .from('projects')
-            .select(`
-                *,
-                products (*),
-                deals (*),
-                contacts (*)
-            `);
+        const sevenDaysAgoIso = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+
+const { data: projects, error } = await supabase
+  .from('projects')
+  .select(`*, products (*), deals (*), contacts (*)`)
+  .eq('status', 'approved')
+  .or(`license_status.eq.license_approved,created_time.gte.${sevenDaysAgoIso}`)
+  .order('display_order', { ascending: true, nullsFirst: false });
 
         if (error) throw error;
         if (!projects || projects.length === 0) {
@@ -655,7 +655,14 @@ function renderFamilies() {
 });
     const grid = document.getElementById('familiesGrid');
     if (sortedProjects.length === 0) {
-        grid.innerHTML = `<div style="grid-column: span 2; text-align: center; padding: 30px;">${t.noProjects}</div>`;
+        const noProjectsText =
+  (t && t.noProjects)
+    ? t.noProjects
+    : (appState.currentLanguage === 'ar'
+        ? 'لا توجد مشاريع حالياً. أخبر من تعرفهم وسجّل مشروعك.'
+        : 'No projects available right now. Tell others and register your project.');
+
+grid.innerHTML = `<div style="grid-column: span 2; text-align: center; padding: 30px;">${noProjectsText}</div>`;
         return;
     }
     grid.innerHTML = sortedProjects.map(family => {
