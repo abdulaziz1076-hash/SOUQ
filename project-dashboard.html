@@ -315,7 +315,10 @@
 		<div id="licenseStatusAlert" class="warning-banner" style="margin-bottom:20px;"></div>
 
 		<form id="licenseForm">
-			<div class="form-row"><label>ملف الرخصة (صورة أو PDF - حد أقصى 5 ميجابايت)</label><input type="file" id="licenseFile" accept="image/*,.pdf" required></div>
+			<div class="form-row">
+				<label>ملف الرخصة (صورة أو PDF - حد أقصى 5 ميجابايت)</label>
+				<input type="file" id="licenseFile" accept="image/*,.pdf" required>
+			</div>
 			<button type="submit" class="btn-save">رفع الرخصة</button>
 		</form>
 	</div>
@@ -351,8 +354,10 @@
 	<div class="help-sidebar">
 		<h4><i class="fas fa-life-ring"></i> دليل سريع</h4>
 		<p>
-			• يمكنك إدارة كل شيء من هنا. لرفع صور المنتجات، نوصي بإنشاء bucket إضافي باسم <code>product-images</code> في Storage.<br><br>
-			• الحد الأقصى لحجم الصورة: 2 ميجابايت، للرخصة: 5 ميجابايت.<br><br>
+			• يمكنك إدارة كل شيء من هنا. لرفع صور المنتجات، نوصي بإنشاء bucket إضافي باسم <code>product-images</code> في Storage.
+			<br><br>
+			• الحد الأقصى لحجم الصورة: 2 ميجابايت، للرخصة: 5 ميجابايت.
+			<br><br>
 			• إذا واجهتك مشكلة في رفع الملفات، تأكد من وجود bucket مناسب وصلاحيات الرفع.
 		</p>
 	</div>
@@ -378,6 +383,7 @@
 			.single();
 
 		if (!project) { window.location.href = 'project-login.html'; return null; }
+
 		projectId = project.id;
 		return session;
 	}
@@ -432,7 +438,7 @@
 			html += `
 				<div class="product-item">
 					<img class="product-img-thumb" src="${p.main_image || 'https://placehold.co/60x60/0F3D2E/white?text=No+Image'}" onerror="this.src='https://placehold.co/60x60'">
-					<div class="product-info"><strong>${p.name_ar}</strong><br>${p.price_ar || 'سعر عند الطلب'}</div>
+					<div class="product-info"><strong>${p.name_ar || ''}</strong><br>${p.price_ar || 'سعر عند الطلب'}</div>
 					<div class="product-actions">
 						<button class="btn-secondary" onclick="editProduct('${p.id}')"><i class="fas fa-edit"></i></button>
 						<button class="btn-secondary" style="background:#C41E3A;color:white" onclick="deleteProduct('${p.id}')"><i class="fas fa-trash"></i></button>
@@ -451,7 +457,15 @@
 
 		let html = '';
 		for (const d of data) {
-			html += `<div class="product-item"><div><strong>${d.title_ar}</strong><br>${d.expiry_date || ''}</div><div class="product-actions"><button class="btn-secondary" onclick="editDeal('${d.id}')"><i class="fas fa-edit"></i></button><button class="btn-secondary" style="background:#C41E3A;color:white" onclick="deleteDeal('${d.id}')"><i class="fas fa-trash"></i></button></div></div>`;
+			html += `
+				<div class="product-item">
+					<div><strong>${d.title_ar || ''}</strong><br>${d.expiry_date || ''}</div>
+					<div class="product-actions">
+						<button class="btn-secondary" onclick="editDeal('${d.id}')"><i class="fas fa-edit"></i></button>
+						<button class="btn-secondary" style="background:#C41E3A;color:white" onclick="deleteDeal('${d.id}')"><i class="fas fa-trash"></i></button>
+					</div>
+				</div>
+			`;
 		}
 		container.innerHTML = html;
 	}
@@ -480,15 +494,20 @@
 
 		let html = '<div style="display:flex; flex-direction:column; gap:15px;">';
 		for (const t of data) {
-			let statusClass = t.status === 'open' ? 'status-pending' : (t.status === 'in_progress' ? 'status-pending' : 'status-approved');
+			let statusClass = (t.status === 'open' || t.status === 'in_progress') ? 'status-pending' : 'status-approved';
 			let statusText = t.status === 'open' ? 'مفتوحة' : (t.status === 'in_progress' ? 'قيد المعالجة' : 'مغلقة');
 
+			const replyHtml = t.admin_reply
+				? `<div style="margin-top:10px; background:white; padding:10px; border-radius:16px;"><strong>رد الإدارة:</strong> ${t.admin_reply}</div>`
+				: '';
+
+			const msg = (t.message || '');
 			html += `
 				<div style="background:var(--light); border-radius:20px; padding:15px;">
-					<div><strong>${t.subject}</strong> <span class="status-badge ${statusClass}">${statusText}</span></div>
+					<div><strong>${t.subject || ''}</strong> <span class="status-badge ${statusClass}">${statusText}</span></div>
 					<div style="font-size:12px; color:var(--gray); margin-top:5px;">${new Date(t.created_at).toLocaleString()}</div>
-					<div style="margin-top:10px;">${t.message.substring(0, 150)}${t.message.length > 150 ? '...' : ''}</div>
-					${t.admin_reply ? `<div style="margin-top:10px; background:white; padding:10px; border-radius:16px;"><strong>رد الإدارة:</strong> ${t.admin_reply}</div>` : ''}
+					<div style="margin-top:10px;">${msg.substring(0, 150)}${msg.length > 150 ? '...' : ''}</div>
+					${replyHtml}
 				</div>
 			`;
 		}
@@ -535,7 +554,7 @@
 			coverage: document.getElementById('profileCoverage').value,
 			category_ar: document.getElementById('profileCategory').value,
 			adra_license: document.getElementById('profileAdraLicense').checked,
-			...(logoUrl && { image: logoUrl })
+			...(logoUrl ? { image: logoUrl } : {})
 		};
 
 		await supabase.from('projects').update(updates).eq('id', projectId);
@@ -591,8 +610,8 @@
 		if (!data) return;
 
 		document.getElementById('productId').value = data.id;
-		document.getElementById('productNameAr').value = data.name_ar;
-		document.getElementById('productNameEn').value = data.name_en;
+		document.getElementById('productNameAr').value = data.name_ar || '';
+		document.getElementById('productNameEn').value = data.name_en || '';
 		document.getElementById('productDescAr').value = data.description_ar || '';
 		document.getElementById('productDescEn').value = data.description_en || '';
 		document.getElementById('productPriceAr').value = data.price_ar || '';
@@ -716,8 +735,8 @@
 		if (!data) return;
 
 		document.getElementById('dealId').value = data.id;
-		document.getElementById('dealTitleAr').value = data.title_ar;
-		document.getElementById('dealTitleEn').value = data.title_en;
+		document.getElementById('dealTitleAr').value = data.title_ar || '';
+		document.getElementById('dealTitleEn').value = data.title_en || '';
 		document.getElementById('dealDescAr').value = data.description_ar || '';
 		document.getElementById('dealDescEn').value = data.description_en || '';
 		document.getElementById('dealBadgeAr').value = data.badge_ar || '';
