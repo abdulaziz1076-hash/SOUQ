@@ -921,9 +921,6 @@ function renderProductsByType(family) {
     productsGrid.innerHTML = filteredProducts.map(p => {
         const productName = currentLang === 'ar' ? p.name : p.nameEn;
         const productDesc = currentLang === 'ar' ? p.description : p.descriptionEn;
-        const productCategory = currentLang === 'ar' ? p.category : p.categoryEn;
-        const tCat = translations[currentLang].categories;
-        const categoryDisplay = tCat[p.category] || productCategory || '-';
         const isFav = isFavorite(p.id, 'product');
         const priceText = getPriceDisplay(p);
         const priceHtml = priceText ? `<div class="product-price">${priceText}</div>` : '';
@@ -939,7 +936,6 @@ function renderProductsByType(family) {
                     <div class="product-description">${productDesc || ''}</div>
                     ${priceHtml}
                     ${addToCartBtn}
-                    <div class="product-category">${categoryDisplay}</div>
                 </div>
             </div>
         `;
