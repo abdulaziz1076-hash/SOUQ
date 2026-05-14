@@ -1047,12 +1047,15 @@ async function loadFeedbacks() {
             <td>${f.reporter_email || '-'}</td>
             <td><span class="badge ${badgeClass}">${f.status}</span></td>
             <td>${new Date(f.created_at).toLocaleString()}</td>
-            <td><select onchange="window.updateFeedbackStatus(${f.id}, this.value)" style="padding:6px 12px; border-radius:30px;">
-                <option ${f.status==='pending'?'selected':''} value="pending">معلق</option>
-                <option ${f.status==='reviewed'?'selected':''} value="reviewed">مراجَع</option>
-                <option ${f.status==='resolved'?'selected':''} value="resolved">محلول</option>
-                <option ${f.status==='rejected'?'selected':''} value="rejected">مرفوض</option>
-            </select></td>
+            <td>
+  <select onchange="window.updateProjectLicenseStatus(${p.id}, this.value)" style="padding:6px 12px; border-radius:30px;">
+    <option value="pending_license" ${p.license_status === 'pending_license' ? 'selected' : ''}>pending_license</option>
+    <option value="license_uploaded" ${p.license_status === 'license_uploaded' ? 'selected' : ''}>license_uploaded</option>
+    <option value="license_approved" ${p.license_status === 'license_approved' ? 'selected' : ''}>license_approved</option>
+    <option value="license_rejected" ${p.license_status === 'license_rejected' ? 'selected' : ''}>license_rejected</option>
+    <option value="suspended" ${p.license_status === 'suspended' ? 'selected' : ''}>suspended</option>
+  </select>
+</td>
         </tr>`;
     }
     html += `</tbody>`;
