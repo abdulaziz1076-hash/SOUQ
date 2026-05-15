@@ -124,8 +124,17 @@ async function loadProjectsFromSupabase() {
 const { data: projects, error } = await supabase
   .from('projects')
   .select(`*, products (*), deals (*), contacts (*)`)
-  .eq('status', 'approved')
-  .or(`license_status.eq.license_approved,created_at.gte.${sevenDaysAgoIso}`)
+  // status لصاحب المشروع فقط: نخفي المعطل/المحذوف
+  .not('status', 'in', '("disabled","deleted")')
+  // التحكم بالظهور عبر license_status
+  .or(
+    [
+      // يظهر دائمًا إذا معتمد
+      `license_status.eq.license_approved`,
+      // يظهر 7 أيام فقط إذا pending_license أو license_uploaded
+      `and(license_status.in.(pending_license,license_uploaded),created_at.gte.${sevenDaysAgoIso})`,
+    ].join(',')
+  )
   .order('display_order', { ascending: true, nullsFirst: false });
 
         if (error) throw error;
