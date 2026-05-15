@@ -108,7 +108,14 @@
 		.tab-btn:hover:not(.active) { background: #e6f0f5; }
 
 		/* المحتوى */
-		.content-card { background: white; border-radius: 32px; padding: 28px; box-shadow: 0 8px 24px rgba(0,0,0,0.04); border: 1px solid #e9f0f5; display: none; }
+		.content-card {
+			background: white;
+			border-radius: 32px;
+			padding: 28px;
+			box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+			border: 1px solid #e9f0f5;
+			display: none;
+		}
 		.content-card.active { display: block; animation: fadeIn 0.3s ease; }
 		@keyframes fadeIn { from { opacity: 0; transform: translateY(8px);} to { opacity: 1; transform: translateY(0);} }
 
@@ -131,7 +138,11 @@
 			font-size: 13px;
 			min-width: 170px;
 		}
-		.filter-bar input:focus, .filter-bar select:focus { border-color: #1a5f44; outline: none; box-shadow: 0 0 0 3px rgba(26,95,68,0.1); }
+		.filter-bar input:focus, .filter-bar select:focus {
+			border-color: #1a5f44;
+			outline: none;
+			box-shadow: 0 0 0 3px rgba(26,95,68,0.1);
+		}
 		.filter-bar button {
 			background: #0a2e25;
 			color: white;
@@ -463,7 +474,6 @@
 					</div>
 
 					<div class="form-row"><label>الصورة (URL)</label><input id="projectImage" placeholder="رابط الصورة"></div>
-
 					<div class="form-row"><label>التصنيف (عربي)</label><select id="projectCategoryAr"></select></div>
 					<div class="form-row"><label>التصنيف (إنجليزي)</label><select id="projectCategoryEn"></select></div>
 
@@ -680,24 +690,6 @@
 			`;
 		}
 
-		// ==================== تحديث license_status من تبويب المشاريع (جديد) ====================
-		window.updateProjectLicenseStatus = async (projectId, newStatus) => {
-			const { error } = await supabase
-				.from('projects')
-				.update({
-					license_status: newStatus,
-					license_reviewed_at: new Date().toISOString()
-				})
-				.eq('id', projectId);
-
-			if (error) showToast(error.message, true);
-			else {
-				showToast('تم تحديث حالة الترخيص');
-				loadProjects(currentProjectsPage);
-				loadStats();
-			}
-		};
-
 		// ==================== المشاريع ====================
 		async function loadProjects(page = 1) {
 			currentProjectsPage = page;
@@ -722,55 +714,30 @@
 			projectsTotal = count || 0;
 			if (error) { showToast(error.message, true); return; }
 
-			let html = `
-				<table class="data-table">
-					<thead>
-						<tr>
-							<th>الترتيب</th>
-							<th>ID</th>
-							<th>الصورة</th>
-							<th>الاسم (عربي)</th>
-							<th>التصنيف</th>
-							<th>الإمارة</th>
-							<th>الحالة</th>
-							<th>حالة الترخيص</th>
-							<th>الإجراءات</th>
-						</tr>
-					</thead>
-					<tbody>
-			`;
+			let html = `<table class="data-table"><thead><tr>
+				<th>الترتيب</th><th>ID</th><th>الصورة</th><th>الاسم (عربي)</th><th>التصنيف</th><th>الإمارة</th><th>الحالة</th><th>الإجراءات</th>
+			</tr></thead><tbody>`;
 
 			for (const p of (data || [])) {
 				let statusBadge = p.status === 'approved' ? 'badge-approved' : (p.status === 'rejected' ? 'badge-rejected' : 'badge-pending');
 
-				html += `
-					<tr>
-						<td style="white-space: nowrap;">
-							<input type="number" value="${p.display_order ?? 0}" style="width:70px;" class="project-order-input" data-id="${p.id}">
-							<button class="action-btn move-up" onclick="window.swapProjectOrder(${p.id}, 'up')"><i class="fas fa-arrow-up"></i></button>
-							<button class="action-btn move-down" onclick="window.swapProjectOrder(${p.id}, 'down')"><i class="fas fa-arrow-down"></i></button>
-						</td>
-						<td>${p.id}</td>
-						<td>${p.image ? `<img src="${escapeHtml(p.image)}" class="thumb-preview" onclick="window.open('${escapeHtml(p.image)}')">` : '-'}</td>
-						<td>${escapeHtml(p.name_ar)}</td>
-						<td>${escapeHtml(p.category_ar || '-')}</td>
-						<td>${escapeHtml(p.emirate)}</td>
-						<td><span class="badge ${statusBadge}">${p.status === 'approved' ? 'موافق' : (p.status === 'rejected' ? 'مرفوض' : 'معلق')}</span></td>
-						<td>
-							<select onchange="window.updateProjectLicenseStatus(${p.id}, this.value)" style="padding:6px 12px; border-radius:30px;">
-								<option value="pending_license" ${p.license_status === 'pending_license' ? 'selected' : ''}>pending_license</option>
-								<option value="license_uploaded" ${p.license_status === 'license_uploaded' ? 'selected' : ''}>license_uploaded</option>
-								<option value="license_approved" ${p.license_status === 'license_approved' ? 'selected' : ''}>license_approved</option>
-								<option value="license_rejected" ${p.license_status === 'license_rejected' ? 'selected' : ''}>license_rejected</option>
-								<option value="suspended" ${p.license_status === 'suspended' ? 'selected' : ''}>suspended</option>
-							</select>
-						</td>
-						<td class="action-buttons">
-							<button class="action-btn edit" onclick="window.editProject(${p.id})"><i class="fas fa-edit"></i></button>
-							<button class="action-btn delete" onclick="window.deleteItem('projects',${p.id})"><i class="fas fa-trash"></i></button>
-						</td>
-					</tr>
-				`;
+				html += `<tr>
+					<td style="white-space: nowrap;">
+						<input type="number" value="${p.display_order ?? 0}" style="width:70px;" class="project-order-input" data-id="${p.id}">
+						<button class="action-btn move-up" onclick="window.swapProjectOrder(${p.id}, 'up')"><i class="fas fa-arrow-up"></i></button>
+						<button class="action-btn move-down" onclick="window.swapProjectOrder(${p.id}, 'down')"><i class="fas fa-arrow-down"></i></button>
+					</td>
+					<td>${p.id}</td>
+					<td>${p.image ? `<img src="${escapeHtml(p.image)}" class="thumb-preview" onclick="window.open('${escapeHtml(p.image)}')">` : '-'}</td>
+					<td>${escapeHtml(p.name_ar)}</td>
+					<td>${escapeHtml(p.category_ar || '-')}</td>
+					<td>${escapeHtml(p.emirate)}</td>
+					<td><span class="badge ${statusBadge}">${p.status === 'approved' ? 'موافق' : (p.status === 'rejected' ? 'مرفوض' : 'معلق')}</span></td>
+					<td class="action-buttons">
+						<button class="action-btn edit" onclick="window.editProject(${p.id})"><i class="fas fa-edit"></i></button>
+						<button class="action-btn delete" onclick="window.deleteItem('projects',${p.id})"><i class="fas fa-trash"></i></button>
+					</td>
+				</tr>`;
 			}
 
 			html += `</tbody></table>`;
@@ -861,7 +828,8 @@
 			const projectId = document.getElementById('productProjectFilter').value;
 			if (!projectId) { document.getElementById('productsTableContainer').innerHTML = '<p style="padding:20px;">✏️ اختر مشروعاً أولاً من القائمة</p>'; return; }
 
-			const { data } = await supabase.from('products').select('*').eq('project_id', projectId).order('display_order', { ascending: true, nullsFirst: false });
+			const { data, error } = await supabase.from('products').select('*').eq('project_id', projectId).order('display_order', { ascending: true, nullsFirst: false });
+			if (error) return showToast(error.message, true);
 
 			let html = `<table class="data-table"><thead><tr><th>الترتيب</th><th>ID</th><th>الصورة</th><th>الاسم (عربي)</th><th>التصنيف</th><th>النوع</th><th>السعر</th><th>الإجراءات</th></tr></thead><tbody>`;
 			for (const p of (data || [])) {
@@ -931,7 +899,8 @@
 			const projectId = document.getElementById('productProjectFilter').value;
 			if (!projectId) return showToast('اختر مشروعاً أولاً', true);
 
-			const { data } = await supabase.from('products').select('id').eq('project_id', projectId).order('display_order', { ascending: true, nullsFirst: false }).order('id', { ascending: true });
+			const { data, error } = await supabase.from('products').select('id').eq('project_id', projectId).order('display_order', { ascending: true, nullsFirst: false }).order('id', { ascending: true });
+			if (error) return showToast(error.message, true);
 			if (!data) return;
 
 			for (let i = 0; i < data.length; i++) {
@@ -1175,7 +1144,9 @@
 			const projectId = document.getElementById('dealProjectFilter').value;
 			if (!projectId) { document.getElementById('dealsTableContainer').innerHTML = '<p>اختر مشروعاً لعرض عروضه</p>'; return; }
 
-			const { data } = await supabase.from('deals').select('*').eq('project_id', projectId);
+			const { data, error } = await supabase.from('deals').select('*').eq('project_id', projectId);
+			if (error) return showToast(error.message, true);
+
 			let html = `<table class="data-table"><thead><tr><th>ID</th><th>الصورة</th><th>العنوان</th><th>الإجراءات</th></tr></thead><tbody>`;
 			for (const d of (data || [])) {
 				html += `<tr>
@@ -1246,7 +1217,9 @@
 			const projectId = document.getElementById('contactProjectFilter').value;
 			if (!projectId) { document.getElementById('contactsTableContainer').innerHTML = '<p>اختر مشروعاً لعرض بيانات التواصل</p>'; return; }
 
-			let { data } = await supabase.from('contacts').select('*').eq('project_id', projectId);
+			let { data, error } = await supabase.from('contacts').select('*').eq('project_id', projectId);
+			if (error) return showToast(error.message, true);
+
 			const contact = (data && data[0]) || { project_id: projectId };
 
 			let html = `
@@ -1466,7 +1439,7 @@
 			URL.revokeObjectURL(url);
 		}
 
-		// ==================== إدارة التراخيص ====================
+		// ==================== إدارة التراخيص (يعرض license_status + يحدثها عند قبول/رفض) ====================
 		async function loadLicenseRequests() {
 			const status = document.getElementById('licenseStatusFilter').value;
 
@@ -1490,14 +1463,24 @@
 			if (error) { console.error(error); showToast('خطأ في تحميل طلبات التراخيص', true); return; }
 
 			let html = `<table class="data-table"><thead>
-				<tr><th>المشروع</th><th>صاحب المشروع</th><th>ملف الرخصة</th><th>الحالة</th><th>تاريخ الرفع</th><th>الإجراءات</th></tr>
+				<tr>
+					<th>المشروع</th>
+					<th>صاحب المشروع</th>
+					<th>ملف الرخصة</th>
+					<th>حالة الطلب</th>
+					<th>حالة الترخيص الحالية</th>
+					<th>تاريخ الرفع</th>
+					<th>الإجراءات</th>
+				</tr>
 			</thead><tbody>`;
 
 			for (const req of (data || [])) {
 				const project = req.projects;
+
 				const projectName = project?.name_ar || 'مشروع محذوف';
 				const ownerId = project?.owner_user_id || 'غير معروف';
 
+				// حالة الطلب (project_license_requests.status)
 				let statusText = '';
 				let badgeClass = '';
 				if (req.status === 'pending') { statusText = 'قيد المراجعة'; badgeClass = 'badge-pending'; }
@@ -1505,11 +1488,22 @@
 				else if (req.status === 'rejected') { statusText = 'مرفوض'; badgeClass = 'badge-rejected'; }
 				else { statusText = escapeHtml(req.status || '-'); badgeClass = 'badge-reviewed'; }
 
+				// حالة الترخيص الحالية (projects.license_status)
+				const licenseStatus = project?.license_status || '-';
+				let licenseBadgeClass = 'badge-reviewed';
+				let licenseStatusText = licenseStatus;
+
+				if (licenseStatus === 'license_approved') licenseBadgeClass = 'badge-approved';
+				else if (licenseStatus === 'license_rejected') licenseBadgeClass = 'badge-rejected';
+				else if (licenseStatus === 'pending_license' || licenseStatus === 'license_uploaded') licenseBadgeClass = 'badge-pending';
+				else if (licenseStatus === 'suspended') licenseBadgeClass = 'badge-rejected';
+
 				html += `<tr>
 					<td>${escapeHtml(projectName)}</td>
 					<td>${escapeHtml(ownerId)}</td>
 					<td>${req.license_file_url ? `<a href="${escapeHtml(req.license_file_url)}" target="_blank" class="btn-outline" style="padding:4px 12px; text-decoration:none;">📄 عرض الملف</a>` : '-'}</td>
 					<td><span class="badge ${badgeClass}">${statusText}</span></td>
+					<td><span class="badge ${licenseBadgeClass}">${escapeHtml(licenseStatusText)}</span></td>
 					<td>${req.created_at ? new Date(req.created_at).toLocaleString() : '-'}</td>
 					<td class="action-buttons">
 						<button class="action-btn edit" onclick="window.reviewLicense('${req.id}', 'approve')" title="قبول"><i class="fas fa-check-circle"></i></button>
@@ -1526,7 +1520,7 @@
 			const newStatus = (action === 'approve') ? 'approved' : 'rejected';
 			const projectLicenseStatus = (action === 'approve') ? 'license_approved' : 'license_rejected';
 
-			// تحديث حالة الطلب
+			// 1) تحديث حالة الطلب
 			const { error: updateReq } = await supabase
 				.from('project_license_requests')
 				.update({ status: newStatus })
@@ -1534,26 +1528,43 @@
 
 			if (updateReq) { showToast(updateReq.message, true); return; }
 
-			// الحصول على project_id
-			const { data: reqData } = await supabase
+			// 2) جلب project_id
+			const { data: reqData, error: reqFetchError } = await supabase
 				.from('project_license_requests')
 				.select('project_id')
 				.eq('id', requestId)
 				.single();
 
+			if (reqFetchError) { showToast(reqFetchError.message, true); return; }
+
+			// 3) تحديث projects.license_status (بدون تغيير created_at / license_uploaded_at)
 			if (reqData && reqData.project_id) {
-				await supabase
+				const projUpdate = {
+					license_status: projectLicenseStatus,
+					license_reviewed_at: new Date().toISOString()
+				};
+
+				if (action === 'reject') {
+					const reason = prompt('سبب الرفض (اختياري):') || '';
+					projUpdate.rejection_reason = reason.trim() ? reason.trim() : null;
+				} else {
+					projUpdate.rejection_reason = null;
+				}
+
+				const { error: projErr } = await supabase
 					.from('projects')
-					.update({
-						license_status: projectLicenseStatus,
-						license_reviewed_at: new Date().toISOString()
-					})
+					.update(projUpdate)
 					.eq('id', reqData.project_id);
+
+				if (projErr) { showToast(projErr.message, true); return; }
 			}
 
 			showToast(`تم ${action === 'approve' ? 'قبول' : 'رفض'} الرخصة بنجاح`);
-			loadLicenseRequests();
-			loadStats();
+
+			// تحديث فوري للعرض
+			await loadLicenseRequests();
+			await loadProjects(currentProjectsPage);
+			await loadStats();
 		};
 
 		// ==================== الدعم الفني ====================
@@ -1603,7 +1614,7 @@
 
 			const replyHtml = `
 				<div style="margin-bottom: 20px;">
-					<p><strong>المشروع:</strong> ${escapeHtml(ticket.project_id || '?')}</p>
+					<p><strong>Project ID:</strong> ${escapeHtml(ticket.project_id || '?')}</p>
 					<p><strong>الموضوع:</strong> ${escapeHtml(ticket.subject)}</p>
 					<p><strong>الرسالة:</strong><br>${escapeHtml(ticket.message)}</p>
 					<p><strong>التاريخ:</strong> ${ticket.created_at ? new Date(ticket.created_at).toLocaleString() : '-'}</p>
@@ -1759,31 +1770,6 @@
 			}
 		}
 
-		async function checkSession() {
-			const { data: { session } } = await supabase.auth.getSession();
-			if (session && session.user?.email === ALLOWED_EMAIL) {
-				document.getElementById('loginSection').style.display = 'none';
-				document.getElementById('adminContent').style.display = 'block';
-
-				fillCategoryDropdowns();
-				await initEmirateFilter();
-				await initProjectSelects();
-
-				await loadStats();
-				await loadProjects(1);
-				await loadRegistrations(1);
-				await loadProducts();
-				await loadDeals();
-				await loadContacts();
-				await loadFeedbacks();
-				await loadOrders(1);
-				await loadLicenseRequests();
-				await loadSupportTickets();
-
-				attachTabs();
-			}
-		}
-
 		// ==================== Events ====================
 		document.getElementById('addProjectBtn').onclick = () => {
 			document.getElementById('projectForm').reset();
@@ -1872,23 +1858,43 @@
 			else alert('تم إرسال رابط إعادة التعيين إلى بريدك الإلكتروني');
 		});
 
+		async function checkSession() {
+			const { data: { session } } = await supabase.auth.getSession();
+			if (session && session.user?.email === ALLOWED_EMAIL) {
+				document.getElementById('loginSection').style.display = 'none';
+				document.getElementById('adminContent').style.display = 'block';
+
+				fillCategoryDropdowns();
+				await initEmirateFilter();
+				await initProjectSelects();
+
+				await loadStats();
+				await loadProjects(1);
+				await loadRegistrations(1);
+				await loadProducts();
+				await loadDeals();
+				await loadContacts();
+				await loadFeedbacks();
+				await loadOrders(1);
+				await loadLicenseRequests();
+				await loadSupportTickets();
+
+				attachTabs();
+			}
+		}
+
 		checkSession();
 
-		// Expose (لكي تعمل الpagination buttons)
+		// Expose for pagination buttons
 		window.loadProjects = loadProjects;
 		window.loadProducts = loadProducts;
 		window.loadOrders = loadOrders;
 		window.loadRegistrations = loadRegistrations;
-		window.editProject = window.editProject;
-		window.editProduct = window.editProduct;
-		window.editDeal = window.editDeal;
-		window.swapProjectOrder = window.swapProjectOrder;
-		window.swapProductOrder = window.swapProductOrder;
-		window.reorderAllProjects = window.reorderAllProjects;
-		window.reorderAllProducts = window.reorderAllProducts;
-		window.reviewLicense = window.reviewLicense;
-		window.loadLicenseRequests = loadLicenseRequests;
+		window.loadDeals = loadDeals;
+		window.loadContacts = loadContacts;
+		window.loadFeedbacks = loadFeedbacks;
 		window.loadSupportTickets = loadSupportTickets;
+		window.loadLicenseRequests = loadLicenseRequests;
 	</script>
 
 </body>
