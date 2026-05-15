@@ -38,38 +38,42 @@
   </div>
 
   <script type="module">
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-    import { APP_CONFIG } from '../config.js';
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+  import { APP_CONFIG } from '../config.js'; // مهم: لأن callback داخل auth/
 
-    const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
+  const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
 
-    async function waitForSession() {
+  async function run() {
+    try {
+      const url = new URL(window.location.href);
+      const code = url.searchParams.get('code');
+
+      // 1) أهم خطوة: تبادل الكود إلى Session
+      if (code) {
+        const { error } = await supabase.auth.exchangeCodeForSession(code);
+        if (error) throw error;
+
+        // تنظف الرابط من code (اختياري لكن ممتاز)
+        window.history.replaceState({}, document.title, url.origin + url.pathname);
+      }
+
+      // 2) تأكد أن الجلسة صارت موجودة
       const { data: { session } } = await supabase.auth.getSession();
-      if (session) return session;
 
-      return await new Promise(async (resolve) => {
-        const { data: sub } = supabase.auth.onAuthStateChange((_event, sess) => {
-          if (sess) {
-            sub.subscription.unsubscribe();
-            resolve(sess);
-          }
-        });
+      if (!session) {
+        window.location.href = '../project-login.html';
+        return;
+      }
 
-        setTimeout(async () => {
-          sub.subscription.unsubscribe();
-          const { data: { session: s2 } } = await supabase.auth.getSession();
-          resolve(s2 || null);
-        }, 5000);
-      });
-    }
-
-    const session = await waitForSession();
-
-    if (!session) {
-      window.location.href = '../project-login.html';
-    } else {
+      // 3) حوّل للداشبورد
       window.location.href = '../project-dashboard.html';
+    } catch (e) {
+      console.error('Callback error:', e);
+      window.location.href = '../project-login.html';
     }
-  </script>
+  }
+
+  run();
+</script>
 </body>
 </html>
