@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>تسجيل مشروع جديد | سوق المشاريع</title>
 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-	<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+	<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap" rel="stylesheet" />
+	<link rel="stylesheet" href="css/style.css" />
 
 	<style>
 		body {
@@ -30,11 +30,7 @@
 		.register-card h2 { color: #0F3D2E; font-size: 28px; margin-bottom: 8px; text-align: center; }
 		.register-card p { color: #64748b; margin-bottom: 30px; text-align: center; }
 
-		.step-indicator {
-			display: flex;
-			justify-content: space-between;
-			margin-bottom: 30px;
-		}
+		.step-indicator { display: flex; justify-content: space-between; margin-bottom: 30px; }
 		.step { text-align: center; flex: 1; }
 		.step .circle {
 			width: 40px;
@@ -88,11 +84,11 @@
 		button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
 		.error {
-			color: #dc2626;
 			margin-top: 12px;
 			font-size: 13px;
 			display: none;
 			background: #fee2e2;
+			color: #dc2626;
 			padding: 10px 14px;
 			border-radius: 18px;
 			border: 1px solid #fecaca;
@@ -142,12 +138,12 @@
 			<div id="step1">
 				<div class="form-group">
 					<label>اسم المشروع (عربي)</label>
-					<input type="text" id="nameAr" required>
+					<input type="text" id="nameAr" required />
 				</div>
 
 				<div class="form-group">
 					<label>اسم المشروع (إنجليزي)</label>
-					<input type="text" id="nameEn" required>
+					<input type="text" id="nameEn" required />
 				</div>
 
 				<div class="row-2cols">
@@ -216,7 +212,7 @@
 
 				<div class="form-group">
 					<label>صورة المشروع (لوجو)</label>
-					<input type="file" id="logoImage" accept="image/*" required>
+					<input type="file" id="logoImage" accept="image/*" required />
 				</div>
 
 				<button type="button" id="nextStepBtn" class="next-btn">
@@ -228,33 +224,40 @@
 			<div id="step2" style="display:none;">
 				<div class="form-group">
 					<label>البريد الإلكتروني (تسجيل الدخول)</label>
-					<input type="email" id="email" required>
+					<input type="email" id="email" required />
 				</div>
 
 				<div class="row-2cols">
 					<div>
 						<label>كلمة المرور</label>
-						<input type="password" id="password" required>
+						<input type="password" id="password" required />
 					</div>
 					<div>
 						<label>تأكيد كلمة المرور</label>
-						<input type="password" id="confirmPassword" required>
+						<input type="password" id="confirmPassword" required />
 					</div>
 				</div>
 
 				<div class="form-group">
 					<label>رقم واتساب (للتواصل)</label>
-					<input type="tel" id="whatsapp" required placeholder="مثال: 971501234567">
+					<input type="tel" id="whatsapp" required placeholder="مثال: 971501234567" />
 				</div>
 
 				<div class="form-group">
 					<label>حساب إنستغرام (اختياري)</label>
-					<input type="text" id="instagram">
+					<input type="text" id="instagram" />
 				</div>
 
 				<div class="checkbox-group">
-					<input type="checkbox" id="consent" required>
-					<label>أوافق على <a href="consent-publish.html" target="_blank">شروط النشر</a> و <a href="terms.html" target="_blank">الاستخدام</a> و <a href="privacy.html" target="_blank">سياسة الخصوصية</a></label>
+					<input type="checkbox" id="consent" required />
+					<label>
+						أوافق على
+						<a href="consent-publish.html" target="_blank">شروط النشر</a>
+						و
+						<a href="terms.html" target="_blank">الاستخدام</a>
+						و
+						<a href="privacy.html" target="_blank">سياسة الخصوصية</a>
+					</label>
 				</div>
 
 				<div class="row-2cols">
@@ -281,7 +284,7 @@
 			const errorDiv = document.getElementById('formError');
 			errorDiv.innerText = msg;
 			errorDiv.style.display = 'block';
-			setTimeout(() => (errorDiv.style.display = 'none'), 6000);
+			setTimeout(() => (errorDiv.style.display = 'none'), 6500);
 		}
 
 		// التنقل بين الخطوات
@@ -315,20 +318,23 @@
 		form.addEventListener('submit', async (e) => {
 			e.preventDefault();
 
+			if (window.__registerBusy) return;
+			window.__registerBusy = true;
+
 			const email = document.getElementById('email').value.trim();
 			const password = document.getElementById('password').value;
 			const confirm = document.getElementById('confirmPassword').value;
 			const whatsappRaw = document.getElementById('whatsapp').value.trim();
 			const consent = document.getElementById('consent').checked;
 
-			if (!email || !password || !whatsappRaw) { showError('يرجى ملء جميع الحقول المطلوبة'); return; }
-			if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('البريد الإلكتروني غير صالح'); return; }
-			if (password.length < 6) { showError('كلمة المرور يجب أن تكون 6 أحرف على الأقل'); return; }
-			if (password !== confirm) { showError('كلمتا المرور غير متطابقتين'); return; }
-			if (!consent) { showError('يجب الموافقة على الشروط'); return; }
+			if (!email || !password || !whatsappRaw) { showError('يرجى ملء جميع الحقول المطلوبة'); window.__registerBusy = false; return; }
+			if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('البريد الإلكتروني غير صالح'); window.__registerBusy = false; return; }
+			if (password.length < 6) { showError('كلمة المرور يجب أن تكون 6 أحرف على الأقل'); window.__registerBusy = false; return; }
+			if (password !== confirm) { showError('كلمتا المرور غير متطابقتين'); window.__registerBusy = false; return; }
+			if (!consent) { showError('يجب الموافقة على الشروط'); window.__registerBusy = false; return; }
 
 			const whatsappDigits = whatsappRaw.replace(/\D/g, '');
-			if (whatsappDigits.length < 9 || whatsappDigits.length > 15) { showError('رقم واتساب غير صالح (مثال: 971501234567)'); return; }
+			if (whatsappDigits.length < 9 || whatsappDigits.length > 15) { showError('رقم واتساب غير صالح (مثال: 971501234567)'); window.__registerBusy = false; return; }
 
 			const submitBtn = document.getElementById('submitBtn');
 			const originalText = submitBtn.innerHTML;
@@ -367,7 +373,34 @@
 					}
 				});
 
-				if (authError) throw new Error(authError.message);
+				// رسائل عربية بدل رسائل Supabase
+				if (authError) {
+					const msg = (authError.message || '').toLowerCase();
+
+					const isAlreadyRegistered =
+						msg.includes('already registered') ||
+						msg.includes('already exists') ||
+						msg.includes('user already') ||
+						msg.includes('duplicate') ||
+						msg.includes('exists');
+
+					if (isAlreadyRegistered) {
+						throw new Error('لديك حساب مسجل بنفس البريد. يرجى إعادة تعيين كلمة المرور من صفحة "نسيت كلمة المرور".');
+					}
+
+					const isRateLimit =
+						msg.includes('rate limit') ||
+						msg.includes('too many') ||
+						msg.includes('over_email_send_rate_limit') ||
+						msg.includes('429');
+
+					if (isRateLimit) {
+						throw new Error('تم تجاوز حد إرسال رسائل البريد مؤقتًا. انتظر قليلًا ثم حاول مرة أخرى.');
+					}
+
+					throw new Error('تعذر إنشاء الحساب. تأكد من البيانات وحاول مرة أخرى.');
+				}
+
 				if (!authData?.user?.id) throw new Error('تعذر إنشاء الحساب');
 
 				const userId = authData.user.id;
@@ -426,9 +459,20 @@
 			} catch (err) {
 				console.error(err);
 				showError(err.message || 'حدث خطأ، يرجى المحاولة لاحقاً');
+
+				// إذا عنده حساب موجود: ودّه بعد قليل لصفحة نسيت كلمة المرور (اختياري)
+				if ((err.message || '').includes('إعادة تعيين كلمة المرور')) {
+					setTimeout(() => window.location.href = 'project-forgot-password.html', 1400);
+				}
+
 				submitBtn.disabled = false;
 				submitBtn.innerHTML = originalText;
+				window.__registerBusy = false;
+				return;
 			}
+
+			// إذا وصلنا هنا يعني تمام (سيتم التحويل)
+			window.__registerBusy = false;
 		});
 	</script>
 </body>
