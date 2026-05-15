@@ -33,15 +33,9 @@
 		.step-indicator { display: flex; justify-content: space-between; margin-bottom: 30px; }
 		.step { text-align: center; flex: 1; }
 		.step .circle {
-			width: 40px;
-			height: 40px;
-			background: #E2E8F0;
-			border-radius: 50%;
-			display: inline-flex;
-			align-items: center;
-			justify-content: center;
-			font-weight: bold;
-			color: #64748b;
+			width: 40px; height: 40px; background: #E2E8F0; border-radius: 50%;
+			display: inline-flex; align-items: center; justify-content: center;
+			font-weight: bold; color: #64748b;
 		}
 		.step.active .circle { background: #D4AF37; color: #0F3D2E; }
 		.step .label { font-size: 12px; margin-top: 6px; color: #64748b; }
@@ -373,7 +367,6 @@
 					}
 				});
 
-				// رسائل عربية بدل رسائل Supabase
 				if (authError) {
 					const msg = (authError.message || '').toLowerCase();
 
@@ -403,64 +396,46 @@
 
 				if (!authData?.user?.id) throw new Error('تعذر إنشاء الحساب');
 
-				const userId = authData.user.id;
-
-				// 3) إدراج مشروع في جدول projects
-				const trialEnd = new Date();
-				trialEnd.setDate(trialEnd.getDate() + 7);
-
-				const newId = Date.now() + Math.floor(Math.random() * 10000);
-
-				const projectData = {
-					id: newId,
-					name_ar: document.getElementById('nameAr').value.trim(),
-					name_en: document.getElementById('nameEn').value.trim(),
-					emirate: document.getElementById('emirate').value,
-					description_ar: document.getElementById('descAr').value,
-					description_en: document.getElementById('descEn').value,
-					long_description_ar: document.getElementById('longDescAr').value,
-					long_description_en: document.getElementById('longDescEn').value,
-					image: logoUrl,
-					adra_license: false,
-					coverage: document.getElementById('coverage').value,
-					category_ar: document.getElementById('category').value,
-					category_en: document.getElementById('category').value,
-					owner_user_id: userId,
-					license_status: 'pending_license',
-					status: 'active',
-					trial_end_date: trialEnd.toISOString(),
-					display_order: 0
+				// 3) حفظ بيانات المشروع مؤقتًا (سيتم إنشاء المشروع بعد تأكيد البريد داخل الداشبورد)
+				const payload = {
+					version: 1,
+					createdAt: new Date().toISOString(),
+					ownerEmail: email,
+					project: {
+						name_ar: document.getElementById('nameAr').value.trim(),
+						name_en: document.getElementById('nameEn').value.trim(),
+						emirate: document.getElementById('emirate').value,
+						description_ar: document.getElementById('descAr').value,
+						description_en: document.getElementById('descEn').value,
+						long_description_ar: document.getElementById('longDescAr').value,
+						long_description_en: document.getElementById('longDescEn').value,
+						image: logoUrl,
+						adra_license: false,
+						coverage: document.getElementById('coverage').value,
+						category_ar: document.getElementById('category').value,
+						category_en: document.getElementById('category').value,
+						license_status: 'pending_license',
+						status: 'active',
+						display_order: 0
+					},
+					contact: {
+						whatsapp: whatsappDigits,
+						instagram: document.getElementById('instagram').value.trim() || null,
+						phone: null,
+						email: email
+					}
 				};
 
-				const { data: projectInsert, error: projectError } = await supabase
-					.from('projects')
-					.insert(projectData)
-					.select()
-					.single();
-
-				if (projectError) throw new Error(projectError.message);
-
-				// 4) إدراج جهة اتصال في جدول contacts
-				const contactData = {
-					project_id: projectInsert.id,
-					whatsapp: whatsappDigits,
-					instagram: document.getElementById('instagram').value.trim() || null,
-					phone: null,
-					email: email
-				};
-
-				const { error: contactError } = await supabase.from('contacts').insert(contactData);
-				if (contactError) console.warn('Contact insert warning:', contactError);
-
-				// 5) تحويل المستخدم لصفحة “تحقق من البريد”
+				localStorage.setItem('pendingProjectPayload', JSON.stringify(payload));
 				localStorage.setItem('pendingEmail', email);
+
+				// 4) تحويل المستخدم لصفحة “تحقق من البريد”
 				window.location.href = 'check-email.html';
 
 			} catch (err) {
 				console.error(err);
 				showError(err.message || 'حدث خطأ، يرجى المحاولة لاحقاً');
 
-				// إذا عنده حساب موجود: ودّه بعد قليل لصفحة نسيت كلمة المرور (اختياري)
 				if ((err.message || '').includes('إعادة تعيين كلمة المرور')) {
 					setTimeout(() => window.location.href = 'project-forgot-password.html', 1400);
 				}
@@ -471,7 +446,6 @@
 				return;
 			}
 
-			// إذا وصلنا هنا يعني تمام (سيتم التحويل)
 			window.__registerBusy = false;
 		});
 	</script>
