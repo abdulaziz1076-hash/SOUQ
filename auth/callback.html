@@ -39,12 +39,7 @@
 
   <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-
-    // مهم: اختر واحد فقط حسب وضعك:
-    // (1) إذا config.js في الجذر:
-    // import { APP_CONFIG } from '../config.js';
-    // (2) إذا نسخت config.js داخل auth/:
-    import { APP_CONFIG } from './config.js';
+    import { APP_CONFIG } from '../config.js';
 
     const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
 
@@ -64,7 +59,7 @@
           sub.subscription.unsubscribe();
           const { data: { session: s2 } } = await supabase.auth.getSession();
           resolve(s2 || null);
-        }, 4000);
+        }, 5000);
       });
     }
 
