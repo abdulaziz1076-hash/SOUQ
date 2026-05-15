@@ -10,10 +10,9 @@
 	<link rel="stylesheet" href="css/style.css" />
 
 	<style>
-		/* أنماط إضافية للوحة التحكم */
 		.dashboard-container { max-width: 1400px; margin: 20px auto; padding: 0 20px; }
 		.dashboard-header { background: white; border-radius: 28px; padding: 20px 30px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; box-shadow: var(--card-shadow); border: 1px solid var(--light-gray); }
-		.dashboard-title h1 { font-family: 'El Messiri', serif; color: var(--primary-dark); font-size: 24px; }
+		.dashboard-title h1 { font-family: 'Almarai', sans-serif; color: var(--primary-dark); font-size: 24px; }
 		.dashboard-title p { color: var(--gray); font-size: 13px; }
 
 		/* أزرار الحساب */
@@ -22,6 +21,8 @@
 		.btn-danger:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(196, 30, 58, 0.25); }
 		.btn-warning { background: #F59E0B; color: #1A1A1A; border: none; padding: 10px 18px; border-radius: 40px; font-weight: 800; cursor: pointer; transition: 0.2s; }
 		.btn-warning:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(245, 158, 11, 0.25); }
+		.btn-success { background: #16A34A; color: #fff; border: none; padding: 10px 18px; border-radius: 40px; font-weight: 800; cursor: pointer; transition: 0.2s; }
+		.btn-success:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(22, 163, 74, 0.25); }
 
 		.stats-grid-dash { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin-bottom: 30px; }
 		.stat-card-dash { background: white; border-radius: 24px; padding: 20px; text-align: center; border: 1px solid var(--light-gray); }
@@ -50,19 +51,18 @@
 
 		.btn-secondary { background: white; color: var(--primary-dark); border: 1px solid var(--primary-dark); padding: 10px 20px; border-radius: 40px; cursor: pointer; }
 
-		.product-item, .deal-item { background: var(--light); border-radius: 20px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
+		.product-item { background: var(--light); border-radius: 20px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
 		.product-img-thumb { width: 60px; height: 60px; object-fit: cover; border-radius: 16px; background: #f0f0f0; }
 		.product-info { flex: 1; }
 		.product-actions { display: flex; gap: 10px; }
 
-		.status-badge { display: inline-block; padding: 4px 12px; border-radius: 30px; font-size: 12px; font-weight: 700; }
-		.status-pending { background: #FEF3C7; color: #D97706; }
-		.status-approved { background: #DCFCE7; color: #15803D; }
-		.status-rejected { background: #FEE2E2; color: #DC2626; }
+		.status-badge { display: inline-block; padding: 4px 12px; border-radius: 30px; font-size: 12px; font-weight: 800; }
+		.status-active { background: #DCFCE7; color: #15803D; }
+		.status-disabled { background: #FEF3C7; color: #D97706; }
+		.status-deleted { background: #FEE2E2; color: #DC2626; }
 
-		.help-sidebar { background: #F8FAFC; border-radius: 20px; padding: 20px; margin-top: 30px; border-right: 4px solid var(--secondary); }
-		.help-sidebar h4 { color: var(--primary-dark); margin-bottom: 10px; }
-		.help-sidebar p { font-size: 13px; color: var(--gray); }
+		.warning-banner { background: #FEF3C7; border-right: 4px solid #F59E0B; padding: 12px 20px; border-radius: 16px; margin-bottom: 20px; font-size: 13px; }
+		.info-banner { background: #DBEAFE; border-right: 4px solid #3B82F6; padding: 12px 20px; border-radius: 16px; margin-bottom: 20px; font-size: 13px; }
 
 		.preview-img { max-width: 100px; max-height: 100px; margin-top: 5px; border-radius: 12px; border: 1px solid var(--light-gray); }
 
@@ -71,8 +71,6 @@
 			.product-item { flex-direction: column; text-align: center; }
 			.account-actions { justify-content: center; width: 100%; }
 		}
-
-		.warning-banner { background: #FEF3C7; border-right: 4px solid #F59E0B; padding: 12px 20px; border-radius: 16px; margin-bottom: 20px; font-size: 13px; }
 	</style>
 </head>
 
@@ -109,15 +107,22 @@
 		<div class="dashboard-title">
 			<h1 id="dashboardTitle">لوحة تحكم المشروع</h1>
 			<p id="dashboardSub">إدارة مشروعك ومنتجاتك وبيانات التواصل</p>
+			<div id="accountStatusWrap" style="margin-top:10px;"></div>
 		</div>
 
 		<div class="account-actions">
+			<button id="reactivateAccountBtn" class="btn-success" style="display:none;">
+				<i class="fas fa-play-circle"></i> إعادة تنشيط الحساب
+			</button>
+
 			<button id="disableAccountBtn" class="btn-warning">
 				<i class="fas fa-pause-circle"></i> تعطيل الحساب
 			</button>
+
 			<button id="deleteAccountBtn" class="btn-danger">
 				<i class="fas fa-user-slash"></i> حذف الحساب
 			</button>
+
 			<button id="logoutBtn" class="btn-secondary" style="background:#C41E3A; color:white; border:none;">
 				<i class="fas fa-sign-out-alt"></i> خروج
 			</button>
@@ -137,7 +142,7 @@
 		<button class="tab-btn-dash" data-tab="support"><i class="fas fa-headset"></i> الدعم الفني</button>
 	</div>
 
-	<!-- تبويب: بيانات المشروع -->
+	<!-- بيانات المشروع -->
 	<div id="profileTab" class="tab-pane-dash active">
 		<form id="profileForm">
 			<div class="form-row"><label>اسم المشروع (عربي)</label><input type="text" id="profileNameAr" required></div>
@@ -167,7 +172,7 @@
 
 			<div class="form-row"><label>التصنيف الرئيسي</label><select id="profileCategory"></select></div>
 
-			<div class="checkbox-group">
+			<div class="checkbox-group" style="display:flex; align-items:center; gap:10px; margin-bottom:20px;">
 				<input type="checkbox" id="profileAdraLicense">
 				<label>رخصة أدريا (إن وجدت)</label>
 			</div>
@@ -175,25 +180,24 @@
 			<div class="form-row">
 				<label>شعار المشروع (صورة - حد أقصى 2 ميجابايت)</label>
 				<input type="file" id="profileLogo" accept="image/*">
-				<div id="currentLogoHint" class="preview-img"></div>
+				<div id="currentLogoHint"></div>
 			</div>
 
 			<button type="submit" class="btn-save">حفظ التغييرات</button>
 		</form>
 	</div>
 
-	<!-- تبويب: المنتجات -->
+	<!-- المنتجات -->
 	<div id="productsTab" class="tab-pane-dash">
-		<div style="display: flex; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+		<div style="display:flex; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
 			<h2>المنتجات</h2>
 			<button id="addProductBtn" class="btn-save" style="background: var(--secondary); color: var(--primary-dark);">
 				<i class="fas fa-plus"></i> إضافة منتج
 			</button>
 		</div>
-
 		<div id="productsListContainer"></div>
 
-		<!-- مودال إضافة/تعديل منتج -->
+		<!-- مودال المنتج -->
 		<div id="productModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:2000; align-items:center; justify-content:center;">
 			<div style="background:white; border-radius:32px; max-width:700px; width:90%; padding:25px; max-height:90vh; overflow-y:auto;">
 				<h3 id="productModalTitle">إضافة منتج</h3>
@@ -207,13 +211,13 @@
 					<div class="form-row">
 						<label>الصورة الرئيسية (رفع ملف - حد أقصى 2 ميجابايت)</label>
 						<input type="file" id="productMainImageFile" accept="image/*">
-						<div id="mainImagePreview" class="preview-img"></div>
+						<div id="mainImagePreview"></div>
 					</div>
 
 					<div class="form-row">
-						<label>صور إضافية (يمكن رفع عدة صور - كل صورة حد أقصى 2 ميجابايت)</label>
+						<label>صور إضافية (رفع عدة صور - كل صورة حد أقصى 2 ميجابايت)</label>
 						<input type="file" id="productExtraImages" accept="image/*" multiple>
-						<div id="extraImagesPreview" class="preview-img" style="display:flex; gap:5px; flex-wrap:wrap;"></div>
+						<div id="extraImagesPreview" style="display:flex; gap:5px; flex-wrap:wrap;"></div>
 					</div>
 
 					<div class="form-row"><label>الوصف القصير (عربي)</label><textarea id="productDescAr" rows="2"></textarea></div>
@@ -245,8 +249,6 @@
 					<div class="form-row"><label>تفاصيل إضافية (عربي) - كل سطر نقطة</label><textarea id="productDetailsAr" rows="3"></textarea></div>
 					<div class="form-row"><label>تفاصيل إضافية (إنجليزي)</label><textarea id="productDetailsEn" rows="3"></textarea></div>
 
-					<!-- تم حذف Variants بالكامل -->
-
 					<div style="display:flex; gap:10px; margin-top:20px;">
 						<button type="submit" class="btn-save">حفظ</button>
 						<button type="button" id="closeProductModal" class="btn-secondary">إلغاء</button>
@@ -256,9 +258,9 @@
 		</div>
 	</div>
 
-	<!-- تبويب: العروض (مبسط) -->
+	<!-- العروض -->
 	<div id="dealsTab" class="tab-pane-dash">
-		<div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+		<div style="display:flex; justify-content:space-between; margin-bottom:20px;">
 			<h2>العروض</h2>
 			<button id="addDealBtn" class="btn-save" style="background: var(--secondary); color: var(--primary-dark);">
 				<i class="fas fa-plus"></i> إضافة عرض
@@ -267,20 +269,24 @@
 
 		<div id="dealsListContainer"></div>
 
-		<!-- مودال عرض بسيط -->
 		<div id="dealModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:2000; align-items:center; justify-content:center;">
 			<div style="background:white; border-radius:32px; max-width:500px; width:90%; padding:25px;">
 				<h3 id="dealModalTitle">إضافة عرض</h3>
 
 				<form id="dealFormModal">
 					<input type="hidden" id="dealId">
+
 					<div class="form-row"><label>العنوان (عربي)</label><input id="dealTitleAr" required></div>
 					<div class="form-row"><label>العنوان (إنجليزي)</label><input id="dealTitleEn" required></div>
+
 					<div class="form-row"><label>الصورة (اختياري - حد أقصى 2 ميجابايت)</label><input type="file" id="dealImageFile" accept="image/*"></div>
+
 					<div class="form-row"><label>الوصف (عربي)</label><textarea id="dealDescAr" rows="2"></textarea></div>
 					<div class="form-row"><label>الوصف (إنجليزي)</label><textarea id="dealDescEn" rows="2"></textarea></div>
+
 					<div class="form-row"><label>الشارة (عربي)</label><input id="dealBadgeAr" placeholder="عرض"></div>
 					<div class="form-row"><label>الشارة (إنجليزي)</label><input id="dealBadgeEn" placeholder="Offer"></div>
+
 					<div class="form-row"><label>تاريخ الانتهاء</label><input id="dealExpiry" type="date"></div>
 
 					<div style="display:flex; gap:10px;">
@@ -292,7 +298,7 @@
 		</div>
 	</div>
 
-	<!-- تبويب: التواصل -->
+	<!-- التواصل -->
 	<div id="contactsTab" class="tab-pane-dash">
 		<form id="contactsForm">
 			<div class="form-row"><label>واتساب</label><input type="text" id="contactWhatsapp"></div>
@@ -305,14 +311,15 @@
 			<div class="form-row"><label>فيسبوك</label><input type="text" id="contactFacebook"></div>
 			<div class="form-row"><label>تويتر (X)</label><input type="text" id="contactTwitter"></div>
 			<div class="form-row"><label>موقع إلكتروني</label><input type="text" id="contactWebsite"></div>
+
 			<button type="submit" class="btn-save">حفظ بيانات التواصل</button>
 		</form>
 	</div>
 
-	<!-- تبويب: الرخصة -->
+	<!-- الرخصة -->
 	<div id="licenseTab" class="tab-pane-dash">
 		<h2>رفع الرخصة التجارية</h2>
-		<div id="licenseStatusAlert" class="warning-banner" style="margin-bottom:20px;"></div>
+		<div id="licenseStatusAlert" style="margin-bottom:20px;"></div>
 
 		<form id="licenseForm">
 			<div class="form-row">
@@ -323,7 +330,7 @@
 		</form>
 	</div>
 
-	<!-- تبويب: الدعم الفني -->
+	<!-- الدعم الفني -->
 	<div id="supportTab" class="tab-pane-dash">
 		<h2>الدعم الفني</h2>
 
@@ -350,17 +357,6 @@
 		</div>
 	</div>
 
-	<!-- دليل سريع -->
-	<div class="help-sidebar">
-		<h4><i class="fas fa-life-ring"></i> دليل سريع</h4>
-		<p>
-			• يمكنك إدارة كل شيء من هنا. لرفع صور المنتجات، نوصي بإنشاء bucket إضافي باسم <code>product-images</code> في Storage.
-			<br><br>
-			• الحد الأقصى لحجم الصورة: 2 ميجابايت، للرخصة: 5 ميجابايت.
-			<br><br>
-			• إذا واجهتك مشكلة في رفع الملفات، تأكد من وجود bucket مناسب وصلاحيات الرفع.
-		</p>
-	</div>
 </div>
 
 <script type="module">
@@ -370,6 +366,48 @@
 
 	const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
 	let projectId = null;
+
+	function normalizeStatus(s) {
+		return (s || '').toString().trim().toLowerCase();
+	}
+
+	function renderAccountStatus(status) {
+		const wrap = document.getElementById('accountStatusWrap');
+		const reactivateBtn = document.getElementById('reactivateAccountBtn');
+		const disableBtn = document.getElementById('disableAccountBtn');
+		const deleteBtn = document.getElementById('deleteAccountBtn');
+
+		const v = normalizeStatus(status);
+
+		let badgeClass = 'status-active';
+		let text = 'فعال';
+
+		if (v === 'disabled') { badgeClass = 'status-disabled'; text = 'معطل'; }
+		else if (v === 'deleted') { badgeClass = 'status-deleted'; text = 'محذوف'; }
+
+		wrap.innerHTML = `<span class="status-badge ${badgeClass}">حالة الحساب: ${text}</span>`;
+
+		// زر إعادة التنشيط يظهر فقط إذا الحساب معطل
+		if (v === 'disabled') reactivateBtn.style.display = 'inline-flex';
+		else reactivateBtn.style.display = 'none';
+
+		// إذا محذوف: نقفل الأزرار (اختياري)
+		if (v === 'deleted') {
+			disableBtn.disabled = true;
+			deleteBtn.disabled = true;
+			reactivateBtn.disabled = true;
+			disableBtn.style.opacity = 0.6;
+			deleteBtn.style.opacity = 0.6;
+			reactivateBtn.style.opacity = 0.6;
+		} else {
+			disableBtn.disabled = false;
+			deleteBtn.disabled = false;
+			reactivateBtn.disabled = false;
+			disableBtn.style.opacity = 1;
+			deleteBtn.style.opacity = 1;
+			reactivateBtn.style.opacity = 1;
+		}
+	}
 
 	// ============ Session ============
 	async function checkSession() {
@@ -390,7 +428,16 @@
 
 	// ============ Load data ============
 	async function loadProjectData() {
-		const { data: project } = await supabase.from('projects').select('*').eq('id', projectId).single();
+		const { data: project, error } = await supabase
+			.from('projects')
+			.select('*')
+			.eq('id', projectId)
+			.single();
+
+		if (error) {
+			alert(error.message);
+			return;
+		}
 
 		if (project) {
 			document.getElementById('profileNameAr').value = project.name_ar || '';
@@ -401,10 +448,18 @@
 			document.getElementById('profileLongEn').value = project.long_description_en || '';
 			document.getElementById('profileEmirate').value = project.emirate || 'دبي';
 			document.getElementById('profileCoverage').value = project.coverage || 'الإمارة فقط';
-			document.getElementById('profileAdraLicense').checked = project.adra_license || false;
+			document.getElementById('profileAdraLicense').checked = !!project.adra_license;
 
-			if (project.image) document.getElementById('currentLogoHint').innerHTML = `<img src="${project.image}" class="preview-img" style="max-width:100px;">`;
-			else document.getElementById('currentLogoHint').innerHTML = 'لا يوجد شعار حالياً';
+			// التصنيف العربي فقط (عندك في الجدول category_ar/category_en)
+			if (project.category_ar) document.getElementById('profileCategory').value = project.category_ar;
+
+			if (project.image) {
+				document.getElementById('currentLogoHint').innerHTML = `<img src="${project.image}" class="preview-img" style="max-width:100px;">`;
+			} else {
+				document.getElementById('currentLogoHint').innerHTML = 'لا يوجد شعار حالياً';
+			}
+
+			renderAccountStatus(project.status);
 		}
 
 		await loadStats();
@@ -412,7 +467,7 @@
 		await loadDeals();
 		await loadContacts();
 		await loadTickets();
-		checkLicenseStatus();
+		await checkLicenseStatus();
 	}
 
 	async function loadStats() {
@@ -428,17 +483,20 @@
 	}
 
 	async function loadProducts() {
-		const { data } = await supabase.from('products').select('*').eq('project_id', projectId).order('display_order', { ascending: true });
-		const container = document.getElementById('productsListContainer');
+		const { data, error } = await supabase.from('products').select('*').eq('project_id', projectId).order('display_order', { ascending: true });
+		if (error) { alert(error.message); return; }
 
+		const container = document.getElementById('productsListContainer');
 		if (!data || data.length === 0) { container.innerHTML = '<p>لا توجد منتجات. أضف منتجك الأول.</p>'; return; }
 
 		let html = '';
 		for (const p of data) {
+			const img = p.main_image || 'https://placehold.co/60x60/0F3D2E/white?text=No+Image';
+			const price = p.price_ar || 'سعر عند الطلب';
 			html += `
 				<div class="product-item">
-					<img class="product-img-thumb" src="${p.main_image || 'https://placehold.co/60x60/0F3D2E/white?text=No+Image'}" onerror="this.src='https://placehold.co/60x60'">
-					<div class="product-info"><strong>${p.name_ar || ''}</strong><br>${p.price_ar || 'سعر عند الطلب'}</div>
+					<img class="product-img-thumb" src="${img}" onerror="this.src='https://placehold.co/60x60'">
+					<div class="product-info"><strong>${p.name_ar || ''}</strong><br>${price}</div>
 					<div class="product-actions">
 						<button class="btn-secondary" onclick="editProduct('${p.id}')"><i class="fas fa-edit"></i></button>
 						<button class="btn-secondary" style="background:#C41E3A;color:white" onclick="deleteProduct('${p.id}')"><i class="fas fa-trash"></i></button>
@@ -450,9 +508,10 @@
 	}
 
 	async function loadDeals() {
-		const { data } = await supabase.from('deals').select('*').eq('project_id', projectId);
-		const container = document.getElementById('dealsListContainer');
+		const { data, error } = await supabase.from('deals').select('*').eq('project_id', projectId).order('created_at', { ascending: false });
+		if (error) { alert(error.message); return; }
 
+		const container = document.getElementById('dealsListContainer');
 		if (!data || data.length === 0) { container.innerHTML = '<p>لا توجد عروض.</p>'; return; }
 
 		let html = '';
@@ -471,7 +530,8 @@
 	}
 
 	async function loadContacts() {
-		const { data } = await supabase.from('contacts').select('*').eq('project_id', projectId).single();
+		const { data, error } = await supabase.from('contacts').select('*').eq('project_id', projectId).single();
+		if (error && error.code !== 'PGRST116') { /* no rows */ }
 		if (!data) return;
 
 		document.getElementById('contactWhatsapp').value = data.whatsapp || '';
@@ -487,15 +547,16 @@
 	}
 
 	async function loadTickets() {
-		const { data } = await supabase.from('support_tickets').select('*').eq('project_id', projectId).order('created_at', { ascending: false });
-		const container = document.getElementById('ticketsListContainer');
+		const { data, error } = await supabase.from('support_tickets').select('*').eq('project_id', projectId).order('created_at', { ascending: false });
+		if (error) { alert(error.message); return; }
 
+		const container = document.getElementById('ticketsListContainer');
 		if (!data || data.length === 0) { container.innerHTML = '<p>لا توجد تذاكر دعم.</p>'; return; }
 
 		let html = '<div style="display:flex; flex-direction:column; gap:15px;">';
 		for (const t of data) {
-			let statusClass = (t.status === 'open' || t.status === 'in_progress') ? 'status-pending' : 'status-approved';
-			let statusText = t.status === 'open' ? 'مفتوحة' : (t.status === 'in_progress' ? 'قيد المعالجة' : 'مغلقة');
+			const statusText = t.status === 'open' ? 'مفتوحة' : (t.status === 'in_progress' ? 'قيد المعالجة' : 'مغلقة');
+			const badgeClass = (t.status === 'open' || t.status === 'in_progress') ? 'status-disabled' : 'status-active';
 
 			const replyHtml = t.admin_reply
 				? `<div style="margin-top:10px; background:white; padding:10px; border-radius:16px;"><strong>رد الإدارة:</strong> ${t.admin_reply}</div>`
@@ -504,8 +565,8 @@
 			const msg = (t.message || '');
 			html += `
 				<div style="background:var(--light); border-radius:20px; padding:15px;">
-					<div><strong>${t.subject || ''}</strong> <span class="status-badge ${statusClass}">${statusText}</span></div>
-					<div style="font-size:12px; color:var(--gray); margin-top:5px;">${new Date(t.created_at).toLocaleString()}</div>
+					<div><strong>${t.subject || ''}</strong> <span class="status-badge ${badgeClass}">${statusText}</span></div>
+					<div style="font-size:12px; color:var(--gray); margin-top:5px;">${t.created_at ? new Date(t.created_at).toLocaleString() : ''}</div>
 					<div style="margin-top:10px;">${msg.substring(0, 150)}${msg.length > 150 ? '...' : ''}</div>
 					${replyHtml}
 				</div>
@@ -515,21 +576,29 @@
 		container.innerHTML = html;
 	}
 
-	function checkLicenseStatus() {
-		supabase.from('projects').select('license_status').eq('id', projectId).single().then(({ data }) => {
-			if (!data) return;
-			const status = data.license_status;
-			const alertDiv = document.getElementById('licenseStatusAlert');
+	async function checkLicenseStatus() {
+		const { data, error } = await supabase.from('projects').select('license_status').eq('id', projectId).single();
+		if (error || !data) return;
 
-			if (status === 'pending_license') alertDiv.innerHTML = '<div class="warning-banner"><i class="fas fa-clock"></i> لم يتم رفع الرخصة بعد. يرجى رفعها لاستمرار ظهور مشروعك.</div>';
-			else if (status === 'license_uploaded') alertDiv.innerHTML = '<div class="warning-banner" style="background:#DBEAFE;"><i class="fas fa-hourglass-half"></i> جاري مراجعة الرخصة من قبل الإدارة.</div>';
-			else if (status === 'license_approved') alertDiv.innerHTML = '<div class="warning-banner" style="background:#DCFCE7;"><i class="fas fa-check-circle"></i> معتمد! مشروعك ظاهر في السوق.</div>';
-			else if (status === 'license_rejected') alertDiv.innerHTML = '<div class="warning-banner" style="background:#FEE2E2;"><i class="fas fa-times-circle"></i> مرفوض: يرجى رفع ملف صحيح.</div>';
-			else alertDiv.innerHTML = '';
-		});
+		const status = data.license_status;
+		const alertDiv = document.getElementById('licenseStatusAlert');
+
+		if (status === 'pending_license') {
+			alertDiv.innerHTML = `<div class="warning-banner"><i class="fas fa-clock"></i> لم يتم رفع الرخصة بعد. يرجى رفعها لاستمرار ظهور مشروعك.</div>`;
+		} else if (status === 'license_uploaded') {
+			alertDiv.innerHTML = `<div class="info-banner"><i class="fas fa-hourglass-half"></i> جاري مراجعة الرخصة من قبل الإدارة.</div>`;
+		} else if (status === 'license_approved') {
+			alertDiv.innerHTML = `<div class="info-banner" style="background:#DCFCE7; border-right-color:#16A34A;"><i class="fas fa-check-circle"></i> معتمد! مشروعك ظاهر في السوق.</div>`;
+		} else if (status === 'license_rejected') {
+			alertDiv.innerHTML = `<div class="warning-banner" style="background:#FEE2E2; border-right-color:#DC2626;"><i class="fas fa-times-circle"></i> مرفوض: يرجى رفع ملف صحيح.</div>`;
+		} else if (status === 'suspended') {
+			alertDiv.innerHTML = `<div class="warning-banner" style="background:#FEE2E2; border-right-color:#DC2626;"><i class="fas fa-ban"></i> الحساب موقوف من الإدارة.</div>`;
+		} else {
+			alertDiv.innerHTML = '';
+		}
 	}
 
-	// ============ Save profile ============
+	// ============ حفظ بيانات المشروع ============
 	document.getElementById('profileForm').addEventListener('submit', async (e) => {
 		e.preventDefault();
 
@@ -557,16 +626,18 @@
 			...(logoUrl ? { image: logoUrl } : {})
 		};
 
-		await supabase.from('projects').update(updates).eq('id', projectId);
+		const { error } = await supabase.from('projects').update(updates).eq('id', projectId);
+		if (error) { alert(error.message); return; }
+
 		alert('تم حفظ البيانات');
-		loadProjectData();
+		await loadProjectData();
 	});
 
-	// ============ Save contacts ============
+	// ============ حفظ التواصل ============
 	document.getElementById('contactsForm').addEventListener('submit', async (e) => {
 		e.preventDefault();
 
-		await supabase.from('contacts').upsert({
+		const payload = {
 			project_id: projectId,
 			whatsapp: document.getElementById('contactWhatsapp').value,
 			phone: document.getElementById('contactPhone').value,
@@ -578,12 +649,15 @@
 			facebook: document.getElementById('contactFacebook').value,
 			twitter: document.getElementById('contactTwitter').value,
 			website: document.getElementById('contactWebsite').value
-		});
+		};
+
+		const { error } = await supabase.from('contacts').upsert(payload);
+		if (error) { alert(error.message); return; }
 
 		alert('تم حفظ بيانات التواصل');
 	});
 
-	// ============ License upload ============
+	// ============ رفع الرخصة ============
 	document.getElementById('licenseForm').addEventListener('submit', async (e) => {
 		e.preventDefault();
 
@@ -594,205 +668,23 @@
 		const ext = file.name.split('.').pop();
 		const fileName = `${projectId}/license_${Date.now()}.${ext}`;
 
-		const licenseUrl = await uploadFile('project-logos', fileName, file, 5); // نفس bucket مؤقتاً
+		// ملاحظة: خليته نفس الباكيت اللي كنت تستخدمه عندك، إذا عندك باكيت خاص للرخص غيّره هنا
+		const licenseUrl = await uploadFile('project-logos', fileName, file, 5);
 		if (!licenseUrl) return;
 
-		await supabase.from('project_license_requests').insert({ project_id: projectId, license_file_url: licenseUrl, status: 'pending' });
+		await supabase.from('project_license_requests').insert({
+			project_id: projectId,
+			license_file_url: licenseUrl,
+			status: 'pending'
+		});
+
 		await supabase.from('projects').update({ license_status: 'license_uploaded' }).eq('id', projectId);
 
 		alert('تم رفع الرخصة، جاري المراجعة');
-		checkLicenseStatus();
+		await checkLicenseStatus();
 	});
 
-	// ============ Products ============
-	window.editProduct = async (id) => {
-		const { data } = await supabase.from('products').select('*').eq('id', id).single();
-		if (!data) return;
-
-		document.getElementById('productId').value = data.id;
-		document.getElementById('productNameAr').value = data.name_ar || '';
-		document.getElementById('productNameEn').value = data.name_en || '';
-		document.getElementById('productDescAr').value = data.description_ar || '';
-		document.getElementById('productDescEn').value = data.description_en || '';
-		document.getElementById('productPriceAr').value = data.price_ar || '';
-		document.getElementById('productPriceEn').value = data.price_en || '';
-		document.getElementById('productTypeAr').value = data.type_ar || '';
-		document.getElementById('productTypeEn').value = data.type_en || '';
-		document.getElementById('productDetailsAr').value = (data.details_ar || []).join('\n');
-		document.getElementById('productDetailsEn').value = (data.details_en || []).join('\n');
-
-		document.getElementById('productModalTitle').innerText = 'تعديل المنتج';
-		document.getElementById('productModal').style.display = 'flex';
-	};
-
-	window.deleteProduct = async (id) => {
-		if (!confirm('حذف المنتج؟')) return;
-		await supabase.from('products').delete().eq('id', id);
-		loadProducts();
-		loadStats();
-	};
-
-	async function uploadProductImages(productIdForPath, mainFile, extraFiles) {
-		let mainImageUrl = null;
-		let extraUrls = [];
-
-		if (mainFile && validateFileSize(mainFile, 2)) {
-			const ext = mainFile.name.split('.').pop();
-			const fileName = `${projectId}/${productIdForPath}/main_${Date.now()}.${ext}`;
-			mainImageUrl = await uploadFile('project-logos', fileName, mainFile, 2);
-		}
-
-		if (extraFiles && extraFiles.length) {
-			for (let i = 0; i < extraFiles.length; i++) {
-				const f = extraFiles[i];
-				if (validateFileSize(f, 2)) {
-					const ext = f.name.split('.').pop();
-					const fileName = `${projectId}/${productIdForPath}/extra_${Date.now()}_${i}.${ext}`;
-					const url = await uploadFile('project-logos', fileName, f, 2);
-					if (url) extraUrls.push(url);
-				}
-			}
-		}
-
-		return { mainImageUrl, extraUrls };
-	}
-
-	document.getElementById('productFormModal')?.addEventListener('submit', async (e) => {
-		e.preventDefault();
-
-		const id = document.getElementById('productId').value;
-		const detailsAr = document.getElementById('productDetailsAr').value.split('\n').filter(l => l.trim());
-		const detailsEn = document.getElementById('productDetailsEn').value.split('\n').filter(l => l.trim());
-
-		let mainImageUrl = null;
-		let extraImages = [];
-
-		const mainFile = document.getElementById('productMainImageFile').files[0];
-		const extraFiles = document.getElementById('productExtraImages').files;
-
-		if (mainFile || extraFiles.length) {
-			const tempId = id || Date.now().toString();
-			const uploadResult = await uploadProductImages(tempId, mainFile, Array.from(extraFiles));
-			mainImageUrl = uploadResult.mainImageUrl;
-			extraImages = uploadResult.extraUrls;
-		}
-
-		const payload = {
-			name_ar: document.getElementById('productNameAr').value,
-			name_en: document.getElementById('productNameEn').value,
-			main_image: mainImageUrl,
-			images: extraImages,
-			description_ar: document.getElementById('productDescAr').value,
-			description_en: document.getElementById('productDescEn').value,
-			price_ar: document.getElementById('productPriceAr').value,
-			price_en: document.getElementById('productPriceEn').value,
-			type_ar: document.getElementById('productTypeAr').value,
-			type_en: document.getElementById('productTypeEn').value,
-			details_ar: detailsAr,
-			details_en: detailsEn,
-			project_id: projectId
-		};
-
-		let savedProductId = id;
-
-		if (!savedProductId) {
-			const { data: newProduct, error } = await supabase.from('products').insert(payload).select().single();
-			if (error) { alert(error.message); return; }
-			savedProductId = newProduct.id;
-		} else {
-			await supabase.from('products').update(payload).eq('id', savedProductId);
-		}
-
-		alert('تم حفظ المنتج');
-		document.getElementById('productModal').style.display = 'none';
-		loadProducts();
-		loadStats();
-	});
-
-	document.getElementById('addProductBtn').onclick = () => {
-		document.getElementById('productFormModal').reset();
-		document.getElementById('productId').value = '';
-		document.getElementById('mainImagePreview').innerHTML = '';
-		document.getElementById('extraImagesPreview').innerHTML = '';
-		document.getElementById('productModalTitle').innerText = 'إضافة منتج';
-		document.getElementById('productModal').style.display = 'flex';
-	};
-
-	document.getElementById('closeProductModal')?.addEventListener('click', () => {
-		document.getElementById('productModal').style.display = 'none';
-	});
-
-	// ============ Deals ============
-	window.deleteDeal = async (id) => {
-		if (!confirm('حذف العرض؟')) return;
-		await supabase.from('deals').delete().eq('id', id);
-		loadDeals();
-		loadStats();
-	};
-
-	window.editDeal = async (id) => {
-		const { data } = await supabase.from('deals').select('*').eq('id', id).single();
-		if (!data) return;
-
-		document.getElementById('dealId').value = data.id;
-		document.getElementById('dealTitleAr').value = data.title_ar || '';
-		document.getElementById('dealTitleEn').value = data.title_en || '';
-		document.getElementById('dealDescAr').value = data.description_ar || '';
-		document.getElementById('dealDescEn').value = data.description_en || '';
-		document.getElementById('dealBadgeAr').value = data.badge_ar || '';
-		document.getElementById('dealBadgeEn').value = data.badge_en || '';
-		document.getElementById('dealExpiry').value = data.expiry_date || '';
-
-		document.getElementById('dealModalTitle').innerText = 'تعديل عرض';
-		document.getElementById('dealModal').style.display = 'flex';
-	};
-
-	document.getElementById('addDealBtn').onclick = () => {
-		document.getElementById('dealFormModal').reset();
-		document.getElementById('dealId').value = '';
-		document.getElementById('dealModalTitle').innerText = 'إضافة عرض';
-		document.getElementById('dealModal').style.display = 'flex';
-	};
-
-	document.getElementById('closeDealModal')?.addEventListener('click', () => {
-		document.getElementById('dealModal').style.display = 'none';
-	});
-
-	document.getElementById('dealFormModal')?.addEventListener('submit', async (e) => {
-		e.preventDefault();
-
-		const id = document.getElementById('dealId').value;
-		let imageUrl = null;
-
-		const imageFile = document.getElementById('dealImageFile').files[0];
-		if (imageFile && validateFileSize(imageFile, 2)) {
-			const ext = imageFile.name.split('.').pop();
-			const fileName = `${projectId}/deals/${Date.now()}.${ext}`;
-			imageUrl = await uploadFile('project-logos', fileName, imageFile, 2);
-		}
-
-		const payload = {
-			title_ar: document.getElementById('dealTitleAr').value,
-			title_en: document.getElementById('dealTitleEn').value,
-			description_ar: document.getElementById('dealDescAr').value,
-			description_en: document.getElementById('dealDescEn').value,
-			badge_ar: document.getElementById('dealBadgeAr').value,
-			badge_en: document.getElementById('dealBadgeEn').value,
-			expiry_date: document.getElementById('dealExpiry').value,
-			image: imageUrl,
-			project_id: projectId
-		};
-
-		if (id) await supabase.from('deals').update(payload).eq('id', id);
-		else await supabase.from('deals').insert(payload);
-
-		alert('تم حفظ العرض');
-		document.getElementById('dealModal').style.display = 'none';
-		loadDeals();
-		loadStats();
-	});
-
-	// ============ Support tickets ============
+	// ============ دعم فني ============
 	document.getElementById('newTicketBtn').onclick = () => { document.getElementById('ticketModal').style.display = 'flex'; };
 	document.getElementById('closeTicketModal').onclick = () => { document.getElementById('ticketModal').style.display = 'none'; };
 
@@ -802,12 +694,53 @@
 		const subject = document.getElementById('ticketSubject').value;
 		const message = document.getElementById('ticketMessage').value;
 
-		await supabase.from('support_tickets').insert({ project_id: projectId, subject, message, status: 'open' });
+		const { error } = await supabase.from('support_tickets').insert({ project_id: projectId, subject, message, status: 'open' });
+		if (error) { alert(error.message); return; }
 
 		alert('تم إرسال التذكرة');
 		document.getElementById('ticketModal').style.display = 'none';
-		loadTickets();
+		await loadTickets();
 	});
+
+	// ============ أزرار الحالة (تعطيل/حذف/إعادة تنشيط) ============
+	document.getElementById('disableAccountBtn').addEventListener('click', async () => {
+		if (!confirm('هل أنت متأكد؟ سيتم تعطيل المشروع وقد يتوقف ظهوره في السوق.')) return;
+
+		const { error } = await supabase.from('projects').update({ status: 'disabled' }).eq('id', projectId);
+		if (error) { alert(error.message); return; }
+
+		alert('تم تعطيل الحساب.');
+		await loadProjectData();
+	});
+
+	document.getElementById('reactivateAccountBtn').addEventListener('click', async () => {
+		if (!confirm('هل تريد إعادة تنشيط الحساب؟')) return;
+
+		const { error } = await supabase.from('projects').update({ status: 'active' }).eq('id', projectId);
+		if (error) { alert(error.message); return; }
+
+		alert('تم إعادة تنشيط الحساب.');
+		await loadProjectData();
+	});
+
+	document.getElementById('deleteAccountBtn').addEventListener('click', async () => {
+		const ok = confirm('هل أنت متأكد من حذف الحساب؟ سيتم إخفاء المشروع (حذف ناعم).');
+		if (!ok) return;
+		const ok2 = confirm('تأكيد أخير: هل تريد حذف الحساب الآن؟');
+		if (!ok2) return;
+
+		const { error } = await supabase.from('projects').update({ status: 'deleted' }).eq('id', projectId);
+		if (error) { alert(error.message); return; }
+
+		alert('تم حذف الحساب (المشروع).');
+		await loadProjectData();
+	});
+
+	// ============ Logout ============
+	document.getElementById('logoutBtn').onclick = async () => {
+		await supabase.auth.signOut();
+		window.location.href = 'index.html';
+	};
 
 	// ============ Tabs ============
 	document.querySelectorAll('.tab-btn-dash').forEach(btn => {
@@ -819,86 +752,29 @@
 		});
 	});
 
-	// ============ Account: disable/delete (project) ============
-	document.getElementById('disableAccountBtn').addEventListener('click', async () => {
-		if (!confirm('هل أنت متأكد؟ سيتم تعطيل المشروع وقد يتوقف ظهوره في السوق.')) return;
-
-		const { error } = await supabase.from('projects').update({ status: 'disabled' }).eq('id', projectId);
-		if (error) { alert(error.message); return; }
-
-		alert('تم تعطيل الحساب (المشروع).');
-		await supabase.auth.signOut();
-		window.location.href = 'index.html';
-	});
-
-	document.getElementById('deleteAccountBtn').addEventListener('click', async () => {
-		const ok = confirm('هل أنت متأكد من حذف الحساب؟ سيتم إخفاء المشروع (حذف ناعم). لا يمكن التراجع بسهولة.');
-		if (!ok) return;
-
-		const ok2 = confirm('تأكيد أخير: هل تريد حذف الحساب (المشروع) الآن؟');
-		if (!ok2) return;
-
-		const { error } = await supabase.from('projects').update({ status: 'deleted' }).eq('id', projectId);
-		if (error) { alert(error.message); return; }
-
-		alert('تم حذف الحساب (المشروع) بنجاح.');
-		await supabase.auth.signOut();
-		window.location.href = 'index.html';
-	});
-
-	// ============ Logout ============
-	document.getElementById('logoutBtn').onclick = async () => {
-		await supabase.auth.signOut();
-		window.location.href = 'index.html';
-	};
-
 	// ============ Init ============
 	await checkSession();
-	await loadProjectData();
 
+	// تعبئة التصنيفات
 	const categories = ["أطعمة ومشروبات","الرقميات","روائح وعطور","عناية","حلويات","تجميل","ملابس","يدويات","هدايا","عطارة","فنون","نباتات","ترفيه"];
 	const catSelect = document.getElementById('profileCategory');
 	catSelect.innerHTML = categories.map(c => `<option value="${c}">${c}</option>`).join('');
 
-	// معاينة الصور
-	document.getElementById('productMainImageFile').addEventListener('change', (e) => {
-		const file = e.target.files[0];
-		if (file) {
-			const reader = new FileReader();
-			reader.onload = (ev) => document.getElementById('mainImagePreview').innerHTML = `<img src="${ev.target.result}" class="preview-img" style="max-width:100px;">`;
-			reader.readAsDataURL(file);
-		} else document.getElementById('mainImagePreview').innerHTML = '';
-	});
+	await loadProjectData();
 
-	document.getElementById('productExtraImages').addEventListener('change', (e) => {
-		const files = e.target.files;
-		const container = document.getElementById('extraImagesPreview');
-		container.innerHTML = '';
-		Array.from(files).forEach(f => {
-			const reader = new FileReader();
-			reader.onload = (ev) => {
-				const img = document.createElement('img');
-				img.src = ev.target.result;
-				img.className = 'preview-img';
-				img.style.maxWidth = '80px';
-				container.appendChild(img);
-			};
-			reader.readAsDataURL(f);
-		});
-	});
+	// القائمة
+	document.getElementById('menuToggleBtn').addEventListener('click', () => document.getElementById('navMenu').classList.toggle('active'));
 
-	// تبديل اللغة
-	let currentLang = 'ar';
-	function toggleLang() {
+	// تبديل اللغة (بسيط كما كان عندك)
+	let currentLang = localStorage.getItem('projectSouqLang') || 'ar';
+	document.getElementById('langToggleBtn').addEventListener('click', () => {
 		currentLang = currentLang === 'ar' ? 'en' : 'ar';
 		localStorage.setItem('projectSouqLang', currentLang);
 		document.documentElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
 		location.reload();
-	}
-	document.getElementById('langToggleBtn').addEventListener('click', toggleLang);
-	document.getElementById('menuToggleBtn').addEventListener('click', () => document.getElementById('navMenu').classList.toggle('active'));
+	});
+
 </script>
 
-<script type="module" src="js/project-session.js"></script>
 </body>
 </html>
