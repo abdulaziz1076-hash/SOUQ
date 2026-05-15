@@ -37,10 +37,7 @@
 		.tab-pane-dash { display: none; background: white; border-radius: 28px; padding: 30px; border: 1px solid var(--light-gray); margin-bottom: 30px; }
 		.tab-pane-dash.active { display: block; animation: fadeIn 0.3s ease; }
 
-		@keyframes fadeIn {
-			from { opacity: 0; transform: translateY(10px); }
-			to { opacity: 1; transform: translateY(0); }
-		}
+		@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
 		.form-row { margin-bottom: 20px; }
 		.form-row label { display: block; font-weight: 700; margin-bottom: 8px; color: var(--primary-dark); }
@@ -165,13 +162,8 @@
 			<div class="form-row">
 				<label>الإمارة</label>
 				<select id="profileEmirate">
-					<option>أبوظبي</option>
-					<option>دبي</option>
-					<option>الشارقة</option>
-					<option>عجمان</option>
-					<option>رأس الخيمة</option>
-					<option>الفجيرة</option>
-					<option>أم القيوين</option>
+					<option>أبوظبي</option><option>دبي</option><option>الشارقة</option><option>عجمان</option>
+					<option>رأس الخيمة</option><option>الفجيرة</option><option>أم القيوين</option>
 				</select>
 			</div>
 
@@ -375,9 +367,8 @@
 	<div class="help-sidebar">
 		<h4><i class="fas fa-life-ring"></i> دليل سريع</h4>
 		<p>
-			• يمكنك إدارة كل شيء من هنا. <code></code><br><br>
 			• الحد الأقصى لحجم الصورة: 2 ميجابايت، للرخصة: 5 ميجابايت.<br><br>
-			• إذا واجهتك مشكلة في رفع الملفات، تواصل مع الدعم الفني .
+			• إذا واجهتك مشكلة في رفع الملفات، تواصل مع الدعم الفني.
 		</p>
 	</div>
 </div>
@@ -408,7 +399,7 @@
 	const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
 	let projectId = null;
 
-	// ========= UI helpers (احترافي) =========
+	// ========= UI helpers =========
 	function toast(msg, type = 'info') {
 		const el = document.getElementById('toast');
 		const colors = { info: '#111827', success: '#166534', warn: '#92400E', error: '#991B1B' };
@@ -449,9 +440,7 @@
 		});
 	}
 
-	function normalizeStatus(s) {
-		return (s || '').toString().trim().toLowerCase();
-	}
+	function normalizeStatus(s) { return (s || '').toString().trim().toLowerCase(); }
 
 	function renderAccountStatus(status) {
 		const wrap = document.getElementById('accountStatusWrap');
@@ -468,31 +457,106 @@
 		reactivateBtn.style.display = (v === 'disabled') ? 'inline-flex' : 'none';
 	}
 
+	// ============ Ensure project exists AFTER email confirmation ============
+	async function ensureProjectExists(session) {
+		// جرّب تجيب مشروع المستخدم
+		const { data: existing, error: exErr } = await supabase
+			.from('projects')
+			.select('id')
+			.eq('owner_user_id', session.user.id)
+			.maybeSingle();
+
+		if (existing && !exErr) return existing.id;
+
+		// ما فيه مشروع: أنشئه من localStorage (pendingProjectPayload)
+		const raw = localStorage.getItem('pendingProjectPayload');
+		if (!raw) return null;
+
+		let payload = null;
+		try { payload = JSON.parse(raw); } catch { payload = null; }
+		if (!payload?.project) return null;
+
+		const trialEnd = new Date();
+		trialEnd.setDate(trialEnd.getDate() + 7);
+
+		const newId = Date.now() + Math.floor(Math.random() * 10000);
+
+		const projectData = {
+			id: newId,
+			owner_user_id: session.user.id,
+
+			name_ar: payload.project.name_ar || '',
+			name_en: payload.project.name_en || '',
+			emirate: payload.project.emirate || 'دبي',
+			description_ar: payload.project.description_ar || '',
+			description_en: payload.project.description_en || '',
+			long_description_ar: payload.project.long_description_ar || '',
+			long_description_en: payload.project.long_description_en || '',
+			image: payload.project.image || null,
+
+			adra_license: !!payload.project.adra_license,
+			coverage: payload.project.coverage || 'الإمارة فقط',
+			category_ar: payload.project.category_ar || null,
+			category_en: payload.project.category_en || null,
+
+			license_status: payload.project.license_status || 'pending_license',
+			status: payload.project.status || 'active',
+			trial_end_date: trialEnd.toISOString(),
+			display_order: payload.project.display_order ?? 0
+		};
+
+		const { data: inserted, error: insErr } = await supabase
+			.from('projects')
+			.insert(projectData)
+			.select('id')
+			.single();
+
+		if (insErr) {
+			toast('تعذر إنشاء المشروع بعد التأكيد: ' + insErr.message, 'error');
+			return null;
+		}
+
+		// إدراج contacts إن أمكن
+		if (payload.contact) {
+			const contactData = {
+				project_id: inserted.id,
+				whatsapp: payload.contact.whatsapp || null,
+				instagram: payload.contact.instagram || null,
+				phone: payload.contact.phone || null,
+				email: payload.contact.email || null
+			};
+
+			const { error: cErr } = await supabase.from('contacts').insert(contactData);
+			if (cErr) console.warn('contacts insert error:', cErr);
+		}
+
+		// تنظيف
+		localStorage.removeItem('pendingProjectPayload');
+		localStorage.removeItem('pendingEmail');
+
+		return inserted.id;
+	}
+
 	// ============ Session ============
 	async function checkSession() {
 		const { data: { session } } = await supabase.auth.getSession();
 		if (!session) { window.location.href = 'project-login.html'; return null; }
 
-		const { data: project, error } = await supabase
-			.from('projects')
-			.select('id')
-			.eq('owner_user_id', session.user.id)
-			.single();
+		// تأكد المشروع موجود (بعد التأكيد)
+		const ensuredId = await ensureProjectExists(session);
+		if (!ensuredId) {
+			// لا يوجد مشروع مرتبط ولم نجد pending payload
+			window.location.href = 'project-login.html';
+			return null;
+		}
 
-		if (error || !project) { window.location.href = 'project-login.html'; return null; }
-
-		projectId = project.id;
+		projectId = ensuredId;
 		return session;
 	}
 
 	// ============ Load data ============
 	async function loadProjectData() {
-		const { data: project, error } = await supabase
-			.from('projects')
-			.select('*')
-			.eq('id', projectId)
-			.single();
-
+		const { data: project, error } = await supabase.from('projects').select('*').eq('id', projectId).single();
 		if (error) { toast(error.message, 'error'); return; }
 
 		if (project) {
@@ -508,11 +572,8 @@
 
 			if (project.category_ar) document.getElementById('profileCategory').value = project.category_ar;
 
-			if (project.image) {
-				document.getElementById('currentLogoHint').innerHTML = `<img src="${project.image}" class="preview-img" style="max-width:100px;">`;
-			} else {
-				document.getElementById('currentLogoHint').innerHTML = 'لا يوجد شعار حالياً';
-			}
+			if (project.image) document.getElementById('currentLogoHint').innerHTML = `<img src="${project.image}" class="preview-img" style="max-width:100px;">`;
+			else document.getElementById('currentLogoHint').innerHTML = 'لا يوجد شعار حالياً';
 
 			renderAccountStatus(project.status);
 		}
@@ -546,10 +607,9 @@
 
 		let html = '';
 		for (const p of data) {
-			const img = p.main_image || 'https://placehold.co/60x60/0F3D2E/white?text=No+Image';
 			html += `
 				<div class="product-item">
-					<img class="product-img-thumb" src="${img}" onerror="this.src='https://placehold.co/60x60'">
+					<img class="product-img-thumb" src="${p.main_image || 'https://placehold.co/60x60/0F3D2E/white?text=No+Image'}" onerror="this.src='https://placehold.co/60x60'">
 					<div class="product-info"><strong>${p.name_ar || ''}</strong><br>${p.price_ar || 'سعر عند الطلب'}</div>
 					<div class="product-actions">
 						<button class="btn-secondary" onclick="editProduct('${p.id}')"><i class="fas fa-edit"></i></button>
@@ -584,8 +644,8 @@
 	}
 
 	async function loadContacts() {
-		const { data, error } = await supabase.from('contacts').select('*').eq('project_id', projectId).single();
-		if (error || !data) return;
+		const { data } = await supabase.from('contacts').select('*').eq('project_id', projectId).maybeSingle();
+		if (!data) return;
 
 		document.getElementById('contactWhatsapp').value = data.whatsapp || '';
 		document.getElementById('contactPhone').value = data.phone || '';
@@ -610,12 +670,9 @@
 		for (const t of data) {
 			const statusClass = (t.status === 'open' || t.status === 'in_progress') ? 'status-pending' : 'status-approved';
 			const statusText = t.status === 'open' ? 'مفتوحة' : (t.status === 'in_progress' ? 'قيد المعالجة' : 'مغلقة');
-
-			const replyHtml = t.admin_reply
-				? `<div style="margin-top:10px; background:white; padding:10px; border-radius:16px;"><strong>رد الإدارة:</strong> ${t.admin_reply}</div>`
-				: '';
-
+			const replyHtml = t.admin_reply ? `<div style="margin-top:10px; background:white; padding:10px; border-radius:16px;"><strong>رد الإدارة:</strong> ${t.admin_reply}</div>` : '';
 			const msg = (t.message || '');
+
 			html += `
 				<div style="background:var(--light); border-radius:20px; padding:15px;">
 					<div><strong>${t.subject || ''}</strong> <span class="status-badge ${statusClass}">${statusText}</span></div>
@@ -636,23 +693,11 @@
 		const status = data.license_status;
 		const alertDiv = document.getElementById('licenseStatusAlert');
 
-		if (status === 'pending_license') {
-			alertDiv.innerHTML = '<i class="fas fa-clock"></i> لم يتم رفع الرخصة بعد. يرجى رفعها لاستمرار ظهور مشروعك.';
-		} else if (status === 'license_uploaded') {
-			alertDiv.style.background = '#DBEAFE';
-			alertDiv.style.borderRightColor = '#3B82F6';
-			alertDiv.innerHTML = '<i class="fas fa-hourglass-half"></i> جاري مراجعة الرخصة من قبل الإدارة.';
-		} else if (status === 'license_approved') {
-			alertDiv.style.background = '#DCFCE7';
-			alertDiv.style.borderRightColor = '#16A34A';
-			alertDiv.innerHTML = '<i class="fas fa-check-circle"></i> معتمد! مشروعك ظاهر في السوق.';
-		} else if (status === 'license_rejected') {
-			alertDiv.style.background = '#FEE2E2';
-			alertDiv.style.borderRightColor = '#DC2626';
-			alertDiv.innerHTML = '<i class="fas fa-times-circle"></i> مرفوض: يرجى رفع ملف صحيح.';
-		} else {
-			alertDiv.innerHTML = '';
-		}
+		if (status === 'pending_license') alertDiv.innerHTML = '<i class="fas fa-clock"></i> لم يتم رفع الرخصة بعد. يرجى رفعها لاستمرار ظهور مشروعك.';
+		else if (status === 'license_uploaded') { alertDiv.style.background = '#DBEAFE'; alertDiv.style.borderRightColor = '#3B82F6'; alertDiv.innerHTML = '<i class="fas fa-hourglass-half"></i> جاري مراجعة الرخصة من قبل الإدارة.'; }
+		else if (status === 'license_approved') { alertDiv.style.background = '#DCFCE7'; alertDiv.style.borderRightColor = '#16A34A'; alertDiv.innerHTML = '<i class="fas fa-check-circle"></i> معتمد! مشروعك ظاهر في السوق.'; }
+		else if (status === 'license_rejected') { alertDiv.style.background = '#FEE2E2'; alertDiv.style.borderRightColor = '#DC2626'; alertDiv.innerHTML = '<i class="fas fa-times-circle"></i> مرفوض: يرجى رفع ملف صحيح.'; }
+		else alertDiv.innerHTML = '';
 	}
 
 	// ============ Save profile ============
@@ -761,12 +806,7 @@
 	};
 
 	window.deleteProduct = async (id) => {
-		const ok = await confirmDialog({
-			title: 'حذف المنتج',
-			message: 'هل أنت متأكد من حذف هذا المنتج؟ لا يمكن التراجع.',
-			okText: 'حذف',
-			danger: true
-		});
+		const ok = await confirmDialog({ title: 'حذف المنتج', message: 'هل أنت متأكد من حذف هذا المنتج؟ لا يمكن التراجع.', okText: 'حذف', danger: true });
 		if (!ok) return;
 
 		const { error } = await supabase.from('products').delete().eq('id', id);
@@ -839,9 +879,8 @@
 		};
 
 		if (!id) {
-			const { data: newProduct, error } = await supabase.from('products').insert(payload).select().single();
+			const { error } = await supabase.from('products').insert(payload);
 			if (error) { toast(error.message, 'error'); return; }
-			if (!newProduct) { toast('تعذر إضافة المنتج', 'error'); return; }
 		} else {
 			const { error } = await supabase.from('products').update(payload).eq('id', id);
 			if (error) { toast(error.message, 'error'); return; }
@@ -868,12 +907,7 @@
 
 	// ============ Deals ============
 	window.deleteDeal = async (id) => {
-		const ok = await confirmDialog({
-			title: 'حذف العرض',
-			message: 'هل أنت متأكد من حذف هذا العرض؟ لا يمكن التراجع.',
-			okText: 'حذف',
-			danger: true
-		});
+		const ok = await confirmDialog({ title: 'حذف العرض', message: 'هل أنت متأكد من حذف هذا العرض؟ لا يمكن التراجع.', okText: 'حذف', danger: true });
 		if (!ok) return;
 
 		const { error } = await supabase.from('deals').delete().eq('id', id);
@@ -958,7 +992,6 @@
 
 	document.getElementById('ticketForm').addEventListener('submit', async (e) => {
 		e.preventDefault();
-
 		const subject = document.getElementById('ticketSubject').value;
 		const message = document.getElementById('ticketMessage').value;
 
@@ -982,12 +1015,7 @@
 
 	// ============ Account: disable/delete/reactivate ============
 	document.getElementById('disableAccountBtn').addEventListener('click', async () => {
-		const ok = await confirmDialog({
-			title: 'تعطيل الحساب',
-			message: 'سيتم تعطيل المشروع وقد يتوقف ظهوره في السوق. هل تريد المتابعة؟',
-			okText: 'تعطيل',
-			danger: true
-		});
+		const ok = await confirmDialog({ title: 'تعطيل الحساب', message: 'سيتم تعطيل المشروع وقد يتوقف ظهوره في السوق. هل تريد المتابعة؟', okText: 'تعطيل', danger: true });
 		if (!ok) return;
 
 		const { error } = await supabase.from('projects').update({ status: 'disabled' }).eq('id', projectId);
@@ -998,12 +1026,7 @@
 	});
 
 	document.getElementById('reactivateAccountBtn').addEventListener('click', async () => {
-		const ok = await confirmDialog({
-			title: 'إعادة تنشيط الحساب',
-			message: 'سيتم إعادة تنشيط الحساب ليصبح نشطًا من جديد. هل تريد المتابعة؟',
-			okText: 'إعادة تنشيط',
-			danger: false
-		});
+		const ok = await confirmDialog({ title: 'إعادة تنشيط الحساب', message: 'سيتم إعادة تنشيط الحساب ليصبح نشطًا من جديد. هل تريد المتابعة؟', okText: 'إعادة تنشيط', danger: false });
 		if (!ok) return;
 
 		const { error } = await supabase.from('projects').update({ status: 'active' }).eq('id', projectId);
@@ -1014,20 +1037,10 @@
 	});
 
 	document.getElementById('deleteAccountBtn').addEventListener('click', async () => {
-		const ok = await confirmDialog({
-			title: 'حذف الحساب',
-			message: 'سيتم حذف الحساب (حذف ناعم) وسيختفي مشروعك. هل تريد المتابعة؟',
-			okText: 'حذف',
-			danger: true
-		});
+		const ok = await confirmDialog({ title: 'حذف الحساب', message: 'سيتم حذف الحساب (حذف ناعم) وسيختفي مشروعك. هل تريد المتابعة؟', okText: 'حذف', danger: true });
 		if (!ok) return;
 
-		const ok2 = await confirmDialog({
-			title: 'تأكيد أخير',
-			message: 'تأكيد أخير: هل تريد حذف الحساب الآن؟',
-			okText: 'نعم، احذف',
-			danger: true
-		});
+		const ok2 = await confirmDialog({ title: 'تأكيد أخير', message: 'تأكيد أخير: هل تريد حذف الحساب الآن؟', okText: 'نعم، احذف', danger: true });
 		if (!ok2) return;
 
 		const { error } = await supabase.from('projects').update({ status: 'deleted' }).eq('id', projectId);
@@ -1044,28 +1057,26 @@
 	};
 
 	// ============ Init ============
-	await checkSession();
+	const session = await checkSession();
+	if (session) {
+		const categories = ["أطعمة ومشروبات","الرقميات","روائح وعطور","عناية","حلويات","تجميل","ملابس","يدويات","هدايا","عطارة","فنون","نباتات","ترفيه"];
+		const catSelect = document.getElementById('profileCategory');
+		catSelect.innerHTML = categories.map(c => `<option value="${c}">${c}</option>`).join('');
 
-	// التصنيفات
-	const categories = ["أطعمة ومشروبات","الرقميات","روائح وعطور","عناية","حلويات","تجميل","ملابس","يدويات","هدايا","عطارة","فنون","نباتات","ترفيه"];
-	const catSelect = document.getElementById('profileCategory');
-	catSelect.innerHTML = categories.map(c => `<option value="${c}">${c}</option>`).join('');
+		await loadProjectData();
+	}
 
-	await loadProjectData();
-
-	// معاينة الصور
-	document.getElementById('productMainImageFile').addEventListener('change', (e) => {
+	// معاينة الصور (المنتجات)
+	document.getElementById('productMainImageFile')?.addEventListener('change', (e) => {
 		const file = e.target.files[0];
 		if (file) {
 			const reader = new FileReader();
 			reader.onload = (ev) => document.getElementById('mainImagePreview').innerHTML = `<img src="${ev.target.result}" class="preview-img" style="max-width:100px;">`;
 			reader.readAsDataURL(file);
-		} else {
-			document.getElementById('mainImagePreview').innerHTML = '';
-		}
+		} else document.getElementById('mainImagePreview').innerHTML = '';
 	});
 
-	document.getElementById('productExtraImages').addEventListener('change', (e) => {
+	document.getElementById('productExtraImages')?.addEventListener('change', (e) => {
 		const files = e.target.files;
 		const container = document.getElementById('extraImagesPreview');
 		container.innerHTML = '';
@@ -1096,7 +1107,7 @@
 	document.getElementById('menuToggleBtn').addEventListener('click', () => document.getElementById('navMenu').classList.toggle('active'));
 </script>
 
-<!-- إذا ملفك يحتاجه كـ module مستقل، اتركه. (وجوده لا يضر) -->
+<!-- وجوده لا يضر -->
 <script type="module" src="js/project-session.js"></script>
 
 </body>
