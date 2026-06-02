@@ -556,7 +556,7 @@
 
 	// ============ Load data ============
 	async function loadProjectData() {
-		const { data: project, error } = await supabase.from('projects').select('*').eq('id', projectId).single();
+		const { data: project, error } = await supabase.from('projects').select('*').eq('id', projectId).maybeSingle();
 		if (error) { toast(error.message, 'error'); return; }
 
 		if (project) {
