@@ -539,20 +539,28 @@
 
 	// ============ Session ============
 	async function checkSession() {
-		const { data: { session } } = await supabase.auth.getSession();
-		if (!session) { window.location.href = 'project-login.html'; return null; }
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+        window.location.href = 'project-login.html';
+        return null;
+    }
 
-		// تأكد المشروع موجود (بعد التأكيد)
-		const ensuredId = await ensureProjectExists(session);
-		if (!ensuredId) {
-			// لا يوجد مشروع مرتبط ولم نجد pending payload
-			window.location.href = 'project-login.html';
-			return null;
-		}
+    // البحث عن المشروع باستخدام limit(1)
+    const { data: projectRows } = await supabase
+        .from('projects')
+        .select('id')
+        .eq('owner_user_id', session.user.id)
+        .limit(1);
 
-		projectId = ensuredId;
-		return session;
-	}
+    if (!projectRows || projectRows.length === 0) {
+        // إذا لم يوجد مشروع (لم ينشأ في callback)، نعيد التوجيه للتسجيل
+        window.location.href = 'project-register.html';
+        return null;
+    }
+
+    projectId = projectRows[0].id;
+    return session;
+}
 
 	// ============ Load data ============
 	async function loadProjectData() {
