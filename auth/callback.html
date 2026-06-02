@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>جاري تسجيل الدخول… | سوق المشاريع</title>
+  <title>جاري تأكيد البريد وإعداد مشروعك…</title>
   <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap" rel="stylesheet" />
   <style>
     body{
@@ -33,47 +33,109 @@
 <body>
   <div class="card">
     <img class="logo" src="https://souqalmasharie.onrender.com/images/logo.png" alt="سوق المشاريع" />
-    <h1>جاري تأكيد البريد وتسجيل الدخول…</h1>
+    <h1>جاري تأكيد البريد وإنشاء مشروعك…</h1>
     <p>انتظر لحظات، سيتم تحويلك للوحة التحكم.</p>
   </div>
 
   <script type="module">
-  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-  import { APP_CONFIG } from '../config.js'; // مهم: لأن callback داخل auth/
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+    import { APP_CONFIG } from '../config.js';
 
-  const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
+    const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
 
-  async function run() {
-    try {
-      const url = new URL(window.location.href);
-      const code = url.searchParams.get('code');
+    async function createProjectFromPayload(userId) {
+      const raw = localStorage.getItem('pendingProjectPayload');
+      if (!raw) return null;
 
-      // 1) أهم خطوة: تبادل الكود إلى Session
-      if (code) {
-        const { error } = await supabase.auth.exchangeCodeForSession(code);
-        if (error) throw error;
+      let payload;
+      try { payload = JSON.parse(raw); } catch(e) { return null; }
+      if (!payload?.project) return null;
 
-        // تنظف الرابط من code (اختياري لكن ممتاز)
-        window.history.replaceState({}, document.title, url.origin + url.pathname);
+      const trialEnd = new Date();
+      trialEnd.setDate(trialEnd.getDate() + 7);
+      const newId = Date.now() + Math.floor(Math.random() * 10000);
+
+      const projectData = {
+        id: newId,
+        owner_user_id: userId,
+        name_ar: payload.project.name_ar || '',
+        name_en: payload.project.name_en || '',
+        emirate: payload.project.emirate || 'دبي',
+        description_ar: payload.project.description_ar || '',
+        description_en: payload.project.description_en || '',
+        long_description_ar: payload.project.long_description_ar || '',
+        long_description_en: payload.project.long_description_en || '',
+        image: payload.project.image || null,
+        adra_license: !!payload.project.adra_license,
+        coverage: payload.project.coverage || 'الإمارة فقط',
+        category_ar: payload.project.category_ar || null,
+        category_en: payload.project.category_en || null,
+        license_status: payload.project.license_status || 'pending_license',
+        status: payload.project.status || 'active',
+        trial_end_date: trialEnd.toISOString(),
+        display_order: payload.project.display_order ?? 0
+      };
+
+      const { error } = await supabase.from('projects').insert(projectData);
+      if (error) {
+        console.error('فشل إنشاء المشروع:', error);
+        return null;
       }
 
-      // 2) تأكد أن الجلسة صارت موجودة
-      const { data: { session } } = await supabase.auth.getSession();
-
-      if (!session) {
-        window.location.href = '../project-login.html';
-        return;
+      if (payload.contact) {
+        await supabase.from('contacts').insert({
+          project_id: newId,
+          whatsapp: payload.contact.whatsapp || null,
+          instagram: payload.contact.instagram || null,
+          phone: payload.contact.phone || null,
+          email: payload.contact.email || null
+        });
       }
 
-      // 3) حوّل للداشبورد
-      window.location.href = '../project-dashboard.html';
-    } catch (e) {
-      console.error('Callback error:', e);
-      window.location.href = '../project-login.html';
+      localStorage.removeItem('pendingProjectPayload');
+      localStorage.removeItem('pendingEmail');
+      return newId;
     }
-  }
 
-  run();
-</script>
+    async function run() {
+      try {
+        const url = new URL(window.location.href);
+        const code = url.searchParams.get('code');
+
+        if (code) {
+          const { error } = await supabase.auth.exchangeCodeForSession(code);
+          if (error) throw error;
+          window.history.replaceState({}, document.title, url.origin + url.pathname);
+          await new Promise(r => setTimeout(r, 500));
+        }
+
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+          window.location.href = '../project-login.html';
+          return;
+        }
+
+        // ✅ إنشاء المشروع الآن (إذا لم يكن موجوداً)
+        const { data: existing } = await supabase
+          .from('projects')
+          .select('id')
+          .eq('owner_user_id', session.user.id)
+          .limit(1);
+
+        if (!existing || existing.length === 0) {
+          const projectId = await createProjectFromPayload(session.user.id);
+          if (!projectId) throw new Error('تعذر إنشاء المشروع');
+        }
+
+        window.location.href = '../project-dashboard.html';
+      } catch (err) {
+        console.error(err);
+        alert('حدث خطأ: ' + err.message);
+        window.location.href = '../project-login.html';
+      }
+    }
+
+    run();
+  </script>
 </body>
 </html>
