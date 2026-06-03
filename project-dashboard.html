@@ -459,83 +459,81 @@
 
 	// ============ Ensure project exists AFTER email confirmation ============
 	async function ensureProjectExists(session) {
-		// جرّب تجيب مشروع المستخدم
-		const { data: existing, error: exErr } = await supabase
-			.from('projects')
-			.select('id')
-			.eq('owner_user_id', session.user.id)
-			.maybeSingle();
+    // جلب المشروع المرتبط بالمستخدم إن وجد
+    const { data: existing, error: exErr } = await supabase
+        .from('projects')
+        .select('id')
+        .eq('owner_user_id', session.user.id)
+        .maybeSingle();
 
-		if (existing && !exErr) return existing.id;
+    if (existing && !exErr) return existing.id;
 
-		// ما فيه مشروع: أنشئه من localStorage (pendingProjectPayload)
-		const raw = localStorage.getItem('pendingProjectPayload');
-		if (!raw) return null;
+    // لا يوجد مشروع: أنشئه من البيانات المخزنة مؤقتًا
+    const raw = localStorage.getItem('pendingProjectPayload');
+    if (!raw) return null;
 
-		let payload = null;
-		try { payload = JSON.parse(raw); } catch { payload = null; }
-		if (!payload?.project) return null;
+    let payload = null;
+    try { payload = JSON.parse(raw); } catch { payload = null; }
+    if (!payload?.project) return null;
 
-		const trialEnd = new Date();
-		trialEnd.setDate(trialEnd.getDate() + 7);
+    const trialEnd = new Date();
+    trialEnd.setDate(trialEnd.getDate() + 7);
 
-		const newId = Date.now() + Math.floor(Math.random() * 10000);
+    // ⚠️ لا نضيف id هنا – سيتم توليده تلقائيًا
+    const projectData = {
+        owner_user_id: session.user.id,
 
-		const projectData = {
-			id: newId,
-			owner_user_id: session.user.id,
+        name_ar: payload.project.name_ar || '',
+        name_en: payload.project.name_en || '',
+        emirate: payload.project.emirate || 'دبي',
+        description_ar: payload.project.description_ar || '',
+        description_en: payload.project.description_en || '',
+        long_description_ar: payload.project.long_description_ar || '',
+        long_description_en: payload.project.long_description_en || '',
+        image: payload.project.image || null,
 
-			name_ar: payload.project.name_ar || '',
-			name_en: payload.project.name_en || '',
-			emirate: payload.project.emirate || 'دبي',
-			description_ar: payload.project.description_ar || '',
-			description_en: payload.project.description_en || '',
-			long_description_ar: payload.project.long_description_ar || '',
-			long_description_en: payload.project.long_description_en || '',
-			image: payload.project.image || null,
+        adra_license: !!payload.project.adra_license,
+        coverage: payload.project.coverage || 'الإمارة فقط',
+        category_ar: payload.project.category_ar || null,
+        category_en: payload.project.category_en || null,
 
-			adra_license: !!payload.project.adra_license,
-			coverage: payload.project.coverage || 'الإمارة فقط',
-			category_ar: payload.project.category_ar || null,
-			category_en: payload.project.category_en || null,
+        license_status: payload.project.license_status || 'pending_license',
+        status: payload.project.status || 'active',
+        trial_end_date: trialEnd.toISOString(),
+        display_order: payload.project.display_order ?? 0
+    };
 
-			license_status: payload.project.license_status || 'pending_license',
-			status: payload.project.status || 'active',
-			trial_end_date: trialEnd.toISOString(),
-			display_order: payload.project.display_order ?? 0
-		};
+    // إدراج المشروع واسترجاع المعرف المُولَّد
+    const { data: inserted, error: insErr } = await supabase
+        .from('projects')
+        .insert(projectData)
+        .select('id')
+        .single();
 
-		const { data: inserted, error: insErr } = await supabase
-			.from('projects')
-			.insert(projectData)
-			.select('id')
-			.single();
+    if (insErr) {
+        toast('تعذر إنشاء المشروع بعد التأكيد: ' + insErr.message, 'error');
+        return null;
+    }
 
-		if (insErr) {
-			toast('تعذر إنشاء المشروع بعد التأكيد: ' + insErr.message, 'error');
-			return null;
-		}
+    // إدراج بيانات التواصل (contacts)
+    if (payload.contact) {
+        const contactData = {
+            project_id: inserted.id,
+            whatsapp: payload.contact.whatsapp || null,
+            instagram: payload.contact.instagram || null,
+            phone: payload.contact.phone || null,
+            email: payload.contact.email || null
+        };
+        const { error: cErr } = await supabase.from('contacts').insert(contactData);
+        if (cErr) console.warn('contacts insert error:', cErr);
+    }
 
-		// إدراج contacts إن أمكن
-		if (payload.contact) {
-			const contactData = {
-				project_id: inserted.id,
-				whatsapp: payload.contact.whatsapp || null,
-				instagram: payload.contact.instagram || null,
-				phone: payload.contact.phone || null,
-				email: payload.contact.email || null
-			};
+    // تنظيف localStorage
+    localStorage.removeItem('pendingProjectPayload');
+    localStorage.removeItem('pendingEmail');
 
-			const { error: cErr } = await supabase.from('contacts').insert(contactData);
-			if (cErr) console.warn('contacts insert error:', cErr);
-		}
-
-		// تنظيف
-		localStorage.removeItem('pendingProjectPayload');
-		localStorage.removeItem('pendingEmail');
-
-		return inserted.id;
-	}
+    return inserted.id;
+}
 
 	// ============ Session ============
 	async function checkSession() {
