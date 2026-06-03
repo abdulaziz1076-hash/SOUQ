@@ -317,6 +317,7 @@
 					<div class="form-row"><label>الوصف القصير (عربي)</label><textarea id="productDescAr" rows="2"></textarea></div>
 					<div class="form-row"><label>الوصف القصير (إنجليزي)</label><textarea id="productDescEn" rows="2"></textarea></div>
 
+					<!-- حقل سعر واحد -->
 					<div class="form-row"><label>السعر (مثال: 50 د.إ)</label><input id="productPrice" placeholder="50 د.إ"></div>
 
 					<div class="form-row">
@@ -541,7 +542,7 @@
 		reactivateBtn.style.display = (v === 'disabled' || v === 'deleted') ? 'inline-flex' : 'none';
 	}
 
-	// ============ Ensure project exists AFTER email confirmation ============
+	// ============ Ensure project exists after email confirmation ============
 	async function ensureProjectExists(session) {
 		const { data: existing, error: exErr } = await supabase
 			.from('projects')
@@ -676,7 +677,12 @@
 
 		let html = '';
 		for (const p of data) {
-			const priceDisplay = p.price ? p.price : (p.price_ar ? p.price_ar : (p.price_en ? p.price_en : 'السعر عند الطلب'));
+			// عرض السعر: نفضل price_ar/price_en معاً لأن base table ليس بها price
+			let priceDisplay = '';
+			if (p.price_ar && p.price_ar.trim()) priceDisplay = p.price_ar;
+			else if (p.price_en && p.price_en.trim()) priceDisplay = p.price_en;
+			else priceDisplay = 'السعر عند الطلب';
+			
 			html += `
 				<div class="product-item">
 					<img class="product-img-thumb" src="${p.main_image || 'https://placehold.co/60x60/0F3D2E/white?text=No+Image'}" onerror="this.src='https://placehold.co/60x60'">
@@ -864,7 +870,9 @@
 		document.getElementById('productNameEn').value = data.name_en || '';
 		document.getElementById('productDescAr').value = data.description_ar || '';
 		document.getElementById('productDescEn').value = data.description_en || '';
-		document.getElementById('productPrice').value = data.price || '';
+		// عرض السعر: نفضل price_ar ثم price_en
+		let priceValue = data.price_ar || data.price_en || '';
+		document.getElementById('productPrice').value = priceValue;
 		document.getElementById('productTypeAr').value = data.type_ar || '';
 		document.getElementById('productTypeEn').value = data.type_en || '';
 		document.getElementById('productDetailsAr').value = (data.details_ar || []).join('\n');
@@ -930,6 +938,8 @@
 			extraImages = uploadResult.extraUrls;
 		}
 
+		const singlePrice = document.getElementById('productPrice').value;
+
 		const payload = {
 			name_ar: document.getElementById('productNameAr').value,
 			name_en: document.getElementById('productNameEn').value,
@@ -937,7 +947,8 @@
 			images: extraImages,
 			description_ar: document.getElementById('productDescAr').value,
 			description_en: document.getElementById('productDescEn').value,
-			price: document.getElementById('productPrice').value,
+			price_ar: singlePrice,   // نضع نفس السعر في الحقلين
+			price_en: singlePrice,
 			type_ar: document.getElementById('productTypeAr').value,
 			type_en: document.getElementById('productTypeEn').value,
 			details_ar: detailsAr,
