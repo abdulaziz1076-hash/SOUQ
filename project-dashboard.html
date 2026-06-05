@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Almarai:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <style>
-        /* أنماط خاصة بلوحة التحكم */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #F4F6FA; font-family: 'Inter', 'Almarai', sans-serif; color: #1E293B; direction: rtl; }
         .dashboard { display: flex; min-height: 100vh; position: relative; }
@@ -69,6 +68,11 @@
         .product-info, .order-info { flex: 1; }
         .product-actions, .order-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 
+        @media (max-width: 768px) {
+            .product-item, .order-item { flex-direction: column; text-align: center; width: 100%; }
+            .product-actions { justify-content: center; }
+        }
+
         .form-row { margin-bottom: 20px; }
         .form-row label { display: block; font-weight: 700; margin-bottom: 8px; color: #0F3D2E; }
         .form-row input, .form-row select, .form-row textarea { width: 100%; padding: 12px 16px; border: 2px solid #E2E8F0; border-radius: 30px; font-family: inherit; background: #F8FAFC; }
@@ -84,7 +88,6 @@
         .modal.active { display: flex; }
         .modal-content { background: white; border-radius: 32px; max-width: 700px; width: 90%; max-height: 85vh; overflow-y: auto; padding: 28px; }
 
-        /* شريط سفلي للهواتف */
         .bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #E2E8F0; padding: 8px 16px; justify-content: space-around; z-index: 1000; }
         .bottom-nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #64748B; font-size: 0.7rem; cursor: pointer; padding: 6px 0; }
         .bottom-nav-item i { font-size: 1.4rem; }
@@ -95,11 +98,13 @@
         .status-pill.active { background: #DCFCE7; color: #15803D; }
         .status-pill.disabled { background: #FEF3C7; color: #D97706; }
         .status-pill.deleted { background: #FEE2E2; color: #DC2626; }
+        .status-pill.completed { background: #DCFCE7; color: #15803D; }
+        .status-pill.processing { background: #DBEAFE; color: #1D4ED8; }
+        .status-pill.cancelled { background: #FEE2E2; color: #DC2626; }
         .status-pill.open { background: #FEF3C7; color: #D97706; }
         .status-pill.in_progress { background: #DBEAFE; color: #1D4ED8; }
         .status-pill.closed { background: #DCFCE7; color: #15803D; }
 
-        /* زر إغلاق القائمة في الهاتف */
         .sidebar .close-sidebar-btn { display: none; text-align: left; margin-bottom: 20px; font-size: 24px; cursor: pointer; color: #D4AF37; }
         @media (max-width: 768px) {
             .sidebar { transform: translateX(100%); display: block; transition: transform 0.3s; }
@@ -110,7 +115,6 @@
             .bottom-nav { display: flex; }
             .stats-grid { gap: 12px; }
             .stat-card { min-width: 130px; padding: 12px 16px; }
-            .product-item, .order-item { flex-direction: column; text-align: center; }
         }
         .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #0F3D2E; color: white; padding: 10px 20px; border-radius: 40px; z-index: 3000; font-weight: 500; display: none; }
         .toast.show { display: block; animation: fadeUp 0.3s; }
@@ -120,7 +124,7 @@
         .warning-banner { background: #FEF3C7; border-right: 4px solid #F59E0B; padding: 12px 20px; border-radius: 16px; margin-bottom: 20px; font-size: 13px; }
         .help-sidebar { background: #F8FAFC; border-radius: 20px; padding: 20px; margin-top: 30px; border-right: 4px solid #D4AF37; }
 
-        /* تحسين معاينة المنتج لتكون مطابقة للموقع الرئيسي */
+        /* تنسيق المعاينة المطابق للموقع */
         .preview-product-card {
             background: white;
             border-radius: 14px;
@@ -130,58 +134,18 @@
             width: 100%;
             max-width: 280px;
             margin: 0 auto;
-            transition: transform 0.25s;
         }
-        .preview-product-card .product-image {
-            height: 140px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: white;
-            padding: 10px;
-            border-bottom: 1px solid #E8E4DD;
-        }
-        .preview-product-card .product-image img {
-            max-width: 95%;
-            max-height: 95%;
-            object-fit: contain;
-            border-radius: 8px;
-        }
-        .preview-product-card .product-content {
-            padding: 10px;
-            text-align: center;
-        }
-        .preview-product-card .product-name {
-            font-family: 'El Messiri', serif;
-            font-size: 14px;
-            font-weight: 700;
-            color: #0F3D2E;
-            margin: 0 0 5px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .preview-product-card .product-description {
-            font-size: 11px;
-            color: #8A8A8A;
-            line-height: 1.4;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            margin: 5px 0;
-        }
-        .preview-product-card .product-price {
-            background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(212,175,55,0.15));
-            border: 1px solid #D4AF37;
-            border-radius: 25px;
-            padding: 4px 12px;
-            display: inline-block;
-            font-size: 12px;
-            font-weight: 700;
-            margin-top: 6px;
-        }
+        .preview-product-card .product-image { height: 140px; display: flex; align-items: center; justify-content: center; background: white; padding: 10px; border-bottom: 1px solid #E8E4DD; }
+        .preview-product-card .product-image img { max-width: 95%; max-height: 95%; object-fit: contain; border-radius: 8px; }
+        .preview-product-card .product-content { padding: 10px; text-align: center; }
+        .preview-product-card .product-name { font-family: 'El Messiri', serif; font-size: 14px; font-weight: 700; color: #0F3D2E; margin: 0 0 5px; }
+        .preview-product-card .product-price { background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(212,175,55,0.15)); border: 1px solid #D4AF37; border-radius: 25px; padding: 4px 12px; display: inline-block; font-size: 12px; font-weight: 700; }
+
+        /* إحصائيات الطلبات */
+        .orders-stats-grid { display: flex; gap: 20px; margin-bottom: 25px; flex-wrap: wrap; }
+        .orders-stat-card { background: white; border-radius: 24px; padding: 16px 24px; flex: 1; min-width: 150px; border: 1px solid #E9EDF2; text-align: center; }
+        .orders-stat-card h3 { font-size: 28px; font-weight: 800; color: #0F3D2E; }
+        .orders-stat-card p { color: #64748B; font-size: 13px; margin-top: 5px; }
     </style>
 </head>
 <body>
@@ -208,7 +172,7 @@
         <div class="stats-scroll"><div class="stats-grid" id="statsGrid"></div></div>
 
         <div id="profileSection" class="card">
-            <div class="card-header"><h3><i class="fas fa-store"></i> بيانات المشروع</h3></div>
+            <div class="card-header"><h3>بيانات المشروع</h3></div>
             <div style="padding:24px">
                 <form id="profileForm">
                     <div class="form-row"><label>اسم المشروع (عربي)</label><input type="text" id="profileNameAr" required></div>
@@ -233,22 +197,23 @@
         </div>
 
         <div id="productsSection" class="card" style="display:none;">
-            <div class="card-header"><h3><i class="fas fa-box"></i> المنتجات</h3><button id="addProductBtn" class="btn-primary"><i class="fas fa-plus"></i> إضافة منتج</button></div>
+            <div class="card-header"><h3>المنتجات</h3><button id="addProductBtn" class="btn-primary"><i class="fas fa-plus"></i> إضافة منتج</button></div>
             <div id="productsListContainer" class="products-list-container" style="padding:20px;"></div>
         </div>
 
         <div id="dealsSection" class="card" style="display:none;">
-            <div class="card-header"><h3><i class="fas fa-tags"></i> العروض</h3><button id="addDealBtn" class="btn-primary"><i class="fas fa-plus"></i> إضافة عرض</button></div>
+            <div class="card-header"><h3>العروض</h3><button id="addDealBtn" class="btn-primary"><i class="fas fa-plus"></i> إضافة عرض</button></div>
             <div id="dealsListContainer" style="padding:20px;"></div>
         </div>
 
         <div id="ordersSection" class="card" style="display:none;">
-            <div class="card-header"><h3><i class="fas fa-shopping-cart"></i> طلبات العملاء</h3></div>
+            <div class="card-header"><h3>الطلبات</h3></div>
+            <div class="orders-stats-grid" id="ordersStatsGrid"></div>
             <div id="ordersListContainer" class="orders-list-container" style="padding:20px;"></div>
         </div>
 
         <div id="contactsSection" class="card" style="display:none;">
-            <div class="card-header"><h3><i class="fas fa-address-card"></i> بيانات التواصل</h3></div>
+            <div class="card-header"><h3>بيانات التواصل</h3></div>
             <div style="padding:24px"><form id="contactsForm">
                 <div class="form-row"><label>واتساب</label><input type="text" id="contactWhatsapp"></div>
                 <div class="form-row"><label>هاتف</label><input type="text" id="contactPhone"></div>
@@ -265,7 +230,7 @@
         </div>
 
         <div id="licenseSection" class="card" style="display:none;">
-            <div class="card-header"><h3><i class="fas fa-file-certificate"></i> الرخصة التجارية</h3></div>
+            <div class="card-header"><h3>الرخصة التجارية</h3></div>
             <div style="padding:24px">
                 <div id="licenseStatusAlert" class="warning-banner"></div>
                 <form id="licenseForm"><div class="form-row"><label>ملف الرخصة (صورة/PDF - حد 5MB)</label><input type="file" id="licenseFile" accept="image/*,.pdf" required></div><button type="submit" class="btn-save">رفع الرخصة</button></form>
@@ -273,11 +238,11 @@
         </div>
 
         <div id="supportSection" class="card" style="display:none;">
-            <div class="card-header"><h3><i class="fas fa-headset"></i> الدعم الفني</h3><button id="newTicketBtn" class="btn-primary"><i class="fas fa-plus"></i> تذكرة جديدة</button></div>
+            <div class="card-header"><h3>الدعم الفني</h3><button id="newTicketBtn" class="btn-primary"><i class="fas fa-plus"></i> تذكرة جديدة</button></div>
             <div id="ticketsListContainer" style="padding:20px;"></div>
         </div>
 
-        <div class="help-sidebar"><h4><i class="fas fa-life-ring"></i> دليل سريع</h4><p>• يمكنك ترتيب المنتجات باستخدام أزرار ↑ و ↓.<br>• الصورة الرئيسية والصور الإضافية تحفظ حتى عند التعديل.<br>• استخدم زر "معاينة المنتج" لترى كيف سيظهر للعملاء.</p></div>
+        <div class="help-sidebar"><h4>دليل سريع</h4><p>• يمكنك ترتيب المنتجات باستخدام أزرار ↑ و ↓.<br>• الصورة الرئيسية والصور الإضافية تحفظ حتى عند التعديل.<br>• استخدم زر "معاينة المنتج" لترى كيف سيظهر للعملاء.</p></div>
     </main>
 </div>
 
@@ -318,10 +283,24 @@
 
     async function loadStats() { const { count: pc } = await supabase.from('products').select('*', { count: 'exact', head: true }).eq('project_id', projectId); const { count: dc } = await supabase.from('deals').select('*', { count: 'exact', head: true }).eq('project_id', projectId); const { count: oc } = await supabase.from('admin_order_logs').select('*', { count: 'exact', head: true }).eq('project_id', projectId); document.getElementById('statsGrid').innerHTML = `<div class="stat-card"><div class="stat-left"><h3>${pc||0}</h3><p>المنتجات</p></div><i class="fas fa-box-open stat-icon"></i></div><div class="stat-card"><div class="stat-left"><h3>${dc||0}</h3><p>العروض</p></div><i class="fas fa-tags stat-icon"></i></div><div class="stat-card"><div class="stat-left"><h3>${oc||0}</h3><p>الطلبات</p></div><i class="fas fa-shopping-cart stat-icon"></i></div>`; }
 
-    // ==================== المنتجات ====================
+    // ==================== المنتجات (مع الترتيب) ====================
     async function loadProducts() { const { data, error } = await supabase.from('products').select('*').eq('project_id', projectId).order('display_order', { ascending: true }); if (error) return; const container = document.getElementById('productsListContainer'); if (!data.length) { container.innerHTML = '<p>لا توجد منتجات. أضف منتجك الأول.</p>'; return; } let html = ''; for (const p of data) { let price = p.price_ar || p.price_en || 'السعر عند الطلب'; html += `<div class="product-item"><img class="product-img-thumb" src="${p.main_image || 'https://placehold.co/60x60/0F3D2E/white?text=No+Image'}"><div class="product-info"><strong>${p.name_ar}</strong><br>${price}</div><div class="product-actions"><button class="btn-secondary" onclick="window.moveProduct('${p.id}', 'up')"><i class="fas fa-arrow-up"></i></button><button class="btn-secondary" onclick="window.moveProduct('${p.id}', 'down')"><i class="fas fa-arrow-down"></i></button><button class="btn-secondary" onclick="window.editProduct('${p.id}')"><i class="fas fa-edit"></i></button><button class="btn-danger" onclick="window.deleteProduct('${p.id}')"><i class="fas fa-trash"></i></button></div></div>`; } container.innerHTML = html; }
 
-    window.moveProduct = async (id, dir) => { const { data: cur } = await supabase.from('products').select('id, display_order').eq('id', id).single(); if (!cur) return; let query; if (dir === 'up') query = supabase.from('products').select('id, display_order').eq('project_id', projectId).lt('display_order', cur.display_order).order('display_order', { ascending: false }).limit(1); else query = supabase.from('products').select('id, display_order').eq('project_id', projectId).gt('display_order', cur.display_order).order('display_order', { ascending: true }).limit(1); const { data: neighbor } = await query; if (!neighbor?.length) { toast(dir === 'up' ? 'هذا المنتج هو الأعلى' : 'هذا المنتج هو الأسفل'); return; } const target = neighbor[0]; await supabase.from('products').update({ display_order: target.display_order }).eq('id', cur.id); await supabase.from('products').update({ display_order: cur.display_order }).eq('id', target.id); loadProducts(); };
+    window.moveProduct = async (id, dir) => {
+        const { data: cur } = await supabase.from('products').select('id, display_order').eq('id', id).single();
+        if (!cur) return;
+        let query;
+        if (dir === 'up') query = supabase.from('products').select('id, display_order').eq('project_id', projectId).lt('display_order', cur.display_order).order('display_order', { ascending: false }).limit(1);
+        else query = supabase.from('products').select('id, display_order').eq('project_id', projectId).gt('display_order', cur.display_order).order('display_order', { ascending: true }).limit(1);
+        const { data: neighbor } = await query;
+        if (!neighbor?.length) { toast(dir === 'up' ? 'هذا المنتج هو الأعلى' : 'هذا المنتج هو الأسفل'); return; }
+        const target = neighbor[0];
+        await supabase.from('products').update({ display_order: target.display_order }).eq('id', cur.id);
+        await supabase.from('products').update({ display_order: cur.display_order }).eq('id', target.id);
+        await loadProducts();
+        // تحديث الصفحة الرئيسية إذا كانت مفتوحة في تبويب آخر
+        if (window.opener && !window.opener.closed) window.opener.location.reload();
+    };
 
     window.editProduct = async (id) => { const { data, error } = await supabase.from('products').select('*').eq('id', id).single(); if (error) { toast(error.message, 'error'); return; } currentMainImageUrl = data.main_image || null; currentExtraImagesUrls = data.images || []; document.getElementById('productId').value = data.id; document.getElementById('productNameAr').value = data.name_ar || ''; document.getElementById('productNameEn').value = data.name_en || ''; document.getElementById('productDescAr').value = data.description_ar || ''; document.getElementById('productDescEn').value = data.description_en || ''; document.getElementById('productPrice').value = data.price_ar || data.price_en || ''; document.getElementById('productTypeAr').value = data.type_ar || ''; document.getElementById('productTypeEn').value = data.type_en || ''; document.getElementById('productDetailsAr').value = (data.details_ar || []).join('\n'); document.getElementById('productDetailsEn').value = (data.details_en || []).join('\n'); const previewDiv = document.getElementById('mainImagePreview'); previewDiv.innerHTML = currentMainImageUrl ? `<img src="${currentMainImageUrl}" class="preview-img">` : ''; renderExtraImagesList(currentExtraImagesUrls); document.getElementById('productModalTitle').innerText = 'تعديل المنتج'; document.getElementById('productModal').classList.add('active'); };
 
@@ -329,7 +308,6 @@
     window.removeExtraImage = (idx) => { currentExtraImagesUrls.splice(idx, 1); renderExtraImagesList(currentExtraImagesUrls); };
     window.deleteProduct = async (id) => { if (!await confirmDialog({ title: 'حذف المنتج', message: 'هل أنت متأكد؟', danger: true })) return; await supabase.from('products').delete().eq('id', id); toast('تم الحذف'); loadProducts(); loadStats(); };
 
-    // معاينة المنتج بشكل مطابق للموقع
     window.previewProduct = () => {
         const name = document.getElementById('productNameAr').value || 'اسم المنتج';
         const price = document.getElementById('productPrice').value || 'السعر عند الطلب';
@@ -410,8 +388,38 @@
     window.deleteDeal = async (id) => { if(await confirmDialog({title:'حذف العرض',message:'تأكيد؟',danger:true})){ await supabase.from('deals').delete().eq('id',id); toast('تم الحذف'); loadDeals(); loadStats(); } };
     document.getElementById('saveDealModalBtn').onclick = async () => { let imageUrl=null; const file=document.getElementById('dealImageFile').files[0]; if(file){ if(!validateFileSize(file,2))return; const ext=file.name.split('.').pop(); imageUrl = await uploadFile('project-logos', `${projectId}/deals/${Date.now()}.${ext}`, file, 2); } const payload = { title_ar:document.getElementById('dealTitleAr').value, title_en:document.getElementById('dealTitleEn').value, description_ar:document.getElementById('dealDescAr').value, description_en:document.getElementById('dealDescEn').value, badge_ar:document.getElementById('dealBadgeAr').value, badge_en:document.getElementById('dealBadgeEn').value, expiry_date:document.getElementById('dealExpiry').value, project_id:projectId, image:imageUrl }; const id=document.getElementById('dealId').value; let err; if(id) err=(await supabase.from('deals').update(payload).eq('id',id)).error; else err=(await supabase.from('deals').insert(payload)).error; if(err) return toast(err.message,true); toast('تم حفظ العرض'); document.getElementById('dealModal').classList.remove('active'); loadDeals(); loadStats(); };
 
-    // ==================== الطلبات (جديد) ====================
-    async function loadOrders() { const { data, error } = await supabase.from('admin_order_logs').select('*').eq('project_id', projectId).order('created_at', { ascending: false }); if (error) { console.error(error); return; } const container = document.getElementById('ordersListContainer'); if (!data?.length) { container.innerHTML = '<p>لا توجد طلبات بعد.</p>'; return; } let html = ''; for (const order of data) { let itemsList = ''; if (order.items && Array.isArray(order.items)) { itemsList = order.items.map(it => `${it.productName} (${it.quantity})`).join(', '); } html += `<div class="order-item"><div class="order-info"><strong>رقم الطلب:</strong> ${order.order_number}<br><strong>العميل:</strong> ${order.customer_whatsapp}<br><strong>المنتجات:</strong> ${itemsList}<br><strong>الإجمالي:</strong> ${order.total_price}<br><strong>التاريخ:</strong> ${new Date(order.created_at).toLocaleString()}</div></div>`; } container.innerHTML = html; }
+    // ==================== الطلبات (مع إحصائيات) ====================
+    async function loadOrders() {
+        const { data, error } = await supabase.from('admin_order_logs').select('*').eq('project_id', projectId).order('created_at', { ascending: false });
+        if (error) { console.error(error); return; }
+        const container = document.getElementById('ordersListContainer');
+        if (!data?.length) { container.innerHTML = '<p>لا توجد طلبات بعد.</p>'; return; }
+        // حساب الإحصائيات
+        let completed = 0, processing = 0, cancelled = 0;
+        data.forEach(order => {
+            const status = (order.status || 'pending').toLowerCase();
+            if (status === 'completed') completed++;
+            else if (status === 'processing') processing++;
+            else if (status === 'cancelled') cancelled++;
+            else processing++; // افتراضي
+        });
+        document.getElementById('ordersStatsGrid').innerHTML = `
+            <div class="orders-stat-card"><h3>${completed}</h3><p>طلبات مكتملة</p></div>
+            <div class="orders-stat-card"><h3>${processing}</h3><p>قيد التجهيز</p></div>
+            <div class="orders-stat-card"><h3>${cancelled}</h3><p>ملغاة/منتهية</p></div>
+        `;
+        let html = '';
+        for (const order of data) {
+            let itemsList = '';
+            if (order.items && Array.isArray(order.items)) {
+                itemsList = order.items.map(it => `${it.productName} (${it.quantity})`).join(', ');
+            }
+            const statusText = order.status === 'completed' ? 'مكتمل' : (order.status === 'cancelled' ? 'ملغي' : 'قيد التجهيز');
+            const statusClass = order.status === 'completed' ? 'completed' : (order.status === 'cancelled' ? 'cancelled' : 'processing');
+            html += `<div class="order-item"><div class="order-info"><strong>رقم الطلب:</strong> ${order.order_number}<br><strong>العميل:</strong> ${order.customer_whatsapp}<br><strong>المنتجات:</strong> ${itemsList}<br><strong>الإجمالي:</strong> ${order.total_price}<br><strong>التاريخ:</strong> ${new Date(order.created_at).toLocaleString()}<br><span class="status-pill ${statusClass}">${statusText}</span></div></div>`;
+        }
+        container.innerHTML = html;
+    }
 
     // ==================== التواصل ====================
     async function loadContacts() { const { data } = await supabase.from('contacts').select('*').eq('project_id', projectId).maybeSingle(); if(data){ document.getElementById('contactWhatsapp').value=data.whatsapp||''; document.getElementById('contactPhone').value=data.phone||''; document.getElementById('contactEmail').value=data.email||''; document.getElementById('contactInstagram').value=data.instagram||''; document.getElementById('contactTelegram').value=data.telegram||''; document.getElementById('contactSnapchat').value=data.snapchat||''; document.getElementById('contactTiktok').value=data.tiktok||''; document.getElementById('contactFacebook').value=data.facebook||''; document.getElementById('contactTwitter').value=data.twitter||''; document.getElementById('contactWebsite').value=data.website||''; } }
@@ -423,12 +431,14 @@
     document.getElementById('saveTicketModalBtn').onclick=async()=>{ const subject=document.getElementById('ticketSubject').value.trim(); const msg=document.getElementById('ticketMessage').value.trim(); if(!subject||!msg) return toast('املأ الحقول',true); await supabase.from('support_tickets').insert({ project_id:projectId, subject, message:msg, status:'open' }); toast('تم الإرسال'); document.getElementById('ticketModal').classList.remove('active'); loadTickets(); };
 
     // ==================== بيانات المشروع ====================
-    async function loadProjectData() { const { data: proj } = await supabase.from('projects').select('*').eq('id', projectId).single(); if(proj){ document.getElementById('profileNameAr').value=proj.name_ar||''; document.getElementById('profileNameEn').value=proj.name_en||''; document.getElementById('profileDescAr').value=proj.description_ar||''; document.getElementById('profileDescEn').value=proj.description_en||''; document.getElementById('profileLongAr').value=proj.long_description_ar||''; document.getElementById('profileLongEn').value=proj.long_description_en||''; document.getElementById('profileEmirate').value=proj.emirate||'دبي'; document.getElementById('profileCoverage').value=proj.coverage||'الإمارة فقط'; document.getElementById('profileAdraLicense').checked=!!proj.adra_license; if(proj.category_ar) document.getElementById('profileCategory').value=proj.category_ar; document.getElementById('currentLogoHint').innerHTML=proj.image?`<img src="${proj.image}" class="preview-img">`:'لا يوجد شعار'; const status=proj.status; const statusHtml = `<span class="status-pill ${status==='active'?'active':status==='disabled'?'disabled':'deleted'}">الحالة: ${status==='active'?'نشط (ظاهر في السوق)':status==='disabled'?'معطل (مخفي)':'محذوف (مخفي)'}</span>`; let wrap = document.getElementById('accountStatusWrap'); if(!wrap) { wrap = document.createElement('div'); wrap.id = 'accountStatusWrap'; document.querySelector('#profileSection .card-header').after(wrap); } wrap.innerHTML = statusHtml; const reactivateBtn = document.getElementById('reactivateAccountBtn'); if(reactivateBtn) reactivateBtn.style.display = (status === 'disabled' || status === 'deleted') ? 'inline-flex' : 'none'; } const lic=await supabase.from('projects').select('license_status').eq('id',projectId).single(); const alertDiv=document.getElementById('licenseStatusAlert'); if(lic.data?.license_status==='pending_license') alertDiv.innerHTML='<i class="fas fa-clock"></i> لم يتم رفع الرخصة بعد.'; else if(lic.data?.license_status==='license_uploaded') alertDiv.innerHTML='<i class="fas fa-hourglass-half"></i> جاري المراجعة.'; else if(lic.data?.license_status==='license_approved') alertDiv.innerHTML='<i class="fas fa-check-circle"></i> معتمد.'; else if(lic.data?.license_status==='license_rejected') alertDiv.innerHTML='<i class="fas fa-times-circle"></i> مرفوض، أعد رفع ملف صحيح.'; }
-    document.getElementById('profileForm').addEventListener('submit', async (e) => { e.preventDefault(); let logoUrl=null; const logoFile=document.getElementById('profileLogo').files[0]; if(logoFile){ if(!validateFileSize(logoFile,2))return; const ext=logoFile.name.split('.').pop(); logoUrl=await uploadFile('project-logos', `${projectId}/logo_${Date.now()}.${ext}`, logoFile, 2); } const updates={ name_ar:document.getElementById('profileNameAr').value, name_en:document.getElementById('profileNameEn').value, description_ar:document.getElementById('profileDescAr').value, description_en:document.getElementById('profileDescEn').value, long_description_ar:document.getElementById('profileLongAr').value, long_description_en:document.getElementById('profileLongEn').value, emirate:document.getElementById('profileEmirate').value, coverage:document.getElementById('profileCoverage').value, category_ar:document.getElementById('profileCategory').value, adra_license:document.getElementById('profileAdraLicense').checked }; if(logoUrl) updates.image=logoUrl; await supabase.from('projects').update(updates).eq('id',projectId); toast('تم حفظ البيانات'); loadProjectData(); });
+    async function loadProjectData() { const { data: proj } = await supabase.from('projects').select('*').eq('id', projectId).single(); if(proj){ document.getElementById('profileNameAr').value=proj.name_ar||''; document.getElementById('profileNameEn').value=proj.name_en||''; document.getElementById('profileDescAr').value=proj.description_ar||''; document.getElementById('profileDescEn').value=proj.description_en||''; document.getElementById('profileLongAr').value=proj.long_description_ar||''; document.getElementById('profileLongEn').value=proj.long_description_en||''; document.getElementById('profileEmirate').value=proj.emirate||'دبي'; document.getElementById('profileCoverage').value=proj.coverage||'الإمارة فقط'; document.getElementById('profileAdraLicense').checked=!!proj.adra_license; if(proj.category_ar) document.getElementById('profileCategory').value=proj.category_ar; document.getElementById('currentLogoHint').innerHTML=proj.image?`<img src="${proj.image}" class="preview-img">`:'لا يوجد شعار'; const status=proj.status; const statusHtml = `<span class="status-pill ${status==='active'?'active':status==='disabled'?'disabled':'deleted'}">الحالة: ${status==='active'?'نشط (ظاهر في السوق)':status==='disabled'?'معطل (مخفي)':'محذوف (مخفي)'}</span>`; let wrap = document.getElementById('accountStatusWrap'); if(!wrap) { wrap = document.createElement('div'); wrap.id = 'accountStatusWrap'; document.querySelector('#profileSection .card-header').after(wrap); } wrap.innerHTML = statusHtml; const reactivateBtn = document.getElementById('reactivateAccountBtn'); if(reactivateBtn) reactivateBtn.style.display = (status === 'disabled' || status === 'deleted') ? 'inline-flex' : 'none'; } const lic=await supabase.from('projects').select('license_status').eq('id',projectId).single(); const alertDiv=document.getElementById('licenseStatusAlert'); if(lic.data?.license_status==='pending_license') alertDiv.innerHTML='لم يتم رفع الرخصة بعد. يرجى رفعها لاستمرار ظهور مشروعك.'; else if(lic.data?.license_status==='license_uploaded') alertDiv.innerHTML='جاري مراجعة الرخصة من قبل الإدارة.'; else if(lic.data?.license_status==='license_approved') alertDiv.innerHTML='معتمد! مشروعك ظاهر في السوق.'; else if(lic.data?.license_status==='license_rejected') alertDiv.innerHTML='مرفوض: يرجى رفع ملف صحيح.'; }
+    document.getElementById('profileForm').addEventListener('submit', async (e) => { e.preventDefault(); let logoUrl=null; const logoFile=document.getElementById('profileLogo').files[0]; if(logoFile){ if(!validateFileSize(logoFile,2))return; const ext=logoFile.name.split('.').pop(); logoUrl=await uploadFile('project-logos', `${projectId}/logo_${Date.now()}.${ext}`, logoFile, 2); } const updates={ name_ar:document.getElementById('profileNameAr').value, name_en:document.getElementById('profileNameEn').value, description_ar:document.getElementById('profileDescAr').value, description_en:document.getElementById('profileDescEn').value, long_description_ar:document.getElementById('profileLongAr').value, long_description_en:document.getElementById('profileLongEn').value, emirate:document.getElementById('profileEmirate').value, coverage:document.getElementById('profileCoverage').value, category_ar:document.getElementById('profileCategory').value, adra_license:document.getElementById('profileAdraLicense').checked }; if(logoUrl) updates.image=logoUrl; await supabase.from('projects').update(updates).eq('id',projectId); toast('تم حفظ البيانات'); loadProjectData(); // تحديث الموقع الرئيسي إذا كان مفتوحاً
+        if (window.opener && !window.opener.closed) window.opener.location.reload();
+    });
     document.getElementById('licenseForm').addEventListener('submit', async (e) => { e.preventDefault(); const file=document.getElementById('licenseFile').files[0]; if(!file)return; if(!validateFileSize(file,5))return; const ext=file.name.split('.').pop(); const url=await uploadFile('project-logos', `${projectId}/license_${Date.now()}.${ext}`, file, 5); if(url){ await supabase.from('project_license_requests').insert({ project_id:projectId, license_file_url:url, status:'pending' }); await supabase.from('projects').update({ license_status:'license_uploaded' }).eq('id',projectId); toast('تم رفع الرخصة، جاري المراجعة'); loadProjectData(); } });
-    document.getElementById('disableAccountBtn').onclick=async()=>{ if(await confirmDialog({title:'تعطيل الحساب',message:'سيتم تعطيل المشروع',danger:true})){ await supabase.from('projects').update({status:'disabled'}).eq('id',projectId); toast('تم التعطيل'); loadProjectData(); } };
-    document.getElementById('deleteAccountBtn').onclick=async()=>{ if(await confirmDialog({title:'حذف الحساب',message:'سيتم حذف المشروع',danger:true}) && await confirmDialog({title:'تأكيد نهائي',message:'هل أنت متأكد؟',danger:true})){ await supabase.from('projects').update({status:'deleted'}).eq('id',projectId); toast('تم الحذف'); loadProjectData(); } };
-    document.getElementById('reactivateAccountBtn').onclick=async()=>{ if(await confirmDialog({title:'إعادة تنشيط',message:'سيتم إعادة تفعيل المشروع ليظهر في السوق'})){ await supabase.from('projects').update({status:'active'}).eq('id',projectId); toast('تم التنشيط'); loadProjectData(); } };
+    document.getElementById('disableAccountBtn').onclick=async()=>{ if(await confirmDialog({title:'تعطيل الحساب',message:'سيتم تعطيل المشروع',danger:true})){ await supabase.from('projects').update({status:'disabled'}).eq('id',projectId); toast('تم التعطيل'); loadProjectData(); if (window.opener && !window.opener.closed) window.opener.location.reload(); } };
+    document.getElementById('deleteAccountBtn').onclick=async()=>{ if(await confirmDialog({title:'حذف الحساب',message:'سيتم حذف المشروع',danger:true}) && await confirmDialog({title:'تأكيد نهائي',message:'هل أنت متأكد؟',danger:true})){ await supabase.from('projects').update({status:'deleted'}).eq('id',projectId); toast('تم الحذف'); loadProjectData(); if (window.opener && !window.opener.closed) window.opener.location.reload(); } };
+    document.getElementById('reactivateAccountBtn').onclick=async()=>{ if(await confirmDialog({title:'إعادة تنشيط',message:'سيتم إعادة تفعيل المشروع ليظهر في السوق'})){ await supabase.from('projects').update({status:'active'}).eq('id',projectId); toast('تم التنشيط'); loadProjectData(); if (window.opener && !window.opener.closed) window.opener.location.reload(); } };
     document.getElementById('logoutBtn').onclick=async()=>{ await supabase.auth.signOut(); window.location.href='index.html'; };
 
     // ==================== التنقل بين الأقسام ====================
