@@ -9,8 +9,8 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #F4F6FA; font-family: 'Inter', 'Almarai', sans-serif; color: #1E293B; direction: rtl; }
-    /* القائمة الجانبية (يمين) */
     .dashboard { display: flex; min-height: 100vh; }
+    /* سايد بار سطح المكتب */
     .sidebar {
       width: 280px;
       background: #0F3D2E;
@@ -46,14 +46,14 @@
     .page-title { font-size: 1.6rem; font-weight: 700; color: #0F3D2E; }
     .user-area { display: flex; align-items: center; gap: 16px; background: white; padding: 6px 20px; border-radius: 60px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); border: 1px solid #E2E8F0; }
     .avatar { width: 40px; height: 40px; background: #D4AF37; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #0F3D2E; }
-    /* بطاقات الإحصائيات - صغيرة على الجوال */
+    /* إحصائيات */
     .stats-scroll { overflow-x: auto; margin-bottom: 32px; -webkit-overflow-scrolling: touch; }
     .stats-grid { display: flex; gap: 20px; min-width: min-content; }
     .stat-card { background: white; border-radius: 24px; padding: 16px 20px; min-width: 160px; border: 1px solid #E9EDF2; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
     .stat-left h3 { font-size: 1.6rem; font-weight: 800; color: #0F3D2E; }
     .stat-left p { font-size: 0.75rem; color: #64748B; }
     .stat-icon { font-size: 1.8rem; color: #D4AF37; }
-    /* البطاقات الداخلية */
+    /* بطاقات المحتوى */
     .card { background: white; border-radius: 24px; border: 1px solid #E9EDF2; margin-bottom: 32px; overflow-x: auto; }
     .card-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; border-bottom: 1px solid #F0F2F5; flex-wrap: wrap; gap: 12px; }
     .btn-primary { background: #0F3D2E; color: white; border: none; padding: 8px 18px; border-radius: 40px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-family: inherit; transition: 0.2s; }
@@ -62,11 +62,9 @@
     .btn-secondary:hover { background: #F1F5F9; }
     .btn-danger { background: #C41E3A; color: white; border: none; padding: 6px 12px; border-radius: 30px; cursor: pointer; }
     .btn-danger:hover { background: #A01830; }
-    /* جداول / قوائم المنتجات */
-    .data-table { width: 100%; border-collapse: collapse; min-width: 550px; }
-    .data-table th, .data-table td { padding: 14px 12px; text-align: right; border-bottom: 1px solid #F0F2F5; vertical-align: middle; }
-    .data-table th { background: #FAFCFE; font-weight: 700; color: #0F3D2E; }
-    /* عناصر المنتجات (نمط مرن) */
+    .btn-warning { background: #F59E0B; color: #1A1A1A; border: none; padding: 10px 18px; border-radius: 40px; font-weight: 800; cursor: pointer; }
+    .btn-success { background: #16A34A; color: white; border: none; padding: 10px 18px; border-radius: 40px; font-weight: 800; cursor: pointer; }
+    /* قوائم المنتجات */
     .product-item, .deal-item { background: #F8FAFC; border-radius: 20px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
     .product-img-thumb { width: 60px; height: 60px; object-fit: cover; border-radius: 16px; background: #f0f0f0; }
     .product-info { flex: 1; }
@@ -75,25 +73,25 @@
     .status-pill.active { background: #DCFCE7; color: #15803D; }
     .status-pill.disabled { background: #FEF3C7; color: #D97706; }
     .status-pill.deleted { background: #FEE2E2; color: #DC2626; }
-    /* النماذج */
+    /* نماذج */
     .form-row { margin-bottom: 20px; }
     .form-row label { display: block; font-weight: 700; margin-bottom: 8px; color: #0F3D2E; }
     .form-row input, .form-row select, .form-row textarea { width: 100%; padding: 12px 16px; border: 2px solid #E2E8F0; border-radius: 30px; font-family: inherit; background: #F8FAFC; }
     .form-row input:focus, .form-row select:focus, .form-row textarea:focus { outline: none; border-color: #D4AF37; background: white; }
     .btn-save { background: linear-gradient(135deg, #0F3D2E, #1A5F44); color: white; border: none; padding: 12px 24px; border-radius: 40px; font-weight: 700; cursor: pointer; transition: 0.2s; }
     .btn-save:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(212,175,55,0.3); }
-    /* الصور الإضافية */
+    /* صور إضافية */
     .extra-images-container { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
     .extra-image-item { position: relative; width: 80px; height: 80px; border-radius: 12px; overflow: hidden; border: 1px solid #E2E8F0; background: #F1F5F9; }
     .extra-image-item img { width: 100%; height: 100%; object-fit: cover; }
     .remove-extra-img { position: absolute; top: 4px; right: 4px; background: rgba(0,0,0,0.6); color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 10px; transition: 0.2s; }
     .remove-extra-img:hover { background: #C41E3A; }
     .preview-img { max-width: 100px; max-height: 100px; margin-top: 8px; border-radius: 12px; border: 1px solid #E2E8F0; }
-    /* المودالات */
+    /* مودالات */
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); align-items: center; justify-content: center; z-index: 2000; }
     .modal.active { display: flex; }
     .modal-content { background: white; border-radius: 32px; max-width: 700px; width: 90%; max-height: 85vh; overflow-y: auto; padding: 28px; }
-    /* الشريط السفلي للهواتف */
+    /* شريط سفلي للهواتف */
     .bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #E2E8F0; padding: 8px 16px; justify-content: space-around; z-index: 1000; }
     .bottom-nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #64748B; font-size: 0.7rem; cursor: pointer; padding: 6px 0; border-radius: 12px; transition: 0.2s; }
     .bottom-nav-item i { font-size: 1.4rem; }
@@ -142,7 +140,7 @@
 
     <!-- تبويب بيانات المشروع -->
     <div id="profileSection" class="card">
-      <div class="card-header"><h3><i class="fas fa-store"></i> بيانات المشروع</h3><button id="saveProfileBtn" class="btn-primary" style="display:none;">حفظ</button></div>
+      <div class="card-header"><h3><i class="fas fa-store"></i> بيانات المشروع</h3></div>
       <div style="padding:24px">
         <form id="profileForm">
           <div class="form-row"><label>اسم المشروع (عربي)</label><input type="text" id="profileNameAr" required></div>
@@ -156,10 +154,10 @@
           <div class="form-row"><label>التصنيف الرئيسي</label><select id="profileCategory"></select></div>
           <div class="checkbox-group" style="display:flex; gap:10px; align-items:center; margin:10px 0 20px;"><input type="checkbox" id="profileAdraLicense"><label>رخصة أدريا (إن وجدت)</label></div>
           <div class="form-row"><label>شعار المشروع</label><input type="file" id="profileLogo" accept="image/*"><div id="currentLogoHint"></div></div>
-          <div class="account-actions" style="margin-top:20px;">
-            <button id="reactivateAccountBtn" class="btn-success" style="display:none; background:#16A34A; color:white; border:none; padding:10px 18px; border-radius:40px;"><i class="fas fa-play-circle"></i> إعادة تنشيط</button>
-            <button id="disableAccountBtn" class="btn-warning" style="background:#F59E0B; color:#1A1A1A; border:none;"><i class="fas fa-pause-circle"></i> تعطيل الحساب</button>
-            <button id="deleteAccountBtn" class="btn-danger" style="background:#C41E3A;"><i class="fas fa-user-slash"></i> حذف الحساب</button>
+          <div class="account-actions" style="margin-top:20px; display:flex; gap:12px; flex-wrap:wrap;">
+            <button id="reactivateAccountBtn" class="btn-success" style="display:none;"><i class="fas fa-play-circle"></i> إعادة تنشيط</button>
+            <button id="disableAccountBtn" class="btn-warning"><i class="fas fa-pause-circle"></i> تعطيل الحساب</button>
+            <button id="deleteAccountBtn" class="btn-danger"><i class="fas fa-user-slash"></i> حذف الحساب</button>
             <button id="logoutBtn" class="btn-secondary" style="background:#C41E3A; color:white; border:none;"><i class="fas fa-sign-out-alt"></i> خروج</button>
           </div>
         </form>
@@ -211,7 +209,7 @@
       <div id="ticketsListContainer" style="padding:20px;"></div>
     </div>
 
-    <div class="help-sidebar"><h4><i class="fas fa-life-ring"></i> دليل سريع</h4><p>• يمكنك ترتيب المنتجات باستخدام أزرار ↑ و ↓.<br>• الصورة الرئيسية والصور الإضافية تحفظ حتى عند التعديل.<br>• يمكن حذف الصور الإضافية قبل الحفظ.</p></div>
+    <div class="help-sidebar"><h4><i class="fas fa-life-ring"></i> دليل سريع</h4><p>• يمكنك ترتيب المنتجات باستخدام أزرار ↑ و ↓.<br>• الصورة الرئيسية والصور الإضافية تحفظ حتى عند التعديل.<br>• زر إعادة التنشيط يظهر للحساب المعطل أو المحذوف ويعيد تفعيله.</p></div>
   </main>
 </div>
 
@@ -226,7 +224,7 @@
 </div>
 
 <!-- مودال المنتج -->
-<div id="productModal" class="modal"><div class="modal-content"><h3 id="productModalTitle">إضافة منتج</h3><input type="hidden" id="productId"><div class="form-row"><label>الاسم (عربي)</label><input id="productNameAr"></div><div class="form-row"><label>الاسم (إنجليزي)</label><input id="productNameEn"></div><div class="form-row"><label>الصورة الرئيسية</label><input type="file" id="productMainImageFile" accept="image/*"><div id="mainImagePreview" class="preview-img"></div></div><div class="form-row"><label>صور إضافية (عدة صور)</label><input type="file" id="productExtraImages" accept="image/*" multiple><div id="extraImagesList" class="extra-images-container"></div></div><div class="form-row"><label>السعر</label><input id="productPrice"></div><div class="form-row"><label>التصنيف (عربي)</label><input id="productCategoryAr"></div><div class="form-row"><label>التصنيف (إنجليزي)</label><input id="productCategoryEn"></div><div class="form-row"><label>نوع المنتج (عربي)</label><input id="productTypeAr"></div><div class="form-row"><label>نوع المنتج (إنجليزي)</label><input id="productTypeEn"></div><div class="form-row"><label>الوصف القصير (عربي)</label><textarea id="productDescAr" rows="2"></textarea></div><div class="form-row"><label>الوصف القصير (إنجليزي)</label><textarea id="productDescEn" rows="2"></textarea></div><div class="form-row"><label>تفاصيل إضافية (عربي)</label><textarea id="productDetailsAr" rows="3"></textarea></div><div class="form-row"><label>تفاصيل إضافية (إنجليزي)</label><textarea id="productDetailsEn" rows="3"></textarea></div><div style="display:flex; gap:10px;"><button id="saveProductModalBtn" class="btn-save">حفظ</button><button id="closeProductModalBtn" class="btn-secondary">إلغاء</button></div></div></div>
+<div id="productModal" class="modal"><div class="modal-content"><h3 id="productModalTitle">إضافة منتج</h3><input type="hidden" id="productId"><div class="form-row"><label>الاسم (عربي)</label><input id="productNameAr"></div><div class="form-row"><label>الاسم (إنجليزي)</label><input id="productNameEn"></div><div class="form-row"><label>الصورة الرئيسية</label><input type="file" id="productMainImageFile" accept="image/*"><div id="mainImagePreview" class="preview-img"></div></div><div class="form-row"><label>صور إضافية (عدة صور)</label><input type="file" id="productExtraImages" accept="image/*" multiple><div id="extraImagesList" class="extra-images-container"></div></div><div class="form-row"><label>السعر</label><input id="productPrice"></div><div class="form-row"><label>التصنيف (عربي)</label><input id="productCategoryAr"></div><div class="form-row"><label>التصنيف (إنجليزي)</label><input id="productCategoryEn"></div><div class="form-row"><label>نوع المنتج (عربي)</label><input id="productTypeAr"></div><div class="form-row"><label>نوع المنتج (إنجليزي)</label><input id="productTypeEn"></div><div class="form-row"><label>الوصف القصير (عربي)</label><textarea id="productDescAr" rows="2"></textarea></div><div class="form-row"><label>الوصف القصير (إنجليزي)</label><textarea id="productDescEn" rows="2"></textarea></div><div class="form-row"><label>تفاصيل إضافية (عربي)</label><textarea id="productDetailsAr" rows="3"></textarea></div><div class="form-row"><label>تفاصيل إضافية (إنجليزي)</label><textarea id="productDetailsEn" rows="3"></textarea></div><div style="display:flex; gap:10px; margin-top:20px;"><button id="saveProductModalBtn" class="btn-save">حفظ</button><button id="closeProductModalBtn" class="btn-secondary">إلغاء</button></div></div></div>
 
 <!-- مودال العرض -->
 <div id="dealModal" class="modal"><div class="modal-content"><h3>إضافة عرض</h3><input type="hidden" id="dealId"><div class="form-row"><label>العنوان (عربي)</label><input id="dealTitleAr"></div><div class="form-row"><label>العنوان (إنجليزي)</label><input id="dealTitleEn"></div><div class="form-row"><label>الصورة</label><input type="file" id="dealImageFile" accept="image/*"></div><div class="form-row"><label>الوصف (عربي)</label><textarea id="dealDescAr" rows="2"></textarea></div><div class="form-row"><label>الوصف (إنجليزي)</label><textarea id="dealDescEn" rows="2"></textarea></div><div class="form-row"><label>الشارة (عربي)</label><input id="dealBadgeAr"></div><div class="form-row"><label>Badge (En)</label><input id="dealBadgeEn"></div><div class="form-row"><label>تاريخ الانتهاء</label><input type="date" id="dealExpiry"></div><div style="display:flex; gap:10px;"><button id="saveDealModalBtn" class="btn-save">حفظ</button><button id="closeDealModalBtn" class="btn-secondary">إلغاء</button></div></div></div>
@@ -276,16 +274,71 @@
   document.getElementById('newTicketBtn').onclick=()=>document.getElementById('ticketModal').classList.add('active');
   document.getElementById('saveTicketModalBtn').onclick=async()=>{ const subject=document.getElementById('ticketSubject').value.trim(); const msg=document.getElementById('ticketMessage').value.trim(); if(!subject||!msg) return toast('املأ الحقول',true); await supabase.from('support_tickets').insert({ project_id:projectId, subject, message:msg, status:'open' }); toast('تم الإرسال'); document.getElementById('ticketModal').classList.remove('active'); loadTickets(); };
 
-  // بيانات المشروع + تعطيل/حذف
-  async function loadProjectData() { const { data: proj } = await supabase.from('projects').select('*').eq('id', projectId).single(); if(proj){ document.getElementById('profileNameAr').value=proj.name_ar||''; document.getElementById('profileNameEn').value=proj.name_en||''; document.getElementById('profileDescAr').value=proj.description_ar||''; document.getElementById('profileDescEn').value=proj.description_en||''; document.getElementById('profileLongAr').value=proj.long_description_ar||''; document.getElementById('profileLongEn').value=proj.long_description_en||''; document.getElementById('profileEmirate').value=proj.emirate||'دبي'; document.getElementById('profileCoverage').value=proj.coverage||'الإمارة فقط'; document.getElementById('profileAdraLicense').checked=!!proj.adra_license; if(proj.category_ar) document.getElementById('profileCategory').value=proj.category_ar; document.getElementById('currentLogoHint').innerHTML=proj.image?`<img src="${proj.image}" class="preview-img">`:'لا يوجد شعار'; const status=proj.status; document.getElementById('accountStatusWrap').innerHTML=`<span class="status-pill ${status==='active'?'active':status==='disabled'?'disabled':'deleted'}">حالة الحساب: ${status==='active'?'فعال':status==='disabled'?'معطل':'محذوف'}</span>`; document.getElementById('reactivateAccountBtn').style.display=(status==='disabled'||status==='deleted')?'inline-flex':'none'; } const lic=await supabase.from('projects').select('license_status').eq('id',projectId).single(); const alertDiv=document.getElementById('licenseStatusAlert'); if(lic.data?.license_status==='pending_license') alertDiv.innerHTML='<i class="fas fa-clock"></i> لم يتم رفع الرخصة بعد.'; else if(lic.data?.license_status==='license_uploaded') alertDiv.innerHTML='<i class="fas fa-hourglass-half"></i> جاري المراجعة.'; else if(lic.data?.license_status==='license_approved') alertDiv.innerHTML='<i class="fas fa-check-circle"></i> معتمد.'; else if(lic.data?.license_status==='license_rejected') alertDiv.innerHTML='<i class="fas fa-times-circle"></i> مرفوض، أعد رفع ملف صحيح.'; }
+  // بيانات المشروع + أزرار الحساب (مع إصلاح زر إعادة التنشيط)
+  async function loadProjectData() { 
+    const { data: proj } = await supabase.from('projects').select('*').eq('id', projectId).single(); 
+    if(proj){
+      document.getElementById('profileNameAr').value=proj.name_ar||''; document.getElementById('profileNameEn').value=proj.name_en||'';
+      document.getElementById('profileDescAr').value=proj.description_ar||''; document.getElementById('profileDescEn').value=proj.description_en||'';
+      document.getElementById('profileLongAr').value=proj.long_description_ar||''; document.getElementById('profileLongEn').value=proj.long_description_en||'';
+      document.getElementById('profileEmirate').value=proj.emirate||'دبي'; document.getElementById('profileCoverage').value=proj.coverage||'الإمارة فقط';
+      document.getElementById('profileAdraLicense').checked=!!proj.adra_license;
+      if(proj.category_ar) document.getElementById('profileCategory').value=proj.category_ar;
+      document.getElementById('currentLogoHint').innerHTML=proj.image?`<img src="${proj.image}" class="preview-img">`:'لا يوجد شعار';
+      
+      const status = proj.status;
+      const statusText = status === 'active' ? 'فعال' : (status === 'disabled' ? 'معطل' : 'محذوف');
+      const statusClass = status === 'active' ? 'active' : (status === 'disabled' ? 'disabled' : 'deleted');
+      document.getElementById('accountStatusWrap').innerHTML = `<span class="status-pill ${statusClass}">حالة الحساب: ${statusText}</span>`;
+      const reactivateBtn = document.getElementById('reactivateAccountBtn');
+      if (status === 'disabled' || status === 'deleted') reactivateBtn.style.display = 'inline-flex';
+      else reactivateBtn.style.display = 'none';
+    }
+    const lic=await supabase.from('projects').select('license_status').eq('id',projectId).single();
+    const alertDiv=document.getElementById('licenseStatusAlert');
+    if(lic.data?.license_status==='pending_license') alertDiv.innerHTML='<i class="fas fa-clock"></i> لم يتم رفع الرخصة بعد.';
+    else if(lic.data?.license_status==='license_uploaded') alertDiv.innerHTML='<i class="fas fa-hourglass-half"></i> جاري المراجعة.';
+    else if(lic.data?.license_status==='license_approved') alertDiv.innerHTML='<i class="fas fa-check-circle"></i> معتمد.';
+    else if(lic.data?.license_status==='license_rejected') alertDiv.innerHTML='<i class="fas fa-times-circle"></i> مرفوض، أعد رفع ملف صحيح.';
+  }
+
+  // حفظ بيانات المشروع
   document.getElementById('profileForm').addEventListener('submit', async (e) => { e.preventDefault(); let logoUrl=null; const logoFile=document.getElementById('profileLogo').files[0]; if(logoFile){ if(!validateFileSize(logoFile,2))return; const ext=logoFile.name.split('.').pop(); logoUrl=await uploadFile('project-logos', `${projectId}/logo_${Date.now()}.${ext}`, logoFile, 2); } const updates={ name_ar:document.getElementById('profileNameAr').value, name_en:document.getElementById('profileNameEn').value, description_ar:document.getElementById('profileDescAr').value, description_en:document.getElementById('profileDescEn').value, long_description_ar:document.getElementById('profileLongAr').value, long_description_en:document.getElementById('profileLongEn').value, emirate:document.getElementById('profileEmirate').value, coverage:document.getElementById('profileCoverage').value, category_ar:document.getElementById('profileCategory').value, adra_license:document.getElementById('profileAdraLicense').checked }; if(logoUrl) updates.image=logoUrl; await supabase.from('projects').update(updates).eq('id',projectId); toast('تم حفظ البيانات'); loadProjectData(); });
   document.getElementById('licenseForm').addEventListener('submit', async (e) => { e.preventDefault(); const file=document.getElementById('licenseFile').files[0]; if(!file)return; if(!validateFileSize(file,5))return; const ext=file.name.split('.').pop(); const url=await uploadFile('project-logos', `${projectId}/license_${Date.now()}.${ext}`, file, 5); if(url){ await supabase.from('project_license_requests').insert({ project_id:projectId, license_file_url:url, status:'pending' }); await supabase.from('projects').update({ license_status:'license_uploaded' }).eq('id',projectId); toast('تم رفع الرخصة، جاري المراجعة'); loadProjectData(); } });
-  document.getElementById('disableAccountBtn').onclick=async()=>{ if(await confirmDialog({title:'تعطيل الحساب',message:'سيتم تعطيل المشروع',danger:true})){ await supabase.from('projects').update({status:'disabled'}).eq('id',projectId); toast('تم التعطيل'); location.reload(); } };
-  document.getElementById('deleteAccountBtn').onclick=async()=>{ if(await confirmDialog({title:'حذف الحساب',message:'سيتم حذف المشروع',danger:true}) && await confirmDialog({title:'تأكيد نهائي',message:'هل أنت متأكد؟',danger:true})){ await supabase.from('projects').update({status:'deleted'}).eq('id',projectId); toast('تم الحذف'); location.reload(); } };
-  document.getElementById('reactivateAccountBtn').onclick=async()=>{ if(await confirmDialog({title:'إعادة تنشيط',message:'سيتم إعادة تفعيل المشروع'})){ await supabase.from('projects').update({status:'active'}).eq('id',projectId); toast('تم التنشيط'); location.reload(); } };
-  document.getElementById('logoutBtn').onclick=async()=>{ await supabase.auth.signOut(); window.location.href='index.html'; };
 
-  function showSection(section) { document.querySelectorAll('#profileSection, #productsSection, #dealsSection, #contactsSection, #licenseSection, #supportSection').forEach(s => s.style.display = 'none'); document.getElementById(`${section}Section`).style.display = 'block'; document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(el => el.classList.remove('active')); document.querySelectorAll(`.nav-item[data-section="${section}"], .bottom-nav-item[data-section="${section}"]`).forEach(el => el.classList.add('active')); document.getElementById('pageTitle').innerText = section === 'profile' ? 'بيانات المشروع' : (section === 'products' ? 'المنتجات' : (section === 'deals' ? 'العروض' : (section === 'contacts' ? 'التواصل' : (section === 'license' ? 'الرخصة' : 'الدعم الفني')))); if(section === 'products') loadProducts(); else if(section === 'deals') loadDeals(); else if(section === 'contacts') loadContacts(); else if(section === 'support') loadTickets(); else if(section === 'license') loadProjectData(); }
+  // أزرار الحساب (تعطيل - حذف - إعادة تنشيط)
+  document.getElementById('disableAccountBtn').onclick = async () => {
+    if(await confirmDialog({title:'تعطيل الحساب',message:'سيتم تعطيل المشروع ولن يظهر في السوق. هل تريد المتابعة؟',danger:true})){
+      await supabase.from('projects').update({status:'disabled'}).eq('id',projectId);
+      toast('تم تعطيل الحساب'); location.reload();
+    }
+  };
+  document.getElementById('deleteAccountBtn').onclick = async () => {
+    if(await confirmDialog({title:'حذف الحساب',message:'سيتم حذف الحساب (حذف ناعم) ولن يظهر. هل تريد المتابعة؟',danger:true}) && await confirmDialog({title:'تأكيد نهائي',message:'لا يمكن التراجع. هل أنت متأكد؟',danger:true})){
+      await supabase.from('projects').update({status:'deleted'}).eq('id',projectId);
+      toast('تم حذف الحساب'); location.reload();
+    }
+  };
+  document.getElementById('reactivateAccountBtn').onclick = async () => {
+    const { data: proj } = await supabase.from('projects').select('status').eq('id', projectId).single();
+    const status = proj?.status;
+    const msg = status === 'deleted' ? 'هذا الحساب محذوف. هل تريد إعادة تنشيطه وجعله نشطاً مرة أخرى؟' : 'الحساب معطل. هل تريد إعادة تنشيطه؟';
+    if(await confirmDialog({title:'إعادة تنشيط الحساب', message: msg, danger: false})){
+      await supabase.from('projects').update({status:'active'}).eq('id',projectId);
+      toast('تم إعادة تنشيط الحساب'); location.reload();
+    }
+  };
+  document.getElementById('logoutBtn').onclick = async () => { await supabase.auth.signOut(); window.location.href='index.html'; };
+
+  // التنقل بين التبويبات
+  function showSection(section) { 
+    document.querySelectorAll('#profileSection, #productsSection, #dealsSection, #contactsSection, #licenseSection, #supportSection').forEach(s => s.style.display = 'none'); 
+    document.getElementById(`${section}Section`).style.display = 'block'; 
+    document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(el => el.classList.remove('active')); 
+    document.querySelectorAll(`.nav-item[data-section="${section}"], .bottom-nav-item[data-section="${section}"]`).forEach(el => el.classList.add('active')); 
+    document.getElementById('pageTitle').innerText = section === 'profile' ? 'بيانات المشروع' : (section === 'products' ? 'المنتجات' : (section === 'deals' ? 'العروض' : (section === 'contacts' ? 'التواصل' : (section === 'license' ? 'الرخصة' : 'الدعم الفني')))); 
+    if(section === 'products') loadProducts(); else if(section === 'deals') loadDeals(); else if(section === 'contacts') loadContacts(); else if(section === 'support') loadTickets(); else if(section === 'license') loadProjectData(); 
+  }
   document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(btn => btn.addEventListener('click', () => showSection(btn.dataset.section)));
   document.getElementById('addProductBtn').onclick=()=>{ document.getElementById('productId').value=''; document.getElementById('productNameAr').value=''; document.getElementById('productNameEn').value=''; document.getElementById('productPrice').value=''; document.getElementById('productCategoryAr').value=''; document.getElementById('productCategoryEn').value=''; document.getElementById('productTypeAr').value=''; document.getElementById('productTypeEn').value=''; document.getElementById('productDescAr').value=''; document.getElementById('productDescEn').value=''; document.getElementById('productDetailsAr').value=''; document.getElementById('productDetailsEn').value=''; document.getElementById('mainImagePreview').innerHTML=''; currentExtraImagesUrls=[]; renderExtraImagesList([]); document.getElementById('productModalTitle').innerText='إضافة منتج'; document.getElementById('productModal').classList.add('active'); };
   document.getElementById('addDealBtn').onclick=()=>{ document.getElementById('dealId').value=''; document.getElementById('dealTitleAr').value=''; document.getElementById('dealTitleEn').value=''; document.getElementById('dealDescAr').value=''; document.getElementById('dealDescEn').value=''; document.getElementById('dealBadgeAr').value=''; document.getElementById('dealBadgeEn').value=''; document.getElementById('dealExpiry').value=''; document.getElementById('dealModal').classList.add('active'); };
@@ -293,7 +346,12 @@
   document.getElementById('mobileMenuBtn').onclick = () => { const s = document.getElementById('sidebar'); s.style.display = s.style.display === 'block' ? 'none' : 'block'; };
   window.onclick = (e) => { if(e.target.classList.contains('modal')) e.target.classList.remove('active'); if(e.target.classList.contains('confirm-modal')) e.target.style.display = 'none'; };
 
-  const session = await checkSession(); if(session) { const cats = ["أطعمة ومشروبات","الرقميات","روائح وعطور","عناية","حلويات","تجميل","ملابس","يدويات","هدايا","عطارة","فنون","نباتات","ترفيه"]; document.getElementById('profileCategory').innerHTML = cats.map(c=>`<option value="${c}">${c}</option>`).join(''); await loadProjectData(); await loadStats(); showSection('profile'); }
+  const session = await checkSession(); 
+  if(session) { 
+    const cats = ["أطعمة ومشروبات","الرقميات","روائح وعطور","عناية","حلويات","تجميل","ملابس","يدويات","هدايا","عطارة","فنون","نباتات","ترفيه"]; 
+    document.getElementById('profileCategory').innerHTML = cats.map(c=>`<option value="${c}">${c}</option>`).join(''); 
+    await loadProjectData(); await loadStats(); showSection('profile'); 
+  }
 </script>
 </body>
 </html>
