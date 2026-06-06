@@ -142,7 +142,6 @@
     .confirm-card { background: #fff; width: min(520px,92vw); border-radius: 22px; padding: 20px; }
     .warning-banner { background: #FEF3C7; border-right: 4px solid #F59E0B; padding: 12px 20px; border-radius: 16px; margin-bottom: 20px; font-size: 13px; }
     .order-status-select { padding: 6px 12px; border-radius: 30px; border: 1px solid #CBD5E1; background: white; font-family: inherit; cursor: pointer; }
-    /* تلوين رقم الطلب حسب الحالة */
     .order-number-new { color: #C41E3A; font-weight: 700; }
     .order-number-processing { color: #F59E0B; font-weight: 700; }
     .order-number-delivered { color: #10B981; font-weight: 700; }
@@ -251,8 +250,6 @@
       <div class="card-header"><h3><i class="fas fa-headset"></i> الدعم الفني</h3><button id="newTicketBtn" class="btn-primary"><i class="fas fa-plus"></i> تذكرة جديدة</button></div>
       <div id="ticketsListContainer" style="padding:20px;"></div>
     </div>
-
-    <!-- تم إزالة الدليل السريع بناءً على الطلب -->
   </main>
 </div>
 
@@ -340,7 +337,7 @@
         <td>${new Date(order.created_at).toLocaleString()}</td>
       </tr>`;
     }
-    html += `</tbody><tr></div>`;
+    html += `</tbody></table></div>`;
     container.innerHTML = html;
   }
 
@@ -359,7 +356,6 @@
       document.getElementById('profileEmirate').value=proj.emirate||'دبي'; document.getElementById('profileCoverage').value=proj.coverage||'الإمارة فقط';
       document.getElementById('profileAdraLicense').checked=!!proj.adra_license; if(proj.category_ar) document.getElementById('profileCategory').value=proj.category_ar;
       document.getElementById('currentLogoHint').innerHTML=proj.image?`<img src="${proj.image}" class="preview-img">`:'لا يوجد شعار';
-      // إظهار/إخفاء زر إعادة التنشيط بناءً على الحالة
       const reactivateBtn = document.getElementById('dropdownReactivateAccountBtn');
       if (proj.status === 'disabled' || proj.status === 'deleted') reactivateBtn.style.display = 'flex';
       else reactivateBtn.style.display = 'none';
@@ -387,20 +383,60 @@
   document.getElementById('dropdownDeleteAccountBtn').onclick = async () => { if(await confirmDialog({title:'حذف الحساب',message:'سيتم حذف المشروع',danger:true}) && await confirmDialog({title:'تأكيد نهائي',message:'هل أنت متأكد؟',danger:true})){ await supabase.from('projects').update({status:'deleted'}).eq('id',projectId); toast('تم الحذف'); location.reload(); } };
   document.getElementById('dropdownLogoutBtn').onclick = async () => { await supabase.auth.signOut(); window.location.href = 'index.html'; };
 
-  // قائمة المستخدم (إغلاق عند النقر خارجها)
+  // قائمة المستخدم
   const userArea = document.getElementById('userArea');
   const userDropdown = document.getElementById('userDropdown');
   userArea.addEventListener('click', (e) => { e.stopPropagation(); userDropdown.classList.toggle('show'); });
   document.addEventListener('click', (e) => { if (!userArea.contains(e.target)) userDropdown.classList.remove('show'); });
 
-  // إظهار الأقسام
-  function showSection(section) { document.querySelectorAll('#profileSection, #productsSection, #dealsSection, #contactsSection, #licenseSection, #ordersSection, #supportSection').forEach(s => s.style.display = 'none'); document.getElementById(`${section}Section`).style.display = 'block'; document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(el => el.classList.remove('active')); document.querySelectorAll(`.nav-item[data-section="${section}"], .bottom-nav-item[data-section="${section}"]`).forEach(el => el.classList.add('active')); const titles = { profile:'بيانات المشروع', products:'المنتجات', deals:'العروض', contacts:'التواصل', license:'الرخصة', orders:'الطلبات', support:'الدعم الفني' }; document.getElementById('pageTitle').innerText = titles[section]; if(section === 'products') loadProducts(); else if(section === 'deals') loadDeals(); else if(section === 'contacts') loadContacts(); else if(section === 'support') loadTickets(); else if(section === 'license') loadProjectData(); else if(section === 'orders') loadOrders(); }
-  document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(btn => btn.addEventListener('click', () => showSection(btn.dataset.section)));
+  // إظهار الأقسام مع إغلاق القائمة الجانبية في الهواتف
+  function showSection(section) {
+    document.querySelectorAll('#profileSection, #productsSection, #dealsSection, #contactsSection, #licenseSection, #ordersSection, #supportSection').forEach(s => s.style.display = 'none');
+    document.getElementById(`${section}Section`).style.display = 'block';
+    document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll(`.nav-item[data-section="${section}"], .bottom-nav-item[data-section="${section}"]`).forEach(el => el.classList.add('active'));
+    const titles = { profile:'بيانات المشروع', products:'المنتجات', deals:'العروض', contacts:'التواصل', license:'الرخصة', orders:'الطلبات', support:'الدعم الفني' };
+    document.getElementById('pageTitle').innerText = titles[section];
+    if(section === 'products') loadProducts();
+    else if(section === 'deals') loadDeals();
+    else if(section === 'contacts') loadContacts();
+    else if(section === 'support') loadTickets();
+    else if(section === 'license') loadProjectData();
+    else if(section === 'orders') loadOrders();
+    
+    // إغلاق القائمة الجانبية في وضع الهاتف بعد النقر على خيار
+    if (window.innerWidth <= 768) {
+      const sidebar = document.getElementById('sidebar');
+      if (sidebar) sidebar.style.display = 'none';
+    }
+  }
+  
+  // ربط أزرار القائمة الجانبية والسفلية
+  document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(btn => btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    showSection(btn.dataset.section);
+  }));
+
+  // زر القائمة للهواتف: فتح/إغلاق الشريط الجانبي
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const sidebar = document.getElementById('sidebar');
+  mobileMenuBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sidebar.style.display === 'block') sidebar.style.display = 'none';
+    else sidebar.style.display = 'block';
+  });
+  // إغلاق القائمة الجانبية عند النقر خارجها (في الهواتف)
+  document.addEventListener('click', (e) => {
+    if (window.innerWidth <= 768 && sidebar && sidebar.style.display === 'block') {
+      if (!sidebar.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+        sidebar.style.display = 'none';
+      }
+    }
+  });
 
   document.getElementById('addProductBtn').onclick=()=>{ document.getElementById('productId').value=''; document.getElementById('productNameAr').value=''; document.getElementById('productNameEn').value=''; document.getElementById('productPriceAr').value=''; document.getElementById('productPriceEn').value=''; document.getElementById('productCategoryAr').value=''; document.getElementById('productCategoryEn').value=''; document.getElementById('productTypeAr').value=''; document.getElementById('productTypeEn').value=''; document.getElementById('productDescAr').value=''; document.getElementById('productDescEn').value=''; document.getElementById('productDetailsAr').value=''; document.getElementById('productDetailsEn').value=''; document.getElementById('mainImagePreview').innerHTML=''; currentExtraImagesUrls=[]; renderExtraImagesList([]); document.getElementById('productModalTitle').innerText='إضافة منتج'; document.getElementById('productModal').classList.add('active'); };
   document.getElementById('addDealBtn').onclick=()=>{ document.getElementById('dealId').value=''; document.getElementById('dealTitleAr').value=''; document.getElementById('dealTitleEn').value=''; document.getElementById('dealDescAr').value=''; document.getElementById('dealDescEn').value=''; document.getElementById('dealBadgeAr').value=''; document.getElementById('dealBadgeEn').value=''; document.getElementById('dealExpiry').value=''; document.getElementById('dealModal').classList.add('active'); };
   document.querySelectorAll('.modal .btn-secondary, #closeProductModalBtn, #closeDealModalBtn, #closeTicketModalBtn').forEach(btn => btn?.addEventListener('click', () => document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'))));
-  document.getElementById('mobileMenuBtn').onclick = () => { const s = document.getElementById('sidebar'); s.style.display = s.style.display === 'block' ? 'none' : 'block'; };
   window.onclick = (e) => { if(e.target.classList.contains('modal')) e.target.classList.remove('active'); if(e.target.classList.contains('confirm-modal')) e.target.style.display = 'none'; };
 
   const sessionData = await checkSession(); if(sessionData) { const cats = ["أطعمة ومشروبات","الرقميات","روائح وعطور","عناية","حلويات","تجميل","ملابس","يدويات","هدايا","عطارة","فنون","نباتات","ترفيه"]; document.getElementById('profileCategory').innerHTML = cats.map(c=>`<option value="${c}">${c}</option>`).join(''); await loadProjectData(); await loadStats(); showSection('profile'); }
