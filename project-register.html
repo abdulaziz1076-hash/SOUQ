@@ -15,7 +15,7 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
-            font-family: 'Almarai', sans-serif;
+            font-family: 'Almarai', Arial, sans-serif;
         }
         .register-card {
             background: white;
@@ -107,7 +107,7 @@
     </div>
 
     <form id="registerForm">
-        <!-- الخطوة 1: بيانات المشروع فقط -->
+        <!-- الخطوة 1 -->
         <div id="step1">
             <div class="form-group"><label>اسم المشروع (عربي)</label><input type="text" id="nameAr" required></div>
             <div class="form-group"><label>اسم المشروع (إنجليزي)</label><input type="text" id="nameEn" required></div>
@@ -115,7 +115,7 @@
                 <div><label>الإمارة</label><select id="emirate"><option>أبوظبي</option><option>دبي</option><option>الشارقة</option><option>عجمان</option><option>رأس الخيمة</option><option>الفجيرة</option><option>أم القيوين</option></select></div>
                 <div><label>التصنيف الرئيسي</label><select id="category"><option>أطعمة ومشروبات</option><option>الرقميات</option><option>روائح وعطور</option><option>عناية</option><option>حلويات</option><option>تجميل</option><option>ملابس</option><option>يدويات</option><option>هدايا</option><option>عطارة</option><option>فنون</option><option>نباتات</option><option>ترفيه</option></select></div>
             </div>
-            <div class="form-group"><label>وصف قصير (عربي)</label><textarea id="descAr" rows="2" maxlength="250"></textarea></div>
+            <div class="form-group"><label>وصف قصير (عربي) - 250 حرف</label><textarea id="descAr" rows="2" maxlength="250"></textarea></div>
             <div class="form-group"><label>وصف قصير (إنجليزي)</label><textarea id="descEn" rows="2" maxlength="250"></textarea></div>
             <div class="form-group"><label>وصف طويل (عربي) - اختياري</label><textarea id="longDescAr" rows="3"></textarea></div>
             <div class="form-group"><label>وصف طويل (إنجليزي)</label><textarea id="longDescEn" rows="3"></textarea></div>
@@ -124,7 +124,7 @@
             <button type="button" id="nextStepBtn" class="next-btn">التالي <i class="fas fa-arrow-left"></i></button>
         </div>
 
-        <!-- الخطوة 2: البريد وكلمة المرور وبيانات التواصل -->
+        <!-- الخطوة 2 -->
         <div id="step2" style="display:none;">
             <div class="form-group"><label>البريد الإلكتروني (تسجيل الدخول)</label><input type="email" id="email" required></div>
             <div class="row-2cols"><div><label>كلمة المرور</label><input type="password" id="password" required></div><div><label>تأكيد كلمة المرور</label><input type="password" id="confirmPassword" required></div></div>
@@ -141,24 +141,23 @@
 <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-    const supabase = createClient(
-        'https://xyepcwptfihnztgghimx.supabase.co',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5ZXBjd3B0Zmlobnp0Z2doaW14Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0ODA2OTcsImV4cCI6MjA5MjA1NjY5N30.SZvZjWpih1JiUlv24xLhNwjTvzo9RNsrTiI9fchWldE'
-    );
+    const SUPABASE_URL = 'https://xyepcwptfihnztgghimx.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5ZXBjd3B0Zmlobnp0Z2doaW14Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0ODA2OTcsImV4cCI6MjA5MjA1NjY5N30.SZvZjWpih1JiUlv24xLhNwjTvzo9RNsrTiI9fchWldE';
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     function showError(msg) {
-        const errDiv = document.getElementById('formError');
-        errDiv.innerText = msg;
-        errDiv.style.display = 'block';
-        setTimeout(() => errDiv.style.display = 'none', 6000);
+        const errorDiv = document.getElementById('formError');
+        errorDiv.innerText = msg;
+        errorDiv.style.display = 'block';
+        setTimeout(() => (errorDiv.style.display = 'none'), 6500);
     }
 
-    // التنقل
+    // التنقل بين الخطوات
     document.getElementById('nextStepBtn').onclick = () => {
         const nameAr = document.getElementById('nameAr').value.trim();
         const nameEn = document.getElementById('nameEn').value.trim();
-        const logo = document.getElementById('logoImage').files[0];
-        if (!nameAr || !nameEn || !logo) {
+        const logoFile = document.getElementById('logoImage').files[0];
+        if (!nameAr || !nameEn || !logoFile) {
             showError('يرجى ملء جميع الحقول المطلوبة في الخطوة الأولى');
             return;
         }
@@ -174,21 +173,20 @@
         document.getElementById('step1Indicator').classList.add('active');
     };
 
-    // رفع الشعار
     async function uploadLogo(file, userId) {
-        const ext = file.name.split('.').pop();
-        const path = `${userId}/logo_${Date.now()}.${ext}`;
-        const { error } = await supabase.storage.from('project-logos').upload(path, file);
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${userId}/logo_${Date.now()}.${fileExt}`;
+        const { error } = await supabase.storage.from('project-logos').upload(fileName, file);
         if (error) throw new Error('فشل رفع الشعار: ' + error.message);
-        const { data } = supabase.storage.from('project-logos').getPublicUrl(path);
+        const { data } = supabase.storage.from('project-logos').getPublicUrl(fileName);
         return data.publicUrl;
     }
 
     const form = document.getElementById('registerForm');
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        if (window._regLock) return;
-        window._regLock = true;
+        if (window._registerLock) return;
+        window._registerLock = true;
 
         const email = document.getElementById('email').value.trim();
         const password = document.getElementById('password').value;
@@ -196,37 +194,37 @@
         const whatsappRaw = document.getElementById('whatsapp').value.trim();
         const consent = document.getElementById('consent').checked;
 
-        if (!email || !password || !whatsappRaw) { showError('جميع الحقول مطلوبة'); window._regLock = false; return; }
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('البريد الإلكتروني غير صالح'); window._regLock = false; return; }
-        if (password.length < 6) { showError('كلمة المرور يجب أن تكون 6 أحرف على الأقل'); window._regLock = false; return; }
-        if (password !== confirm) { showError('كلمتا المرور غير متطابقتين'); window._regLock = false; return; }
-        if (!consent) { showError('يجب الموافقة على الشروط'); window._regLock = false; return; }
-        const whatsapp = whatsappRaw.replace(/\D/g, '');
-        if (whatsapp.length < 9 || whatsapp.length > 15) { showError('رقم واتساب غير صحيح'); window._regLock = false; return; }
+        // تحقق الحقول
+        if (!email || !password || !whatsappRaw) { showError('يرجى ملء جميع الحقول المطلوبة'); window._registerLock = false; return; }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('البريد الإلكتروني غير صالح'); window._registerLock = false; return; }
+        if (password.length < 6) { showError('كلمة المرور يجب أن تكون 6 أحرف على الأقل'); window._registerLock = false; return; }
+        if (password !== confirm) { showError('كلمتا المرور غير متطابقتين'); window._registerLock = false; return; }
+        if (!consent) { showError('يجب الموافقة على الشروط'); window._registerLock = false; return; }
+        const whatsappDigits = whatsappRaw.replace(/\D/g, '');
+        if (whatsappDigits.length < 9 || whatsappDigits.length > 15) { showError('رقم واتساب غير صالح (مثال: 971501234567)'); window._registerLock = false; return; }
 
-        const btn = document.getElementById('submitBtn');
-        const original = btn.innerHTML;
-        btn.disabled = true;
-        btn.innerHTML = '<span class="loader-small"></span> جاري...';
+        const submitBtn = document.getElementById('submitBtn');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="loader-small"></span> جاري...';
 
         try {
-            // 1. إنشاء حساب Auth (يرسل البريد التلقائي)
+            // 1) إنشاء حساب Auth
             const { data: authData, error: authError } = await supabase.auth.signUp({
-                email,
-                password,
+                email, password,
                 options: {
                     data: { role: 'project_owner' },
                     emailRedirectTo: window.location.origin + '/auth/callback.html'
                 }
             });
-            if (authError) throw new Error(authError.message.includes('already') ? 'البريد مسجل مسبقاً' : authError.message);
+            if (authError) throw new Error(authError.message.includes('already registered') ? 'البريد الإلكتروني مسجل مسبقاً' : authError.message);
             const userId = authData.user.id;
 
-            // 2. رفع الشعار
+            // 2) رفع الشعار
             const logoFile = document.getElementById('logoImage').files[0];
             const logoUrl = await uploadLogo(logoFile, userId);
 
-            // 3. إدراج المشروع (حالة pending)
+            // 3) إدراج المشروع في قاعدة البيانات (حالة pending)
             const projectPayload = {
                 name_ar: document.getElementById('nameAr').value.trim(),
                 name_en: document.getElementById('nameEn').value.trim(),
@@ -249,7 +247,7 @@
             const { error: projError } = await supabase.from('projects').insert(projectPayload);
             if (projError) throw projError;
 
-            // 4. الحصول على project_id
+            // 4) الحصول على project_id الذي تم إنشاؤه
             const { data: projectData, error: fetchError } = await supabase
                 .from('projects')
                 .select('id')
@@ -257,28 +255,28 @@
                 .single();
             if (fetchError) throw fetchError;
 
-            // 5. إدراج بيانات التواصل
-            const contactPayload = {
+            // 5) إدراج بيانات التواصل
+            await supabase.from('contacts').insert({
                 project_id: projectData.id,
-                whatsapp: whatsapp,
+                whatsapp: whatsappDigits,
                 instagram: document.getElementById('instagram').value.trim() || null,
                 email: email
-            };
-            const { error: contactError } = await supabase.from('contacts').insert(contactPayload);
-            if (contactError) console.warn('فشل إدراج جهة الاتصال:', contactError);
+            });
 
-            // 6. تخزين مؤقت ثم الانتقال
+            // 6) تخزين مؤقت للبريد الإلكتروني (اختياري)
             localStorage.setItem('pendingEmail', email);
-            btn.innerHTML = '✅ تم إنشاء الحساب';
+
+            // 7) إظهار النجاح والتحويل إلى صفحة "تحقق من بريدك"
+            submitBtn.innerHTML = '✅ تم إنشاء الحساب';
             setTimeout(() => {
                 window.location.href = 'check-email.html';
             }, 1500);
         } catch (err) {
             console.error(err);
-            showError(err.message || 'حدث خطأ غير متوقع');
-            btn.disabled = false;
-            btn.innerHTML = original;
-            window._regLock = false;
+            showError(err.message || 'حدث خطأ، يرجى المحاولة لاحقاً');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            window._registerLock = false;
         }
     });
 </script>
