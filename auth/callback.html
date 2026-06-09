@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>جاري تأكيد البريد وإعداد مشروعك…</title>
+  <title>جاري تأكيد الحساب… | سوق المشاريع</title>
   <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap" rel="stylesheet" />
   <style>
     body{
@@ -28,13 +28,17 @@
     .logo{ width:70px; border-radius:16px; border:2px solid #D4AF37; background:#fff; }
     h1{ margin:14px 0 6px; color:#0F3D2E; font-size:20px; }
     p{ margin:8px 0; color:#334155; line-height:1.9; font-size:14px; }
+    .loader{ display:inline-block; width:20px; height:20px; border:2px solid #D4AF37; border-top-color:transparent; border-radius:50%; animation:spin 0.6s linear infinite; vertical-align:middle; margin-left:8px; }
+    @keyframes spin{ to{ transform:rotate(360deg); } }
+    .error{ background:#fee2e2; color:#dc2626; padding:12px; border-radius:16px; margin-top:16px; }
   </style>
 </head>
 <body>
   <div class="card">
     <img class="logo" src="https://souqalmasharie.onrender.com/images/logo.png" alt="سوق المشاريع" />
-    <h1>جاري تأكيد البريد وإنشاء مشروعك…</h1>
-    <p>انتظر لحظات، سيتم تحويلك للوحة التحكم.</p>
+    <h1>جاري تأكيد البريد وإنشاء المشروع</h1>
+    <p>يرجى الانتظار قليلاً...</p>
+    <div class="loader"></div>
   </div>
 
   <script type="module">
@@ -43,95 +47,121 @@
 
     const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
 
-    async function createProjectFromPayload(userId) {
-      const raw = localStorage.getItem('pendingProjectPayload');
-      if (!raw) return null;
-
-      let payload;
-      try { payload = JSON.parse(raw); } catch(e) { return null; }
-      if (!payload?.project) return null;
-
-      const trialEnd = new Date();
-      trialEnd.setDate(trialEnd.getDate() + 7);
-      const newId = Date.now() + Math.floor(Math.random() * 10000);
-
-      const projectData = {
-        id: newId,
-        owner_user_id: userId,
-        name_ar: payload.project.name_ar || '',
-        name_en: payload.project.name_en || '',
-        emirate: payload.project.emirate || 'دبي',
-        description_ar: payload.project.description_ar || '',
-        description_en: payload.project.description_en || '',
-        long_description_ar: payload.project.long_description_ar || '',
-        long_description_en: payload.project.long_description_en || '',
-        image: payload.project.image || null,
-        adra_license: !!payload.project.adra_license,
-        coverage: payload.project.coverage || 'الإمارة فقط',
-        category_ar: payload.project.category_ar || null,
-        category_en: payload.project.category_en || null,
-        license_status: payload.project.license_status || 'pending_license',
-        status: payload.project.status || 'active',
-        trial_end_date: trialEnd.toISOString(),
-        display_order: payload.project.display_order ?? 0
-      };
-
-      const { error } = await supabase.from('projects').insert(projectData);
-      if (error) {
-        console.error('فشل إنشاء المشروع:', error);
-        return null;
+    async function createProjectFromPayload(userId, payload) {
+      if (!payload || !payload.project) {
+        throw new Error('لا توجد بيانات مشروع محفوظة مؤقتاً.');
       }
 
+      // 1) إنشاء المشروع
+      const projectPayload = {
+        ...payload.project,
+        owner_user_id: userId,
+        status: 'active',
+        display_order: 0,
+        created_at: new Date().toISOString(),
+        license_status: 'pending_license'
+      };
+      delete projectPayload.id; // تجنب تعارض id
+
+      const { data: newProject, error: projError } = await supabase
+        .from('projects')
+        .insert(projectPayload)
+        .select()
+        .single();
+
+      if (projError) throw projError;
+
+      // 2) إنشاء بيانات التواصل
       if (payload.contact) {
-        await supabase.from('contacts').insert({
-          project_id: newId,
-          whatsapp: payload.contact.whatsapp || null,
+        const contactPayload = {
+          project_id: newProject.id,
+          whatsapp: payload.contact.whatsapp,
           instagram: payload.contact.instagram || null,
           phone: payload.contact.phone || null,
           email: payload.contact.email || null
-        });
+        };
+        const { error: contactError } = await supabase
+          .from('contacts')
+          .insert(contactPayload);
+        if (contactError) console.warn('فشل في حفظ بيانات التواصل:', contactError);
       }
 
+      // 3) تنظيف التخزين المؤقت
       localStorage.removeItem('pendingProjectPayload');
       localStorage.removeItem('pendingEmail');
-      return newId;
+
+      return newProject;
     }
 
     async function run() {
-      try {
-        const url = new URL(window.location.href);
-        const code = url.searchParams.get('code');
+      const url = new URL(window.location.href);
+      const code = url.searchParams.get('code');
+      const cardDiv = document.querySelector('.card');
 
+      try {
+        // 1) تبادل الكود للحصول على الجلسة
         if (code) {
           const { error } = await supabase.auth.exchangeCodeForSession(code);
           if (error) throw error;
+          // تنظيف الرابط من الكود
           window.history.replaceState({}, document.title, url.origin + url.pathname);
-          await new Promise(r => setTimeout(r, 500));
         }
 
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session) {
-          window.location.href = '../project-login.html';
+        // 2) الحصول على الجلسة والمستخدم
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        if (sessionError) throw sessionError;
+        if (!session) throw new Error('لم يتم العثور على جلسة نشطة.');
+
+        const userId = session.user.id;
+
+        // 3) التحقق من وجود مشروع مرتبط بهذا المستخدم (لتجنب التكرار)
+        const { data: existingProject, error: checkError } = await supabase
+          .from('projects')
+          .select('id')
+          .eq('owner_user_id', userId)
+          .maybeSingle();
+
+        if (checkError) throw checkError;
+
+        if (existingProject) {
+          // المشروع موجود بالفعل -> التوجيه مباشرة للوحة التحكم
+          window.location.href = '../project-dashboard.html';
           return;
         }
 
-        // ✅ إنشاء المشروع الآن (إذا لم يكن موجوداً)
-        const { data: existing } = await supabase
-          .from('projects')
-          .select('id')
-          .eq('owner_user_id', session.user.id)
-          .limit(1);
-
-        if (!existing || existing.length === 0) {
-          const projectId = await createProjectFromPayload(session.user.id);
-          if (!projectId) throw new Error('تعذر إنشاء المشروع');
+        // 4) قراءة البيانات المؤقتة من localStorage
+        const pendingPayloadRaw = localStorage.getItem('pendingProjectPayload');
+        if (!pendingPayloadRaw) {
+          throw new Error('لا توجد بيانات مشروع محفوظة. يرجى إعادة التسجيل.');
         }
 
-        window.location.href = '../project-dashboard.html';
+        const pendingPayload = JSON.parse(pendingPayloadRaw);
+        if (!pendingPayload.project) {
+          throw new Error('بيانات المشروع غير مكتملة.');
+        }
+
+        // 5) إنشاء المشروع في قاعدة البيانات
+        await createProjectFromPayload(userId, pendingPayload);
+        
+        // 6) عرض رسالة نجاح ثم التوجيه
+        cardDiv.innerHTML = `
+          <img class="logo" src="https://souqalmasharie.onrender.com/images/logo.png" alt="سوق المشاريع" />
+          <h1>✅ تم إنشاء مشروعك بنجاح</h1>
+          <p>سيتم تحويلك إلى لوحة التحكم خلال لحظات...</p>
+        `;
+        
+        setTimeout(() => {
+          window.location.href = '../project-dashboard.html';
+        }, 1500);
+
       } catch (err) {
-        console.error(err);
-        alert('حدث خطأ: ' + err.message);
-        window.location.href = '../project-login.html';
+        console.error('خطأ في المعالجة:', err);
+        cardDiv.innerHTML = `
+          <img class="logo" src="https://souqalmasharie.onrender.com/images/logo.png" alt="سوق المشاريع" />
+          <h1>⚠️ حدث خطأ</h1>
+          <div class="error">${err.message || 'تعذر إنشاء المشروع. يرجى المحاولة مرة أخرى أو التواصل مع الدعم.'}</div>
+          <p style="margin-top:16px;"><a href="../project-login.html" style="color:#D4AF37;">تسجيل الدخول</a> | <a href="../project-register.html" style="color:#D4AF37;">تسجيل جديد</a></p>
+        `;
       }
     }
 
