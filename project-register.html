@@ -1,18 +1,13 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تسجيل مشروع جديد | سوق المشاريع</title>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: linear-gradient(145deg, #0F3D2E, #1A5F44);
             min-height: 100vh;
@@ -20,7 +15,7 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
-            font-family: 'Almarai', Arial, sans-serif;
+            font-family: 'Almarai', sans-serif;
         }
         .register-card {
             background: white;
@@ -32,7 +27,6 @@
         }
         .register-card h2 { color: #0F3D2E; font-size: 28px; margin-bottom: 8px; text-align: center; }
         .register-card p { color: #64748b; margin-bottom: 30px; text-align: center; }
-
         .step-indicator { display: flex; justify-content: space-between; margin-bottom: 30px; }
         .step { text-align: center; flex: 1; }
         .step .circle {
@@ -43,10 +37,8 @@
         .step.active .circle { background: #D4AF37; color: #0F3D2E; }
         .step .label { font-size: 12px; margin-top: 6px; color: #64748b; }
         .step.active .label { color: #0F3D2E; font-weight: bold; }
-
         .form-group { margin-bottom: 20px; }
         .form-group label { font-weight: 700; display: block; margin-bottom: 8px; color: #0F3D2E; }
-
         input, select, textarea {
             width: 100%;
             padding: 12px 16px;
@@ -60,11 +52,9 @@
             border-color: #D4AF37;
             background: white;
         }
-
         .row-2cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .checkbox-group { display: flex; align-items: flex-start; gap: 12px; margin: 20px 0; }
         .checkbox-group input { width: 20px; margin-top: 2px; }
-
         button {
             background: #0F3D2E;
             color: white;
@@ -79,7 +69,6 @@
         button:hover { background: #1A5F44; transform: translateY(-2px); }
         .next-btn, .prev-btn { width: 100%; margin-top: 15px; }
         button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-
         .error {
             margin-top: 12px;
             font-size: 13px;
@@ -90,9 +79,7 @@
             border-radius: 18px;
             border: 1px solid #fecaca;
         }
-
         .info-note { font-size: 12px; color: #64748b; margin-top: 20px; text-align: center; }
-
         .loader-small {
             display: inline-block;
             width: 18px;
@@ -105,194 +92,73 @@
             vertical-align: middle;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-
-        @media (max-width: 700px) {
-            .row-2cols { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 700px) { .row-2cols { grid-template-columns: 1fr; } }
     </style>
 </head>
-
 <body>
 <div class="register-card">
     <i class="fas fa-store" style="font-size: 60px; color: #D4AF37; display: block; text-align: center; margin-bottom: 15px;"></i>
-
     <h2>انضم إلى سوق المشاريع</h2>
     <p>أنشئ مشروعك المنزلي وابدأ البيع اليوم</p>
 
     <div class="step-indicator">
-        <div class="step active" id="step1Indicator">
-            <div class="circle">1</div>
-            <div class="label">بيانات المشروع</div>
-        </div>
-        <div class="step" id="step2Indicator">
-            <div class="circle">2</div>
-            <div class="label">الحساب والتواصل</div>
-        </div>
+        <div class="step active" id="step1Indicator"><div class="circle">1</div><div class="label">بيانات المشروع</div></div>
+        <div class="step" id="step2Indicator"><div class="circle">2</div><div class="label">الحساب والتواصل</div></div>
     </div>
 
     <form id="registerForm">
-        <!-- الخطوة 1 -->
+        <!-- الخطوة 1: بيانات المشروع فقط -->
         <div id="step1">
-            <div class="form-group">
-                <label>اسم المشروع (عربي)</label>
-                <input type="text" id="nameAr" required />
-            </div>
-
-            <div class="form-group">
-                <label>اسم المشروع (إنجليزي)</label>
-                <input type="text" id="nameEn" required />
-            </div>
-
+            <div class="form-group"><label>اسم المشروع (عربي)</label><input type="text" id="nameAr" required></div>
+            <div class="form-group"><label>اسم المشروع (إنجليزي)</label><input type="text" id="nameEn" required></div>
             <div class="row-2cols">
-                <div>
-                    <label>الإمارة</label>
-                    <select id="emirate">
-                        <option>أبوظبي</option>
-                        <option>دبي</option>
-                        <option>الشارقة</option>
-                        <option>عجمان</option>
-                        <option>رأس الخيمة</option>
-                        <option>الفجيرة</option>
-                        <option>أم القيوين</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label>التصنيف الرئيسي</label>
-                    <select id="category">
-                        <option>أطعمة ومشروبات</option>
-                        <option>الرقميات</option>
-                        <option>روائح وعطور</option>
-                        <option>عناية</option>
-                        <option>حلويات</option>
-                        <option>تجميل</option>
-                        <option>ملابس</option>
-                        <option>يدويات</option>
-                        <option>هدايا</option>
-                        <option>عطارة</option>
-                        <option>فنون</option>
-                        <option>نباتات</option>
-                        <option>ترفيه</option>
-                    </select>
-                </div>
+                <div><label>الإمارة</label><select id="emirate"><option>أبوظبي</option><option>دبي</option><option>الشارقة</option><option>عجمان</option><option>رأس الخيمة</option><option>الفجيرة</option><option>أم القيوين</option></select></div>
+                <div><label>التصنيف الرئيسي</label><select id="category"><option>أطعمة ومشروبات</option><option>الرقميات</option><option>روائح وعطور</option><option>عناية</option><option>حلويات</option><option>تجميل</option><option>ملابس</option><option>يدويات</option><option>هدايا</option><option>عطارة</option><option>فنون</option><option>نباتات</option><option>ترفيه</option></select></div>
             </div>
-
-            <div class="form-group">
-                <label>وصف قصير (عربي) - 250 حرف</label>
-                <textarea id="descAr" rows="2" maxlength="250"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>وصف قصير (إنجليزي)</label>
-                <textarea id="descEn" rows="2" maxlength="250"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>وصف طويل (عربي) - اختياري</label>
-                <textarea id="longDescAr" rows="3"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>وصف طويل (إنجليزي)</label>
-                <textarea id="longDescEn" rows="3"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>نطاق التغطية</label>
-                <select id="coverage">
-                    <option>الإمارة فقط</option>
-                    <option>جميع إمارات الدولة</option>
-                    <option>دول الخليج</option>
-                    <option>العالم</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>صورة المشروع (لوجو)</label>
-                <input type="file" id="logoImage" accept="image/*" required />
-            </div>
-
-            <button type="button" id="nextStepBtn" class="next-btn">
-                التالي <i class="fas fa-arrow-left"></i>
-            </button>
+            <div class="form-group"><label>وصف قصير (عربي)</label><textarea id="descAr" rows="2" maxlength="250"></textarea></div>
+            <div class="form-group"><label>وصف قصير (إنجليزي)</label><textarea id="descEn" rows="2" maxlength="250"></textarea></div>
+            <div class="form-group"><label>وصف طويل (عربي) - اختياري</label><textarea id="longDescAr" rows="3"></textarea></div>
+            <div class="form-group"><label>وصف طويل (إنجليزي)</label><textarea id="longDescEn" rows="3"></textarea></div>
+            <div class="form-group"><label>نطاق التغطية</label><select id="coverage"><option>الإمارة فقط</option><option>جميع إمارات الدولة</option><option>دول الخليج</option><option>العالم</option></select></div>
+            <div class="form-group"><label>صورة المشروع (لوجو)</label><input type="file" id="logoImage" accept="image/*" required></div>
+            <button type="button" id="nextStepBtn" class="next-btn">التالي <i class="fas fa-arrow-left"></i></button>
         </div>
 
-        <!-- الخطوة 2 -->
+        <!-- الخطوة 2: البريد وكلمة المرور وبيانات التواصل -->
         <div id="step2" style="display:none;">
-            <div class="form-group">
-                <label>البريد الإلكتروني (تسجيل الدخول)</label>
-                <input type="email" id="email" required />
-            </div>
-
-            <div class="row-2cols">
-                <div>
-                    <label>كلمة المرور</label>
-                    <input type="password" id="password" required />
-                </div>
-                <div>
-                    <label>تأكيد كلمة المرور</label>
-                    <input type="password" id="confirmPassword" required />
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>رقم واتساب (للتواصل)</label>
-                <input type="tel" id="whatsapp" required placeholder="مثال: 971501234567" />
-            </div>
-
-            <div class="form-group">
-                <label>حساب إنستغرام (اختياري)</label>
-                <input type="text" id="instagram" />
-            </div>
-
-            <div class="checkbox-group">
-                <input type="checkbox" id="consent" required />
-                <label>
-                    أوافق على
-                    <a href="consent-publish.html" target="_blank">شروط النشر</a>
-                    و
-                    <a href="terms.html" target="_blank">الاستخدام</a>
-                    و
-                    <a href="privacy.html" target="_blank">سياسة الخصوصية</a>
-                </label>
-            </div>
-
-            <div class="row-2cols">
-                <button type="button" id="prevStepBtn" class="prev-btn">السابق</button>
-                <button type="submit" id="submitBtn"><span id="submitText">إنشاء حساب المشروع</span></button>
-            </div>
+            <div class="form-group"><label>البريد الإلكتروني (تسجيل الدخول)</label><input type="email" id="email" required></div>
+            <div class="row-2cols"><div><label>كلمة المرور</label><input type="password" id="password" required></div><div><label>تأكيد كلمة المرور</label><input type="password" id="confirmPassword" required></div></div>
+            <div class="form-group"><label>رقم واتساب (للتواصل)</label><input type="tel" id="whatsapp" required placeholder="مثال: 971501234567"></div>
+            <div class="form-group"><label>حساب إنستغرام (اختياري)</label><input type="text" id="instagram"></div>
+            <div class="checkbox-group"><input type="checkbox" id="consent" required><label>أوافق على <a href="consent-publish.html" target="_blank">شروط النشر</a> و <a href="terms.html" target="_blank">الاستخدام</a> و <a href="privacy.html" target="_blank">سياسة الخصوصية</a></label></div>
+            <div class="row-2cols"><button type="button" id="prevStepBtn" class="prev-btn">السابق</button><button type="submit" id="submitBtn"><span id="submitText">إنشاء حساب المشروع</span></button></div>
         </div>
-
         <div id="formError" class="error"></div>
     </form>
-
-    <div class="info-note">
-        سيتم إنشاء مشروعك فوراً، وسيتم إرسال رابط تأكيد البريد الإلكتروني. بعد التأكيد، يمكنك تسجيل الدخول والبدء في إدارة مشروعك.
-    </div>
+    <div class="info-note">سيتم إنشاء مشروعك فوراً، وسيتم إرسال رابط تأكيد البريد الإلكتروني. بعد التأكيد، يمكنك تسجيل الدخول والبدء في إدارة مشروعك.</div>
 </div>
 
 <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-    // إعداد Supabase - استخدم التكوين الثابت مباشرة لتجنب مشاكل import
-    const SUPABASE_URL = 'https://xyepcwptfihnztgghimx.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5ZXBjd3B0Zmlobnp0Z2doaW14Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0ODA2OTcsImV4cCI6MjA5MjA1NjY5N30.SZvZjWpih1JiUlv24xLhNwjTvzo9RNsrTiI9fchWldE';
-
-    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const supabase = createClient(
+        'https://xyepcwptfihnztgghimx.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5ZXBjd3B0Zmlobnp0Z2doaW14Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0ODA2OTcsImV4cCI6MjA5MjA1NjY5N30.SZvZjWpih1JiUlv24xLhNwjTvzo9RNsrTiI9fchWldE'
+    );
 
     function showError(msg) {
-        const errorDiv = document.getElementById('formError');
-        errorDiv.innerText = msg;
-        errorDiv.style.display = 'block';
-        setTimeout(() => (errorDiv.style.display = 'none'), 6500);
+        const errDiv = document.getElementById('formError');
+        errDiv.innerText = msg;
+        errDiv.style.display = 'block';
+        setTimeout(() => errDiv.style.display = 'none', 6000);
     }
 
-    // التنقل بين الخطوات
+    // التنقل
     document.getElementById('nextStepBtn').onclick = () => {
         const nameAr = document.getElementById('nameAr').value.trim();
         const nameEn = document.getElementById('nameEn').value.trim();
-        const logoFile = document.getElementById('logoImage').files[0];
-        if (!nameAr || !nameEn || !logoFile) {
+        const logo = document.getElementById('logoImage').files[0];
+        if (!nameAr || !nameEn || !logo) {
             showError('يرجى ملء جميع الحقول المطلوبة في الخطوة الأولى');
             return;
         }
@@ -301,7 +167,6 @@
         document.getElementById('step1Indicator').classList.remove('active');
         document.getElementById('step2Indicator').classList.add('active');
     };
-
     document.getElementById('prevStepBtn').onclick = () => {
         document.getElementById('step2').style.display = 'none';
         document.getElementById('step1').style.display = 'block';
@@ -309,25 +174,21 @@
         document.getElementById('step1Indicator').classList.add('active');
     };
 
-    // رفع الصورة
+    // رفع الشعار
     async function uploadLogo(file, userId) {
-        const fileExt = file.name.split('.').pop();
-        const fileName = `${userId}/logo_${Date.now()}.${fileExt}`;
-        const { error: uploadError } = await supabase.storage
-            .from('project-logos')
-            .upload(fileName, file);
-        if (uploadError) throw new Error('فشل رفع الشعار: ' + uploadError.message);
-        const { data: urlData } = supabase.storage
-            .from('project-logos')
-            .getPublicUrl(fileName);
-        return urlData.publicUrl;
+        const ext = file.name.split('.').pop();
+        const path = `${userId}/logo_${Date.now()}.${ext}`;
+        const { error } = await supabase.storage.from('project-logos').upload(path, file);
+        if (error) throw new Error('فشل رفع الشعار: ' + error.message);
+        const { data } = supabase.storage.from('project-logos').getPublicUrl(path);
+        return data.publicUrl;
     }
 
     const form = document.getElementById('registerForm');
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        if (window._registerLock) return;
-        window._registerLock = true;
+        if (window._regLock) return;
+        window._regLock = true;
 
         const email = document.getElementById('email').value.trim();
         const password = document.getElementById('password').value;
@@ -335,45 +196,21 @@
         const whatsappRaw = document.getElementById('whatsapp').value.trim();
         const consent = document.getElementById('consent').checked;
 
-        if (!email || !password || !whatsappRaw) {
-            showError('يرجى ملء جميع الحقول المطلوبة');
-            window._registerLock = false;
-            return;
-        }
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            showError('البريد الإلكتروني غير صالح');
-            window._registerLock = false;
-            return;
-        }
-        if (password.length < 6) {
-            showError('كلمة المرور يجب أن تكون 6 أحرف على الأقل');
-            window._registerLock = false;
-            return;
-        }
-        if (password !== confirm) {
-            showError('كلمتا المرور غير متطابقتين');
-            window._registerLock = false;
-            return;
-        }
-        if (!consent) {
-            showError('يجب الموافقة على الشروط');
-            window._registerLock = false;
-            return;
-        }
-        const whatsappDigits = whatsappRaw.replace(/\D/g, '');
-        if (whatsappDigits.length < 9 || whatsappDigits.length > 15) {
-            showError('رقم واتساب غير صالح (مثال: 971501234567)');
-            window._registerLock = false;
-            return;
-        }
+        if (!email || !password || !whatsappRaw) { showError('جميع الحقول مطلوبة'); window._regLock = false; return; }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('البريد الإلكتروني غير صالح'); window._regLock = false; return; }
+        if (password.length < 6) { showError('كلمة المرور يجب أن تكون 6 أحرف على الأقل'); window._regLock = false; return; }
+        if (password !== confirm) { showError('كلمتا المرور غير متطابقتين'); window._regLock = false; return; }
+        if (!consent) { showError('يجب الموافقة على الشروط'); window._regLock = false; return; }
+        const whatsapp = whatsappRaw.replace(/\D/g, '');
+        if (whatsapp.length < 9 || whatsapp.length > 15) { showError('رقم واتساب غير صحيح'); window._regLock = false; return; }
 
-        const submitBtn = document.getElementById('submitBtn');
-        const originalText = submitBtn.innerHTML;
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span class="loader-small"></span> جاري...';
+        const btn = document.getElementById('submitBtn');
+        const original = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="loader-small"></span> جاري...';
 
         try {
-            // 1) إنشاء حساب Auth
+            // 1. إنشاء حساب Auth (يرسل البريد التلقائي)
             const { data: authData, error: authError } = await supabase.auth.signUp({
                 email,
                 password,
@@ -382,19 +219,14 @@
                     emailRedirectTo: window.location.origin + '/auth/callback.html'
                 }
             });
-            if (authError) {
-                if (authError.message.includes('already registered')) {
-                    throw new Error('البريد الإلكتروني مسجل مسبقاً. الرجاء تسجيل الدخول.');
-                }
-                throw new Error(authError.message);
-            }
+            if (authError) throw new Error(authError.message.includes('already') ? 'البريد مسجل مسبقاً' : authError.message);
             const userId = authData.user.id;
 
-            // 2) رفع الشعار
+            // 2. رفع الشعار
             const logoFile = document.getElementById('logoImage').files[0];
             const logoUrl = await uploadLogo(logoFile, userId);
 
-            // 3) إدراج المشروع في جدول projects (حالة pending)
+            // 3. إدراج المشروع (حالة pending)
             const projectPayload = {
                 name_ar: document.getElementById('nameAr').value.trim(),
                 name_en: document.getElementById('nameEn').value.trim(),
@@ -414,37 +246,39 @@
                 owner_user_id: userId,
                 created_at: new Date().toISOString()
             };
-            const { error: projError } = await supabase
-                .from('projects')
-                .insert(projectPayload);
+            const { error: projError } = await supabase.from('projects').insert(projectPayload);
             if (projError) throw projError;
 
-            // 4) إدراج بيانات التواصل
+            // 4. الحصول على project_id
+            const { data: projectData, error: fetchError } = await supabase
+                .from('projects')
+                .select('id')
+                .eq('owner_user_id', userId)
+                .single();
+            if (fetchError) throw fetchError;
+
+            // 5. إدراج بيانات التواصل
             const contactPayload = {
-                project_id: (await supabase.from('projects').select('id').eq('owner_user_id', userId).single()).data.id,
-                whatsapp: whatsappDigits,
+                project_id: projectData.id,
+                whatsapp: whatsapp,
                 instagram: document.getElementById('instagram').value.trim() || null,
                 email: email
             };
-            const { error: contactError } = await supabase
-                .from('contacts')
-                .insert(contactPayload);
-            if (contactError) console.warn('Contacts insert failed:', contactError);
+            const { error: contactError } = await supabase.from('contacts').insert(contactPayload);
+            if (contactError) console.warn('فشل إدراج جهة الاتصال:', contactError);
 
-            // 5) تخزين مؤقت
+            // 6. تخزين مؤقت ثم الانتقال
             localStorage.setItem('pendingEmail', email);
-
-            // 6) إظهار النجاح والتحويل
-            submitBtn.innerHTML = '✅ تم إنشاء الحساب';
+            btn.innerHTML = '✅ تم إنشاء الحساب';
             setTimeout(() => {
                 window.location.href = 'check-email.html';
             }, 1500);
         } catch (err) {
             console.error(err);
-            showError(err.message || 'حدث خطأ، يرجى المحاولة لاحقاً');
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = originalText;
-            window._registerLock = false;
+            showError(err.message || 'حدث خطأ غير متوقع');
+            btn.disabled = false;
+            btn.innerHTML = original;
+            window._regLock = false;
         }
     });
 </script>
