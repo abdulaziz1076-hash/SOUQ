@@ -7,99 +7,114 @@
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Almarai', sans-serif;
-            background: linear-gradient(145deg, #0F3D2E, #1A5F44);
+            font-family: 'Almarai', Arial, sans-serif;
+            margin: 0;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0;
-            padding: 20px;
+            background: radial-gradient(1200px 600px at 50% -10%, #1A5F44 0%, #0F3D2E 55%, #0B2E23 100%);
         }
         .card {
-            background: white;
-            border-radius: 32px;
-            padding: 40px 30px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 28px;
+            padding: 35px 30px;
             text-align: center;
-            max-width: 500px;
-            width: 100%;
+            width: min(500px, 90vw);
+            backdrop-filter: blur(8px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
-        .logo { width: 70px; margin-bottom: 20px; }
+        .logo { width: 70px; margin-bottom: 15px; }
         h1 { color: #0F3D2E; font-size: 24px; margin-bottom: 10px; }
-        p { color: #4a5568; margin-bottom: 20px; line-height: 1.6; }
-        .loader { display: inline-block; width: 30px; height: 30px; border: 3px solid #D4AF37; border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        p { color: #334155; margin-bottom: 20px; line-height: 1.6; }
+        .loader { display: inline-block; width: 24px; height: 24px; border: 3px solid #D4AF37; border-top-color: transparent; border-radius: 50%; animation: spin 0.6s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .success { color: #166534; background: #dcfce7; padding: 12px; border-radius: 20px; margin-top: 15px; }
-        .error { color: #b91c1c; background: #fee2e2; padding: 12px; border-radius: 20px; margin-top: 15px; }
+        .error { background: #fee2e2; color: #b91c1c; padding: 12px; border-radius: 20px; margin-top: 20px; }
+        .success { background: #dcfce7; color: #166534; padding: 12px; border-radius: 20px; margin-top: 20px; }
         a { color: #D4AF37; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
 <div class="card" id="statusCard">
     <img class="logo" src="https://souqalmasharie.onrender.com/images/logo.png" alt="سوق المشاريع">
-    <h1>جاري تأكيد البريد...</h1>
+    <h1>جاري تأكيد البريد الإلكتروني</h1>
+    <p>يرجى الانتظار...</p>
     <div class="loader"></div>
 </div>
 
 <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-    const supabase = createClient(
-        'https://xyepcwptfihnztgghimx.supabase.co',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5ZXBjd3B0Zmlobnp0Z2doaW14Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0ODA2OTcsImV4cCI6MjA5MjA1NjY5N30.SZvZjWpih1JiUlv24xLhNwjTvzo9RNsrTiI9fchWldE'
-    );
+    const SUPABASE_URL = 'https://xyepcwptfihnztgghimx.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5ZXBjd3B0Zmlobnp0Z2doaW14Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0ODA2OTcsImV4cCI6MjA5MjA1NjY5N30.SZvZjWpih1JiUlv24xLhNwjTvzo9RNsrTiI9fchWldE';
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     const card = document.getElementById('statusCard');
+
+    async function delay(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
     async function run() {
         const url = new URL(window.location.href);
         const code = url.searchParams.get('code');
 
         try {
+            // 1) تبادل الكود للحصول على جلسة
             if (code) {
                 const { error } = await supabase.auth.exchangeCodeForSession(code);
                 if (error) throw error;
+                // إزالة الكود من الرابط
                 window.history.replaceState({}, document.title, url.origin + url.pathname);
             }
 
+            // 2) الانتظار قليلاً للتأكد من اكتمال الجلسة
+            await delay(500);
+            
+            // 3) الحصول على الجلسة والمستخدم
             const { data: { session }, error: sessionError } = await supabase.auth.getSession();
             if (sessionError) throw sessionError;
-            if (!session) throw new Error('لم يتم العثور على جلسة نشطة.');
+            if (!session) throw new Error('لم يتم العثور على جلسة نشطة. يرجى المحاولة مرة أخرى.');
 
             const userId = session.user.id;
 
-            // تحديث المشروع من pending إلى active
-            const { error: updateError } = await supabase
+            // 4) البحث عن المشروع المرتبط بهذا المستخدم في قاعدة البيانات
+            const { data: project, error: projectError } = await supabase
                 .from('projects')
-                .update({ status: 'active' })
+                .select('id, status')
                 .eq('owner_user_id', userId)
-                .eq('status', 'pending');
+                .single();
 
-            if (updateError && updateError.code !== 'PGRST116') {
-                console.warn('تحديث الحالة:', updateError);
-                // لا نمنع الدخول
+            if (projectError || !project) {
+                throw new Error('لا يوجد مشروع مرتبط بهذا الحساب. يرجى إعادة التسجيل.');
             }
 
-            // تنظيف التخزين المؤقت
-            localStorage.removeItem('pendingEmail');
+            // 5) إذا كان المشروع لا يزال pending، قم بتحديثه إلى active
+            if (project.status === 'pending') {
+                const { error: updateError } = await supabase
+                    .from('projects')
+                    .update({ status: 'active' })
+                    .eq('id', project.id);
+                if (updateError) console.warn('فشل تحديث حالة المشروع:', updateError);
+            }
 
+            // 6) عرض رسالة نجاح
             card.innerHTML = `
                 <img class="logo" src="https://souqalmasharie.onrender.com/images/logo.png" alt="سوق المشاريع">
-                <h1>✅ تم تأكيد البريد</h1>
-                <div class="success">تم تفعيل حساب مشروعك بنجاح.</div>
-                <p>سيتم تحويلك إلى لوحة التحكم...</p>
+                <h1>✅ تم تأكيد البريد بنجاح</h1>
+                <p>سيتم تحويلك إلى لوحة التحكم الخاصة بمشروعك خلال لحظات...</p>
                 <div class="loader"></div>
             `;
+
+            // 7) التوجيه إلى لوحة التحكم (project-dashboard.html)
             setTimeout(() => {
                 window.location.href = '../project-dashboard.html';
             }, 2000);
+
         } catch (err) {
             console.error(err);
             card.innerHTML = `
                 <img class="logo" src="https://souqalmasharie.onrender.com/images/logo.png" alt="سوق المشاريع">
                 <h1>⚠️ حدث خطأ</h1>
-                <div class="error">${err.message || 'تعذر تأكيد البريد. حاول تسجيل الدخول يدوياً.'}</div>
+                <div class="error">${err.message || 'تعذر تأكيد البريد. يرجى المحاولة مرة أخرى.'}</div>
                 <p><a href="../project-login.html">تسجيل الدخول</a> | <a href="../project-register.html">تسجيل جديد</a></p>
             `;
         }
