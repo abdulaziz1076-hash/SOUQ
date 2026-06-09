@@ -58,53 +58,40 @@
         const code = url.searchParams.get('code');
 
         try {
-            // 1) تبادل الكود للحصول على جلسة
             if (code) {
                 const { error } = await supabase.auth.exchangeCodeForSession(code);
                 if (error) throw error;
-                // إزالة الكود من الرابط
                 window.history.replaceState({}, document.title, url.origin + url.pathname);
             }
 
-            // 2) الانتظار قليلاً للتأكد من اكتمال الجلسة
             await delay(500);
-            
-            // 3) الحصول على الجلسة والمستخدم
             const { data: { session }, error: sessionError } = await supabase.auth.getSession();
             if (sessionError) throw sessionError;
-            if (!session) throw new Error('لم يتم العثور على جلسة نشطة. يرجى المحاولة مرة أخرى.');
+            if (!session) throw new Error('لم يتم العثور على جلسة نشطة.');
 
             const userId = session.user.id;
 
-            // 4) البحث عن المشروع المرتبط بهذا المستخدم في قاعدة البيانات
+            // البحث عن المشروع
             const { data: project, error: projectError } = await supabase
                 .from('projects')
                 .select('id, status')
                 .eq('owner_user_id', userId)
-                .single();
+                .maybeSingle();  // use maybeSingle to avoid error if not found
 
-            if (projectError || !project) {
-                throw new Error('لا يوجد مشروع مرتبط بهذا الحساب. يرجى إعادة التسجيل.');
-            }
+            if (projectError) throw projectError;
+            if (!project) throw new Error('لا يوجد مشروع مرتبط بهذا الحساب. يرجى إعادة التسجيل.');
 
-            // 5) إذا كان المشروع لا يزال pending، قم بتحديثه إلى active
+            // تحديث الحالة إلى active إذا كانت pending
             if (project.status === 'pending') {
-                const { error: updateError } = await supabase
-                    .from('projects')
-                    .update({ status: 'active' })
-                    .eq('id', project.id);
-                if (updateError) console.warn('فشل تحديث حالة المشروع:', updateError);
+                await supabase.from('projects').update({ status: 'active' }).eq('id', project.id);
             }
 
-            // 6) عرض رسالة نجاح
             card.innerHTML = `
                 <img class="logo" src="https://souqalmasharie.onrender.com/images/logo.png" alt="سوق المشاريع">
                 <h1>✅ تم تأكيد البريد بنجاح</h1>
                 <p>سيتم تحويلك إلى لوحة التحكم الخاصة بمشروعك خلال لحظات...</p>
                 <div class="loader"></div>
             `;
-
-            // 7) التوجيه إلى لوحة التحكم (project-dashboard.html)
             setTimeout(() => {
                 window.location.href = '../project-dashboard.html';
             }, 2000);
