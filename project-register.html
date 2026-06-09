@@ -107,7 +107,6 @@
     </div>
 
     <form id="registerForm">
-        <!-- الخطوة 1 -->
         <div id="step1">
             <div class="form-group"><label>اسم المشروع (عربي)</label><input type="text" id="nameAr" required></div>
             <div class="form-group"><label>اسم المشروع (إنجليزي)</label><input type="text" id="nameEn" required></div>
@@ -120,11 +119,10 @@
             <div class="form-group"><label>وصف طويل (عربي) - اختياري</label><textarea id="longDescAr" rows="3"></textarea></div>
             <div class="form-group"><label>وصف طويل (إنجليزي)</label><textarea id="longDescEn" rows="3"></textarea></div>
             <div class="form-group"><label>نطاق التغطية</label><select id="coverage"><option>الإمارة فقط</option><option>جميع إمارات الدولة</option><option>دول الخليج</option><option>العالم</option></select></div>
-            <div class="form-group"><label>صورة المشروع (لوجو)</label><input type="file" id="logoImage" accept="image/*" required></div>
+            <div class="form-group"><label>صورة المشروع (لوجو)</label><input type="file" id="logoImage" accept="image/*"></div>
             <button type="button" id="nextStepBtn" class="next-btn">التالي <i class="fas fa-arrow-left"></i></button>
         </div>
 
-        <!-- الخطوة 2 -->
         <div id="step2" style="display:none;">
             <div class="form-group"><label>البريد الإلكتروني (تسجيل الدخول)</label><input type="email" id="email" required></div>
             <div class="row-2cols"><div><label>كلمة المرور</label><input type="password" id="password" required></div><div><label>تأكيد كلمة المرور</label><input type="password" id="confirmPassword" required></div></div>
@@ -156,9 +154,8 @@
     document.getElementById('nextStepBtn').onclick = () => {
         const nameAr = document.getElementById('nameAr').value.trim();
         const nameEn = document.getElementById('nameEn').value.trim();
-        const logoFile = document.getElementById('logoImage').files[0];
-        if (!nameAr || !nameEn || !logoFile) {
-            showError('يرجى ملء جميع الحقول المطلوبة في الخطوة الأولى');
+        if (!nameAr || !nameEn) {
+            showError('يرجى ملء اسم المشروع بالعربية والإنجليزية');
             return;
         }
         document.getElementById('step1').style.display = 'none';
@@ -173,11 +170,15 @@
         document.getElementById('step1Indicator').classList.add('active');
     };
 
-    async function uploadLogo(file, userId) {
+    async function uploadLogo(file, projectId) {
+        if (!file) return null;
         const fileExt = file.name.split('.').pop();
-        const fileName = `${userId}/logo_${Date.now()}.${fileExt}`;
+        const fileName = `${projectId}/logo_${Date.now()}.${fileExt}`;
         const { error } = await supabase.storage.from('project-logos').upload(fileName, file);
-        if (error) throw new Error('فشل رفع الشعار: ' + error.message);
+        if (error) {
+            console.error('Upload error:', error);
+            return null;
+        }
         const { data } = supabase.storage.from('project-logos').getPublicUrl(fileName);
         return data.publicUrl;
     }
@@ -220,11 +221,7 @@
             if (authError) throw new Error(authError.message.includes('already registered') ? 'البريد الإلكتروني مسجل مسبقاً' : authError.message);
             const userId = authData.user.id;
 
-            // 2) رفع الشعار
-            const logoFile = document.getElementById('logoImage').files[0];
-            const logoUrl = await uploadLogo(logoFile, userId);
-
-            // 3) إدراج المشروع في قاعدة البيانات (حالة pending)
+            // 2) إدراج المشروع في قاعدة البيانات (بدون صورة أولاً)
             const projectPayload = {
                 name_ar: document.getElementById('nameAr').value.trim(),
                 name_en: document.getElementById('nameEn').value.trim(),
@@ -233,7 +230,7 @@
                 description_en: document.getElementById('descEn').value,
                 long_description_ar: document.getElementById('longDescAr').value,
                 long_description_en: document.getElementById('longDescEn').value,
-                image: logoUrl,
+                image: 'https://placehold.co/400x400/0F3D2E/white?text=Logo', // رابط مؤقت
                 coverage: document.getElementById('coverage').value,
                 category_ar: document.getElementById('category').value,
                 category_en: document.getElementById('category').value,
@@ -244,29 +241,35 @@
                 owner_user_id: userId,
                 created_at: new Date().toISOString()
             };
-            const { error: projError } = await supabase.from('projects').insert(projectPayload);
+            const { data: newProject, error: projError } = await supabase
+                .from('projects')
+                .insert(projectPayload)
+                .select()
+                .single();
             if (projError) throw projError;
 
-            // 4) الحصول على project_id الذي تم إنشاؤه
-            const { data: projectData, error: fetchError } = await supabase
-                .from('projects')
-                .select('id')
-                .eq('owner_user_id', userId)
-                .single();
-            if (fetchError) throw fetchError;
+            // 3) رفع الصورة إذا وجدت، وتحديث سجل المشروع
+            const logoFile = document.getElementById('logoImage').files[0];
+            if (logoFile) {
+                const logoUrl = await uploadLogo(logoFile, newProject.id);
+                if (logoUrl) {
+                    await supabase.from('projects').update({ image: logoUrl }).eq('id', newProject.id);
+                }
+            }
 
-            // 5) إدراج بيانات التواصل
-            await supabase.from('contacts').insert({
-                project_id: projectData.id,
+            // 4) إدراج بيانات التواصل
+            const { error: contactError } = await supabase.from('contacts').insert({
+                project_id: newProject.id,
                 whatsapp: whatsappDigits,
                 instagram: document.getElementById('instagram').value.trim() || null,
                 email: email
             });
+            if (contactError) console.warn('Contacts insert failed:', contactError);
 
-            // 6) تخزين مؤقت للبريد الإلكتروني (اختياري)
+            // 5) تخزين مؤقت
             localStorage.setItem('pendingEmail', email);
 
-            // 7) إظهار النجاح والتحويل إلى صفحة "تحقق من بريدك"
+            // 6) إظهار النجاح والتحويل
             submitBtn.innerHTML = '✅ تم إنشاء الحساب';
             setTimeout(() => {
                 window.location.href = 'check-email.html';
