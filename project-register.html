@@ -183,6 +183,16 @@
         return data.publicUrl;
     }
 
+    // دالة انتظار الجلسة بعد التسجيل
+    async function waitForSession(maxAttempts = 10) {
+        for (let i = 0; i < maxAttempts; i++) {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) return session;
+            await new Promise(resolve => setTimeout(resolve, 500));
+        }
+        return null;
+    }
+
     const form = document.getElementById('registerForm');
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -218,14 +228,18 @@
                 }
             });
             if (authError) throw new Error(authError.message.includes('already registered') ? 'البريد الإلكتروني مسجل مسبقاً' : authError.message);
-            const userId = authData.user.id;
 
-            // 2) رفع الشعار (اختياري) - سنرفعه الآن إلى مجلد مؤقت ثم نربطه لاحقاً
+            // 2) انتظار الجلسة (قد تستغرق ثانية أو اثنتين)
+            const session = await waitForSession();
+            if (!session) throw new Error('لم نتمكن من تسجيل الدخول تلقائياً. يرجى المحاولة مرة أخرى.');
+
+            const userId = session.user.id;
+
+            // 3) رفع الشعار (اختياري)
             let logoUrl = 'https://placehold.co/400x400/0F3D2E/white?text=Logo';
             const logoFile = document.getElementById('logoImage').files[0];
             if (logoFile) {
-                const fileExt = logoFile.name.split('.').pop();
-                const tempPath = `temp/${userId}/logo_${Date.now()}.${fileExt}`;
+                const tempPath = `temp/${userId}/logo_${Date.now()}.${logoFile.name.split('.').pop()}`;
                 const { error: uploadErr } = await supabase.storage.from('project-logos').upload(tempPath, logoFile);
                 if (!uploadErr) {
                     const { data: urlData } = supabase.storage.from('project-logos').getPublicUrl(tempPath);
@@ -233,7 +247,7 @@
                 }
             }
 
-            // 3) إدراج المشروع في قاعدة البيانات بحالة pending
+            // 4) إدراج المشروع
             const projectPayload = {
                 name_ar: document.getElementById('nameAr').value.trim(),
                 name_en: document.getElementById('nameEn').value.trim(),
@@ -247,7 +261,7 @@
                 category_ar: document.getElementById('category').value,
                 category_en: document.getElementById('category').value,
                 adra_license: false,
-                status: 'pending',     // غير ظاهر للجمهور حتى تأكيد البريد
+                status: 'pending',
                 license_status: 'pending_license',
                 display_order: 0,
                 owner_user_id: userId,
@@ -260,7 +274,7 @@
                 .single();
             if (projError) throw projError;
 
-            // 4) إدراج بيانات التواصل
+            // 5) إدراج بيانات التواصل
             const { error: contactError } = await supabase.from('contacts').insert({
                 project_id: newProject.id,
                 whatsapp: whatsappDigits,
@@ -269,10 +283,10 @@
             });
             if (contactError) console.warn('Contacts insert failed:', contactError);
 
-            // 5) تخزين البريد فقط للتذكير في صفحة check-email
+            // 6) تخزين البريد فقط للتذكير
             localStorage.setItem('pendingEmail', email);
 
-            // 6) التوجيه إلى صفحة تأكيد البريد
+            // 7) التوجيه إلى صفحة تأكيد البريد
             submitBtn.innerHTML = '✅ تم إنشاء الحساب والمشروع';
             setTimeout(() => {
                 window.location.href = 'check-email.html';
