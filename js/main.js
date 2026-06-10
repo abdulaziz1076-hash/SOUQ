@@ -124,6 +124,7 @@ async function loadProjectsFromSupabase() {
 const { data: projects, error } = await supabase
   .from('projects')
   .select(`*, products (*), deals (*), contacts (*)`)
+  .eq('status', 'active')
   // status لصاحب المشروع فقط: نخفي المعطل/المحذوف
   .not('status', 'in', '("disabled","deleted")')
   // التحكم بالظهور عبر license_status
