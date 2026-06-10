@@ -133,7 +133,7 @@
         </div>
         <div id="formError" class="error"></div>
     </form>
-    <div class="info-note">سيتم إنشاء مشروعك فوراً، وسيتم إرسال رابط تأكيد البريد الإلكتروني. بعد التأكيد، يمكنك تسجيل الدخول والبدء في إدارة مشروعك.</div>
+    <div class="info-note">سيتم إنشاء حسابك ومشروعك فوراً. ستحتاج إلى تأكيد بريدك الإلكتروني ليظهر مشروعك للجمهور.</div>
 </div>
 
 <script type="module">
@@ -195,7 +195,6 @@
         const whatsappRaw = document.getElementById('whatsapp').value.trim();
         const consent = document.getElementById('consent').checked;
 
-        // تحقق الحقول
         if (!email || !password || !whatsappRaw) { showError('يرجى ملء جميع الحقول المطلوبة'); window._registerLock = false; return; }
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('البريد الإلكتروني غير صالح'); window._registerLock = false; return; }
         if (password.length < 6) { showError('كلمة المرور يجب أن تكون 6 أحرف على الأقل'); window._registerLock = false; return; }
@@ -221,7 +220,20 @@
             if (authError) throw new Error(authError.message.includes('already registered') ? 'البريد الإلكتروني مسجل مسبقاً' : authError.message);
             const userId = authData.user.id;
 
-            // 2) إدراج المشروع في قاعدة البيانات (بدون صورة أولاً)
+            // 2) رفع الشعار (اختياري) - سنرفعه الآن إلى مجلد مؤقت ثم نربطه لاحقاً
+            let logoUrl = 'https://placehold.co/400x400/0F3D2E/white?text=Logo';
+            const logoFile = document.getElementById('logoImage').files[0];
+            if (logoFile) {
+                const fileExt = logoFile.name.split('.').pop();
+                const tempPath = `temp/${userId}/logo_${Date.now()}.${fileExt}`;
+                const { error: uploadErr } = await supabase.storage.from('project-logos').upload(tempPath, logoFile);
+                if (!uploadErr) {
+                    const { data: urlData } = supabase.storage.from('project-logos').getPublicUrl(tempPath);
+                    logoUrl = urlData.publicUrl;
+                }
+            }
+
+            // 3) إدراج المشروع في قاعدة البيانات بحالة pending
             const projectPayload = {
                 name_ar: document.getElementById('nameAr').value.trim(),
                 name_en: document.getElementById('nameEn').value.trim(),
@@ -230,12 +242,12 @@
                 description_en: document.getElementById('descEn').value,
                 long_description_ar: document.getElementById('longDescAr').value,
                 long_description_en: document.getElementById('longDescEn').value,
-                image: 'https://placehold.co/400x400/0F3D2E/white?text=Logo', // رابط مؤقت
+                image: logoUrl,
                 coverage: document.getElementById('coverage').value,
                 category_ar: document.getElementById('category').value,
                 category_en: document.getElementById('category').value,
                 adra_license: false,
-                status: 'pending',
+                status: 'pending',     // غير ظاهر للجمهور حتى تأكيد البريد
                 license_status: 'pending_license',
                 display_order: 0,
                 owner_user_id: userId,
@@ -248,15 +260,6 @@
                 .single();
             if (projError) throw projError;
 
-            // 3) رفع الصورة إذا وجدت، وتحديث سجل المشروع
-            const logoFile = document.getElementById('logoImage').files[0];
-            if (logoFile) {
-                const logoUrl = await uploadLogo(logoFile, newProject.id);
-                if (logoUrl) {
-                    await supabase.from('projects').update({ image: logoUrl }).eq('id', newProject.id);
-                }
-            }
-
             // 4) إدراج بيانات التواصل
             const { error: contactError } = await supabase.from('contacts').insert({
                 project_id: newProject.id,
@@ -266,11 +269,11 @@
             });
             if (contactError) console.warn('Contacts insert failed:', contactError);
 
-            // 5) تخزين مؤقت
+            // 5) تخزين البريد فقط للتذكير في صفحة check-email
             localStorage.setItem('pendingEmail', email);
 
-            // 6) إظهار النجاح والتحويل
-            submitBtn.innerHTML = '✅ تم إنشاء الحساب';
+            // 6) التوجيه إلى صفحة تأكيد البريد
+            submitBtn.innerHTML = '✅ تم إنشاء الحساب والمشروع';
             setTimeout(() => {
                 window.location.href = 'check-email.html';
             }, 1500);
