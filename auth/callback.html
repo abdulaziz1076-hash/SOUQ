@@ -71,25 +71,29 @@
 
             const userId = session.user.id;
 
-            // البحث عن المشروع
+            // البحث عن مشروع المستخدم
             const { data: project, error: projectError } = await supabase
                 .from('projects')
                 .select('id, status')
                 .eq('owner_user_id', userId)
-                .maybeSingle();  // use maybeSingle to avoid error if not found
+                .maybeSingle();
 
             if (projectError) throw projectError;
             if (!project) throw new Error('لا يوجد مشروع مرتبط بهذا الحساب. يرجى إعادة التسجيل.');
 
-            // تحديث الحالة إلى active إذا كانت pending
+            // تحديث حالة المشروع إلى active إذا كانت pending
             if (project.status === 'pending') {
-                await supabase.from('projects').update({ status: 'active' }).eq('id', project.id);
+                const { error: updateError } = await supabase
+                    .from('projects')
+                    .update({ status: 'active' })
+                    .eq('id', project.id);
+                if (updateError) throw updateError;
             }
 
             card.innerHTML = `
                 <img class="logo" src="https://souqalmasharie.onrender.com/images/logo.png" alt="سوق المشاريع">
                 <h1>✅ تم تأكيد البريد بنجاح</h1>
-                <p>سيتم تحويلك إلى لوحة التحكم الخاصة بمشروعك خلال لحظات...</p>
+                <p>تم تفعيل مشروعك. سيتم تحويلك إلى لوحة التحكم خلال لحظات...</p>
                 <div class="loader"></div>
             `;
             setTimeout(() => {
