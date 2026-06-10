@@ -178,6 +178,18 @@
       </div>
     </div>
 
+    <!-- تنبيه تأكيد البريد الإلكتروني -->
+    <div id="emailConfirmationAlert" style="display: none; background: #FEF3C7; border-right: 4px solid #F59E0B; padding: 16px 20px; border-radius: 20px; margin-bottom: 20px;">
+      <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+        <i class="fas fa-envelope" style="font-size: 24px; color: #F59E0B;"></i>
+        <div style="flex: 1;">
+          <strong id="alertTitle">⚠️ مشروعك غير ظاهر للجمهور</strong>
+          <p id="alertMessage" style="margin: 4px 0 0 0; font-size: 13px;">لم تقم بتأكيد بريدك الإلكتروني بعد. يرجى التحقق من بريدك والضغط على رابط التأكيد ليظهر مشروعك في السوق.</p>
+        </div>
+        <button id="resendEmailBtn" class="btn-primary" style="background: #F59E0B; color: #1E293B;">إعادة إرسال رابط التأكيد</button>
+      </div>
+    </div>
+
     <div class="stats-scroll"><div class="stats-grid" id="statsGrid"></div></div>
 
     <!-- تبويب بيانات المشروع -->
@@ -286,7 +298,16 @@
   function toast(msg, isErr = false) { const el = document.getElementById('toast'); el.textContent = msg; el.style.background = isErr ? '#C41E3A' : '#0F3D2E'; el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 3000); }
   function confirmDialog({ title, message, danger = false }) { return new Promise((resolve) => { const modal = document.getElementById('confirmModal'); document.getElementById('confirmTitle').innerText = title; document.getElementById('confirmMsg').innerText = message; const ok = document.getElementById('confirmOk'); ok.style.background = danger ? '#C41E3A' : 'var(--primary-gradient)'; const close = () => { modal.style.display = 'none'; resolve(false); }; document.getElementById('confirmCancel').onclick = close; ok.onclick = () => { modal.style.display = 'none'; resolve(true); }; modal.style.display = 'flex'; }); }
 
-  async function checkSession() { const { data: { session } } = await supabase.auth.getSession(); if (!session) { window.location.href = 'project-login.html'; return null; } const { data: project } = await supabase.from('projects').select('id, name_ar, status').eq('owner_user_id', session.user.id).single(); if (!project) { window.location.href = 'project-login.html'; return null; } projectId = project.id; document.getElementById('userName').innerHTML = `مرحباً، ${project.name_ar || ''}`; document.getElementById('userAvatar').innerText = (project.name_ar?.[0] || 'م'); return { session, project }; }
+  async function checkSession() { 
+    const { data: { session } } = await supabase.auth.getSession(); 
+    if (!session) { window.location.href = 'project-login.html'; return null; } 
+    const { data: project } = await supabase.from('projects').select('id, name_ar, status').eq('owner_user_id', session.user.id).single(); 
+    if (!project) { window.location.href = 'project-login.html'; return null; } 
+    projectId = project.id; 
+    document.getElementById('userName').innerHTML = `مرحباً، ${project.name_ar || ''}`; 
+    document.getElementById('userAvatar').innerText = (project.name_ar?.[0] || 'م'); 
+    return { session, project }; 
+  }
 
   async function loadStats() { const { count: pc } = await supabase.from('products').select('*', { count: 'exact', head: true }).eq('project_id', projectId); const { count: dc } = await supabase.from('deals').select('*', { count: 'exact', head: true }).eq('project_id', projectId); const { count: oc } = await supabase.from('admin_order_logs').select('*', { count: 'exact', head: true }).eq('project_id', projectId); document.getElementById('statsGrid').innerHTML = `<div class="stat-card"><div class="stat-left"><h3>${pc||0}</h3><p>المنتجات</p></div><i class="fas fa-box-open stat-icon"></i></div><div class="stat-card"><div class="stat-left"><h3>${dc||0}</h3><p>العروض</p></div><i class="fas fa-tags stat-icon"></i></div><div class="stat-card"><div class="stat-left"><h3>${oc||0}</h3><p>الطلبات</p></div><i class="fas fa-shopping-cart stat-icon"></i></div>`; }
 
@@ -346,7 +367,7 @@
     if (error) { toast('فشل تحديث الحالة: ' + error.message, true); } else { toast('تم تحديث حالة الطلب بنجاح'); loadOrders(); }
   };
 
-  // بيانات المشروع + إظهار زر إعادة التنشيط
+  // بيانات المشروع + إظهار زر إعادة التنشيط وتنشيط تنبيه البريد
   async function loadProjectData() { 
     const { data: proj } = await supabase.from('projects').select('*').eq('id', projectId).single(); 
     if(proj){
@@ -359,6 +380,14 @@
       const reactivateBtn = document.getElementById('dropdownReactivateAccountBtn');
       if (proj.status === 'disabled' || proj.status === 'deleted') reactivateBtn.style.display = 'flex';
       else reactivateBtn.style.display = 'none';
+
+      // التحكم في تنبيه تأكيد البريد (إذا كان المشروع pending بسبب عدم تأكيد البريد)
+      const alertBox = document.getElementById('emailConfirmationAlert');
+      if (proj.status === 'pending') {
+        alertBox.style.display = 'block';
+      } else {
+        alertBox.style.display = 'none';
+      }
     }
     const lic=await supabase.from('projects').select('license_status').eq('id',projectId).single(); 
     const alertDiv=document.getElementById('licenseStatusAlert');
@@ -377,6 +406,23 @@
   };
   document.getElementById('licenseForm').addEventListener('submit', async (e) => { e.preventDefault(); const file=document.getElementById('licenseFile').files[0]; if(!file)return; if(!validateFileSize(file,5))return; const ext=file.name.split('.').pop(); const url=await uploadFile('project-logos', `${projectId}/license_${Date.now()}.${ext}`, file, 5); if(url){ await supabase.from('project_license_requests').insert({ project_id:projectId, license_file_url:url, status:'pending' }); await supabase.from('projects').update({ license_status:'license_uploaded' }).eq('id',projectId); toast('تم رفع الرخصة، جاري المراجعة'); loadProjectData(); } });
   
+  // إعادة إرسال رابط تأكيد البريد
+  const resendBtn = document.getElementById('resendEmailBtn');
+  if (resendBtn) {
+    resendBtn.onclick = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session || !session.user) return toast('الرجاء تسجيل الدخول أولاً', true);
+      const email = session.user.email;
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email: email,
+        options: { emailRedirectTo: window.location.origin + '/auth/callback.html' }
+      });
+      if (error) toast(error.message, true);
+      else toast('تم إعادة إرسال رابط التأكيد إلى بريدك الإلكتروني');
+    };
+  }
+
   // أزرار القائمة المنسدلة
   document.getElementById('dropdownReactivateAccountBtn').onclick = async () => { if(await confirmDialog({title:'إعادة تنشيط',message:'سيتم إعادة تفعيل المشروع'})){ await supabase.from('projects').update({status:'active'}).eq('id',projectId); toast('تم التنشيط'); location.reload(); } };
   document.getElementById('dropdownDisableAccountBtn').onclick = async () => { if(await confirmDialog({title:'تعطيل الحساب',message:'سيتم تعطيل المشروع',danger:true})){ await supabase.from('projects').update({status:'disabled'}).eq('id',projectId); toast('تم التعطيل'); location.reload(); } };
