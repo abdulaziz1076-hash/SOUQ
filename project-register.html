@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>تسجيل مشروع جديد | سوق المشاريع</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap" rel="stylesheet">
@@ -183,8 +183,8 @@
         return data.publicUrl;
     }
 
-    // دالة انتظار الجلسة بعد التسجيل
-    async function waitForSession(maxAttempts = 10) {
+    // انتظار الجلسة
+    async function waitForSession(maxAttempts = 15) {
         for (let i = 0; i < maxAttempts; i++) {
             const { data: { session } } = await supabase.auth.getSession();
             if (session) return session;
@@ -219,23 +219,26 @@
         submitBtn.innerHTML = '<span class="loader-small"></span> جاري...';
 
         try {
-            // 1) إنشاء حساب Auth
-            const { data: authData, error: authError } = await supabase.auth.signUp({
+            // 1) تسجيل الحساب
+            const { error: signUpError } = await supabase.auth.signUp({
                 email, password,
                 options: {
                     data: { role: 'project_owner' },
                     emailRedirectTo: window.location.origin + '/auth/callback.html'
                 }
             });
-            if (authError) throw new Error(authError.message.includes('already registered') ? 'البريد الإلكتروني مسجل مسبقاً' : authError.message);
+            if (signUpError) throw new Error(signUpError.message.includes('already registered') ? 'البريد الإلكتروني مسجل مسبقاً' : signUpError.message);
 
-            // 2) انتظار الجلسة (قد تستغرق ثانية أو اثنتين)
+            // 2) تسجيل الدخول التلقائي لضمان وجود جلسة نشطة
+            const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+            if (signInError) throw new Error('فشل تسجيل الدخول التلقائي، يرجى المحاولة مرة أخرى');
+
+            // 3) انتظار الجلسة
             const session = await waitForSession();
-            if (!session) throw new Error('لم نتمكن من تسجيل الدخول تلقائياً. يرجى المحاولة مرة أخرى.');
-
+            if (!session) throw new Error('لم نتمكن من الحصول على الجلسة، حاول مرة أخرى');
             const userId = session.user.id;
 
-            // 3) رفع الشعار (اختياري)
+            // 4) رفع الشعار
             let logoUrl = 'https://placehold.co/400x400/0F3D2E/white?text=Logo';
             const logoFile = document.getElementById('logoImage').files[0];
             if (logoFile) {
@@ -247,7 +250,7 @@
                 }
             }
 
-            // 4) إدراج المشروع
+            // 5) إدراج المشروع (الآن الجلسة نشطة و RLS ستسمح بالإدراج)
             const projectPayload = {
                 name_ar: document.getElementById('nameAr').value.trim(),
                 name_en: document.getElementById('nameEn').value.trim(),
@@ -274,7 +277,7 @@
                 .single();
             if (projError) throw projError;
 
-            // 5) إدراج بيانات التواصل
+            // 6) إدراج بيانات التواصل
             const { error: contactError } = await supabase.from('contacts').insert({
                 project_id: newProject.id,
                 whatsapp: whatsappDigits,
@@ -283,10 +286,10 @@
             });
             if (contactError) console.warn('Contacts insert failed:', contactError);
 
-            // 6) تخزين البريد فقط للتذكير
+            // 7) تخزين البريد للتذكير
             localStorage.setItem('pendingEmail', email);
 
-            // 7) التوجيه إلى صفحة تأكيد البريد
+            // 8) التوجيه إلى صفحة تأكيد البريد
             submitBtn.innerHTML = '✅ تم إنشاء الحساب والمشروع';
             setTimeout(() => {
                 window.location.href = 'check-email.html';
