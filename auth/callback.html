@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>تأكيد البريد الإلكتروني | سوق المشاريع</title>
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
@@ -81,7 +81,7 @@
             if (projectError) throw projectError;
             if (!project) throw new Error('لا يوجد مشروع مرتبط بهذا الحساب. يرجى إعادة التسجيل.');
 
-            // تحديث حالة المشروع إلى active إذا كانت pending
+            // تحديث حالة المشروع إلى active
             if (project.status === 'pending') {
                 const { error: updateError } = await supabase
                     .from('projects')
