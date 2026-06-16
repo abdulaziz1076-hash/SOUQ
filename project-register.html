@@ -251,7 +251,7 @@
                 if (uploadedUrl) logoUrl = uploadedUrl;
             }
 
-            // 3) إدراج المشروع بحالة pending
+            // 3) إدراج المشروع بحالة pending مع تاريخ الإنشاء (لحساب المهلة)
             const projectPayload = {
                 name_ar: document.getElementById('nameAr').value.trim(),
                 name_en: document.getElementById('nameEn').value.trim(),
@@ -287,13 +287,17 @@
             });
             if (contactError) console.warn('Contacts insert failed:', contactError);
 
-            // 5) عرض رسالة نجاح
-            showToast('✅ تم إنشاء حسابك ومشروعك بنجاح! يرجى تأكيد بريدك الإلكتروني ليظهر مشروعك للجمهور.');
+            // 5) حفظ projectId في localStorage للاستخدام في الداشبورد
+            localStorage.setItem('currentProjectId', newProject.id);
+            localStorage.setItem('pendingEmail', email);
 
-            // 6) التوجيه مباشرة إلى لوحة التحكم (بدون صفحة check-email)
+            // 6) عرض رسالة نجاح
+            showToast('✅ تم إنشاء حسابك ومشروعك بنجاح! يرجى تأكيد بريدك الإلكتروني.');
+
+            // 7) التوجيه إلى لوحة التحكم مع تمرير projectId
             setTimeout(() => {
-                window.location.href = 'project-dashboard.html';
-            }, 2000);
+                window.location.href = `project-dashboard.html?project_id=${newProject.id}`;
+            }, 1500);
 
         } catch (err) {
             console.error(err);
