@@ -58,7 +58,6 @@
         const code = url.searchParams.get('code');
 
         try {
-            // 1) تبادل الكود للحصول على الجلسة
             if (code) {
                 const { error } = await supabase.auth.exchangeCodeForSession(code);
                 if (error) throw error;
@@ -72,7 +71,6 @@
 
             const userId = session.user.id;
 
-            // 2) البحث عن مشروع المستخدم
             const { data: project, error: projectError } = await supabase
                 .from('projects')
                 .select('id, status')
@@ -82,7 +80,6 @@
             if (projectError) throw projectError;
             if (!project) throw new Error('لا يوجد مشروع مرتبط بهذا الحساب. يرجى إعادة التسجيل.');
 
-            // 3) تحديث حالة المشروع إلى active (فقط إذا كانت pending)
             if (project.status === 'pending') {
                 const { error: updateError } = await supabase
                     .from('projects')
@@ -91,11 +88,9 @@
                 if (updateError) throw updateError;
             }
 
-            // 4) مسح البيانات المؤقتة (إن وجدت)
             localStorage.removeItem('pendingProjectData');
             localStorage.removeItem('pendingEmail');
 
-            // 5) توجيه المستخدم إلى لوحة التحكم
             card.innerHTML = `
                 <img class="logo" src="https://souqalmasharie.onrender.com/images/logo.png" alt="سوق المشاريع">
                 <h1>✅ تم تأكيد البريد بنجاح</h1>
