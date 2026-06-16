@@ -93,6 +93,19 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
         @media (max-width: 700px) { .row-2cols { grid-template-columns: 1fr; } }
+        .toast-message {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #0F3D2E;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 60px;
+            z-index: 9999;
+            font-size: 14px;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -136,6 +149,8 @@
     <div class="info-note">سيتم إنشاء حسابك ومشروعك فوراً. ستحتاج إلى تأكيد بريدك الإلكتروني ليظهر مشروعك للجمهور.</div>
 </div>
 
+<div id="toastMsg" class="toast-message"></div>
+
 <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
@@ -148,6 +163,13 @@
         errorDiv.innerText = msg;
         errorDiv.style.display = 'block';
         setTimeout(() => (errorDiv.style.display = 'none'), 6500);
+    }
+
+    function showToast(msg) {
+        const toast = document.getElementById('toastMsg');
+        toast.textContent = msg;
+        toast.style.display = 'block';
+        setTimeout(() => toast.style.display = 'none', 4000);
     }
 
     // التنقل بين الخطوات
@@ -183,16 +205,6 @@
         return data.publicUrl;
     }
 
-    // انتظار الجلسة
-    async function waitForSession(maxAttempts = 15) {
-        for (let i = 0; i < maxAttempts; i++) {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session) return session;
-            await new Promise(resolve => setTimeout(resolve, 500));
-        }
-        return null;
-    }
-
     const form = document.getElementById('registerForm');
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -219,8 +231,8 @@
         submitBtn.innerHTML = '<span class="loader-small"></span> جاري...';
 
         try {
-            // 1) تسجيل الحساب
-            const { error: signUpError } = await supabase.auth.signUp({
+            // 1) إنشاء حساب Auth
+            const { data: authData, error: signUpError } = await supabase.auth.signUp({
                 email, password,
                 options: {
                     data: { role: 'project_owner' },
@@ -228,29 +240,18 @@
                 }
             });
             if (signUpError) throw new Error(signUpError.message.includes('already registered') ? 'البريد الإلكتروني مسجل مسبقاً' : signUpError.message);
+            
+            const userId = authData.user.id;
 
-            // 2) تسجيل الدخول التلقائي لضمان وجود جلسة نشطة
-            const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
-            if (signInError) throw new Error('فشل تسجيل الدخول التلقائي، يرجى المحاولة مرة أخرى');
-
-            // 3) انتظار الجلسة
-            const session = await waitForSession();
-            if (!session) throw new Error('لم نتمكن من الحصول على الجلسة، حاول مرة أخرى');
-            const userId = session.user.id;
-
-            // 4) رفع الشعار
+            // 2) رفع الشعار
             let logoUrl = 'https://placehold.co/400x400/0F3D2E/white?text=Logo';
             const logoFile = document.getElementById('logoImage').files[0];
             if (logoFile) {
-                const tempPath = `temp/${userId}/logo_${Date.now()}.${logoFile.name.split('.').pop()}`;
-                const { error: uploadErr } = await supabase.storage.from('project-logos').upload(tempPath, logoFile);
-                if (!uploadErr) {
-                    const { data: urlData } = supabase.storage.from('project-logos').getPublicUrl(tempPath);
-                    logoUrl = urlData.publicUrl;
-                }
+                const uploadedUrl = await uploadLogo(logoFile, userId);
+                if (uploadedUrl) logoUrl = uploadedUrl;
             }
 
-            // 5) إدراج المشروع (الآن الجلسة نشطة و RLS ستسمح بالإدراج)
+            // 3) إدراج المشروع بحالة pending
             const projectPayload = {
                 name_ar: document.getElementById('nameAr').value.trim(),
                 name_en: document.getElementById('nameEn').value.trim(),
@@ -277,7 +278,7 @@
                 .single();
             if (projError) throw projError;
 
-            // 6) إدراج بيانات التواصل
+            // 4) إدراج بيانات التواصل
             const { error: contactError } = await supabase.from('contacts').insert({
                 project_id: newProject.id,
                 whatsapp: whatsappDigits,
@@ -286,14 +287,14 @@
             });
             if (contactError) console.warn('Contacts insert failed:', contactError);
 
-            // 7) تخزين البريد للتذكير
-            localStorage.setItem('pendingEmail', email);
+            // 5) عرض رسالة نجاح
+            showToast('✅ تم إنشاء حسابك ومشروعك بنجاح! يرجى تأكيد بريدك الإلكتروني ليظهر مشروعك للجمهور.');
 
-            // 8) التوجيه إلى صفحة تأكيد البريد
-            submitBtn.innerHTML = '✅ تم إنشاء الحساب والمشروع';
+            // 6) التوجيه مباشرة إلى لوحة التحكم (بدون صفحة check-email)
             setTimeout(() => {
-                window.location.href = 'check-email.html';
-            }, 1500);
+                window.location.href = 'project-dashboard.html';
+            }, 2000);
+
         } catch (err) {
             console.error(err);
             showError(err.message || 'حدث خطأ، يرجى المحاولة لاحقاً');
