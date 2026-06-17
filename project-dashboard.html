@@ -367,7 +367,10 @@
     if (error) { toast('فشل تحديث الحالة: ' + error.message, true); } else { toast('تم تحديث حالة الطلب بنجاح'); loadOrders(); }
   };
 
+  // ============================================================
   // بيانات المشروع + إظهار زر إعادة التنشيط وتنشيط تنبيه البريد
+  // ✅ تم تعديل شرط إظهار التنبيه إلى !proj.is_email_verified
+  // ============================================================
   async function loadProjectData() { 
     const { data: proj } = await supabase.from('projects').select('*').eq('id', projectId).single(); 
     if(proj){
@@ -381,9 +384,9 @@
       if (proj.status === 'disabled' || proj.status === 'deleted') reactivateBtn.style.display = 'flex';
       else reactivateBtn.style.display = 'none';
 
-      // التحكم في تنبيه تأكيد البريد (إذا كان المشروع pending بسبب عدم تأكيد البريد)
+      // ✅ التحكم في تنبيه تأكيد البريد بناءً على is_email_verified (بدلاً من status)
       const alertBox = document.getElementById('emailConfirmationAlert');
-      if (proj.status === 'pending') {
+      if (!proj.is_email_verified) {
         alertBox.style.display = 'block';
       } else {
         alertBox.style.display = 'none';
@@ -406,10 +409,21 @@
   };
   document.getElementById('licenseForm').addEventListener('submit', async (e) => { e.preventDefault(); const file=document.getElementById('licenseFile').files[0]; if(!file)return; if(!validateFileSize(file,5))return; const ext=file.name.split('.').pop(); const url=await uploadFile('project-logos', `${projectId}/license_${Date.now()}.${ext}`, file, 5); if(url){ await supabase.from('project_license_requests').insert({ project_id:projectId, license_file_url:url, status:'pending' }); await supabase.from('projects').update({ license_status:'license_uploaded' }).eq('id',projectId); toast('تم رفع الرخصة، جاري المراجعة'); loadProjectData(); } });
   
-  // إعادة إرسال رابط تأكيد البريد
+  // ============================================================
+  // ✅ إعادة إرسال رابط تأكيد البريد مع حد زمني ساعة واحدة
+  // ============================================================
   const resendBtn = document.getElementById('resendEmailBtn');
   if (resendBtn) {
     resendBtn.onclick = async () => {
+      // التحقق من آخر إرسال من localStorage
+      const lastResend = localStorage.getItem('lastResendTime');
+      const now = Date.now();
+      if (lastResend && (now - parseInt(lastResend)) < 3600000) {
+        const remaining = Math.ceil((3600000 - (now - parseInt(lastResend))) / 60000);
+        toast(`يمكنك إعادة الإرسال بعد ${remaining} دقيقة`, true);
+        return;
+      }
+
       const { data: { session } } = await supabase.auth.getSession();
       if (!session || !session.user) return toast('الرجاء تسجيل الدخول أولاً', true);
       const email = session.user.email;
@@ -419,7 +433,10 @@
         options: { emailRedirectTo: window.location.origin + '/auth/callback.html' }
       });
       if (error) toast(error.message, true);
-      else toast('تم إعادة إرسال رابط التأكيد إلى بريدك الإلكتروني');
+      else {
+        toast('تم إعادة إرسال رابط التأكيد إلى بريدك الإلكتروني');
+        localStorage.setItem('lastResendTime', String(now));
+      }
     };
   }
 
