@@ -58,6 +58,7 @@
         const code = url.searchParams.get('code');
 
         try {
+            // 1. تبادل الكود بجلسة (تسجيل الدخول)
             if (code) {
                 const { error } = await supabase.auth.exchangeCodeForSession(code);
                 if (error) throw error;
@@ -65,32 +66,40 @@
             }
 
             await delay(500);
+
+            // 2. التحقق من الجلسة
             const { data: { session }, error: sessionError } = await supabase.auth.getSession();
             if (sessionError) throw sessionError;
             if (!session) throw new Error('لم يتم العثور على جلسة نشطة.');
 
             const userId = session.user.id;
 
+            // 3. جلب المشروع
             const { data: project, error: projectError } = await supabase
                 .from('projects')
-                .select('id, status')
+                .select('id, status, is_email_verified')
                 .eq('owner_user_id', userId)
                 .maybeSingle();
 
             if (projectError) throw projectError;
             if (!project) throw new Error('لا يوجد مشروع مرتبط بهذا الحساب. يرجى إعادة التسجيل.');
 
-            if (project.status === 'pending') {
-                const { error: updateError } = await supabase
-                    .from('projects')
-                    .update({ status: 'active' })
-                    .eq('id', project.id);
-                if (updateError) throw updateError;
-            }
+            // 4. ✅ التحديث الجوهري: نعدل الحالة و is_email_verified مباشرةً
+            const { error: updateError } = await supabase
+                .from('projects')
+                .update({
+                    status: 'active',               // نضمن أن المشروع فعال
+                    is_email_verified: true         // ✅ نؤكد البريد مباشرة (هذا هو المفتاح)
+                })
+                .eq('id', project.id);
 
+            if (updateError) throw updateError;
+
+            // 5. تنظيف localStorage
             localStorage.removeItem('pendingProjectData');
             localStorage.removeItem('pendingEmail');
 
+            // 6. عرض رسالة نجاح وإعادة التوجيه
             card.innerHTML = `
                 <img class="logo" src="https://souqalmasharie.onrender.com/images/logo.png" alt="سوق المشاريع">
                 <h1>✅ تم تأكيد البريد بنجاح</h1>
