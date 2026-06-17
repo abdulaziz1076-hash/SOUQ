@@ -121,22 +121,18 @@ async function loadProjectsFromSupabase() {
 
         const sevenDaysAgoIso = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
 
-const { data: projects, error } = await supabase
-  .from('projects')
-  .select(`*, products (*), deals (*), contacts (*)`)
-  .eq('status', 'active')
-  // status لصاحب المشروع فقط: نخفي المعطل/المحذوف
-  .not('status', 'in', '("disabled","deleted")')
-  // التحكم بالظهور عبر license_status
-  .or(
-    [
-      // يظهر دائمًا إذا معتمد
-      `license_status.eq.license_approved`,
-      // يظهر 7 أيام فقط إذا pending_license أو license_uploaded
-      `and(license_status.in.(pending_license,license_uploaded),created_at.gte.${sevenDaysAgoIso})`,
-    ].join(',')
-  )
-  .order('display_order', { ascending: true, nullsFirst: false });
+        const { data: projects, error } = await supabase
+            .from('projects')
+            .select(`*, products (*), deals (*), contacts (*)`)
+            .eq('is_email_verified', true)          // ← الشرط الجديد: فقط الموثقة بريدياً
+            .eq('status', 'active')                 // ← نضمن أن المشروع فعال (ليس معطلاً أو محذوفاً)
+            .or(
+                [
+                    `license_status.eq.license_approved`,
+                    `and(license_status.in.(pending_license,license_uploaded),created_at.gte.${sevenDaysAgoIso})`,
+                ].join(',')
+            )
+            .order('display_order', { ascending: true, nullsFirst: false });
 
         if (error) throw error;
         if (!projects || projects.length === 0) {
