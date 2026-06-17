@@ -251,7 +251,9 @@
                 if (uploadedUrl) logoUrl = uploadedUrl;
             }
 
-            // 3) إدراج المشروع بحالة pending مع تاريخ الإنشاء (لحساب المهلة)
+            // ============================================================
+            // ✅ التعديل الجوهري هنا (تم تغيير status و إضافة is_email_verified)
+            // ============================================================
             const projectPayload = {
                 name_ar: document.getElementById('nameAr').value.trim(),
                 name_en: document.getElementById('nameEn').value.trim(),
@@ -265,12 +267,15 @@
                 category_ar: document.getElementById('category').value,
                 category_en: document.getElementById('category').value,
                 adra_license: false,
-                status: 'pending',
+                status: 'active',                 // ✅ تغيير من 'pending' إلى 'active'
+                is_email_verified: false,         // ✅ إضافة العمود الجديد (سيتم تحديثه تلقائياً بعد تأكيد البريد)
                 license_status: 'pending_license',
                 display_order: 0,
                 owner_user_id: userId,
                 created_at: new Date().toISOString()
             };
+            // ============================================================
+
             const { data: newProject, error: projError } = await supabase
                 .from('projects')
                 .insert(projectPayload)
