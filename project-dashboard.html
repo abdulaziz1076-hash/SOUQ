@@ -178,7 +178,7 @@
       </div>
     </div>
 
-    <!-- تنبيه تأكيد البريد الإلكتروني -->
+    <!-- ✅ تنبيه تأكيد البريد الإلكتروني (يظهر بناءً على is_email_verified) -->
     <div id="emailConfirmationAlert" style="display: none; background: #FEF3C7; border-right: 4px solid #F59E0B; padding: 16px 20px; border-radius: 20px; margin-bottom: 20px;">
       <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
         <i class="fas fa-envelope" style="font-size: 24px; color: #F59E0B;"></i>
@@ -298,23 +298,114 @@
   function toast(msg, isErr = false) { const el = document.getElementById('toast'); el.textContent = msg; el.style.background = isErr ? '#C41E3A' : '#0F3D2E'; el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 3000); }
   function confirmDialog({ title, message, danger = false }) { return new Promise((resolve) => { const modal = document.getElementById('confirmModal'); document.getElementById('confirmTitle').innerText = title; document.getElementById('confirmMsg').innerText = message; const ok = document.getElementById('confirmOk'); ok.style.background = danger ? '#C41E3A' : 'var(--primary-gradient)'; const close = () => { modal.style.display = 'none'; resolve(false); }; document.getElementById('confirmCancel').onclick = close; ok.onclick = () => { modal.style.display = 'none'; resolve(true); }; modal.style.display = 'flex'; }); }
 
+  // ============================================================
+  // ✅ دالة checkSession المعدلة (تستخدم maybeSingle وتتعامل مع الجلسة غير المؤكدة)
+  // ============================================================
   async function checkSession() { 
     const { data: { session } } = await supabase.auth.getSession(); 
-    if (!session) { window.location.href = 'project-login.html'; return null; } 
-    const { data: project } = await supabase.from('projects').select('id, name_ar, status').eq('owner_user_id', session.user.id).single(); 
-    if (!project) { window.location.href = 'project-login.html'; return null; } 
+    
+    // إذا لم توجد جلسة، نوجه إلى تسجيل الدخول
+    if (!session) {
+      // إذا كان هناك projectId محفوظ مؤقتاً (من التسجيل)، نحذفه ونوجه مع ?new=true
+      const newProjectId = localStorage.getItem('newProjectId');
+      if (newProjectId) {
+        localStorage.removeItem('newProjectId');
+        window.location.href = 'project-login.html?new=true';
+      } else {
+        window.location.href = 'project-login.html';
+      }
+      return null; 
+    } 
+
+    // محاولة جلب المشروع (حتى لو كانت الجلسة غير مؤكدة، قد ينجح الاستعلام)
+    const { data: project, error } = await supabase
+      .from('projects')
+      .select('id, name_ar, status')
+      .eq('owner_user_id', session.user.id)
+      .maybeSingle(); // ✅ استخدام maybeSingle بدلاً من single لتجنب الأخطاء
+
+    // إذا لم نجد المشروع فوراً (قد يكون بسبب تأخير Supabase)، ننتظر ثانية ونحاول مرة أخرى
+    if (!project && !error) {
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      const { data: retryProject } = await supabase
+        .from('projects')
+        .select('id, name_ar, status')
+        .eq('owner_user_id', session.user.id)
+        .maybeSingle();
+      if (retryProject) {
+        projectId = retryProject.id;
+        document.getElementById('userName').innerHTML = `مرحباً، ${retryProject.name_ar || ''}`;
+        document.getElementById('userAvatar').innerText = (retryProject.name_ar?.[0] || 'م');
+        return { session, project: retryProject };
+      }
+    }
+
+    if (error || !project) {
+      // إذا لم يوجد مشروع (وربما المستخدم سجل لتوه لكن الجلسة غير مكتملة)
+      const newProjectId = localStorage.getItem('newProjectId');
+      if (newProjectId) {
+        localStorage.removeItem('newProjectId');
+        window.location.href = 'project-login.html?new=true';
+      } else {
+        window.location.href = 'project-login.html';
+      }
+      return null;
+    }
+
+    // ✅ كل شيء طبيعي، نعين projectId ونعرض اسم المستخدم
     projectId = project.id; 
     document.getElementById('userName').innerHTML = `مرحباً، ${project.name_ar || ''}`; 
     document.getElementById('userAvatar').innerText = (project.name_ar?.[0] || 'م'); 
+
+    // ✅ نمسح أي مفتاح مؤقت إن وجد
+    localStorage.removeItem('newProjectId');
+
     return { session, project }; 
   }
 
-  async function loadStats() { const { count: pc } = await supabase.from('products').select('*', { count: 'exact', head: true }).eq('project_id', projectId); const { count: dc } = await supabase.from('deals').select('*', { count: 'exact', head: true }).eq('project_id', projectId); const { count: oc } = await supabase.from('admin_order_logs').select('*', { count: 'exact', head: true }).eq('project_id', projectId); document.getElementById('statsGrid').innerHTML = `<div class="stat-card"><div class="stat-left"><h3>${pc||0}</h3><p>المنتجات</p></div><i class="fas fa-box-open stat-icon"></i></div><div class="stat-card"><div class="stat-left"><h3>${dc||0}</h3><p>العروض</p></div><i class="fas fa-tags stat-icon"></i></div><div class="stat-card"><div class="stat-left"><h3>${oc||0}</h3><p>الطلبات</p></div><i class="fas fa-shopping-cart stat-icon"></i></div>`; }
+  // ============================================================
+  // ✅ loadStats تعمل فقط إذا كان projectId موجوداً
+  // ============================================================
+  async function loadStats() { 
+    if (!projectId) {
+      document.getElementById('statsGrid').innerHTML = '<div class="stat-card"><div class="stat-left"><h3>0</h3><p>المنتجات</p></div><i class="fas fa-box-open stat-icon"></i></div><div class="stat-card"><div class="stat-left"><h3>0</h3><p>العروض</p></div><i class="fas fa-tags stat-icon"></i></div><div class="stat-card"><div class="stat-left"><h3>0</h3><p>الطلبات</p></div><i class="fas fa-shopping-cart stat-icon"></i></div>';
+      return;
+    }
+    const { count: pc } = await supabase.from('products').select('*', { count: 'exact', head: true }).eq('project_id', projectId); 
+    const { count: dc } = await supabase.from('deals').select('*', { count: 'exact', head: true }).eq('project_id', projectId); 
+    const { count: oc } = await supabase.from('admin_order_logs').select('*', { count: 'exact', head: true }).eq('project_id', projectId); 
+    document.getElementById('statsGrid').innerHTML = `<div class="stat-card"><div class="stat-left"><h3>${pc||0}</h3><p>المنتجات</p></div><i class="fas fa-box-open stat-icon"></i></div><div class="stat-card"><div class="stat-left"><h3>${dc||0}</h3><p>العروض</p></div><i class="fas fa-tags stat-icon"></i></div><div class="stat-card"><div class="stat-left"><h3>${oc||0}</h3><p>الطلبات</p></div><i class="fas fa-shopping-cart stat-icon"></i></div>`; 
+  }
 
-  // المنتجات
+  // ============================================================
+  // المنتجات (نفس الكود القديم مع التأكد من وجود projectId)
+  // ============================================================
   let currentExtraImagesUrls = [];
-  async function loadProducts() { const { data, error } = await supabase.from('products').select('*').eq('project_id', projectId).order('display_order', { ascending: true, nullsFirst: false }); if (error) return; const container = document.getElementById('productsListContainer'); if (!data.length) { container.innerHTML = '<p>لا توجد منتجات. أضف منتجك الأول.</p>'; return; } let html = ''; for (const p of data) { let price = p.price_ar || p.price_en || 'السعر عند الطلب'; html += `<div class="product-item"><img class="product-img-thumb" src="${p.main_image || 'https://placehold.co/60x60/0F3D2E/white?text=No+Image'}"><div class="product-info"><strong>${p.name_ar}</strong><br>${price}</div><div class="product-actions"><button class="btn-secondary" onclick="window.moveProduct('${p.id}', 'up')"><i class="fas fa-arrow-up"></i></button><button class="btn-secondary" onclick="window.moveProduct('${p.id}', 'down')"><i class="fas fa-arrow-down"></i></button><button class="btn-secondary" onclick="window.editProduct('${p.id}')"><i class="fas fa-edit"></i></button><button class="btn-danger" onclick="window.deleteProduct('${p.id}')"><i class="fas fa-trash"></i></button></div></div>`; } container.innerHTML = html; }
-  window.moveProduct = async (id, dir) => { const { data: cur } = await supabase.from('products').select('id, display_order').eq('id', id).single(); let q; if (dir === 'up') q = supabase.from('products').select('id, display_order').eq('project_id', projectId).lt('display_order', cur.display_order).order('display_order', { ascending: false }).limit(1); else q = supabase.from('products').select('id, display_order').eq('project_id', projectId).gt('display_order', cur.display_order).order('display_order', { ascending: true }).limit(1); const { data: neighbor } = await q; if (!neighbor?.length) return toast(dir === 'up' ? 'الأول' : 'الأخير'); await supabase.from('products').update({ display_order: neighbor[0].display_order }).eq('id', cur.id); await supabase.from('products').update({ display_order: cur.display_order }).eq('id', neighbor[0].id); loadProducts(); };
+  async function loadProducts() { 
+    if (!projectId) return;
+    const { data, error } = await supabase.from('products').select('*').eq('project_id', projectId).order('display_order', { ascending: true, nullsFirst: false }); 
+    if (error) return; 
+    const container = document.getElementById('productsListContainer'); 
+    if (!data.length) { container.innerHTML = '<p>لا توجد منتجات. أضف منتجك الأول.</p>'; return; } 
+    let html = ''; 
+    for (const p of data) { 
+      let price = p.price_ar || p.price_en || 'السعر عند الطلب'; 
+      html += `<div class="product-item"><img class="product-img-thumb" src="${p.main_image || 'https://placehold.co/60x60/0F3D2E/white?text=No+Image'}"><div class="product-info"><strong>${p.name_ar}</strong><br>${price}</div><div class="product-actions"><button class="btn-secondary" onclick="window.moveProduct('${p.id}', 'up')"><i class="fas fa-arrow-up"></i></button><button class="btn-secondary" onclick="window.moveProduct('${p.id}', 'down')"><i class="fas fa-arrow-down"></i></button><button class="btn-secondary" onclick="window.editProduct('${p.id}')"><i class="fas fa-edit"></i></button><button class="btn-danger" onclick="window.deleteProduct('${p.id}')"><i class="fas fa-trash"></i></button></div></div>`; 
+    } 
+    container.innerHTML = html; 
+  }
+  window.moveProduct = async (id, dir) => { 
+    if (!projectId) return;
+    const { data: cur } = await supabase.from('products').select('id, display_order').eq('id', id).single(); 
+    let q; 
+    if (dir === 'up') q = supabase.from('products').select('id, display_order').eq('project_id', projectId).lt('display_order', cur.display_order).order('display_order', { ascending: false }).limit(1); 
+    else q = supabase.from('products').select('id, display_order').eq('project_id', projectId).gt('display_order', cur.display_order).order('display_order', { ascending: true }).limit(1); 
+    const { data: neighbor } = await q; 
+    if (!neighbor?.length) return toast(dir === 'up' ? 'الأول' : 'الأخير'); 
+    await supabase.from('products').update({ display_order: neighbor[0].display_order }).eq('id', cur.id); 
+    await supabase.from('products').update({ display_order: cur.display_order }).eq('id', neighbor[0].id); 
+    loadProducts(); 
+  };
   window.editProduct = async (id) => { const { data } = await supabase.from('products').select('*').eq('id', id).single(); if (!data) return; document.getElementById('productId').value = data.id; document.getElementById('productNameAr').value = data.name_ar; document.getElementById('productNameEn').value = data.name_en; document.getElementById('productPriceAr').value = data.price_ar || ''; document.getElementById('productPriceEn').value = data.price_en || ''; document.getElementById('productCategoryAr').value = data.category_ar || ''; document.getElementById('productCategoryEn').value = data.category_en || ''; document.getElementById('productTypeAr').value = data.type_ar || ''; document.getElementById('productTypeEn').value = data.type_en || ''; document.getElementById('productDescAr').value = data.description_ar || ''; document.getElementById('productDescEn').value = data.description_en || ''; document.getElementById('productDetailsAr').value = (data.details_ar || []).join('\n'); document.getElementById('productDetailsEn').value = (data.details_en || []).join('\n'); document.getElementById('mainImagePreview').innerHTML = data.main_image ? `<img src="${data.main_image}" class="preview-img">` : ''; currentExtraImagesUrls = data.images || []; renderExtraImagesList(currentExtraImagesUrls); document.getElementById('productModalTitle').innerText = 'تعديل المنتج'; document.getElementById('productModal').classList.add('active'); };
   window.deleteProduct = async (id) => { if (!await confirmDialog({ title: 'حذف المنتج', message: 'هل أنت متأكد؟', danger: true })) return; await supabase.from('products').delete().eq('id', id); toast('تم الحذف'); loadProducts(); loadStats(); };
   function renderExtraImagesList(urls) { const container = document.getElementById('extraImagesList'); container.innerHTML = urls.map((url, idx) => `<div class="extra-image-item"><img src="${url}"><div class="remove-extra-img" onclick="removeExtraImage(${idx})"><i class="fas fa-times"></i></div></div>`).join(''); }
@@ -322,22 +413,42 @@
   document.getElementById('saveProductModalBtn').onclick = async () => { const id = document.getElementById('productId').value; let mainImageUrl = null; const mainFile = document.getElementById('productMainImageFile').files[0]; if (mainFile) { if (!validateFileSize(mainFile, 2)) return; const ext = mainFile.name.split('.').pop(); mainImageUrl = await uploadFile('project-logos', `${projectId}/${id || Date.now()}/main_${Date.now()}.${ext}`, mainFile, 2); } else { const old = document.querySelector('#mainImagePreview img'); if (old && old.src) mainImageUrl = old.src; } const extraFiles = document.getElementById('productExtraImages').files; let newUrls = []; for (let f of extraFiles) { if (validateFileSize(f, 2)) { const ext = f.name.split('.').pop(); const url = await uploadFile('project-logos', `${projectId}/${id || Date.now()}/extra_${Date.now()}_${Math.random()}.${ext}`, f, 2); if (url) newUrls.push(url); } } const finalExtra = [...currentExtraImagesUrls, ...newUrls]; const detailsAr = document.getElementById('productDetailsAr').value.split('\n').filter(l=>l.trim()); const detailsEn = document.getElementById('productDetailsEn').value.split('\n').filter(l=>l.trim()); const payload = { name_ar: document.getElementById('productNameAr').value, name_en: document.getElementById('productNameEn').value, price_ar: document.getElementById('productPriceAr').value, price_en: document.getElementById('productPriceEn').value, category_ar: document.getElementById('productCategoryAr').value, category_en: document.getElementById('productCategoryEn').value, type_ar: document.getElementById('productTypeAr').value, type_en: document.getElementById('productTypeEn').value, description_ar: document.getElementById('productDescAr').value, description_en: document.getElementById('productDescEn').value, details_ar: detailsAr, details_en: detailsEn, images: finalExtra, project_id: projectId }; if (mainImageUrl) payload.main_image = mainImageUrl; let err; if (id) err = (await supabase.from('products').update(payload).eq('id', id)).error; else err = (await supabase.from('products').insert(payload)).error; if (err) return toast(err.message, true); toast('تم حفظ المنتج'); document.getElementById('productModal').classList.remove('active'); loadProducts(); loadStats(); };
 
   // العروض
-  async function loadDeals() { const { data } = await supabase.from('deals').select('*').eq('project_id', projectId); const container = document.getElementById('dealsListContainer'); if (!data?.length) { container.innerHTML = '<p>لا توجد عروض.</p>'; return; } let html = ''; for (const d of data) html += `<div class="product-item"><div><strong>${d.title_ar}</strong><br>${d.expiry_date||''}</div><div class="product-actions"><button class="btn-secondary" onclick="editDeal('${d.id}')"><i class="fas fa-edit"></i></button><button class="btn-danger" onclick="deleteDeal('${d.id}')"><i class="fas fa-trash"></i></button></div></div>`; container.innerHTML = html; }
+  async function loadDeals() { 
+    if (!projectId) return;
+    const { data } = await supabase.from('deals').select('*').eq('project_id', projectId); 
+    const container = document.getElementById('dealsListContainer'); 
+    if (!data?.length) { container.innerHTML = '<p>لا توجد عروض.</p>'; return; } 
+    let html = ''; 
+    for (const d of data) html += `<div class="product-item"><div><strong>${d.title_ar}</strong><br>${d.expiry_date||''}</div><div class="product-actions"><button class="btn-secondary" onclick="editDeal('${d.id}')"><i class="fas fa-edit"></i></button><button class="btn-danger" onclick="deleteDeal('${d.id}')"><i class="fas fa-trash"></i></button></div></div>`; 
+    container.innerHTML = html; 
+  }
   window.editDeal = async (id) => { const { data } = await supabase.from('deals').select('*').eq('id', id).single(); if(data){ document.getElementById('dealId').value=data.id; document.getElementById('dealTitleAr').value=data.title_ar; document.getElementById('dealTitleEn').value=data.title_en; document.getElementById('dealDescAr').value=data.description_ar; document.getElementById('dealDescEn').value=data.description_en; document.getElementById('dealBadgeAr').value=data.badge_ar; document.getElementById('dealBadgeEn').value=data.badge_en; document.getElementById('dealExpiry').value=data.expiry_date; document.getElementById('dealModal').classList.add('active'); } };
   window.deleteDeal = async (id) => { if(await confirmDialog({title:'حذف العرض',message:'تأكيد؟',danger:true})){ await supabase.from('deals').delete().eq('id',id); toast('تم الحذف'); loadDeals(); loadStats(); } };
   document.getElementById('saveDealModalBtn').onclick = async () => { let imageUrl=null; const file=document.getElementById('dealImageFile').files[0]; if(file){ if(!validateFileSize(file,2))return; const ext=file.name.split('.').pop(); imageUrl = await uploadFile('project-logos', `${projectId}/deals/${Date.now()}.${ext}`, file, 2); } const payload = { title_ar:document.getElementById('dealTitleAr').value, title_en:document.getElementById('dealTitleEn').value, description_ar:document.getElementById('dealDescAr').value, description_en:document.getElementById('dealDescEn').value, badge_ar:document.getElementById('dealBadgeAr').value, badge_en:document.getElementById('dealBadgeEn').value, expiry_date:document.getElementById('dealExpiry').value, project_id:projectId, image:imageUrl }; const id=document.getElementById('dealId').value; let err; if(id) err=(await supabase.from('deals').update(payload).eq('id',id)).error; else err=(await supabase.from('deals').insert(payload)).error; if(err) return toast(err.message,true); toast('تم حفظ العرض'); document.getElementById('dealModal').classList.remove('active'); loadDeals(); loadStats(); };
 
   // التواصل
-  async function loadContacts() { const { data } = await supabase.from('contacts').select('*').eq('project_id', projectId).maybeSingle(); if(data){ document.getElementById('contactWhatsapp').value=data.whatsapp||''; document.getElementById('contactPhone').value=data.phone||''; document.getElementById('contactEmail').value=data.email||''; document.getElementById('contactInstagram').value=data.instagram||''; document.getElementById('contactTelegram').value=data.telegram||''; document.getElementById('contactSnapchat').value=data.snapchat||''; document.getElementById('contactTiktok').value=data.tiktok||''; document.getElementById('contactFacebook').value=data.facebook||''; document.getElementById('contactTwitter').value=data.twitter||''; document.getElementById('contactWebsite').value=data.website||''; } }
+  async function loadContacts() { 
+    if (!projectId) return;
+    const { data } = await supabase.from('contacts').select('*').eq('project_id', projectId).maybeSingle(); 
+    if(data){ document.getElementById('contactWhatsapp').value=data.whatsapp||''; document.getElementById('contactPhone').value=data.phone||''; document.getElementById('contactEmail').value=data.email||''; document.getElementById('contactInstagram').value=data.instagram||''; document.getElementById('contactTelegram').value=data.telegram||''; document.getElementById('contactSnapchat').value=data.snapchat||''; document.getElementById('contactTiktok').value=data.tiktok||''; document.getElementById('contactFacebook').value=data.facebook||''; document.getElementById('contactTwitter').value=data.twitter||''; document.getElementById('contactWebsite').value=data.website||''; } }
   document.getElementById('contactsForm').addEventListener('submit', async (e) => { e.preventDefault(); let whatsapp = document.getElementById('contactWhatsapp').value.trim(); let clean = whatsapp.replace(/\D/g,''); if(clean && !clean.startsWith('971')) clean = '971' + clean.replace(/^0+/,''); await supabase.from('contacts').upsert({ project_id:projectId, whatsapp:clean, phone:document.getElementById('contactPhone').value, email:document.getElementById('contactEmail').value, instagram:document.getElementById('contactInstagram').value, telegram:document.getElementById('contactTelegram').value, snapchat:document.getElementById('contactSnapchat').value, tiktok:document.getElementById('contactTiktok').value, facebook:document.getElementById('contactFacebook').value, twitter:document.getElementById('contactTwitter').value, website:document.getElementById('contactWebsite').value }); toast('تم حفظ التواصل'); });
 
   // الدعم الفني
-  async function loadTickets() { const { data } = await supabase.from('support_tickets').select('*').eq('project_id', projectId).order('created_at',{ascending:false}); const container=document.getElementById('ticketsListContainer'); if(!data?.length){ container.innerHTML='<p>لا توجد تذاكر</p>'; return; } let html=''; for(const t of data){ html+=`<div style="background:#F8FAFC; border-radius:20px; padding:15px; margin-bottom:10px;"><strong>${t.subject}</strong> <span class="status-pill active">${t.status}</span><div>${t.message.substring(0,100)}</div>${t.admin_reply?`<div class="warning-banner" style="margin-top:10px;"><strong>رد الإدارة:</strong> ${t.admin_reply}</div>`:''}</div>`; } container.innerHTML=html; }
+  async function loadTickets() { 
+    if (!projectId) return;
+    const { data } = await supabase.from('support_tickets').select('*').eq('project_id', projectId).order('created_at',{ascending:false}); 
+    const container=document.getElementById('ticketsListContainer'); 
+    if(!data?.length){ container.innerHTML='<p>لا توجد تذاكر</p>'; return; } 
+    let html=''; 
+    for(const t of data){ html+=`<div style="background:#F8FAFC; border-radius:20px; padding:15px; margin-bottom:10px;"><strong>${t.subject}</strong> <span class="status-pill active">${t.status}</span><div>${t.message.substring(0,100)}</div>${t.admin_reply?`<div class="warning-banner" style="margin-top:10px;"><strong>رد الإدارة:</strong> ${t.admin_reply}</div>`:''}</div>`; } 
+    container.innerHTML=html; 
+  }
   document.getElementById('newTicketBtn').onclick=()=>document.getElementById('ticketModal').classList.add('active');
   document.getElementById('saveTicketModalBtn').onclick=async()=>{ const subject=document.getElementById('ticketSubject').value.trim(); const msg=document.getElementById('ticketMessage').value.trim(); if(!subject||!msg) return toast('املأ الحقول',true); await supabase.from('support_tickets').insert({ project_id:projectId, subject, message:msg, status:'open' }); toast('تم الإرسال'); document.getElementById('ticketModal').classList.remove('active'); loadTickets(); };
 
-  // الطلبات مع تلوين رقم الطلب
+  // الطلبات
   async function loadOrders() {
+    if (!projectId) return;
     const { data, error } = await supabase.from('admin_order_logs').select('*').eq('project_id', projectId).order('created_at', { ascending: false });
     if (error) { toast(error.message, true); return; }
     const container = document.getElementById('ordersTableContainer');
@@ -368,25 +479,34 @@
   };
 
   // ============================================================
-  // بيانات المشروع + إظهار زر إعادة التنشيط وتنشيط تنبيه البريد
-  // ✅ تم تعديل شرط إظهار التنبيه إلى !proj.is_email_verified
+  // ✅ loadProjectData المعدلة (تظهر التنبيه بناءً على is_email_verified)
   // ============================================================
   async function loadProjectData() { 
+    if (!projectId) {
+      // إذا لم يوجد projectId، نخفي التنبيه ونعرض رسالة
+      document.getElementById('emailConfirmationAlert').style.display = 'none';
+      return;
+    }
     const { data: proj } = await supabase.from('projects').select('*').eq('id', projectId).single(); 
     if(proj){
-      document.getElementById('profileNameAr').value=proj.name_ar||''; document.getElementById('profileNameEn').value=proj.name_en||'';
-      document.getElementById('profileDescAr').value=proj.description_ar||''; document.getElementById('profileDescEn').value=proj.description_en||'';
-      document.getElementById('profileLongAr').value=proj.long_description_ar||''; document.getElementById('profileLongEn').value=proj.long_description_en||'';
-      document.getElementById('profileEmirate').value=proj.emirate||'دبي'; document.getElementById('profileCoverage').value=proj.coverage||'الإمارة فقط';
-      document.getElementById('profileAdraLicense').checked=!!proj.adra_license; if(proj.category_ar) document.getElementById('profileCategory').value=proj.category_ar;
+      document.getElementById('profileNameAr').value=proj.name_ar||''; 
+      document.getElementById('profileNameEn').value=proj.name_en||'';
+      document.getElementById('profileDescAr').value=proj.description_ar||''; 
+      document.getElementById('profileDescEn').value=proj.description_en||'';
+      document.getElementById('profileLongAr').value=proj.long_description_ar||''; 
+      document.getElementById('profileLongEn').value=proj.long_description_en||'';
+      document.getElementById('profileEmirate').value=proj.emirate||'دبي'; 
+      document.getElementById('profileCoverage').value=proj.coverage||'الإمارة فقط';
+      document.getElementById('profileAdraLicense').checked=!!proj.adra_license; 
+      if(proj.category_ar) document.getElementById('profileCategory').value=proj.category_ar;
       document.getElementById('currentLogoHint').innerHTML=proj.image?`<img src="${proj.image}" class="preview-img">`:'لا يوجد شعار';
       const reactivateBtn = document.getElementById('dropdownReactivateAccountBtn');
       if (proj.status === 'disabled' || proj.status === 'deleted') reactivateBtn.style.display = 'flex';
       else reactivateBtn.style.display = 'none';
 
-      // ✅ التحكم في تنبيه تأكيد البريد بناءً على is_email_verified (بدلاً من status)
+      // ✅ التحكم في تنبيه تأكيد البريد (الجزء الأهم)
       const alertBox = document.getElementById('emailConfirmationAlert');
-      if (!proj.is_email_verified) {
+      if (proj.is_email_verified === false) {
         alertBox.style.display = 'block';
       } else {
         alertBox.style.display = 'none';
@@ -399,6 +519,7 @@
     else if(lic.data?.license_status==='license_approved') alertDiv.innerHTML='<i class="fas fa-check-circle"></i> معتمد.';
     else if(lic.data?.license_status==='license_rejected') alertDiv.innerHTML='<i class="fas fa-times-circle"></i> مرفوض، أعد رفع ملف صحيح.';
   }
+
   document.getElementById('saveProfileBtn').onclick = async () => {
     let logoUrl=null; const logoFile=document.getElementById('profileLogo').files[0];
     if(logoFile){ if(!validateFileSize(logoFile,2))return; const ext=logoFile.name.split('.').pop(); logoUrl=await uploadFile('project-logos', `${projectId}/logo_${Date.now()}.${ext}`, logoFile, 2); }
@@ -410,7 +531,7 @@
   document.getElementById('licenseForm').addEventListener('submit', async (e) => { e.preventDefault(); const file=document.getElementById('licenseFile').files[0]; if(!file)return; if(!validateFileSize(file,5))return; const ext=file.name.split('.').pop(); const url=await uploadFile('project-logos', `${projectId}/license_${Date.now()}.${ext}`, file, 5); if(url){ await supabase.from('project_license_requests').insert({ project_id:projectId, license_file_url:url, status:'pending' }); await supabase.from('projects').update({ license_status:'license_uploaded' }).eq('id',projectId); toast('تم رفع الرخصة، جاري المراجعة'); loadProjectData(); } });
   
   // ============================================================
-  // ✅ إعادة إرسال رابط تأكيد البريد مع حد زمني ساعة واحدة
+  // ✅ زر إعادة الإرسال (مع حد زمني ساعة واحدة)
   // ============================================================
   const resendBtn = document.getElementById('resendEmailBtn');
   if (resendBtn) {
@@ -440,7 +561,9 @@
     };
   }
 
+  // ============================================================
   // أزرار القائمة المنسدلة
+  // ============================================================
   document.getElementById('dropdownReactivateAccountBtn').onclick = async () => { if(await confirmDialog({title:'إعادة تنشيط',message:'سيتم إعادة تفعيل المشروع'})){ await supabase.from('projects').update({status:'active'}).eq('id',projectId); toast('تم التنشيط'); location.reload(); } };
   document.getElementById('dropdownDisableAccountBtn').onclick = async () => { if(await confirmDialog({title:'تعطيل الحساب',message:'سيتم تعطيل المشروع',danger:true})){ await supabase.from('projects').update({status:'disabled'}).eq('id',projectId); toast('تم التعطيل'); location.reload(); } };
   document.getElementById('dropdownDeleteAccountBtn').onclick = async () => { if(await confirmDialog({title:'حذف الحساب',message:'سيتم حذف المشروع',danger:true}) && await confirmDialog({title:'تأكيد نهائي',message:'هل أنت متأكد؟',danger:true})){ await supabase.from('projects').update({status:'deleted'}).eq('id',projectId); toast('تم الحذف'); location.reload(); } };
@@ -452,7 +575,9 @@
   userArea.addEventListener('click', (e) => { e.stopPropagation(); userDropdown.classList.toggle('show'); });
   document.addEventListener('click', (e) => { if (!userArea.contains(e.target)) userDropdown.classList.remove('show'); });
 
-  // إظهار الأقسام مع إغلاق القائمة الجانبية في الهواتف
+  // ============================================================
+  // إظهار الأقسام
+  // ============================================================
   function showSection(section) {
     document.querySelectorAll('#profileSection, #productsSection, #dealsSection, #contactsSection, #licenseSection, #ordersSection, #supportSection').forEach(s => s.style.display = 'none');
     document.getElementById(`${section}Section`).style.display = 'block';
@@ -467,20 +592,18 @@
     else if(section === 'license') loadProjectData();
     else if(section === 'orders') loadOrders();
     
-    // إغلاق القائمة الجانبية في وضع الهاتف بعد النقر على خيار
     if (window.innerWidth <= 768) {
       const sidebar = document.getElementById('sidebar');
       if (sidebar) sidebar.style.display = 'none';
     }
   }
   
-  // ربط أزرار القائمة الجانبية والسفلية
   document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(btn => btn.addEventListener('click', (e) => {
     e.stopPropagation();
     showSection(btn.dataset.section);
   }));
 
-  // زر القائمة للهواتف: فتح/إغلاق الشريط الجانبي
+  // زر القائمة للهواتف
   const mobileMenuBtn = document.getElementById('mobileMenuBtn');
   const sidebar = document.getElementById('sidebar');
   mobileMenuBtn.addEventListener('click', (e) => {
@@ -488,7 +611,6 @@
     if (sidebar.style.display === 'block') sidebar.style.display = 'none';
     else sidebar.style.display = 'block';
   });
-  // إغلاق القائمة الجانبية عند النقر خارجها (في الهواتف)
   document.addEventListener('click', (e) => {
     if (window.innerWidth <= 768 && sidebar && sidebar.style.display === 'block') {
       if (!sidebar.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
@@ -502,7 +624,20 @@
   document.querySelectorAll('.modal .btn-secondary, #closeProductModalBtn, #closeDealModalBtn, #closeTicketModalBtn').forEach(btn => btn?.addEventListener('click', () => document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'))));
   window.onclick = (e) => { if(e.target.classList.contains('modal')) e.target.classList.remove('active'); if(e.target.classList.contains('confirm-modal')) e.target.style.display = 'none'; };
 
-  const sessionData = await checkSession(); if(sessionData) { const cats = ["أطعمة ومشروبات","الرقميات","روائح وعطور","عناية","حلويات","تجميل","ملابس","يدويات","هدايا","عطارة","فنون","نباتات","ترفيه"]; document.getElementById('profileCategory').innerHTML = cats.map(c=>`<option value="${c}">${c}</option>`).join(''); await loadProjectData(); await loadStats(); showSection('profile'); }
+  // ============================================================
+  // ✅ التهيئة الرئيسية
+  // ============================================================
+  const sessionData = await checkSession(); 
+  if(sessionData) { 
+    const cats = ["أطعمة ومشروبات","الرقميات","روائح وعطور","عناية","حلويات","تجميل","ملابس","يدويات","هدايا","عطارة","فنون","نباتات","ترفيه"]; 
+    document.getElementById('profileCategory').innerHTML = cats.map(c=>`<option value="${c}">${c}</option>`).join(''); 
+    await loadProjectData(); 
+    await loadStats();
+    await loadProducts(); // تحميل المنتجات مبدئياً
+    await loadDeals();   // تحميل العروض مبدئياً
+    await loadOrders();  // تحميل الطلبات مبدئياً
+    showSection('profile'); 
+  }
 </script>
 </body>
 </html>
