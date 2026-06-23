@@ -106,6 +106,9 @@
             font-size: 14px;
             display: none;
         }
+        .toast-message.error {
+            background: #C41E3A;
+        }
     </style>
 </head>
 <body>
@@ -165,9 +168,10 @@
         setTimeout(() => (errorDiv.style.display = 'none'), 6500);
     }
 
-    function showToast(msg) {
+    function showToast(msg, isError = false) {
         const toast = document.getElementById('toastMsg');
         toast.textContent = msg;
+        toast.className = 'toast-message' + (isError ? ' error' : '');
         toast.style.display = 'block';
         setTimeout(() => toast.style.display = 'none', 4000);
     }
@@ -205,18 +209,11 @@
         return data.publicUrl;
     }
 
-    // ✅ دالة انتظار إنشاء المستخدم بالكامل
-    async function waitForUser(maxAttempts = 15, delayMs = 500) {
+    // دالة انتظار الجلسة
+    async function waitForSession(maxAttempts = 15, delayMs = 500) {
         for (let i = 0; i < maxAttempts; i++) {
-            const { data: { user }, error } = await supabase.auth.getUser();
-            if (error) {
-                console.warn(`محاولة ${i+1}: فشل الحصول على المستخدم`, error);
-                await new Promise(resolve => setTimeout(resolve, delayMs));
-                continue;
-            }
-            if (user && user.id) {
-                return user;
-            }
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) return session;
             await new Promise(resolve => setTimeout(resolve, delayMs));
         }
         return null;
@@ -234,6 +231,7 @@
         const whatsappRaw = document.getElementById('whatsapp').value.trim();
         const consent = document.getElementById('consent').checked;
 
+        // التحقق الأساسي
         if (!email || !password || !whatsappRaw) { showError('يرجى ملء جميع الحقول المطلوبة'); window._registerLock = false; return; }
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('البريد الإلكتروني غير صالح'); window._registerLock = false; return; }
         if (password.length < 6) { showError('كلمة المرور يجب أن تكون 6 أحرف على الأقل'); window._registerLock = false; return; }
@@ -248,7 +246,7 @@
         submitBtn.innerHTML = '<span class="loader-small"></span> جاري...';
 
         try {
-            // 1) إنشاء الحساب
+            // 1) محاولة إنشاء الحساب (هنا سيرفض Supabase الطلب إذا كان هناك rate limit)
             const { data: authData, error: signUpError } = await supabase.auth.signUp({
                 email, password,
                 options: {
@@ -256,19 +254,37 @@
                     emailRedirectTo: window.location.origin + '/auth/callback.html'
                 }
             });
+
+            // إذا كان الخطأ يحتوي على "rate limit" أو "over_email_send_rate_limit"
             if (signUpError) {
-                if (signUpError.message.includes('already registered')) {
-                    throw new Error('البريد الإلكتروني مسجل مسبقاً. يرجى تسجيل الدخول أو استعادة كلمة المرور.');
+                const msg = signUpError.message.toLowerCase();
+                if (msg.includes('rate limit') || msg.includes('over_email_send_rate_limit')) {
+                    // نعرض رسالة خاصة للمستخدم ونوقف العملية (لم يتم إنشاء حساب ولا مشروع)
+                    showToast('⚠️ لا يمكننا تسجيلكم في الوقت الحالي بسبب الضغط. يرجى المحاولة بعد نصف ساعة.', true);
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                    window._registerLock = false;
+                    return;
                 }
                 throw signUpError;
             }
 
-            // 2) انتظار إنشاء المستخدم بالكامل
-            const user = await waitForUser();
-            if (!user) throw new Error('لم نتمكن من الحصول على معرف المستخدم. يرجى المحاولة مرة أخرى.');
-            const userId = user.id;
+            // 2) إذا نجح signUp، نحاول تسجيل الدخول التلقائي للحصول على جلسة
+            const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+            if (signInError) {
+                // إذا فشل تسجيل الدخول (قد يكون بسبب عدم تأكيد البريد، ولكننا نحتاج الجلسة)
+                // نجرب طريقة أخرى: ننتظر حتى تصبح الجلسة متاحة
+                const session = await waitForSession();
+                if (!session) throw new Error('لم نتمكن من الحصول على الجلسة');
+            }
 
-            // 3) رفع الشعار (اختياري)
+            // 3) الحصول على الجلسة (بعد محاولة تسجيل الدخول أو الانتظار)
+            const session = await waitForSession();
+            if (!session) throw new Error('لم نتمكن من الحصول على الجلسة، حاول مرة أخرى');
+
+            const userId = session.user.id;
+
+            // 4) رفع الشعار (اختياري)
             let logoUrl = 'https://placehold.co/400x400/0F3D2E/white?text=Logo';
             const logoFile = document.getElementById('logoImage').files[0];
             if (logoFile) {
@@ -279,12 +295,12 @@
                 }
             }
 
-            // 4) حساب تاريخ انتهاء الفترة التجريبية (7 أيام من الآن)
+            // 5) حساب تاريخ انتهاء الفترة التجريبية (7 أيام)
             const now = new Date();
             const trialEnd = new Date(now);
             trialEnd.setDate(trialEnd.getDate() + 7);
 
-            // 5) إدراج المشروع
+            // 6) إدراج المشروع
             const projectPayload = {
                 name_ar: document.getElementById('nameAr').value.trim(),
                 name_en: document.getElementById('nameEn').value.trim(),
@@ -315,7 +331,7 @@
 
             if (projError) throw projError;
 
-            // 6) إدراج بيانات التواصل
+            // 7) إدراج بيانات التواصل
             const { error: contactError } = await supabase.from('contacts').insert({
                 project_id: newProject.id,
                 whatsapp: whatsappDigits,
@@ -324,20 +340,27 @@
             });
             if (contactError) console.warn('Contacts insert failed:', contactError);
 
-            // 7) حفظ البريد والتوجيه
+            // 8) حفظ البريد للتذكير
             localStorage.setItem('pendingEmail', email);
+            localStorage.setItem('newProjectId', newProject.id);
 
-            // 8) عرض رسالة نجاح
-            showToast('✅ تم إنشاء حسابك ومشروعك بنجاح! يرجى تأكيد بريدك الإلكتروني.');
+            // 9) عرض رسالة نجاح
+            showToast('✅ تم إنشاء حسابك ومشروعك بنجاح! 📧 تم إرسال رابط التأكيد إلى بريدك. تحقق من Spam إذا لم يصل خلال 5 دقائق.');
 
-            // 9) التوجيه إلى لوحة التحكم
+            // 10) التوجيه إلى لوحة التحكم
             setTimeout(() => {
                 window.location.href = `project-dashboard.html?new=true&project_id=${newProject.id}`;
             }, 1500);
 
         } catch (err) {
             console.error(err);
-            showError(err.message || 'حدث خطأ، يرجى المحاولة لاحقاً');
+            // إذا كان الخطأ بسبب rate limit (قد يظهر في مرحلة متأخرة)
+            const msg = err.message.toLowerCase();
+            if (msg.includes('rate limit') || msg.includes('over_email_send_rate_limit')) {
+                showToast('⚠️ لا يمكننا تسجيلكم في الوقت الحالي بسبب الضغط. يرجى المحاولة بعد نصف ساعة.', true);
+            } else {
+                showError(err.message || 'حدث خطأ، يرجى المحاولة لاحقاً');
+            }
             submitBtn.disabled = false;
             submitBtn.innerHTML = originalText;
             window._registerLock = false;
