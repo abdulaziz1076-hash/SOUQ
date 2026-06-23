@@ -258,7 +258,14 @@
 
             const userId = authData.user.id;
 
-            // 2) رفع الشعار (اختياري)
+            // 2) ✅ تسجيل الدخول التلقائي للحصول على جلسة صالحة
+            const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+            if (signInError) {
+                console.warn('⚠️ فشل تسجيل الدخول التلقائي:', signInError.message);
+                // حتى إذا فشل، نكمل ولكن قد يطلب تسجيل الدخول يدوياً
+            }
+
+            // 3) رفع الشعار (اختياري)
             let logoUrl = 'https://placehold.co/400x400/0F3D2E/white?text=Logo';
             const logoFile = document.getElementById('logoImage').files[0];
             if (logoFile) {
@@ -269,7 +276,7 @@
                 }
             }
 
-            // 3) تجميع بيانات المشروع
+            // 4) تجميع بيانات المشروع
             const projectData = {
                 name_ar: document.getElementById('nameAr').value.trim(),
                 name_en: document.getElementById('nameEn').value.trim(),
@@ -287,7 +294,7 @@
                 email: email
             };
 
-            // 4) ✅ حفظ البيانات في جدول pending_projects
+            // 5) حفظ البيانات في جدول pending_projects
             const { error: pendingError } = await supabase
                 .from('pending_projects')
                 .insert({
@@ -299,7 +306,7 @@
 
             if (pendingError) throw pendingError;
 
-            // 5) التوجيه إلى لوحة التحكم مع تعليمة pending=true
+            // 6) التوجيه إلى لوحة التحكم مع تعليمة pending=true
             showToast('✅ تم إنشاء حسابك. سيتم توجيهك إلى لوحة التحكم.');
             submitBtn.disabled = false;
             submitBtn.innerHTML = 'تم الإرسال ✅';
