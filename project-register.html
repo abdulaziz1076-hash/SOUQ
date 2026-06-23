@@ -205,6 +205,16 @@
         return data.publicUrl;
     }
 
+    // دالة انتظار الجلسة (مع محاولات متعددة)
+    async function waitForSession(maxAttempts = 15, delayMs = 500) {
+        for (let i = 0; i < maxAttempts; i++) {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) return session;
+            await new Promise(resolve => setTimeout(resolve, delayMs));
+        }
+        return null;
+    }
+
     const form = document.getElementById('registerForm');
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -231,7 +241,7 @@
         submitBtn.innerHTML = '<span class="loader-small"></span> جاري...';
 
         try {
-            // 1) إنشاء حساب Auth (بدون تسجيل دخول تلقائي)
+            // 1) إنشاء الحساب
             const { data: authData, error: signUpError } = await supabase.auth.signUp({
                 email, password,
                 options: {
@@ -240,16 +250,28 @@
                 }
             });
             if (signUpError) {
-                // التعامل مع البريد المسجل مسبقاً
                 if (signUpError.message.includes('already registered')) {
                     throw new Error('البريد الإلكتروني مسجل مسبقاً. يرجى تسجيل الدخول أو استعادة كلمة المرور.');
                 }
                 throw signUpError;
             }
-            
-            const userId = authData.user.id;
 
-            // 2) رفع الشعار (إذا وجد)
+            // 2) تسجيل الدخول التلقائي (لإنشاء جلسة نشطة)
+            const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+            if (signInError) {
+                // إذا فشل تسجيل الدخول، قد يكون بسبب عدم تفعيل البريد، لكن Supabase يسمح بتسجيل الدخول حتى مع البريد غير المؤكد.
+                // نعطي فرصة ثانية بعد انتظار قصير.
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                const retrySignIn = await supabase.auth.signInWithPassword({ email, password });
+                if (retrySignIn.error) throw new Error('فشل تسجيل الدخول التلقائي: ' + retrySignIn.error.message);
+            }
+
+            // 3) انتظار الجلسة
+            const session = await waitForSession();
+            if (!session) throw new Error('لم نتمكن من الحصول على الجلسة، حاول مرة أخرى');
+            const userId = session.user.id;
+
+            // 4) رفع الشعار
             let logoUrl = 'https://placehold.co/400x400/0F3D2E/white?text=Logo';
             const logoFile = document.getElementById('logoImage').files[0];
             if (logoFile) {
@@ -260,7 +282,7 @@
                 }
             }
 
-            // 3) إدراج المشروع في قاعدة البيانات (حالة pending)
+            // 5) إدراج المشروع (الآن هناك جلسة نشطة، و RLS ستسمح)
             const projectPayload = {
                 name_ar: document.getElementById('nameAr').value.trim(),
                 name_en: document.getElementById('nameEn').value.trim(),
@@ -290,7 +312,7 @@
 
             if (projError) throw projError;
 
-            // 4) إدراج بيانات التواصل
+            // 6) إدراج بيانات التواصل
             const { error: contactError } = await supabase.from('contacts').insert({
                 project_id: newProject.id,
                 whatsapp: whatsappDigits,
@@ -299,14 +321,13 @@
             });
             if (contactError) console.warn('Contacts insert failed:', contactError);
 
-            // 5) حفظ projectId في localStorage للاستخدام في الداشبورد
-            localStorage.setItem('currentProjectId', newProject.id);
+            // 7) حفظ البريد للتذكير
             localStorage.setItem('pendingEmail', email);
 
-            // 6) عرض رسالة نجاح
+            // 8) عرض رسالة نجاح
             showToast('✅ تم إنشاء حسابك ومشروعك بنجاح! يرجى تأكيد بريدك الإلكتروني.');
 
-            // 7) التوجيه مباشرة إلى لوحة التحكم
+            // 9) التوجيه إلى لوحة التحكم
             setTimeout(() => {
                 window.location.href = `project-dashboard.html?new=true&project_id=${newProject.id}`;
             }, 1500);
