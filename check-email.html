@@ -112,6 +112,21 @@
             text-decoration: underline;
         }
         .resend-link:hover { color: #0F3D2E; }
+        .toast-message {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #0F3D2E;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 60px;
+            z-index: 9999;
+            font-size: 14px;
+            display: none;
+        }
+        .toast-message.show { display: block; animation: fadeUp 0.3s; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateX(-50%) translateY(20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
         @media (max-width: 480px) {
             .card { padding: 30px 20px; }
             .steps { flex-direction: column; gap: 10px; }
@@ -160,12 +175,22 @@
     </p>
 </div>
 
+<div id="toastMsg" class="toast-message"></div>
+
 <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
     const SUPABASE_URL = 'https://xyepcwptfihnztgghimx.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5ZXBjd3B0Zmlobnp0Z2doaW14Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0ODA2OTcsImV4cCI6MjA5MjA1NjY5N30.SZvZjWpih1JiUlv24xLhNwjTvzo9RNsrTiI9fchWldE';
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    function showToast(msg, isError = false) {
+        const toast = document.getElementById('toastMsg');
+        toast.textContent = msg;
+        toast.className = 'toast-message' + (isError ? ' error' : '');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 4000);
+    }
 
     // عرض البريد الإلكتروني المحفوظ
     const email = localStorage.getItem('pendingEmail') || 'بريدك الإلكتروني';
@@ -189,9 +214,9 @@
             });
 
             if (error) throw error;
-            alert('✅ تم إعادة إرسال رابط التأكيد إلى بريدك الإلكتروني.');
+            showToast('✅ تم إعادة إرسال رابط التأكيد إلى بريدك الإلكتروني.');
         } catch (err) {
-            alert('❌ حدث خطأ: ' + err.message);
+            showToast('❌ حدث خطأ: ' + err.message, true);
         } finally {
             link.innerText = 'أعد إرسال رابط التأكيد';
             link.style.color = '#D4AF37';
