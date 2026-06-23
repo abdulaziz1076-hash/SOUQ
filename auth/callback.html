@@ -58,7 +58,6 @@
   const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
   const card = document.getElementById('statusCard');
 
-  // دالة تأخير بسيطة
   const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
   async function run() {
@@ -75,7 +74,7 @@
 
       // 2) الحصول على الجلسة (مع إعادة المحاولة)
       let session = null;
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 10; i++) {
         const { data, error } = await supabase.auth.getSession();
         if (error) throw error;
         if (data.session) {
@@ -89,9 +88,9 @@
 
       const userId = session.user.id;
 
-      // 3) البحث عن مشروع المستخدم (مع إعادة المحاولة في حال التأخير)
+      // 3) البحث عن مشروع المستخدم (مع إعادة المحاولة)
       let project = null;
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 10; i++) {
         const { data, error } = await supabase
           .from('projects')
           .select('id, status, is_email_verified')
@@ -107,11 +106,11 @@
       }
 
       if (!project) {
-        // إذا لم يوجد مشروع، نتحقق إذا كان المستخدم قد سجل لتوه
-        throw new Error('لا يوجد مشروع مرتبط بهذا الحساب. يرجى إعادة التسجيل.');
+        // ربما لم يتم إنشاء المشروع بسبب خطأ سابق، نعطي رسالة واضحة مع خيار إعادة التسجيل
+        throw new Error('لا يوجد مشروع مرتبط بهذا الحساب. يرجى إعادة التسجيل من الصفحة الرئيسية.');
       }
 
-      // 4) تحديث حالة المشروع (إذا كانت pending)
+      // 4) تحديث حالة المشروع
       if (project.status === 'pending' || !project.is_email_verified) {
         const { error: updateError } = await supabase
           .from('projects')
