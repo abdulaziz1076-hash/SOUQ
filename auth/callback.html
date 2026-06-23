@@ -58,6 +58,9 @@
   const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
   const card = document.getElementById('statusCard');
 
+  // دالة تأخير بسيطة
+  const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
   async function run() {
     try {
       const url = new URL(window.location.href);
@@ -70,33 +73,56 @@
         window.history.replaceState({}, document.title, url.origin + url.pathname);
       }
 
-      // 2) الحصول على الجلسة
-      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-      if (sessionError) throw sessionError;
-      if (!session) throw new Error('لم يتم العثور على جلسة نشطة.');
+      // 2) الحصول على الجلسة (مع إعادة المحاولة)
+      let session = null;
+      for (let i = 0; i < 5; i++) {
+        const { data, error } = await supabase.auth.getSession();
+        if (error) throw error;
+        if (data.session) {
+          session = data.session;
+          break;
+        }
+        await delay(500);
+      }
+
+      if (!session) throw new Error('لم يتم العثور على جلسة نشطة. يرجى تسجيل الدخول.');
 
       const userId = session.user.id;
 
-      // 3) البحث عن مشروع المستخدم
-      const { data: project, error: projectError } = await supabase
-        .from('projects')
-        .select('id, status')
-        .eq('owner_user_id', userId)
-        .maybeSingle();
+      // 3) البحث عن مشروع المستخدم (مع إعادة المحاولة في حال التأخير)
+      let project = null;
+      for (let i = 0; i < 5; i++) {
+        const { data, error } = await supabase
+          .from('projects')
+          .select('id, status, is_email_verified')
+          .eq('owner_user_id', userId)
+          .maybeSingle();
 
-      if (projectError) throw projectError;
-      if (!project) throw new Error('لا يوجد مشروع مرتبط بهذا الحساب. يرجى إعادة التسجيل.');
+        if (error) throw error;
+        if (data) {
+          project = data;
+          break;
+        }
+        await delay(500);
+      }
 
-      // بعد تأكيد البريد وتحديث الجلسة
-if (project.status === 'pending') {
-    await supabase
-        .from('projects')
-        .update({ 
+      if (!project) {
+        // إذا لم يوجد مشروع، نتحقق إذا كان المستخدم قد سجل لتوه
+        throw new Error('لا يوجد مشروع مرتبط بهذا الحساب. يرجى إعادة التسجيل.');
+      }
+
+      // 4) تحديث حالة المشروع (إذا كانت pending)
+      if (project.status === 'pending' || !project.is_email_verified) {
+        const { error: updateError } = await supabase
+          .from('projects')
+          .update({ 
             status: 'active',
-            is_email_verified: true  // ← تحديث الحقل الجديد
-        })
-        .eq('id', project.id);
-}
+            is_email_verified: true
+          })
+          .eq('id', project.id);
+
+        if (updateError) throw updateError;
+      }
 
       // 5) عرض رسالة النجاح والتحويل
       card.innerHTML = `
