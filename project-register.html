@@ -235,34 +235,44 @@
         submitBtn.innerHTML = '<span class="loader-small"></span> جاري...';
 
         try {
-            // 1) إنشاء الحساب
+            // 1) إنشاء الحساب (✅ نزيل role لأن العمود غير موجود في auth.users)
             const { data: authData, error: signUpError } = await supabase.auth.signUp({
                 email, password,
                 options: {
-                    data: { role: 'project_owner' },
+                    // data: { role: 'project_owner' }, // ❌ تم إزالتها
                     emailRedirectTo: window.location.origin + '/auth/callback.html'
                 }
             });
 
+            // 2) التعامل مع أخطاء التسجيل
             if (signUpError) {
                 const msg = signUpError.message.toLowerCase();
 
-                // ✅ حالة الـ rate limit: نعرض رسالة ولا ننتقل إلى check-email.html
+                // حالات الفشل التي لا تسمح بالمتابعة
                 if (msg.includes('rate limit') || msg.includes('over_email_send_rate_limit')) {
                     showToast('⚠️ لا يمكننا تسجيلكم في الوقت الحالي بسبب الضغط. حاول بعد نصف ساعة.', true);
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = originalText;
                     window._registerLock = false;
-                    return; // ⛔ نوقف التنفيذ هنا، لا ننتقل إلى check-email.html
+                    return;
+                }
+
+                if (msg.includes('database error') || msg.includes('saving new user')) {
+                    showToast('❌ حدث خطأ في إنشاء الحساب. يرجى المحاولة مرة أخرى.', true);
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                    window._registerLock = false;
+                    return;
                 }
 
                 // أي خطأ آخر
                 throw signUpError;
             }
 
+            // إذا وصلنا هنا، فهذا يعني أن الحساب أنشئ والرسالة أرسلت
             const userId = authData.user.id;
 
-            // 2) رفع الشعار (اختياري)
+            // 3) رفع الشعار (اختياري)
             let logoUrl = 'https://placehold.co/400x400/0F3D2E/white?text=Logo';
             const logoFile = document.getElementById('logoImage').files[0];
             if (logoFile) {
@@ -273,7 +283,7 @@
                 }
             }
 
-            // 3) تجميع بيانات المشروع
+            // 4) تجميع بيانات المشروع
             const projectData = {
                 name_ar: document.getElementById('nameAr').value.trim(),
                 name_en: document.getElementById('nameEn').value.trim(),
@@ -291,7 +301,7 @@
                 email: email
             };
 
-            // 4) حفظ البيانات في جدول pending_projects
+            // 5) حفظ البيانات في جدول pending_projects
             const { error: pendingError } = await supabase
                 .from('pending_projects')
                 .insert({
@@ -303,10 +313,10 @@
 
             if (pendingError) throw pendingError;
 
-            // 5) حفظ البريد الإلكتروني لعرضه في check-email
+            // 6) حفظ البريد الإلكتروني لعرضه في check-email
             localStorage.setItem('pendingEmail', email);
 
-            // 6) ✅ التوجيه إلى صفحة "تحقق من بريدك" (فقط بعد نجاح كل شيء)
+            // 7) ✅ التوجيه إلى صفحة "تحقق من بريدك" (فقط بعد نجاح كل شيء)
             showToast('✅ تم إنشاء حسابك. يرجى تأكيد بريدك الإلكتروني لإكمال التسجيل.');
             submitBtn.disabled = false;
             submitBtn.innerHTML = 'تم الإرسال ✅';
@@ -318,11 +328,12 @@
             console.error(err);
             const msg = err.message.toLowerCase();
 
-            // ✅ معالجة متكررة للـ rate limit في حالة ظهوره هنا أيضاً
             if (msg.includes('rate limit') || msg.includes('over_email_send_rate_limit')) {
                 showToast('⚠️ لا يمكننا تسجيلكم في الوقت الحالي بسبب الضغط. حاول بعد نصف ساعة.', true);
             } else if (msg.includes('already registered')) {
                 showToast('البريد الإلكتروني مسجل مسبقاً. يرجى تسجيل الدخول أو استعادة كلمة المرور.', true);
+            } else if (msg.includes('database error') || msg.includes('saving new user')) {
+                showToast('❌ حدث خطأ في إنشاء الحساب. يرجى المحاولة مرة أخرى.', true);
             } else {
                 showError(err.message || 'حدث خطأ، يرجى المحاولة لاحقاً');
             }
