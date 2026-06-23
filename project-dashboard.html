@@ -146,6 +146,44 @@
     .order-number-processing { color: #F59E0B; font-weight: 700; }
     .order-number-delivered { color: #10B981; font-weight: 700; }
     .order-number-cancelled { color: #6B7280; font-weight: 700; text-decoration: line-through; }
+
+    /* ===== تنسيق زر إعادة الإرسال ===== */
+    .resend-btn-container {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .resend-btn-container .btn-primary {
+      background: #F59E0B;
+      color: #1E293B;
+    }
+    .resend-btn-container .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .resend-timer {
+      font-size: 13px;
+      color: #64748B;
+    }
+    .resend-timer strong {
+      color: #0F3D2E;
+    }
+    .resend-status {
+      font-size: 13px;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+    .resend-status.success {
+      background: #DCFCE7;
+      color: #15803D;
+    }
+    .resend-status.error {
+      background: #FEE2E2;
+      color: #DC2626;
+    }
   </style>
 </head>
 <body>
@@ -178,15 +216,19 @@
       </div>
     </div>
 
-    <!-- ✅ تنبيه تأكيد البريد الإلكتروني (يظهر بناءً على is_email_verified) -->
+    <!-- ✅ تنبيه تأكيد البريد الإلكتروني مع زر إعادة الإرسال وعداد 30 دقيقة -->
     <div id="emailConfirmationAlert" style="display: none; background: #FEF3C7; border-right: 4px solid #F59E0B; padding: 16px 20px; border-radius: 20px; margin-bottom: 20px;">
-      <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-        <i class="fas fa-envelope" style="font-size: 24px; color: #F59E0B;"></i>
+      <div style="display: flex; align-items: flex-start; gap: 12px; flex-wrap: wrap;">
+        <i class="fas fa-envelope" style="font-size: 24px; color: #F59E0B; margin-top: 4px;"></i>
         <div style="flex: 1;">
-          <strong id="alertTitle">⚠️ مشروعك غير ظاهر للجمهور</strong>
-          <p id="alertMessage" style="margin: 4px 0 0 0; font-size: 13px;">لم تقم بتأكيد بريدك الإلكتروني بعد. يرجى التحقق من بريدك والضغط على رابط التأكيد ليظهر مشروعك في السوق.</p>
+          <strong id="alertTitle" style="display: block; color: #0C4A6E;">⚠️ مشروعك غير ظاهر للجمهور</strong>
+          <p id="alertMessage" style="margin: 4px 0 0 0; font-size: 13px; color: #0F172A;">لم تقم بتأكيد بريدك الإلكتروني بعد. يرجى الضغط على الزر أدناه لإرسال رابط التأكيد.</p>
+          <div class="resend-btn-container">
+            <button id="resendEmailBtn" class="btn-primary">📧 إرسال رابط التأكيد</button>
+            <span id="resendTimer" class="resend-timer"></span>
+            <span id="resendStatus" class="resend-status"></span>
+          </div>
         </div>
-        <button id="resendEmailBtn" class="btn-primary" style="background: #F59E0B; color: #1E293B;">إعادة إرسال رابط التأكيد</button>
       </div>
     </div>
 
@@ -299,14 +341,11 @@
   function confirmDialog({ title, message, danger = false }) { return new Promise((resolve) => { const modal = document.getElementById('confirmModal'); document.getElementById('confirmTitle').innerText = title; document.getElementById('confirmMsg').innerText = message; const ok = document.getElementById('confirmOk'); ok.style.background = danger ? '#C41E3A' : 'var(--primary-gradient)'; const close = () => { modal.style.display = 'none'; resolve(false); }; document.getElementById('confirmCancel').onclick = close; ok.onclick = () => { modal.style.display = 'none'; resolve(true); }; modal.style.display = 'flex'; }); }
 
   // ============================================================
-  // ✅ دالة checkSession المعدلة (تستخدم maybeSingle وتتعامل مع الجلسة غير المؤكدة)
+  // ✅ checkSession - البحث عن المشروع باستخدام maybeSingle
   // ============================================================
   async function checkSession() { 
     const { data: { session } } = await supabase.auth.getSession(); 
-    
-    // إذا لم توجد جلسة، نوجه إلى تسجيل الدخول
     if (!session) {
-      // إذا كان هناك projectId محفوظ مؤقتاً (من التسجيل)، نحذفه ونوجه مع ?new=true
       const newProjectId = localStorage.getItem('newProjectId');
       if (newProjectId) {
         localStorage.removeItem('newProjectId');
@@ -317,19 +356,17 @@
       return null; 
     } 
 
-    // محاولة جلب المشروع (حتى لو كانت الجلسة غير مؤكدة، قد ينجح الاستعلام)
     const { data: project, error } = await supabase
       .from('projects')
-      .select('id, name_ar, status')
+      .select('id, name_ar, status, is_email_verified, trial_end_date')
       .eq('owner_user_id', session.user.id)
-      .maybeSingle(); // ✅ استخدام maybeSingle بدلاً من single لتجنب الأخطاء
+      .maybeSingle();
 
-    // إذا لم نجد المشروع فوراً (قد يكون بسبب تأخير Supabase)، ننتظر ثانية ونحاول مرة أخرى
     if (!project && !error) {
       await new Promise(resolve => setTimeout(resolve, 1500));
       const { data: retryProject } = await supabase
         .from('projects')
-        .select('id, name_ar, status')
+        .select('id, name_ar, status, is_email_verified, trial_end_date')
         .eq('owner_user_id', session.user.id)
         .maybeSingle();
       if (retryProject) {
@@ -341,7 +378,6 @@
     }
 
     if (error || !project) {
-      // إذا لم يوجد مشروع (وربما المستخدم سجل لتوه لكن الجلسة غير مكتملة)
       const newProjectId = localStorage.getItem('newProjectId');
       if (newProjectId) {
         localStorage.removeItem('newProjectId');
@@ -352,19 +388,16 @@
       return null;
     }
 
-    // ✅ كل شيء طبيعي، نعين projectId ونعرض اسم المستخدم
     projectId = project.id; 
     document.getElementById('userName').innerHTML = `مرحباً، ${project.name_ar || ''}`; 
     document.getElementById('userAvatar').innerText = (project.name_ar?.[0] || 'م'); 
-
-    // ✅ نمسح أي مفتاح مؤقت إن وجد
     localStorage.removeItem('newProjectId');
 
     return { session, project }; 
   }
 
   // ============================================================
-  // ✅ loadStats تعمل فقط إذا كان projectId موجوداً
+  // ✅ loadStats
   // ============================================================
   async function loadStats() { 
     if (!projectId) {
@@ -378,7 +411,7 @@
   }
 
   // ============================================================
-  // المنتجات (نفس الكود القديم مع التأكد من وجود projectId)
+  // ✅ المنتجات
   // ============================================================
   let currentExtraImagesUrls = [];
   async function loadProducts() { 
@@ -479,71 +512,141 @@
   };
 
   // ============================================================
-  // ✅ loadProjectData المعدلة (تظهر التنبيه بناءً على is_email_verified)
+  // ✅ loadProjectData + زر إعادة الإرسال مع عداد 30 دقيقة
   // ============================================================
-async function loadProjectData() { 
+  async function loadProjectData() { 
     const { data: proj } = await supabase.from('projects').select('*').eq('id', projectId).single(); 
     if(proj){
-        document.getElementById('profileNameAr').value=proj.name_ar||''; 
-        document.getElementById('profileNameEn').value=proj.name_en||'';
-        document.getElementById('profileDescAr').value=proj.description_ar||''; 
-        document.getElementById('profileDescEn').value=proj.description_en||'';
-        document.getElementById('profileLongAr').value=proj.long_description_ar||''; 
-        document.getElementById('profileLongEn').value=proj.long_description_en||'';
-        document.getElementById('profileEmirate').value=proj.emirate||'دبي'; 
-        document.getElementById('profileCoverage').value=proj.coverage||'الإمارة فقط';
-        document.getElementById('profileAdraLicense').checked=!!proj.adra_license; 
-        if(proj.category_ar) document.getElementById('profileCategory').value=proj.category_ar;
-        document.getElementById('currentLogoHint').innerHTML=proj.image?`<img src="${proj.image}" class="preview-img">`:'لا يوجد شعار';
-        
-        // زر إعادة التنشيط
-        const reactivateBtn = document.getElementById('dropdownReactivateAccountBtn');
-        if (proj.status === 'disabled' || proj.status === 'deleted') reactivateBtn.style.display = 'flex';
-        else reactivateBtn.style.display = 'none';
+      document.getElementById('profileNameAr').value=proj.name_ar||''; 
+      document.getElementById('profileNameEn').value=proj.name_en||'';
+      document.getElementById('profileDescAr').value=proj.description_ar||''; 
+      document.getElementById('profileDescEn').value=proj.description_en||'';
+      document.getElementById('profileLongAr').value=proj.long_description_ar||''; 
+      document.getElementById('profileLongEn').value=proj.long_description_en||'';
+      document.getElementById('profileEmirate').value=proj.emirate||'دبي'; 
+      document.getElementById('profileCoverage').value=proj.coverage||'الإمارة فقط';
+      document.getElementById('profileAdraLicense').checked=!!proj.adra_license; 
+      if(proj.category_ar) document.getElementById('profileCategory').value=proj.category_ar;
+      document.getElementById('currentLogoHint').innerHTML=proj.image?`<img src="${proj.image}" class="preview-img">`:'لا يوجد شعار';
+      
+      const reactivateBtn = document.getElementById('dropdownReactivateAccountBtn');
+      if (proj.status === 'disabled' || proj.status === 'deleted') reactivateBtn.style.display = 'flex';
+      else reactivateBtn.style.display = 'none';
 
-        // ==== تنبيه تأكيد البريد ====
-       const alertBox = document.getElementById('emailConfirmationAlert');
-if (proj.is_email_verified === false) {
-    alertBox.style.display = 'block';
-} else {
-    alertBox.style.display = 'none';
-}
-        const resendBtn = document.getElementById('resendEmailBtn');
-        
-        // إذا كان المشروع pending (لم يؤكد بريده)
-        if (proj.status === 'pending' || !proj.is_email_verified) {
-            alertBox.style.display = 'block';
-            // تحديث نص التنبيه
-            document.getElementById('alertMessage').textContent = 'لم تقم بتأكيد بريدك الإلكتروني بعد. يرجى التحقق من بريدك والضغط على رابط التأكيد ليظهر مشروعك في السوق.';
-            // إظهار زر إعادة الإرسال
-            if (resendBtn) {
-                resendBtn.style.display = 'inline-flex';
-                resendBtn.onclick = async () => {
-                    const { data: { session } } = await supabase.auth.getSession();
-                    if (!session || !session.user) return toast('الرجاء تسجيل الدخول أولاً', true);
-                    const email = session.user.email;
-                    const { error } = await supabase.auth.resend({
-                        type: 'signup',
-                        email: email,
-                        options: { emailRedirectTo: window.location.origin + '/auth/callback.html' }
-                    });
-                    if (error) toast(error.message, true);
-                    else toast('تم إعادة إرسال رابط التأكيد إلى بريدك الإلكتروني');
-                };
+      // ✅ تنبيه تأكيد البريد
+      const alertBox = document.getElementById('emailConfirmationAlert');
+      const resendBtn = document.getElementById('resendEmailBtn');
+      const timerSpan = document.getElementById('resendTimer');
+      const statusSpan = document.getElementById('resendStatus');
+
+      if (proj.status === 'pending' || !proj.is_email_verified) {
+        alertBox.style.display = 'block';
+        document.getElementById('alertMessage').textContent = 'لم تقم بتأكيد بريدك الإلكتروني بعد. اضغط على الزر أدناه لإرسال رابط التأكيد.';
+
+        // ✅ التحقق من آخر وقت إرسال (عداد 30 دقيقة)
+        const lastSend = localStorage.getItem('lastResendTime');
+        const now = Date.now();
+        const cooldownMs = 30 * 60 * 1000; // 30 دقيقة
+
+        if (lastSend && (now - parseInt(lastSend)) < cooldownMs) {
+          const remaining = Math.ceil((cooldownMs - (now - parseInt(lastSend))) / 60000);
+          resendBtn.disabled = true;
+          timerSpan.innerHTML = `⏳ يرجى الانتظار <strong>${remaining}</strong> دقيقة قبل إعادة الإرسال.`;
+          // تحديث العداد كل دقيقة
+          const interval = setInterval(() => {
+            const now2 = Date.now();
+            const remaining2 = Math.ceil((cooldownMs - (now2 - parseInt(lastSend))) / 60000);
+            if (remaining2 <= 0) {
+              clearInterval(interval);
+              resendBtn.disabled = false;
+              timerSpan.innerHTML = '';
+              statusSpan.className = 'resend-status';
+              statusSpan.textContent = '✅ يمكنك إرسال رابط التأكيد الآن.';
+            } else {
+              timerSpan.innerHTML = `⏳ يرجى الانتظار <strong>${remaining2}</strong> دقيقة.`;
             }
+          }, 60000);
         } else {
-            alertBox.style.display = 'none';
-            if (resendBtn) resendBtn.style.display = 'none';
+          resendBtn.disabled = false;
+          timerSpan.innerHTML = '';
+          statusSpan.className = 'resend-status success';
+          statusSpan.textContent = '✅ يمكنك إرسال رابط التأكيد الآن.';
         }
+
+        // ✅ زر إعادة الإرسال
+        resendBtn.onclick = async () => {
+          const lastSendCheck = localStorage.getItem('lastResendTime');
+          const nowCheck = Date.now();
+          if (lastSendCheck && (nowCheck - parseInt(lastSendCheck)) < cooldownMs) {
+            const remaining = Math.ceil((cooldownMs - (nowCheck - parseInt(lastSendCheck))) / 60000);
+            statusSpan.className = 'resend-status error';
+            statusSpan.textContent = `⏳ انتظر ${remaining} دقيقة قبل إعادة الإرسال.`;
+            return;
+          }
+
+          const { data: { session } } = await supabase.auth.getSession();
+          if (!session || !session.user) return toast('الرجاء تسجيل الدخول أولاً', true);
+          const email = session.user.email;
+          
+          try {
+            const { error } = await supabase.auth.resend({
+              type: 'signup',
+              email: email,
+              options: { emailRedirectTo: window.location.origin + '/auth/callback.html' }
+            });
+            if (error) {
+              if (error.message.includes('rate limit') || error.message.includes('over_email_send_rate_limit')) {
+                statusSpan.className = 'resend-status error';
+                statusSpan.textContent = '⚠️ تم تجاوز حد الإرسال. انتظر ساعة ثم حاول مجدداً.';
+              } else {
+                statusSpan.className = 'resend-status error';
+                statusSpan.textContent = '❌ فشل الإرسال: ' + error.message;
+              }
+              toast(error.message, true);
+            } else {
+              localStorage.setItem('lastResendTime', String(Date.now()));
+              statusSpan.className = 'resend-status success';
+              statusSpan.textContent = '✅ تم إرسال رابط التأكيد. تحقق من بريدك (بما في ذلك Spam).';
+              resendBtn.disabled = true;
+              timerSpan.innerHTML = '⏳ انتظر 30 دقيقة قبل إعادة الإرسال.';
+              toast('✅ تم إرسال رابط التأكيد إلى بريدك الإلكتروني.');
+              
+              // تفعيل العداد
+              const interval2 = setInterval(() => {
+                const now2 = Date.now();
+                const last = localStorage.getItem('lastResendTime');
+                if (!last) { clearInterval(interval2); return; }
+                const remaining2 = Math.ceil((cooldownMs - (now2 - parseInt(last))) / 60000);
+                if (remaining2 <= 0) {
+                  clearInterval(interval2);
+                  resendBtn.disabled = false;
+                  timerSpan.innerHTML = '';
+                  statusSpan.className = 'resend-status success';
+                  statusSpan.textContent = '✅ يمكنك إرسال رابط التأكيد الآن.';
+                } else {
+                  timerSpan.innerHTML = `⏳ يرجى الانتظار <strong>${remaining2}</strong> دقيقة.`;
+                }
+              }, 60000);
+            }
+          } catch (err) {
+            statusSpan.className = 'resend-status error';
+            statusSpan.textContent = '❌ حدث خطأ غير متوقع. حاول مجدداً.';
+            toast(err.message, true);
+          }
+        };
+      } else {
+        alertBox.style.display = 'none';
+      }
     }
-    // باقي الكود (حالة الرخصة) ...
+
+    // حالة الرخصة
     const lic=await supabase.from('projects').select('license_status').eq('id',projectId).single(); 
     const alertDiv=document.getElementById('licenseStatusAlert');
     if(lic.data?.license_status==='pending_license') alertDiv.innerHTML='<i class="fas fa-clock"></i> لم يتم رفع الرخصة بعد.';
     else if(lic.data?.license_status==='license_uploaded') alertDiv.innerHTML='<i class="fas fa-hourglass-half"></i> جاري المراجعة.';
     else if(lic.data?.license_status==='license_approved') alertDiv.innerHTML='<i class="fas fa-check-circle"></i> معتمد.';
     else if(lic.data?.license_status==='license_rejected') alertDiv.innerHTML='<i class="fas fa-times-circle"></i> مرفوض، أعد رفع ملف صحيح.';
-}
+  }
 
   document.getElementById('saveProfileBtn').onclick = async () => {
     let logoUrl=null; const logoFile=document.getElementById('profileLogo').files[0];
@@ -554,41 +657,8 @@ if (proj.is_email_verified === false) {
     toast('تم حفظ البيانات'); loadProjectData();
   };
   document.getElementById('licenseForm').addEventListener('submit', async (e) => { e.preventDefault(); const file=document.getElementById('licenseFile').files[0]; if(!file)return; if(!validateFileSize(file,5))return; const ext=file.name.split('.').pop(); const url=await uploadFile('project-logos', `${projectId}/license_${Date.now()}.${ext}`, file, 5); if(url){ await supabase.from('project_license_requests').insert({ project_id:projectId, license_file_url:url, status:'pending' }); await supabase.from('projects').update({ license_status:'license_uploaded' }).eq('id',projectId); toast('تم رفع الرخصة، جاري المراجعة'); loadProjectData(); } });
-  
-  // ============================================================
-  // ✅ زر إعادة الإرسال (مع حد زمني ساعة واحدة)
-  // ============================================================
-  const resendBtn = document.getElementById('resendEmailBtn');
-  if (resendBtn) {
-    resendBtn.onclick = async () => {
-      // التحقق من آخر إرسال من localStorage
-      const lastResend = localStorage.getItem('lastResendTime');
-      const now = Date.now();
-      if (lastResend && (now - parseInt(lastResend)) < 3600000) {
-        const remaining = Math.ceil((3600000 - (now - parseInt(lastResend))) / 60000);
-        toast(`يمكنك إعادة الإرسال بعد ${remaining} دقيقة`, true);
-        return;
-      }
 
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session || !session.user) return toast('الرجاء تسجيل الدخول أولاً', true);
-      const email = session.user.email;
-      const { error } = await supabase.auth.resend({
-        type: 'signup',
-        email: email,
-        options: { emailRedirectTo: window.location.origin + '/auth/callback.html' }
-      });
-      if (error) toast(error.message, true);
-      else {
-        toast('تم إعادة إرسال رابط التأكيد إلى بريدك الإلكتروني');
-        localStorage.setItem('lastResendTime', String(now));
-      }
-    };
-  }
-
-  // ============================================================
   // أزرار القائمة المنسدلة
-  // ============================================================
   document.getElementById('dropdownReactivateAccountBtn').onclick = async () => { if(await confirmDialog({title:'إعادة تنشيط',message:'سيتم إعادة تفعيل المشروع'})){ await supabase.from('projects').update({status:'active'}).eq('id',projectId); toast('تم التنشيط'); location.reload(); } };
   document.getElementById('dropdownDisableAccountBtn').onclick = async () => { if(await confirmDialog({title:'تعطيل الحساب',message:'سيتم تعطيل المشروع',danger:true})){ await supabase.from('projects').update({status:'disabled'}).eq('id',projectId); toast('تم التعطيل'); location.reload(); } };
   document.getElementById('dropdownDeleteAccountBtn').onclick = async () => { if(await confirmDialog({title:'حذف الحساب',message:'سيتم حذف المشروع',danger:true}) && await confirmDialog({title:'تأكيد نهائي',message:'هل أنت متأكد؟',danger:true})){ await supabase.from('projects').update({status:'deleted'}).eq('id',projectId); toast('تم الحذف'); location.reload(); } };
@@ -600,9 +670,7 @@ if (proj.is_email_verified === false) {
   userArea.addEventListener('click', (e) => { e.stopPropagation(); userDropdown.classList.toggle('show'); });
   document.addEventListener('click', (e) => { if (!userArea.contains(e.target)) userDropdown.classList.remove('show'); });
 
-  // ============================================================
   // إظهار الأقسام
-  // ============================================================
   function showSection(section) {
     document.querySelectorAll('#profileSection, #productsSection, #dealsSection, #contactsSection, #licenseSection, #ordersSection, #supportSection').forEach(s => s.style.display = 'none');
     document.getElementById(`${section}Section`).style.display = 'block';
@@ -658,9 +726,9 @@ if (proj.is_email_verified === false) {
     document.getElementById('profileCategory').innerHTML = cats.map(c=>`<option value="${c}">${c}</option>`).join(''); 
     await loadProjectData(); 
     await loadStats();
-    await loadProducts(); // تحميل المنتجات مبدئياً
-    await loadDeals();   // تحميل العروض مبدئياً
-    await loadOrders();  // تحميل الطلبات مبدئياً
+    await loadProducts();
+    await loadDeals();
+    await loadOrders();
     showSection('profile'); 
   }
 </script>
