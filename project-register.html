@@ -235,7 +235,7 @@
         submitBtn.innerHTML = '<span class="loader-small"></span> جاري...';
 
         try {
-            // 1) إنشاء الحساب (بدون إنشاء المشروع)
+            // 1) إنشاء الحساب
             const { data: authData, error: signUpError } = await supabase.auth.signUp({
                 email, password,
                 options: {
@@ -258,8 +258,8 @@
 
             const userId = authData.user.id;
 
-            // 2) حفظ بيانات المشروع في localStorage مؤقتاً
-            let logoUrl = null;
+            // 2) رفع الشعار (اختياري)
+            let logoUrl = 'https://placehold.co/400x400/0F3D2E/white?text=Logo';
             const logoFile = document.getElementById('logoImage').files[0];
             if (logoFile) {
                 try {
@@ -269,6 +269,7 @@
                 }
             }
 
+            // 3) تجميع بيانات المشروع
             const projectData = {
                 name_ar: document.getElementById('nameAr').value.trim(),
                 name_en: document.getElementById('nameEn').value.trim(),
@@ -277,27 +278,33 @@
                 description_en: document.getElementById('descEn').value,
                 long_description_ar: document.getElementById('longDescAr').value,
                 long_description_en: document.getElementById('longDescEn').value,
-                image: logoUrl || 'https://placehold.co/400x400/0F3D2E/white?text=Logo',
+                image: logoUrl,
                 coverage: document.getElementById('coverage').value,
                 category_ar: document.getElementById('category').value,
                 category_en: document.getElementById('category').value,
                 whatsapp: whatsappDigits,
                 instagram: document.getElementById('instagram').value.trim() || null,
-                email: email,
-                owner_user_id: userId
+                email: email
             };
 
-            // تخزين البيانات مع الطابع الزمني (صلاحية 30 دقيقة)
-            localStorage.setItem('pendingProjectData', JSON.stringify(projectData));
-            localStorage.setItem('pendingProjectTimestamp', Date.now().toString());
-            localStorage.setItem('pendingEmail', email);
+            // 4) ✅ حفظ البيانات في جدول pending_projects
+            const { error: pendingError } = await supabase
+                .from('pending_projects')
+                .insert({
+                    user_id: userId,
+                    email: email,
+                    data: projectData,
+                    expires_at: new Date(Date.now() + 60 * 60 * 1000).toISOString() // ساعة واحدة
+                });
 
-            // 3) التوجيه إلى صفحة "تحقق من بريدك"
-            showToast('✅ تم إنشاء حسابك. يرجى تأكيد بريدك الإلكتروني لإكمال التسجيل.');
+            if (pendingError) throw pendingError;
+
+            // 5) التوجيه إلى لوحة التحكم مع تعليمة pending=true
+            showToast('✅ تم إنشاء حسابك. سيتم توجيهك إلى لوحة التحكم.');
             submitBtn.disabled = false;
             submitBtn.innerHTML = 'تم الإرسال ✅';
             setTimeout(() => {
-                window.location.href = 'check-email.html';
+                window.location.href = 'project-dashboard.html?pending=true';
             }, 1500);
 
         } catch (err) {
