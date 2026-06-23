@@ -106,12 +106,11 @@
       }
 
       if (!project) {
-        // إذا لم يوجد مشروع، نعطي رسالة واضحة مع خيار إعادة التسجيل
         throw new Error('لا يوجد مشروع مرتبط بهذا الحساب. يرجى إعادة التسجيل من الصفحة الرئيسية.');
       }
 
-      // 4) تحديث حالة المشروع: تفعيل وإلغاء الفترة التجريبية
-      await supabase
+      // 4) ✅ تحديث حالة المشروع: تفعيل وإلغاء الفترة التجريبية
+      const { error: updateError } = await supabase
         .from('projects')
         .update({
           status: 'active',
@@ -120,11 +119,13 @@
         })
         .eq('id', project.id);
 
+      if (updateError) throw updateError;
+
       // 5) عرض رسالة النجاح والتحويل
       card.innerHTML = `
         <img class="logo" src="https://souqalmasharie.onrender.com/images/logo.png" alt="سوق المشاريع" />
         <h1>✅ تم تأكيد البريد بنجاح</h1>
-        <p>سيتم تحويلك إلى لوحة التحكم خلال لحظات...</p>
+        <p>تم تفعيل مشروعك. سيتم تحويلك إلى لوحة التحكم خلال لحظات...</p>
         <div class="loader"></div>
       `;
       setTimeout(() => {
