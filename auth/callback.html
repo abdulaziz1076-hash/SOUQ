@@ -63,10 +63,17 @@
   const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
   async function getValidSession() {
+    // محاولة الحصول على جلسة صالحة مع إعادة المحاولة
     for (let attempt = 0; attempt < 15; attempt++) {
       const { data: { session }, error } = await supabase.auth.getSession();
-      if (error) throw error;
-      if (session) return session;
+      if (error) {
+        console.warn(`محاولة جلسة ${attempt+1} فشلت:`, error);
+        await delay(500);
+        continue;
+      }
+      if (session) {
+        return session;
+      }
       await delay(500);
     }
     throw new Error('لم يتم العثور على جلسة نشطة بعد عدة محاولات.');
@@ -77,14 +84,14 @@
       const url = new URL(window.location.href);
       const code = url.searchParams.get('code');
 
-      // 1) تبادل الكود للحصول على الجلسة
+      // 1) تبادل الكود للحصول على الجلسة (إذا كان موجوداً)
       if (code) {
         const { error } = await supabase.auth.exchangeCodeForSession(code);
         if (error) throw error;
         window.history.replaceState({}, document.title, url.origin + url.pathname);
       }
 
-      // 2) الحصول على الجلسة
+      // 2) الحصول على الجلسة مع إعادة المحاولة
       const session = await getValidSession();
       const userId = session.user.id;
 
@@ -106,41 +113,53 @@
           <p>سيتم تحويلك إلى لوحة التحكم...</p>
           <div class="loader"></div>
         `;
-        setTimeout(() => window.location.href = '../project-dashboard.html', 1500);
+        setTimeout(() => window.location.href = '../project-dashboard.html?confirmed=true', 1500);
         return;
       }
 
-      // 4) جلب البيانات من pending_projects
+      // 4) ✅ جلب البيانات من pending_projects مع إعادة محاولة وتجاوز أخطاء RLS
       let pendingData = null;
-      for (let attempt = 0; attempt < 5; attempt++) {
-        const { data, error } = await supabase
-          .from('pending_projects')
-          .select('id, data')
-          .eq('user_id', userId)
-          .order('created_at', { ascending: false })
-          .limit(1)
-          .maybeSingle();
+      let lastError = null;
 
-        if (error) {
-          console.warn(`محاولة ${attempt+1} فشلت:`, error);
+      for (let attempt = 0; attempt < 5; attempt++) {
+        try {
+          const { data, error } = await supabase
+            .from('pending_projects')
+            .select('id, data')
+            .eq('user_id', userId)
+            .order('created_at', { ascending: false })
+            .limit(1)
+            .maybeSingle();
+
+          if (error) {
+            console.warn(`محاولة ${attempt+1} فشلت:`, error);
+            lastError = error;
+            await delay(800);
+            continue;
+          }
+
+          if (data) {
+            pendingData = data;
+            break;
+          }
+
+          await delay(500);
+        } catch (err) {
+          console.warn(`محاولة ${attempt+1} استثناء:`, err);
+          lastError = err;
           await delay(800);
-          continue;
         }
-        if (data) {
-          pendingData = data;
-          break;
-        }
-        await delay(500);
       }
 
       if (!pendingData) {
-        throw new Error('لا توجد بيانات مشروع معلقة. يرجى التسجيل من الصفحة الرئيسية.');
+        console.error('فشل جلب البيانات من pending_projects:', lastError);
+        throw new Error('لا توجد بيانات مشروع معلقة. قد يكون انتهت صلاحية الطلب أو حدث خطأ في جلب البيانات.');
       }
 
       const projectData = pendingData.data;
       const pendingId = pendingData.id;
 
-      // 5) ✅ إنشاء المشروع في جدول projects
+      // 5) إنشاء المشروع
       const now = new Date();
       const projectPayload = {
         name_ar: projectData.name_ar,
@@ -181,13 +200,13 @@
       });
       if (contactError) console.warn('Contacts insert failed:', contactError);
 
-      // 7) ✅ حذف السجل من pending_projects
+      // 7) حذف الطلب المعلق
       await supabase
         .from('pending_projects')
         .delete()
         .eq('id', pendingId);
 
-      // 8) عرض رسالة النجاح والتوجيه إلى لوحة التحكم
+      // 8) عرض رسالة النجاح والتوجيه
       card.innerHTML = `
         <img class="logo" src="https://souqalmasharie.onrender.com/images/logo.png" alt="سوق المشاريع" />
         <h1>✅ تم إنشاء مشروعك بنجاح</h1>
@@ -195,7 +214,7 @@
         <div class="loader"></div>
       `;
       setTimeout(() => {
-        window.location.href = '../project-dashboard.html';
+        window.location.href = '../project-dashboard.html?confirmed=true';
       }, 2000);
 
     } catch (err) {
