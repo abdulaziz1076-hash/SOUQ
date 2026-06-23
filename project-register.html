@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
-        /* نفس الأنماط السابقة بدون تغيير */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: linear-gradient(145deg, #0F3D2E, #1A5F44);
@@ -210,29 +209,6 @@
         return data.publicUrl;
     }
 
-    // دالة تسجيل الدخول للحصول على الجلسة
-    async function loginAndGetUserId(email, password, maxAttempts = 5) {
-        for (let attempt = 0; attempt < maxAttempts; attempt++) {
-            try {
-                const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-                if (error) {
-                    if (error.message.includes('Invalid login credentials') || error.message.includes('Email not confirmed')) {
-                        await new Promise(resolve => setTimeout(resolve, 1000));
-                        continue;
-                    }
-                    throw error;
-                }
-                if (data.session) {
-                    return data.user.id;
-                }
-            } catch (e) {
-                console.warn(`محاولة ${attempt+1} فشلت:`, e.message);
-                await new Promise(resolve => setTimeout(resolve, 1000));
-            }
-        }
-        throw new Error('تعذر تسجيل الدخول التلقائي. يرجى تسجيل الدخول يدوياً.');
-    }
-
     const form = document.getElementById('registerForm');
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -259,7 +235,7 @@
         submitBtn.innerHTML = '<span class="loader-small"></span> جاري...';
 
         try {
-            // 1) محاولة إنشاء الحساب (هذا الطلب سيفشل إذا كان هناك rate limit)
+            // ✅ 1) إنشاء الحساب (سيفشل إذا كان هناك rate limit)
             const { data: authData, error: signUpError } = await supabase.auth.signUp({
                 email, password,
                 options: {
@@ -268,7 +244,7 @@
                 }
             });
 
-            // إذا كان الخطأ يحتوي على rate limit، نعرض رسالة ونوقف العملية (لم يتم إنشاء حساب)
+            // ✅ 2) التعامل مع rate limit فوراً
             if (signUpError) {
                 const msg = signUpError.message.toLowerCase();
                 if (msg.includes('rate limit') || msg.includes('over_email_send_rate_limit')) {
@@ -281,19 +257,10 @@
                 throw signUpError;
             }
 
-            // إذا وصلنا إلى هنا، فهذا يعني أن signUp نجح (تم إنشاء الحساب وإرسال البريد)
-            // قد يكون البريد في طريقه، لكننا لا نستطيع الجزم بذلك
-            // سنحاول تسجيل الدخول للحصول على جلسة نشطة
-            let userId;
-            try {
-                userId = await loginAndGetUserId(email, password);
-            } catch (loginError) {
-                // إذا فشل تسجيل الدخول، نأخذ userId من signUp (قد لا يعمل بسبب RLS)
-                console.warn('تسجيل الدخول التلقائي فشل، سنحاول استخدام userId من signUp:', loginError.message);
-                userId = authData.user.id;
-            }
+            // ✅ 3) نحصل على userId مباشرة من authData (لا ننتظر جلسة)
+            const userId = authData.user.id;
 
-            // 2) رفع الشعار (اختياري)
+            // ✅ 4) رفع الشعار (اختياري)
             let logoUrl = 'https://placehold.co/400x400/0F3D2E/white?text=Logo';
             const logoFile = document.getElementById('logoImage').files[0];
             if (logoFile) {
@@ -304,12 +271,12 @@
                 }
             }
 
-            // 3) حساب تاريخ انتهاء الفترة التجريبية (7 أيام)
+            // ✅ 5) حساب تاريخ انتهاء الفترة التجريبية (7 أيام)
             const now = new Date();
             const trialEnd = new Date(now);
             trialEnd.setDate(trialEnd.getDate() + 7);
 
-            // 4) إدراج المشروع
+            // ✅ 6) إدراج المشروع (بدون انتظار جلسة - السياسة الجديدة تسمح بذلك)
             const projectPayload = {
                 name_ar: document.getElementById('nameAr').value.trim(),
                 name_en: document.getElementById('nameEn').value.trim(),
@@ -338,32 +305,9 @@
                 .select()
                 .single();
 
-            if (projError) {
-                // إذا كان الخطأ بسبب foreign key، قد يكون المستخدم غير موجود بعد، ننتظر ونحاول مرة أخرى
-                if (projError.message.includes('foreign key constraint')) {
-                    console.warn('foreign key error, retrying after delay...');
-                    await new Promise(resolve => setTimeout(resolve, 2000));
-                    // نحاول جلب المستخدم مرة أخرى
-                    const { data: { session } } = await supabase.auth.getSession();
-                    if (session) {
-                        const retryUserId = session.user.id;
-                        projectPayload.owner_user_id = retryUserId;
-                        const { data: retryProject, error: retryError } = await supabase
-                            .from('projects')
-                            .insert(projectPayload)
-                            .select()
-                            .single();
-                        if (retryError) throw retryError;
-                        newProject = retryProject;
-                    } else {
-                        throw projError;
-                    }
-                } else {
-                    throw projError;
-                }
-            }
+            if (projError) throw projError;
 
-            // 5) إدراج بيانات التواصل
+            // ✅ 7) إدراج بيانات التواصل
             const { error: contactError } = await supabase.from('contacts').insert({
                 project_id: newProject.id,
                 whatsapp: whatsappDigits,
@@ -372,14 +316,14 @@
             });
             if (contactError) console.warn('Contacts insert failed:', contactError);
 
-            // 6) حفظ البريد للتذكير
+            // ✅ 8) حفظ بيانات للتذكير
             localStorage.setItem('pendingEmail', email);
             localStorage.setItem('newProjectId', newProject.id);
 
-            // 7) عرض رسالة نجاح مع تذكير بالتحقق من Spam
-            showToast('✅ تم إنشاء حسابك ومشروعك بنجاح! 📧 تم إرسال رابط التأكيد إلى بريدك. تحقق من Spam/Junk إذا لم يصل خلال 5 دقائق.');
+            // ✅ 9) عرض رسالة نجاح (مع تذكير بالتحقق من البريد)
+            showToast('✅ تم إنشاء حسابك ومشروعك بنجاح! 📧 يرجى تأكيد بريدك الإلكتروني من لوحة التحكم.');
 
-            // 8) التوجيه إلى لوحة التحكم
+            // ✅ 10) التوجيه إلى لوحة التحكم
             setTimeout(() => {
                 window.location.href = `project-dashboard.html?new=true&project_id=${newProject.id}`;
             }, 1500);
