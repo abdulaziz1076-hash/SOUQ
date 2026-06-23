@@ -184,6 +184,37 @@
       background: #FEE2E2;
       color: #DC2626;
     }
+
+    /* ===== تنبيه تأكيد البريد الإلكتروني ===== */
+    .email-confirmation-alert {
+      background: #FEF3C7;
+      border-right: 4px solid #F59E0B;
+      padding: 16px 20px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .email-confirmation-alert .alert-icon {
+      font-size: 24px;
+      color: #F59E0B;
+      margin-top: 4px;
+    }
+    .email-confirmation-alert .alert-content {
+      flex: 1;
+    }
+    .email-confirmation-alert .alert-title {
+      font-weight: 700;
+      color: #0C4A6E;
+      display: block;
+    }
+    .email-confirmation-alert .alert-message {
+      font-size: 13px;
+      color: #0F172A;
+      margin: 4px 0 0 0;
+    }
   </style>
 </head>
 <body>
@@ -217,12 +248,12 @@
     </div>
 
     <!-- ✅ تنبيه تأكيد البريد الإلكتروني مع زر إعادة الإرسال وعداد 30 دقيقة -->
-    <div id="emailConfirmationAlert" style="display: none; background: #FEF3C7; border-right: 4px solid #F59E0B; padding: 16px 20px; border-radius: 20px; margin-bottom: 20px;">
-      <div style="display: flex; align-items: flex-start; gap: 12px; flex-wrap: wrap;">
-        <i class="fas fa-envelope" style="font-size: 24px; color: #F59E0B; margin-top: 4px;"></i>
-        <div style="flex: 1;">
-          <strong id="alertTitle" style="display: block; color: #0C4A6E;">⚠️ مشروعك غير ظاهر للجمهور</strong>
-          <p id="alertMessage" style="margin: 4px 0 0 0; font-size: 13px; color: #0F172A;">لم تقم بتأكيد بريدك الإلكتروني بعد. يرجى الضغط على الزر أدناه لإرسال رابط التأكيد.</p>
+    <div id="emailConfirmationAlert" style="display: none;">
+      <div class="email-confirmation-alert">
+        <div class="alert-icon"><i class="fas fa-envelope"></i></div>
+        <div class="alert-content">
+          <strong class="alert-title">⚠️ مشروعك غير ظاهر للجمهور</strong>
+          <p class="alert-message" id="alertMessage">لم تقم بتأكيد بريدك الإلكتروني بعد. يرجى الضغط على الزر أدناه لإرسال رابط التأكيد.</p>
           <div class="resend-btn-container">
             <button id="resendEmailBtn" class="btn-primary">📧 إرسال رابط التأكيد</button>
             <span id="resendTimer" class="resend-timer"></span>
@@ -393,6 +424,16 @@
     document.getElementById('userAvatar').innerText = (project.name_ar?.[0] || 'م'); 
     localStorage.removeItem('newProjectId');
 
+    // ✅ معالجة معاملات URL (بدون إخفاء المحتوى)
+    const urlParams = new URLSearchParams(window.location.search);
+    const isPending = urlParams.get('pending') === 'true';
+    const isConfirmed = urlParams.get('confirmed') === 'true';
+
+    if (isPending || isConfirmed) {
+      // إزالة المعامل من الرابط (تنظيف)
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
     return { session, project }; 
   }
 
@@ -533,7 +574,7 @@
       if (proj.status === 'disabled' || proj.status === 'deleted') reactivateBtn.style.display = 'flex';
       else reactivateBtn.style.display = 'none';
 
-      // ✅ تنبيه تأكيد البريد
+      // ✅ تنبيه تأكيد البريد (يظهر فقط، ولا يخفي شيئاً)
       const alertBox = document.getElementById('emailConfirmationAlert');
       const resendBtn = document.getElementById('resendEmailBtn');
       const timerSpan = document.getElementById('resendTimer');
