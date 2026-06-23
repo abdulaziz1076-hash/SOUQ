@@ -87,16 +87,16 @@
       if (projectError) throw projectError;
       if (!project) throw new Error('لا يوجد مشروع مرتبط بهذا الحساب. يرجى إعادة التسجيل.');
 
-      // 4) تحديث حالة المشروع والتحقق من البريد
-      if (project.status === 'pending') {
-        await supabase
-          .from('projects')
-          .update({ 
+      // بعد تأكيد البريد وتحديث الجلسة
+if (project.status === 'pending') {
+    await supabase
+        .from('projects')
+        .update({ 
             status: 'active',
-            is_email_verified: true 
-          })
-          .eq('id', project.id);
-      }
+            is_email_verified: true  // ← تحديث الحقل الجديد
+        })
+        .eq('id', project.id);
+}
 
       // 5) عرض رسالة النجاح والتحويل
       card.innerHTML = `
