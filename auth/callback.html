@@ -41,6 +41,8 @@
     @keyframes spin { to { transform: rotate(360deg); } }
     .error { background: #fee2e2; color: #b91c1c; padding: 12px; border-radius: 20px; margin-top: 15px; }
     .success { background: #dcfce7; color: #166534; padding: 12px; border-radius: 20px; margin-top: 15px; }
+    .btn { display: inline-block; margin-top:15px; background:#D4AF37; color:#0F3D2E; padding:10px 25px; border-radius:40px; text-decoration:none; font-weight:700; }
+    .btn:hover { background:#0F3D2E; color:white; }
   </style>
 </head>
 <body>
@@ -88,44 +90,100 @@
 
       const userId = session.user.id;
 
-      // 3) البحث عن مشروع المستخدم (مع إعادة المحاولة)
-      let project = null;
-      for (let i = 0; i < 10; i++) {
-        const { data, error } = await supabase
-          .from('projects')
-          .select('id, status, is_email_verified, trial_end_date')
-          .eq('owner_user_id', userId)
-          .maybeSingle();
-
-        if (error) throw error;
-        if (data) {
-          project = data;
-          break;
-        }
-        await delay(500);
-      }
-
-      if (!project) {
-        throw new Error('لا يوجد مشروع مرتبط بهذا الحساب. يرجى إعادة التسجيل من الصفحة الرئيسية.');
-      }
-
-      // 4) ✅ تحديث حالة المشروع: تفعيل وإلغاء الفترة التجريبية
-      const { error: updateError } = await supabase
+      // 3) التحقق من وجود مشروع مسبقاً (قد يكون أنشئ بالفعل)
+      const { data: existingProject } = await supabase
         .from('projects')
-        .update({
-          status: 'active',
-          is_email_verified: true,
-          trial_end_date: null
-        })
-        .eq('id', project.id);
+        .select('id, status, is_email_verified')
+        .eq('owner_user_id', userId)
+        .maybeSingle();
 
-      if (updateError) throw updateError;
+      if (existingProject) {
+        // إذا كان المشروع موجوداً، فقط نحدث حالة التأكيد
+        await supabase
+          .from('projects')
+          .update({ is_email_verified: true, status: 'active', trial_end_date: null })
+          .eq('id', existingProject.id);
+        card.innerHTML = `
+          <img class="logo" src="https://souqalmasharie.onrender.com/images/logo.png" alt="سوق المشاريع" />
+          <h1>✅ تم تفعيل مشروعك</h1>
+          <p>سيتم تحويلك إلى لوحة التحكم...</p>
+          <div class="loader"></div>
+        `;
+        setTimeout(() => window.location.href = '../project-dashboard.html', 1500);
+        return;
+      }
 
-      // 5) عرض رسالة النجاح والتحويل
+      // 4) قراءة بيانات المشروع المؤقتة من localStorage
+      const pendingData = localStorage.getItem('pendingProjectData');
+      const timestamp = localStorage.getItem('pendingProjectTimestamp');
+
+      if (!pendingData) {
+        throw new Error('لا توجد بيانات مشروع مؤقتة. يرجى التسجيل من الصفحة الرئيسية.');
+      }
+
+      // التحقق من صلاحية البيانات (30 دقيقة)
+      if (timestamp && (Date.now() - parseInt(timestamp) > 30 * 60 * 1000)) {
+        localStorage.removeItem('pendingProjectData');
+        localStorage.removeItem('pendingProjectTimestamp');
+        throw new Error('انتهت صلاحية بيانات التسجيل. يرجى إعادة المحاولة.');
+      }
+
+      const projectData = JSON.parse(pendingData);
+
+      // 5) إنشاء المشروع في قاعدة البيانات
+      const now = new Date();
+      const trialEnd = new Date(now);
+      trialEnd.setDate(trialEnd.getDate() + 7);
+
+      const projectPayload = {
+        name_ar: projectData.name_ar,
+        name_en: projectData.name_en,
+        emirate: projectData.emirate,
+        description_ar: projectData.description_ar,
+        description_en: projectData.description_en,
+        long_description_ar: projectData.long_description_ar,
+        long_description_en: projectData.long_description_en,
+        image: projectData.image,
+        coverage: projectData.coverage,
+        category_ar: projectData.category_ar,
+        category_en: projectData.category_en,
+        adra_license: false,
+        status: 'active',
+        license_status: 'pending_license',
+        display_order: 0,
+        owner_user_id: userId,
+        created_at: now.toISOString(),
+        trial_end_date: null,
+        is_email_verified: true
+      };
+
+      const { data: newProject, error: projError } = await supabase
+        .from('projects')
+        .insert(projectPayload)
+        .select()
+        .single();
+
+      if (projError) throw projError;
+
+      // 6) إدراج بيانات التواصل
+      const { error: contactError } = await supabase.from('contacts').insert({
+        project_id: newProject.id,
+        whatsapp: projectData.whatsapp,
+        instagram: projectData.instagram || null,
+        email: projectData.email
+      });
+      if (contactError) console.warn('Contacts insert failed:', contactError);
+
+      // 7) حذف البيانات المؤقتة
+      localStorage.removeItem('pendingProjectData');
+      localStorage.removeItem('pendingProjectTimestamp');
+      localStorage.removeItem('pendingEmail');
+
+      // 8) عرض رسالة النجاح والتحويل
       card.innerHTML = `
         <img class="logo" src="https://souqalmasharie.onrender.com/images/logo.png" alt="سوق المشاريع" />
-        <h1>✅ تم تأكيد البريد بنجاح</h1>
-        <p>تم تفعيل مشروعك. سيتم تحويلك إلى لوحة التحكم خلال لحظات...</p>
+        <h1>✅ تم إنشاء مشروعك بنجاح</h1>
+        <p>مرحباً بك في سوق المشاريع. سيتم تحويلك إلى لوحة التحكم خلال لحظات...</p>
         <div class="loader"></div>
       `;
       setTimeout(() => {
@@ -138,7 +196,7 @@
         <img class="logo" src="https://souqalmasharie.onrender.com/images/logo.png" alt="سوق المشاريع" />
         <h1>⚠️ حدث خطأ</h1>
         <div class="error">${err.message || 'تعذر تأكيد البريد. يرجى المحاولة مرة أخرى.'}</div>
-        <p><a href="../project-login.html">تسجيل الدخول</a> | <a href="../project-register.html">تسجيل جديد</a></p>
+        <p><a href="../project-login.html" class="btn">تسجيل الدخول</a> <a href="../project-register.html" class="btn" style="background:#0F3D2E;color:white;">تسجيل جديد</a></p>
       `;
     }
   }
