@@ -209,14 +209,18 @@
         return data.publicUrl;
     }
 
-    // دالة انتظار الجلسة
-    async function waitForSession(maxAttempts = 15, delayMs = 500) {
-        for (let i = 0; i < maxAttempts; i++) {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session) return session;
-            await new Promise(resolve => setTimeout(resolve, delayMs));
-        }
-        return null;
+    // دالة للحصول على userId من signUp دون الاعتماد على تسجيل الدخول التلقائي
+    async function getUserIdAfterSignUp(email, password) {
+        // 1) محاولة إنشاء الحساب
+        const { data, error } = await supabase.auth.signUp({
+            email, password,
+            options: {
+                data: { role: 'project_owner' },
+                emailRedirectTo: window.location.origin + '/auth/callback.html'
+            }
+        });
+        if (error) throw error;
+        return data.user.id;
     }
 
     const form = document.getElementById('registerForm');
@@ -231,7 +235,6 @@
         const whatsappRaw = document.getElementById('whatsapp').value.trim();
         const consent = document.getElementById('consent').checked;
 
-        // التحقق الأساسي
         if (!email || !password || !whatsappRaw) { showError('يرجى ملء جميع الحقول المطلوبة'); window._registerLock = false; return; }
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('البريد الإلكتروني غير صالح'); window._registerLock = false; return; }
         if (password.length < 6) { showError('كلمة المرور يجب أن تكون 6 أحرف على الأقل'); window._registerLock = false; return; }
@@ -246,45 +249,11 @@
         submitBtn.innerHTML = '<span class="loader-small"></span> جاري...';
 
         try {
-            // 1) محاولة إنشاء الحساب (هنا سيرفض Supabase الطلب إذا كان هناك rate limit)
-            const { data: authData, error: signUpError } = await supabase.auth.signUp({
-                email, password,
-                options: {
-                    data: { role: 'project_owner' },
-                    emailRedirectTo: window.location.origin + '/auth/callback.html'
-                }
-            });
+            // 1) محاولة إنشاء الحساب (سيتم رفضه إذا كان هناك rate limit)
+            const userId = await getUserIdAfterSignUp(email, password);
+            // إذا وصلنا إلى هنا، فهذا يعني أن signUp نجح (تم إنشاء الحساب وإرسال البريد)
 
-            // إذا كان الخطأ يحتوي على "rate limit" أو "over_email_send_rate_limit"
-            if (signUpError) {
-                const msg = signUpError.message.toLowerCase();
-                if (msg.includes('rate limit') || msg.includes('over_email_send_rate_limit')) {
-                    // نعرض رسالة خاصة للمستخدم ونوقف العملية (لم يتم إنشاء حساب ولا مشروع)
-                    showToast('⚠️ لا يمكننا تسجيلكم في الوقت الحالي بسبب الضغط. يرجى المحاولة بعد نصف ساعة.', true);
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalText;
-                    window._registerLock = false;
-                    return;
-                }
-                throw signUpError;
-            }
-
-            // 2) إذا نجح signUp، نحاول تسجيل الدخول التلقائي للحصول على جلسة
-            const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
-            if (signInError) {
-                // إذا فشل تسجيل الدخول (قد يكون بسبب عدم تأكيد البريد، ولكننا نحتاج الجلسة)
-                // نجرب طريقة أخرى: ننتظر حتى تصبح الجلسة متاحة
-                const session = await waitForSession();
-                if (!session) throw new Error('لم نتمكن من الحصول على الجلسة');
-            }
-
-            // 3) الحصول على الجلسة (بعد محاولة تسجيل الدخول أو الانتظار)
-            const session = await waitForSession();
-            if (!session) throw new Error('لم نتمكن من الحصول على الجلسة، حاول مرة أخرى');
-
-            const userId = session.user.id;
-
-            // 4) رفع الشعار (اختياري)
+            // 2) رفع الشعار (اختياري)
             let logoUrl = 'https://placehold.co/400x400/0F3D2E/white?text=Logo';
             const logoFile = document.getElementById('logoImage').files[0];
             if (logoFile) {
@@ -295,12 +264,12 @@
                 }
             }
 
-            // 5) حساب تاريخ انتهاء الفترة التجريبية (7 أيام)
+            // 3) حساب تاريخ انتهاء الفترة التجريبية (7 أيام)
             const now = new Date();
             const trialEnd = new Date(now);
             trialEnd.setDate(trialEnd.getDate() + 7);
 
-            // 6) إدراج المشروع
+            // 4) إدراج المشروع
             const projectPayload = {
                 name_ar: document.getElementById('nameAr').value.trim(),
                 name_en: document.getElementById('nameEn').value.trim(),
@@ -331,7 +300,7 @@
 
             if (projError) throw projError;
 
-            // 7) إدراج بيانات التواصل
+            // 5) إدراج بيانات التواصل
             const { error: contactError } = await supabase.from('contacts').insert({
                 project_id: newProject.id,
                 whatsapp: whatsappDigits,
@@ -340,24 +309,25 @@
             });
             if (contactError) console.warn('Contacts insert failed:', contactError);
 
-            // 8) حفظ البريد للتذكير
+            // 6) حفظ البريد للتذكير
             localStorage.setItem('pendingEmail', email);
             localStorage.setItem('newProjectId', newProject.id);
 
-            // 9) عرض رسالة نجاح
+            // 7) عرض رسالة نجاح
             showToast('✅ تم إنشاء حسابك ومشروعك بنجاح! 📧 تم إرسال رابط التأكيد إلى بريدك. تحقق من Spam إذا لم يصل خلال 5 دقائق.');
 
-            // 10) التوجيه إلى لوحة التحكم
+            // 8) التوجيه إلى لوحة التحكم
             setTimeout(() => {
                 window.location.href = `project-dashboard.html?new=true&project_id=${newProject.id}`;
             }, 1500);
 
         } catch (err) {
             console.error(err);
-            // إذا كان الخطأ بسبب rate limit (قد يظهر في مرحلة متأخرة)
             const msg = err.message.toLowerCase();
             if (msg.includes('rate limit') || msg.includes('over_email_send_rate_limit')) {
                 showToast('⚠️ لا يمكننا تسجيلكم في الوقت الحالي بسبب الضغط. يرجى المحاولة بعد نصف ساعة.', true);
+            } else if (msg.includes('already registered')) {
+                showToast('البريد الإلكتروني مسجل مسبقاً. يرجى تسجيل الدخول أو استعادة كلمة المرور.', true);
             } else {
                 showError(err.message || 'حدث خطأ، يرجى المحاولة لاحقاً');
             }
