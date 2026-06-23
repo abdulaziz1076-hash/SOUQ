@@ -371,71 +371,118 @@
   function toast(msg, isErr = false) { const el = document.getElementById('toast'); el.textContent = msg; el.style.background = isErr ? '#C41E3A' : '#0F3D2E'; el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 3000); }
   function confirmDialog({ title, message, danger = false }) { return new Promise((resolve) => { const modal = document.getElementById('confirmModal'); document.getElementById('confirmTitle').innerText = title; document.getElementById('confirmMsg').innerText = message; const ok = document.getElementById('confirmOk'); ok.style.background = danger ? '#C41E3A' : 'var(--primary-gradient)'; const close = () => { modal.style.display = 'none'; resolve(false); }; document.getElementById('confirmCancel').onclick = close; ok.onclick = () => { modal.style.display = 'none'; resolve(true); }; modal.style.display = 'flex'; }); }
 
-  // ============================================================
-  // ✅ checkSession - البحث عن المشروع باستخدام maybeSingle
-  // ============================================================
-  async function checkSession() { 
-    const { data: { session } } = await supabase.auth.getSession(); 
-    if (!session) {
-      const newProjectId = localStorage.getItem('newProjectId');
-      if (newProjectId) {
+// ============================================================
+// ✅ checkSession - دالة التحقق من الجلسة مع دعم التسجيل الجديد
+// ============================================================
+async function checkSession() {
+    // 1) محاولة الحصول على الجلسة فوراً
+    const { data: { session }, error } = await supabase.auth.getSession();
+
+    // 2) إذا كانت الجلسة موجودة، نكمل
+    if (session) {
+        // نزيل أي علامات مؤقتة إذا وجدت
+        localStorage.removeItem('justRegistered');
+        localStorage.removeItem('newProjectId');
+        return await handleExistingSession(session);
+    }
+
+    // 3) إذا لم توجد جلسة، نتحقق من علامة "justRegistered"
+    const justRegistered = localStorage.getItem('justRegistered') === 'true';
+    const newProjectId = localStorage.getItem('newProjectId');
+
+    // 4) إذا كان المستخدم قد سجل للتو، نعطيه فرصة لإكمال تسجيل الدخول
+    if (justRegistered) {
+        // عرض رسالة مؤقتة للمستخدم (اختياري)
+        showToast('⏳ جاري تسجيل الدخول... يرجى الانتظار');
+
+        // محاولة استرداد الجلسة (مع إعادة المحاولة)
+        for (let attempt = 0; attempt < 5; attempt++) {
+            await new Promise(resolve => setTimeout(resolve, 1000)); // انتظار 1 ثانية
+
+            const { data: { session: retrySession } } = await supabase.auth.getSession();
+            if (retrySession) {
+                localStorage.removeItem('justRegistered');
+                localStorage.removeItem('newProjectId');
+                return await handleExistingSession(retrySession);
+            }
+        }
+
+        // إذا فشلت جميع المحاولات، نزيل العلامات ونوجه المستخدم لتسجيل الدخول
+        localStorage.removeItem('justRegistered');
+        localStorage.removeItem('newProjectId');
+        showToast('⚠️ انتهت مهلة تسجيل الدخول. يرجى تسجيل الدخول يدوياً.', true);
+        window.location.href = 'project-login.html?new=true';
+        return null;
+    }
+
+    // 5) إذا لم توجد جلسة وليس مستخدم جديد، نوجه إلى تسجيل الدخول
+    if (newProjectId) {
         localStorage.removeItem('newProjectId');
         window.location.href = 'project-login.html?new=true';
-      } else {
+    } else {
         window.location.href = 'project-login.html';
-      }
-      return null; 
-    } 
+    }
+    return null;
+}
+
+// ============================================================
+// ✅ handleExistingSession - معالجة الجلسة الموجودة (منطق قديم)
+// ============================================================
+async function handleExistingSession(session) {
+    const userId = session.user.id;
 
     const { data: project, error } = await supabase
-      .from('projects')
-      .select('id, name_ar, status, is_email_verified, trial_end_date')
-      .eq('owner_user_id', session.user.id)
-      .maybeSingle();
-
-    if (!project && !error) {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      const { data: retryProject } = await supabase
         .from('projects')
         .select('id, name_ar, status, is_email_verified, trial_end_date')
-        .eq('owner_user_id', session.user.id)
+        .eq('owner_user_id', userId)
         .maybeSingle();
-      if (retryProject) {
-        projectId = retryProject.id;
-        document.getElementById('userName').innerHTML = `مرحباً، ${retryProject.name_ar || ''}`;
-        document.getElementById('userAvatar').innerText = (retryProject.name_ar?.[0] || 'م');
-        return { session, project: retryProject };
-      }
+
+    // إذا لم يتم العثور على مشروع، ننتظر قليلاً (قد يكون قيد الإنشاء)
+    if (!project && !error) {
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        const { data: retryProject } = await supabase
+            .from('projects')
+            .select('id, name_ar, status, is_email_verified, trial_end_date')
+            .eq('owner_user_id', userId)
+            .maybeSingle();
+
+        if (retryProject) {
+            projectId = retryProject.id;
+            document.getElementById('userName').innerHTML = `مرحباً، ${retryProject.name_ar || ''}`;
+            document.getElementById('userAvatar').innerText = (retryProject.name_ar?.[0] || 'م');
+            return { session, project: retryProject };
+        }
     }
 
+    // إذا كان هناك خطأ أو لا مشروع، نوجه لتسجيل الدخول
     if (error || !project) {
-      const newProjectId = localStorage.getItem('newProjectId');
-      if (newProjectId) {
-        localStorage.removeItem('newProjectId');
-        window.location.href = 'project-login.html?new=true';
-      } else {
-        window.location.href = 'project-login.html';
-      }
-      return null;
+        const newProjectId = localStorage.getItem('newProjectId');
+        if (newProjectId) {
+            localStorage.removeItem('newProjectId');
+            window.location.href = 'project-login.html?new=true';
+        } else {
+            window.location.href = 'project-login.html';
+        }
+        return null;
     }
 
-    projectId = project.id; 
-    document.getElementById('userName').innerHTML = `مرحباً، ${project.name_ar || ''}`; 
-    document.getElementById('userAvatar').innerText = (project.name_ar?.[0] || 'م'); 
+    // ✅ تخزين معرف المشروع وإظهار اسم المستخدم
+    projectId = project.id;
+    document.getElementById('userName').innerHTML = `مرحباً، ${project.name_ar || ''}`;
+    document.getElementById('userAvatar').innerText = (project.name_ar?.[0] || 'م');
     localStorage.removeItem('newProjectId');
 
-    // ✅ معالجة معاملات URL (بدون إخفاء المحتوى)
+    // ✅ معالجة معاملات URL (تنظيف)
     const urlParams = new URLSearchParams(window.location.search);
     const isPending = urlParams.get('pending') === 'true';
     const isConfirmed = urlParams.get('confirmed') === 'true';
 
     if (isPending || isConfirmed) {
-      // إزالة المعامل من الرابط (تنظيف)
-      window.history.replaceState({}, document.title, window.location.pathname);
+        window.history.replaceState({}, document.title, window.location.pathname);
     }
 
-    return { session, project }; 
-  }
+    return { session, project };
+}
 
   // ============================================================
   // ✅ loadStats
