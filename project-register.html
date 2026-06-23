@@ -235,11 +235,10 @@
         submitBtn.innerHTML = '<span class="loader-small"></span> جاري...';
 
         try {
-            // 1) إنشاء الحساب (✅ نزيل role لأن العمود غير موجود في auth.users)
+            // 1) إنشاء الحساب
             const { data: authData, error: signUpError } = await supabase.auth.signUp({
                 email, password,
                 options: {
-                    // data: { role: 'project_owner' }, // ❌ تم إزالتها
                     emailRedirectTo: window.location.origin + '/auth/callback.html'
                 }
             });
@@ -248,15 +247,16 @@
             if (signUpError) {
                 const msg = signUpError.message.toLowerCase();
 
-                // حالات الفشل التي لا تسمح بالمتابعة
+                // ❌ حالة الـ rate limit: لا ننتقل إلى check-email.html
                 if (msg.includes('rate limit') || msg.includes('over_email_send_rate_limit')) {
-                    showToast('⚠️ لا يمكننا تسجيلكم في الوقت الحالي بسبب الضغط. حاول بعد نصف ساعة.', true);
+                    showToast('⚠️ لا يمكننا تسجيلكم في الوقت الحالي بسبب الضغط. يرجى المحاولة بعد نصف ساعة.', true);
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = originalText;
                     window._registerLock = false;
-                    return;
+                    return; // ⛔ نوقف التنفيذ هنا
                 }
 
+                // ❌ حالة فشل حفظ المستخدم (مشكلة في قاعدة البيانات)
                 if (msg.includes('database error') || msg.includes('saving new user')) {
                     showToast('❌ حدث خطأ في إنشاء الحساب. يرجى المحاولة مرة أخرى.', true);
                     submitBtn.disabled = false;
@@ -269,7 +269,7 @@
                 throw signUpError;
             }
 
-            // إذا وصلنا هنا، فهذا يعني أن الحساب أنشئ والرسالة أرسلت
+            // ✅ إذا وصلنا هنا، فهذا يعني أن الحساب أنشئ والرسالة أرسلت
             const userId = authData.user.id;
 
             // 3) رفع الشعار (اختياري)
