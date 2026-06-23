@@ -119,28 +119,23 @@ async function loadProjectsFromSupabase() {
         showLoader();
         console.log('🔄 Loading data from Supabase...');
 
-        const sevenDaysAgoIso = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
-
+        // استعلام بسيط: فقط المشاريع النشطة (status = 'active')
         const { data: projects, error } = await supabase
             .from('projects')
             .select(`*, products (*), deals (*), contacts (*)`)
-            .eq('is_email_verified', true)          // ← الشرط الجديد: فقط الموثقة بريدياً
-            .eq('status', 'active')                 // ← نضمن أن المشروع فعال (ليس معطلاً أو محذوفاً)
-            .or(
-                [
-                    `license_status.eq.license_approved`,
-                    `and(license_status.in.(pending_license,license_uploaded),created_at.gte.${sevenDaysAgoIso})`,
-                ].join(',')
-            )
+            .eq('status', 'active')   // فقط المشاريع المؤكدة
             .order('display_order', { ascending: true, nullsFirst: false });
 
         if (error) throw error;
         if (!projects || projects.length === 0) {
-            console.warn('⚠️ No projects found');
+            console.warn('⚠️ No active projects found');
             projectsData = [];
+            window.projectsData = [];
+            hideLoader();
             return;
         }
 
+        // باقي الكود كما هو (معالجة المنتجات، العروض، جهات الاتصال)
         const { data: allVariants, error: varError } = await supabase
             .from('product_variants')
             .select('*');
@@ -159,61 +154,63 @@ async function loadProjectsFromSupabase() {
             const products = (project.products || [])
                 .sort((a, b) => (a.display_order ?? 0) - (b.display_order ?? 0))
                 .map(p => ({
-  id: p.id,
-  name: p.name_ar,
-  nameEn: p.name_en,
-  description: p.description_ar,
-  descriptionEn: p.description_en,
-  longDescription: p.long_description_ar,
-  longDescriptionEn: p.long_description_en,
-  mainImage: p.main_image,
-  images: p.images || [],
-  details: p.details_ar || [],
-  detailsEn: p.details_en || [],
-  category: p.category_ar,
-  categoryEn: p.category_en,
-  type: p.type_ar,
-  typeEn: p.type_en,
-  price_ar: p.price_ar,
-  price_en: p.price_en,
-  variants: variantsByProduct[p.id] || []
-}));
+                    id: p.id,
+                    name: p.name_ar,
+                    nameEn: p.name_en,
+                    description: p.description_ar,
+                    descriptionEn: p.description_en,
+                    longDescription: p.long_description_ar,
+                    longDescriptionEn: p.long_description_en,
+                    mainImage: p.main_image,
+                    images: p.images || [],
+                    details: p.details_ar || [],
+                    detailsEn: p.details_en || [],
+                    category: p.category_ar,
+                    categoryEn: p.category_en,
+                    type: p.type_ar,
+                    typeEn: p.type_en,
+                    price_ar: p.price_ar,
+                    price_en: p.price_en,
+                    variants: variantsByProduct[p.id] || []
+                }));
+
             return {
-  id: project.id,
-  name: project.name_ar,
-  nameEn: project.name_en,
-  is_paid: project.is_paid,
-  emirate: project.emirate,
-  description: project.description_ar,
-  descriptionEn: project.description_en,
-  longDescription: project.long_description_ar,
-  longDescriptionEn: project.long_description_en,
-  image: project.image,
-  adra_license: project.adra_license ? "نعم" : "لا",
-  coverage: project.coverage,
-  category: project.category_ar,
-  categoryEn: project.category_en,
-  display_order: project.display_order ?? 0,
-  products: products,
-  deals: (project.deals || []).map(d => ({
-    id: d.id,
-    title: d.title_ar,
-    titleEn: d.title_en,
-    description: d.description_ar,
-    descriptionEn: d.description_en,
-    image: d.image,
-    images: d.images || [],
-    badge: d.badge_ar,
-    badgeEn: d.badge_en,
-    expiry: d.expiry_date
-  })),
-  whatsapp: null,
-  phone: null,
-  email: null,
-  sell_points: []
-};
+                id: project.id,
+                name: project.name_ar,
+                nameEn: project.name_en,
+                is_paid: project.is_paid,
+                emirate: project.emirate,
+                description: project.description_ar,
+                descriptionEn: project.description_en,
+                longDescription: project.long_description_ar,
+                longDescriptionEn: project.long_description_en,
+                image: project.image,
+                adra_license: project.adra_license ? "نعم" : "لا",
+                coverage: project.coverage,
+                category: project.category_ar,
+                categoryEn: project.category_en,
+                display_order: project.display_order ?? 0,
+                products: products,
+                deals: (project.deals || []).map(d => ({
+                    id: d.id,
+                    title: d.title_ar,
+                    titleEn: d.title_en,
+                    description: d.description_ar,
+                    descriptionEn: d.description_en,
+                    image: d.image,
+                    images: d.images || [],
+                    badge: d.badge_ar,
+                    badgeEn: d.badge_en,
+                    expiry: d.expiry_date
+                })),
+                whatsapp: null,
+                phone: null,
+                email: null,
+                sell_points: []
+            };
         });
 
+        // معالجة جهات الاتصال
         contactsData = {};
         projects.forEach(project => {
             const contact = project.contacts;
@@ -251,8 +248,9 @@ async function loadProjectsFromSupabase() {
         window.projectsData = projectsData;
         window.contactsData = contactsData;
 
-        console.log(`✅ Loaded ${projectsData.length} projects`);
+        console.log(`✅ Loaded ${projectsData.length} active projects`);
 
+        // إعادة عرض الصفحة الحالية
         if (appState.currentPage === 'families') renderFamilies();
         else if (appState.currentPage === 'products' && appState.currentFamilyId) showFamilyProducts(appState.currentFamilyId, false);
         else if (appState.currentPage === 'product-detail' && appState.currentFamilyId && appState.currentProductId) showProductDetail(appState.currentFamilyId, appState.currentProductId, false);
@@ -262,6 +260,7 @@ async function loadProjectsFromSupabase() {
         console.error('❌ Supabase error:', error);
         showToast('حدث خطأ في تحميل البيانات، يرجى تحديث الصفحة');
         projectsData = [];
+        window.projectsData = [];
     } finally {
         hideLoader();
     }
