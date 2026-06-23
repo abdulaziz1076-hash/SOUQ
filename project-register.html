@@ -258,14 +258,7 @@
 
             const userId = authData.user.id;
 
-            // 2) ✅ تسجيل الدخول التلقائي للحصول على جلسة صالحة
-            const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
-            if (signInError) {
-                console.warn('⚠️ فشل تسجيل الدخول التلقائي:', signInError.message);
-                // حتى إذا فشل، نكمل ولكن قد يطلب تسجيل الدخول يدوياً
-            }
-
-            // 3) رفع الشعار (اختياري)
+            // 2) رفع الشعار (اختياري)
             let logoUrl = 'https://placehold.co/400x400/0F3D2E/white?text=Logo';
             const logoFile = document.getElementById('logoImage').files[0];
             if (logoFile) {
@@ -276,7 +269,7 @@
                 }
             }
 
-            // 4) تجميع بيانات المشروع
+            // 3) تجميع بيانات المشروع
             const projectData = {
                 name_ar: document.getElementById('nameAr').value.trim(),
                 name_en: document.getElementById('nameEn').value.trim(),
@@ -294,24 +287,27 @@
                 email: email
             };
 
-            // 5) حفظ البيانات في جدول pending_projects
+            // 4) حفظ البيانات في جدول pending_projects
             const { error: pendingError } = await supabase
                 .from('pending_projects')
                 .insert({
                     user_id: userId,
                     email: email,
                     data: projectData,
-                    expires_at: new Date(Date.now() + 60 * 60 * 1000).toISOString() // ساعة واحدة
+                    expires_at: new Date(Date.now() + 60 * 60 * 1000).toISOString()
                 });
 
             if (pendingError) throw pendingError;
 
-            // 6) التوجيه إلى لوحة التحكم مع تعليمة pending=true
-            showToast('✅ تم إنشاء حسابك. سيتم توجيهك إلى لوحة التحكم.');
+            // 5) حفظ البريد الإلكتروني لعرضه في check-email
+            localStorage.setItem('pendingEmail', email);
+
+            // 6) التوجيه إلى صفحة "تحقق من بريدك"
+            showToast('✅ تم إنشاء حسابك. يرجى تأكيد بريدك الإلكتروني لإكمال التسجيل.');
             submitBtn.disabled = false;
             submitBtn.innerHTML = 'تم الإرسال ✅';
             setTimeout(() => {
-                window.location.href = 'project-dashboard.html?pending=true';
+                window.location.href = 'check-email.html';
             }, 1500);
 
         } catch (err) {
