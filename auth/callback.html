@@ -74,7 +74,7 @@
         window.history.replaceState({}, document.title, url.origin + url.pathname);
       }
 
-      // 2) الحصول على الجلسة (مع إعادة المحاولة)
+      // 2) الحصول على الجلسة
       let session = null;
       for (let i = 0; i < 10; i++) {
         const { data, error } = await supabase.auth.getSession();
@@ -98,7 +98,7 @@
         .maybeSingle();
 
       if (existingProject) {
-        // إذا كان المشروع موجوداً، فقط نحدث حالة التأكيد
+        // تحديث حالة التأكيد إذا لزم الأمر
         await supabase
           .from('projects')
           .update({ is_email_verified: true, status: 'active', trial_end_date: null })
@@ -109,32 +109,30 @@
           <p>سيتم تحويلك إلى لوحة التحكم...</p>
           <div class="loader"></div>
         `;
-        setTimeout(() => window.location.href = '../project-dashboard.html', 1500);
+        setTimeout(() => window.location.href = '../project-dashboard.html?confirmed=true', 1500);
         return;
       }
 
-      // 4) قراءة بيانات المشروع المؤقتة من localStorage
-      const pendingData = localStorage.getItem('pendingProjectData');
-      const timestamp = localStorage.getItem('pendingProjectTimestamp');
+      // 4) ✅ قراءة الطلب المعلق من قاعدة البيانات (بدلاً من localStorage)
+      const { data: pendingData, error: pendingError } = await supabase
+        .from('pending_projects')
+        .select('id, data')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (pendingError) throw pendingError;
 
       if (!pendingData) {
-        throw new Error('لا توجد بيانات مشروع مؤقتة. يرجى التسجيل من الصفحة الرئيسية.');
+        throw new Error('لا توجد بيانات مشروع معلقة. يرجى التسجيل من الصفحة الرئيسية.');
       }
 
-      // التحقق من صلاحية البيانات (30 دقيقة)
-      if (timestamp && (Date.now() - parseInt(timestamp) > 30 * 60 * 1000)) {
-        localStorage.removeItem('pendingProjectData');
-        localStorage.removeItem('pendingProjectTimestamp');
-        throw new Error('انتهت صلاحية بيانات التسجيل. يرجى إعادة المحاولة.');
-      }
+      const projectData = pendingData.data;
+      const pendingId = pendingData.id;
 
-      const projectData = JSON.parse(pendingData);
-
-      // 5) إنشاء المشروع في قاعدة البيانات
+      // 5) إنشاء المشروع
       const now = new Date();
-      const trialEnd = new Date(now);
-      trialEnd.setDate(trialEnd.getDate() + 7);
-
       const projectPayload = {
         name_ar: projectData.name_ar,
         name_en: projectData.name_en,
@@ -174,12 +172,13 @@
       });
       if (contactError) console.warn('Contacts insert failed:', contactError);
 
-      // 7) حذف البيانات المؤقتة
-      localStorage.removeItem('pendingProjectData');
-      localStorage.removeItem('pendingProjectTimestamp');
-      localStorage.removeItem('pendingEmail');
+      // 7) ✅ حذف الطلب المعلق من قاعدة البيانات
+      await supabase
+        .from('pending_projects')
+        .delete()
+        .eq('id', pendingId);
 
-      // 8) عرض رسالة النجاح والتحويل
+      // 8) عرض رسالة النجاح والتوجيه إلى لوحة التحكم مع confirmed=true
       card.innerHTML = `
         <img class="logo" src="https://souqalmasharie.onrender.com/images/logo.png" alt="سوق المشاريع" />
         <h1>✅ تم إنشاء مشروعك بنجاح</h1>
@@ -187,7 +186,7 @@
         <div class="loader"></div>
       `;
       setTimeout(() => {
-        window.location.href = '../project-dashboard.html';
+        window.location.href = '../project-dashboard.html?confirmed=true';
       }, 2000);
 
     } catch (err) {
