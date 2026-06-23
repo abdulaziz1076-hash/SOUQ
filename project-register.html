@@ -192,10 +192,10 @@
         document.getElementById('step1Indicator').classList.add('active');
     };
 
-    async function uploadLogo(file, projectId) {
+    async function uploadLogo(file, userId) {
         if (!file) return null;
         const fileExt = file.name.split('.').pop();
-        const fileName = `${projectId}/logo_${Date.now()}.${fileExt}`;
+        const fileName = `temp/${userId}/logo_${Date.now()}.${fileExt}`;
         const { error } = await supabase.storage.from('project-logos').upload(fileName, file);
         if (error) {
             console.error('Upload error:', error);
@@ -203,6 +203,16 @@
         }
         const { data } = supabase.storage.from('project-logos').getPublicUrl(fileName);
         return data.publicUrl;
+    }
+
+    // دالة انتظار الجلسة
+    async function waitForSession(maxAttempts = 15) {
+        for (let i = 0; i < maxAttempts; i++) {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) return session;
+            await new Promise(resolve => setTimeout(resolve, 500));
+        }
+        return null;
     }
 
     const form = document.getElementById('registerForm');
@@ -240,10 +250,17 @@
                 }
             });
             if (signUpError) throw new Error(signUpError.message.includes('already registered') ? 'البريد الإلكتروني مسجل مسبقاً' : signUpError.message);
-            
-            const userId = authData.user.id;
 
-            // 2) رفع الشعار
+            // 2) تسجيل الدخول التلقائي لضمان وجود جلسة نشطة
+            const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+            if (signInError) throw new Error('فشل تسجيل الدخول التلقائي، يرجى المحاولة مرة أخرى');
+
+            // 3) انتظار الجلسة
+            const session = await waitForSession();
+            if (!session) throw new Error('لم نتمكن من الحصول على الجلسة، حاول مرة أخرى');
+            const userId = session.user.id;
+
+            // 4) رفع الشعار
             let logoUrl = 'https://placehold.co/400x400/0F3D2E/white?text=Logo';
             const logoFile = document.getElementById('logoImage').files[0];
             if (logoFile) {
@@ -251,9 +268,7 @@
                 if (uploadedUrl) logoUrl = uploadedUrl;
             }
 
-            // ============================================================
-            // ✅ التعديل الجوهري هنا (تم تغيير status و إضافة is_email_verified)
-            // ============================================================
+            // 5) إدراج المشروع بحالة pending
             const projectPayload = {
                 name_ar: document.getElementById('nameAr').value.trim(),
                 name_en: document.getElementById('nameEn').value.trim(),
@@ -267,15 +282,13 @@
                 category_ar: document.getElementById('category').value,
                 category_en: document.getElementById('category').value,
                 adra_license: false,
-                status: 'active',                 // ✅ تغيير من 'pending' إلى 'active'
-                is_email_verified: false,         // ✅ إضافة العمود الجديد (سيتم تحديثه تلقائياً بعد تأكيد البريد)
+                status: 'pending',
                 license_status: 'pending_license',
                 display_order: 0,
                 owner_user_id: userId,
-                created_at: new Date().toISOString()
+                created_at: new Date().toISOString(),
+                is_email_verified: false
             };
-            // ============================================================
-
             const { data: newProject, error: projError } = await supabase
                 .from('projects')
                 .insert(projectPayload)
@@ -283,7 +296,7 @@
                 .single();
             if (projError) throw projError;
 
-            // 4) إدراج بيانات التواصل
+            // 6) إدراج بيانات التواصل
             const { error: contactError } = await supabase.from('contacts').insert({
                 project_id: newProject.id,
                 whatsapp: whatsappDigits,
@@ -292,16 +305,15 @@
             });
             if (contactError) console.warn('Contacts insert failed:', contactError);
 
-            // 5) حفظ projectId في localStorage للاستخدام في الداشبورد
-            localStorage.setItem('currentProjectId', newProject.id);
+            // 7) تخزين البريد للتذكير
             localStorage.setItem('pendingEmail', email);
 
-            // 6) عرض رسالة نجاح
-            showToast('✅ تم إنشاء حسابك ومشروعك بنجاح! يرجى تأكيد بريدك الإلكتروني.');
+            // 8) عرض رسالة نجاح
+            showToast('✅ تم إنشاء حسابك ومشروعك بنجاح! سيتم تحويلك إلى صفحة تأكيد البريد.');
 
-            // 7) التوجيه إلى لوحة التحكم مع تمرير projectId
+            // 9) التوجيه إلى صفحة تأكيد البريد
             setTimeout(() => {
-                window.location.href = `project-dashboard.html?project_id=${newProject.id}`;
+                window.location.href = 'check-email.html';
             }, 1500);
 
         } catch (err) {
