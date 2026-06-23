@@ -121,10 +121,11 @@ async function loadProjectsFromSupabase() {
 
         // استعلام بسيط: فقط المشاريع النشطة (status = 'active')
         const { data: projects, error } = await supabase
-            .from('projects')
-            .select(`*, products (*), deals (*), contacts (*)`)
-            .eq('status', 'active')   // فقط المشاريع المؤكدة
-            .order('display_order', { ascending: true, nullsFirst: false });
+    .from('projects')
+    .select(`*, products (*), deals (*), contacts (*)`)
+    .eq('status', 'active')
+    .eq('is_email_verified', true)  // ← تأكد من أن البريد مؤكد
+    .order('display_order', { ascending: true, nullsFirst: false });
 
         if (error) throw error;
         if (!projects || projects.length === 0) {
