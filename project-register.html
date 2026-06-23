@@ -246,13 +246,17 @@
 
             if (signUpError) {
                 const msg = signUpError.message.toLowerCase();
+
+                // ✅ حالة الـ rate limit: نعرض رسالة ولا ننتقل إلى check-email.html
                 if (msg.includes('rate limit') || msg.includes('over_email_send_rate_limit')) {
                     showToast('⚠️ لا يمكننا تسجيلكم في الوقت الحالي بسبب الضغط. حاول بعد نصف ساعة.', true);
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = originalText;
                     window._registerLock = false;
-                    return;
+                    return; // ⛔ نوقف التنفيذ هنا، لا ننتقل إلى check-email.html
                 }
+
+                // أي خطأ آخر
                 throw signUpError;
             }
 
@@ -302,7 +306,7 @@
             // 5) حفظ البريد الإلكتروني لعرضه في check-email
             localStorage.setItem('pendingEmail', email);
 
-            // 6) التوجيه إلى صفحة "تحقق من بريدك"
+            // 6) ✅ التوجيه إلى صفحة "تحقق من بريدك" (فقط بعد نجاح كل شيء)
             showToast('✅ تم إنشاء حسابك. يرجى تأكيد بريدك الإلكتروني لإكمال التسجيل.');
             submitBtn.disabled = false;
             submitBtn.innerHTML = 'تم الإرسال ✅';
@@ -313,6 +317,8 @@
         } catch (err) {
             console.error(err);
             const msg = err.message.toLowerCase();
+
+            // ✅ معالجة متكررة للـ rate limit في حالة ظهوره هنا أيضاً
             if (msg.includes('rate limit') || msg.includes('over_email_send_rate_limit')) {
                 showToast('⚠️ لا يمكننا تسجيلكم في الوقت الحالي بسبب الضغط. حاول بعد نصف ساعة.', true);
             } else if (msg.includes('already registered')) {
@@ -320,6 +326,7 @@
             } else {
                 showError(err.message || 'حدث خطأ، يرجى المحاولة لاحقاً');
             }
+
             submitBtn.disabled = false;
             submitBtn.innerHTML = originalText;
             window._registerLock = false;
