@@ -106,6 +106,7 @@
       }
 
       if (!project) {
+        // إذا لم يوجد مشروع، نعطي رسالة واضحة مع خيار إعادة التسجيل
         throw new Error('لا يوجد مشروع مرتبط بهذا الحساب. يرجى إعادة التسجيل من الصفحة الرئيسية.');
       }
 
@@ -115,7 +116,7 @@
         .update({
           status: 'active',
           is_email_verified: true,
-          trial_end_date: null   // إلغاء التقييد الزمني (يظهر دائماً)
+          trial_end_date: null
         })
         .eq('id', project.id);
 
