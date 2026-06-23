@@ -192,10 +192,10 @@
         document.getElementById('step1Indicator').classList.add('active');
     };
 
-    async function uploadLogo(file, userId) {
+    async function uploadLogo(file, projectId) {
         if (!file) return null;
         const fileExt = file.name.split('.').pop();
-        const fileName = `temp/${userId}/logo_${Date.now()}.${fileExt}`;
+        const fileName = `${projectId}/logo_${Date.now()}.${fileExt}`;
         const { error } = await supabase.storage.from('project-logos').upload(fileName, file);
         if (error) {
             console.error('Upload error:', error);
@@ -203,16 +203,6 @@
         }
         const { data } = supabase.storage.from('project-logos').getPublicUrl(fileName);
         return data.publicUrl;
-    }
-
-    // دالة انتظار الجلسة
-    async function waitForSession(maxAttempts = 15) {
-        for (let i = 0; i < maxAttempts; i++) {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session) return session;
-            await new Promise(resolve => setTimeout(resolve, 500));
-        }
-        return null;
     }
 
     const form = document.getElementById('registerForm');
@@ -241,7 +231,7 @@
         submitBtn.innerHTML = '<span class="loader-small"></span> جاري...';
 
         try {
-            // 1) إنشاء حساب Auth
+            // 1) إنشاء حساب Auth (بدون تسجيل دخول تلقائي)
             const { data: authData, error: signUpError } = await supabase.auth.signUp({
                 email, password,
                 options: {
@@ -249,26 +239,28 @@
                     emailRedirectTo: window.location.origin + '/auth/callback.html'
                 }
             });
-            if (signUpError) throw new Error(signUpError.message.includes('already registered') ? 'البريد الإلكتروني مسجل مسبقاً' : signUpError.message);
+            if (signUpError) {
+                // التعامل مع البريد المسجل مسبقاً
+                if (signUpError.message.includes('already registered')) {
+                    throw new Error('البريد الإلكتروني مسجل مسبقاً. يرجى تسجيل الدخول أو استعادة كلمة المرور.');
+                }
+                throw signUpError;
+            }
+            
+            const userId = authData.user.id;
 
-            // 2) تسجيل الدخول التلقائي لضمان وجود جلسة نشطة
-            const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
-            if (signInError) throw new Error('فشل تسجيل الدخول التلقائي، يرجى المحاولة مرة أخرى');
-
-            // 3) انتظار الجلسة
-            const session = await waitForSession();
-            if (!session) throw new Error('لم نتمكن من الحصول على الجلسة، حاول مرة أخرى');
-            const userId = session.user.id;
-
-            // 4) رفع الشعار
+            // 2) رفع الشعار (إذا وجد)
             let logoUrl = 'https://placehold.co/400x400/0F3D2E/white?text=Logo';
             const logoFile = document.getElementById('logoImage').files[0];
             if (logoFile) {
-                const uploadedUrl = await uploadLogo(logoFile, userId);
-                if (uploadedUrl) logoUrl = uploadedUrl;
+                try {
+                    logoUrl = await uploadLogo(logoFile, userId);
+                } catch (uploadErr) {
+                    console.warn('فشل رفع الشعار، سيتم استخدام الرابط الافتراضي');
+                }
             }
 
-            // 5) إدراج المشروع بحالة pending
+            // 3) إدراج المشروع في قاعدة البيانات (حالة pending)
             const projectPayload = {
                 name_ar: document.getElementById('nameAr').value.trim(),
                 name_en: document.getElementById('nameEn').value.trim(),
@@ -289,14 +281,16 @@
                 created_at: new Date().toISOString(),
                 is_email_verified: false
             };
+
             const { data: newProject, error: projError } = await supabase
                 .from('projects')
                 .insert(projectPayload)
                 .select()
                 .single();
+
             if (projError) throw projError;
 
-            // 6) إدراج بيانات التواصل
+            // 4) إدراج بيانات التواصل
             const { error: contactError } = await supabase.from('contacts').insert({
                 project_id: newProject.id,
                 whatsapp: whatsappDigits,
@@ -305,15 +299,16 @@
             });
             if (contactError) console.warn('Contacts insert failed:', contactError);
 
-            // 7) تخزين البريد للتذكير
+            // 5) حفظ projectId في localStorage للاستخدام في الداشبورد
+            localStorage.setItem('currentProjectId', newProject.id);
             localStorage.setItem('pendingEmail', email);
 
-            // 8) عرض رسالة نجاح
-            showToast('✅ تم إنشاء حسابك ومشروعك بنجاح! سيتم تحويلك إلى صفحة تأكيد البريد.');
+            // 6) عرض رسالة نجاح
+            showToast('✅ تم إنشاء حسابك ومشروعك بنجاح! يرجى تأكيد بريدك الإلكتروني.');
 
-            // 9) التوجيه إلى صفحة تأكيد البريد
+            // 7) التوجيه مباشرة إلى لوحة التحكم
             setTimeout(() => {
-                window.location.href = 'check-email.html';
+                window.location.href = `project-dashboard.html?new=true&project_id=${newProject.id}`;
             }, 1500);
 
         } catch (err) {
