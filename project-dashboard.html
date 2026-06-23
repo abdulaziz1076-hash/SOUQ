@@ -481,44 +481,64 @@
   // ============================================================
   // ✅ loadProjectData المعدلة (تظهر التنبيه بناءً على is_email_verified)
   // ============================================================
-  async function loadProjectData() { 
-    if (!projectId) {
-      // إذا لم يوجد projectId، نخفي التنبيه ونعرض رسالة
-      document.getElementById('emailConfirmationAlert').style.display = 'none';
-      return;
-    }
+async function loadProjectData() { 
     const { data: proj } = await supabase.from('projects').select('*').eq('id', projectId).single(); 
     if(proj){
-      document.getElementById('profileNameAr').value=proj.name_ar||''; 
-      document.getElementById('profileNameEn').value=proj.name_en||'';
-      document.getElementById('profileDescAr').value=proj.description_ar||''; 
-      document.getElementById('profileDescEn').value=proj.description_en||'';
-      document.getElementById('profileLongAr').value=proj.long_description_ar||''; 
-      document.getElementById('profileLongEn').value=proj.long_description_en||'';
-      document.getElementById('profileEmirate').value=proj.emirate||'دبي'; 
-      document.getElementById('profileCoverage').value=proj.coverage||'الإمارة فقط';
-      document.getElementById('profileAdraLicense').checked=!!proj.adra_license; 
-      if(proj.category_ar) document.getElementById('profileCategory').value=proj.category_ar;
-      document.getElementById('currentLogoHint').innerHTML=proj.image?`<img src="${proj.image}" class="preview-img">`:'لا يوجد شعار';
-      const reactivateBtn = document.getElementById('dropdownReactivateAccountBtn');
-      if (proj.status === 'disabled' || proj.status === 'deleted') reactivateBtn.style.display = 'flex';
-      else reactivateBtn.style.display = 'none';
+        document.getElementById('profileNameAr').value=proj.name_ar||''; 
+        document.getElementById('profileNameEn').value=proj.name_en||'';
+        document.getElementById('profileDescAr').value=proj.description_ar||''; 
+        document.getElementById('profileDescEn').value=proj.description_en||'';
+        document.getElementById('profileLongAr').value=proj.long_description_ar||''; 
+        document.getElementById('profileLongEn').value=proj.long_description_en||'';
+        document.getElementById('profileEmirate').value=proj.emirate||'دبي'; 
+        document.getElementById('profileCoverage').value=proj.coverage||'الإمارة فقط';
+        document.getElementById('profileAdraLicense').checked=!!proj.adra_license; 
+        if(proj.category_ar) document.getElementById('profileCategory').value=proj.category_ar;
+        document.getElementById('currentLogoHint').innerHTML=proj.image?`<img src="${proj.image}" class="preview-img">`:'لا يوجد شعار';
+        
+        // زر إعادة التنشيط
+        const reactivateBtn = document.getElementById('dropdownReactivateAccountBtn');
+        if (proj.status === 'disabled' || proj.status === 'deleted') reactivateBtn.style.display = 'flex';
+        else reactivateBtn.style.display = 'none';
 
-      // ✅ التحكم في تنبيه تأكيد البريد (الجزء الأهم)
-      const alertBox = document.getElementById('emailConfirmationAlert');
-      if (proj.is_email_verified === false) {
-        alertBox.style.display = 'block';
-      } else {
-        alertBox.style.display = 'none';
-      }
+        // ==== تنبيه تأكيد البريد ====
+        const alertBox = document.getElementById('emailConfirmationAlert');
+        const resendBtn = document.getElementById('resendEmailBtn');
+        
+        // إذا كان المشروع pending (لم يؤكد بريده)
+        if (proj.status === 'pending' || !proj.is_email_verified) {
+            alertBox.style.display = 'block';
+            // تحديث نص التنبيه
+            document.getElementById('alertMessage').textContent = 'لم تقم بتأكيد بريدك الإلكتروني بعد. يرجى التحقق من بريدك والضغط على رابط التأكيد ليظهر مشروعك في السوق.';
+            // إظهار زر إعادة الإرسال
+            if (resendBtn) {
+                resendBtn.style.display = 'inline-flex';
+                resendBtn.onclick = async () => {
+                    const { data: { session } } = await supabase.auth.getSession();
+                    if (!session || !session.user) return toast('الرجاء تسجيل الدخول أولاً', true);
+                    const email = session.user.email;
+                    const { error } = await supabase.auth.resend({
+                        type: 'signup',
+                        email: email,
+                        options: { emailRedirectTo: window.location.origin + '/auth/callback.html' }
+                    });
+                    if (error) toast(error.message, true);
+                    else toast('تم إعادة إرسال رابط التأكيد إلى بريدك الإلكتروني');
+                };
+            }
+        } else {
+            alertBox.style.display = 'none';
+            if (resendBtn) resendBtn.style.display = 'none';
+        }
     }
+    // باقي الكود (حالة الرخصة) ...
     const lic=await supabase.from('projects').select('license_status').eq('id',projectId).single(); 
     const alertDiv=document.getElementById('licenseStatusAlert');
     if(lic.data?.license_status==='pending_license') alertDiv.innerHTML='<i class="fas fa-clock"></i> لم يتم رفع الرخصة بعد.';
     else if(lic.data?.license_status==='license_uploaded') alertDiv.innerHTML='<i class="fas fa-hourglass-half"></i> جاري المراجعة.';
     else if(lic.data?.license_status==='license_approved') alertDiv.innerHTML='<i class="fas fa-check-circle"></i> معتمد.';
     else if(lic.data?.license_status==='license_rejected') alertDiv.innerHTML='<i class="fas fa-times-circle"></i> مرفوض، أعد رفع ملف صحيح.';
-  }
+}
 
   document.getElementById('saveProfileBtn').onclick = async () => {
     let logoUrl=null; const logoFile=document.getElementById('profileLogo').files[0];
