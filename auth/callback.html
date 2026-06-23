@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>جاري تأكيد البريد… | سوق المشاريع</title>
+  <title>تأكيد البريد الإلكتروني | سوق المشاريع</title>
   <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap" rel="stylesheet" />
   <style>
     body{
@@ -93,7 +93,7 @@
       for (let i = 0; i < 10; i++) {
         const { data, error } = await supabase
           .from('projects')
-          .select('id, status, is_email_verified')
+          .select('id, status, is_email_verified, trial_end_date')
           .eq('owner_user_id', userId)
           .maybeSingle();
 
@@ -109,18 +109,15 @@
         throw new Error('لا يوجد مشروع مرتبط بهذا الحساب. يرجى إعادة التسجيل من الصفحة الرئيسية.');
       }
 
-      // 4) تحديث حالة المشروع
-      if (project.status === 'pending' || !project.is_email_verified) {
-        const { error: updateError } = await supabase
-          .from('projects')
-          .update({ 
-            status: 'active',
-            is_email_verified: true
-          })
-          .eq('id', project.id);
-
-        if (updateError) throw updateError;
-      }
+      // 4) تحديث حالة المشروع: تفعيل وإلغاء الفترة التجريبية
+      await supabase
+        .from('projects')
+        .update({
+          status: 'active',
+          is_email_verified: true,
+          trial_end_date: null   // إلغاء التقييد الزمني (يظهر دائماً)
+        })
+        .eq('id', project.id);
 
       // 5) عرض رسالة النجاح والتحويل
       card.innerHTML = `
