@@ -502,7 +502,12 @@ async function loadProjectData() {
         else reactivateBtn.style.display = 'none';
 
         // ==== تنبيه تأكيد البريد ====
-        const alertBox = document.getElementById('emailConfirmationAlert');
+       const alertBox = document.getElementById('emailConfirmationAlert');
+if (proj.is_email_verified === false) {
+    alertBox.style.display = 'block';
+} else {
+    alertBox.style.display = 'none';
+}
         const resendBtn = document.getElementById('resendEmailBtn');
         
         // إذا كان المشروع pending (لم يؤكد بريده)
