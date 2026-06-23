@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
+        /* نفس الأنماط السابقة */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: linear-gradient(145deg, #0F3D2E, #1A5F44);
@@ -209,18 +210,30 @@
         return data.publicUrl;
     }
 
-    // دالة للحصول على userId من signUp دون الاعتماد على تسجيل الدخول التلقائي
-    async function getUserIdAfterSignUp(email, password) {
-        // 1) محاولة إنشاء الحساب
-        const { data, error } = await supabase.auth.signUp({
-            email, password,
-            options: {
-                data: { role: 'project_owner' },
-                emailRedirectTo: window.location.origin + '/auth/callback.html'
+    // دالة لتسجيل الدخول والحصول على userId مع إعادة محاولة
+    async function loginAndGetUserId(email, password, maxAttempts = 5) {
+        for (let attempt = 0; attempt < maxAttempts; attempt++) {
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+                if (error) {
+                    console.warn(`تسجيل الدخول محاولة ${attempt+1} فشل:`, error.message);
+                    if (error.message.includes('Invalid login credentials') || error.message.includes('Email not confirmed')) {
+                        // قد يكون البريد غير مؤكد، لكننا نستمر بالمحاولة
+                        await new Promise(resolve => setTimeout(resolve, 1000));
+                        continue;
+                    }
+                    throw error;
+                }
+                if (data.session) {
+                    // نجحنا في الحصول على جلسة
+                    return data.user.id;
+                }
+            } catch (e) {
+                console.warn(`محاولة ${attempt+1} فشلت:`, e.message);
+                await new Promise(resolve => setTimeout(resolve, 1000));
             }
-        });
-        if (error) throw error;
-        return data.user.id;
+        }
+        throw new Error('تعذر تسجيل الدخول التلقائي بعد عدة محاولات. يرجى تسجيل الدخول يدوياً.');
     }
 
     const form = document.getElementById('registerForm');
@@ -249,11 +262,48 @@
         submitBtn.innerHTML = '<span class="loader-small"></span> جاري...';
 
         try {
-            // 1) محاولة إنشاء الحساب (سيتم رفضه إذا كان هناك rate limit)
-            const userId = await getUserIdAfterSignUp(email, password);
-            // إذا وصلنا إلى هنا، فهذا يعني أن signUp نجح (تم إنشاء الحساب وإرسال البريد)
+            // 1) إنشاء الحساب
+            const { data: authData, error: signUpError } = await supabase.auth.signUp({
+                email, password,
+                options: {
+                    data: { role: 'project_owner' },
+                    emailRedirectTo: window.location.origin + '/auth/callback.html'
+                }
+            });
 
-            // 2) رفع الشعار (اختياري)
+            if (signUpError) {
+                if (signUpError.message.includes('rate limit') || signUpError.message.includes('over_email_send_rate_limit')) {
+                    showToast('⚠️ لا يمكننا تسجيلكم في الوقت الحالي بسبب الضغط. يرجى المحاولة بعد نصف ساعة.', true);
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                    window._registerLock = false;
+                    return;
+                }
+                throw signUpError;
+            }
+
+            // 2) محاولة تسجيل الدخول التلقائي للحصول على جلسة
+            let userId;
+            try {
+                userId = await loginAndGetUserId(email, password);
+            } catch (loginError) {
+                // إذا فشل تسجيل الدخول، نستخدم userId من signUp ولكن قد لا يعمل بسبب RLS
+                console.warn('تسجيل الدخول التلقائي فشل، سنحاول استخدام userId من signUp:', loginError.message);
+                userId = authData.user.id;
+                // ولكن قد يكون هناك مشكلة في RLS لأن الجلسة غير موجودة
+                // لذلك نعرض رسالة ونطلب من المستخدم تسجيل الدخول يدوياً
+                // لكننا سنحاول الإدراج مع userId من signUp، وقد يعمل إذا كانت السياسات تسمح.
+                // لكننا سنحاول مرة أخرى تسجيل الدخول بعد انتظار قصير.
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                try {
+                    userId = await loginAndGetUserId(email, password);
+                } catch (e2) {
+                    // إذا فشل مرة أخرى، نستخدم userId من signUp ولكن قد يسبب foreign key error
+                    userId = authData.user.id;
+                }
+            }
+
+            // 3) رفع الشعار (اختياري)
             let logoUrl = 'https://placehold.co/400x400/0F3D2E/white?text=Logo';
             const logoFile = document.getElementById('logoImage').files[0];
             if (logoFile) {
@@ -264,12 +314,12 @@
                 }
             }
 
-            // 3) حساب تاريخ انتهاء الفترة التجريبية (7 أيام)
+            // 4) حساب تاريخ انتهاء الفترة التجريبية (7 أيام)
             const now = new Date();
             const trialEnd = new Date(now);
             trialEnd.setDate(trialEnd.getDate() + 7);
 
-            // 4) إدراج المشروع
+            // 5) إدراج المشروع
             const projectPayload = {
                 name_ar: document.getElementById('nameAr').value.trim(),
                 name_en: document.getElementById('nameEn').value.trim(),
@@ -298,9 +348,32 @@
                 .select()
                 .single();
 
-            if (projError) throw projError;
+            if (projError) {
+                // إذا كان الخطأ بسبب foreign key، قد يكون المستخدم غير موجود بعد، ننتظر ونحاول مرة أخرى
+                if (projError.message.includes('foreign key constraint')) {
+                    console.warn('foreign key error, retrying after delay...');
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                    // نحاول جلب المستخدم مرة أخرى
+                    const { data: { session } } = await supabase.auth.getSession();
+                    if (session) {
+                        const retryUserId = session.user.id;
+                        projectPayload.owner_user_id = retryUserId;
+                        const { data: retryProject, error: retryError } = await supabase
+                            .from('projects')
+                            .insert(projectPayload)
+                            .select()
+                            .single();
+                        if (retryError) throw retryError;
+                        newProject = retryProject;
+                    } else {
+                        throw projError;
+                    }
+                } else {
+                    throw projError;
+                }
+            }
 
-            // 5) إدراج بيانات التواصل
+            // 6) إدراج بيانات التواصل
             const { error: contactError } = await supabase.from('contacts').insert({
                 project_id: newProject.id,
                 whatsapp: whatsappDigits,
@@ -309,14 +382,14 @@
             });
             if (contactError) console.warn('Contacts insert failed:', contactError);
 
-            // 6) حفظ البريد للتذكير
+            // 7) حفظ البريد للتذكير
             localStorage.setItem('pendingEmail', email);
             localStorage.setItem('newProjectId', newProject.id);
 
-            // 7) عرض رسالة نجاح
+            // 8) عرض رسالة نجاح
             showToast('✅ تم إنشاء حسابك ومشروعك بنجاح! 📧 تم إرسال رابط التأكيد إلى بريدك. تحقق من Spam إذا لم يصل خلال 5 دقائق.');
 
-            // 8) التوجيه إلى لوحة التحكم
+            // 9) التوجيه إلى لوحة التحكم
             setTimeout(() => {
                 window.location.href = `project-dashboard.html?new=true&project_id=${newProject.id}`;
             }, 1500);
