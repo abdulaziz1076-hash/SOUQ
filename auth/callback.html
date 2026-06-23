@@ -63,7 +63,6 @@
   const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
   async function getValidSession() {
-    // محاولة الحصول على جلسة صالحة مع إعادة المحاولة
     for (let attempt = 0; attempt < 15; attempt++) {
       const { data: { session }, error } = await supabase.auth.getSession();
       if (error) throw error;
@@ -78,14 +77,14 @@
       const url = new URL(window.location.href);
       const code = url.searchParams.get('code');
 
-      // 1) تبادل الكود للحصول على الجلسة (إذا كان موجوداً)
+      // 1) تبادل الكود للحصول على الجلسة
       if (code) {
         const { error } = await supabase.auth.exchangeCodeForSession(code);
         if (error) throw error;
         window.history.replaceState({}, document.title, url.origin + url.pathname);
       }
 
-      // 2) الحصول على الجلسة مع إعادة المحاولة
+      // 2) الحصول على الجلسة
       const session = await getValidSession();
       const userId = session.user.id;
 
@@ -107,11 +106,11 @@
           <p>سيتم تحويلك إلى لوحة التحكم...</p>
           <div class="loader"></div>
         `;
-        setTimeout(() => window.location.href = '../project-dashboard.html?confirmed=true', 1500);
+        setTimeout(() => window.location.href = '../project-dashboard.html', 1500);
         return;
       }
 
-      // 4) جلب البيانات من pending_projects مع إعادة المحاولة
+      // 4) جلب البيانات من pending_projects
       let pendingData = null;
       for (let attempt = 0; attempt < 5; attempt++) {
         const { data, error } = await supabase
@@ -141,7 +140,7 @@
       const projectData = pendingData.data;
       const pendingId = pendingData.id;
 
-      // 5) إنشاء المشروع
+      // 5) ✅ إنشاء المشروع في جدول projects
       const now = new Date();
       const projectPayload = {
         name_ar: projectData.name_ar,
@@ -182,13 +181,13 @@
       });
       if (contactError) console.warn('Contacts insert failed:', contactError);
 
-      // 7) حذف الطلب المعلق
+      // 7) ✅ حذف السجل من pending_projects
       await supabase
         .from('pending_projects')
         .delete()
         .eq('id', pendingId);
 
-      // 8) عرض رسالة النجاح والتوجيه
+      // 8) عرض رسالة النجاح والتوجيه إلى لوحة التحكم
       card.innerHTML = `
         <img class="logo" src="https://souqalmasharie.onrender.com/images/logo.png" alt="سوق المشاريع" />
         <h1>✅ تم إنشاء مشروعك بنجاح</h1>
@@ -196,7 +195,7 @@
         <div class="loader"></div>
       `;
       setTimeout(() => {
-        window.location.href = '../project-dashboard.html?confirmed=true';
+        window.location.href = '../project-dashboard.html';
       }, 2000);
 
     } catch (err) {
