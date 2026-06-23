@@ -149,7 +149,7 @@
         </div>
         <div id="formError" class="error"></div>
     </form>
-    <div class="info-note">سيتم إنشاء حسابك ومشروعك فوراً. ستحتاج إلى تأكيد بريدك الإلكتروني ليظهر مشروعك للجمهور.</div>
+    <div class="info-note">سيتم إنشاء حسابك، وسيتم إرسال رابط تأكيد إلى بريدك. بعد التأكيد، سيتم إنشاء مشروعك تلقائياً.</div>
 </div>
 
 <div id="toastMsg" class="toast-message"></div>
@@ -196,10 +196,10 @@
         document.getElementById('step1Indicator').classList.add('active');
     };
 
-    async function uploadLogo(file, projectId) {
+    async function uploadLogo(file, userId) {
         if (!file) return null;
         const fileExt = file.name.split('.').pop();
-        const fileName = `${projectId}/logo_${Date.now()}.${fileExt}`;
+        const fileName = `temp/${userId}/logo_${Date.now()}.${fileExt}`;
         const { error } = await supabase.storage.from('project-logos').upload(fileName, file);
         if (error) {
             console.error('Upload error:', error);
@@ -235,7 +235,7 @@
         submitBtn.innerHTML = '<span class="loader-small"></span> جاري...';
 
         try {
-            // 1) إنشاء الحساب
+            // 1) إنشاء الحساب (بدون إنشاء المشروع)
             const { data: authData, error: signUpError } = await supabase.auth.signUp({
                 email, password,
                 options: {
@@ -247,7 +247,7 @@
             if (signUpError) {
                 const msg = signUpError.message.toLowerCase();
                 if (msg.includes('rate limit') || msg.includes('over_email_send_rate_limit')) {
-                    showToast('⚠️ لا يمكننا تسجيلكم في الوقت الحالي بسبب الضغط. يرجى المحاولة بعد نصف ساعة.', true);
+                    showToast('⚠️ لا يمكننا تسجيلكم في الوقت الحالي بسبب الضغط. حاول بعد نصف ساعة.', true);
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = originalText;
                     window._registerLock = false;
@@ -258,18 +258,8 @@
 
             const userId = authData.user.id;
 
-            // 2) تسجيل الدخول التلقائي لتفعيل الجلسة (حل مشكلة RLS)
-            const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
-            if (signInError) {
-                // إذا فشل تسجيل الدخول (مثلاً لأن البريد لم يؤكد)، يمكننا محاولة التعامل معه لكن نادر.
-                console.warn('تسجيل الدخول التلقائي فشل، لكن سنحاول إدراج المشروع باستخدام owner_user_id يدوياً (قد يفشل)');
-                // لكن الأفضل أن نكمل على أي حال لأن السياسة قد تسمح بذلك إذا كانت هناك سياسة تسمح بإدراج مع owner_user_id من دون جلسة.
-                // هنا نكتفي بعرض تحذير ونكمل.
-                showToast('تنبيه: يرجى تسجيل الدخول يدوياً بعد التأكيد', true);
-            }
-
-            // 3) رفع الشعار (اختياري)
-            let logoUrl = 'https://placehold.co/400x400/0F3D2E/white?text=Logo';
+            // 2) حفظ بيانات المشروع في localStorage مؤقتاً
+            let logoUrl = null;
             const logoFile = document.getElementById('logoImage').files[0];
             if (logoFile) {
                 try {
@@ -279,13 +269,7 @@
                 }
             }
 
-            // 4) حساب تاريخ انتهاء الفترة التجريبية (7 أيام)
-            const now = new Date();
-            const trialEnd = new Date(now);
-            trialEnd.setDate(trialEnd.getDate() + 7);
-
-            // 5) إدراج المشروع (مع owner_user_id)
-            const projectPayload = {
+            const projectData = {
                 name_ar: document.getElementById('nameAr').value.trim(),
                 name_en: document.getElementById('nameEn').value.trim(),
                 emirate: document.getElementById('emirate').value,
@@ -293,66 +277,34 @@
                 description_en: document.getElementById('descEn').value,
                 long_description_ar: document.getElementById('longDescAr').value,
                 long_description_en: document.getElementById('longDescEn').value,
-                image: logoUrl,
+                image: logoUrl || 'https://placehold.co/400x400/0F3D2E/white?text=Logo',
                 coverage: document.getElementById('coverage').value,
                 category_ar: document.getElementById('category').value,
                 category_en: document.getElementById('category').value,
-                adra_license: false,
-                status: 'pending',
-                license_status: 'pending_license',
-                display_order: 0,
-                owner_user_id: userId,
-                created_at: now.toISOString(),
-                trial_end_date: trialEnd.toISOString(),
-                is_email_verified: false
-            };
-
-            const { data: newProject, error: projError } = await supabase
-                .from('projects')
-                .insert(projectPayload)
-                .select()
-                .single();
-
-            if (projError) {
-                // إذا كان الخطأ بسبب RLS، قد يكون تسجيل الدخول لم يكتمل، نحاول إدراج بدون جلسة ولكن قد يفشل.
-                // نعطي رسالة واضحة للمستخدم.
-                if (projError.code === '42501') {
-                    showError('حدث خطأ في الأمان. يرجى المحاولة مرة أخرى، أو تسجيل الدخول يدوياً بعد التأكيد.');
-                } else {
-                    throw projError;
-                }
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalText;
-                window._registerLock = false;
-                return;
-            }
-
-            // 6) إدراج بيانات التواصل
-            const { error: contactError } = await supabase.from('contacts').insert({
-                project_id: newProject.id,
                 whatsapp: whatsappDigits,
                 instagram: document.getElementById('instagram').value.trim() || null,
-                email: email
-            });
-            if (contactError) console.warn('Contacts insert failed:', contactError);
+                email: email,
+                owner_user_id: userId
+            };
 
-            // 7) حفظ بيانات للتذكير
+            // تخزين البيانات مع الطابع الزمني (صلاحية 30 دقيقة)
+            localStorage.setItem('pendingProjectData', JSON.stringify(projectData));
+            localStorage.setItem('pendingProjectTimestamp', Date.now().toString());
             localStorage.setItem('pendingEmail', email);
-            localStorage.setItem('newProjectId', newProject.id);
 
-            // عرض رسالة نجاح
-            showToast('✅ تم إنشاء حسابك ومشروعك بنجاح! 📧 يرجى تأكيد بريدك الإلكتروني من لوحة التحكم.');
-
-            // التوجيه إلى لوحة التحكم
+            // 3) التوجيه إلى صفحة "تحقق من بريدك"
+            showToast('✅ تم إنشاء حسابك. يرجى تأكيد بريدك الإلكتروني لإكمال التسجيل.');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = 'تم الإرسال ✅';
             setTimeout(() => {
-                window.location.href = `project-dashboard.html?new=true&project_id=${newProject.id}`;
+                window.location.href = 'check-email.html';
             }, 1500);
 
         } catch (err) {
             console.error(err);
             const msg = err.message.toLowerCase();
             if (msg.includes('rate limit') || msg.includes('over_email_send_rate_limit')) {
-                showToast('⚠️ لا يمكننا تسجيلكم في الوقت الحالي بسبب الضغط. يرجى المحاولة بعد نصف ساعة.', true);
+                showToast('⚠️ لا يمكننا تسجيلكم في الوقت الحالي بسبب الضغط. حاول بعد نصف ساعة.', true);
             } else if (msg.includes('already registered')) {
                 showToast('البريد الإلكتروني مسجل مسبقاً. يرجى تسجيل الدخول أو استعادة كلمة المرور.', true);
             } else {
