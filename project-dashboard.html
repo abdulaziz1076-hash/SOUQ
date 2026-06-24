@@ -392,8 +392,8 @@ async function checkSession() {
 
     // 4) إذا كان المستخدم قد سجل للتو، نعطيه فرصة لإكمال تسجيل الدخول
     if (justRegistered) {
-        // عرض رسالة مؤقتة للمستخدم (اختياري)
-        showToast('⏳ جاري تسجيل الدخول... يرجى الانتظار');
+        // ✅ إصلاح: استخدام toast بدلاً من showToast
+        toast('⏳ جاري تسجيل الدخول... يرجى الانتظار');
 
         // محاولة استرداد الجلسة (مع إعادة المحاولة)
         for (let attempt = 0; attempt < 5; attempt++) {
@@ -410,7 +410,7 @@ async function checkSession() {
         // إذا فشلت جميع المحاولات، نزيل العلامات ونوجه المستخدم لتسجيل الدخول
         localStorage.removeItem('justRegistered');
         localStorage.removeItem('newProjectId');
-        showToast('⚠️ انتهت مهلة تسجيل الدخول. يرجى تسجيل الدخول يدوياً.', true);
+        toast('⚠️ انتهت مهلة تسجيل الدخول. يرجى تسجيل الدخول يدوياً.', true);
         window.location.href = 'project-login.html?new=true';
         return null;
     }
