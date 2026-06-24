@@ -147,7 +147,6 @@
     .order-number-delivered { color: #10B981; font-weight: 700; }
     .order-number-cancelled { color: #6B7280; font-weight: 700; text-decoration: line-through; }
 
-    /* ===== تنسيق زر إعادة الإرسال ===== */
     .resend-btn-container {
       margin-top: 10px;
       display: flex;
@@ -185,7 +184,6 @@
       color: #DC2626;
     }
 
-    /* ===== تنبيه تأكيد البريد الإلكتروني ===== */
     .email-confirmation-alert {
       background: #FEF3C7;
       border-right: 4px solid #F59E0B;
@@ -247,7 +245,6 @@
       </div>
     </div>
 
-    <!-- ✅ تنبيه تأكيد البريد الإلكتروني مع زر إعادة الإرسال وعداد 30 دقيقة -->
     <div id="emailConfirmationAlert" style="display: none;">
       <div class="email-confirmation-alert">
         <div class="alert-icon"><i class="fas fa-envelope"></i></div>
@@ -265,7 +262,6 @@
 
     <div class="stats-scroll"><div class="stats-grid" id="statsGrid"></div></div>
 
-    <!-- تبويب بيانات المشروع -->
     <div id="profileSection" class="card">
       <div class="card-header"><h3><i class="fas fa-store"></i> بيانات المشروع</h3><button id="saveProfileBtn" class="btn-primary" style="display:flex;">حفظ التغييرات</button></div>
       <div style="padding:24px">
@@ -285,19 +281,16 @@
       </div>
     </div>
 
-    <!-- تبويب المنتجات -->
     <div id="productsSection" class="card" style="display:none;">
       <div class="card-header"><h3><i class="fas fa-box"></i> المنتجات</h3><button id="addProductBtn" class="btn-primary"><i class="fas fa-plus"></i> إضافة منتج</button></div>
       <div id="productsListContainer" style="padding:20px;"></div>
     </div>
 
-    <!-- تبويب العروض -->
     <div id="dealsSection" class="card" style="display:none;">
       <div class="card-header"><h3><i class="fas fa-tags"></i> العروض</h3><button id="addDealBtn" class="btn-primary"><i class="fas fa-plus"></i> إضافة عرض</button></div>
       <div id="dealsListContainer" style="padding:20px;"></div>
     </div>
 
-    <!-- تبويب التواصل -->
     <div id="contactsSection" class="card" style="display:none;">
       <div class="card-header"><h3><i class="fas fa-address-card"></i> بيانات التواصل</h3></div>
       <div style="padding:24px"><form id="contactsForm">
@@ -315,7 +308,6 @@
       </form></div>
     </div>
 
-    <!-- تبويب الرخصة -->
     <div id="licenseSection" class="card" style="display:none;">
       <div class="card-header"><h3><i class="fas fa-id-card"></i> الرخصة التجارية</h3></div>
       <div style="padding:24px">
@@ -324,13 +316,11 @@
       </div>
     </div>
 
-    <!-- تبويب الطلبات -->
     <div id="ordersSection" class="card" style="display:none;">
       <div class="card-header"><h3><i class="fas fa-truck"></i> إدارة الطلبات</h3></div>
       <div id="ordersTableContainer" style="padding:20px;"></div>
     </div>
 
-    <!-- تبويب الدعم الفني -->
     <div id="supportSection" class="card" style="display:none;">
       <div class="card-header"><h3><i class="fas fa-headset"></i> الدعم الفني</h3><button id="newTicketBtn" class="btn-primary"><i class="fas fa-plus"></i> تذكرة جديدة</button></div>
       <div id="ticketsListContainer" style="padding:20px;"></div>
@@ -338,7 +328,6 @@
   </main>
 </div>
 
-<!-- شريط سفلي للهواتف -->
 <div class="bottom-nav" id="bottomNav">
   <div class="bottom-nav-item active" data-section="profile"><i class="fas fa-store"></i><span>البيانات</span></div>
   <div class="bottom-nav-item" data-section="products"><i class="fas fa-box"></i><span>منتجات</span></div>
@@ -349,13 +338,10 @@
   <div class="bottom-nav-item" data-section="support"><i class="fas fa-headset"></i><span>دعم</span></div>
 </div>
 
-<!-- مودال المنتج -->
 <div id="productModal" class="modal"><div class="modal-content"><h3 id="productModalTitle">إضافة منتج</h3><input type="hidden" id="productId"><div class="form-row"><label>الاسم (عربي)</label><input id="productNameAr"></div><div class="form-row"><label>الاسم (إنجليزي)</label><input id="productNameEn"></div><div class="form-row"><label>الصورة الرئيسية</label><input type="file" id="productMainImageFile" accept="image/*"><div id="mainImagePreview" class="preview-img"></div></div><div class="form-row"><label>صور إضافية (عدة صور)</label><input type="file" id="productExtraImages" accept="image/*" multiple><div id="extraImagesList" class="extra-images-container"></div></div><div class="form-row"><label>السعر (عربي)</label><input id="productPriceAr"></div><div class="form-row"><label>السعر (إنجليزي)</label><input id="productPriceEn"></div><div class="form-row"><label>التصنيف (عربي)</label><input id="productCategoryAr"></div><div class="form-row"><label>التصنيف (إنجليزي)</label><input id="productCategoryEn"></div><div class="form-row"><label>نوع المنتج (عربي)</label><input id="productTypeAr"></div><div class="form-row"><label>نوع المنتج (إنجليزي)</label><input id="productTypeEn"></div><div class="form-row"><label>الوصف القصير (عربي)</label><textarea id="productDescAr" rows="2"></textarea></div><div class="form-row"><label>الوصف القصير (إنجليزي)</label><textarea id="productDescEn" rows="2"></textarea></div><div class="form-row"><label>تفاصيل إضافية (عربي)</label><textarea id="productDetailsAr" rows="3"></textarea></div><div class="form-row"><label>تفاصيل إضافية (إنجليزي)</label><textarea id="productDetailsEn" rows="3"></textarea></div><div style="display:flex; gap:10px;"><button id="saveProductModalBtn" class="btn-save">حفظ</button><button id="closeProductModalBtn" class="btn-secondary">إلغاء</button></div></div></div>
 
-<!-- مودال العرض -->
 <div id="dealModal" class="modal"><div class="modal-content"><h3>إضافة عرض</h3><input type="hidden" id="dealId"><div class="form-row"><label>العنوان (عربي)</label><input id="dealTitleAr"></div><div class="form-row"><label>العنوان (إنجليزي)</label><input id="dealTitleEn"></div><div class="form-row"><label>الصورة</label><input type="file" id="dealImageFile" accept="image/*"></div><div class="form-row"><label>الوصف (عربي)</label><textarea id="dealDescAr" rows="2"></textarea></div><div class="form-row"><label>الوصف (إنجليزي)</label><textarea id="dealDescEn" rows="2"></textarea></div><div class="form-row"><label>الشارة (عربي)</label><input id="dealBadgeAr"></div><div class="form-row"><label>Badge (En)</label><input id="dealBadgeEn"></div><div class="form-row"><label>تاريخ الانتهاء</label><input type="date" id="dealExpiry"></div><div style="display:flex; gap:10px;"><button id="saveDealModalBtn" class="btn-save">حفظ</button><button id="closeDealModalBtn" class="btn-secondary">إلغاء</button></div></div></div>
 
-<!-- مودال تذكرة -->
 <div id="ticketModal" class="modal"><div class="modal-content"><h3>تذكرة دعم جديدة</h3><div class="form-row"><label>الموضوع</label><input id="ticketSubject"></div><div class="form-row"><label>الرسالة</label><textarea id="ticketMessage" rows="4"></textarea></div><div style="display:flex; gap:10px;"><button id="saveTicketModalBtn" class="btn-save">إرسال</button><button id="closeTicketModalBtn" class="btn-secondary">إلغاء</button></div></div></div>
 
 <div id="toast" class="toast"></div>
@@ -371,122 +357,85 @@
   function toast(msg, isErr = false) { const el = document.getElementById('toast'); el.textContent = msg; el.style.background = isErr ? '#C41E3A' : '#0F3D2E'; el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 3000); }
   function confirmDialog({ title, message, danger = false }) { return new Promise((resolve) => { const modal = document.getElementById('confirmModal'); document.getElementById('confirmTitle').innerText = title; document.getElementById('confirmMsg').innerText = message; const ok = document.getElementById('confirmOk'); ok.style.background = danger ? '#C41E3A' : 'var(--primary-gradient)'; const close = () => { modal.style.display = 'none'; resolve(false); }; document.getElementById('confirmCancel').onclick = close; ok.onclick = () => { modal.style.display = 'none'; resolve(true); }; modal.style.display = 'flex'; }); }
 
-// ============================================================
-// ✅ checkSession - دالة التحقق من الجلسة مع دعم التسجيل الجديد
-// ============================================================
-async function checkSession() {
-    // 1) محاولة الحصول على الجلسة فوراً
+  async function checkSession() {
     const { data: { session }, error } = await supabase.auth.getSession();
-
-    // 2) إذا كانت الجلسة موجودة، نكمل
     if (session) {
-        // نزيل أي علامات مؤقتة إذا وجدت
-        localStorage.removeItem('justRegistered');
-        localStorage.removeItem('newProjectId');
-        return await handleExistingSession(session);
+      localStorage.removeItem('justRegistered');
+      localStorage.removeItem('newProjectId');
+      return await handleExistingSession(session);
     }
-
-    // 3) إذا لم توجد جلسة، نتحقق من علامة "justRegistered"
     const justRegistered = localStorage.getItem('justRegistered') === 'true';
     const newProjectId = localStorage.getItem('newProjectId');
-
-    // 4) إذا كان المستخدم قد سجل للتو، نعطيه فرصة لإكمال تسجيل الدخول
     if (justRegistered) {
-        // ✅ إصلاح: استخدام toast بدلاً من showToast
-        toast('⏳ جاري تسجيل الدخول... يرجى الانتظار');
-
-        // محاولة استرداد الجلسة (مع إعادة المحاولة)
-        for (let attempt = 0; attempt < 5; attempt++) {
-            await new Promise(resolve => setTimeout(resolve, 1000)); // انتظار 1 ثانية
-
-            const { data: { session: retrySession } } = await supabase.auth.getSession();
-            if (retrySession) {
-                localStorage.removeItem('justRegistered');
-                localStorage.removeItem('newProjectId');
-                return await handleExistingSession(retrySession);
-            }
+      toast('⏳ جاري تسجيل الدخول... يرجى الانتظار');
+      for (let attempt = 0; attempt < 5; attempt++) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        const { data: { session: retrySession } } = await supabase.auth.getSession();
+        if (retrySession) {
+          localStorage.removeItem('justRegistered');
+          localStorage.removeItem('newProjectId');
+          return await handleExistingSession(retrySession);
         }
-
-        // إذا فشلت جميع المحاولات، نزيل العلامات ونوجه المستخدم لتسجيل الدخول
-        localStorage.removeItem('justRegistered');
-        localStorage.removeItem('newProjectId');
-        toast('⚠️ انتهت مهلة تسجيل الدخول. يرجى تسجيل الدخول يدوياً.', true);
-        window.location.href = 'project-login.html?new=true';
-        return null;
+      }
+      localStorage.removeItem('justRegistered');
+      localStorage.removeItem('newProjectId');
+      toast('⚠️ انتهت مهلة تسجيل الدخول. يرجى تسجيل الدخول يدوياً.', true);
+      window.location.href = 'project-login.html?new=true';
+      return null;
     }
-
-    // 5) إذا لم توجد جلسة وليس مستخدم جديد، نوجه إلى تسجيل الدخول
     if (newProjectId) {
-        localStorage.removeItem('newProjectId');
-        window.location.href = 'project-login.html?new=true';
+      localStorage.removeItem('newProjectId');
+      window.location.href = 'project-login.html?new=true';
     } else {
-        window.location.href = 'project-login.html';
+      window.location.href = 'project-login.html';
     }
     return null;
-}
+  }
 
-// ============================================================
-// ✅ handleExistingSession - معالجة الجلسة الموجودة (منطق قديم)
-// ============================================================
-async function handleExistingSession(session) {
+  async function handleExistingSession(session) {
     const userId = session.user.id;
-
     const { data: project, error } = await supabase
+      .from('projects')
+      .select('id, name_ar, status, is_email_verified, trial_end_date')
+      .eq('owner_user_id', userId)
+      .maybeSingle();
+    if (!project && !error) {
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      const { data: retryProject } = await supabase
         .from('projects')
         .select('id, name_ar, status, is_email_verified, trial_end_date')
         .eq('owner_user_id', userId)
         .maybeSingle();
-
-    // إذا لم يتم العثور على مشروع، ننتظر قليلاً (قد يكون قيد الإنشاء)
-    if (!project && !error) {
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        const { data: retryProject } = await supabase
-            .from('projects')
-            .select('id, name_ar, status, is_email_verified, trial_end_date')
-            .eq('owner_user_id', userId)
-            .maybeSingle();
-
-        if (retryProject) {
-            projectId = retryProject.id;
-            document.getElementById('userName').innerHTML = `مرحباً، ${retryProject.name_ar || ''}`;
-            document.getElementById('userAvatar').innerText = (retryProject.name_ar?.[0] || 'م');
-            return { session, project: retryProject };
-        }
+      if (retryProject) {
+        projectId = retryProject.id;
+        document.getElementById('userName').innerHTML = `مرحباً، ${retryProject.name_ar || ''}`;
+        document.getElementById('userAvatar').innerText = (retryProject.name_ar?.[0] || 'م');
+        return { session, project: retryProject };
+      }
     }
-
-    // إذا كان هناك خطأ أو لا مشروع، نوجه لتسجيل الدخول
     if (error || !project) {
-        const newProjectId = localStorage.getItem('newProjectId');
-        if (newProjectId) {
-            localStorage.removeItem('newProjectId');
-            window.location.href = 'project-login.html?new=true';
-        } else {
-            window.location.href = 'project-login.html';
-        }
-        return null;
+      const newProjectId = localStorage.getItem('newProjectId');
+      if (newProjectId) {
+        localStorage.removeItem('newProjectId');
+        window.location.href = 'project-login.html?new=true';
+      } else {
+        window.location.href = 'project-login.html';
+      }
+      return null;
     }
-
-    // ✅ تخزين معرف المشروع وإظهار اسم المستخدم
     projectId = project.id;
     document.getElementById('userName').innerHTML = `مرحباً، ${project.name_ar || ''}`;
     document.getElementById('userAvatar').innerText = (project.name_ar?.[0] || 'م');
     localStorage.removeItem('newProjectId');
-
-    // ✅ معالجة معاملات URL (تنظيف)
     const urlParams = new URLSearchParams(window.location.search);
     const isPending = urlParams.get('pending') === 'true';
     const isConfirmed = urlParams.get('confirmed') === 'true';
-
     if (isPending || isConfirmed) {
-        window.history.replaceState({}, document.title, window.location.pathname);
+      window.history.replaceState({}, document.title, window.location.pathname);
     }
-
     return { session, project };
-}
+  }
 
-  // ============================================================
-  // ✅ loadStats
-  // ============================================================
   async function loadStats() { 
     if (!projectId) {
       document.getElementById('statsGrid').innerHTML = '<div class="stat-card"><div class="stat-left"><h3>0</h3><p>المنتجات</p></div><i class="fas fa-box-open stat-icon"></i></div><div class="stat-card"><div class="stat-left"><h3>0</h3><p>العروض</p></div><i class="fas fa-tags stat-icon"></i></div><div class="stat-card"><div class="stat-left"><h3>0</h3><p>الطلبات</p></div><i class="fas fa-shopping-cart stat-icon"></i></div>';
@@ -498,14 +447,11 @@ async function handleExistingSession(session) {
     document.getElementById('statsGrid').innerHTML = `<div class="stat-card"><div class="stat-left"><h3>${pc||0}</h3><p>المنتجات</p></div><i class="fas fa-box-open stat-icon"></i></div><div class="stat-card"><div class="stat-left"><h3>${dc||0}</h3><p>العروض</p></div><i class="fas fa-tags stat-icon"></i></div><div class="stat-card"><div class="stat-left"><h3>${oc||0}</h3><p>الطلبات</p></div><i class="fas fa-shopping-cart stat-icon"></i></div>`; 
   }
 
-  // ============================================================
-  // ✅ المنتجات
-  // ============================================================
   let currentExtraImagesUrls = [];
   async function loadProducts() { 
     if (!projectId) return;
     const { data, error } = await supabase.from('products').select('*').eq('project_id', projectId).order('display_order', { ascending: true, nullsFirst: false }); 
-    if (error) return; 
+    if (error) { toast(error.message, true); return; }
     const container = document.getElementById('productsListContainer'); 
     if (!data.length) { container.innerHTML = '<p>لا توجد منتجات. أضف منتجك الأول.</p>'; return; } 
     let html = ''; 
@@ -533,10 +479,10 @@ async function handleExistingSession(session) {
   window.removeExtraImage = (idx) => { currentExtraImagesUrls.splice(idx, 1); renderExtraImagesList(currentExtraImagesUrls); };
   document.getElementById('saveProductModalBtn').onclick = async () => { const id = document.getElementById('productId').value; let mainImageUrl = null; const mainFile = document.getElementById('productMainImageFile').files[0]; if (mainFile) { if (!validateFileSize(mainFile, 2)) return; const ext = mainFile.name.split('.').pop(); mainImageUrl = await uploadFile('project-logos', `${projectId}/${id || Date.now()}/main_${Date.now()}.${ext}`, mainFile, 2); } else { const old = document.querySelector('#mainImagePreview img'); if (old && old.src) mainImageUrl = old.src; } const extraFiles = document.getElementById('productExtraImages').files; let newUrls = []; for (let f of extraFiles) { if (validateFileSize(f, 2)) { const ext = f.name.split('.').pop(); const url = await uploadFile('project-logos', `${projectId}/${id || Date.now()}/extra_${Date.now()}_${Math.random()}.${ext}`, f, 2); if (url) newUrls.push(url); } } const finalExtra = [...currentExtraImagesUrls, ...newUrls]; const detailsAr = document.getElementById('productDetailsAr').value.split('\n').filter(l=>l.trim()); const detailsEn = document.getElementById('productDetailsEn').value.split('\n').filter(l=>l.trim()); const payload = { name_ar: document.getElementById('productNameAr').value, name_en: document.getElementById('productNameEn').value, price_ar: document.getElementById('productPriceAr').value, price_en: document.getElementById('productPriceEn').value, category_ar: document.getElementById('productCategoryAr').value, category_en: document.getElementById('productCategoryEn').value, type_ar: document.getElementById('productTypeAr').value, type_en: document.getElementById('productTypeEn').value, description_ar: document.getElementById('productDescAr').value, description_en: document.getElementById('productDescEn').value, details_ar: detailsAr, details_en: detailsEn, images: finalExtra, project_id: projectId }; if (mainImageUrl) payload.main_image = mainImageUrl; let err; if (id) err = (await supabase.from('products').update(payload).eq('id', id)).error; else err = (await supabase.from('products').insert(payload)).error; if (err) return toast(err.message, true); toast('تم حفظ المنتج'); document.getElementById('productModal').classList.remove('active'); loadProducts(); loadStats(); };
 
-  // العروض
   async function loadDeals() { 
     if (!projectId) return;
-    const { data } = await supabase.from('deals').select('*').eq('project_id', projectId); 
+    const { data, error } = await supabase.from('deals').select('*').eq('project_id', projectId); 
+    if (error) { toast(error.message, true); return; }
     const container = document.getElementById('dealsListContainer'); 
     if (!data?.length) { container.innerHTML = '<p>لا توجد عروض.</p>'; return; } 
     let html = ''; 
@@ -547,81 +493,156 @@ async function handleExistingSession(session) {
   window.deleteDeal = async (id) => { if(await confirmDialog({title:'حذف العرض',message:'تأكيد؟',danger:true})){ await supabase.from('deals').delete().eq('id',id); toast('تم الحذف'); loadDeals(); loadStats(); } };
   document.getElementById('saveDealModalBtn').onclick = async () => { let imageUrl=null; const file=document.getElementById('dealImageFile').files[0]; if(file){ if(!validateFileSize(file,2))return; const ext=file.name.split('.').pop(); imageUrl = await uploadFile('project-logos', `${projectId}/deals/${Date.now()}.${ext}`, file, 2); } const payload = { title_ar:document.getElementById('dealTitleAr').value, title_en:document.getElementById('dealTitleEn').value, description_ar:document.getElementById('dealDescAr').value, description_en:document.getElementById('dealDescEn').value, badge_ar:document.getElementById('dealBadgeAr').value, badge_en:document.getElementById('dealBadgeEn').value, expiry_date:document.getElementById('dealExpiry').value, project_id:projectId, image:imageUrl }; const id=document.getElementById('dealId').value; let err; if(id) err=(await supabase.from('deals').update(payload).eq('id',id)).error; else err=(await supabase.from('deals').insert(payload)).error; if(err) return toast(err.message,true); toast('تم حفظ العرض'); document.getElementById('dealModal').classList.remove('active'); loadDeals(); loadStats(); };
 
-  // التواصل
   async function loadContacts() { 
     if (!projectId) return;
-    const { data } = await supabase.from('contacts').select('*').eq('project_id', projectId).maybeSingle(); 
+    const { data, error } = await supabase.from('contacts').select('*').eq('project_id', projectId).maybeSingle(); 
+    if (error) { toast(error.message, true); return; }
     if(data){ document.getElementById('contactWhatsapp').value=data.whatsapp||''; document.getElementById('contactPhone').value=data.phone||''; document.getElementById('contactEmail').value=data.email||''; document.getElementById('contactInstagram').value=data.instagram||''; document.getElementById('contactTelegram').value=data.telegram||''; document.getElementById('contactSnapchat').value=data.snapchat||''; document.getElementById('contactTiktok').value=data.tiktok||''; document.getElementById('contactFacebook').value=data.facebook||''; document.getElementById('contactTwitter').value=data.twitter||''; document.getElementById('contactWebsite').value=data.website||''; } }
   document.getElementById('contactsForm').addEventListener('submit', async (e) => { e.preventDefault(); let whatsapp = document.getElementById('contactWhatsapp').value.trim(); let clean = whatsapp.replace(/\D/g,''); if(clean && !clean.startsWith('971')) clean = '971' + clean.replace(/^0+/,''); await supabase.from('contacts').upsert({ project_id:projectId, whatsapp:clean, phone:document.getElementById('contactPhone').value, email:document.getElementById('contactEmail').value, instagram:document.getElementById('contactInstagram').value, telegram:document.getElementById('contactTelegram').value, snapchat:document.getElementById('contactSnapchat').value, tiktok:document.getElementById('contactTiktok').value, facebook:document.getElementById('contactFacebook').value, twitter:document.getElementById('contactTwitter').value, website:document.getElementById('contactWebsite').value }); toast('تم حفظ التواصل'); });
 
-  // الدعم الفني
   async function loadTickets() { 
-    if (!projectId) return;
-    const { data } = await supabase.from('support_tickets').select('*').eq('project_id', projectId).order('created_at',{ascending:false}); 
-    const container=document.getElementById('ticketsListContainer'); 
-    if(!data?.length){ container.innerHTML='<p>لا توجد تذاكر</p>'; return; } 
-    let html=''; 
-    for(const t of data){ html+=`<div style="background:#F8FAFC; border-radius:20px; padding:15px; margin-bottom:10px;"><strong>${t.subject}</strong> <span class="status-pill active">${t.status}</span><div>${t.message.substring(0,100)}</div>${t.admin_reply?`<div class="warning-banner" style="margin-top:10px;"><strong>رد الإدارة:</strong> ${t.admin_reply}</div>`:''}</div>`; } 
-    container.innerHTML=html; 
-  }
-  document.getElementById('newTicketBtn').onclick=()=>document.getElementById('ticketModal').classList.add('active');
-  document.getElementById('saveTicketModalBtn').onclick=async()=>{ const subject=document.getElementById('ticketSubject').value.trim(); const msg=document.getElementById('ticketMessage').value.trim(); if(!subject||!msg) return toast('املأ الحقول',true); await supabase.from('support_tickets').insert({ project_id:projectId, subject, message:msg, status:'open' }); toast('تم الإرسال'); document.getElementById('ticketModal').classList.remove('active'); loadTickets(); };
-
-  // الطلبات
-  async function loadOrders() {
-    if (!projectId) return;
-    const { data, error } = await supabase.from('admin_order_logs').select('*').eq('project_id', projectId).order('created_at', { ascending: false });
-    if (error) { toast(error.message, true); return; }
-    const container = document.getElementById('ordersTableContainer');
-    if (!data || data.length === 0) { container.innerHTML = '<p>لا توجد طلبات حتى الآن</p>'; return; }
-    let html = `<div style="overflow-x: auto;"><table class="data-table"><thead><tr><th>رقم الطلب</th><th>العميل</th><th>الإجمالي</th><th>الحالة</th><th>التاريخ</th></tr></thead><tbody>`;
-    for (const order of data) {
-      const status = order.status || 'جديد';
-      let orderClass = '';
-      if (status === 'جديد') orderClass = 'order-number-new';
-      else if (status === 'قيد التجهيز') orderClass = 'order-number-processing';
-      else if (status === 'تم التسليم') orderClass = 'order-number-delivered';
-      else if (status === 'ملغي') orderClass = 'order-number-cancelled';
-      html += `<tr>
-        <td><span class="${orderClass}">${order.order_number}</span></td>
-        <td>${order.customer_whatsapp || '-'}</td>
-        <td>${order.total_price}</td>
-        <td><select class="order-status-select" data-order-id="${order.id}" onchange="updateOrderStatus('${order.id}', this.value)"><option value="جديد" ${status === 'جديد' ? 'selected' : ''}>جديد</option><option value="قيد التجهيز" ${status === 'قيد التجهيز' ? 'selected' : ''}>قيد التجهيز</option><option value="تم التسليم" ${status === 'تم التسليم' ? 'selected' : ''}>تم التسليم</option><option value="ملغي" ${status === 'ملغي' ? 'selected' : ''}>ملغي</option></select></td>
-        <td>${new Date(order.created_at).toLocaleString()}</td>
-      </tr>`;
+    if (!projectId) {
+      document.getElementById('ticketsListContainer').innerHTML = '<p>لم يتم تحديد المشروع</p>';
+      return;
     }
-    html += `</tbody></table></div>`;
-    container.innerHTML = html;
+    try {
+      const { data, error } = await supabase
+        .from('support_tickets')
+        .select('*')
+        .eq('project_id', projectId)
+        .order('created_at', { ascending: false });
+        
+      if (error) {
+        console.error('Tickets error:', error);
+        document.getElementById('ticketsListContainer').innerHTML = `<p>⚠️ خطأ في تحميل التذاكر: ${error.message}</p>`;
+        return;
+      }
+      
+      const container = document.getElementById('ticketsListContainer'); 
+      if (!data?.length) { container.innerHTML = '<p>لا توجد تذاكر</p>'; return; } 
+      let html = ''; 
+      for (const t of data) { 
+        html += `<div style="background:#F8FAFC; border-radius:20px; padding:15px; margin-bottom:10px;">
+          <strong>${t.subject}</strong> <span class="status-pill active">${t.status}</span>
+          <div>${t.message.substring(0,100)}</div>
+          ${t.admin_reply ? `<div class="warning-banner" style="margin-top:10px;"><strong>رد الإدارة:</strong> ${t.admin_reply}</div>` : ''}
+        </div>`; 
+      } 
+      container.innerHTML = html; 
+    } catch (err) {
+      console.error('Unexpected error in loadTickets:', err);
+      document.getElementById('ticketsListContainer').innerHTML = '<p>⚠️ حدث خطأ غير متوقع في تحميل التذاكر</p>';
+    }
+  }
+
+  document.getElementById('newTicketBtn').onclick = () => document.getElementById('ticketModal').classList.add('active');
+  document.getElementById('saveTicketModalBtn').onclick = async () => { 
+    const subject = document.getElementById('ticketSubject').value.trim(); 
+    const msg = document.getElementById('ticketMessage').value.trim(); 
+    if (!subject || !msg) return toast('املأ الحقول', true);
+    try {
+      const { error } = await supabase
+        .from('support_tickets')
+        .insert({ project_id: projectId, subject, message: msg, status: 'open' });
+      if (error) {
+        toast('فشل الإرسال: ' + error.message, true);
+        return;
+      }
+      toast('تم الإرسال'); 
+      document.getElementById('ticketModal').classList.remove('active'); 
+      loadTickets(); 
+    } catch (err) {
+      toast('حدث خطأ غير متوقع', true);
+    }
+  };
+
+  async function loadOrders() {
+    if (!projectId) {
+      document.getElementById('ordersTableContainer').innerHTML = '<p>لم يتم تحديد المشروع</p>';
+      return;
+    }
+    try {
+      const { data, error } = await supabase
+        .from('admin_order_logs')
+        .select('*')
+        .eq('project_id', projectId)
+        .order('created_at', { ascending: false });
+        
+      if (error) {
+        console.error('Orders error:', error);
+        document.getElementById('ordersTableContainer').innerHTML = `<p>⚠️ خطأ في تحميل الطلبات: ${error.message}</p>`;
+        return;
+      }
+      
+      const container = document.getElementById('ordersTableContainer');
+      if (!data || data.length === 0) { container.innerHTML = '<p>لا توجد طلبات حتى الآن</p>'; return; }
+      let html = `<div style="overflow-x: auto;"><table class="data-table"><thead><tr><th>رقم الطلب</th><th>العميل</th><th>الإجمالي</th><th>الحالة</th><th>التاريخ</th></tr></thead><tbody>`;
+      for (const order of data) {
+        const status = order.status || 'جديد';
+        let orderClass = '';
+        if (status === 'جديد') orderClass = 'order-number-new';
+        else if (status === 'قيد التجهيز') orderClass = 'order-number-processing';
+        else if (status === 'تم التسليم') orderClass = 'order-number-delivered';
+        else if (status === 'ملغي') orderClass = 'order-number-cancelled';
+        html += `<tr>
+          <td><span class="${orderClass}">${order.order_number}</span></td>
+          <td>${order.customer_whatsapp || '-'}</td>
+          <td>${order.total_price}</td>
+          <td><select class="order-status-select" data-order-id="${order.id}" onchange="updateOrderStatus('${order.id}', this.value)"><option value="جديد" ${status === 'جديد' ? 'selected' : ''}>جديد</option><option value="قيد التجهيز" ${status === 'قيد التجهيز' ? 'selected' : ''}>قيد التجهيز</option><option value="تم التسليم" ${status === 'تم التسليم' ? 'selected' : ''}>تم التسليم</option><option value="ملغي" ${status === 'ملغي' ? 'selected' : ''}>ملغي</option></select></td>
+          <td>${new Date(order.created_at).toLocaleString()}</td>
+        </tr>`;
+      }
+      html += `</tbody></table></div>`;
+      container.innerHTML = html;
+    } catch (err) {
+      console.error('Unexpected error in loadOrders:', err);
+      document.getElementById('ordersTableContainer').innerHTML = '<p>⚠️ حدث خطأ غير متوقع في تحميل الطلبات</p>';
+    }
   }
 
   window.updateOrderStatus = async (orderId, newStatus) => {
-    const { error } = await supabase.from('admin_order_logs').update({ status: newStatus }).eq('id', orderId);
-    if (error) { toast('فشل تحديث الحالة: ' + error.message, true); } else { toast('تم تحديث حالة الطلب بنجاح'); loadOrders(); }
+    try {
+      const { error } = await supabase.from('admin_order_logs').update({ status: newStatus }).eq('id', orderId);
+      if (error) { toast('فشل تحديث الحالة: ' + error.message, true); } else { toast('تم تحديث حالة الطلب بنجاح'); loadOrders(); }
+    } catch (err) {
+      toast('حدث خطأ غير متوقع', true);
+    }
   };
 
-  // ============================================================
-  // ✅ loadProjectData + زر إعادة الإرسال مع عداد 30 دقيقة
-  // ============================================================
   async function loadProjectData() { 
-    const { data: proj } = await supabase.from('projects').select('*').eq('id', projectId).single(); 
-    if(proj){
-      document.getElementById('profileNameAr').value=proj.name_ar||''; 
-      document.getElementById('profileNameEn').value=proj.name_en||'';
-      document.getElementById('profileDescAr').value=proj.description_ar||''; 
-      document.getElementById('profileDescEn').value=proj.description_en||'';
-      document.getElementById('profileLongAr').value=proj.long_description_ar||''; 
-      document.getElementById('profileLongEn').value=proj.long_description_en||'';
-      document.getElementById('profileEmirate').value=proj.emirate||'دبي'; 
-      document.getElementById('profileCoverage').value=proj.coverage||'الإمارة فقط';
-      document.getElementById('profileAdraLicense').checked=!!proj.adra_license; 
-      if(proj.category_ar) document.getElementById('profileCategory').value=proj.category_ar;
-      document.getElementById('currentLogoHint').innerHTML=proj.image?`<img src="${proj.image}" class="preview-img">`:'لا يوجد شعار';
+    try {
+      const { data: proj, error } = await supabase
+        .from('projects')
+        .select('*')
+        .eq('id', projectId)
+        .single();
+        
+      if (error) {
+        toast('خطأ في تحميل بيانات المشروع: ' + error.message, true);
+        return;
+      }
+      
+      if (!proj) {
+        toast('لم يتم العثور على المشروع', true);
+        return;
+      }
+      
+      document.getElementById('profileNameAr').value = proj.name_ar || ''; 
+      document.getElementById('profileNameEn').value = proj.name_en || '';
+      document.getElementById('profileDescAr').value = proj.description_ar || ''; 
+      document.getElementById('profileDescEn').value = proj.description_en || '';
+      document.getElementById('profileLongAr').value = proj.long_description_ar || ''; 
+      document.getElementById('profileLongEn').value = proj.long_description_en || '';
+      document.getElementById('profileEmirate').value = proj.emirate || 'دبي'; 
+      document.getElementById('profileCoverage').value = proj.coverage || 'الإمارة فقط';
+      document.getElementById('profileAdraLicense').checked = !!proj.adra_license; 
+      if (proj.category_ar) document.getElementById('profileCategory').value = proj.category_ar;
+      document.getElementById('currentLogoHint').innerHTML = proj.image ? `<img src="${proj.image}" class="preview-img">` : 'لا يوجد شعار';
       
       const reactivateBtn = document.getElementById('dropdownReactivateAccountBtn');
       if (proj.status === 'disabled' || proj.status === 'deleted') reactivateBtn.style.display = 'flex';
       else reactivateBtn.style.display = 'none';
 
-      // ✅ تنبيه تأكيد البريد (يظهر فقط، ولا يخفي شيئاً)
       const alertBox = document.getElementById('emailConfirmationAlert');
       const resendBtn = document.getElementById('resendEmailBtn');
       const timerSpan = document.getElementById('resendTimer');
@@ -631,16 +652,14 @@ async function handleExistingSession(session) {
         alertBox.style.display = 'block';
         document.getElementById('alertMessage').textContent = 'لم تقم بتأكيد بريدك الإلكتروني بعد. اضغط على الزر أدناه لإرسال رابط التأكيد.';
 
-        // ✅ التحقق من آخر وقت إرسال (عداد 30 دقيقة)
         const lastSend = localStorage.getItem('lastResendTime');
         const now = Date.now();
-        const cooldownMs = 30 * 60 * 1000; // 30 دقيقة
+        const cooldownMs = 30 * 60 * 1000;
 
         if (lastSend && (now - parseInt(lastSend)) < cooldownMs) {
           const remaining = Math.ceil((cooldownMs - (now - parseInt(lastSend))) / 60000);
           resendBtn.disabled = true;
           timerSpan.innerHTML = `⏳ يرجى الانتظار <strong>${remaining}</strong> دقيقة قبل إعادة الإرسال.`;
-          // تحديث العداد كل دقيقة
           const interval = setInterval(() => {
             const now2 = Date.now();
             const remaining2 = Math.ceil((cooldownMs - (now2 - parseInt(lastSend))) / 60000);
@@ -661,7 +680,6 @@ async function handleExistingSession(session) {
           statusSpan.textContent = '✅ يمكنك إرسال رابط التأكيد الآن.';
         }
 
-        // ✅ زر إعادة الإرسال
         resendBtn.onclick = async () => {
           const lastSendCheck = localStorage.getItem('lastResendTime');
           const nowCheck = Date.now();
@@ -699,7 +717,6 @@ async function handleExistingSession(session) {
               timerSpan.innerHTML = '⏳ انتظر 30 دقيقة قبل إعادة الإرسال.';
               toast('✅ تم إرسال رابط التأكيد إلى بريدك الإلكتروني.');
               
-              // تفعيل العداد
               const interval2 = setInterval(() => {
                 const now2 = Date.now();
                 const last = localStorage.getItem('lastResendTime');
@@ -725,66 +742,145 @@ async function handleExistingSession(session) {
       } else {
         alertBox.style.display = 'none';
       }
+    } catch (err) {
+      toast('حدث خطأ غير متوقع في تحميل بيانات المشروع', true);
     }
 
-    // حالة الرخصة
-    const lic=await supabase.from('projects').select('license_status').eq('id',projectId).single(); 
-    const alertDiv=document.getElementById('licenseStatusAlert');
-    if(lic.data?.license_status==='pending_license') alertDiv.innerHTML='<i class="fas fa-clock"></i> لم يتم رفع الرخصة بعد.';
-    else if(lic.data?.license_status==='license_uploaded') alertDiv.innerHTML='<i class="fas fa-hourglass-half"></i> جاري المراجعة.';
-    else if(lic.data?.license_status==='license_approved') alertDiv.innerHTML='<i class="fas fa-check-circle"></i> معتمد.';
-    else if(lic.data?.license_status==='license_rejected') alertDiv.innerHTML='<i class="fas fa-times-circle"></i> مرفوض، أعد رفع ملف صحيح.';
+    try {
+      const lic = await supabase.from('projects').select('license_status').eq('id', projectId).single();
+      const alertDiv = document.getElementById('licenseStatusAlert');
+      if (lic.data?.license_status === 'pending_license') alertDiv.innerHTML = '<i class="fas fa-clock"></i> لم يتم رفع الرخصة بعد.';
+      else if (lic.data?.license_status === 'license_uploaded') alertDiv.innerHTML = '<i class="fas fa-hourglass-half"></i> جاري المراجعة.';
+      else if (lic.data?.license_status === 'license_approved') alertDiv.innerHTML = '<i class="fas fa-check-circle"></i> معتمد.';
+      else if (lic.data?.license_status === 'license_rejected') alertDiv.innerHTML = '<i class="fas fa-times-circle"></i> مرفوض، أعد رفع ملف صحيح.';
+    } catch (err) {
+      // تجاهل خطأ تحميل حالة الرخصة
+    }
   }
 
   document.getElementById('saveProfileBtn').onclick = async () => {
-    let logoUrl=null; const logoFile=document.getElementById('profileLogo').files[0];
-    if(logoFile){ if(!validateFileSize(logoFile,2))return; const ext=logoFile.name.split('.').pop(); logoUrl=await uploadFile('project-logos', `${projectId}/logo_${Date.now()}.${ext}`, logoFile, 2); }
-    const updates={ name_ar:document.getElementById('profileNameAr').value, name_en:document.getElementById('profileNameEn').value, description_ar:document.getElementById('profileDescAr').value, description_en:document.getElementById('profileDescEn').value, long_description_ar:document.getElementById('profileLongAr').value, long_description_en:document.getElementById('profileLongEn').value, emirate:document.getElementById('profileEmirate').value, coverage:document.getElementById('profileCoverage').value, category_ar:document.getElementById('profileCategory').value, adra_license:document.getElementById('profileAdraLicense').checked };
-    if(logoUrl) updates.image=logoUrl;
-    await supabase.from('projects').update(updates).eq('id',projectId);
-    toast('تم حفظ البيانات'); loadProjectData();
+    let logoUrl = null; const logoFile = document.getElementById('profileLogo').files[0];
+    if (logoFile) { if (!validateFileSize(logoFile, 2)) return; const ext = logoFile.name.split('.').pop(); logoUrl = await uploadFile('project-logos', `${projectId}/logo_${Date.now()}.${ext}`, logoFile, 2); }
+    const updates = { 
+      name_ar: document.getElementById('profileNameAr').value,
+      name_en: document.getElementById('profileNameEn').value,
+      description_ar: document.getElementById('profileDescAr').value,
+      description_en: document.getElementById('profileDescEn').value,
+      long_description_ar: document.getElementById('profileLongAr').value,
+      long_description_en: document.getElementById('profileLongEn').value,
+      emirate: document.getElementById('profileEmirate').value,
+      coverage: document.getElementById('profileCoverage').value,
+      category_ar: document.getElementById('profileCategory').value,
+      adra_license: document.getElementById('profileAdraLicense').checked
+    };
+    if (logoUrl) updates.image = logoUrl;
+    try {
+      const { error } = await supabase.from('projects').update(updates).eq('id', projectId);
+      if (error) { toast('فشل الحفظ: ' + error.message, true); return; }
+      toast('تم حفظ البيانات');
+      loadProjectData();
+    } catch (err) {
+      toast('حدث خطأ غير متوقع', true);
+    }
   };
-  document.getElementById('licenseForm').addEventListener('submit', async (e) => { e.preventDefault(); const file=document.getElementById('licenseFile').files[0]; if(!file)return; if(!validateFileSize(file,5))return; const ext=file.name.split('.').pop(); const url=await uploadFile('project-logos', `${projectId}/license_${Date.now()}.${ext}`, file, 5); if(url){ await supabase.from('project_license_requests').insert({ project_id:projectId, license_file_url:url, status:'pending' }); await supabase.from('projects').update({ license_status:'license_uploaded' }).eq('id',projectId); toast('تم رفع الرخصة، جاري المراجعة'); loadProjectData(); } });
 
-  // أزرار القائمة المنسدلة
-  document.getElementById('dropdownReactivateAccountBtn').onclick = async () => { if(await confirmDialog({title:'إعادة تنشيط',message:'سيتم إعادة تفعيل المشروع'})){ await supabase.from('projects').update({status:'active'}).eq('id',projectId); toast('تم التنشيط'); location.reload(); } };
-  document.getElementById('dropdownDisableAccountBtn').onclick = async () => { if(await confirmDialog({title:'تعطيل الحساب',message:'سيتم تعطيل المشروع',danger:true})){ await supabase.from('projects').update({status:'disabled'}).eq('id',projectId); toast('تم التعطيل'); location.reload(); } };
-  document.getElementById('dropdownDeleteAccountBtn').onclick = async () => { if(await confirmDialog({title:'حذف الحساب',message:'سيتم حذف المشروع',danger:true}) && await confirmDialog({title:'تأكيد نهائي',message:'هل أنت متأكد؟',danger:true})){ await supabase.from('projects').update({status:'deleted'}).eq('id',projectId); toast('تم الحذف'); location.reload(); } };
-  document.getElementById('dropdownLogoutBtn').onclick = async () => { await supabase.auth.signOut(); window.location.href = 'index.html'; };
+  document.getElementById('licenseForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const file = document.getElementById('licenseFile').files[0];
+    if (!file) return toast('يرجى اختيار ملف', true);
+    if (!validateFileSize(file, 5)) return;
 
-  // قائمة المستخدم
+    try {
+      const ext = file.name.split('.').pop();
+      const url = await uploadFile('project-logos', `${projectId}/license_${Date.now()}.${ext}`, file, 5);
+      if (!url) {
+        toast('فشل رفع الملف إلى الخادم', true);
+        return;
+      }
+
+      const { error: insertError } = await supabase
+        .from('project_license_requests')
+        .insert({
+          project_id: projectId,
+          license_file_url: url,
+          status: 'pending'
+        });
+
+      if (insertError) {
+        console.error('Insert error:', insertError);
+        toast('فشل حفظ الرخصة: ' + insertError.message, true);
+        return;
+      }
+
+      await supabase
+        .from('projects')
+        .update({ license_status: 'license_uploaded' })
+        .eq('id', projectId);
+
+      toast('تم رفع الرخصة، جاري المراجعة');
+      loadProjectData();
+    } catch (err) {
+      console.error('License upload error:', err);
+      toast('حدث خطأ غير متوقع: ' + err.message, true);
+    }
+  });
+
+  document.getElementById('dropdownReactivateAccountBtn').onclick = async () => {
+    if (await confirmDialog({ title: 'إعادة تنشيط', message: 'سيتم إعادة تفعيل المشروع' })) {
+      await supabase.from('projects').update({ status: 'active' }).eq('id', projectId);
+      toast('تم التنشيط');
+      location.reload();
+    }
+  };
+  document.getElementById('dropdownDisableAccountBtn').onclick = async () => {
+    if (await confirmDialog({ title: 'تعطيل الحساب', message: 'سيتم تعطيل المشروع', danger: true })) {
+      await supabase.from('projects').update({ status: 'disabled' }).eq('id', projectId);
+      toast('تم التعطيل');
+      location.reload();
+    }
+  };
+  document.getElementById('dropdownDeleteAccountBtn').onclick = async () => {
+    if (await confirmDialog({ title: 'حذف الحساب', message: 'سيتم حذف المشروع', danger: true }) && await confirmDialog({ title: 'تأكيد نهائي', message: 'هل أنت متأكد؟', danger: true })) {
+      await supabase.from('projects').update({ status: 'deleted' }).eq('id', projectId);
+      toast('تم الحذف');
+      location.reload();
+    }
+  };
+  document.getElementById('dropdownLogoutBtn').onclick = async () => {
+    await supabase.auth.signOut();
+    window.location.href = 'index.html';
+  };
+
   const userArea = document.getElementById('userArea');
   const userDropdown = document.getElementById('userDropdown');
   userArea.addEventListener('click', (e) => { e.stopPropagation(); userDropdown.classList.toggle('show'); });
   document.addEventListener('click', (e) => { if (!userArea.contains(e.target)) userDropdown.classList.remove('show'); });
 
-  // إظهار الأقسام
   function showSection(section) {
     document.querySelectorAll('#profileSection, #productsSection, #dealsSection, #contactsSection, #licenseSection, #ordersSection, #supportSection').forEach(s => s.style.display = 'none');
     document.getElementById(`${section}Section`).style.display = 'block';
     document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(el => el.classList.remove('active'));
     document.querySelectorAll(`.nav-item[data-section="${section}"], .bottom-nav-item[data-section="${section}"]`).forEach(el => el.classList.add('active'));
-    const titles = { profile:'بيانات المشروع', products:'المنتجات', deals:'العروض', contacts:'التواصل', license:'الرخصة', orders:'الطلبات', support:'الدعم الفني' };
+    const titles = { profile: 'بيانات المشروع', products: 'المنتجات', deals: 'العروض', contacts: 'التواصل', license: 'الرخصة', orders: 'الطلبات', support: 'الدعم الفني' };
     document.getElementById('pageTitle').innerText = titles[section];
-    if(section === 'products') loadProducts();
-    else if(section === 'deals') loadDeals();
-    else if(section === 'contacts') loadContacts();
-    else if(section === 'support') loadTickets();
-    else if(section === 'license') loadProjectData();
-    else if(section === 'orders') loadOrders();
+    if (section === 'products') loadProducts();
+    else if (section === 'deals') loadDeals();
+    else if (section === 'contacts') loadContacts();
+    else if (section === 'support') loadTickets();
+    else if (section === 'license') loadProjectData();
+    else if (section === 'orders') loadOrders();
     
     if (window.innerWidth <= 768) {
       const sidebar = document.getElementById('sidebar');
       if (sidebar) sidebar.style.display = 'none';
     }
   }
-  
+
   document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(btn => btn.addEventListener('click', (e) => {
     e.stopPropagation();
     showSection(btn.dataset.section);
   }));
 
-  // زر القائمة للهواتف
   const mobileMenuBtn = document.getElementById('mobileMenuBtn');
   const sidebar = document.getElementById('sidebar');
   mobileMenuBtn.addEventListener('click', (e) => {
@@ -800,18 +896,44 @@ async function handleExistingSession(session) {
     }
   });
 
-  document.getElementById('addProductBtn').onclick=()=>{ document.getElementById('productId').value=''; document.getElementById('productNameAr').value=''; document.getElementById('productNameEn').value=''; document.getElementById('productPriceAr').value=''; document.getElementById('productPriceEn').value=''; document.getElementById('productCategoryAr').value=''; document.getElementById('productCategoryEn').value=''; document.getElementById('productTypeAr').value=''; document.getElementById('productTypeEn').value=''; document.getElementById('productDescAr').value=''; document.getElementById('productDescEn').value=''; document.getElementById('productDetailsAr').value=''; document.getElementById('productDetailsEn').value=''; document.getElementById('mainImagePreview').innerHTML=''; currentExtraImagesUrls=[]; renderExtraImagesList([]); document.getElementById('productModalTitle').innerText='إضافة منتج'; document.getElementById('productModal').classList.add('active'); };
-  document.getElementById('addDealBtn').onclick=()=>{ document.getElementById('dealId').value=''; document.getElementById('dealTitleAr').value=''; document.getElementById('dealTitleEn').value=''; document.getElementById('dealDescAr').value=''; document.getElementById('dealDescEn').value=''; document.getElementById('dealBadgeAr').value=''; document.getElementById('dealBadgeEn').value=''; document.getElementById('dealExpiry').value=''; document.getElementById('dealModal').classList.add('active'); };
+  document.getElementById('addProductBtn').onclick = () => {
+    document.getElementById('productId').value = '';
+    document.getElementById('productNameAr').value = '';
+    document.getElementById('productNameEn').value = '';
+    document.getElementById('productPriceAr').value = '';
+    document.getElementById('productPriceEn').value = '';
+    document.getElementById('productCategoryAr').value = '';
+    document.getElementById('productCategoryEn').value = '';
+    document.getElementById('productTypeAr').value = '';
+    document.getElementById('productTypeEn').value = '';
+    document.getElementById('productDescAr').value = '';
+    document.getElementById('productDescEn').value = '';
+    document.getElementById('productDetailsAr').value = '';
+    document.getElementById('productDetailsEn').value = '';
+    document.getElementById('mainImagePreview').innerHTML = '';
+    currentExtraImagesUrls = [];
+    renderExtraImagesList([]);
+    document.getElementById('productModalTitle').innerText = 'إضافة منتج';
+    document.getElementById('productModal').classList.add('active');
+  };
+  document.getElementById('addDealBtn').onclick = () => {
+    document.getElementById('dealId').value = '';
+    document.getElementById('dealTitleAr').value = '';
+    document.getElementById('dealTitleEn').value = '';
+    document.getElementById('dealDescAr').value = '';
+    document.getElementById('dealDescEn').value = '';
+    document.getElementById('dealBadgeAr').value = '';
+    document.getElementById('dealBadgeEn').value = '';
+    document.getElementById('dealExpiry').value = '';
+    document.getElementById('dealModal').classList.add('active');
+  };
   document.querySelectorAll('.modal .btn-secondary, #closeProductModalBtn, #closeDealModalBtn, #closeTicketModalBtn').forEach(btn => btn?.addEventListener('click', () => document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'))));
-  window.onclick = (e) => { if(e.target.classList.contains('modal')) e.target.classList.remove('active'); if(e.target.classList.contains('confirm-modal')) e.target.style.display = 'none'; };
+  window.onclick = (e) => { if (e.target.classList.contains('modal')) e.target.classList.remove('active'); if (e.target.classList.contains('confirm-modal')) e.target.style.display = 'none'; };
 
-  // ============================================================
-  // ✅ التهيئة الرئيسية
-  // ============================================================
   const sessionData = await checkSession(); 
-  if(sessionData) { 
+  if (sessionData) { 
     const cats = ["أطعمة ومشروبات","الرقميات","روائح وعطور","عناية","حلويات","تجميل","ملابس","يدويات","هدايا","عطارة","فنون","نباتات","ترفيه"]; 
-    document.getElementById('profileCategory').innerHTML = cats.map(c=>`<option value="${c}">${c}</option>`).join(''); 
+    document.getElementById('profileCategory').innerHTML = cats.map(c => `<option value="${c}">${c}</option>`).join(''); 
     await loadProjectData(); 
     await loadStats();
     await loadProducts();
