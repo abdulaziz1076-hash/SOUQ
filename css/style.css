@@ -5274,7 +5274,15 @@ html[dir="rtl"] .page-title {
   display: none !important;
 }
 
+/* إظهار الخيارات بشكل طبيعي */
 .product-variants,
 .variants-selector,
 .variant-option {
-  display: none !important;
+  display: block; /* أو display: flex للـ .variants-selector */
+}
+
+.variants-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
