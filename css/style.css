@@ -1272,16 +1272,18 @@ html[dir="ltr"] .license-badge-card {
     background: white;
     color: #C41E3A;
     border-color: var(--secondary);
-    left: 15px !important;
-    right: auto;
-    bottom: 60px !important;
+    /* نزيل left/right و bottom الثابتة، ونجعلها تعتمد على flex داخل الـ profile-header */
+    position: absolute;
+    bottom: 12px;
+    right: 12px; /* للـ RTL، ستكون في الزاوية اليمنى السفلية */
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
 }
-.feedback-btn:hover {
-    background: var(--secondary);
-    color: white;
-    transform: scale(1.1);
-    left: 8px;
+/* في حالة LTR، نعكس الاتجاه */
+[dir="ltr"] .feedback-btn {
     right: auto;
+    left: 12px;
 }
 
 .action-btn:hover {
@@ -2056,6 +2058,9 @@ html[dir="ltr"] .license-badge-card {
     align-items: center;
     gap: 12px;
     position: relative;
+}
+.profile-header .action-btn {
+    bottom: 15px;
 }
 
 .profile-avatar {
@@ -4145,6 +4150,29 @@ html[dir="ltr"] .share-popup {
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
     margin-top: 10px;
+    .feedback-btn {
+        width: 34px;
+        height: 34px;
+        font-size: 14px;
+        bottom: 8px;
+        right: 8px;
+    }
+    [dir="ltr"] .feedback-btn {
+        right: auto;
+        left: 8px;
+    }
+    .profile-header {
+        padding: 12px 12px;
+        gap: 8px;
+        flex-wrap: wrap; /* للسماح بالالتفاف إذا كان النص طويلاً */
+    }
+    .profile-avatar {
+        width: 50px;
+        height: 50px;
+    }
+    .profile-name {
+        font-size: 16px;
+    }
 }
 
 @media (min-width: 768px) {
@@ -4793,10 +4821,10 @@ html[dir="ltr"] .share-popup {
 }
 
 .feedback-btn:hover {
-    background: var(--favorite-red) !important;  /* خلفية حمراء */
-    border-color: var(--favorite-red) !important; /* حدود حمراء */
-    color: white !important;                      /* تغيير لون الأيقونة إلى الأبيض */
-    transform: scale(1.1);                        /* تكبير بسيط (اختياري) */
+    background: var(--favorite-red) !important;  
+    border-color: var(--favorite-red) !important; 
+    color: white !important;                      
+    transform: scale(1.1);                       
 }
 
 /* ========== 29. PRICE DISPLAY STYLES ========== */
