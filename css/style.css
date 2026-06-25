@@ -1268,20 +1268,29 @@ html[dir="ltr"] .license-badge-card {
     border: 1px solid rgba(212, 175, 55, 0.3);
 }
 
-.feedback-btn {
+/* أيقونة الشكوى في رأس المشروع */
+.profile-header .feedback-btn {
+    bottom: 15px !important;    /* نفس مسافة الأيقونات الأخرى */
     background: white;
     color: #C41E3A;
     border-color: var(--secondary);
-    left: 15px !important;
-    right: auto;
-    bottom: 60px !important;
 }
-.feedback-btn:hover {
-    background: var(--secondary);
-    color: white;
-    transform: scale(1.1);
-    left: 8px;
+
+/* تحديد الجهة: في RTL تكون في اليمين، وفي LTR في اليسار */
+[dir="rtl"] .profile-header .feedback-btn {
+    right: 15px;
+    left: auto;
+}
+[dir="ltr"] .profile-header .feedback-btn {
+    left: 15px;
     right: auto;
+}
+
+.profile-header .feedback-btn:hover {
+    background: var(--favorite-red) !important;
+    border-color: var(--favorite-red) !important;
+    color: white !important;
+    transform: scale(1.1);
 }
 
 .action-btn:hover {
@@ -2112,6 +2121,9 @@ html[dir="ltr"] .license-badge-card {
 [dir="ltr"] .profile-header .share-btn {
     right: 15px;
     left: auto;
+}
+.profile-header .share-btn {
+    bottom: 15px;
 }
 
 .profile-body {
