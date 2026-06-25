@@ -1250,7 +1250,7 @@ html[dir="ltr"] .license-badge-card {
     border: 1px solid var(--light-gray);
 }
 
-/* action buttons (share, favorite) */
+/* ===== action buttons (share, favorite, feedback) ===== */
 .action-btn {
     position: absolute;
     bottom: 8px;
@@ -1268,15 +1268,37 @@ html[dir="ltr"] .license-badge-card {
     border: 1px solid rgba(212, 175, 55, 0.3);
 }
 
-/* أيقونة الشكوى في رأس المشروع */
+.action-btn:hover {
+    transform: scale(1.1);
+    border-color: var(--secondary);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== زر المشاركة (Share) ===== */
+.share-btn {
+    color: var(--primary-dark);
+    bottom: 15px !important;  /* نفس مسافة أيقونة الشكوى */
+}
+[dir="rtl"] .share-btn {
+    right: 15px;
+    left: auto;
+}
+[dir="ltr"] .share-btn {
+    left: 15px;
+    right: auto;
+}
+.share-btn:hover {
+    background: var(--secondary);
+    color: white;
+}
+
+/* ===== زر الشكوى (Feedback) داخل رأس المشروع ===== */
 .profile-header .feedback-btn {
-    bottom: 15px !important;    /* نفس مسافة الأيقونات الأخرى */
+    bottom: 15px !important;
     background: white;
     color: #C41E3A;
     border-color: var(--secondary);
 }
-
-/* تحديد الجهة: في RTL تكون في اليمين، وفي LTR في اليسار */
 [dir="rtl"] .profile-header .feedback-btn {
     right: 15px;
     left: auto;
@@ -1285,7 +1307,6 @@ html[dir="ltr"] .license-badge-card {
     left: 15px;
     right: auto;
 }
-
 .profile-header .feedback-btn:hover {
     background: var(--favorite-red) !important;
     border-color: var(--favorite-red) !important;
@@ -1293,29 +1314,27 @@ html[dir="ltr"] .license-badge-card {
     transform: scale(1.1);
 }
 
-.action-btn:hover {
-    transform: scale(1.1);
-    border-color: var(--secondary);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+/* ===== زر المفضلة (Favorite) ===== */
+.favorite-btn {
+    color: var(--gray);
+    border-color: rgba(196, 30, 58, 0.3);
 }
-
-.share-btn {
-    color: var(--primary-dark);
-}
-
-[dir="rtl"] .share-btn {
-    right: 8px;
-    left: auto;
-}
-
-[dir="ltr"] .share-btn {
+[dir="rtl"] .favorite-btn {
     left: 8px;
     right: auto;
 }
-
-.share-btn:hover {
-    background: var(--secondary);
-    color: white;
+[dir="ltr"] .favorite-btn {
+    right: 8px;
+    left: auto;
+}
+.favorite-btn.active {
+    color: var(--favorite-red);
+    background: white;
+    border-color: var(--favorite-red);
+}
+.favorite-btn:hover {
+    background: var(--favorite-red-light);
+    border-color: var(--favorite-red);
 }
 
 .favorite-btn {
