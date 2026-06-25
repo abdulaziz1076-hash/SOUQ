@@ -10,14 +10,14 @@ const BASE_URL = 'https://souqalmasharie.onrender.com';
 
 async function generateSitemap() {
     console.log('🔄 جاري جلب البيانات من Supabase...');
-    
-    // جلب المشاريع النشطة فقط
+
+    // جلب المشاريع النشطة
     const { data: projects, error: projErr } = await supabase
         .from('projects')
         .select('id, name_ar, updated_at')
         .eq('status', 'active')
         .eq('is_email_verified', true);
-    
+
     if (projErr) {
         console.error('❌ خطأ في جلب المشاريع:', projErr);
         throw projErr;
@@ -27,7 +27,7 @@ async function generateSitemap() {
     const { data: products, error: prodErr } = await supabase
         .from('products')
         .select('id, project_id, updated_at');
-    
+
     if (prodErr) {
         console.error('❌ خطأ في جلب المنتجات:', prodErr);
         throw prodErr;
