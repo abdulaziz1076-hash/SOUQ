@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
 
     <style>
-        /* ===== إعادة تعيين وتحسينات عامة ===== */
+        /* ===== أنماط عامة ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: #f0f4f8;
@@ -19,7 +19,7 @@
         }
         .admin-wrapper { max-width: 1600px; margin: 0 auto; padding: 24px 20px; }
 
-        /* ===== شريط علوي محسن ===== */
+        /* ===== شريط علوي ===== */
         .top-bar {
             display: flex;
             justify-content: space-between;
@@ -65,7 +65,7 @@
         }
         .logout-btn:hover { background: #c53030; transform: translateY(-2px); }
 
-        /* ===== بطاقات إحصائية مع تدرجات لونية ===== */
+        /* ===== بطاقات إحصائية ===== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -433,7 +433,7 @@
         }
         .remove-variant:hover { background: #fecaca; transform: scale(1.05); }
 
-        /* ===== التنبيهات (Toast) ===== */
+        /* ===== التنبيهات ===== */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -706,13 +706,10 @@
         </div>
     </div>
 
-    <!-- مودال المشروع -->
+    <!-- مودالات -->
     <div id="projectModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h3>مشروع</h3>
-                <button class="modal-close" data-modal="projectModal"><i class="fas fa-times"></i></button>
-            </div>
+            <div class="modal-header"><h3>مشروع</h3><button class="modal-close" data-modal="projectModal"><i class="fas fa-times"></i></button></div>
             <div class="modal-body">
                 <form id="projectForm">
                     <input type="hidden" id="projectId">
@@ -734,7 +731,6 @@
         </div>
     </div>
 
-    <!-- مودال المنتج -->
     <div id="productModal" class="modal">
         <div class="modal-content">
             <div class="modal-header"><h3>منتج</h3><button class="modal-close" data-modal="productModal"><i class="fas fa-times"></i></button></div>
@@ -764,7 +760,6 @@
         </div>
     </div>
 
-    <!-- مودال العرض -->
     <div id="dealModal" class="modal">
         <div class="modal-content">
             <div class="modal-header"><h3>عرض</h3><button class="modal-close" data-modal="dealModal"><i class="fas fa-times"></i></button></div>
@@ -785,28 +780,16 @@
         </div>
     </div>
 
-    <!-- مودال تفاصيل الطلب -->
     <div id="orderDetailsModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header"><h3>تفاصيل الطلب</h3><button class="modal-close" data-modal="orderDetailsModal"><i class="fas fa-times"></i></button></div>
-            <div class="modal-body" id="orderDetailsBody"></div>
-        </div>
+        <div class="modal-content"><div class="modal-header"><h3>تفاصيل الطلب</h3><button class="modal-close" data-modal="orderDetailsModal"><i class="fas fa-times"></i></button></div><div class="modal-body" id="orderDetailsBody"></div></div>
     </div>
 
-    <!-- مودال تفاصيل طلب التسجيل -->
     <div id="regDetailsModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header"><h3>تفاصيل طلب التسجيل</h3><button class="modal-close" data-modal="regDetailsModal"><i class="fas fa-times"></i></button></div>
-            <div class="modal-body" id="regDetailsBody"></div>
-        </div>
+        <div class="modal-content"><div class="modal-header"><h3>تفاصيل طلب التسجيل</h3><button class="modal-close" data-modal="regDetailsModal"><i class="fas fa-times"></i></button></div><div class="modal-body" id="regDetailsBody"></div></div>
     </div>
 
-    <!-- مودال تفاصيل تذكرة الدعم -->
     <div id="ticketReplyModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header"><h3>تفاصيل التذكرة والرد</h3><button class="modal-close" data-modal="ticketReplyModal"><i class="fas fa-times"></i></button></div>
-            <div class="modal-body" id="ticketReplyBody"></div>
-        </div>
+        <div class="modal-content"><div class="modal-header"><h3>تفاصيل التذكرة والرد</h3><button class="modal-close" data-modal="ticketReplyModal"><i class="fas fa-times"></i></button></div><div class="modal-body" id="ticketReplyBody"></div></div>
     </div>
 
     <script type="module">
@@ -830,7 +813,8 @@
             supportTotal: 0,
             currentVariants: [],
             currentTab: 'registrations',
-            isLoading: false
+            isLoading: false,
+            projectsMap: {} // لتخزين أسماء المشاريع (id -> name_ar)
         };
 
         const CATEGORIES_AR = ["أطعمة ومشروبات","الرقميات","روائح وعطور","عناية","حلويات","تجميل","ملابس","يدويات","هدايا","عطارة","فنون","نباتات","ترفيه"];
@@ -868,6 +852,17 @@
             return { badge: 'badge-approved', text: 'فعال' };
         }
 
+        // ===== تحميل أسماء المشاريع (للاستخدام في التراخيص والدعم) =====
+        async function loadProjectsMap() {
+            const { data, error } = await supabase.from('projects').select('id, name_ar');
+            if (error) {
+                console.error('خطأ في جلب أسماء المشاريع:', error);
+                return;
+            }
+            state.projectsMap = {};
+            data.forEach(p => { state.projectsMap[p.id] = p.name_ar; });
+        }
+
         // ===== تحميل الإحصائيات =====
         async function loadStats() {
             try {
@@ -893,25 +888,6 @@
                 document.getElementById('statsContainer').innerHTML = `<div class="stat-card"><div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div><div class="stat-number">!</div><div class="stat-label">خطأ في التحميل</div></div>`;
             }
         }
-
-        // ===== تحديث حالة الترخيص =====
-        window.updateProjectLicenseStatus = async (projectId, newStatus) => {
-            const payload = {
-                license_status: newStatus,
-                license_reviewed_at: new Date().toISOString()
-            };
-            if (newStatus === 'license_rejected') {
-                const reason = prompt('سبب الرفض (اختياري):') || '';
-                payload.rejection_reason = reason.trim() || null;
-            } else {
-                payload.rejection_reason = null;
-            }
-            const { error } = await supabase.from('projects').update(payload).eq('id', projectId);
-            if (error) return showToast(error.message, true);
-            showToast('تم تحديث حالة الترخيص');
-            await loadProjects(state.currentProjectsPage);
-            await loadStats();
-        };
 
         // ===== المشاريع =====
         async function loadProjects(page = 1) {
@@ -1623,21 +1599,23 @@
         }
 
         async function exportLicensesCSV() {
-            const { data, error } = await supabase.from('project_license_requests').select('*, projects(name_ar)').order('created_at', { ascending: false });
+            const { data, error } = await supabase.from('project_license_requests').select('*').order('created_at', { ascending: false });
             if (error || !data) return showToast(error?.message || 'لا توجد بيانات', true);
-            const rows = [['المشروع','حالة الطلب','تاريخ الرفع']];
+            const rows = [['ID المشروع','حالة الطلب','تاريخ الرفع','ملف الرخصة']];
             data.forEach(req => {
-                rows.push([req.projects?.name_ar || 'غير معروف', req.status, req.created_at]);
+                const projectName = state.projectsMap[req.project_id] || 'غير معروف';
+                rows.push([projectName, req.status, req.created_at, req.license_file_url || '']);
             });
             downloadCSV(rows, 'licenses_export');
         }
 
         async function exportSupportCSV() {
-            const { data, error } = await supabase.from('support_tickets').select('*, projects(name_ar)').order('created_at', { ascending: false });
+            const { data, error } = await supabase.from('support_tickets').select('*').order('created_at', { ascending: false });
             if (error || !data) return showToast(error?.message || 'لا توجد بيانات', true);
             const rows = [['المشروع','الموضوع','الحالة','التاريخ']];
             data.forEach(t => {
-                rows.push([t.projects?.name_ar || 'غير معروف', t.subject, t.status, t.created_at]);
+                const projectName = state.projectsMap[t.project_id] || 'غير معروف';
+                rows.push([projectName, t.subject, t.status, t.created_at]);
             });
             downloadCSV(rows, 'support_export');
         }
@@ -1656,7 +1634,7 @@
             showToast('تم التصدير بنجاح');
         }
 
-        // ===== التراخيص (مع ترقيم) =====
+        // ===== التراخيص (باستخدام استعلام بسيط) =====
         async function loadLicenseRequests(page = 1) {
             if (state.isLoading) return;
             state.isLoading = true;
@@ -1665,22 +1643,7 @@
                 const status = document.getElementById('licenseStatusFilter').value;
                 let query = supabase
                     .from('project_license_requests')
-                    .select(`
-                        id,
-                        project_id,
-                        license_file_url,
-                        status,
-                        admin_notes,
-                        created_at,
-                        updated_at,
-                        projects (
-                            id,
-                            name_ar,
-                            name_en,
-                            owner_user_id,
-                            license_status
-                        )
-                    `)
+                    .select('*', { count: 'exact' })
                     .order('created_at', { ascending: false })
                     .range((page - 1) * LIMIT, page * LIMIT - 1);
 
@@ -1695,31 +1658,30 @@
                     document.getElementById('licensesPagination').innerHTML = '';
                     return;
                 }
+
+                // جلب أسماء المشاريع لكل طلب
+                const projectIds = [...new Set(data.map(req => req.project_id))];
+                const { data: projectsData } = await supabase.from('projects').select('id, name_ar').in('id', projectIds);
+                const projectMap = {};
+                if (projectsData) {
+                    projectsData.forEach(p => { projectMap[p.id] = p.name_ar; });
+                }
+
                 let html = `<div class="table-wrapper"><table class="data-table"><thead><tr>
-                    <th>المشروع</th><th>صاحب المشروع</th><th>ملف الرخصة</th><th>حالة الطلب</th><th>حالة الترخيص</th><th>تاريخ الرفع</th><th>الإجراءات</th>
+                    <th>المشروع</th><th>ملف الرخصة</th><th>حالة الطلب</th><th>تاريخ الرفع</th><th>الإجراءات</th>
                 </tr></thead><tbody>`;
                 for (const req of data) {
-                    const project = req.projects;
-                    const projectName = project?.name_ar || 'مشروع محذوف';
-                    const ownerId = project?.owner_user_id || 'غير معروف';
+                    const projectName = projectMap[req.project_id] || 'مشروع محذوف';
                     let statusText = '', badgeClass = '';
                     if (req.status === 'pending') { statusText = 'قيد المراجعة'; badgeClass = 'badge-pending'; }
                     else if (req.status === 'approved') { statusText = 'موافق'; badgeClass = 'badge-approved'; }
                     else if (req.status === 'rejected') { statusText = 'مرفوض'; badgeClass = 'badge-rejected'; }
                     else { statusText = escapeHtml(req.status || '-'); badgeClass = 'badge-reviewed'; }
-                    const licenseStatus = project?.license_status || '-';
-                    let licenseBadgeClass = 'badge-reviewed';
-                    let licenseStatusText = licenseStatus;
-                    if (licenseStatus === 'license_approved') licenseBadgeClass = 'badge-approved';
-                    else if (licenseStatus === 'license_rejected') licenseBadgeClass = 'badge-rejected';
-                    else if (licenseStatus === 'pending_license' || licenseStatus === 'license_uploaded') licenseBadgeClass = 'badge-pending';
-                    else if (licenseStatus === 'suspended') licenseBadgeClass = 'badge-rejected';
+
                     html += `<tr>
                         <td>${escapeHtml(projectName)}</td>
-                        <td>${escapeHtml(ownerId)}</td>
                         <td>${req.license_file_url ? `<a href="${escapeHtml(req.license_file_url)}" target="_blank" class="btn-outline" style="padding:4px 12px; text-decoration:none;">📄 عرض الملف</a>` : '-'}</td>
                         <td><span class="badge ${badgeClass}">${statusText}</span></td>
-                        <td><span class="badge ${licenseBadgeClass}">${escapeHtml(licenseStatusText)}</span></td>
                         <td>${req.created_at ? new Date(req.created_at).toLocaleString() : '-'}</td>
                         <td class="action-buttons">
                             <button class="action-btn approve" onclick="window.reviewLicense('${req.id}', 'approve')" title="قبول"><i class="fas fa-check-circle"></i></button>
@@ -1743,12 +1705,14 @@
 
         window.reviewLicense = async (requestId, action) => {
             const newStatus = (action === 'approve') ? 'approved' : 'rejected';
-            const projectLicenseStatus = (action === 'approve') ? 'license_approved' : 'license_rejected';
             const { error: updateReq } = await supabase.from('project_license_requests').update({ status: newStatus }).eq('id', requestId);
             if (updateReq) { showToast(updateReq.message, true); return; }
+
+            // جلب project_id من الطلب لتحديث حالة المشروع
             const { data: reqData, error: reqFetchError } = await supabase.from('project_license_requests').select('project_id').eq('id', requestId).single();
             if (reqFetchError) { showToast(reqFetchError.message, true); return; }
             if (reqData && reqData.project_id) {
+                const projectLicenseStatus = (action === 'approve') ? 'license_approved' : 'license_rejected';
                 const projUpdate = { license_status: projectLicenseStatus, license_reviewed_at: new Date().toISOString() };
                 if (action === 'reject') {
                     const reason = prompt('سبب الرفض (اختياري):') || '';
@@ -1765,7 +1729,7 @@
             await loadStats();
         };
 
-        // ===== الدعم الفني (مع ترقيم) =====
+        // ===== الدعم الفني (باستخدام استعلام بسيط) =====
         async function loadSupportTickets(page = 1) {
             if (state.isLoading) return;
             state.isLoading = true;
@@ -1774,19 +1738,7 @@
                 const status = document.getElementById('supportStatusFilter').value;
                 let query = supabase
                     .from('support_tickets')
-                    .select(`
-                        id,
-                        project_id,
-                        subject,
-                        message,
-                        status,
-                        admin_reply,
-                        created_at,
-                        updated_at,
-                        projects (
-                            name_ar
-                        )
-                    `)
+                    .select('*', { count: 'exact' })
                     .order('created_at', { ascending: false })
                     .range((page - 1) * LIMIT, page * LIMIT - 1);
 
@@ -1801,13 +1753,24 @@
                     document.getElementById('supportPagination').innerHTML = '';
                     return;
                 }
+
+                // جلب أسماء المشاريع لكل تذكرة
+                const projectIds = [...new Set(data.map(t => t.project_id))];
+                const { data: projectsData } = await supabase.from('projects').select('id, name_ar').in('id', projectIds);
+                const projectMap = {};
+                if (projectsData) {
+                    projectsData.forEach(p => { projectMap[p.id] = p.name_ar; });
+                }
+
                 let html = `<div class="table-wrapper"><table class="data-table"><thead><tr><th>#</th><th>المشروع</th><th>الموضوع</th><th>الحالة</th><th>التاريخ</th><th>الإجراءات</th></tr></thead><tbody>`;
                 for (const ticket of data) {
+                    const projectName = projectMap[ticket.project_id] || 'غير معروف';
                     const statusClass = ticket.status === 'open' ? 'badge-pending' : (ticket.status === 'in_progress' ? 'badge-pending' : 'badge-approved');
                     const statusText = ticket.status === 'open' ? 'مفتوحة' : (ticket.status === 'in_progress' ? 'قيد المعالجة' : 'مغلقة');
+
                     html += `<tr>
                         <td>${escapeHtml(ticket.id)}</td>
-                        <td>${escapeHtml(ticket.projects?.name_ar || '?')}</td>
+                        <td>${escapeHtml(projectName)}</td>
                         <td>${escapeHtml(ticket.subject)}</td>
                         <td><span class="badge ${statusClass}">${statusText}</span></td>
                         <td>${ticket.created_at ? new Date(ticket.created_at).toLocaleString() : '-'}</td>
@@ -2083,6 +2046,7 @@
                 document.getElementById('loginSection').style.display = 'none';
                 document.getElementById('adminContent').style.display = 'block';
                 fillCategoryDropdowns();
+                await loadProjectsMap(); // تحميل أسماء المشاريع
                 await initEmirateFilter();
                 await initProjectSelects();
                 await loadStats();
