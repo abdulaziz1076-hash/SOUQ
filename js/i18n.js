@@ -45,11 +45,6 @@ export const translations = {
 		stat3: "طلبات تواصل",
 		stat4: "شركاء داعمين",
 
-		badge1: "قريباً",
-		badge2: "قريباً",
-		badge3: "قريباً",
-		badge4: "قريباً",
-
 		// ===== Pages / Titles =====
 		familiesPageTitle: "المشاريع",
 		familiesPageSubtitle: "استعرض المشاريع في الإمارات",
@@ -221,10 +216,6 @@ export const translations = {
 		stat3: "Contact Requests",
 		stat4: "Supporting Partners",
 
-		badge1: "Coming Soon",
-		badge2: "Coming Soon",
-		badge3: "Coming Soon",
-		badge4: "Coming Soon",
 
 		// ===== Pages / Titles =====
 		familiesPageTitle: "Projects",
