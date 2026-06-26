@@ -1,431 +1,701 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم - سوق المشاريع</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>لوحة تحكم المشرف – سوق المشاريع</title>
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    <!-- Google Fonts (نفس هوية الموقع) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=El+Messiri:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
+    <!-- Sortable.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 
     <style>
-        /* ===== RESET & VARIABLES (نفس هوية الموقع) ===== */
+        /* ===== RESET & BASE ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
-        :root {
-            --primary-dark: #0F3D2E;
-            --primary-light: #1A5F44;
-            --primary-gradient: linear-gradient(135deg, #0F3D2E, #1A5F44);
-            --secondary: #D4AF37;
-            --secondary-light: #f5d06b;
-            --light: #F8F5F0;
-            --gray: #8A8A8A;
-            --light-gray: #E8E4DD;
-            --dark: #1A1A1A;
-            --danger: #C41E3A;
-            --success: #28a745;
-            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            --hover-shadow: 0 8px 25px rgba(15, 61, 46, 0.15);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --radius: 18px;
-        }
-
         body {
-            font-family: 'Almarai', sans-serif;
-            background: var(--light);
-            color: var(--dark);
-            padding: 20px;
-            min-height: 100vh;
+            background: #f0f4f8;
+            font-family: 'Almarai', 'Tajawal', sans-serif;
+            color: #1a2c3e;
+            direction: rtl;
         }
-
-        .admin-container {
-            max-width: 1400px;
+        .admin-wrapper {
+            max-width: 1600px;
             margin: 0 auto;
+            padding: 24px 20px;
         }
 
-        /* ===== HEADER ===== */
-        .admin-header {
-            background: var(--primary-gradient);
-            color: white;
-            padding: 20px 30px;
-            border-radius: var(--radius);
+        /* ===== LOGIN ===== */
+        #loginSection {
+            min-height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(15, 61, 46, 0.15);
-            border: 1px solid rgba(212, 175, 55, 0.2);
+            justify-content: center;
+            background: linear-gradient(145deg, #0a2e25, #1a5f44);
         }
-
-        .admin-header .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .login-card {
+            background: white;
+            border-radius: 48px;
+            padding: 42px;
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
         }
-
-        .admin-header .logo-area i {
-            font-size: 32px;
-            color: var(--secondary);
+        .login-card h2 {
+            color: #0a2e25;
+            margin-bottom: 8px;
         }
-
-        .admin-header .logo-area h1 {
-            font-family: 'El Messiri', serif;
-            font-size: 26px;
-            font-weight: 700;
+        .login-card p {
+            color: #64748b;
+            margin-bottom: 24px;
         }
-
-        .admin-header .logo-area span {
+        .login-card input {
+            width: 100%;
+            padding: 14px;
+            margin: 10px 0;
+            border-radius: 40px;
+            border: 1px solid #cfdfe9;
+            font-family: inherit;
             font-size: 14px;
-            opacity: 0.8;
-            display: block;
+        }
+        .login-card input:focus {
+            outline: none;
+            border-color: #D4AF37;
+        }
+        .login-btn {
+            background: #0a2e25;
+            color: white;
+            width: 100%;
+            padding: 14px;
+            border-radius: 40px;
+            font-weight: bold;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .login-btn:hover {
+            background: #1a5f44;
+            transform: translateY(-2px);
+        }
+        .login-error {
+            color: #dc2626;
+            margin-top: 16px;
+            font-size: 13px;
+        }
+        .forgot-link {
+            color: #D4AF37;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 12px;
         }
 
-        .admin-header .header-actions {
+        /* ===== TOP BAR ===== */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            border-radius: 32px;
+            padding: 12px 28px;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2edf2;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .logo-area h1 {
+            font-size: 1.5rem;
+            color: #0a2e25;
+            font-weight: 800;
+        }
+        .logo-area i {
+            color: #D4AF37;
+            margin-left: 8px;
+        }
+        .top-actions {
             display: flex;
             gap: 12px;
             align-items: center;
+            flex-wrap: wrap;
         }
-
-        .admin-header .header-actions a {
+        .refresh-all-btn {
+            background: #0a2e25;
             color: white;
-            background: rgba(255,255,255,0.1);
+            border: none;
             padding: 8px 18px;
             border-radius: 40px;
-            text-decoration: none;
-            font-size: 14px;
-            border: 1px solid rgba(255,255,255,0.2);
-            transition: var(--transition);
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+        .refresh-all-btn:hover {
+            background: #1a5f44;
+            transform: translateY(-2px);
+        }
+        .logout-btn {
+            background: #e53e3e;
+            color: white;
+            border: none;
+            padding: 8px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-
-        .admin-header .header-actions a:hover {
-            background: var(--secondary);
-            color: var(--primary-dark);
-            border-color: var(--secondary);
+        .logout-btn:hover {
+            background: #c53030;
+            transform: translateY(-2px);
         }
 
         /* ===== STATS ===== */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
         }
-
-        .stat-box {
+        .stat-card {
             background: white;
+            border-radius: 24px;
             padding: 20px;
-            border-radius: var(--radius);
-            border: 1px solid var(--light-gray);
-            box-shadow: var(--card-shadow);
-            text-align: center;
-            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            border: 1px solid #e9f0f5;
+            transition: 0.25s;
+            position: relative;
+            overflow: hidden;
         }
-
-        .stat-box:hover {
+        .stat-card:hover {
             transform: translateY(-4px);
-            box-shadow: var(--hover-shadow);
-            border-color: var(--secondary);
+            box-shadow: 0 16px 30px -12px rgba(0, 0, 0, 0.1);
         }
-
-        .stat-box .number {
+        .stat-card .stat-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(145deg, #0b3b2e, #1a5f44);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+        .stat-card .stat-icon i {
+            font-size: 24px;
+            color: #D4AF37;
+        }
+        .stat-card .stat-number {
             font-size: 32px;
             font-weight: 800;
-            color: var(--primary-dark);
-            display: block;
+            color: #0a2e25;
+            line-height: 1.2;
         }
-
-        .stat-box .label {
-            font-size: 14px;
-            color: var(--gray);
+        .stat-card .stat-label {
+            font-size: 13px;
+            color: #5f7f9a;
             margin-top: 4px;
+            font-weight: 500;
+        }
+        .stat-card .stat-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(212, 175, 55, 0.15);
+            color: #0a2e25;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+        [dir="ltr"] .stat-card .stat-badge {
+            left: auto;
+            right: 12px;
         }
 
-        .stat-box .icon {
-            font-size: 28px;
-            color: var(--secondary);
-            margin-bottom: 6px;
-        }
-
-        /* ===== TABLE ===== */
-        .table-wrapper {
+        /* ===== TABS ===== */
+        .tabs-container {
             background: white;
-            border-radius: var(--radius);
-            border: 1px solid var(--light-gray);
-            padding: 20px;
-            box-shadow: var(--card-shadow);
-            overflow-x: auto;
-        }
-
-        .table-header {
+            border-radius: 60px;
+            padding: 6px;
+            margin-bottom: 24px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
             flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 20px;
+            gap: 4px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+            border: 1px solid #e2edf2;
         }
-
-        .table-header h2 {
-            font-family: 'El Messiri', serif;
-            color: var(--primary-dark);
-            font-size: 22px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .table-header h2 i {
-            color: var(--secondary);
-        }
-
-        .table-header .search-box {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .table-header .search-box input {
-            padding: 10px 16px;
-            border: 2px solid var(--light-gray);
-            border-radius: 40px;
-            font-family: inherit;
-            font-size: 14px;
-            background: var(--light);
-            transition: var(--transition);
-            width: 250px;
-        }
-
-        .table-header .search-box input:focus {
-            outline: none;
-            border-color: var(--secondary);
-            background: white;
-        }
-
-        .table-header .search-box button {
-            background: var(--primary-gradient);
-            color: white;
+        .tab-btn {
+            background: transparent;
             border: none;
             padding: 10px 20px;
-            border-radius: 40px;
+            border-radius: 50px;
             font-weight: 700;
+            font-size: 13px;
             cursor: pointer;
-            transition: var(--transition);
-            border: 1px solid var(--secondary);
+            transition: 0.2s;
+            color: #2c4e6e;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            flex: 0 0 auto;
         }
-
-        .table-header .search-box button:hover {
-            transform: scale(1.03);
-            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
-        }
-
-        /* ===== TABLE STYLES ===== */
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        .tab-btn i {
             font-size: 14px;
         }
-
-        thead {
-            background: var(--primary-gradient);
+        .tab-btn.active {
+            background: #0a2e25;
             color: white;
+            box-shadow: 0 8px 18px rgba(10, 46, 37, 0.2);
+        }
+        .tab-btn:hover:not(.active) {
+            background: #e6f0f5;
         }
 
-        thead th {
-            padding: 14px 12px;
+        /* ===== CONTENT CARDS ===== */
+        .content-card {
+            background: white;
+            border-radius: 28px;
+            padding: 24px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e9f0f5;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .content-card.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== FILTER BAR ===== */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .filter-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+        .filter-bar input,
+        .filter-bar select {
+            padding: 8px 14px;
+            border: 1px solid #cfdfe9;
+            border-radius: 34px;
+            background: white;
+            font-family: inherit;
+            font-size: 13px;
+            min-width: 140px;
+            transition: 0.2s;
+        }
+        .filter-bar input:focus,
+        .filter-bar select:focus {
+            border-color: #1a5f44;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 95, 68, 0.1);
+        }
+        .filter-bar button {
+            background: #0a2e25;
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s;
+            font-family: inherit;
+            font-size: 13px;
+        }
+        .filter-bar button.btn-outline {
+            background: white;
+            color: #0a2e25;
+            border: 1px solid #0a2e25;
+        }
+        .filter-bar button.btn-outline:hover {
+            background: #0a2e25;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .filter-bar button:hover {
+            transform: translateY(-2px);
+            background: #1a5f44;
+        }
+        .filter-bar .refresh-btn {
+            background: #D4AF37;
+            color: #0a2e25;
+        }
+        .filter-bar .refresh-btn:hover {
+            background: #c49b2a;
+        }
+
+        /* ===== TABLES ===== */
+        .table-wrapper {
+            overflow-x: auto;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            min-width: 650px;
+        }
+        .data-table th,
+        .data-table td {
+            padding: 12px 10px;
+            text-align: right;
+            border-bottom: 1px solid #edf2f7;
+            vertical-align: middle;
+        }
+        .data-table th {
+            background: #fafcfd;
+            font-weight: 800;
+            color: #0a2e25;
+            position: sticky;
+            top: 0;
+            z-index: 5;
+        }
+        .data-table tr:hover td {
+            background-color: #f8fbfe;
+        }
+        .data-table .no-data {
             text-align: center;
+            padding: 30px;
+            color: #94a3b8;
+        }
+
+        /* ===== BADGES ===== */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 11px;
             font-weight: 700;
             white-space: nowrap;
         }
-
-        tbody tr {
-            border-bottom: 1px solid var(--light-gray);
-            transition: var(--transition);
+        .badge-pending {
+            background: #fff3e0;
+            color: #c47a2e;
+        }
+        .badge-approved {
+            background: #dcfce7;
+            color: #15803d;
+        }
+        .badge-rejected {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+        .badge-reviewed {
+            background: #e0f2fe;
+            color: #0369a1;
+        }
+        .badge-resolved {
+            background: #d9f99d;
+            color: #3f6212;
+        }
+        .badge-open {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        .badge-closed {
+            background: #e5e7eb;
+            color: #4b5563;
+        }
+        .badge-in_progress {
+            background: #dbeafe;
+            color: #1d4ed8;
         }
 
-        tbody tr:hover {
-            background: rgba(212, 175, 55, 0.04);
+        /* ===== THUMBNAILS ===== */
+        .thumb-preview {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .thumb-preview:hover {
+            transform: scale(1.1);
         }
 
-        tbody td {
-            padding: 14px 12px;
-            text-align: center;
+        /* ===== ACTION BUTTONS ===== */
+        .action-buttons {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            padding: 5px;
+            border-radius: 10px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+        .action-btn.approve {
+            color: #15803d;
+            background: #dcfce7;
+        }
+        .action-btn.approve:hover {
+            background: #bbf7d0;
+            transform: scale(1.05);
+        }
+        .action-btn.reject {
+            color: #b91c1c;
+            background: #fee2e2;
+        }
+        .action-btn.reject:hover {
+            background: #fecaca;
+            transform: scale(1.05);
+        }
+        .action-btn.edit {
+            color: #2c7da0;
+            background: #eef6fc;
+        }
+        .action-btn.edit:hover {
+            background: #c9e6f5;
+            transform: scale(1.05);
+        }
+        .action-btn.delete {
+            color: #e53e3e;
+            background: #fee9e9;
+        }
+        .action-btn.delete:hover {
+            background: #fccaca;
+            transform: scale(1.05);
+        }
+        .action-btn.view {
+            color: #0a2e25;
+            background: #f1f5f9;
+        }
+        .action-btn.view:hover {
+            background: #e2e8f0;
+            transform: scale(1.05);
+        }
+
+        /* ===== DRAG & DROP ===== */
+        .sortable-row {
+            cursor: grab;
+            transition: background 0.2s;
+        }
+        .sortable-row:active {
+            cursor: grabbing;
+        }
+        .sortable-row.sortable-chosen {
+            background: #fef9e6 !important;
+            border: 1px solid #D4AF37;
+        }
+        .sortable-row.sortable-ghost {
+            opacity: 0.4;
+        }
+        .drag-handle {
+            cursor: grab;
+            color: #D4AF37;
+            font-size: 18px;
+            padding: 0 6px;
+            user-select: none;
+            display: inline-block;
             vertical-align: middle;
         }
-
-        .project-image {
-            width: 50px;
-            height: 50px;
-            border-radius: 10px;
-            object-fit: cover;
-            border: 1px solid var(--light-gray);
+        .drag-handle:active {
+            cursor: grabbing;
         }
 
-        .project-name-cell {
-            font-weight: 700;
-            color: var(--primary-dark);
-        }
-
-        .badge-paid {
-            display: inline-block;
-            background: linear-gradient(135deg, #C41E3A, #A01830);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-size: 11px;
-            font-weight: 700;
-        }
-
-        .badge-licensed {
-            display: inline-block;
-            background: var(--gradient-gold);
-            color: var(--primary-dark);
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-size: 11px;
-            font-weight: 700;
-        }
-
-        .badge-normal {
-            display: inline-block;
-            background: var(--light-gray);
-            color: var(--gray);
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-size: 11px;
-            font-weight: 700;
-        }
-
-        /* ===== FORM CONTROLS داخل الجدول ===== */
-        .form-control-inline {
-            width: 100%;
-            padding: 6px 10px;
-            border: 2px solid var(--light-gray);
-            border-radius: 10px;
-            font-family: inherit;
-            font-size: 13px;
-            background: var(--light);
-            transition: var(--transition);
-            max-width: 120px;
-            margin: 0 auto;
-        }
-
-        .form-control-inline:focus {
-            outline: none;
-            border-color: var(--secondary);
-            background: white;
-        }
-
-        .form-control-inline-lg {
-            max-width: 200px;
-        }
-
-        /* Toggle Switch */
-        .toggle-wrap {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .toggle {
-            position: relative;
-            width: 50px;
-            height: 28px;
-            background: var(--light-gray);
-            border-radius: 30px;
-            cursor: pointer;
-            transition: var(--transition);
-            border: 2px solid var(--light-gray);
-            flex-shrink: 0;
-        }
-
-        .toggle.active {
-            background: var(--primary-dark);
-            border-color: var(--secondary);
-        }
-
-        .toggle .slider {
-            position: absolute;
-            top: 2px;
-            right: 2px;
-            width: 20px;
-            height: 20px;
-            background: white;
-            border-radius: 50%;
-            transition: var(--transition);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-        }
-
-        .toggle.active .slider {
-            right: 24px;
-            background: var(--secondary);
-        }
-
-        .toggle-label {
-            font-size: 11px;
-            font-weight: 600;
-            margin-right: 8px;
-            color: var(--gray);
-            min-width: 40px;
-        }
-
-        .toggle.active + .toggle-label {
-            color: var(--primary-dark);
-        }
-
-        /* Buttons */
-        .btn-save {
-            background: var(--primary-gradient);
+        .save-order-btn {
+            background: #0a2e25;
             color: white;
             border: none;
-            padding: 6px 16px;
-            border-radius: 30px;
-            font-weight: 700;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
             cursor: pointer;
-            transition: var(--transition);
-            font-size: 12px;
-            border: 1px solid var(--secondary);
+            transition: 0.2s;
+            margin-top: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
-
-        .btn-save:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        .save-order-btn:hover {
+            background: #1a5f44;
+            transform: translateY(-2px);
         }
-
-        .btn-save:disabled {
+        .save-order-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
             transform: none;
         }
-
-        .btn-danger {
-            background: var(--danger);
-            color: white;
-            border: none;
-            padding: 6px 16px;
-            border-radius: 30px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 12px;
+        .order-status {
+            margin-right: 15px;
+            font-size: 13px;
+            color: var(--gray);
         }
 
-        .btn-danger:hover {
-            opacity: 0.8;
+        .view-details-btn {
+            background: #D4AF37;
+            color: #0a2e25;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+        .view-details-btn:hover {
+            background: #c49b2a;
             transform: scale(1.05);
+        }
+
+        /* ===== PAGINATION ===== */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .pagination button {
+            padding: 6px 14px;
+            border-radius: 30px;
+            border: 1px solid #cfdfe9;
+            background: white;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        .pagination button:hover {
+            background: #0a2e25;
+            color: white;
+            border-color: #0a2e25;
+        }
+        .pagination button.active {
+            background: #0a2e25;
+            color: white;
+            border-color: #0a2e25;
+        }
+
+        /* ===== MODALS ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 32px;
+            max-width: 750px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 30px 40px rgba(0, 0, 0, 0.2);
+            animation: fadeScale 0.25s ease;
+        }
+        @keyframes fadeScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #e9f0f5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 10;
+            border-radius: 32px 32px 0 0;
+        }
+        .modal-header h3 {
+            font-size: 1.4rem;
+            color: #0a2e25;
+            font-weight: 800;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 26px;
+            cursor: pointer;
+            color: #94a3b8;
+            transition: 0.2s;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        .modal-close:hover {
+            background: #f1f5f9;
+            color: #0a2e25;
+        }
+        .modal-body {
+            padding: 24px;
+        }
+        .modal-body p {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        .modal-body strong {
+            color: #0a2e25;
         }
 
         /* ===== TOAST ===== */
@@ -434,285 +704,507 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            background: var(--primary-dark);
+            background: #0a2e25;
             color: white;
             padding: 12px 28px;
-            border-radius: 40px;
+            border-radius: 60px;
+            z-index: 3000;
+            font-weight: 500;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+            animation: fadeUp 0.25s ease;
+            max-width: 90%;
+            text-align: center;
             font-size: 14px;
-            z-index: 9999;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-            display: none;
-            border: 1px solid var(--secondary);
-            font-weight: 600;
         }
-
-        .toast.show {
-            display: block;
-            animation: fadeUp 0.3s ease;
-        }
-
-        .toast.success {
-            background: var(--success);
-            border-color: var(--success);
-        }
-
         .toast.error {
-            background: var(--danger);
-            border-color: var(--danger);
+            background: #dc2626;
         }
-
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
-            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
         }
 
-        /* ===== LOADER ===== */
-        .loader-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(248, 245, 240, 0.85);
-            backdrop-filter: blur(4px);
-            z-index: 9998;
-            display: none;
-            justify-content: center;
-            align-items: center;
+        /* ===== ORDER STATUS SELECT ===== */
+        .order-status-select {
+            padding: 4px 10px;
+            border-radius: 30px;
+            border: 1px solid #cfdfe9;
+            background: white;
+            font-family: inherit;
+            font-size: 12px;
+            cursor: pointer;
         }
 
-        .loader-overlay.show {
+        /* ===== TOGGLE SWITCH (للتمييز) ===== */
+        .toggle-wrap {
             display: flex;
+            align-items: center;
+            gap: 6px;
+            justify-content: center;
         }
-
-        .loader-spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid var(--light-gray);
-            border-top: 4px solid var(--secondary);
+        .toggle {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background: #ccc;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 2px solid #ccc;
+            flex-shrink: 0;
+        }
+        .toggle.active {
+            background: #0a2e25;
+            border-color: #D4AF37;
+        }
+        .toggle .slider {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 16px;
+            height: 16px;
+            background: white;
             border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+            transition: 0.3s;
         }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .toggle.active .slider {
+            right: 20px;
+            background: #D4AF37;
+        }
+        .toggle-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #555;
+            min-width: 30px;
+        }
+        .toggle.active + .toggle-label {
+            color: #0a2e25;
         }
 
         /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            .admin-header {
-                flex-direction: column;
-                align-items: flex-start;
+        @media (max-width: 700px) {
+            .admin-wrapper {
+                padding: 16px 12px;
             }
-
-            .admin-header .header-actions {
-                width: 100%;
-                justify-content: flex-start;
-                flex-wrap: wrap;
+            .tab-btn {
+                padding: 6px 12px;
+                font-size: 11px;
             }
-
-            .table-header {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .table-header .search-box {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .table-header .search-box input {
-                width: 100%;
-            }
-
-            table {
+            .tab-btn i {
                 font-size: 12px;
             }
-
-            thead th, tbody td {
-                padding: 10px 6px;
+            .filter-group {
+                width: 100%;
             }
-
-            .form-control-inline {
-                max-width: 80px;
+            .filter-bar input,
+            .filter-bar select {
+                width: 100%;
+                min-width: unset;
+            }
+            .data-table th,
+            .data-table td {
                 font-size: 11px;
-                padding: 4px 6px;
+                padding: 6px 4px;
             }
-
-            .form-control-inline-lg {
-                max-width: 120px;
+            .stat-card .stat-number {
+                font-size: 24px;
             }
-
-            .project-image {
-                width: 40px;
-                height: 40px;
+            .top-bar {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
             }
-
-            .toggle {
-                width: 40px;
-                height: 24px;
+            .top-actions {
+                justify-content: center;
             }
-
-            .toggle .slider {
-                width: 16px;
-                height: 16px;
-                top: 2px;
-                right: 2px;
+            .modal-content {
+                max-width: 100%;
+                border-radius: 24px;
             }
-
-            .toggle.active .slider {
-                right: 18px;
+            .modal-body {
+                padding: 16px;
             }
-
-            .toggle-label {
-                font-size: 9px;
-                min-width: 30px;
-            }
-
-            .btn-save, .btn-danger {
-                font-size: 10px;
-                padding: 4px 10px;
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
             }
         }
-
         @media (max-width: 480px) {
-            body { padding: 10px; }
-            .admin-header { padding: 15px; }
-            .table-wrapper { padding: 12px; }
-            .stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-            .stat-box { padding: 14px; }
-            .stat-box .number { font-size: 24px; }
-        }
-
-        /* ===== نص مساعد ===== */
-        .helper-text {
-            font-size: 11px;
-            color: var(--gray);
-            margin-top: 4px;
-            display: block;
-        }
-
-        .text-muted {
-            color: var(--gray);
-            font-size: 12px;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .mt-20 {
-            margin-top: 20px;
-        }
-
-        .gap-10 {
-            gap: 10px;
-        }
-
-        .flex-center {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            .tabs-container {
+                border-radius: 24px;
+                padding: 4px;
+                gap: 3px;
+            }
+            .tab-btn {
+                padding: 5px 10px;
+                font-size: 10px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            .stat-card {
+                padding: 14px;
+            }
+            .stat-card .stat-number {
+                font-size: 20px;
+            }
+            .stat-card .stat-icon {
+                width: 36px;
+                height: 36px;
+            }
+            .stat-card .stat-icon i {
+                font-size: 18px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="loader-overlay" id="loaderOverlay">
-        <div class="loader-spinner"></div>
+    <!-- ==================== LOGIN ==================== -->
+    <div id="loginSection">
+        <div class="login-card">
+            <i class="fas fa-chalkboard-user" style="font-size:64px; color:#D4AF37; margin-bottom:20px;"></i>
+            <h2>دخول المشرف</h2>
+            <p>سوق المشاريع – لوحة التحكم المتقدمة</p>
+            <input type="email" id="adminEmail" placeholder="البريد الإلكتروني" value="abdulaziz1076@gmail.com">
+            <input type="password" id="adminPassword" placeholder="كلمة المرور">
+            <button class="login-btn" id="loginBtn">
+                دخول <i class="fas fa-arrow-left"></i>
+            </button>
+            <div class="login-error" id="loginError"></div>
+            <a href="#" id="forgotPasswordLink" class="forgot-link">نسيت كلمة المرور؟</a>
+        </div>
     </div>
 
-    <div class="toast" id="toastMessage"></div>
+    <!-- ==================== ADMIN DASHBOARD ==================== -->
+    <div id="adminContent" style="display:none;">
+        <div class="admin-wrapper">
 
-    <div class="admin-container">
-
-        <!-- ===== HEADER ===== -->
-        <header class="admin-header">
-            <div class="logo-area">
-                <i class="fas fa-crown"></i>
-                <div>
-                    <h1>لوحة التحكم</h1>
-                    <span>سوق المشاريع - إدارة المشاريع</span>
+            <!-- TOP BAR -->
+            <div class="top-bar">
+                <div class="logo-area">
+                    <h1><i class="fas fa-store"></i> سوق المشاريع | المشرف المتقدم</h1>
                 </div>
-            </div>
-            <div class="header-actions">
-                <a href="index.html" target="_blank"><i class="fas fa-store"></i> زيارة السوق</a>
-                <a href="#" onclick="refreshData()"><i class="fas fa-sync-alt"></i> تحديث</a>
-            </div>
-        </header>
-
-        <!-- ===== STATS ===== -->
-        <div class="stats-grid" id="statsGrid">
-            <div class="stat-box">
-                <div class="icon"><i class="fas fa-store"></i></div>
-                <span class="number" id="totalProjects">0</span>
-                <span class="label">إجمالي المشاريع</span>
-            </div>
-            <div class="stat-box">
-                <div class="icon"><i class="fas fa-fire"></i></div>
-                <span class="number" id="paidProjects">0</span>
-                <span class="label">مشاريع مميزة</span>
-            </div>
-            <div class="stat-box">
-                <div class="icon"><i class="fas fa-check-circle"></i></div>
-                <span class="number" id="licensedProjects">0</span>
-                <span class="label">مرخصة</span>
-            </div>
-            <div class="stat-box">
-                <div class="icon"><i class="fas fa-clock"></i></div>
-                <span class="number" id="pendingProjects">0</span>
-                <span class="label">قيد المراجعة</span>
-            </div>
-        </div>
-
-        <!-- ===== TABLE ===== -->
-        <div class="table-wrapper">
-            <div class="table-header">
-                <h2><i class="fas fa-list-ul"></i> إدارة المشاريع</h2>
-                <div class="search-box">
-                    <input type="text" id="searchInput" placeholder="ابحث باسم المشروع..." onkeyup="filterTable()">
-                    <button onclick="filterTable()"><i class="fas fa-search"></i> بحث</button>
-                    <button onclick="resetFilters()" style="background: var(--light-gray); color: var(--dark); border-color: var(--light-gray);">إعادة ضبط</button>
+                <div class="top-actions">
+                    <button class="refresh-all-btn" id="refreshAllBtn"><i class="fas fa-sync-alt"></i> تحديث الكل</button>
+                    <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> خروج</button>
                 </div>
             </div>
 
-            <div style="overflow-x: auto;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>الصورة</th>
-                            <th>اسم المشروع</th>
-                            <th>الإمارة</th>
-                            <th>مرخص</th>
-                            <th>مميز</th>
-                            <th>الترتيب</th>
-                            <th>سبب الرفض</th>
-                            <th>الإجراءات</th>
-                        </tr>
-                    </thead>
-                    <tbody id="projectsTableBody">
-                        <!-- يتم تعبئتها بواسطة JavaScript -->
-                    </tbody>
-                </table>
+            <!-- STATS -->
+            <div class="stats-grid" id="statsContainer">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-spinner fa-spin"></i></div>
+                    <div class="stat-number">...</div>
+                    <div class="stat-label">جاري التحميل</div>
+                </div>
             </div>
 
-            <div class="text-center mt-20 text-muted" id="noResults" style="display: none;">
-                <i class="fas fa-inbox"></i> لا توجد مشاريع تطابق البحث
+            <!-- TABS (تم حذف تبويب "طلبات التسجيل") -->
+            <div class="tabs-container">
+                <button class="tab-btn active" data-tab="projects"><i class="fas fa-store"></i> المشاريع</button>
+                <button class="tab-btn" data-tab="products"><i class="fas fa-box"></i> المنتجات</button>
+                <button class="tab-btn" data-tab="deals"><i class="fas fa-tags"></i> العروض</button>
+                <button class="tab-btn" data-tab="contacts"><i class="fas fa-address-card"></i> بيانات التواصل</button>
+                <button class="tab-btn" data-tab="feedbacks"><i class="fas fa-comment-dots"></i> الشكاوى</button>
+                <button class="tab-btn" data-tab="orders"><i class="fas fa-truck"></i> الطلبات</button>
+                <button class="tab-btn" data-tab="licenses"><i class="fas fa-file-certificate"></i> إدارة التراخيص</button>
+                <button class="tab-btn" data-tab="support"><i class="fas fa-headset"></i> الدعم الفني</button>
             </div>
 
-            <div class="helper-text text-center mt-20">
-                <i class="fas fa-info-circle"></i>
-                <strong>ملاحظة:</strong> الترتيب اليدوي (<code>display_order</code>) يُستخدم للمشاريع المميزة. المشاريع العادية تظهر عشوائياً في السوق وتتغير كل 24 ساعة.
+            <!-- ===== TAB: PROJECTS (مع مميز وسبب الرفض) ===== -->
+            <div id="projectsTab" class="content-card active">
+                <div class="filter-bar">
+                    <div class="filter-group">
+                        <input type="text" id="projectSearch" placeholder="بحث بالاسم...">
+                        <select id="projectEmirateFilter"><option value="">كل الإمارات</option></select>
+                        <select id="projectStatusFilter">
+                            <option value="">كل الحالات</option>
+                            <option value="active">فعال</option>
+                            <option value="disabled">معطل</option>
+                            <option value="deleted">محذوف</option>
+                            <option value="pending">معلق</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <button class="refresh-btn" id="refreshProjectsBtn"><i class="fas fa-sync-alt"></i> تحديث</button>
+                        <button class="btn-outline" id="addProjectBtn"><i class="fas fa-plus"></i> مشروع جديد</button>
+                        <button class="btn-outline" id="exportProjectsBtn"><i class="fas fa-file-csv"></i> تصدير</button>
+                    </div>
+                </div>
+                <div id="projectsTableContainer"></div>
+                <!-- زر حفظ الترتيب -->
+                <div style="text-align: left; margin-top: 15px;">
+                    <button id="saveOrderBtn" class="save-order-btn"><i class="fas fa-save"></i> حفظ الترتيب الجديد</button>
+                    <span id="orderStatus" class="order-status"></span>
+                </div>
+                <div class="pagination" id="projectsPagination"></div>
             </div>
+
+            <!-- ===== TAB: PRODUCTS ===== -->
+            <div id="productsTab" class="content-card">
+                <div class="filter-bar">
+                    <select id="productProjectFilter"><option value="">اختر المشروع أولاً</option></select>
+                    <div class="filter-group">
+                        <button class="refresh-btn" id="refreshProductsBtn"><i class="fas fa-sync-alt"></i> تحديث</button>
+                        <button class="btn-outline" id="addProductBtn"><i class="fas fa-plus"></i> منتج جديد</button>
+                        <button class="btn-outline" id="reorderProductsBtn"><i class="fas fa-sort-amount-down"></i> إعادة ترتيب</button>
+                        <button class="btn-outline" id="exportProductsBtn"><i class="fas fa-file-csv"></i> تصدير</button>
+                    </div>
+                </div>
+                <div id="productsTableContainer"></div>
+            </div>
+
+            <!-- ===== TAB: DEALS ===== -->
+            <div id="dealsTab" class="content-card">
+                <div class="filter-bar">
+                    <select id="dealProjectFilter"><option value="">اختر المشروع</option></select>
+                    <div class="filter-group">
+                        <button class="refresh-btn" id="refreshDealsBtn"><i class="fas fa-sync-alt"></i> تحديث</button>
+                        <button class="btn-outline" id="addDealBtn"><i class="fas fa-plus"></i> عرض جديد</button>
+                        <button class="btn-outline" id="exportDealsBtn"><i class="fas fa-file-csv"></i> تصدير</button>
+                    </div>
+                </div>
+                <div id="dealsTableContainer"></div>
+            </div>
+
+            <!-- ===== TAB: CONTACTS ===== -->
+            <div id="contactsTab" class="content-card">
+                <div class="filter-bar">
+                    <select id="contactProjectFilter"><option value="">اختر المشروع</option></select>
+                    <div class="filter-group">
+                        <button class="refresh-btn" id="refreshContactsBtn"><i class="fas fa-sync-alt"></i> تحديث</button>
+                        <button class="btn-outline" id="exportContactsBtn"><i class="fas fa-file-csv"></i> تصدير</button>
+                    </div>
+                </div>
+                <div id="contactsTableContainer"></div>
+            </div>
+
+            <!-- ===== TAB: FEEDBACKS ===== -->
+            <div id="feedbacksTab" class="content-card">
+                <div class="filter-bar">
+                    <select id="feedbackStatusFilter">
+                        <option value="">كل الحالات</option>
+                        <option value="pending">معلق</option>
+                        <option value="reviewed">مراجَع</option>
+                        <option value="resolved">محلول</option>
+                        <option value="rejected">مرفوض</option>
+                    </select>
+                    <div class="filter-group">
+                        <button class="refresh-btn" id="refreshFeedbacksBtn"><i class="fas fa-sync-alt"></i> تحديث</button>
+                        <button class="btn-outline" id="exportFeedbacksBtn"><i class="fas fa-file-csv"></i> تصدير</button>
+                    </div>
+                </div>
+                <div id="feedbacksTableContainer"></div>
+            </div>
+
+            <!-- ===== TAB: ORDERS ===== -->
+            <div id="ordersTab" class="content-card">
+                <div class="filter-bar">
+                    <div class="filter-group">
+                        <input type="text" id="ordersSearch" placeholder="بحث: مشروع، واتساب، رقم طلب...">
+                        <select id="ordersProjectFilter"><option value="">كل المشاريع</option></select>
+                    </div>
+                    <div class="filter-group">
+                        <button class="refresh-btn" id="refreshOrdersBtn"><i class="fas fa-sync-alt"></i> تحديث</button>
+                        <button class="btn-outline" id="exportOrdersBtn"><i class="fas fa-file-csv"></i> تصدير CSV</button>
+                    </div>
+                </div>
+                <div id="ordersTableContainer"></div>
+                <div class="pagination" id="ordersPagination"></div>
+            </div>
+
+            <!-- ===== TAB: LICENSES ===== -->
+            <div id="licensesTab" class="content-card">
+                <div class="filter-bar">
+                    <div class="filter-group">
+                        <select id="licenseStatusFilter">
+                            <option value="all">كل حالات الطلب</option>
+                            <option value="pending">قيد المراجعة</option>
+                            <option value="approved">موافق</option>
+                            <option value="rejected">مرفوض</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <button class="refresh-btn" id="refreshLicensesBtn"><i class="fas fa-sync-alt"></i> تحديث</button>
+                        <button class="btn-outline" id="exportLicensesBtn"><i class="fas fa-file-csv"></i> تصدير</button>
+                    </div>
+                </div>
+                <div id="licensesTableContainer"></div>
+                <div class="pagination" id="licensesPagination"></div>
+            </div>
+
+            <!-- ===== TAB: SUPPORT ===== -->
+            <div id="supportTab" class="content-card">
+                <div class="filter-bar">
+                    <div class="filter-group">
+                        <select id="supportStatusFilter">
+                            <option value="all">كل الحالات</option>
+                            <option value="open">مفتوحة</option>
+                            <option value="in_progress">قيد المعالجة</option>
+                            <option value="closed">مغلقة</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <button class="refresh-btn" id="refreshSupportBtn"><i class="fas fa-sync-alt"></i> تحديث</button>
+                        <button class="btn-outline" id="exportSupportBtn"><i class="fas fa-file-csv"></i> تصدير</button>
+                    </div>
+                </div>
+                <div id="supportTicketsContainer"></div>
+                <div class="pagination" id="supportPagination"></div>
+            </div>
+
         </div>
-
     </div>
 
-    <!-- ====================================================================== -->
-    <!-- JavaScript -->
-    <!-- ====================================================================== -->
+    <!-- ==================== MODALS ==================== -->
+
+    <!-- Project Modal -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>مشروع</h3>
+                <button class="modal-close" data-modal="projectModal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="projectForm">
+                    <input type="hidden" id="projectId">
+                    <div class="filter-group" style="display:grid; gap:12px; margin-bottom:12px;">
+                        <input id="projectNameAr" placeholder="الاسم (عربي)" required style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                        <input id="projectNameEn" placeholder="الاسم (إنجليزي)" required style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                        <select id="projectEmirate" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                            <option>أبوظبي</option><option>دبي</option><option>الشارقة</option><option>عجمان</option>
+                            <option>رأس الخيمة</option><option>الفجيرة</option><option>أم القيوين</option>
+                        </select>
+                        <input id="projectImage" placeholder="رابط الصورة" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                        <select id="projectCategoryAr" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;"></select>
+                        <select id="projectCategoryEn" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;"></select>
+                        <textarea id="projectDescAr" rows="2" placeholder="الوصف القصير (عربي)" style="padding:10px 14px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit;"></textarea>
+                        <textarea id="projectDescEn" rows="2" placeholder="الوصف القصير (إنجليزي)" style="padding:10px 14px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit;"></textarea>
+                        <textarea id="projectLongDescAr" rows="3" placeholder="الوصف الطويل (عربي)" style="padding:10px 14px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit;"></textarea>
+                        <textarea id="projectLongDescEn" rows="3" placeholder="الوصف الطويل (إنجليزي)" style="padding:10px 14px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit;"></textarea>
+                        <select id="projectStatus" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                            <option value="active">فعال</option><option value="disabled">معطل</option>
+                            <option value="deleted">محذوف</option><option value="pending">معلق</option>
+                        </select>
+                        <label style="display:flex; align-items:center; gap:8px; font-weight:600;">
+                            <input type="checkbox" id="projectLicense"> رخصة أدريا
+                        </label>
+                    </div>
+                    <button class="login-btn" style="width:100%; margin-top:10px;">حفظ</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>منتج</h3>
+                <button class="modal-close" data-modal="productModal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="productForm">
+                    <input type="hidden" id="productId">
+                    <input type="hidden" id="productProjectId">
+                    <div class="filter-group" style="display:grid; gap:10px; margin-bottom:12px;">
+                        <input id="productNameAr" placeholder="الاسم (عربي)" required style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                        <input id="productNameEn" placeholder="الاسم (إنجليزي)" required style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                        <input id="productMainImage" placeholder="الصورة الرئيسية (URL)" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                        <input id="productImages" placeholder="صور إضافية (فاصلة)" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                        <input id="productPriceAr" placeholder="السعر (عربي)" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                        <input id="productPriceEn" placeholder="السعر (إنجليزي)" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                        <select id="productTypeAr" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                            <option value="">-- نوع المنتج (عربي) --</option>
+                            <option value="أطباق رئيسية">أطباق رئيسية</option>
+                            <option value="مشروبات">مشروبات</option>
+                            <option value="حلويات">حلويات</option>
+                            <option value="أخرى">أخرى</option>
+                        </select>
+                        <select id="productTypeEn" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                            <option value="">-- Product Type (En) --</option>
+                            <option value="Main Dishes">Main Dishes</option>
+                            <option value="Drinks">Drinks</option>
+                            <option value="Desserts">Desserts</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <select id="productCategoryAr" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;"></select>
+                        <select id="productCategoryEn" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;"></select>
+                        <textarea id="productDescAr" rows="2" placeholder="الوصف القصير (عربي)" style="padding:10px 14px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit;"></textarea>
+                        <textarea id="productDescEn" rows="2" placeholder="الوصف القصير (إنجليزي)" style="padding:10px 14px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit;"></textarea>
+                        <textarea id="productLongDescAr" rows="3" placeholder="الوصف الطويل (عربي)" style="padding:10px 14px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit;"></textarea>
+                        <textarea id="productLongDescEn" rows="3" placeholder="الوصف الطويل (إنجليزي)" style="padding:10px 14px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit;"></textarea>
+                        <textarea id="productDetailsAr" rows="3" placeholder="التفاصيل (عربي) - كل سطر نقطة" style="padding:10px 14px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit;"></textarea>
+                        <textarea id="productDetailsEn" rows="3" placeholder="التفاصيل (إنجليزي)" style="padding:10px 14px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit;"></textarea>
+                        <div id="variantsContainer"></div>
+                        <button type="button" id="addVariantBtn" class="btn-outline" style="padding:8px 16px; border-radius:30px; border:1px solid #0a2e25; background:white; cursor:pointer; font-family:inherit; font-weight:600; width:fit-content;">
+                            <i class="fas fa-plus"></i> إضافة خيار
+                        </button>
+                    </div>
+                    <button class="login-btn" style="width:100%; margin-top:10px;">حفظ</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deal Modal -->
+    <div id="dealModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>عرض</h3>
+                <button class="modal-close" data-modal="dealModal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="dealForm">
+                    <input type="hidden" id="dealId">
+                    <input type="hidden" id="dealProjectId">
+                    <div class="filter-group" style="display:grid; gap:10px; margin-bottom:12px;">
+                        <input id="dealTitleAr" placeholder="العنوان (عربي)" required style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                        <input id="dealTitleEn" placeholder="العنوان (إنجليزي)" required style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                        <input id="dealImage" placeholder="الصورة (URL)" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                        <textarea id="dealDescAr" rows="2" placeholder="الوصف (عربي)" style="padding:10px 14px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit;"></textarea>
+                        <textarea id="dealDescEn" rows="2" placeholder="الوصف (إنجليزي)" style="padding:10px 14px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit;"></textarea>
+                        <input id="dealBadgeAr" placeholder="الشارة (عربي)" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                        <input id="dealBadgeEn" placeholder="الشارة (إنجليزي)" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                        <input id="dealExpiry" type="text" placeholder="تاريخ الانتهاء (مثال: 31/12/2026)" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                    </div>
+                    <button class="login-btn" style="width:100%; margin-top:10px;">حفظ</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Details Modal -->
+    <div id="orderDetailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>تفاصيل الطلب</h3>
+                <button class="modal-close" data-modal="orderDetailsModal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="orderDetailsBody"></div>
+        </div>
+    </div>
+
+    <!-- Ticket Reply Modal -->
+    <div id="ticketReplyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>تفاصيل التذكرة والرد</h3>
+                <button class="modal-close" data-modal="ticketReplyModal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="ticketReplyBody"></div>
+        </div>
+    </div>
+
+    <!-- ==================== SCRIPTS ==================== -->
     <script type="importmap">
         {
             "imports": {
@@ -725,107 +1217,166 @@
         import { createClient } from '@supabase/supabase-js';
         import { APP_CONFIG } from './config.js';
 
-        // ===== Supabase Client =====
         const supabase = createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
+        const ALLOWED_EMAIL = 'abdulaziz1076@gmail.com';
+        const LIMIT = 10;
 
-        // ===== State =====
-        let projects = [];
-        let originalProjects = [];
+        // ===== STATE =====
+        const state = {
+            currentProjectsPage: 1,
+            projectsTotal: 0,
+            currentOrdersPage: 1,
+            ordersTotal: 0,
+            currentLicensesPage: 1,
+            licensesTotal: 0,
+            currentSupportPage: 1,
+            supportTotal: 0,
+            currentVariants: [],
+            currentTab: 'projects',
+            isLoading: false,
+            projectsMap: {}
+        };
 
-        // ===== DOM Refs =====
-        const tbody = document.getElementById('projectsTableBody');
-        const loader = document.getElementById('loaderOverlay');
-        const toast = document.getElementById('toastMessage');
+        const CATEGORIES_AR = ["أطعمة ومشروبات", "الرقميات", "روائح وعطور", "عناية", "حلويات", "تجميل", "ملابس", "يدويات", "هدايا", "عطارة", "فنون", "نباتات", "ترفيه"];
+        const CATEGORIES_EN = ["Food & Beverages", "IT", "Scents & Perfumes", "Care", "Sweets", "Beauty", "Clothes", "Handmade", "Gifts", "Apothecary", "Arts", "Plants", "Entertainment"];
 
-        // ===== Toast =====
-        function showToast(msg, type = '') {
+        // ===== TOAST =====
+        function showToast(msg, isErr = false) {
+            const existing = document.querySelector('.toast');
+            if (existing) existing.remove();
+            const toast = document.createElement('div');
+            toast.className = 'toast' + (isErr ? ' error' : '');
             toast.textContent = msg;
-            toast.className = 'toast show ' + type;
-            clearTimeout(toast._timeout);
-            toast._timeout = setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3500);
         }
 
-        // ===== Loader =====
-        function showLoader() { loader.classList.add('show'); }
-        function hideLoader() { loader.classList.remove('show'); }
-
-        // ===== Load Data =====
-        async function loadProjects() {
-            showLoader();
-            try {
-                const { data, error } = await supabase
-                    .from('projects')
-                    .select('*')
-                    .order('display_order', { ascending: true, nullsFirst: false });
-
-                if (error) throw error;
-
-                projects = data || [];
-                originalProjects = [...projects];
-                updateStats();
-                renderTable();
-                hideLoader();
-            } catch (err) {
-                console.error(err);
-                showToast('❌ فشل تحميل البيانات: ' + err.message, 'error');
-                hideLoader();
-            }
+        function escapeHtml(str) {
+            if (str === null || str === undefined) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
         }
 
-        // ===== Update Stats =====
-        function updateStats() {
-            const total = projects.length;
-            const paid = projects.filter(p => p.is_paid === true).length;
-            const licensed = projects.filter(p => p.adra_license === true).length;
-            const pending = projects.filter(p => p.status === 'pending' || p.status === 'review').length;
+        function normalizeStatus(s) { return (s || '').toString().trim().toLowerCase(); }
 
-            document.getElementById('totalProjects').textContent = total;
-            document.getElementById('paidProjects').textContent = paid;
-            document.getElementById('licensedProjects').textContent = licensed;
-            document.getElementById('pendingProjects').textContent = pending;
+        function mapProjectStatusToBadgeAndText(status) {
+            const v = normalizeStatus(status);
+            if (v === 'disabled' || v === 'inactive') return { badge: 'badge-pending', text: 'معطل' };
+            if (v === 'deleted' || v === 'archived') return { badge: 'badge-rejected', text: 'محذوف' };
+            if (v === 'pending') return { badge: 'badge-pending', text: 'معلق' };
+            return { badge: 'badge-approved', text: 'فعال' };
         }
 
-        // ===== Render Table =====
-        function renderTable(filtered = null) {
-            const list = filtered || projects;
-            if (list.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="9" class="text-center text-muted" style="padding: 40px;">
-                            <i class="fas fa-inbox" style="font-size: 32px; display: block; margin-bottom: 10px;"></i>
-                            لا توجد مشاريع لعرضها
-                        </td>
-                    </tr>
-                `;
-                document.getElementById('noResults').style.display = list.length === 0 && projects.length > 0 ? 'block' :
-                'none';
+        // ===== LOAD PROJECTS MAP =====
+        async function loadProjectsMap() {
+            const { data, error } = await supabase.from('projects').select('id, name_ar');
+            if (error) {
+                console.error('خطأ في جلب أسماء المشاريع:', error);
                 return;
             }
+            state.projectsMap = {};
+            data.forEach(p => { state.projectsMap[p.id] = p.name_ar; });
+        }
 
-            document.getElementById('noResults').style.display = 'none';
+        // ===== LOAD STATS =====
+        async function loadStats() {
+            try {
+                const [projects, products, feedbacks, orders] = await Promise.all([
+                    supabase.from('projects').select('*', { count: 'exact', head: true }),
+                    supabase.from('products').select('*', { count: 'exact', head: true }),
+                    supabase.from('feedbacks').select('*', { count: 'exact', head: true }),
+                    supabase.from('admin_order_logs').select('*', { count: 'exact', head: true })
+                ]);
 
-            tbody.innerHTML = list.map((p, index) => {
-                const isPaid = p.is_paid === true;
-                const isLicensed = p.adra_license === true;
-                const statusBadge = isLicensed ?
-                    `<span class="badge-licensed"><i class="fas fa-check-circle"></i> مرخص</span>` :
-                    `<span class="badge-normal">غير مرخص</span>`;
+                document.getElementById('statsContainer').innerHTML = `
+                    <div class="stat-card"><div class="stat-icon"><i class="fas fa-store"></i></div><div class="stat-number">${projects.count||0}</div><div class="stat-label">المشاريع</div><span class="stat-badge">نشطة</span></div>
+                    <div class="stat-card"><div class="stat-icon"><i class="fas fa-box"></i></div><div class="stat-number">${products.count||0}</div><div class="stat-label">المنتجات</div><span class="stat-badge">معروضة</span></div>
+                    <div class="stat-card"><div class="stat-icon"><i class="fas fa-comment-dots"></i></div><div class="stat-number">${feedbacks.count||0}</div><div class="stat-label">الشكاوى</div><span class="stat-badge">وارد</span></div>
+                    <div class="stat-card"><div class="stat-icon"><i class="fas fa-truck"></i></div><div class="stat-number">${orders.count||0}</div><div class="stat-label">الطلبات (السلة)</div><span class="stat-badge">مطلوب</span></div>
+                `;
+            } catch (e) {
+                console.error('Stats error:', e);
+                document.getElementById('statsContainer').innerHTML = `<div class="stat-card"><div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div><div class="stat-number">!</div><div class="stat-label">خطأ في التحميل</div></div>`;
+            }
+        }
 
-                const paidBadge = isPaid ?
-                    `<span class="badge-paid"><i class="fas fa-fire"></i> مميز</span>` :
-                    `<span class="badge-normal">عادي</span>`;
+        // ===== LOAD PROJECTS (مع إضافة عمود مميز وسبب الرفض) =====
+        async function loadProjects(page = 1) {
+            if (state.isLoading) return;
+            state.isLoading = true;
+            state.currentProjectsPage = page;
 
-                return `
-                    <tr data-project-id="${p.id}">
-                        <td>${index + 1}</td>
+            try {
+                let query = supabase
+                    .from('projects')
+                    .select('*', { count: 'exact' })
+                    .order('display_order', { ascending: true, nullsFirst: false })
+                    .order('id', { ascending: false })
+                    .range((page - 1) * LIMIT, page * LIMIT - 1);
+
+                const search = document.getElementById('projectSearch').value;
+                if (search) query = query.or(`name_ar.ilike.%${search}%,name_en.ilike.%${search}%`);
+
+                const emirate = document.getElementById('projectEmirateFilter').value;
+                if (emirate) query = query.eq('emirate', emirate);
+
+                const statusF = document.getElementById('projectStatusFilter').value;
+                if (statusF) query = query.eq('status', statusF);
+
+                const { data, error, count } = await query;
+                if (error) throw error;
+
+                state.projectsTotal = count || 0;
+                const container = document.getElementById('projectsTableContainer');
+                if (!data || data.length === 0) {
+                    container.innerHTML = `<div class="no-data">لا توجد مشاريع</div>`;
+                    document.getElementById('projectsPagination').innerHTML = '';
+                    return;
+                }
+
+                let html = `<div class="table-wrapper"><table class="data-table"><thead><tr>
+                    <th style="width:60px;">الترتيب</th>
+                    <th>ID</th>
+                    <th>الصورة</th>
+                    <th>الاسم (عربي)</th>
+                    <th>التصنيف</th>
+                    <th>الإمارة</th>
+                    <th>الحالة</th>
+                    <th>حالة الترخيص</th>
+                    <th>مميز</th>
+                    <th>سبب الرفض</th>
+                    <th>الإجراءات</th>
+                </tr></thead><tbody id="projects-tbody">`;
+
+                data.forEach((p, idx) => {
+                    const st = mapProjectStatusToBadgeAndText(p.status);
+                    const licenseStatusMap = {
+                        'pending_license': 'قيد المراجعة',
+                        'license_uploaded': 'تم الرفع',
+                        'license_approved': 'معتمد',
+                        'license_rejected': 'مرفوض',
+                        'suspended': 'معلق'
+                    };
+                    const licenseDisplay = licenseStatusMap[p.license_status] || p.license_status || '-';
+
+                    const isPaid = p.is_paid === true;
+
+                    html += `<tr class="sortable-row" data-project-id="${p.id}">
                         <td>
-                            <img src="${p.image || 'images/placeholder.png'}" alt="${p.name_ar}" class="project-image" loading="lazy">
+                            <span class="drag-handle"><i class="fas fa-grip-vertical"></i></span>
+                            <span class="order-number">${idx+1}</span>
                         </td>
-                        <td class="project-name-cell">${p.name_ar || p.name_en || 'بدون اسم'}</td>
-                        <td>${p.emirate || '-'}</td>
-                        <td>${statusBadge}</td>
+                        <td>${p.id}</td>
+                        <td>${p.image ? `<img src="${escapeHtml(p.image)}" class="thumb-preview" onclick="window.open('${escapeHtml(p.image)}')">` : '-'}</td>
+                        <td>${escapeHtml(p.name_ar)}</td>
+                        <td>${escapeHtml(p.category_ar || '-')}</td>
+                        <td>${escapeHtml(p.emirate)}</td>
+                        <td><span class="badge ${st.badge}">${st.text}</span></td>
+                        <td><span class="badge ${p.license_status === 'license_approved' ? 'badge-approved' : 'badge-pending'}">${licenseDisplay}</span></td>
                         <td>
                             <div class="toggle-wrap">
                                 <div class="toggle ${isPaid ? 'active' : ''}" 
@@ -837,174 +1388,1285 @@
                             </div>
                         </td>
                         <td>
-                            <input type="number" class="form-control-inline" 
-                                   value="${p.display_order ?? 0}" 
-                                   min="0" step="1"
-                                   id="order_${p.id}"
-                                   onchange="window.updateOrder('${p.id}', this.value)">
+                            <input type="text" class="form-control-inline" value="${escapeHtml(p.rejection_reason || '')}" 
+                                   placeholder="سبب الرفض" style="width:100%; padding:4px 8px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit; font-size:12px;"
+                                   id="reason_${p.id}" 
+                                   onchange="window.updateRejectionReason('${p.id}', this.value)">
                         </td>
-                        <td>
-                            <input type="text" class="form-control-inline form-control-inline-lg" 
-                                   value="${p.rejection_reason || ''}" 
-                                   placeholder="سبب الرفض (اختياري)"
-                                   id="reason_${p.id}"
-                                   onchange="window.updateReason('${p.id}', this.value)">
+                        <td class="action-buttons">
+                            <button class="action-btn edit" onclick="window.editProject(${p.id})"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn delete" onclick="window.deleteItem('projects',${p.id})"><i class="fas fa-trash"></i></button>
                         </td>
-                        <td>
-                            <button class="btn-save" onclick="window.saveProject('${p.id}')" id="save_${p.id}">
-                                <i class="fas fa-save"></i> حفظ
-                            </button>
-                            <button class="btn-danger" onclick="window.deleteProject('${p.id}')" style="margin-top:4px;">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
+                    </tr>`;
+                });
+
+                html += `</tbody></table></div>`;
+                container.innerHTML = html;
+
+                // ===== تهيئة Sortable =====
+                const tbody = document.getElementById('projects-tbody');
+                if (tbody) {
+                    new Sortable(tbody, {
+                        handle: '.drag-handle',
+                        animation: 150,
+                        ghostClass: 'sortable-ghost',
+                        chosenClass: 'sortable-chosen',
+                        onEnd: function(evt) {
+                            const rows = tbody.querySelectorAll('tr');
+                            rows.forEach((row, index) => {
+                                const td = row.querySelector('td:first-child');
+                                if (td) {
+                                    const handle = td.querySelector('.drag-handle');
+                                    const numSpan = td.querySelector('.order-number');
+                                    if (handle && numSpan) {
+                                        td.innerHTML = '';
+                                        td.appendChild(handle);
+                                        td.appendChild(document.createTextNode(' '));
+                                        const newSpan = document.createElement('span');
+                                        newSpan.className = 'order-number';
+                                        newSpan.textContent = index + 1;
+                                        td.appendChild(newSpan);
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+
+                // Pagination
+                const totalPages = Math.ceil(state.projectsTotal / LIMIT);
+                let pagHtml = '<div class="pagination">';
+                for (let i = 1; i <= totalPages; i++) {
+                    pagHtml += `<button onclick="window.loadProjects(${i})" ${i === page ? 'class="active"' : ''}>${i}</button>`;
+                }
+                pagHtml += '</div>';
+                document.getElementById('projectsPagination').innerHTML = totalPages > 1 ? pagHtml : '';
+
+            } catch (e) {
+                showToast(e.message, true);
+                console.error('loadProjects error:', e);
+            } finally {
+                state.isLoading = false;
+            }
         }
 
-        // ===== Filter =====
-        window.filterTable = function() {
-            const query = document.getElementById('searchInput').value.trim().toLowerCase();
-            if (!query) {
-                renderTable(projects);
-                return;
-            }
-            const filtered = projects.filter(p =>
-                (p.name_ar || '').toLowerCase().includes(query) ||
-                (p.name_en || '').toLowerCase().includes(query) ||
-                (p.emirate || '').toLowerCase().includes(query)
-            );
-            renderTable(filtered);
-        };
-
-        window.resetFilters = function() {
-            document.getElementById('searchInput').value = '';
-            renderTable(projects);
-        };
-
-        // ===== Toggle Paid =====
-        window.togglePaid = async function(id) {
-            const project = projects.find(p => p.id === id);
-            if (!project) return;
-
-            const newVal = !project.is_paid;
-            project.is_paid = newVal;
-
-            // تحديث واجهة التبديل فوراً
+        // ===== دالة تبديل المميز =====
+        window.togglePaid = async (id) => {
+            const row = document.querySelector(`tr[data-project-id="${id}"]`);
+            if (!row) return;
             const toggle = document.getElementById(`toggle_${id}`);
             const label = document.getElementById(`label_${id}`);
-            if (toggle) toggle.classList.toggle('active', newVal);
-            if (label) label.textContent = newVal ? 'مميز' : 'عادي';
+            if (!toggle || !label) return;
 
-            // حفظ تلقائي
-            await saveProjectToDB(id);
-        };
+            const isActive = toggle.classList.contains('active');
+            const newVal = !isActive;
 
-        // ===== Update Order =====
-        window.updateOrder = function(id, value) {
-            const project = projects.find(p => p.id === id);
-            if (!project) return;
-            const num = parseInt(value, 10);
-            if (!isNaN(num)) {
-                project.display_order = num;
+            // تحديث الواجهة
+            if (newVal) {
+                toggle.classList.add('active');
+                label.textContent = 'مميز';
+            } else {
+                toggle.classList.remove('active');
+                label.textContent = 'عادي';
             }
-        };
 
-        // ===== Update Reason =====
-        window.updateReason = function(id, value) {
-            const project = projects.find(p => p.id === id);
-            if (!project) return;
-            project.rejection_reason = value || null;
-        };
-
-        // ===== Save Project to DB =====
-        async function saveProjectToDB(id) {
-            const project = projects.find(p => p.id === id);
-            if (!project) return;
-
-            const btn = document.getElementById(`save_${id}`);
-            if (btn) { btn.disabled = true;
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> حفظ...'; }
-
+            // حفظ في قاعدة البيانات
             try {
                 const { error } = await supabase
                     .from('projects')
-                    .update({
-                        is_paid: project.is_paid,
-                        display_order: project.display_order ?? 0,
-                        rejection_reason: project.rejection_reason || null,
-                        updated_at: new Date().toISOString()
-                    })
+                    .update({ is_paid: newVal })
                     .eq('id', id);
-
                 if (error) throw error;
-
-                showToast('✅ تم حفظ التغييرات بنجاح', 'success');
+                showToast(`تم ${newVal ? 'تفعيل' : 'إلغاء'} التميز للمشروع`);
+                // تحديث الإحصائيات
+                loadStats();
             } catch (err) {
-                console.error(err);
-                showToast('❌ خطأ في الحفظ: ' + err.message, 'error');
+                showToast(err.message, true);
+                // إعادة التبديل في حالة الخطأ
+                if (newVal) {
+                    toggle.classList.remove('active');
+                    label.textContent = 'عادي';
+                } else {
+                    toggle.classList.add('active');
+                    label.textContent = 'مميز';
+                }
+            }
+        };
+
+        // ===== دالة تحديث سبب الرفض =====
+        window.updateRejectionReason = async (id, value) => {
+            try {
+                const { error } = await supabase
+                    .from('projects')
+                    .update({ rejection_reason: value.trim() || null })
+                    .eq('id', id);
+                if (error) throw error;
+                showToast('تم حفظ سبب الرفض');
+            } catch (err) {
+                showToast(err.message, true);
+            }
+        };
+
+        // ===== حفظ الترتيب الجديد =====
+        async function saveNewOrder() {
+            const tbody = document.getElementById('projects-tbody');
+            if (!tbody) return;
+            const rows = tbody.querySelectorAll('tr');
+            if (rows.length === 0) return;
+
+            const updates = [];
+            rows.forEach((row, index) => {
+                const id = row.dataset.projectId;
+                if (id) {
+                    updates.push({ id: parseInt(id), display_order: index + 1 });
+                }
+            });
+
+            if (updates.length === 0) return;
+
+            const saveBtn = document.getElementById('saveOrderBtn');
+            const statusSpan = document.getElementById('orderStatus');
+            saveBtn.disabled = true;
+            statusSpan.textContent = '⏳ جاري حفظ الترتيب...';
+
+            try {
+                const promises = updates.map(u =>
+                    supabase.from('projects').update({ display_order: u.display_order }).eq('id', u.id)
+                );
+                const results = await Promise.all(promises);
+                const errors = results.filter(r => r.error);
+                if (errors.length > 0) {
+                    throw new Error(errors[0].error.message);
+                }
+                statusSpan.textContent = '✅ تم حفظ الترتيب بنجاح!';
+                showToast('تم تحديث ترتيب المشاريع');
+                setTimeout(() => {
+                    loadProjects(state.currentProjectsPage);
+                }, 500);
+            } catch (err) {
+                statusSpan.textContent = '❌ فشل الحفظ: ' + err.message;
+                showToast(err.message, true);
             } finally {
-                if (btn) { btn.disabled = false;
-                    btn.innerHTML = '<i class="fas fa-save"></i> حفظ'; }
+                saveBtn.disabled = false;
+                setTimeout(() => { statusSpan.textContent = ''; }, 5000);
             }
         }
 
-        window.saveProject = function(id) {
-            saveProjectToDB(id);
-        };
+        document.getElementById('saveOrderBtn')?.addEventListener('click', saveNewOrder);
 
-        // ===== Delete Project =====
-        window.deleteProject = async function(id) {
-            const confirmDelete = confirm('هل أنت متأكد من حذف هذا المشروع؟ لا يمكن التراجع.');
-            if (!confirmDelete) return;
-
-            showLoader();
-            try {
-                const { error } = await supabase
-                    .from('projects')
-                    .delete()
-                    .eq('id', id);
-
-                if (error) throw error;
-
-                projects = projects.filter(p => p.id !== id);
-                originalProjects = [...projects];
-                updateStats();
-                renderTable();
-                showToast('🗑️ تم حذف المشروع بنجاح', 'success');
-            } catch (err) {
-                console.error(err);
-                showToast('❌ فشل الحذف: ' + err.message, 'error');
-            } finally {
-                hideLoader();
+        // ===== DELETE ITEM =====
+        window.deleteItem = async (table, id) => {
+            if (!confirm('هل أنت متأكد من الحذف؟')) return;
+            const { error } = await supabase.from(table).delete().eq('id', id);
+            if (error) showToast(error.message, true);
+            else {
+                showToast('تم الحذف بنجاح');
+                if (table === 'projects') loadProjects(state.currentProjectsPage);
+                else if (table === 'products') loadProducts();
+                else if (table === 'deals') loadDeals();
+                loadStats();
             }
         };
 
-        // ===== Refresh =====
-        window.refreshData = function() {
-            loadProjects();
-            showToast('🔄 جاري تحديث البيانات...');
+        // ===== LOAD PRODUCTS =====
+        async function loadProducts() {
+            const projectId = document.getElementById('productProjectFilter').value;
+            if (!projectId) {
+                document.getElementById('productsTableContainer').innerHTML = '<div class="no-data">✏️ اختر مشروعاً أولاً من القائمة</div>';
+                return;
+            }
+            const { data, error } = await supabase.from('products').select('*').eq('project_id', projectId).order('display_order', { ascending: true, nullsFirst: false });
+            if (error) return showToast(error.message, true);
+            const container = document.getElementById('productsTableContainer');
+            if (!data || data.length === 0) {
+                container.innerHTML = '<div class="no-data">لا توجد منتجات لهذا المشروع</div>';
+                return;
+            }
+            let html = `<div class="table-wrapper"><table class="data-table"><thead><tr><th>الترتيب</th><th>ID</th><th>الصورة</th><th>الاسم (عربي)</th><th>التصنيف</th><th>النوع</th><th>السعر</th><th>الإجراءات</th></tr></thead><tbody>`;
+            for (const p of data) {
+                html += `<tr>
+                    <td style="white-space:nowrap;">
+                        <input type="number" value="${p.display_order ?? 0}" style="width:60px; padding:4px 8px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit; font-size:12px;" class="product-order-input" data-id="${p.id}">
+                        <button class="action-btn move-up" onclick="window.swapProductOrder('${p.id}', 'up')"><i class="fas fa-arrow-up"></i></button>
+                        <button class="action-btn move-down" onclick="window.swapProductOrder('${p.id}', 'down')"><i class="fas fa-arrow-down"></i></button>
+                    </td>
+                    <td>${escapeHtml(p.id)}</td>
+                    <td>${p.main_image ? `<img src="${escapeHtml(p.main_image)}" class="thumb-preview">` : '-'}</td>
+                    <td>${escapeHtml(p.name_ar)}</td>
+                    <td>${escapeHtml(p.category_ar || '-')}</td>
+                    <td>${escapeHtml(p.type_ar || '-')}</td>
+                    <td>${escapeHtml(p.price_ar || '-')}</td>
+                    <td class="action-buttons">
+                        <button class="action-btn edit" onclick="window.editProduct('${p.id}')"><i class="fas fa-edit"></i></button>
+                        <button class="action-btn delete" onclick="window.deleteItem('products','${p.id}')"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>`;
+            }
+            html += `</tbody></table></div>`;
+            container.innerHTML = html;
+
+            document.querySelectorAll('.product-order-input').forEach(inp => {
+                inp.addEventListener('change', function() {
+                    const id = this.dataset.id;
+                    const newOrder = parseInt(this.value);
+                    if (!isNaN(newOrder)) updateProductOrderDirect(id, newOrder);
+                });
+            });
+        }
+
+        window.swapProductOrder = async (id, direction) => {
+            const projectId = document.getElementById('productProjectFilter').value;
+            if (!projectId) return;
+            const { data: current } = await supabase.from('products').select('id, display_order').eq('id', id).single();
+            if (!current) return;
+            let currentOrder = current.display_order ?? 0;
+            let query = direction === 'up'
+                ? supabase.from('products').select('id, display_order').eq('project_id', projectId).lt('display_order', currentOrder).order('display_order', { ascending: false }).limit(1)
+                : supabase.from('products').select('id, display_order').eq('project_id', projectId).gt('display_order', currentOrder).order('display_order', { ascending: true }).limit(1);
+            const { data: neighbor } = await query;
+            if (!neighbor?.length) return showToast(direction === 'up' ? 'هذا بالفعل الأعلى' : 'هذا بالفعل الأسفل');
+            const target = neighbor[0];
+            await supabase.from('products').update({ display_order: target.display_order }).eq('id', current.id);
+            await supabase.from('products').update({ display_order: currentOrder }).eq('id', target.id);
+            showToast('تم تبديل الترتيب');
+            loadProducts();
         };
 
-        // ===== Init =====
-        loadProjects();
+        async function updateProductOrderDirect(id, newOrder) {
+            const { error } = await supabase.from('products').update({ display_order: newOrder }).eq('id', id);
+            if (error) showToast(error.message, true);
+            else loadProducts();
+        }
 
-        // ===== تحديث auto-save عند تغيير أي حقل (اختياري) =====
-        // تم بالفعل ربط onchange لكل حقل
+        window.reorderAllProducts = async () => {
+            const projectId = document.getElementById('productProjectFilter').value;
+            if (!projectId) return showToast('اختر مشروعاً أولاً', true);
+            const { data } = await supabase.from('products').select('id').eq('project_id', projectId).order('display_order', { ascending: true, nullsFirst: false }).order('id', { ascending: true });
+            if (!data) return;
+            for (let i = 0; i < data.length; i++) {
+                await supabase.from('products').update({ display_order: i + 1 }).eq('id', data[i].id);
+            }
+            showToast('تم إعادة ترتيب المنتجات');
+            loadProducts();
+        };
 
-        console.log('✅ لوحة التحكم جاهزة');
+        window.editProduct = async (id) => {
+            const { data } = await supabase.from('products').select('*').eq('id', id).single();
+            if (!data) return;
+            document.getElementById('productId').value = data.id;
+            document.getElementById('productProjectId').value = data.project_id;
+            document.getElementById('productNameAr').value = data.name_ar || '';
+            document.getElementById('productNameEn').value = data.name_en || '';
+            document.getElementById('productMainImage').value = data.main_image || '';
+            document.getElementById('productImages').value = (data.images || []).join(',');
+            document.getElementById('productDescAr').value = data.description_ar || '';
+            document.getElementById('productDescEn').value = data.description_en || '';
+            document.getElementById('productLongDescAr').value = data.long_description_ar || '';
+            document.getElementById('productLongDescEn').value = data.long_description_en || '';
+            document.getElementById('productDetailsAr').value = (data.details_ar || []).join('\n');
+            document.getElementById('productDetailsEn').value = (data.details_en || []).join('\n');
+            if (document.getElementById('productTypeAr')) document.getElementById('productTypeAr').value = data.type_ar || '';
+            if (document.getElementById('productTypeEn')) document.getElementById('productTypeEn').value = data.type_en || '';
+            if (document.getElementById('productCategoryAr')) document.getElementById('productCategoryAr').value = data.category_ar || '';
+            if (document.getElementById('productCategoryEn')) document.getElementById('productCategoryEn').value = data.category_en || '';
+            document.getElementById('productPriceAr').value = data.price_ar || '';
+            document.getElementById('productPriceEn').value = data.price_en || '';
+            const { data: variants } = await supabase.from('product_variants').select('*').eq('product_id', id);
+            state.currentVariants = variants || [];
+            renderVariants();
+            document.getElementById('productModal').classList.add('active');
+        };
 
-        // جعل الدوال متاحة في النطاق العام (لأننا في module)
-        window.togglePaid = window.togglePaid;
-        window.updateOrder = window.updateOrder;
-        window.updateReason = window.updateReason;
-        window.saveProject = window.saveProject;
-        window.deleteProject = window.deleteProject;
-        window.filterTable = window.filterTable;
-        window.resetFilters = window.resetFilters;
-        window.refreshData = window.refreshData;
+        function renderVariants() {
+            const container = document.getElementById('variantsContainer');
+            if (!container) return;
+            container.innerHTML = state.currentVariants.map((v, idx) => `
+                <div class="variant-row" style="display:flex; gap:8px; margin-bottom:8px; flex-wrap:wrap; align-items:center;">
+                    <input type="text" placeholder="الاسم (عربي)" value="${escapeHtml(v.label_ar || '')}" class="variant-label-ar" style="flex:1; min-width:80px; padding:8px 12px; border:1px solid #cfdfe9; border-radius:20px; font-family:inherit; font-size:13px;">
+                    <input type="text" placeholder="الاسم (En)" value="${escapeHtml(v.label_en || '')}" class="variant-label-en" style="flex:1; min-width:80px; padding:8px 12px; border:1px solid #cfdfe9; border-radius:20px; font-family:inherit; font-size:13px;">
+                    <input type="text" placeholder="السعر (عربي)" value="${escapeHtml(v.price_ar || '')}" class="variant-price-ar" style="flex:1; min-width:80px; padding:8px 12px; border:1px solid #cfdfe9; border-radius:20px; font-family:inherit; font-size:13px;">
+                    <input type="text" placeholder="السعر (En)" value="${escapeHtml(v.price_en || '')}" class="variant-price-en" style="flex:1; min-width:80px; padding:8px 12px; border:1px solid #cfdfe9; border-radius:20px; font-family:inherit; font-size:13px;">
+                    <label style="display:flex; align-items:center; gap:4px; font-size:12px; font-weight:600;">
+                        <input type="checkbox" ${v.is_default ? 'checked' : ''} class="variant-default"> افتراضي
+                    </label>
+                    <button type="button" class="remove-variant" data-idx="${idx}" style="background:#fee2e2; border:none; border-radius:30px; width:32px; height:32px; cursor:pointer; color:#b91c1c; display:flex; align-items:center; justify-content:center; transition:0.2s;">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `).join('');
+            document.querySelectorAll('.remove-variant').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const idx = parseInt(btn.dataset.idx);
+                    state.currentVariants.splice(idx, 1);
+                    renderVariants();
+                });
+            });
+        }
+
+        document.getElementById('addVariantBtn')?.addEventListener('click', () => {
+            state.currentVariants.push({ label_ar: '', label_en: '', price_ar: '', price_en: '', is_default: false });
+            renderVariants();
+        });
+
+        async function saveProduct(e) {
+            e.preventDefault();
+            const id = document.getElementById('productId').value;
+            const projectId = document.getElementById('productProjectId').value;
+            const imagesArr = document.getElementById('productImages').value.split(',').map(s => s.trim()).filter(Boolean);
+            const detailsAr = document.getElementById('productDetailsAr').value.split('\n').map(s => s.trim()).filter(Boolean);
+            const detailsEn = document.getElementById('productDetailsEn').value.split('\n').map(s => s.trim()).filter(Boolean);
+            const payload = {
+                name_ar: document.getElementById('productNameAr').value,
+                name_en: document.getElementById('productNameEn').value,
+                main_image: document.getElementById('productMainImage').value,
+                images: imagesArr,
+                description_ar: document.getElementById('productDescAr').value,
+                description_en: document.getElementById('productDescEn').value,
+                long_description_ar: document.getElementById('productLongDescAr').value,
+                long_description_en: document.getElementById('productLongDescEn').value,
+                details_ar: detailsAr,
+                details_en: detailsEn,
+                price_ar: document.getElementById('productPriceAr').value,
+                price_en: document.getElementById('productPriceEn').value,
+                type_ar: document.getElementById('productTypeAr').value,
+                type_en: document.getElementById('productTypeEn').value,
+                category_ar: document.getElementById('productCategoryAr').value,
+                category_en: document.getElementById('productCategoryEn').value,
+                project_id: projectId
+            };
+            let productId = id;
+            let err;
+            if (!productId) {
+                const { data: newProduct, error: insertErr } = await supabase.from('products').insert(payload).select().single();
+                if (insertErr) { showToast(insertErr.message, true); return; }
+                productId = newProduct.id;
+            } else {
+                err = (await supabase.from('products').update(payload).eq('id', productId)).error;
+                if (err) { showToast(err.message, true); return; }
+            }
+            await supabase.from('product_variants').delete().eq('product_id', productId);
+            for (let i = 0; i < state.currentVariants.length; i++) {
+                const rowEl = document.querySelectorAll('#variantsContainer .variant-row')[i];
+                if (!rowEl) continue;
+                const v = {
+                    label_ar: rowEl.querySelector('.variant-label-ar')?.value || '',
+                    label_en: rowEl.querySelector('.variant-label-en')?.value || '',
+                    price_ar: rowEl.querySelector('.variant-price-ar')?.value || '',
+                    price_en: rowEl.querySelector('.variant-price-en')?.value || '',
+                    is_default: !!rowEl.querySelector('.variant-default')?.checked
+                };
+                if (v.label_ar || v.label_en) {
+                    await supabase.from('product_variants').insert({
+                        product_id: productId,
+                        label_ar: v.label_ar,
+                        label_en: v.label_en,
+                        price_ar: v.price_ar,
+                        price_en: v.price_en,
+                        is_default: v.is_default
+                    });
+                }
+            }
+            showToast('تم حفظ المنتج');
+            document.getElementById('productModal').classList.remove('active');
+            loadProducts();
+            loadStats();
+        }
+
+        // ===== LOAD DEALS =====
+        async function loadDeals() {
+            const projectId = document.getElementById('dealProjectFilter').value;
+            if (!projectId) { document.getElementById('dealsTableContainer').innerHTML = '<div class="no-data">اختر مشروعاً لعرض عروضه</div>'; return; }
+            const { data, error } = await supabase.from('deals').select('*').eq('project_id', projectId);
+            if (error) return showToast(error.message, true);
+            const container = document.getElementById('dealsTableContainer');
+            if (!data || data.length === 0) { container.innerHTML = '<div class="no-data">لا توجد عروض لهذا المشروع</div>'; return; }
+            let html = `<div class="table-wrapper"><table class="data-table"><thead><tr><th>ID</th><th>الصورة</th><th>العنوان</th><th>الإجراءات</th></tr></thead><tbody>`;
+            for (const d of data) {
+                html += `<tr>
+                    <td>${escapeHtml(d.id)}</td>
+                    <td>${d.image ? `<img src="${escapeHtml(d.image)}" class="thumb-preview">` : '-'}</td>
+                    <td>${escapeHtml(d.title_ar)}</td>
+                    <td class="action-buttons">
+                        <button class="action-btn edit" onclick="window.editDeal('${d.id}')"><i class="fas fa-edit"></i></button>
+                        <button class="action-btn delete" onclick="window.deleteItem('deals','${d.id}')"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>`;
+            }
+            html += `</tbody></table></div>`;
+            container.innerHTML = html;
+        }
+
+        window.editDeal = async (id) => {
+            const { data } = await supabase.from('deals').select('*').eq('id', id).single();
+            if (!data) return;
+            document.getElementById('dealId').value = data.id;
+            document.getElementById('dealProjectId').value = data.project_id;
+            document.getElementById('dealTitleAr').value = data.title_ar || '';
+            document.getElementById('dealTitleEn').value = data.title_en || '';
+            document.getElementById('dealImage').value = data.image || '';
+            document.getElementById('dealDescAr').value = data.description_ar || '';
+            document.getElementById('dealDescEn').value = data.description_en || '';
+            document.getElementById('dealBadgeAr').value = data.badge_ar || '';
+            document.getElementById('dealBadgeEn').value = data.badge_en || '';
+            document.getElementById('dealExpiry').value = data.expiry_date || '';
+            document.getElementById('dealModal').classList.add('active');
+        };
+
+        async function saveDeal(e) {
+            e.preventDefault();
+            const id = document.getElementById('dealId').value;
+            const projectId = document.getElementById('dealProjectId').value;
+            const payload = {
+                title_ar: document.getElementById('dealTitleAr').value,
+                title_en: document.getElementById('dealTitleEn').value,
+                image: document.getElementById('dealImage').value,
+                description_ar: document.getElementById('dealDescAr').value,
+                description_en: document.getElementById('dealDescEn').value,
+                badge_ar: document.getElementById('dealBadgeAr').value,
+                badge_en: document.getElementById('dealBadgeEn').value,
+                expiry_date: document.getElementById('dealExpiry').value,
+                project_id: projectId
+            };
+            let error;
+            if (id) error = (await supabase.from('deals').update(payload).eq('id', id)).error;
+            else error = (await supabase.from('deals').insert(payload)).error;
+            if (error) showToast(error.message, true);
+            else { showToast('تم حفظ العرض'); document.getElementById('dealModal').classList.remove('active'); loadDeals(); loadStats(); }
+        }
+
+        // ===== LOAD CONTACTS =====
+        async function loadContacts() {
+            const projectId = document.getElementById('contactProjectFilter').value;
+            if (!projectId) { document.getElementById('contactsTableContainer').innerHTML = '<div class="no-data">اختر مشروعاً لعرض بيانات التواصل</div>'; return; }
+            const { data, error } = await supabase.from('contacts').select('*').eq('project_id', projectId);
+            if (error) return showToast(error.message, true);
+            const contact = (data && data[0]) || { project_id: projectId };
+            let html = `<div style="display:grid; gap:12px; max-width:600px; margin:0 auto;">
+                <div class="filter-group" style="display:grid; gap:10px;">
+                    <input id="editWhatsapp" value="${escapeHtml(contact.whatsapp || '')}" placeholder="واتساب" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                    <input id="editPhone" value="${escapeHtml(contact.phone || '')}" placeholder="هاتف" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                    <input id="editEmail" value="${escapeHtml(contact.email || '')}" placeholder="البريد الإلكتروني" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                    <input id="editInstagram" value="${escapeHtml(contact.instagram || '')}" placeholder="إنستغرام" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                    <input id="editTelegram" value="${escapeHtml(contact.telegram || '')}" placeholder="تيليجرام" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                    <input id="editSnapchat" value="${escapeHtml(contact.snapchat || '')}" placeholder="سناب شات" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                    <input id="editTiktok" value="${escapeHtml(contact.tiktok || '')}" placeholder="تيك توك" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                    <input id="editFacebook" value="${escapeHtml(contact.facebook || '')}" placeholder="فيسبوك" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                    <input id="editTwitter" value="${escapeHtml(contact.twitter || '')}" placeholder="تويتر / X" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                    <input id="editWebsite" value="${escapeHtml(contact.website || '')}" placeholder="الموقع الإلكتروني" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                </div>
+                <button id="saveContactBtn" class="login-btn" style="width:100%;">حفظ التغييرات</button>
+            </div>`;
+            document.getElementById('contactsTableContainer').innerHTML = html;
+            document.getElementById('saveContactBtn').onclick = async () => {
+                await supabase.from('contacts').upsert({
+                    project_id: parseInt(projectId),
+                    whatsapp: document.getElementById('editWhatsapp').value,
+                    phone: document.getElementById('editPhone').value,
+                    email: document.getElementById('editEmail').value,
+                    instagram: document.getElementById('editInstagram').value,
+                    telegram: document.getElementById('editTelegram').value,
+                    snapchat: document.getElementById('editSnapchat').value,
+                    tiktok: document.getElementById('editTiktok').value,
+                    facebook: document.getElementById('editFacebook').value,
+                    twitter: document.getElementById('editTwitter').value,
+                    website: document.getElementById('editWebsite').value
+                });
+                showToast('تم حفظ بيانات التواصل');
+            };
+        }
+
+        // ===== LOAD FEEDBACKS =====
+        async function loadFeedbacks() {
+            const status = document.getElementById('feedbackStatusFilter').value;
+            let query = supabase.from('feedbacks').select('*').order('created_at', { ascending: false });
+            if (status) query = query.eq('status', status);
+            const { data, error } = await query;
+            if (error) return showToast(error.message, true);
+            const container = document.getElementById('feedbacksTableContainer');
+            if (!data || data.length === 0) { container.innerHTML = '<div class="no-data">لا توجد شكاوى</div>'; return; }
+            let html = `<div class="table-wrapper"><table class="data-table"><thead><tr><th>ID</th><th>النوع</th><th>الرسالة</th><th>البريد</th><th>الحالة</th><th>التاريخ</th><th>تغيير الحالة</th></tr></thead><tbody>`;
+            for (const f of data) {
+                const badgeClass = f.status === 'pending' ? 'badge-pending' : (f.status === 'resolved' ? 'badge-resolved' : 'badge-reviewed');
+                html += `<tr>
+                    <td>${escapeHtml(f.id)}</td>
+                    <td>${escapeHtml(f.type)}</td>
+                    <td>${escapeHtml(f.message)}</td>
+                    <td>${escapeHtml(f.reporter_email || '-')}</td>
+                    <td><span class="badge ${badgeClass}">${escapeHtml(f.status)}</span></td>
+                    <td>${f.created_at ? new Date(f.created_at).toLocaleString() : '-'}</td>
+                    <td>
+                        <select onchange="window.updateFeedbackStatus(${f.id}, this.value)" style="padding:4px 10px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit; font-size:12px;">
+                            <option ${f.status==='pending'?'selected':''} value="pending">معلق</option>
+                            <option ${f.status==='reviewed'?'selected':''} value="reviewed">مراجَع</option>
+                            <option ${f.status==='resolved'?'selected':''} value="resolved">محلول</option>
+                            <option ${f.status==='rejected'?'selected':''} value="rejected">مرفوض</option>
+                        </select>
+                    </td>
+                </tr>`;
+            }
+            html += `</tbody></table></div>`;
+            container.innerHTML = html;
+        }
+
+        window.updateFeedbackStatus = async (id, newStatus) => {
+            const { error } = await supabase.from('feedbacks').update({ status: newStatus }).eq('id', id);
+            if (error) showToast(error.message, true);
+            else { showToast('تم تحديث حالة الشكوى'); loadFeedbacks(); loadStats(); }
+        };
+
+        // ===== LOAD ORDERS =====
+        async function loadOrders(page = 1) {
+            if (state.isLoading) return;
+            state.isLoading = true;
+            state.currentOrdersPage = page;
+            try {
+                let query = supabase
+                    .from('admin_order_logs')
+                    .select('*', { count: 'exact' })
+                    .order('created_at', { ascending: false })
+                    .range((page - 1) * LIMIT, page * LIMIT - 1);
+
+                const search = document.getElementById('ordersSearch').value;
+                if (search) query = query.or(`project_name.ilike.%${search}%,customer_whatsapp.ilike.%${search}%,order_number.ilike.%${search}%`);
+
+                const projectFilter = document.getElementById('ordersProjectFilter').value;
+                if (projectFilter) query = query.eq('project_id', parseInt(projectFilter));
+
+                const { data, error, count } = await query;
+                if (error) throw error;
+
+                state.ordersTotal = count || 0;
+                const container = document.getElementById('ordersTableContainer');
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<div class="no-data">لا توجد طلبات</div>';
+                    document.getElementById('ordersPagination').innerHTML = '';
+                    return;
+                }
+
+                let html = `<div class="table-wrapper"><table class="data-table"><thead><tr>
+                    <th>رقم الطلب</th><th>المشروع</th><th>واتساب العميل</th><th>المواد المطلوبة</th><th>الإجمالي</th><th>الحالة</th><th>التاريخ</th><th></th>
+                </tr></thead><tbody>`;
+
+                for (const order of data) {
+                    let itemsPreview = '';
+                    if (order.items && Array.isArray(order.items)) {
+                        itemsPreview = order.items.map(it => `${it.productName} × ${it.quantity}`).join(', ');
+                    }
+                    const statusMap = {
+                        'جديد': 'badge-pending',
+                        'قيد التجهيز': 'badge-pending',
+                        'تم التسليم': 'badge-approved',
+                        'ملغي': 'badge-rejected'
+                    };
+                    const statusClass = statusMap[order.status] || 'badge-pending';
+
+                    html += `<tr>
+                        <td>${escapeHtml(order.order_number)}</td>
+                        <td>${escapeHtml(order.project_name)}</td>
+                        <td>${escapeHtml(order.customer_whatsapp)}</td>
+                        <td class="order-items-preview" title="${escapeHtml(itemsPreview)}">${escapeHtml(itemsPreview)}</td>
+                        <td>${escapeHtml(order.total_price)}</td>
+                        <td>
+                            <select class="order-status-select" data-order-id="${order.id}" onchange="window.updateOrderStatus('${order.id}', this.value)" style="padding:4px 10px; border-radius:30px; border:1px solid #cfdfe9; background:white; font-family:inherit; font-size:12px; cursor:pointer;">
+                                <option value="جديد" ${order.status === 'جديد' ? 'selected' : ''}>جديد</option>
+                                <option value="قيد التجهيز" ${order.status === 'قيد التجهيز' ? 'selected' : ''}>قيد التجهيز</option>
+                                <option value="تم التسليم" ${order.status === 'تم التسليم' ? 'selected' : ''}>تم التسليم</option>
+                                <option value="ملغي" ${order.status === 'ملغي' ? 'selected' : ''}>ملغي</option>
+                            </select>
+                        </td>
+                        <td>${order.created_at ? new Date(order.created_at).toLocaleString() : '-'}</td>
+                        <td><button class="view-details-btn" onclick="window.showOrderDetails('${escapeHtml(order.order_number)}')">تفاصيل</button></td>
+                    </tr>`;
+                }
+                html += `</tbody></table></div>`;
+                container.innerHTML = html;
+
+                const totalPages = Math.ceil(state.ordersTotal / LIMIT);
+                let pagHtml = '<div class="pagination">';
+                for (let i = 1; i <= totalPages; i++) pagHtml += `<button onclick="window.loadOrders(${i})" ${i === page ? 'class="active"' : ''}>${i}</button>`;
+                pagHtml += '</div>';
+                document.getElementById('ordersPagination').innerHTML = totalPages > 1 ? pagHtml : '';
+
+            } catch (e) {
+                showToast(e.message, true);
+                console.error('loadOrders error:', e);
+            } finally {
+                state.isLoading = false;
+            }
+        }
+
+        window.updateOrderStatus = async (orderId, newStatus) => {
+            try {
+                const { error } = await supabase.from('admin_order_logs').update({ status: newStatus }).eq('id', orderId);
+                if (error) { showToast(error.message, true); return; }
+                showToast('تم تحديث حالة الطلب بنجاح');
+                loadOrders(state.currentOrdersPage);
+            } catch (e) {
+                showToast(e.message, true);
+            }
+        };
+
+        window.showOrderDetails = async (orderNumber) => {
+            const { data, error } = await supabase.from('admin_order_logs').select('*').eq('order_number', orderNumber).single();
+            if (error || !data) { showToast('خطأ في جلب التفاصيل', true); return; }
+            let itemsHtml = '<ul style="list-style:none; padding:0;">';
+            if (data.items && Array.isArray(data.items)) {
+                data.items.forEach(item => {
+                    itemsHtml += `<li style="padding:6px 0; border-bottom:1px solid #eee;"><strong>${escapeHtml(item.productName)}</strong> - الكمية: ${escapeHtml(item.quantity)} - السعر: ${escapeHtml(item.productPrice || 'غير محدد')}</li>`;
+                });
+            } else itemsHtml += '<li>لا توجد بيانات مواد</li>';
+            itemsHtml += '</ul>';
+            document.getElementById('orderDetailsBody').innerHTML = `
+                <p><strong>رقم الطلب:</strong> ${escapeHtml(data.order_number)}</p>
+                <p><strong>المشروع:</strong> ${escapeHtml(data.project_name)} (ID: ${escapeHtml(data.project_id)})</p>
+                <p><strong>رقم واتساب العميل:</strong> ${escapeHtml(data.customer_whatsapp)}</p>
+                <p><strong>جلسة العميل:</strong> ${escapeHtml(data.customer_session)}</p>
+                <p><strong>الإجمالي:</strong> ${escapeHtml(data.total_price)}</p>
+                <p><strong>الحالة:</strong> ${escapeHtml(data.status || 'جديد')}</p>
+                <p><strong>تاريخ الطلب:</strong> ${data.created_at ? new Date(data.created_at).toLocaleString() : '-'}</p>
+                <h4 style="margin-top:15px;">المنتجات المطلوبة:</h4>
+                ${itemsHtml}
+            `;
+            document.getElementById('orderDetailsModal').classList.add('active');
+        };
+
+        // ===== EXPORT CSV =====
+        async function exportOrdersCSV() {
+            const { data, error } = await supabase.from('admin_order_logs').select('*').order('created_at', { ascending: false });
+            if (error || !data) return showToast(error?.message || 'لا توجد بيانات', true);
+            const rows = [['رقم الطلب', 'اسم المشروع', 'رقم واتساب العميل', 'المواد (JSON)', 'الإجمالي', 'الحالة', 'التاريخ', 'جلسة العميل']];
+            data.forEach(order => {
+                rows.push([order.order_number, order.project_name, order.customer_whatsapp, JSON.stringify(order.items), order.total_price, order.status || 'جديد', order.created_at, order.customer_session]);
+            });
+            downloadCSV(rows, 'orders_export');
+        }
+
+        async function exportProjectsCSV() {
+            const { data, error } = await supabase.from('projects').select('*').order('id', { ascending: false });
+            if (error || !data) return showToast(error?.message || 'لا توجد بيانات', true);
+            const rows = [
+                ['ID', 'الاسم (عربي)', 'الاسم (إنجليزي)', 'الإمارة', 'التصنيف', 'الحالة', 'حالة الترخيص', 'مميز', 'رخصة أدريا', 'سبب الرفض', 'تاريخ الإنشاء']
+            ];
+            data.forEach(p => {
+                rows.push([p.id, p.name_ar, p.name_en, p.emirate, p.category_ar || '-', p.status, p.license_status, p.is_paid ? 'نعم' : 'لا', p.adra_license ? 'نعم' : 'لا', p.rejection_reason || '', p.created_at]);
+            });
+            downloadCSV(rows, 'projects_export');
+        }
+
+        async function exportProductsCSV() {
+            const projectId = document.getElementById('productProjectFilter').value;
+            if (!projectId) return showToast('اختر مشروعاً أولاً', true);
+            const { data, error } = await supabase.from('products').select('*').eq('project_id', projectId);
+            if (error || !data) return showToast(error?.message || 'لا توجد بيانات', true);
+            const rows = [
+                ['ID', 'الاسم (عربي)', 'الاسم (إنجليزي)', 'التصنيف', 'النوع', 'السعر (عربي)', 'السعر (إنجليزي)']
+            ];
+            data.forEach(p => {
+                rows.push([p.id, p.name_ar, p.name_en, p.category_ar || '-', p.type_ar || '-', p.price_ar || '-', p.price_en || '-']);
+            });
+            downloadCSV(rows, 'products_export');
+        }
+
+        async function exportDealsCSV() {
+            const projectId = document.getElementById('dealProjectFilter').value;
+            if (!projectId) return showToast('اختر مشروعاً أولاً', true);
+            const { data, error } = await supabase.from('deals').select('*').eq('project_id', projectId);
+            if (error || !data) return showToast(error?.message || 'لا توجد بيانات', true);
+            const rows = [
+                ['ID', 'العنوان (عربي)', 'العنوان (إنجليزي)', 'الشارة (عربي)', 'الشارة (إنجليزي)', 'تاريخ الانتهاء']
+            ];
+            data.forEach(d => {
+                rows.push([d.id, d.title_ar, d.title_en, d.badge_ar || '-', d.badge_en || '-', d.expiry_date || '-']);
+            });
+            downloadCSV(rows, 'deals_export');
+        }
+
+        async function exportLicensesCSV() {
+            const { data, error } = await supabase.from('project_license_requests').select('*').order('created_at', { ascending: false });
+            if (error || !data) return showToast(error?.message || 'لا توجد بيانات', true);
+            const rows = [
+                ['المشروع', 'حالة الطلب', 'تاريخ الرفع', 'ملف الرخصة']
+            ];
+            for (const req of data) {
+                const projectName = state.projectsMap[req.project_id] || 'غير معروف';
+                rows.push([projectName, req.status, req.created_at, req.license_file_url || '']);
+            }
+            downloadCSV(rows, 'licenses_export');
+        }
+
+        async function exportSupportCSV() {
+            const { data, error } = await supabase.from('support_tickets').select('*').order('created_at', { ascending: false });
+            if (error || !data) return showToast(error?.message || 'لا توجد بيانات', true);
+            const rows = [
+                ['المشروع', 'الموضوع', 'الحالة', 'التاريخ']
+            ];
+            for (const t of data) {
+                const projectName = state.projectsMap[t.project_id] || 'غير معروف';
+                rows.push([projectName, t.subject, t.status, t.created_at]);
+            }
+            downloadCSV(rows, 'support_export');
+        }
+
+        function downloadCSV(rows, filename) {
+            const csvContent = rows.map(row => row.join(',')).join('\n');
+            const blob = new Blob(["\uFEFF" + csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.href = url;
+            link.setAttribute('download', `${filename}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            showToast('تم التصدير بنجاح');
+        }
+
+        // ===== LOAD LICENSE REQUESTS =====
+        async function loadLicenseRequests(page = 1) {
+            if (state.isLoading) return;
+            state.isLoading = true;
+            state.currentLicensesPage = page;
+            try {
+                const status = document.getElementById('licenseStatusFilter').value;
+                let query = supabase
+                    .from('project_license_requests')
+                    .select('*', { count: 'exact' })
+                    .order('created_at', { ascending: false })
+                    .range((page - 1) * LIMIT, page * LIMIT - 1);
+
+                if (status !== 'all') query = query.eq('status', status);
+
+                const { data, error, count } = await query;
+                if (error) throw error;
+                state.licensesTotal = count || 0;
+                const container = document.getElementById('licensesTableContainer');
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<div class="no-data">لا توجد طلبات تراخيص</div>';
+                    document.getElementById('licensesPagination').innerHTML = '';
+                    return;
+                }
+
+                const projectIds = [...new Set(data.map(req => req.project_id))];
+                const { data: projectsData } = await supabase.from('projects').select('id, name_ar').in('id', projectIds);
+                const projectMap = {};
+                if (projectsData) {
+                    projectsData.forEach(p => { projectMap[p.id] = p.name_ar; });
+                }
+
+                let html = `<div class="table-wrapper"><table class="data-table"><thead><tr>
+                    <th>المشروع</th><th>ملف الرخصة</th><th>حالة الطلب</th><th>تاريخ الرفع</th><th>الإجراءات</th>
+                </tr></thead><tbody>`;
+                for (const req of data) {
+                    const projectName = projectMap[req.project_id] || 'مشروع محذوف';
+                    let statusText = '',
+                        badgeClass = '';
+                    if (req.status === 'pending') { statusText = 'قيد المراجعة';
+                        badgeClass = 'badge-pending'; } else if (req.status === 'approved') { statusText = 'موافق';
+                        badgeClass = 'badge-approved'; } else if (req.status === 'rejected') { statusText = 'مرفوض';
+                        badgeClass = 'badge-rejected'; } else { statusText = escapeHtml(req.status || '-');
+                        badgeClass = 'badge-reviewed'; }
+
+                    html += `<tr>
+                        <td>${escapeHtml(projectName)}</td>
+                        <td>${req.license_file_url ? `<a href="${escapeHtml(req.license_file_url)}" target="_blank" class="btn-outline" style="padding:4px 12px; text-decoration:none; border:1px solid #0a2e25; border-radius:20px; font-size:11px; display:inline-block;">📄 عرض الملف</a>` : '-'}</td>
+                        <td><span class="badge ${badgeClass}">${statusText}</span></td>
+                        <td>${req.created_at ? new Date(req.created_at).toLocaleString() : '-'}</td>
+                        <td class="action-buttons">
+                            <button class="action-btn approve" onclick="window.reviewLicense('${req.id}', 'approve')" title="قبول"><i class="fas fa-check-circle"></i></button>
+                            <button class="action-btn reject" onclick="window.reviewLicense('${req.id}', 'reject')" title="رفض"><i class="fas fa-times-circle"></i></button>
+                        </td>
+                    </tr>`;
+                }
+                html += `</tbody></table></div>`;
+                container.innerHTML = html;
+
+                const totalPages = Math.ceil(state.licensesTotal / LIMIT);
+                let pagHtml = '<div class="pagination">';
+                for (let i = 1; i <= totalPages; i++) pagHtml += `<button onclick="window.loadLicenseRequests(${i})" ${i === page ? 'class="active"' : ''}>${i}</button>`;
+                pagHtml += '</div>';
+                document.getElementById('licensesPagination').innerHTML = totalPages > 1 ? pagHtml : '';
+
+            } catch (e) {
+                showToast(e.message, true);
+                console.error('loadLicenseRequests error:', e);
+            } finally {
+                state.isLoading = false;
+            }
+        }
+
+        window.reviewLicense = async (requestId, action) => {
+            const newStatus = (action === 'approve') ? 'approved' : 'rejected';
+            const { error: updateReq } = await supabase.from('project_license_requests').update({ status: newStatus }).eq('id', requestId);
+            if (updateReq) { showToast(updateReq.message, true); return; }
+
+            const { data: reqData, error: reqFetchError } = await supabase.from('project_license_requests').select('project_id').eq('id', requestId)
+                .single();
+            if (reqFetchError) { showToast(reqFetchError.message, true); return; }
+            if (reqData && reqData.project_id) {
+                const projectLicenseStatus = (action === 'approve') ? 'license_approved' : 'license_rejected';
+                const projUpdate = {
+                    license_status: projectLicenseStatus,
+                    license_reviewed_at: new Date().toISOString()
+                };
+                if (action === 'reject') {
+                    // سبب الرفض يُطلب من المسؤول ويمكن تحديثه لاحقاً
+                    const reason = prompt('سبب الرفض (اختياري):') || '';
+                    projUpdate.rejection_reason = reason.trim() || null;
+                } else {
+                    projUpdate.rejection_reason = null;
+                }
+                const { error: projErr } = await supabase.from('projects').update(projUpdate).eq('id', reqData.project_id);
+                if (projErr) { showToast(projErr.message, true); return; }
+            }
+            showToast(`تم ${action === 'approve' ? 'قبول' : 'رفض'} الرخصة بنجاح`);
+            await loadLicenseRequests(state.currentLicensesPage);
+            await loadProjects(state.currentProjectsPage);
+            await loadStats();
+        };
+
+        // ===== LOAD SUPPORT TICKETS =====
+        async function loadSupportTickets(page = 1) {
+            if (state.isLoading) return;
+            state.isLoading = true;
+            state.currentSupportPage = page;
+            try {
+                const status = document.getElementById('supportStatusFilter').value;
+                let query = supabase
+                    .from('support_tickets')
+                    .select('*', { count: 'exact' })
+                    .order('created_at', { ascending: false })
+                    .range((page - 1) * LIMIT, page * LIMIT - 1);
+
+                if (status !== 'all') query = query.eq('status', status);
+
+                const { data, error, count } = await query;
+                if (error) throw error;
+                state.supportTotal = count || 0;
+                const container = document.getElementById('supportTicketsContainer');
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<div class="no-data">لا توجد تذاكر دعم</div>';
+                    document.getElementById('supportPagination').innerHTML = '';
+                    return;
+                }
+
+                const projectIds = [...new Set(data.map(t => t.project_id))];
+                const { data: projectsData } = await supabase.from('projects').select('id, name_ar').in('id', projectIds);
+                const projectMap = {};
+                if (projectsData) {
+                    projectsData.forEach(p => { projectMap[p.id] = p.name_ar; });
+                }
+
+                let html = `<div class="table-wrapper"><table class="data-table"><thead><tr>
+                    <th>#</th><th>المشروع</th><th>الموضوع</th><th>الحالة</th><th>التاريخ</th><th>الإجراءات</th>
+                </tr></thead><tbody>`;
+                for (const ticket of data) {
+                    const projectName = projectMap[ticket.project_id] || 'غير معروف';
+                    const statusClass = ticket.status === 'open' ? 'badge-pending' : (ticket.status === 'in_progress' ? 'badge-in_progress' : 'badge-closed');
+                    const statusText = ticket.status === 'open' ? 'مفتوحة' : (ticket.status === 'in_progress' ? 'قيد المعالجة' : 'مغلقة');
+
+                    html += `<tr>
+                        <td>${escapeHtml(ticket.id)}</td>
+                        <td>${escapeHtml(projectName)}</td>
+                        <td>${escapeHtml(ticket.subject)}</td>
+                        <td><span class="badge ${statusClass}">${statusText}</span></td>
+                        <td>${ticket.created_at ? new Date(ticket.created_at).toLocaleString() : '-'}</td>
+                        <td><button class="view-details-btn" onclick="window.viewSupportTicket('${escapeHtml(ticket.id)}')">رد/عرض</button></td>
+                    </tr>`;
+                }
+                html += `</tbody></table></div>`;
+                container.innerHTML = html;
+
+                const totalPages = Math.ceil(state.supportTotal / LIMIT);
+                let pagHtml = '<div class="pagination">';
+                for (let i = 1; i <= totalPages; i++) pagHtml += `<button onclick="window.loadSupportTickets(${i})" ${i === page ? 'class="active"' : ''}>${i}</button>`;
+                pagHtml += '</div>';
+                document.getElementById('supportPagination').innerHTML = totalPages > 1 ? pagHtml : '';
+
+            } catch (e) {
+                showToast(e.message, true);
+                console.error('loadSupportTickets error:', e);
+            } finally {
+                state.isLoading = false;
+            }
+        }
+
+        window.viewSupportTicket = async (id) => {
+            const { data: ticket, error } = await supabase.from('support_tickets').select('*').eq('id', id).single();
+            if (error || !ticket) { showToast('خطأ في جلب التذكرة', true); return; }
+            document.getElementById('ticketReplyBody').innerHTML = `
+                <div style="margin-bottom:20px;">
+                    <p><strong>Project ID:</strong> ${escapeHtml(ticket.project_id || '?')}</p>
+                    <p><strong>الموضوع:</strong> ${escapeHtml(ticket.subject)}</p>
+                    <p><strong>الرسالة:</strong><br>${escapeHtml(ticket.message)}</p>
+                    <p><strong>التاريخ:</strong> ${ticket.created_at ? new Date(ticket.created_at).toLocaleString() : '-'}</p>
+                    ${ticket.admin_reply ? `<div style="background:#f0f0f0; padding:12px; border-radius:16px; margin-top:15px;"><strong>رد الإدارة السابق:</strong><br>${escapeHtml(ticket.admin_reply)}</div>` : ''}
+                </div>
+                <div class="filter-group" style="display:grid; gap:10px;">
+                    <textarea id="ticketReplyText" rows="4" placeholder="الرد الجديد (اتركه فارغاً إذا لم ترد)" style="padding:10px 14px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit;"></textarea>
+                    <select id="ticketStatusSelect" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                        <option value="open" ${ticket.status === 'open' ? 'selected' : ''}>مفتوحة</option>
+                        <option value="in_progress" ${ticket.status === 'in_progress' ? 'selected' : ''}>قيد المعالجة</option>
+                        <option value="closed" ${ticket.status === 'closed' ? 'selected' : ''}>مغلقة</option>
+                    </select>
+                </div>
+                <button class="login-btn" style="width:100%; margin-top:12px;" onclick="window.submitTicketReply('${escapeHtml(ticket.id)}')">حفظ التغييرات</button>
+            `;
+            document.getElementById('ticketReplyModal').classList.add('active');
+        };
+
+        window.submitTicketReply = async (id) => {
+            const reply = document.getElementById('ticketReplyText').value;
+            const newStatus = document.getElementById('ticketStatusSelect').value;
+            const updateData = { status: newStatus };
+            if (reply.trim()) updateData.admin_reply = reply;
+            const { error } = await supabase.from('support_tickets').update(updateData).eq('id', id);
+            if (error) { showToast(error.message, true); return; }
+            showToast('تم تحديث التذكرة');
+            document.getElementById('ticketReplyModal').classList.remove('active');
+            loadSupportTickets(state.currentSupportPage);
+        };
+
+        // ===== INIT FILTERS =====
+        async function initEmirateFilter() {
+            const { data } = await supabase.from('projects').select('emirate');
+            const unique = [...new Set((data || []).map(p => p.emirate).filter(Boolean))];
+            const select = document.getElementById('projectEmirateFilter');
+            select.innerHTML = '<option value="">كل الإمارات</option>';
+            unique.forEach(e => { const opt = document.createElement('option');
+                opt.value = e;
+                opt.textContent = e;
+                select.appendChild(opt); });
+        }
+
+        async function initProjectSelects() {
+            const { data } = await supabase.from('projects').select('id, name_ar').order('id', { ascending: false });
+            if (!data) return;
+            const fillSelect = (id) => {
+                const sel = document.getElementById(id);
+                if (!sel) return;
+                sel.innerHTML = '<option value="">اختر المشروع</option>';
+                data.forEach(p => { const opt = document.createElement('option');
+                    opt.value = p.id;
+                    opt.textContent = p.name_ar;
+                    sel.appendChild(opt); });
+            };
+            fillSelect('productProjectFilter');
+            fillSelect('dealProjectFilter');
+            fillSelect('contactProjectFilter');
+            const ordersFilter = document.getElementById('ordersProjectFilter');
+            if (ordersFilter) {
+                ordersFilter.innerHTML = '<option value="">كل المشاريع</option>';
+                data.forEach(p => { const opt = document.createElement('option');
+                    opt.value = p.id;
+                    opt.textContent = p.name_ar;
+                    ordersFilter.appendChild(opt); });
+            }
+        }
+
+        function fillCategoryDropdowns() {
+            const projectCatAr = document.getElementById('projectCategoryAr');
+            const projectCatEn = document.getElementById('projectCategoryEn');
+            if (projectCatAr) projectCatAr.innerHTML = '<option value="">-- اختر --</option>' + CATEGORIES_AR.map(c => `<option value="${c}">${c}</option>`).join(
+                '');
+            if (projectCatEn) projectCatEn.innerHTML = '<option value="">-- Select --</option>' + CATEGORIES_EN.map(c => `<option value="${c}">${c}</option>`)
+                .join('');
+            const prodCatAr = document.getElementById('productCategoryAr');
+            const prodCatEn = document.getElementById('productCategoryEn');
+            if (prodCatAr) prodCatAr.innerHTML = '<option value="">-- اختر --</option>' + CATEGORIES_AR.map(c => `<option value="${c}">${c}</option>`).join(
+                '');
+            if (prodCatEn) prodCatEn.innerHTML = '<option value="">-- Select --</option>' + CATEGORIES_EN.map(c => `<option value="${c}">${c}</option>`)
+                .join('');
+        }
+
+        // ===== TABS =====
+        function attachTabs() {
+            const tabMap = {
+                'projects': () => loadProjects(1),
+                'products': loadProducts,
+                'deals': loadDeals,
+                'contacts': loadContacts,
+                'feedbacks': loadFeedbacks,
+                'orders': () => loadOrders(1),
+                'licenses': loadLicenseRequests,
+                'support': loadSupportTickets
+            };
+            const refreshMap = {
+                'refreshProjectsBtn': () => loadProjects(1),
+                'refreshProductsBtn': loadProducts,
+                'refreshDealsBtn': loadDeals,
+                'refreshContactsBtn': loadContacts,
+                'refreshFeedbacksBtn': loadFeedbacks,
+                'refreshOrdersBtn': () => loadOrders(1),
+                'refreshLicensesBtn': loadLicenseRequests,
+                'refreshSupportBtn': loadSupportTickets
+            };
+
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    document.querySelectorAll('.content-card').forEach(c => c.classList.remove('active'));
+                    const tabId = btn.dataset.tab;
+                    document.getElementById(tabId + 'Tab').classList.add('active');
+                    state.currentTab = tabId;
+                    const loadFn = tabMap[tabId];
+                    if (loadFn) loadFn();
+                });
+            });
+
+            Object.keys(refreshMap).forEach(id => {
+                const btn = document.getElementById(id);
+                if (btn) btn.addEventListener('click', () => { const fn = refreshMap[id]; if (fn) fn(); });
+            });
+
+            // Export buttons
+            const exportMap = {
+                'exportOrdersBtn': exportOrdersCSV,
+                'exportProjectsBtn': exportProjectsCSV,
+                'exportProductsBtn': exportProductsCSV,
+                'exportDealsBtn': exportDealsCSV,
+                'exportLicensesBtn': exportLicensesCSV,
+                'exportSupportBtn': exportSupportCSV
+            };
+            Object.keys(exportMap).forEach(id => {
+                const btn = document.getElementById(id);
+                if (btn) btn.addEventListener('click', () => { const fn = exportMap[id]; if (fn) fn(); });
+            });
+        }
+
+        // ===== SAVE PROJECT =====
+        async function saveProject(e) {
+            e.preventDefault();
+            const id = document.getElementById('projectId').value;
+            const payload = {
+                name_ar: document.getElementById('projectNameAr').value,
+                name_en: document.getElementById('projectNameEn').value,
+                emirate: document.getElementById('projectEmirate').value,
+                image: document.getElementById('projectImage').value,
+                description_ar: document.getElementById('projectDescAr').value,
+                description_en: document.getElementById('projectDescEn').value,
+                long_description_ar: document.getElementById('projectLongDescAr').value,
+                long_description_en: document.getElementById('projectLongDescEn').value,
+                adra_license: document.getElementById('projectLicense').checked,
+                status: document.getElementById('projectStatus').value,
+                category_ar: document.getElementById('projectCategoryAr').value,
+                category_en: document.getElementById('projectCategoryEn').value
+            };
+            let error;
+            if (id) error = (await supabase.from('projects').update(payload).eq('id', id)).error;
+            else error = (await supabase.from('projects').insert(payload)).error;
+            if (error) showToast(error.message, true);
+            else { showToast('تم حفظ المشروع');
+                document.getElementById('projectModal').classList.remove('active');
+                loadProjects(state.currentProjectsPage);
+                loadStats();
+                initProjectSelects(); }
+        }
+
+        // ===== EVENTS =====
+        document.getElementById('addProjectBtn').onclick = () => {
+            document.getElementById('projectForm').reset();
+            document.getElementById('projectId').value = '';
+            document.getElementById('projectStatus').value = 'active';
+            document.getElementById('projectModal').classList.add('active');
+        };
+        document.getElementById('addProductBtn').onclick = () => {
+            const pid = document.getElementById('productProjectFilter').value;
+            if (!pid) { showToast('اختر مشروعاً أولاً', true); return; }
+            document.getElementById('productForm').reset();
+            document.getElementById('productId').value = '';
+            document.getElementById('productProjectId').value = pid;
+            state.currentVariants = [];
+            renderVariants();
+            document.getElementById('productModal').classList.add('active');
+        };
+        document.getElementById('addDealBtn').onclick = () => {
+            const pid = document.getElementById('dealProjectFilter').value;
+            if (!pid) { showToast('اختر مشروعاً', true); return; }
+            document.getElementById('dealForm').reset();
+            document.getElementById('dealId').value = '';
+            document.getElementById('dealProjectId').value = pid;
+            document.getElementById('dealModal').classList.add('active');
+        };
+        document.getElementById('reorderProductsBtn').onclick = () => window.reorderAllProducts();
+
+        document.getElementById('productProjectFilter').addEventListener('change', () => loadProducts());
+        document.getElementById('dealProjectFilter').addEventListener('change', () => loadDeals());
+        document.getElementById('contactProjectFilter').addEventListener('change', () => loadContacts());
+
+        document.getElementById('projectSearch').addEventListener('input', () => loadProjects(1));
+        document.getElementById('projectEmirateFilter').addEventListener('change', () => loadProjects(1));
+        document.getElementById('projectStatusFilter').addEventListener('change', () => loadProjects(1));
+        document.getElementById('feedbackStatusFilter').addEventListener('change', () => loadFeedbacks());
+        document.getElementById('ordersSearch').addEventListener('input', () => loadOrders(1));
+        document.getElementById('ordersProjectFilter').addEventListener('change', () => loadOrders(1));
+        document.getElementById('licenseStatusFilter').addEventListener('change', () => loadLicenseRequests(1));
+        document.getElementById('supportStatusFilter').addEventListener('change', () => loadSupportTickets(1));
+
+        document.querySelectorAll('.modal-close').forEach(btn => btn.addEventListener('click', () => {
+            document.getElementById(btn.dataset.modal).classList.remove('active');
+        }));
+        window.onclick = (e) => { if (e.target.classList.contains('modal')) e.target.classList.remove('active'); };
+
+        document.getElementById('projectForm').addEventListener('submit', saveProject);
+        document.getElementById('productForm').addEventListener('submit', saveProduct);
+        document.getElementById('dealForm').addEventListener('submit', saveDeal);
+
+        // ===== REFRESH ALL =====
+        document.getElementById('refreshAllBtn').addEventListener('click', () => {
+            loadStats();
+            loadProjects(state.currentProjectsPage);
+            loadOrders(state.currentOrdersPage);
+            loadProducts();
+            loadDeals();
+            loadContacts();
+            loadFeedbacks();
+            loadLicenseRequests(state.currentLicensesPage);
+            loadSupportTickets(state.currentSupportPage);
+            showToast('تم تحديث جميع البيانات');
+        });
+
+        // ===== LOGIN =====
+        document.getElementById('loginBtn').onclick = async () => {
+            const email = document.getElementById('adminEmail').value;
+            const pwd = document.getElementById('adminPassword').value;
+            const errorDiv = document.getElementById('loginError');
+            errorDiv.innerText = '';
+
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({ email, password: pwd });
+                if (error) throw new Error(error.message);
+                if (data?.user?.email !== ALLOWED_EMAIL) {
+                    await supabase.auth.signOut();
+                    throw new Error('غير مصرح لك بالدخول إلى لوحة التحكم');
+                }
+
+                // التحقق من وجود المستخدم في جدول admin_users
+                const { data: adminCheck, error: adminError } = await supabase
+                    .from('admin_users')
+                    .select('user_id')
+                    .eq('user_id', data.user.id)
+                    .maybeSingle();
+
+                if (adminError) {
+                    console.warn('Admin check error:', adminError);
+                }
+
+                if (!adminCheck) {
+                    const { error: insertError } = await supabase
+                        .from('admin_users')
+                        .insert({ user_id: data.user.id });
+                    if (insertError) {
+                        console.warn('Failed to auto-add admin user:', insertError);
+                    } else {
+                        showToast('✅ تم تسجيلك كمسؤول بنجاح');
+                    }
+                }
+
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('adminContent').style.display = 'block';
+
+                fillCategoryDropdowns();
+                await loadProjectsMap();
+                await initEmirateFilter();
+                await initProjectSelects();
+                await loadStats();
+                await loadProjects(1);
+                await loadProducts();
+                await loadDeals();
+                await loadContacts();
+                await loadFeedbacks();
+                await loadOrders(1);
+                await loadLicenseRequests(1);
+                await loadSupportTickets(1);
+                attachTabs();
+
+            } catch (err) {
+                errorDiv.innerText = err.message || 'بيانات الدخول غير صحيحة';
+                console.error('Login error:', err);
+            }
+        };
+
+        document.getElementById('logoutBtn').onclick = async () => {
+            await supabase.auth.signOut();
+            location.reload();
+        };
+
+        document.getElementById('forgotPasswordLink')?.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('adminEmail').value;
+            if (!email || !email.includes('@')) { alert('الرجاء إدخال البريد الإلكتروني أولاً'); return; }
+            const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin +
+                    '/reset-password.html' });
+            if (error) alert('حدث خطأ: ' + error.message);
+            else alert('تم إرسال رابط إعادة التعيين إلى بريدك الإلكتروني');
+        });
+
+        // ===== SESSION CHECK =====
+        async function checkSession() {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session && session.user?.email === ALLOWED_EMAIL) {
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('adminContent').style.display = 'block';
+                fillCategoryDropdowns();
+                await loadProjectsMap();
+                await initEmirateFilter();
+                await initProjectSelects();
+                await loadStats();
+                await loadProjects(1);
+                await loadProducts();
+                await loadDeals();
+                await loadContacts();
+                await loadFeedbacks();
+                await loadOrders(1);
+                await loadLicenseRequests(1);
+                await loadSupportTickets(1);
+                attachTabs();
+            }
+        }
+
+        checkSession();
+
+        // ===== GLOBAL EXPOSURE =====
+        window.loadProjects = loadProjects;
+        window.loadProducts = loadProducts;
+        window.loadOrders = loadOrders;
+        window.loadLicenseRequests = loadLicenseRequests;
+        window.loadSupportTickets = loadSupportTickets;
+        window.editProject = editProject;
+        window.editProduct = editProduct;
+        window.editDeal = editDeal;
+        window.deleteItem = deleteItem;
+        window.updateFeedbackStatus = updateFeedbackStatus;
+        window.reviewLicense = reviewLicense;
+        window.showOrderDetails = showOrderDetails;
+        window.viewSupportTicket = viewSupportTicket;
+        window.submitTicketReply = submitTicketReply;
+        window.reorderAllProducts = reorderAllProducts;
+        window.updateOrderStatus = updateOrderStatus;
+        window.saveNewOrder = saveNewOrder;
+        window.togglePaid = togglePaid;
+        window.updateRejectionReason = updateRejectionReason;
+
+        // ===== EDIT PROJECT =====
+        window.editProject = async (id) => {
+            const { data } = await supabase.from('projects').select('*').eq('id', id).single();
+            if (!data) return;
+            document.getElementById('projectId').value = data.id;
+            document.getElementById('projectNameAr').value = data.name_ar || '';
+            document.getElementById('projectNameEn').value = data.name_en || '';
+            document.getElementById('projectEmirate').value = data.emirate || '';
+            document.getElementById('projectImage').value = data.image || '';
+            document.getElementById('projectDescAr').value = data.description_ar || '';
+            document.getElementById('projectDescEn').value = data.description_en || '';
+            document.getElementById('projectLongDescAr').value = data.long_description_ar || '';
+            document.getElementById('projectLongDescEn').value = data.long_description_en || '';
+            document.getElementById('projectStatus').value = data.status || 'active';
+            document.getElementById('projectLicense').checked = data.adra_license || false;
+            if (document.getElementById('projectCategoryAr')) document.getElementById('projectCategoryAr').value = data.category_ar || '';
+            if (document.getElementById('projectCategoryEn')) document.getElementById('projectCategoryEn').value = data.category_en || '';
+            document.getElementById('projectModal').classList.add('active');
+        };
     </script>
-
 </body>
 </html>
