@@ -6,25 +6,25 @@
     <title>لوحة تحكم المشرف – سوق المشاريع</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
-    <!-- Sortable.js CDN -->
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=El+Messiri:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 
     <style>
-        /* ===== RESET & BASE ===== */
+        /* ===== RESET & GLOBAL ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         body {
-            background: #f0f4f8;
+            background: #f0f5f7;
             font-family: 'Almarai', 'Tajawal', sans-serif;
-            color: #1a2c3e;
+            color: #1a2e3f;
             direction: rtl;
+            min-height: 100vh;
         }
         .admin-wrapper {
-            max-width: 1600px;
+            max-width: 1440px;
             margin: 0 auto;
             padding: 24px 20px;
         }
@@ -38,54 +38,65 @@
             background: linear-gradient(145deg, #0a2e25, #1a5f44);
         }
         .login-card {
-            background: white;
-            border-radius: 48px;
-            padding: 42px;
+            background: #ffffff;
+            border-radius: 60px;
+            padding: 48px 40px;
             width: 100%;
             max-width: 420px;
             text-align: center;
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .login-card .icon {
+            font-size: 64px;
+            color: #D4AF37;
+            margin-bottom: 16px;
         }
         .login-card h2 {
             color: #0a2e25;
-            margin-bottom: 8px;
+            font-size: 26px;
+            font-weight: 800;
         }
         .login-card p {
-            color: #64748b;
-            margin-bottom: 24px;
+            color: #5f7f9a;
+            margin-bottom: 28px;
         }
         .login-card input {
             width: 100%;
-            padding: 14px;
+            padding: 14px 18px;
             margin: 10px 0;
-            border-radius: 40px;
-            border: 1px solid #cfdfe9;
+            border-radius: 60px;
+            border: 1px solid #dce5ec;
             font-family: inherit;
             font-size: 14px;
+            transition: 0.2s;
+            background: #f9fcff;
         }
         .login-card input:focus {
             outline: none;
             border-color: #D4AF37;
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
         }
         .login-btn {
-            background: #0a2e25;
-            color: white;
+            background: linear-gradient(135deg, #0a2e25, #1a5f44);
+            color: #fff;
             width: 100%;
-            padding: 14px;
-            border-radius: 40px;
-            font-weight: bold;
+            padding: 16px;
+            border-radius: 60px;
+            font-weight: 700;
             border: none;
             font-size: 16px;
             cursor: pointer;
-            transition: 0.2s;
+            transition: 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
+            border: 1px solid #D4AF37;
         }
         .login-btn:hover {
-            background: #1a5f44;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
         }
         .login-error {
             color: #dc2626;
@@ -98,31 +109,42 @@
             font-size: 13px;
             font-weight: 600;
             display: inline-block;
-            margin-top: 12px;
+            margin-top: 14px;
         }
 
-        /* ===== TOP BAR ===== */
+        /* ===== HEADER ===== */
         .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: white;
-            border-radius: 32px;
-            padding: 12px 28px;
+            background: #ffffff;
+            border-radius: 40px;
+            padding: 12px 32px;
             margin-bottom: 32px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e2edf2;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e6edf2;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
+        }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-area i {
+            font-size: 28px;
+            color: #D4AF37;
         }
         .logo-area h1 {
             font-size: 1.5rem;
-            color: #0a2e25;
             font-weight: 800;
+            color: #0a2e25;
+            letter-spacing: -0.5px;
         }
-        .logo-area i {
-            color: #D4AF37;
-            margin-left: 8px;
+        .logo-area span {
+            font-size: 13px;
+            color: #5f7f9a;
+            font-weight: 400;
         }
         .top-actions {
             display: flex;
@@ -130,188 +152,197 @@
             align-items: center;
             flex-wrap: wrap;
         }
-        .refresh-all-btn {
-            background: #0a2e25;
-            color: white;
-            border: none;
-            padding: 8px 18px;
-            border-radius: 40px;
+        .btn {
+            padding: 8px 20px;
+            border-radius: 60px;
             font-weight: 600;
+            font-size: 13px;
+            border: none;
             cursor: pointer;
+            transition: 0.25s;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            transition: 0.2s;
+            font-family: inherit;
         }
-        .refresh-all-btn:hover {
+        .btn-primary {
+            background: #0a2e25;
+            color: #fff;
+            border: 1px solid #D4AF37;
+        }
+        .btn-primary:hover {
             background: #1a5f44;
             transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(10, 46, 37, 0.2);
         }
-        .logout-btn {
-            background: #e53e3e;
-            color: white;
-            border: none;
-            padding: 8px 24px;
-            border-radius: 40px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .btn-gold {
+            background: #D4AF37;
+            color: #0a2e25;
+            border: 1px solid #D4AF37;
         }
-        .logout-btn:hover {
-            background: #c53030;
+        .btn-gold:hover {
+            background: #c49b2a;
+            transform: translateY(-2px);
+        }
+        .btn-danger {
+            background: #dc2626;
+            color: #fff;
+            border: 1px solid #dc2626;
+        }
+        .btn-danger:hover {
+            background: #b91c1c;
+            transform: translateY(-2px);
+        }
+        .btn-outline {
+            background: transparent;
+            color: #0a2e25;
+            border: 1px solid #0a2e25;
+        }
+        .btn-outline:hover {
+            background: #0a2e25;
+            color: #fff;
             transform: translateY(-2px);
         }
 
         /* ===== STATS ===== */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 18px;
             margin-bottom: 32px;
         }
         .stat-card {
-            background: white;
-            border-radius: 24px;
-            padding: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-            border: 1px solid #e9f0f5;
-            transition: 0.25s;
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 22px 20px;
+            border: 1px solid #e6edf2;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            transition: 0.3s;
             position: relative;
             overflow: hidden;
         }
         .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 30px -12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+            border-color: #D4AF37;
         }
-        .stat-card .stat-icon {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(145deg, #0b3b2e, #1a5f44);
-            border-radius: 16px;
+        .stat-card .icon {
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(145deg, #0a2e25, #1a5f44);
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
-        .stat-card .stat-icon i {
-            font-size: 24px;
+        .stat-card .icon i {
+            font-size: 26px;
             color: #D4AF37;
         }
-        .stat-card .stat-number {
-            font-size: 32px;
+        .stat-number {
+            font-size: 34px;
             font-weight: 800;
             color: #0a2e25;
-            line-height: 1.2;
+            line-height: 1.1;
         }
-        .stat-card .stat-label {
-            font-size: 13px;
+        .stat-label {
+            font-size: 14px;
             color: #5f7f9a;
             margin-top: 4px;
             font-weight: 500;
         }
-        .stat-card .stat-badge {
+        .stat-badge {
             position: absolute;
-            top: 12px;
-            left: 12px;
+            top: 16px;
+            left: 16px;
             background: rgba(212, 175, 55, 0.15);
-            color: #0a2e25;
             padding: 4px 12px;
-            border-radius: 30px;
+            border-radius: 40px;
             font-size: 10px;
             font-weight: 700;
-        }
-        [dir="ltr"] .stat-card .stat-badge {
-            left: auto;
-            right: 12px;
+            color: #0a2e25;
         }
 
         /* ===== TABS ===== */
         .tabs-container {
-            background: white;
+            background: #ffffff;
             border-radius: 60px;
             padding: 6px;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
             display: flex;
             flex-wrap: wrap;
             gap: 4px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
-            border: 1px solid #e2edf2;
+            border: 1px solid #e6edf2;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
         }
         .tab-btn {
             background: transparent;
             border: none;
-            padding: 10px 20px;
+            padding: 10px 22px;
             border-radius: 50px;
             font-weight: 700;
             font-size: 13px;
             cursor: pointer;
-            transition: 0.2s;
+            transition: 0.25s;
             color: #2c4e6e;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             flex: 0 0 auto;
+            font-family: inherit;
         }
         .tab-btn i {
-            font-size: 14px;
+            font-size: 15px;
         }
         .tab-btn.active {
-            background: #0a2e25;
-            color: white;
-            box-shadow: 0 8px 18px rgba(10, 46, 37, 0.2);
+            background: linear-gradient(135deg, #0a2e25, #1a5f44);
+            color: #fff;
+            box-shadow: 0 8px 20px rgba(10, 46, 37, 0.2);
         }
         .tab-btn:hover:not(.active) {
-            background: #e6f0f5;
+            background: #eef5f9;
         }
 
         /* ===== CONTENT CARDS ===== */
         .content-card {
-            background: white;
-            border-radius: 28px;
-            padding: 24px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
-            border: 1px solid #e9f0f5;
+            background: #ffffff;
+            border-radius: 32px;
+            padding: 28px 24px;
+            border: 1px solid #e6edf2;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
             display: none;
-            animation: fadeIn 0.3s ease;
+            animation: fadeSlide 0.3s ease;
         }
         .content-card.active {
             display: block;
         }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(8px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* ===== FILTER BAR ===== */
         .filter-bar {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 12px;
+            margin-bottom: 24px;
             align-items: center;
             justify-content: space-between;
         }
         .filter-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
             align-items: center;
         }
         .filter-bar input,
         .filter-bar select {
-            padding: 8px 14px;
-            border: 1px solid #cfdfe9;
-            border-radius: 34px;
-            background: white;
+            padding: 8px 16px;
+            border: 1px solid #dce5ec;
+            border-radius: 60px;
+            background: #f9fcff;
             font-family: inherit;
             font-size: 13px;
             min-width: 140px;
@@ -319,135 +350,83 @@
         }
         .filter-bar input:focus,
         .filter-bar select:focus {
-            border-color: #1a5f44;
+            border-color: #D4AF37;
             outline: none;
-            box-shadow: 0 0 0 3px rgba(26, 95, 68, 0.1);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+            background: #fff;
         }
-        .filter-bar button {
-            background: #0a2e25;
-            color: white;
-            border: none;
+        .filter-bar .btn {
             padding: 8px 18px;
-            border-radius: 40px;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            transition: 0.2s;
-            font-family: inherit;
             font-size: 13px;
-        }
-        .filter-bar button.btn-outline {
-            background: white;
-            color: #0a2e25;
-            border: 1px solid #0a2e25;
-        }
-        .filter-bar button.btn-outline:hover {
-            background: #0a2e25;
-            color: white;
-            transform: translateY(-2px);
-        }
-        .filter-bar button:hover {
-            transform: translateY(-2px);
-            background: #1a5f44;
-        }
-        .filter-bar .refresh-btn {
-            background: #D4AF37;
-            color: #0a2e25;
-        }
-        .filter-bar .refresh-btn:hover {
-            background: #c49b2a;
         }
 
         /* ===== TABLES ===== */
         .table-wrapper {
             overflow-x: auto;
+            margin: 0 -4px;
         }
         .data-table {
             width: 100%;
             border-collapse: collapse;
             font-size: 13px;
-            min-width: 650px;
+            min-width: 700px;
         }
         .data-table th,
         .data-table td {
-            padding: 12px 10px;
+            padding: 14px 12px;
             text-align: right;
-            border-bottom: 1px solid #edf2f7;
+            border-bottom: 1px solid #eef3f7;
             vertical-align: middle;
         }
         .data-table th {
-            background: #fafcfd;
+            background: #f8fbfd;
             font-weight: 800;
             color: #0a2e25;
+            font-size: 12px;
+            letter-spacing: 0.3px;
             position: sticky;
             top: 0;
             z-index: 5;
         }
         .data-table tr:hover td {
-            background-color: #f8fbfe;
+            background: #fafdff;
         }
         .data-table .no-data {
             text-align: center;
-            padding: 30px;
+            padding: 40px;
             color: #94a3b8;
         }
 
         /* ===== BADGES ===== */
         .badge {
             display: inline-block;
-            padding: 4px 12px;
-            border-radius: 40px;
+            padding: 4px 14px;
+            border-radius: 60px;
             font-size: 11px;
             font-weight: 700;
             white-space: nowrap;
         }
-        .badge-pending {
-            background: #fff3e0;
-            color: #c47a2e;
-        }
-        .badge-approved {
-            background: #dcfce7;
-            color: #15803d;
-        }
-        .badge-rejected {
-            background: #fee2e2;
-            color: #b91c1c;
-        }
-        .badge-reviewed {
-            background: #e0f2fe;
-            color: #0369a1;
-        }
-        .badge-resolved {
-            background: #d9f99d;
-            color: #3f6212;
-        }
-        .badge-open {
-            background: #fef3c7;
-            color: #d97706;
-        }
-        .badge-closed {
-            background: #e5e7eb;
-            color: #4b5563;
-        }
-        .badge-in_progress {
-            background: #dbeafe;
-            color: #1d4ed8;
-        }
+        .badge-pending { background: #fef3c7; color: #b45309; }
+        .badge-approved { background: #d1fae5; color: #065f46; }
+        .badge-rejected { background: #fee2e2; color: #991b1b; }
+        .badge-reviewed { background: #dbeafe; color: #1e40af; }
+        .badge-resolved { background: #d9f99d; color: #3f6212; }
+        .badge-open { background: #fef3c7; color: #d97706; }
+        .badge-closed { background: #e5e7eb; color: #4b5563; }
+        .badge-in_progress { background: #dbeafe; color: #1d4ed8; }
 
         /* ===== THUMBNAILS ===== */
         .thumb-preview {
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             object-fit: cover;
-            border-radius: 10px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
             cursor: pointer;
             transition: 0.2s;
         }
         .thumb-preview:hover {
-            transform: scale(1.1);
+            transform: scale(1.08);
         }
 
         /* ===== ACTION BUTTONS ===== */
@@ -460,72 +439,38 @@
             background: none;
             border: none;
             cursor: pointer;
-            font-size: 15px;
+            font-size: 14px;
             padding: 5px;
-            border-radius: 10px;
-            width: 32px;
-            height: 32px;
+            border-radius: 12px;
+            width: 34px;
+            height: 34px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             transition: 0.2s;
         }
-        .action-btn.approve {
-            color: #15803d;
-            background: #dcfce7;
-        }
-        .action-btn.approve:hover {
-            background: #bbf7d0;
-            transform: scale(1.05);
-        }
-        .action-btn.reject {
-            color: #b91c1c;
-            background: #fee2e2;
-        }
-        .action-btn.reject:hover {
-            background: #fecaca;
-            transform: scale(1.05);
-        }
-        .action-btn.edit {
-            color: #2c7da0;
-            background: #eef6fc;
-        }
-        .action-btn.edit:hover {
-            background: #c9e6f5;
-            transform: scale(1.05);
-        }
-        .action-btn.delete {
-            color: #e53e3e;
-            background: #fee9e9;
-        }
-        .action-btn.delete:hover {
-            background: #fccaca;
-            transform: scale(1.05);
-        }
-        .action-btn.view {
-            color: #0a2e25;
-            background: #f1f5f9;
-        }
-        .action-btn.view:hover {
-            background: #e2e8f0;
-            transform: scale(1.05);
-        }
+        .action-btn.approve { color: #065f46; background: #d1fae5; }
+        .action-btn.approve:hover { background: #a7f3d0; transform: scale(1.05); }
+        .action-btn.reject { color: #991b1b; background: #fee2e2; }
+        .action-btn.reject:hover { background: #fecaca; transform: scale(1.05); }
+        .action-btn.edit { color: #1e40af; background: #dbeafe; }
+        .action-btn.edit:hover { background: #bfdbfe; transform: scale(1.05); }
+        .action-btn.delete { color: #dc2626; background: #fee9e9; }
+        .action-btn.delete:hover { background: #fccaca; transform: scale(1.05); }
+        .action-btn.view { color: #0a2e25; background: #f1f5f9; }
+        .action-btn.view:hover { background: #e2e8f0; transform: scale(1.05); }
 
         /* ===== DRAG & DROP ===== */
         .sortable-row {
             cursor: grab;
             transition: background 0.2s;
         }
-        .sortable-row:active {
-            cursor: grabbing;
-        }
+        .sortable-row:active { cursor: grabbing; }
         .sortable-row.sortable-chosen {
             background: #fef9e6 !important;
             border: 1px solid #D4AF37;
         }
-        .sortable-row.sortable-ghost {
-            opacity: 0.4;
-        }
+        .sortable-row.sortable-ghost { opacity: 0.4; }
         .drag-handle {
             cursor: grab;
             color: #D4AF37;
@@ -535,45 +480,45 @@
             display: inline-block;
             vertical-align: middle;
         }
-        .drag-handle:active {
-            cursor: grabbing;
-        }
+        .drag-handle:active { cursor: grabbing; }
 
         .save-order-btn {
             background: #0a2e25;
-            color: white;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 40px;
+            color: #fff;
+            border: 1px solid #D4AF37;
+            padding: 8px 24px;
+            border-radius: 60px;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.2s;
-            margin-top: 15px;
+            transition: 0.3s;
+            margin-top: 16px;
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            font-family: inherit;
         }
         .save-order-btn:hover {
             background: #1a5f44;
             transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(10, 46, 37, 0.15);
         }
         .save-order-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
-            transform: none;
+            transform: none !important;
         }
         .order-status {
-            margin-right: 15px;
+            margin-right: 16px;
             font-size: 13px;
-            color: var(--gray);
+            color: #5f7f9a;
         }
 
         .view-details-btn {
             background: #D4AF37;
             color: #0a2e25;
             border: none;
-            padding: 4px 12px;
-            border-radius: 20px;
+            padding: 4px 14px;
+            border-radius: 40px;
             font-size: 11px;
             cursor: pointer;
             font-weight: 700;
@@ -589,14 +534,14 @@
             display: flex;
             justify-content: center;
             gap: 6px;
-            margin-top: 20px;
+            margin-top: 24px;
             flex-wrap: wrap;
         }
         .pagination button {
-            padding: 6px 14px;
-            border-radius: 30px;
-            border: 1px solid #cfdfe9;
-            background: white;
+            padding: 6px 16px;
+            border-radius: 40px;
+            border: 1px solid #dce5ec;
+            background: #fff;
             cursor: pointer;
             transition: 0.2s;
             font-family: inherit;
@@ -605,12 +550,12 @@
         }
         .pagination button:hover {
             background: #0a2e25;
-            color: white;
+            color: #fff;
             border-color: #0a2e25;
         }
         .pagination button.active {
             background: #0a2e25;
-            color: white;
+            color: #fff;
             border-color: #0a2e25;
         }
 
@@ -623,61 +568,53 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(6px);
             z-index: 2000;
             align-items: center;
             justify-content: center;
             padding: 20px;
         }
-        .modal.active {
-            display: flex;
-        }
+        .modal.active { display: flex; }
         .modal-content {
-            background: white;
-            border-radius: 32px;
-            max-width: 750px;
+            background: #fff;
+            border-radius: 36px;
+            max-width: 780px;
             width: 100%;
-            max-height: 85vh;
+            max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 30px 40px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.2);
             animation: fadeScale 0.25s ease;
         }
         @keyframes fadeScale {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
         .modal-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid #e9f0f5;
+            padding: 20px 28px;
+            border-bottom: 1px solid #eef3f7;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
-            background: white;
+            background: #fff;
             z-index: 10;
-            border-radius: 32px 32px 0 0;
+            border-radius: 36px 36px 0 0;
         }
         .modal-header h3 {
             font-size: 1.4rem;
-            color: #0a2e25;
             font-weight: 800;
+            color: #0a2e25;
         }
         .modal-close {
             background: none;
             border: none;
-            font-size: 26px;
+            font-size: 28px;
             cursor: pointer;
             color: #94a3b8;
             transition: 0.2s;
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -688,15 +625,10 @@
             color: #0a2e25;
         }
         .modal-body {
-            padding: 24px;
+            padding: 28px;
         }
-        .modal-body p {
-            margin-bottom: 8px;
-            line-height: 1.6;
-        }
-        .modal-body strong {
-            color: #0a2e25;
-        }
+        .modal-body p { margin-bottom: 8px; line-height: 1.7; }
+        .modal-body strong { color: #0a2e25; }
 
         /* ===== TOAST ===== */
         .toast {
@@ -705,58 +637,43 @@
             left: 50%;
             transform: translateX(-50%);
             background: #0a2e25;
-            color: white;
-            padding: 12px 28px;
+            color: #fff;
+            padding: 14px 32px;
             border-radius: 60px;
             z-index: 3000;
-            font-weight: 500;
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
-            animation: fadeUp 0.25s ease;
+            font-weight: 600;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            animation: fadeUp 0.3s ease;
             max-width: 90%;
             text-align: center;
             font-size: 14px;
+            border: 1px solid #D4AF37;
         }
         .toast.error {
             background: #dc2626;
+            border-color: #dc2626;
         }
         @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateX(-50%) translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(-50%) translateY(0);
-            }
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
         }
 
-        /* ===== ORDER STATUS SELECT ===== */
-        .order-status-select {
-            padding: 4px 10px;
-            border-radius: 30px;
-            border: 1px solid #cfdfe9;
-            background: white;
-            font-family: inherit;
-            font-size: 12px;
-            cursor: pointer;
-        }
-
-        /* ===== TOGGLE SWITCH (للتمييز) ===== */
+        /* ===== TOGGLE ===== */
         .toggle-wrap {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             justify-content: center;
         }
         .toggle {
             position: relative;
-            width: 44px;
-            height: 24px;
-            background: #ccc;
+            width: 48px;
+            height: 26px;
+            background: #dce5ec;
             border-radius: 30px;
             cursor: pointer;
             transition: 0.3s;
-            border: 2px solid #ccc;
+            border: 2px solid #dce5ec;
             flex-shrink: 0;
         }
         .toggle.active {
@@ -767,102 +684,62 @@
             position: absolute;
             top: 2px;
             right: 2px;
-            width: 16px;
-            height: 16px;
-            background: white;
+            width: 18px;
+            height: 18px;
+            background: #fff;
             border-radius: 50%;
             transition: 0.3s;
         }
         .toggle.active .slider {
-            right: 20px;
+            right: 22px;
             background: #D4AF37;
         }
         .toggle-label {
-            font-size: 11px;
-            font-weight: 600;
-            color: #555;
-            min-width: 30px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #5f7f9a;
+            min-width: 34px;
         }
         .toggle.active + .toggle-label {
             color: #0a2e25;
         }
 
         /* ===== RESPONSIVE ===== */
-        @media (max-width: 700px) {
-            .admin-wrapper {
-                padding: 16px 12px;
-            }
-            .tab-btn {
-                padding: 6px 12px;
-                font-size: 11px;
-            }
-            .tab-btn i {
-                font-size: 12px;
-            }
-            .filter-group {
-                width: 100%;
-            }
-            .filter-bar input,
-            .filter-bar select {
-                width: 100%;
-                min-width: unset;
-            }
-            .data-table th,
-            .data-table td {
-                font-size: 11px;
-                padding: 6px 4px;
-            }
-            .stat-card .stat-number {
-                font-size: 24px;
-            }
-            .top-bar {
-                flex-direction: column;
-                align-items: stretch;
-                text-align: center;
-            }
-            .top-actions {
-                justify-content: center;
-            }
-            .modal-content {
-                max-width: 100%;
-                border-radius: 24px;
-            }
-            .modal-body {
-                padding: 16px;
-            }
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
-            }
+        @media (max-width: 768px) {
+            .admin-wrapper { padding: 16px 12px; }
+            .top-bar { flex-direction: column; align-items: stretch; text-align: center; }
+            .top-actions { justify-content: center; }
+            .tabs-container { border-radius: 30px; }
+            .tab-btn { padding: 6px 14px; font-size: 11px; }
+            .tab-btn i { font-size: 12px; }
+            .filter-bar { flex-direction: column; align-items: stretch; }
+            .filter-group { width: 100%; }
+            .filter-bar input, .filter-bar select { width: 100%; min-width: unset; }
+            .data-table th, .data-table td { font-size: 11px; padding: 8px 6px; }
+            .stat-card .stat-number { font-size: 26px; }
+            .stats-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+            .modal-content { max-width: 100%; border-radius: 24px; }
+            .modal-body { padding: 16px; }
         }
         @media (max-width: 480px) {
-            .tabs-container {
-                border-radius: 24px;
-                padding: 4px;
-                gap: 3px;
-            }
-            .tab-btn {
-                padding: 5px 10px;
-                font-size: 10px;
-            }
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
-            }
-            .stat-card {
-                padding: 14px;
-            }
-            .stat-card .stat-number {
-                font-size: 20px;
-            }
-            .stat-card .stat-icon {
-                width: 36px;
-                height: 36px;
-            }
-            .stat-card .stat-icon i {
-                font-size: 18px;
-            }
+            .stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .stat-card { padding: 14px; }
+            .stat-card .stat-number { font-size: 22px; }
+            .stat-card .icon { width: 40px; height: 40px; }
+            .stat-card .icon i { font-size: 20px; }
+            .login-card { padding: 30px 20px; }
         }
+
+        /* ===== TOOLTIP ===== */
+        .helper-text {
+            font-size: 12px;
+            color: #5f7f9a;
+            margin-top: 8px;
+        }
+        .text-center { text-align: center; }
+        .mt-16 { margin-top: 16px; }
+        .gap-8 { gap: 8px; }
+        .flex-center { display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
@@ -870,7 +747,7 @@
     <!-- ==================== LOGIN ==================== -->
     <div id="loginSection">
         <div class="login-card">
-            <i class="fas fa-chalkboard-user" style="font-size:64px; color:#D4AF37; margin-bottom:20px;"></i>
+            <div class="icon"><i class="fas fa-crown"></i></div>
             <h2>دخول المشرف</h2>
             <p>سوق المشاريع – لوحة التحكم المتقدمة</p>
             <input type="email" id="adminEmail" placeholder="البريد الإلكتروني" value="abdulaziz1076@gmail.com">
@@ -888,38 +765,42 @@
         <div class="admin-wrapper">
 
             <!-- TOP BAR -->
-            <div class="top-bar">
+            <header class="top-bar">
                 <div class="logo-area">
-                    <h1><i class="fas fa-store"></i> سوق المشاريع | المشرف المتقدم</h1>
+                    <i class="fas fa-store-alt"></i>
+                    <div>
+                        <h1>سوق المشاريع</h1>
+                        <span>لوحة تحكم المشرف</span>
+                    </div>
                 </div>
                 <div class="top-actions">
-                    <button class="refresh-all-btn" id="refreshAllBtn"><i class="fas fa-sync-alt"></i> تحديث الكل</button>
-                    <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> خروج</button>
+                    <button class="btn btn-gold" id="refreshAllBtn"><i class="fas fa-sync-alt"></i> تحديث الكل</button>
+                    <button class="btn btn-danger" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> خروج</button>
                 </div>
-            </div>
+            </header>
 
             <!-- STATS -->
             <div class="stats-grid" id="statsContainer">
                 <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-spinner fa-spin"></i></div>
+                    <div class="icon"><i class="fas fa-spinner fa-spin"></i></div>
                     <div class="stat-number">...</div>
                     <div class="stat-label">جاري التحميل</div>
                 </div>
             </div>
 
-            <!-- TABS (تم حذف تبويب "طلبات التسجيل") -->
+            <!-- TABS -->
             <div class="tabs-container">
                 <button class="tab-btn active" data-tab="projects"><i class="fas fa-store"></i> المشاريع</button>
                 <button class="tab-btn" data-tab="products"><i class="fas fa-box"></i> المنتجات</button>
                 <button class="tab-btn" data-tab="deals"><i class="fas fa-tags"></i> العروض</button>
-                <button class="tab-btn" data-tab="contacts"><i class="fas fa-address-card"></i> بيانات التواصل</button>
+                <button class="tab-btn" data-tab="contacts"><i class="fas fa-address-card"></i> التواصل</button>
                 <button class="tab-btn" data-tab="feedbacks"><i class="fas fa-comment-dots"></i> الشكاوى</button>
                 <button class="tab-btn" data-tab="orders"><i class="fas fa-truck"></i> الطلبات</button>
-                <button class="tab-btn" data-tab="licenses"><i class="fas fa-file-certificate"></i> إدارة التراخيص</button>
-                <button class="tab-btn" data-tab="support"><i class="fas fa-headset"></i> الدعم الفني</button>
+                <button class="tab-btn" data-tab="licenses"><i class="fas fa-file-certificate"></i> التراخيص</button>
+                <button class="tab-btn" data-tab="support"><i class="fas fa-headset"></i> الدعم</button>
             </div>
 
-            <!-- ===== TAB: PROJECTS (مع مميز وسبب الرفض) ===== -->
+            <!-- ===== TAB: PROJECTS ===== -->
             <div id="projectsTab" class="content-card active">
                 <div class="filter-bar">
                     <div class="filter-group">
@@ -934,14 +815,13 @@
                         </select>
                     </div>
                     <div class="filter-group">
-                        <button class="refresh-btn" id="refreshProjectsBtn"><i class="fas fa-sync-alt"></i> تحديث</button>
-                        <button class="btn-outline" id="addProjectBtn"><i class="fas fa-plus"></i> مشروع جديد</button>
-                        <button class="btn-outline" id="exportProjectsBtn"><i class="fas fa-file-csv"></i> تصدير</button>
+                        <button class="btn btn-gold" id="refreshProjectsBtn"><i class="fas fa-sync-alt"></i> تحديث</button>
+                        <button class="btn btn-primary" id="addProjectBtn"><i class="fas fa-plus"></i> مشروع جديد</button>
+                        <button class="btn btn-outline" id="exportProjectsBtn"><i class="fas fa-file-csv"></i> تصدير</button>
                     </div>
                 </div>
                 <div id="projectsTableContainer"></div>
-                <!-- زر حفظ الترتيب -->
-                <div style="text-align: left; margin-top: 15px;">
+                <div style="display: flex; justify-content: flex-start; gap: 16px; align-items: center; flex-wrap: wrap; margin-top: 16px;">
                     <button id="saveOrderBtn" class="save-order-btn"><i class="fas fa-save"></i> حفظ الترتيب الجديد</button>
                     <span id="orderStatus" class="order-status"></span>
                 </div>
@@ -953,10 +833,10 @@
                 <div class="filter-bar">
                     <select id="productProjectFilter"><option value="">اختر المشروع أولاً</option></select>
                     <div class="filter-group">
-                        <button class="refresh-btn" id="refreshProductsBtn"><i class="fas fa-sync-alt"></i> تحديث</button>
-                        <button class="btn-outline" id="addProductBtn"><i class="fas fa-plus"></i> منتج جديد</button>
-                        <button class="btn-outline" id="reorderProductsBtn"><i class="fas fa-sort-amount-down"></i> إعادة ترتيب</button>
-                        <button class="btn-outline" id="exportProductsBtn"><i class="fas fa-file-csv"></i> تصدير</button>
+                        <button class="btn btn-gold" id="refreshProductsBtn"><i class="fas fa-sync-alt"></i> تحديث</button>
+                        <button class="btn btn-primary" id="addProductBtn"><i class="fas fa-plus"></i> منتج جديد</button>
+                        <button class="btn btn-outline" id="reorderProductsBtn"><i class="fas fa-sort-amount-down"></i> إعادة ترتيب</button>
+                        <button class="btn btn-outline" id="exportProductsBtn"><i class="fas fa-file-csv"></i> تصدير</button>
                     </div>
                 </div>
                 <div id="productsTableContainer"></div>
@@ -967,9 +847,9 @@
                 <div class="filter-bar">
                     <select id="dealProjectFilter"><option value="">اختر المشروع</option></select>
                     <div class="filter-group">
-                        <button class="refresh-btn" id="refreshDealsBtn"><i class="fas fa-sync-alt"></i> تحديث</button>
-                        <button class="btn-outline" id="addDealBtn"><i class="fas fa-plus"></i> عرض جديد</button>
-                        <button class="btn-outline" id="exportDealsBtn"><i class="fas fa-file-csv"></i> تصدير</button>
+                        <button class="btn btn-gold" id="refreshDealsBtn"><i class="fas fa-sync-alt"></i> تحديث</button>
+                        <button class="btn btn-primary" id="addDealBtn"><i class="fas fa-plus"></i> عرض جديد</button>
+                        <button class="btn btn-outline" id="exportDealsBtn"><i class="fas fa-file-csv"></i> تصدير</button>
                     </div>
                 </div>
                 <div id="dealsTableContainer"></div>
@@ -980,8 +860,8 @@
                 <div class="filter-bar">
                     <select id="contactProjectFilter"><option value="">اختر المشروع</option></select>
                     <div class="filter-group">
-                        <button class="refresh-btn" id="refreshContactsBtn"><i class="fas fa-sync-alt"></i> تحديث</button>
-                        <button class="btn-outline" id="exportContactsBtn"><i class="fas fa-file-csv"></i> تصدير</button>
+                        <button class="btn btn-gold" id="refreshContactsBtn"><i class="fas fa-sync-alt"></i> تحديث</button>
+                        <button class="btn btn-outline" id="exportContactsBtn"><i class="fas fa-file-csv"></i> تصدير</button>
                     </div>
                 </div>
                 <div id="contactsTableContainer"></div>
@@ -998,8 +878,8 @@
                         <option value="rejected">مرفوض</option>
                     </select>
                     <div class="filter-group">
-                        <button class="refresh-btn" id="refreshFeedbacksBtn"><i class="fas fa-sync-alt"></i> تحديث</button>
-                        <button class="btn-outline" id="exportFeedbacksBtn"><i class="fas fa-file-csv"></i> تصدير</button>
+                        <button class="btn btn-gold" id="refreshFeedbacksBtn"><i class="fas fa-sync-alt"></i> تحديث</button>
+                        <button class="btn btn-outline" id="exportFeedbacksBtn"><i class="fas fa-file-csv"></i> تصدير</button>
                     </div>
                 </div>
                 <div id="feedbacksTableContainer"></div>
@@ -1013,8 +893,8 @@
                         <select id="ordersProjectFilter"><option value="">كل المشاريع</option></select>
                     </div>
                     <div class="filter-group">
-                        <button class="refresh-btn" id="refreshOrdersBtn"><i class="fas fa-sync-alt"></i> تحديث</button>
-                        <button class="btn-outline" id="exportOrdersBtn"><i class="fas fa-file-csv"></i> تصدير CSV</button>
+                        <button class="btn btn-gold" id="refreshOrdersBtn"><i class="fas fa-sync-alt"></i> تحديث</button>
+                        <button class="btn btn-outline" id="exportOrdersBtn"><i class="fas fa-file-csv"></i> تصدير</button>
                     </div>
                 </div>
                 <div id="ordersTableContainer"></div>
@@ -1033,8 +913,8 @@
                         </select>
                     </div>
                     <div class="filter-group">
-                        <button class="refresh-btn" id="refreshLicensesBtn"><i class="fas fa-sync-alt"></i> تحديث</button>
-                        <button class="btn-outline" id="exportLicensesBtn"><i class="fas fa-file-csv"></i> تصدير</button>
+                        <button class="btn btn-gold" id="refreshLicensesBtn"><i class="fas fa-sync-alt"></i> تحديث</button>
+                        <button class="btn btn-outline" id="exportLicensesBtn"><i class="fas fa-file-csv"></i> تصدير</button>
                     </div>
                 </div>
                 <div id="licensesTableContainer"></div>
@@ -1053,8 +933,8 @@
                         </select>
                     </div>
                     <div class="filter-group">
-                        <button class="refresh-btn" id="refreshSupportBtn"><i class="fas fa-sync-alt"></i> تحديث</button>
-                        <button class="btn-outline" id="exportSupportBtn"><i class="fas fa-file-csv"></i> تصدير</button>
+                        <button class="btn btn-gold" id="refreshSupportBtn"><i class="fas fa-sync-alt"></i> تحديث</button>
+                        <button class="btn btn-outline" id="exportSupportBtn"><i class="fas fa-file-csv"></i> تصدير</button>
                     </div>
                 </div>
                 <div id="supportTicketsContainer"></div>
@@ -1070,35 +950,35 @@
     <div id="projectModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>مشروع</h3>
+                <h3><i class="fas fa-store" style="color:#D4AF37; margin-left:8px;"></i> مشروع</h3>
                 <button class="modal-close" data-modal="projectModal"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body">
                 <form id="projectForm">
                     <input type="hidden" id="projectId">
-                    <div class="filter-group" style="display:grid; gap:12px; margin-bottom:12px;">
-                        <input id="projectNameAr" placeholder="الاسم (عربي)" required style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
-                        <input id="projectNameEn" placeholder="الاسم (إنجليزي)" required style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
-                        <select id="projectEmirate" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                    <div style="display:grid; gap:14px; margin-bottom:16px;">
+                        <input id="projectNameAr" placeholder="الاسم (عربي)" required style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
+                        <input id="projectNameEn" placeholder="الاسم (إنجليزي)" required style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
+                        <select id="projectEmirate" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
                             <option>أبوظبي</option><option>دبي</option><option>الشارقة</option><option>عجمان</option>
                             <option>رأس الخيمة</option><option>الفجيرة</option><option>أم القيوين</option>
                         </select>
-                        <input id="projectImage" placeholder="رابط الصورة" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
-                        <select id="projectCategoryAr" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;"></select>
-                        <select id="projectCategoryEn" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;"></select>
-                        <textarea id="projectDescAr" rows="2" placeholder="الوصف القصير (عربي)" style="padding:10px 14px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit;"></textarea>
-                        <textarea id="projectDescEn" rows="2" placeholder="الوصف القصير (إنجليزي)" style="padding:10px 14px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit;"></textarea>
-                        <textarea id="projectLongDescAr" rows="3" placeholder="الوصف الطويل (عربي)" style="padding:10px 14px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit;"></textarea>
-                        <textarea id="projectLongDescEn" rows="3" placeholder="الوصف الطويل (إنجليزي)" style="padding:10px 14px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit;"></textarea>
-                        <select id="projectStatus" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                        <input id="projectImage" placeholder="رابط الصورة" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
+                        <select id="projectCategoryAr" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;"></select>
+                        <select id="projectCategoryEn" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;"></select>
+                        <textarea id="projectDescAr" rows="2" placeholder="الوصف القصير (عربي)" style="padding:12px 16px; border-radius:20px; border:1px solid #dce5ec; font-family:inherit;"></textarea>
+                        <textarea id="projectDescEn" rows="2" placeholder="الوصف القصير (إنجليزي)" style="padding:12px 16px; border-radius:20px; border:1px solid #dce5ec; font-family:inherit;"></textarea>
+                        <textarea id="projectLongDescAr" rows="3" placeholder="الوصف الطويل (عربي)" style="padding:12px 16px; border-radius:20px; border:1px solid #dce5ec; font-family:inherit;"></textarea>
+                        <textarea id="projectLongDescEn" rows="3" placeholder="الوصف الطويل (إنجليزي)" style="padding:12px 16px; border-radius:20px; border:1px solid #dce5ec; font-family:inherit;"></textarea>
+                        <select id="projectStatus" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
                             <option value="active">فعال</option><option value="disabled">معطل</option>
                             <option value="deleted">محذوف</option><option value="pending">معلق</option>
                         </select>
-                        <label style="display:flex; align-items:center; gap:8px; font-weight:600;">
-                            <input type="checkbox" id="projectLicense"> رخصة أدريا
+                        <label style="display:flex; align-items:center; gap:10px; font-weight:600; cursor:pointer;">
+                            <input type="checkbox" id="projectLicense" style="width:20px; height:20px;"> رخصة أدريا
                         </label>
                     </div>
-                    <button class="login-btn" style="width:100%; margin-top:10px;">حفظ</button>
+                    <button class="login-btn" style="width:100%;">حفظ</button>
                 </form>
             </div>
         </div>
@@ -1108,48 +988,46 @@
     <div id="productModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>منتج</h3>
+                <h3><i class="fas fa-box" style="color:#D4AF37; margin-left:8px;"></i> منتج</h3>
                 <button class="modal-close" data-modal="productModal"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body">
                 <form id="productForm">
                     <input type="hidden" id="productId">
                     <input type="hidden" id="productProjectId">
-                    <div class="filter-group" style="display:grid; gap:10px; margin-bottom:12px;">
-                        <input id="productNameAr" placeholder="الاسم (عربي)" required style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
-                        <input id="productNameEn" placeholder="الاسم (إنجليزي)" required style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
-                        <input id="productMainImage" placeholder="الصورة الرئيسية (URL)" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
-                        <input id="productImages" placeholder="صور إضافية (فاصلة)" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
-                        <input id="productPriceAr" placeholder="السعر (عربي)" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
-                        <input id="productPriceEn" placeholder="السعر (إنجليزي)" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
-                        <select id="productTypeAr" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                    <div style="display:grid; gap:12px; margin-bottom:16px;">
+                        <input id="productNameAr" placeholder="الاسم (عربي)" required style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
+                        <input id="productNameEn" placeholder="الاسم (إنجليزي)" required style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
+                        <input id="productMainImage" placeholder="الصورة الرئيسية (URL)" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
+                        <input id="productImages" placeholder="صور إضافية (فاصلة)" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
+                        <input id="productPriceAr" placeholder="السعر (عربي)" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
+                        <input id="productPriceEn" placeholder="السعر (إنجليزي)" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
+                        <select id="productTypeAr" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
                             <option value="">-- نوع المنتج (عربي) --</option>
                             <option value="أطباق رئيسية">أطباق رئيسية</option>
                             <option value="مشروبات">مشروبات</option>
                             <option value="حلويات">حلويات</option>
                             <option value="أخرى">أخرى</option>
                         </select>
-                        <select id="productTypeEn" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                        <select id="productTypeEn" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
                             <option value="">-- Product Type (En) --</option>
                             <option value="Main Dishes">Main Dishes</option>
                             <option value="Drinks">Drinks</option>
                             <option value="Desserts">Desserts</option>
                             <option value="Other">Other</option>
                         </select>
-                        <select id="productCategoryAr" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;"></select>
-                        <select id="productCategoryEn" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;"></select>
-                        <textarea id="productDescAr" rows="2" placeholder="الوصف القصير (عربي)" style="padding:10px 14px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit;"></textarea>
-                        <textarea id="productDescEn" rows="2" placeholder="الوصف القصير (إنجليزي)" style="padding:10px 14px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit;"></textarea>
-                        <textarea id="productLongDescAr" rows="3" placeholder="الوصف الطويل (عربي)" style="padding:10px 14px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit;"></textarea>
-                        <textarea id="productLongDescEn" rows="3" placeholder="الوصف الطويل (إنجليزي)" style="padding:10px 14px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit;"></textarea>
-                        <textarea id="productDetailsAr" rows="3" placeholder="التفاصيل (عربي) - كل سطر نقطة" style="padding:10px 14px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit;"></textarea>
-                        <textarea id="productDetailsEn" rows="3" placeholder="التفاصيل (إنجليزي)" style="padding:10px 14px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit;"></textarea>
+                        <select id="productCategoryAr" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;"></select>
+                        <select id="productCategoryEn" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;"></select>
+                        <textarea id="productDescAr" rows="2" placeholder="الوصف القصير (عربي)" style="padding:12px 16px; border-radius:20px; border:1px solid #dce5ec; font-family:inherit;"></textarea>
+                        <textarea id="productDescEn" rows="2" placeholder="الوصف القصير (إنجليزي)" style="padding:12px 16px; border-radius:20px; border:1px solid #dce5ec; font-family:inherit;"></textarea>
+                        <textarea id="productLongDescAr" rows="3" placeholder="الوصف الطويل (عربي)" style="padding:12px 16px; border-radius:20px; border:1px solid #dce5ec; font-family:inherit;"></textarea>
+                        <textarea id="productLongDescEn" rows="3" placeholder="الوصف الطويل (إنجليزي)" style="padding:12px 16px; border-radius:20px; border:1px solid #dce5ec; font-family:inherit;"></textarea>
+                        <textarea id="productDetailsAr" rows="3" placeholder="التفاصيل (عربي) - كل سطر نقطة" style="padding:12px 16px; border-radius:20px; border:1px solid #dce5ec; font-family:inherit;"></textarea>
+                        <textarea id="productDetailsEn" rows="3" placeholder="التفاصيل (إنجليزي)" style="padding:12px 16px; border-radius:20px; border:1px solid #dce5ec; font-family:inherit;"></textarea>
                         <div id="variantsContainer"></div>
-                        <button type="button" id="addVariantBtn" class="btn-outline" style="padding:8px 16px; border-radius:30px; border:1px solid #0a2e25; background:white; cursor:pointer; font-family:inherit; font-weight:600; width:fit-content;">
-                            <i class="fas fa-plus"></i> إضافة خيار
-                        </button>
+                        <button type="button" id="addVariantBtn" class="btn btn-outline" style="width:fit-content;">+ إضافة خيار</button>
                     </div>
-                    <button class="login-btn" style="width:100%; margin-top:10px;">حفظ</button>
+                    <button class="login-btn" style="width:100%;">حفظ</button>
                 </form>
             </div>
         </div>
@@ -1159,24 +1037,24 @@
     <div id="dealModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>عرض</h3>
+                <h3><i class="fas fa-tags" style="color:#D4AF37; margin-left:8px;"></i> عرض</h3>
                 <button class="modal-close" data-modal="dealModal"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body">
                 <form id="dealForm">
                     <input type="hidden" id="dealId">
                     <input type="hidden" id="dealProjectId">
-                    <div class="filter-group" style="display:grid; gap:10px; margin-bottom:12px;">
-                        <input id="dealTitleAr" placeholder="العنوان (عربي)" required style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
-                        <input id="dealTitleEn" placeholder="العنوان (إنجليزي)" required style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
-                        <input id="dealImage" placeholder="الصورة (URL)" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
-                        <textarea id="dealDescAr" rows="2" placeholder="الوصف (عربي)" style="padding:10px 14px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit;"></textarea>
-                        <textarea id="dealDescEn" rows="2" placeholder="الوصف (إنجليزي)" style="padding:10px 14px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit;"></textarea>
-                        <input id="dealBadgeAr" placeholder="الشارة (عربي)" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
-                        <input id="dealBadgeEn" placeholder="الشارة (إنجليزي)" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
-                        <input id="dealExpiry" type="text" placeholder="تاريخ الانتهاء (مثال: 31/12/2026)" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                    <div style="display:grid; gap:12px; margin-bottom:16px;">
+                        <input id="dealTitleAr" placeholder="العنوان (عربي)" required style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
+                        <input id="dealTitleEn" placeholder="العنوان (إنجليزي)" required style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
+                        <input id="dealImage" placeholder="الصورة (URL)" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
+                        <textarea id="dealDescAr" rows="2" placeholder="الوصف (عربي)" style="padding:12px 16px; border-radius:20px; border:1px solid #dce5ec; font-family:inherit;"></textarea>
+                        <textarea id="dealDescEn" rows="2" placeholder="الوصف (إنجليزي)" style="padding:12px 16px; border-radius:20px; border:1px solid #dce5ec; font-family:inherit;"></textarea>
+                        <input id="dealBadgeAr" placeholder="الشارة (عربي)" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
+                        <input id="dealBadgeEn" placeholder="الشارة (إنجليزي)" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
+                        <input id="dealExpiry" type="text" placeholder="تاريخ الانتهاء (مثال: 31/12/2026)" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
                     </div>
-                    <button class="login-btn" style="width:100%; margin-top:10px;">حفظ</button>
+                    <button class="login-btn" style="width:100%;">حفظ</button>
                 </form>
             </div>
         </div>
@@ -1186,7 +1064,7 @@
     <div id="orderDetailsModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>تفاصيل الطلب</h3>
+                <h3><i class="fas fa-file-invoice" style="color:#D4AF37; margin-left:8px;"></i> تفاصيل الطلب</h3>
                 <button class="modal-close" data-modal="orderDetailsModal"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body" id="orderDetailsBody"></div>
@@ -1197,7 +1075,7 @@
     <div id="ticketReplyModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>تفاصيل التذكرة والرد</h3>
+                <h3><i class="fas fa-reply" style="color:#D4AF37; margin-left:8px;"></i> تذكرة الدعم</h3>
                 <button class="modal-close" data-modal="ticketReplyModal"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body" id="ticketReplyBody"></div>
@@ -1293,18 +1171,18 @@
                 ]);
 
                 document.getElementById('statsContainer').innerHTML = `
-                    <div class="stat-card"><div class="stat-icon"><i class="fas fa-store"></i></div><div class="stat-number">${projects.count||0}</div><div class="stat-label">المشاريع</div><span class="stat-badge">نشطة</span></div>
-                    <div class="stat-card"><div class="stat-icon"><i class="fas fa-box"></i></div><div class="stat-number">${products.count||0}</div><div class="stat-label">المنتجات</div><span class="stat-badge">معروضة</span></div>
-                    <div class="stat-card"><div class="stat-icon"><i class="fas fa-comment-dots"></i></div><div class="stat-number">${feedbacks.count||0}</div><div class="stat-label">الشكاوى</div><span class="stat-badge">وارد</span></div>
-                    <div class="stat-card"><div class="stat-icon"><i class="fas fa-truck"></i></div><div class="stat-number">${orders.count||0}</div><div class="stat-label">الطلبات (السلة)</div><span class="stat-badge">مطلوب</span></div>
+                    <div class="stat-card"><div class="icon"><i class="fas fa-store"></i></div><div class="stat-number">${projects.count||0}</div><div class="stat-label">المشاريع</div><span class="stat-badge">نشطة</span></div>
+                    <div class="stat-card"><div class="icon"><i class="fas fa-box"></i></div><div class="stat-number">${products.count||0}</div><div class="stat-label">المنتجات</div><span class="stat-badge">معروضة</span></div>
+                    <div class="stat-card"><div class="icon"><i class="fas fa-comment-dots"></i></div><div class="stat-number">${feedbacks.count||0}</div><div class="stat-label">الشكاوى</div><span class="stat-badge">وارد</span></div>
+                    <div class="stat-card"><div class="icon"><i class="fas fa-truck"></i></div><div class="stat-number">${orders.count||0}</div><div class="stat-label">الطلبات</div><span class="stat-badge">مطلوب</span></div>
                 `;
             } catch (e) {
                 console.error('Stats error:', e);
-                document.getElementById('statsContainer').innerHTML = `<div class="stat-card"><div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div><div class="stat-number">!</div><div class="stat-label">خطأ في التحميل</div></div>`;
+                document.getElementById('statsContainer').innerHTML = `<div class="stat-card"><div class="icon"><i class="fas fa-exclamation-triangle"></i></div><div class="stat-number">!</div><div class="stat-label">خطأ في التحميل</div></div>`;
             }
         }
 
-        // ===== LOAD PROJECTS (مع إضافة عمود مميز وسبب الرفض) =====
+        // ===== LOAD PROJECTS =====
         async function loadProjects(page = 1) {
             if (state.isLoading) return;
             state.isLoading = true;
@@ -1348,7 +1226,6 @@
                     <th>الحالة</th>
                     <th>حالة الترخيص</th>
                     <th>مميز</th>
-                    <th>سبب الرفض</th>
                     <th>الإجراءات</th>
                 </tr></thead><tbody id="projects-tbody">`;
 
@@ -1362,7 +1239,6 @@
                         'suspended': 'معلق'
                     };
                     const licenseDisplay = licenseStatusMap[p.license_status] || p.license_status || '-';
-
                     const isPaid = p.is_paid === true;
 
                     html += `<tr class="sortable-row" data-project-id="${p.id}">
@@ -1387,12 +1263,6 @@
                                 <span class="toggle-label" id="label_${p.id}">${isPaid ? 'مميز' : 'عادي'}</span>
                             </div>
                         </td>
-                        <td>
-                            <input type="text" class="form-control-inline" value="${escapeHtml(p.rejection_reason || '')}" 
-                                   placeholder="سبب الرفض" style="width:100%; padding:4px 8px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit; font-size:12px;"
-                                   id="reason_${p.id}" 
-                                   onchange="window.updateRejectionReason('${p.id}', this.value)">
-                        </td>
                         <td class="action-buttons">
                             <button class="action-btn edit" onclick="window.editProject(${p.id})"><i class="fas fa-edit"></i></button>
                             <button class="action-btn delete" onclick="window.deleteItem('projects',${p.id})"><i class="fas fa-trash"></i></button>
@@ -1403,7 +1273,7 @@
                 html += `</tbody></table></div>`;
                 container.innerHTML = html;
 
-                // ===== تهيئة Sortable =====
+                // Sortable
                 const tbody = document.getElementById('projects-tbody');
                 if (tbody) {
                     new Sortable(tbody, {
@@ -1450,99 +1320,54 @@
             }
         }
 
-        // ===== دالة تبديل المميز =====
+        // ===== TOGGLE PAID =====
         window.togglePaid = async (id) => {
-            const row = document.querySelector(`tr[data-project-id="${id}"]`);
-            if (!row) return;
             const toggle = document.getElementById(`toggle_${id}`);
             const label = document.getElementById(`label_${id}`);
             if (!toggle || !label) return;
-
             const isActive = toggle.classList.contains('active');
             const newVal = !isActive;
-
-            // تحديث الواجهة
-            if (newVal) {
-                toggle.classList.add('active');
-                label.textContent = 'مميز';
-            } else {
-                toggle.classList.remove('active');
-                label.textContent = 'عادي';
-            }
-
-            // حفظ في قاعدة البيانات
+            if (newVal) { toggle.classList.add('active');
+                label.textContent = 'مميز'; } else { toggle.classList.remove('active');
+                label.textContent = 'عادي'; }
             try {
-                const { error } = await supabase
-                    .from('projects')
-                    .update({ is_paid: newVal })
-                    .eq('id', id);
+                const { error } = await supabase.from('projects').update({ is_paid: newVal }).eq('id', id);
                 if (error) throw error;
-                showToast(`تم ${newVal ? 'تفعيل' : 'إلغاء'} التميز للمشروع`);
-                // تحديث الإحصائيات
+                showToast(`تم ${newVal ? 'تفعيل' : 'إلغاء'} التميز`);
                 loadStats();
             } catch (err) {
                 showToast(err.message, true);
-                // إعادة التبديل في حالة الخطأ
-                if (newVal) {
-                    toggle.classList.remove('active');
-                    label.textContent = 'عادي';
-                } else {
-                    toggle.classList.add('active');
-                    label.textContent = 'مميز';
-                }
+                if (newVal) { toggle.classList.remove('active');
+                    label.textContent = 'عادي'; } else { toggle.classList.add('active');
+                    label.textContent = 'مميز'; }
             }
         };
 
-        // ===== دالة تحديث سبب الرفض =====
-        window.updateRejectionReason = async (id, value) => {
-            try {
-                const { error } = await supabase
-                    .from('projects')
-                    .update({ rejection_reason: value.trim() || null })
-                    .eq('id', id);
-                if (error) throw error;
-                showToast('تم حفظ سبب الرفض');
-            } catch (err) {
-                showToast(err.message, true);
-            }
-        };
-
-        // ===== حفظ الترتيب الجديد =====
+        // ===== SAVE ORDER =====
         async function saveNewOrder() {
             const tbody = document.getElementById('projects-tbody');
             if (!tbody) return;
             const rows = tbody.querySelectorAll('tr');
             if (rows.length === 0) return;
-
             const updates = [];
             rows.forEach((row, index) => {
                 const id = row.dataset.projectId;
-                if (id) {
-                    updates.push({ id: parseInt(id), display_order: index + 1 });
-                }
+                if (id) updates.push({ id: parseInt(id), display_order: index + 1 });
             });
-
             if (updates.length === 0) return;
-
             const saveBtn = document.getElementById('saveOrderBtn');
             const statusSpan = document.getElementById('orderStatus');
             saveBtn.disabled = true;
-            statusSpan.textContent = '⏳ جاري حفظ الترتيب...';
-
+            statusSpan.textContent = '⏳ جاري الحفظ...';
             try {
-                const promises = updates.map(u =>
-                    supabase.from('projects').update({ display_order: u.display_order }).eq('id', u.id)
-                );
+                const promises = updates.map(u => supabase.from('projects').update({ display_order: u.display_order }).eq('id',
+                u.id));
                 const results = await Promise.all(promises);
                 const errors = results.filter(r => r.error);
-                if (errors.length > 0) {
-                    throw new Error(errors[0].error.message);
-                }
-                statusSpan.textContent = '✅ تم حفظ الترتيب بنجاح!';
+                if (errors.length) throw new Error(errors[0].error.message);
+                statusSpan.textContent = '✅ تم حفظ الترتيب!';
                 showToast('تم تحديث ترتيب المشاريع');
-                setTimeout(() => {
-                    loadProjects(state.currentProjectsPage);
-                }, 500);
+                setTimeout(() => loadProjects(state.currentProjectsPage), 500);
             } catch (err) {
                 statusSpan.textContent = '❌ فشل الحفظ: ' + err.message;
                 showToast(err.message, true);
@@ -1551,7 +1376,6 @@
                 setTimeout(() => { statusSpan.textContent = ''; }, 5000);
             }
         }
-
         document.getElementById('saveOrderBtn')?.addEventListener('click', saveNewOrder);
 
         // ===== DELETE ITEM =====
@@ -1572,10 +1396,12 @@
         async function loadProducts() {
             const projectId = document.getElementById('productProjectFilter').value;
             if (!projectId) {
-                document.getElementById('productsTableContainer').innerHTML = '<div class="no-data">✏️ اختر مشروعاً أولاً من القائمة</div>';
+                document.getElementById('productsTableContainer').innerHTML =
+                    '<div class="no-data">✏️ اختر مشروعاً أولاً من القائمة</div>';
                 return;
             }
-            const { data, error } = await supabase.from('products').select('*').eq('project_id', projectId).order('display_order', { ascending: true, nullsFirst: false });
+            const { data, error } = await supabase.from('products').select('*').eq('project_id', projectId).order(
+                'display_order', { ascending: true, nullsFirst: false });
             if (error) return showToast(error.message, true);
             const container = document.getElementById('productsTableContainer');
             if (!data || data.length === 0) {
@@ -1586,9 +1412,9 @@
             for (const p of data) {
                 html += `<tr>
                     <td style="white-space:nowrap;">
-                        <input type="number" value="${p.display_order ?? 0}" style="width:60px; padding:4px 8px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit; font-size:12px;" class="product-order-input" data-id="${p.id}">
-                        <button class="action-btn move-up" onclick="window.swapProductOrder('${p.id}', 'up')"><i class="fas fa-arrow-up"></i></button>
-                        <button class="action-btn move-down" onclick="window.swapProductOrder('${p.id}', 'down')"><i class="fas fa-arrow-down"></i></button>
+                        <input type="number" value="${p.display_order ?? 0}" style="width:60px; padding:4px 8px; border-radius:30px; border:1px solid #dce5ec; font-family:inherit; font-size:12px;" class="product-order-input" data-id="${p.id}">
+                        <button class="action-btn edit" onclick="window.swapProductOrder('${p.id}', 'up')"><i class="fas fa-arrow-up"></i></button>
+                        <button class="action-btn edit" onclick="window.swapProductOrder('${p.id}', 'down')"><i class="fas fa-arrow-down"></i></button>
                     </td>
                     <td>${escapeHtml(p.id)}</td>
                     <td>${p.main_image ? `<img src="${escapeHtml(p.main_image)}" class="thumb-preview">` : '-'}</td>
@@ -1620,9 +1446,11 @@
             const { data: current } = await supabase.from('products').select('id, display_order').eq('id', id).single();
             if (!current) return;
             let currentOrder = current.display_order ?? 0;
-            let query = direction === 'up'
-                ? supabase.from('products').select('id, display_order').eq('project_id', projectId).lt('display_order', currentOrder).order('display_order', { ascending: false }).limit(1)
-                : supabase.from('products').select('id, display_order').eq('project_id', projectId).gt('display_order', currentOrder).order('display_order', { ascending: true }).limit(1);
+            let query = direction === 'up' ?
+                supabase.from('products').select('id, display_order').eq('project_id', projectId).lt('display_order',
+                    currentOrder).order('display_order', { ascending: false }).limit(1) :
+                supabase.from('products').select('id, display_order').eq('project_id', projectId).gt('display_order',
+                    currentOrder).order('display_order', { ascending: true }).limit(1);
             const { data: neighbor } = await query;
             if (!neighbor?.length) return showToast(direction === 'up' ? 'هذا بالفعل الأعلى' : 'هذا بالفعل الأسفل');
             const target = neighbor[0];
@@ -1641,7 +1469,8 @@
         window.reorderAllProducts = async () => {
             const projectId = document.getElementById('productProjectFilter').value;
             if (!projectId) return showToast('اختر مشروعاً أولاً', true);
-            const { data } = await supabase.from('products').select('id').eq('project_id', projectId).order('display_order', { ascending: true, nullsFirst: false }).order('id', { ascending: true });
+            const { data } = await supabase.from('products').select('id').eq('project_id', projectId).order('display_order',
+                { ascending: true, nullsFirst: false }).order('id', { ascending: true });
             if (!data) return;
             for (let i = 0; i < data.length; i++) {
                 await supabase.from('products').update({ display_order: i + 1 }).eq('id', data[i].id);
@@ -1667,8 +1496,10 @@
             document.getElementById('productDetailsEn').value = (data.details_en || []).join('\n');
             if (document.getElementById('productTypeAr')) document.getElementById('productTypeAr').value = data.type_ar || '';
             if (document.getElementById('productTypeEn')) document.getElementById('productTypeEn').value = data.type_en || '';
-            if (document.getElementById('productCategoryAr')) document.getElementById('productCategoryAr').value = data.category_ar || '';
-            if (document.getElementById('productCategoryEn')) document.getElementById('productCategoryEn').value = data.category_en || '';
+            if (document.getElementById('productCategoryAr')) document.getElementById('productCategoryAr').value = data.category_ar ||
+                '';
+            if (document.getElementById('productCategoryEn')) document.getElementById('productCategoryEn').value = data.category_en ||
+                '';
             document.getElementById('productPriceAr').value = data.price_ar || '';
             document.getElementById('productPriceEn').value = data.price_en || '';
             const { data: variants } = await supabase.from('product_variants').select('*').eq('product_id', id);
@@ -1682,10 +1513,10 @@
             if (!container) return;
             container.innerHTML = state.currentVariants.map((v, idx) => `
                 <div class="variant-row" style="display:flex; gap:8px; margin-bottom:8px; flex-wrap:wrap; align-items:center;">
-                    <input type="text" placeholder="الاسم (عربي)" value="${escapeHtml(v.label_ar || '')}" class="variant-label-ar" style="flex:1; min-width:80px; padding:8px 12px; border:1px solid #cfdfe9; border-radius:20px; font-family:inherit; font-size:13px;">
-                    <input type="text" placeholder="الاسم (En)" value="${escapeHtml(v.label_en || '')}" class="variant-label-en" style="flex:1; min-width:80px; padding:8px 12px; border:1px solid #cfdfe9; border-radius:20px; font-family:inherit; font-size:13px;">
-                    <input type="text" placeholder="السعر (عربي)" value="${escapeHtml(v.price_ar || '')}" class="variant-price-ar" style="flex:1; min-width:80px; padding:8px 12px; border:1px solid #cfdfe9; border-radius:20px; font-family:inherit; font-size:13px;">
-                    <input type="text" placeholder="السعر (En)" value="${escapeHtml(v.price_en || '')}" class="variant-price-en" style="flex:1; min-width:80px; padding:8px 12px; border:1px solid #cfdfe9; border-radius:20px; font-family:inherit; font-size:13px;">
+                    <input type="text" placeholder="الاسم (عربي)" value="${escapeHtml(v.label_ar || '')}" class="variant-label-ar" style="flex:1; min-width:80px; padding:8px 12px; border:1px solid #dce5ec; border-radius:20px; font-family:inherit; font-size:13px;">
+                    <input type="text" placeholder="الاسم (En)" value="${escapeHtml(v.label_en || '')}" class="variant-label-en" style="flex:1; min-width:80px; padding:8px 12px; border:1px solid #dce5ec; border-radius:20px; font-family:inherit; font-size:13px;">
+                    <input type="text" placeholder="السعر (عربي)" value="${escapeHtml(v.price_ar || '')}" class="variant-price-ar" style="flex:1; min-width:80px; padding:8px 12px; border:1px solid #dce5ec; border-radius:20px; font-family:inherit; font-size:13px;">
+                    <input type="text" placeholder="السعر (En)" value="${escapeHtml(v.price_en || '')}" class="variant-price-en" style="flex:1; min-width:80px; padding:8px 12px; border:1px solid #dce5ec; border-radius:20px; font-family:inherit; font-size:13px;">
                     <label style="display:flex; align-items:center; gap:4px; font-size:12px; font-weight:600;">
                         <input type="checkbox" ${v.is_default ? 'checked' : ''} class="variant-default"> افتراضي
                     </label>
@@ -1775,11 +1606,17 @@
         // ===== LOAD DEALS =====
         async function loadDeals() {
             const projectId = document.getElementById('dealProjectFilter').value;
-            if (!projectId) { document.getElementById('dealsTableContainer').innerHTML = '<div class="no-data">اختر مشروعاً لعرض عروضه</div>'; return; }
+            if (!projectId) {
+                document.getElementById('dealsTableContainer').innerHTML = '<div class="no-data">اختر مشروعاً لعرض عروضه</div>';
+                return;
+            }
             const { data, error } = await supabase.from('deals').select('*').eq('project_id', projectId);
             if (error) return showToast(error.message, true);
             const container = document.getElementById('dealsTableContainer');
-            if (!data || data.length === 0) { container.innerHTML = '<div class="no-data">لا توجد عروض لهذا المشروع</div>'; return; }
+            if (!data || data.length === 0) {
+                container.innerHTML = '<div class="no-data">لا توجد عروض لهذا المشروع</div>';
+                return;
+            }
             let html = `<div class="table-wrapper"><table class="data-table"><thead><tr><th>ID</th><th>الصورة</th><th>العنوان</th><th>الإجراءات</th></tr></thead><tbody>`;
             for (const d of data) {
                 html += `<tr>
@@ -1831,28 +1668,35 @@
             if (id) error = (await supabase.from('deals').update(payload).eq('id', id)).error;
             else error = (await supabase.from('deals').insert(payload)).error;
             if (error) showToast(error.message, true);
-            else { showToast('تم حفظ العرض'); document.getElementById('dealModal').classList.remove('active'); loadDeals(); loadStats(); }
+            else { showToast('تم حفظ العرض');
+                document.getElementById('dealModal').classList.remove('active');
+                loadDeals();
+                loadStats(); }
         }
 
         // ===== LOAD CONTACTS =====
         async function loadContacts() {
             const projectId = document.getElementById('contactProjectFilter').value;
-            if (!projectId) { document.getElementById('contactsTableContainer').innerHTML = '<div class="no-data">اختر مشروعاً لعرض بيانات التواصل</div>'; return; }
+            if (!projectId) {
+                document.getElementById('contactsTableContainer').innerHTML =
+                '<div class="no-data">اختر مشروعاً لعرض بيانات التواصل</div>';
+                return;
+            }
             const { data, error } = await supabase.from('contacts').select('*').eq('project_id', projectId);
             if (error) return showToast(error.message, true);
             const contact = (data && data[0]) || { project_id: projectId };
             let html = `<div style="display:grid; gap:12px; max-width:600px; margin:0 auto;">
-                <div class="filter-group" style="display:grid; gap:10px;">
-                    <input id="editWhatsapp" value="${escapeHtml(contact.whatsapp || '')}" placeholder="واتساب" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
-                    <input id="editPhone" value="${escapeHtml(contact.phone || '')}" placeholder="هاتف" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
-                    <input id="editEmail" value="${escapeHtml(contact.email || '')}" placeholder="البريد الإلكتروني" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
-                    <input id="editInstagram" value="${escapeHtml(contact.instagram || '')}" placeholder="إنستغرام" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
-                    <input id="editTelegram" value="${escapeHtml(contact.telegram || '')}" placeholder="تيليجرام" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
-                    <input id="editSnapchat" value="${escapeHtml(contact.snapchat || '')}" placeholder="سناب شات" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
-                    <input id="editTiktok" value="${escapeHtml(contact.tiktok || '')}" placeholder="تيك توك" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
-                    <input id="editFacebook" value="${escapeHtml(contact.facebook || '')}" placeholder="فيسبوك" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
-                    <input id="editTwitter" value="${escapeHtml(contact.twitter || '')}" placeholder="تويتر / X" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
-                    <input id="editWebsite" value="${escapeHtml(contact.website || '')}" placeholder="الموقع الإلكتروني" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                <div style="display:grid; gap:10px;">
+                    <input id="editWhatsapp" value="${escapeHtml(contact.whatsapp || '')}" placeholder="واتساب" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
+                    <input id="editPhone" value="${escapeHtml(contact.phone || '')}" placeholder="هاتف" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
+                    <input id="editEmail" value="${escapeHtml(contact.email || '')}" placeholder="البريد الإلكتروني" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
+                    <input id="editInstagram" value="${escapeHtml(contact.instagram || '')}" placeholder="إنستغرام" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
+                    <input id="editTelegram" value="${escapeHtml(contact.telegram || '')}" placeholder="تيليجرام" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
+                    <input id="editSnapchat" value="${escapeHtml(contact.snapchat || '')}" placeholder="سناب شات" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
+                    <input id="editTiktok" value="${escapeHtml(contact.tiktok || '')}" placeholder="تيك توك" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
+                    <input id="editFacebook" value="${escapeHtml(contact.facebook || '')}" placeholder="فيسبوك" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
+                    <input id="editTwitter" value="${escapeHtml(contact.twitter || '')}" placeholder="تويتر / X" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
+                    <input id="editWebsite" value="${escapeHtml(contact.website || '')}" placeholder="الموقع الإلكتروني" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
                 </div>
                 <button id="saveContactBtn" class="login-btn" style="width:100%;">حفظ التغييرات</button>
             </div>`;
@@ -1883,10 +1727,14 @@
             const { data, error } = await query;
             if (error) return showToast(error.message, true);
             const container = document.getElementById('feedbacksTableContainer');
-            if (!data || data.length === 0) { container.innerHTML = '<div class="no-data">لا توجد شكاوى</div>'; return; }
+            if (!data || data.length === 0) {
+                container.innerHTML = '<div class="no-data">لا توجد شكاوى</div>';
+                return;
+            }
             let html = `<div class="table-wrapper"><table class="data-table"><thead><tr><th>ID</th><th>النوع</th><th>الرسالة</th><th>البريد</th><th>الحالة</th><th>التاريخ</th><th>تغيير الحالة</th></tr></thead><tbody>`;
             for (const f of data) {
-                const badgeClass = f.status === 'pending' ? 'badge-pending' : (f.status === 'resolved' ? 'badge-resolved' : 'badge-reviewed');
+                const badgeClass = f.status === 'pending' ? 'badge-pending' : (f.status === 'resolved' ? 'badge-resolved' :
+                    'badge-reviewed');
                 html += `<tr>
                     <td>${escapeHtml(f.id)}</td>
                     <td>${escapeHtml(f.type)}</td>
@@ -1895,7 +1743,7 @@
                     <td><span class="badge ${badgeClass}">${escapeHtml(f.status)}</span></td>
                     <td>${f.created_at ? new Date(f.created_at).toLocaleString() : '-'}</td>
                     <td>
-                        <select onchange="window.updateFeedbackStatus(${f.id}, this.value)" style="padding:4px 10px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit; font-size:12px;">
+                        <select onchange="window.updateFeedbackStatus(${f.id}, this.value)" style="padding:4px 10px; border-radius:30px; border:1px solid #dce5ec; font-family:inherit; font-size:12px;">
                             <option ${f.status==='pending'?'selected':''} value="pending">معلق</option>
                             <option ${f.status==='reviewed'?'selected':''} value="reviewed">مراجَع</option>
                             <option ${f.status==='resolved'?'selected':''} value="resolved">محلول</option>
@@ -1911,7 +1759,9 @@
         window.updateFeedbackStatus = async (id, newStatus) => {
             const { error } = await supabase.from('feedbacks').update({ status: newStatus }).eq('id', id);
             if (error) showToast(error.message, true);
-            else { showToast('تم تحديث حالة الشكوى'); loadFeedbacks(); loadStats(); }
+            else { showToast('تم تحديث حالة الشكوى');
+                loadFeedbacks();
+                loadStats(); }
         };
 
         // ===== LOAD ORDERS =====
@@ -1927,7 +1777,8 @@
                     .range((page - 1) * LIMIT, page * LIMIT - 1);
 
                 const search = document.getElementById('ordersSearch').value;
-                if (search) query = query.or(`project_name.ilike.%${search}%,customer_whatsapp.ilike.%${search}%,order_number.ilike.%${search}%`);
+                if (search) query = query.or(
+                    `project_name.ilike.%${search}%,customer_whatsapp.ilike.%${search}%,order_number.ilike.%${search}%`);
 
                 const projectFilter = document.getElementById('ordersProjectFilter').value;
                 if (projectFilter) query = query.eq('project_id', parseInt(projectFilter));
@@ -1967,7 +1818,7 @@
                         <td class="order-items-preview" title="${escapeHtml(itemsPreview)}">${escapeHtml(itemsPreview)}</td>
                         <td>${escapeHtml(order.total_price)}</td>
                         <td>
-                            <select class="order-status-select" data-order-id="${order.id}" onchange="window.updateOrderStatus('${order.id}', this.value)" style="padding:4px 10px; border-radius:30px; border:1px solid #cfdfe9; background:white; font-family:inherit; font-size:12px; cursor:pointer;">
+                            <select class="order-status-select" data-order-id="${order.id}" onchange="window.updateOrderStatus('${order.id}', this.value)" style="padding:4px 10px; border-radius:30px; border:1px solid #dce5ec; background:white; font-family:inherit; font-size:12px; cursor:pointer;">
                                 <option value="جديد" ${order.status === 'جديد' ? 'selected' : ''}>جديد</option>
                                 <option value="قيد التجهيز" ${order.status === 'قيد التجهيز' ? 'selected' : ''}>قيد التجهيز</option>
                                 <option value="تم التسليم" ${order.status === 'تم التسليم' ? 'selected' : ''}>تم التسليم</option>
@@ -1983,7 +1834,8 @@
 
                 const totalPages = Math.ceil(state.ordersTotal / LIMIT);
                 let pagHtml = '<div class="pagination">';
-                for (let i = 1; i <= totalPages; i++) pagHtml += `<button onclick="window.loadOrders(${i})" ${i === page ? 'class="active"' : ''}>${i}</button>`;
+                for (let i = 1; i <= totalPages; i++) pagHtml +=
+                    `<button onclick="window.loadOrders(${i})" ${i === page ? 'class="active"' : ''}>${i}</button>`;
                 pagHtml += '</div>';
                 document.getElementById('ordersPagination').innerHTML = totalPages > 1 ? pagHtml : '';
 
@@ -2012,7 +1864,8 @@
             let itemsHtml = '<ul style="list-style:none; padding:0;">';
             if (data.items && Array.isArray(data.items)) {
                 data.items.forEach(item => {
-                    itemsHtml += `<li style="padding:6px 0; border-bottom:1px solid #eee;"><strong>${escapeHtml(item.productName)}</strong> - الكمية: ${escapeHtml(item.quantity)} - السعر: ${escapeHtml(item.productPrice || 'غير محدد')}</li>`;
+                    itemsHtml +=
+                        `<li style="padding:6px 0; border-bottom:1px solid #eee;"><strong>${escapeHtml(item.productName)}</strong> - الكمية: ${escapeHtml(item.quantity)} - السعر: ${escapeHtml(item.productPrice || 'غير محدد')}</li>`;
                 });
             } else itemsHtml += '<li>لا توجد بيانات مواد</li>';
             itemsHtml += '</ul>';
@@ -2034,9 +1887,15 @@
         async function exportOrdersCSV() {
             const { data, error } = await supabase.from('admin_order_logs').select('*').order('created_at', { ascending: false });
             if (error || !data) return showToast(error?.message || 'لا توجد بيانات', true);
-            const rows = [['رقم الطلب', 'اسم المشروع', 'رقم واتساب العميل', 'المواد (JSON)', 'الإجمالي', 'الحالة', 'التاريخ', 'جلسة العميل']];
+            const rows = [
+                ['رقم الطلب', 'اسم المشروع', 'رقم واتساب العميل', 'المواد (JSON)', 'الإجمالي', 'الحالة', 'التاريخ',
+                    'جلسة العميل'
+                ]
+            ];
             data.forEach(order => {
-                rows.push([order.order_number, order.project_name, order.customer_whatsapp, JSON.stringify(order.items), order.total_price, order.status || 'جديد', order.created_at, order.customer_session]);
+                rows.push([order.order_number, order.project_name, order.customer_whatsapp, JSON.stringify(order.items),
+                    order.total_price, order.status || 'جديد', order.created_at, order.customer_session
+                ]);
             });
             downloadCSV(rows, 'orders_export');
         }
@@ -2045,10 +1904,14 @@
             const { data, error } = await supabase.from('projects').select('*').order('id', { ascending: false });
             if (error || !data) return showToast(error?.message || 'لا توجد بيانات', true);
             const rows = [
-                ['ID', 'الاسم (عربي)', 'الاسم (إنجليزي)', 'الإمارة', 'التصنيف', 'الحالة', 'حالة الترخيص', 'مميز', 'رخصة أدريا', 'سبب الرفض', 'تاريخ الإنشاء']
+                ['ID', 'الاسم (عربي)', 'الاسم (إنجليزي)', 'الإمارة', 'التصنيف', 'الحالة', 'حالة الترخيص', 'مميز',
+                    'رخصة أدريا', 'تاريخ الإنشاء'
+                ]
             ];
             data.forEach(p => {
-                rows.push([p.id, p.name_ar, p.name_en, p.emirate, p.category_ar || '-', p.status, p.license_status, p.is_paid ? 'نعم' : 'لا', p.adra_license ? 'نعم' : 'لا', p.rejection_reason || '', p.created_at]);
+                rows.push([p.id, p.name_ar, p.name_en, p.emirate, p.category_ar || '-', p.status, p.license_status, p
+                    .is_paid ? 'نعم' : 'لا', p.adra_license ? 'نعم' : 'لا', p.created_at
+                ]);
             });
             downloadCSV(rows, 'projects_export');
         }
@@ -2062,7 +1925,9 @@
                 ['ID', 'الاسم (عربي)', 'الاسم (إنجليزي)', 'التصنيف', 'النوع', 'السعر (عربي)', 'السعر (إنجليزي)']
             ];
             data.forEach(p => {
-                rows.push([p.id, p.name_ar, p.name_en, p.category_ar || '-', p.type_ar || '-', p.price_ar || '-', p.price_en || '-']);
+                rows.push([p.id, p.name_ar, p.name_en, p.category_ar || '-', p.type_ar || '-', p.price_ar || '-',
+                    p.price_en || '-'
+                ]);
             });
             downloadCSV(rows, 'products_export');
         }
@@ -2168,7 +2033,7 @@
 
                     html += `<tr>
                         <td>${escapeHtml(projectName)}</td>
-                        <td>${req.license_file_url ? `<a href="${escapeHtml(req.license_file_url)}" target="_blank" class="btn-outline" style="padding:4px 12px; text-decoration:none; border:1px solid #0a2e25; border-radius:20px; font-size:11px; display:inline-block;">📄 عرض الملف</a>` : '-'}</td>
+                        <td>${req.license_file_url ? `<a href="${escapeHtml(req.license_file_url)}" target="_blank" class="btn btn-outline" style="padding:4px 12px; text-decoration:none; font-size:11px;">📄 عرض الملف</a>` : '-'}</td>
                         <td><span class="badge ${badgeClass}">${statusText}</span></td>
                         <td>${req.created_at ? new Date(req.created_at).toLocaleString() : '-'}</td>
                         <td class="action-buttons">
@@ -2182,7 +2047,8 @@
 
                 const totalPages = Math.ceil(state.licensesTotal / LIMIT);
                 let pagHtml = '<div class="pagination">';
-                for (let i = 1; i <= totalPages; i++) pagHtml += `<button onclick="window.loadLicenseRequests(${i})" ${i === page ? 'class="active"' : ''}>${i}</button>`;
+                for (let i = 1; i <= totalPages; i++) pagHtml +=
+                    `<button onclick="window.loadLicenseRequests(${i})" ${i === page ? 'class="active"' : ''}>${i}</button>`;
                 pagHtml += '</div>';
                 document.getElementById('licensesPagination').innerHTML = totalPages > 1 ? pagHtml : '';
 
@@ -2196,10 +2062,12 @@
 
         window.reviewLicense = async (requestId, action) => {
             const newStatus = (action === 'approve') ? 'approved' : 'rejected';
-            const { error: updateReq } = await supabase.from('project_license_requests').update({ status: newStatus }).eq('id', requestId);
+            const { error: updateReq } = await supabase.from('project_license_requests').update({ status: newStatus }).eq('id',
+                requestId);
             if (updateReq) { showToast(updateReq.message, true); return; }
 
-            const { data: reqData, error: reqFetchError } = await supabase.from('project_license_requests').select('project_id').eq('id', requestId)
+            const { data: reqData, error: reqFetchError } = await supabase.from('project_license_requests').select('project_id')
+                .eq('id', requestId)
                 .single();
             if (reqFetchError) { showToast(reqFetchError.message, true); return; }
             if (reqData && reqData.project_id) {
@@ -2209,7 +2077,6 @@
                     license_reviewed_at: new Date().toISOString()
                 };
                 if (action === 'reject') {
-                    // سبب الرفض يُطلب من المسؤول ويمكن تحديثه لاحقاً
                     const reason = prompt('سبب الرفض (اختياري):') || '';
                     projUpdate.rejection_reason = reason.trim() || null;
                 } else {
@@ -2261,8 +2128,10 @@
                 </tr></thead><tbody>`;
                 for (const ticket of data) {
                     const projectName = projectMap[ticket.project_id] || 'غير معروف';
-                    const statusClass = ticket.status === 'open' ? 'badge-pending' : (ticket.status === 'in_progress' ? 'badge-in_progress' : 'badge-closed');
-                    const statusText = ticket.status === 'open' ? 'مفتوحة' : (ticket.status === 'in_progress' ? 'قيد المعالجة' : 'مغلقة');
+                    const statusClass = ticket.status === 'open' ? 'badge-pending' : (ticket.status === 'in_progress' ?
+                        'badge-in_progress' : 'badge-closed');
+                    const statusText = ticket.status === 'open' ? 'مفتوحة' : (ticket.status === 'in_progress' ?
+                        'قيد المعالجة' : 'مغلقة');
 
                     html += `<tr>
                         <td>${escapeHtml(ticket.id)}</td>
@@ -2278,7 +2147,8 @@
 
                 const totalPages = Math.ceil(state.supportTotal / LIMIT);
                 let pagHtml = '<div class="pagination">';
-                for (let i = 1; i <= totalPages; i++) pagHtml += `<button onclick="window.loadSupportTickets(${i})" ${i === page ? 'class="active"' : ''}>${i}</button>`;
+                for (let i = 1; i <= totalPages; i++) pagHtml +=
+                    `<button onclick="window.loadSupportTickets(${i})" ${i === page ? 'class="active"' : ''}>${i}</button>`;
                 pagHtml += '</div>';
                 document.getElementById('supportPagination').innerHTML = totalPages > 1 ? pagHtml : '';
 
@@ -2301,9 +2171,9 @@
                     <p><strong>التاريخ:</strong> ${ticket.created_at ? new Date(ticket.created_at).toLocaleString() : '-'}</p>
                     ${ticket.admin_reply ? `<div style="background:#f0f0f0; padding:12px; border-radius:16px; margin-top:15px;"><strong>رد الإدارة السابق:</strong><br>${escapeHtml(ticket.admin_reply)}</div>` : ''}
                 </div>
-                <div class="filter-group" style="display:grid; gap:10px;">
-                    <textarea id="ticketReplyText" rows="4" placeholder="الرد الجديد (اتركه فارغاً إذا لم ترد)" style="padding:10px 14px; border-radius:20px; border:1px solid #cfdfe9; font-family:inherit;"></textarea>
-                    <select id="ticketStatusSelect" style="padding:10px 14px; border-radius:30px; border:1px solid #cfdfe9; font-family:inherit;">
+                <div style="display:grid; gap:10px;">
+                    <textarea id="ticketReplyText" rows="4" placeholder="الرد الجديد (اتركه فارغاً إذا لم ترد)" style="padding:12px 16px; border-radius:20px; border:1px solid #dce5ec; font-family:inherit;"></textarea>
+                    <select id="ticketStatusSelect" style="padding:12px 16px; border-radius:60px; border:1px solid #dce5ec; font-family:inherit;">
                         <option value="open" ${ticket.status === 'open' ? 'selected' : ''}>مفتوحة</option>
                         <option value="in_progress" ${ticket.status === 'in_progress' ? 'selected' : ''}>قيد المعالجة</option>
                         <option value="closed" ${ticket.status === 'closed' ? 'selected' : ''}>مغلقة</option>
@@ -2366,15 +2236,19 @@
         function fillCategoryDropdowns() {
             const projectCatAr = document.getElementById('projectCategoryAr');
             const projectCatEn = document.getElementById('projectCategoryEn');
-            if (projectCatAr) projectCatAr.innerHTML = '<option value="">-- اختر --</option>' + CATEGORIES_AR.map(c => `<option value="${c}">${c}</option>`).join(
+            if (projectCatAr) projectCatAr.innerHTML = '<option value="">-- اختر --</option>' + CATEGORIES_AR.map(c =>
+                `<option value="${c}">${c}</option>`).join(
                 '');
-            if (projectCatEn) projectCatEn.innerHTML = '<option value="">-- Select --</option>' + CATEGORIES_EN.map(c => `<option value="${c}">${c}</option>`)
+            if (projectCatEn) projectCatEn.innerHTML = '<option value="">-- Select --</option>' + CATEGORIES_EN.map(c =>
+                `<option value="${c}">${c}</option>`)
                 .join('');
             const prodCatAr = document.getElementById('productCategoryAr');
             const prodCatEn = document.getElementById('productCategoryEn');
-            if (prodCatAr) prodCatAr.innerHTML = '<option value="">-- اختر --</option>' + CATEGORIES_AR.map(c => `<option value="${c}">${c}</option>`).join(
+            if (prodCatAr) prodCatAr.innerHTML = '<option value="">-- اختر --</option>' + CATEGORIES_AR.map(c =>
+                `<option value="${c}">${c}</option>`).join(
                 '');
-            if (prodCatEn) prodCatEn.innerHTML = '<option value="">-- Select --</option>' + CATEGORIES_EN.map(c => `<option value="${c}">${c}</option>`)
+            if (prodCatEn) prodCatEn.innerHTML = '<option value="">-- Select --</option>' + CATEGORIES_EN.map(c =>
+                `<option value="${c}">${c}</option>`)
                 .join('');
         }
 
@@ -2646,7 +2520,6 @@
         window.updateOrderStatus = updateOrderStatus;
         window.saveNewOrder = saveNewOrder;
         window.togglePaid = togglePaid;
-        window.updateRejectionReason = updateRejectionReason;
 
         // ===== EDIT PROJECT =====
         window.editProject = async (id) => {
@@ -2663,8 +2536,10 @@
             document.getElementById('projectLongDescEn').value = data.long_description_en || '';
             document.getElementById('projectStatus').value = data.status || 'active';
             document.getElementById('projectLicense').checked = data.adra_license || false;
-            if (document.getElementById('projectCategoryAr')) document.getElementById('projectCategoryAr').value = data.category_ar || '';
-            if (document.getElementById('projectCategoryEn')) document.getElementById('projectCategoryEn').value = data.category_en || '';
+            if (document.getElementById('projectCategoryAr')) document.getElementById('projectCategoryAr').value = data.category_ar ||
+                '';
+            if (document.getElementById('projectCategoryEn')) document.getElementById('projectCategoryEn').value = data.category_en ||
+                '';
             document.getElementById('projectModal').classList.add('active');
         };
     </script>
