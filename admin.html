@@ -17,7 +17,7 @@
             box-sizing: border-box;
         }
         body {
-            background: #f0f5f7;
+            background: #f4f7fb;
             font-family: 'Almarai', 'Tajawal', sans-serif;
             color: #1a2e3f;
             direction: rtl;
@@ -36,6 +36,14 @@
             align-items: center;
             justify-content: center;
             background: linear-gradient(145deg, #0a2e25, #1a5f44);
+            position: relative;
+        }
+        #loginSection::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4AF37' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
         }
         .login-card {
             background: #ffffff;
@@ -44,8 +52,10 @@
             width: 100%;
             max-width: 420px;
             text-align: center;
-            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            position: relative;
+            z-index: 1;
         }
         .login-card .icon {
             font-size: 64px;
@@ -118,8 +128,8 @@
             justify-content: space-between;
             align-items: center;
             background: #ffffff;
-            border-radius: 40px;
-            padding: 12px 32px;
+            border-radius: 60px;
+            padding: 14px 32px;
             margin-bottom: 32px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
             border: 1px solid #e6edf2;
@@ -129,22 +139,32 @@
         .logo-area {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
         }
-        .logo-area i {
-            font-size: 28px;
+        .logo-area .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #0a2e25, #1a5f44);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: #D4AF37;
+            font-size: 24px;
+            border: 1px solid #D4AF37;
         }
         .logo-area h1 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 800;
             color: #0a2e25;
             letter-spacing: -0.5px;
         }
         .logo-area span {
-            font-size: 13px;
+            font-size: 12px;
             color: #5f7f9a;
             font-weight: 400;
+            display: block;
+            margin-top: -2px;
         }
         .top-actions {
             display: flex;
@@ -164,6 +184,7 @@
             align-items: center;
             gap: 8px;
             font-family: inherit;
+            text-decoration: none;
         }
         .btn-primary {
             background: #0a2e25;
@@ -414,6 +435,9 @@
         .badge-open { background: #fef3c7; color: #d97706; }
         .badge-closed { background: #e5e7eb; color: #4b5563; }
         .badge-in_progress { background: #dbeafe; color: #1d4ed8; }
+        .badge-active { background: #d1fae5; color: #065f46; }
+        .badge-disabled { background: #fee2e2; color: #991b1b; }
+        .badge-deleted { background: #e5e7eb; color: #4b5563; }
 
         /* ===== THUMBNAILS ===== */
         .thumb-preview {
@@ -434,6 +458,7 @@
             display: flex;
             gap: 4px;
             flex-wrap: wrap;
+            justify-content: center;
         }
         .action-btn {
             background: none;
@@ -459,6 +484,52 @@
         .action-btn.delete:hover { background: #fccaca; transform: scale(1.05); }
         .action-btn.view { color: #0a2e25; background: #f1f5f9; }
         .action-btn.view:hover { background: #e2e8f0; transform: scale(1.05); }
+
+        /* ===== TOGGLE STATUS ===== */
+        .toggle-status-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+        .toggle-status {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            background: #dce5ec;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 2px solid #dce5ec;
+            flex-shrink: 0;
+        }
+        .toggle-status.active {
+            background: #0a2e25;
+            border-color: #D4AF37;
+        }
+        .toggle-status .slider {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 18px;
+            height: 18px;
+            background: #fff;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        .toggle-status.active .slider {
+            right: 24px;
+            background: #D4AF37;
+        }
+        .toggle-status-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #5f7f9a;
+            min-width: 30px;
+        }
+        .toggle-status.active + .toggle-status-label {
+            color: #0a2e25;
+        }
 
         /* ===== DRAG & DROP ===== */
         .sortable-row {
@@ -605,6 +676,12 @@
             font-size: 1.4rem;
             font-weight: 800;
             color: #0a2e25;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .modal-header h3 i {
+            color: #D4AF37;
         }
         .modal-close {
             background: none;
@@ -658,52 +735,6 @@
             to { opacity: 1; transform: translateX(-50%) translateY(0); }
         }
 
-        /* ===== TOGGLE ===== */
-        .toggle-wrap {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            justify-content: center;
-        }
-        .toggle {
-            position: relative;
-            width: 48px;
-            height: 26px;
-            background: #dce5ec;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: 0.3s;
-            border: 2px solid #dce5ec;
-            flex-shrink: 0;
-        }
-        .toggle.active {
-            background: #0a2e25;
-            border-color: #D4AF37;
-        }
-        .toggle .slider {
-            position: absolute;
-            top: 2px;
-            right: 2px;
-            width: 18px;
-            height: 18px;
-            background: #fff;
-            border-radius: 50%;
-            transition: 0.3s;
-        }
-        .toggle.active .slider {
-            right: 22px;
-            background: #D4AF37;
-        }
-        .toggle-label {
-            font-size: 12px;
-            font-weight: 700;
-            color: #5f7f9a;
-            min-width: 34px;
-        }
-        .toggle.active + .toggle-label {
-            color: #0a2e25;
-        }
-
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             .admin-wrapper { padding: 16px 12px; }
@@ -730,7 +761,6 @@
             .login-card { padding: 30px 20px; }
         }
 
-        /* ===== TOOLTIP ===== */
         .helper-text {
             font-size: 12px;
             color: #5f7f9a;
@@ -767,7 +797,7 @@
             <!-- TOP BAR -->
             <header class="top-bar">
                 <div class="logo-area">
-                    <i class="fas fa-store-alt"></i>
+                    <div class="logo-icon"><i class="fas fa-store-alt"></i></div>
                     <div>
                         <h1>سوق المشاريع</h1>
                         <span>لوحة تحكم المشرف</span>
@@ -950,7 +980,7 @@
     <div id="projectModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3><i class="fas fa-store" style="color:#D4AF37; margin-left:8px;"></i> مشروع</h3>
+                <h3><i class="fas fa-store"></i> مشروع</h3>
                 <button class="modal-close" data-modal="projectModal"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body">
@@ -988,7 +1018,7 @@
     <div id="productModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3><i class="fas fa-box" style="color:#D4AF37; margin-left:8px;"></i> منتج</h3>
+                <h3><i class="fas fa-box"></i> منتج</h3>
                 <button class="modal-close" data-modal="productModal"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body">
@@ -1037,7 +1067,7 @@
     <div id="dealModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3><i class="fas fa-tags" style="color:#D4AF37; margin-left:8px;"></i> عرض</h3>
+                <h3><i class="fas fa-tags"></i> عرض</h3>
                 <button class="modal-close" data-modal="dealModal"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body">
@@ -1064,7 +1094,7 @@
     <div id="orderDetailsModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3><i class="fas fa-file-invoice" style="color:#D4AF37; margin-left:8px;"></i> تفاصيل الطلب</h3>
+                <h3><i class="fas fa-file-invoice"></i> تفاصيل الطلب</h3>
                 <button class="modal-close" data-modal="orderDetailsModal"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body" id="orderDetailsBody"></div>
@@ -1075,7 +1105,7 @@
     <div id="ticketReplyModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3><i class="fas fa-reply" style="color:#D4AF37; margin-left:8px;"></i> تذكرة الدعم</h3>
+                <h3><i class="fas fa-reply"></i> تذكرة الدعم</h3>
                 <button class="modal-close" data-modal="ticketReplyModal"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body" id="ticketReplyBody"></div>
@@ -1143,10 +1173,11 @@
 
         function mapProjectStatusToBadgeAndText(status) {
             const v = normalizeStatus(status);
-            if (v === 'disabled' || v === 'inactive') return { badge: 'badge-pending', text: 'معطل' };
-            if (v === 'deleted' || v === 'archived') return { badge: 'badge-rejected', text: 'محذوف' };
+            if (v === 'active') return { badge: 'badge-active', text: 'فعال' };
+            if (v === 'disabled' || v === 'inactive') return { badge: 'badge-disabled', text: 'معطل' };
+            if (v === 'deleted' || v === 'archived') return { badge: 'badge-deleted', text: 'محذوف' };
             if (v === 'pending') return { badge: 'badge-pending', text: 'معلق' };
-            return { badge: 'badge-approved', text: 'فعال' };
+            return { badge: 'badge-active', text: 'فعال' };
         }
 
         // ===== LOAD PROJECTS MAP =====
@@ -1217,15 +1248,15 @@
                 }
 
                 let html = `<div class="table-wrapper"><table class="data-table"><thead><tr>
-                    <th style="width:60px;">الترتيب</th>
-                    <th>ID</th>
+                    <th style="width:50px;">#</th>
                     <th>الصورة</th>
                     <th>الاسم (عربي)</th>
                     <th>التصنيف</th>
                     <th>الإمارة</th>
                     <th>الحالة</th>
-                    <th>حالة الترخيص</th>
+                    <th>الترخيص</th>
                     <th>مميز</th>
+                    <th>تفعيل</th>
                     <th>الإجراءات</th>
                 </tr></thead><tbody id="projects-tbody">`;
 
@@ -1240,13 +1271,13 @@
                     };
                     const licenseDisplay = licenseStatusMap[p.license_status] || p.license_status || '-';
                     const isPaid = p.is_paid === true;
+                    const isActive = p.status === 'active';
 
                     html += `<tr class="sortable-row" data-project-id="${p.id}">
                         <td>
                             <span class="drag-handle"><i class="fas fa-grip-vertical"></i></span>
                             <span class="order-number">${idx+1}</span>
                         </td>
-                        <td>${p.id}</td>
                         <td>${p.image ? `<img src="${escapeHtml(p.image)}" class="thumb-preview" onclick="window.open('${escapeHtml(p.image)}')">` : '-'}</td>
                         <td>${escapeHtml(p.name_ar)}</td>
                         <td>${escapeHtml(p.category_ar || '-')}</td>
@@ -1263,9 +1294,19 @@
                                 <span class="toggle-label" id="label_${p.id}">${isPaid ? 'مميز' : 'عادي'}</span>
                             </div>
                         </td>
+                        <td>
+                            <div class="toggle-status-wrap">
+                                <div class="toggle-status ${isActive ? 'active' : ''}" 
+                                     onclick="window.toggleStatus('${p.id}')" 
+                                     id="togglestatus_${p.id}">
+                                    <div class="slider"></div>
+                                </div>
+                                <span class="toggle-status-label" id="statuslabel_${p.id}">${isActive ? 'فعال' : 'معطل'}</span>
+                            </div>
+                        </td>
                         <td class="action-buttons">
-                            <button class="action-btn edit" onclick="window.editProject(${p.id})"><i class="fas fa-edit"></i></button>
-                            <button class="action-btn delete" onclick="window.deleteItem('projects',${p.id})"><i class="fas fa-trash"></i></button>
+                            <button class="action-btn edit" onclick="window.editProject(${p.id})" title="تعديل"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn delete" onclick="window.deleteItem('projects',${p.id})" title="حذف نهائي"><i class="fas fa-trash"></i></button>
                         </td>
                     </tr>`;
                 });
@@ -1273,7 +1314,7 @@
                 html += `</tbody></table></div>`;
                 container.innerHTML = html;
 
-                // Sortable
+                // ===== Sortable =====
                 const tbody = document.getElementById('projects-tbody');
                 if (tbody) {
                     new Sortable(tbody, {
@@ -1303,7 +1344,7 @@
                     });
                 }
 
-                // Pagination
+                // ===== Pagination =====
                 const totalPages = Math.ceil(state.projectsTotal / LIMIT);
                 let pagHtml = '<div class="pagination">';
                 for (let i = 1; i <= totalPages; i++) {
@@ -1340,6 +1381,47 @@
                 if (newVal) { toggle.classList.remove('active');
                     label.textContent = 'عادي'; } else { toggle.classList.add('active');
                     label.textContent = 'مميز'; }
+            }
+        };
+
+        // ===== TOGGLE STATUS (Enable/Disable) =====
+        window.toggleStatus = async (id) => {
+            const toggle = document.getElementById(`togglestatus_${id}`);
+            const label = document.getElementById(`statuslabel_${id}`);
+            if (!toggle || !label) return;
+            const isActive = toggle.classList.contains('active');
+            const newStatus = isActive ? 'disabled' : 'active';
+            const newLabel = isActive ? 'معطل' : 'فعال';
+            if (isActive) {
+                toggle.classList.remove('active');
+                label.textContent = 'معطل';
+            } else {
+                toggle.classList.add('active');
+                label.textContent = 'فعال';
+            }
+            try {
+                const { error } = await supabase.from('projects').update({ status: newStatus }).eq('id', id);
+                if (error) throw error;
+                showToast(`تم ${newStatus === 'active' ? 'تفعيل' : 'تعطيل'} المشروع`);
+                loadStats();
+                // تحديث الصف مباشرة لتغيير شارة الحالة
+                const row = document.querySelector(`tr[data-project-id="${id}"]`);
+                if (row) {
+                    const statusCell = row.querySelectorAll('td')[5];
+                    if (statusCell) {
+                        const st = mapProjectStatusToBadgeAndText(newStatus);
+                        statusCell.innerHTML = `<span class="badge ${st.badge}">${st.text}</span>`;
+                    }
+                }
+            } catch (err) {
+                showToast(err.message, true);
+                if (newStatus === 'active') {
+                    toggle.classList.remove('active');
+                    label.textContent = 'معطل';
+                } else {
+                    toggle.classList.add('active');
+                    label.textContent = 'فعال';
+                }
             }
         };
 
@@ -1380,11 +1462,11 @@
 
         // ===== DELETE ITEM =====
         window.deleteItem = async (table, id) => {
-            if (!confirm('هل أنت متأكد من الحذف؟')) return;
+            if (!confirm(`⚠️ هل أنت متأكد من حذف هذا العنصر نهائياً؟\nلا يمكن التراجع عن هذا الإجراء.`)) return;
             const { error } = await supabase.from(table).delete().eq('id', id);
             if (error) showToast(error.message, true);
             else {
-                showToast('تم الحذف بنجاح');
+                showToast('🗑️ تم الحذف النهائي بنجاح');
                 if (table === 'projects') loadProjects(state.currentProjectsPage);
                 else if (table === 'products') loadProducts();
                 else if (table === 'deals') loadDeals();
@@ -1413,8 +1495,8 @@
                 html += `<tr>
                     <td style="white-space:nowrap;">
                         <input type="number" value="${p.display_order ?? 0}" style="width:60px; padding:4px 8px; border-radius:30px; border:1px solid #dce5ec; font-family:inherit; font-size:12px;" class="product-order-input" data-id="${p.id}">
-                        <button class="action-btn edit" onclick="window.swapProductOrder('${p.id}', 'up')"><i class="fas fa-arrow-up"></i></button>
-                        <button class="action-btn edit" onclick="window.swapProductOrder('${p.id}', 'down')"><i class="fas fa-arrow-down"></i></button>
+                        <button class="action-btn edit" onclick="window.swapProductOrder('${p.id}', 'up')" title="رفع"><i class="fas fa-arrow-up"></i></button>
+                        <button class="action-btn edit" onclick="window.swapProductOrder('${p.id}', 'down')" title="خفض"><i class="fas fa-arrow-down"></i></button>
                     </td>
                     <td>${escapeHtml(p.id)}</td>
                     <td>${p.main_image ? `<img src="${escapeHtml(p.main_image)}" class="thumb-preview">` : '-'}</td>
@@ -1423,8 +1505,8 @@
                     <td>${escapeHtml(p.type_ar || '-')}</td>
                     <td>${escapeHtml(p.price_ar || '-')}</td>
                     <td class="action-buttons">
-                        <button class="action-btn edit" onclick="window.editProduct('${p.id}')"><i class="fas fa-edit"></i></button>
-                        <button class="action-btn delete" onclick="window.deleteItem('products','${p.id}')"><i class="fas fa-trash"></i></button>
+                        <button class="action-btn edit" onclick="window.editProduct('${p.id}')" title="تعديل"><i class="fas fa-edit"></i></button>
+                        <button class="action-btn delete" onclick="window.deleteItem('products','${p.id}')" title="حذف"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>`;
             }
@@ -1520,7 +1602,7 @@
                     <label style="display:flex; align-items:center; gap:4px; font-size:12px; font-weight:600;">
                         <input type="checkbox" ${v.is_default ? 'checked' : ''} class="variant-default"> افتراضي
                     </label>
-                    <button type="button" class="remove-variant" data-idx="${idx}" style="background:#fee2e2; border:none; border-radius:30px; width:32px; height:32px; cursor:pointer; color:#b91c1c; display:flex; align-items:center; justify-content:center; transition:0.2s;">
+                    <button type="button" class="remove-variant" data-idx="${idx}" style="background:#fee2e2; border:none; border-radius:30px; width:32px; height:32px; cursor:pointer; color:#b91c1c; display:flex; align-items:center; justify-content:center; transition:0.2s;" title="حذف الخيار">
                         <i class="fas fa-trash"></i>
                     </button>
                 </div>
@@ -1624,8 +1706,8 @@
                     <td>${d.image ? `<img src="${escapeHtml(d.image)}" class="thumb-preview">` : '-'}</td>
                     <td>${escapeHtml(d.title_ar)}</td>
                     <td class="action-buttons">
-                        <button class="action-btn edit" onclick="window.editDeal('${d.id}')"><i class="fas fa-edit"></i></button>
-                        <button class="action-btn delete" onclick="window.deleteItem('deals','${d.id}')"><i class="fas fa-trash"></i></button>
+                        <button class="action-btn edit" onclick="window.editDeal('${d.id}')" title="تعديل"><i class="fas fa-edit"></i></button>
+                        <button class="action-btn delete" onclick="window.deleteItem('deals','${d.id}')" title="حذف"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>`;
             }
@@ -2520,6 +2602,7 @@
         window.updateOrderStatus = updateOrderStatus;
         window.saveNewOrder = saveNewOrder;
         window.togglePaid = togglePaid;
+        window.toggleStatus = toggleStatus;
 
         // ===== EDIT PROJECT =====
         window.editProject = async (id) => {
