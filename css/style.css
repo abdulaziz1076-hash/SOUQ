@@ -2007,7 +2007,7 @@ body.en-mode .product-detail-info .product-price-display:empty::before {
     align-items: center;
     gap: 12px;
     position: relative;
-    min-height: 130px;
+    min-height: 145px;
 }
 .profile-avatar {
     width: 65px;
