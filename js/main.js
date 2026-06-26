@@ -686,6 +686,8 @@ function performFamiliesSearch() {
 function renderFamilies() {
     let filtered = [...projectsData];
     const t = translations[appState.currentLanguage];
+
+    // ------ التصفية (نفس الكود السابق) ------
     if (appState.currentEmirate !== 'all') filtered = filtered.filter(f => f.emirate === appState.currentEmirate);
     if (appState.currentCategory !== 'all') filtered = filtered.filter(f => f.category === appState.currentCategory);
     if (appState.searchQuery) {
@@ -719,13 +721,48 @@ function renderFamilies() {
             });
         }
     }
-    const sortedProjects = [...filtered].sort((a, b) => {
-        if (a.display_order !== b.display_order) {
-            return (a.display_order ?? 0) - (b.display_order ?? 0);
+
+    // ====== الترتيب الجديد ======
+    // 1. فصل المميز عن العادي
+    const paidProjects = filtered.filter(f => f.is_paid === true);
+    const regularProjects = filtered.filter(f => f.is_paid !== true);
+
+    // 2. ترتيب المميز حسب display_order (أو أي ترتيب تفضله)
+    paidProjects.sort((a, b) => (a.display_order ?? 0) - (b.display_order ?? 0));
+
+    // 3. ترتيب العادي عشوائياً مع ثبات لمدة 24 ساعة
+    const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+    const storageKey = `projectRandomOrder_${today}`;
+    let randomOrderMap = JSON.parse(localStorage.getItem(storageKey));
+
+    // إذا لم يكن هناك خريطة عشوائية محفوظة لليوم، ننشئها
+    if (!randomOrderMap || typeof randomOrderMap !== 'object') {
+        randomOrderMap = {};
+        regularProjects.forEach(p => {
+            randomOrderMap[p.id] = Math.random();
+        });
+        localStorage.setItem(storageKey, JSON.stringify(randomOrderMap));
+    } else {
+        // إذا كانت الخريطة موجودة لكن بعض المشاريع جديدة (أضيفت خلال اليوم)، نضيفها
+        let needsUpdate = false;
+        regularProjects.forEach(p => {
+            if (!(p.id in randomOrderMap)) {
+                randomOrderMap[p.id] = Math.random();
+                needsUpdate = true;
+            }
+        });
+        if (needsUpdate) {
+            localStorage.setItem(storageKey, JSON.stringify(randomOrderMap));
         }
-        if (a.is_paid !== b.is_paid) return a.is_paid ? -1 : 1;
-        return 0;
-    });
+    }
+
+    // ترتيب المشاريع العادية حسب القيم العشوائية
+    regularProjects.sort((a, b) => (randomOrderMap[a.id] ?? 0) - (randomOrderMap[b.id] ?? 0));
+
+    // 4. دمج القائمتين: المميز أولاً ثم العادي
+    const sortedProjects = [...paidProjects, ...regularProjects];
+
+    // ------ عرض المشاريع (نفس الكود السابق مع استخدام sortedProjects) ------
     const grid = document.getElementById('familiesGrid');
     if (sortedProjects.length === 0) {
         const noProjectsText =
@@ -734,10 +771,10 @@ function renderFamilies() {
             (appState.currentLanguage === 'ar' ?
                 'لا توجد مشاريع حالياً. أخبر من تعرفهم وسجّل مشروعك.' :
                 'No projects available right now. Tell others and register your project.');
-
         grid.innerHTML = `<div style="grid-column: span 2; text-align: center; padding: 30px;">${noProjectsText}</div>`;
         return;
     }
+
     grid.innerHTML = sortedProjects.map(family => {
         const familyName = appState.currentLanguage === 'ar' ? family.name : family.nameEn;
         const familyDesc = appState.currentLanguage === 'ar' ? family.description : family.descriptionEn;
