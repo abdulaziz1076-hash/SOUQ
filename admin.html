@@ -3193,53 +3193,51 @@
         // LOGIN
         // ============================================================
         document.getElementById('loginBtn').onclick = async () => {
-            const email = document.getElementById('adminEmail').value;
-            const pwd = document.getElementById('adminPassword').value;
-            const errorDiv = document.getElementById('loginError');
-            errorDiv.innerText = '';
+    const email = document.getElementById('adminEmail').value;
+    const pwd = document.getElementById('adminPassword').value;
+    const errorDiv = document.getElementById('loginError');
+    errorDiv.innerText = '';
 
-            try {
-                const { data, error } = await supabase.auth.signInWithPassword({ email, password: pwd });
-                if (error) throw new Error(error.message);
-                if (data?.user?.email !== ALLOWED_EMAIL) {
-                    await supabase.auth.signOut();
-                    throw new Error('غير مصرح لك بالدخول إلى لوحة التحكم');
-                }
+    try {
+        // 1. تسجيل الدخول
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password: pwd });
+        if (error) throw new Error(error.message);
+        if (data?.user?.email !== ALLOWED_EMAIL) {
+            await supabase.auth.signOut();
+            throw new Error('غير مصرح لك بالدخول إلى لوحة التحكم');
+        }
 
-                // Auto-add to admin_users
-                const { data: adminCheck } = await supabase
-                    .from('admin_users')
-                    .select('user_id')
-                    .eq('user_id', data.user.id)
-                    .maybeSingle();
+        // 2. تأكيد الجلسة (الأهم!)
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) throw new Error('فشل الحصول على جلسة المصادقة');
+        console.log('✅ Session token:', session.access_token.slice(0, 20) + '...');
 
-                if (!adminCheck) {
-                    await supabase.from('admin_users').insert({ user_id: data.user.id });
-                }
+        // 3. إدراج المستخدم في admin_users إن لم يكن موجوداً (مع إعادة المحاولة)
+        const { data: adminCheck } = await supabase
+            .from('admin_users')
+            .select('user_id')
+            .eq('user_id', data.user.id)
+            .maybeSingle();
 
-                document.getElementById('loginSection').style.display = 'none';
-                document.getElementById('adminContent').style.display = 'block';
+        if (!adminCheck) {
+            const { error: insertErr } = await supabase
+                .from('admin_users')
+                .insert({ user_id: data.user.id });
+            if (insertErr) console.warn('⚠️ لم يتم إدراج المستخدم في admin_users:', insertErr.message);
+        }
 
-                fillCategoryDropdowns();
-                await loadProjectsMap();
-                await initEmirateFilter();
-                await initProjectSelects();
-                await loadStats();
-                await loadProjects(1);
-                await loadRegistrations(1);
-                await loadProducts();
-                await loadDeals();
-                await loadContacts();
-                await loadFeedbacks();
-                await loadOrders(1);
-                await loadLicenses(1);
-                await loadSupportTickets(1);
+        // 4. إخفاء شاشة الدخول وإظهار لوحة التحكم
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('adminContent').style.display = 'block';
 
-            } catch (err) {
-                errorDiv.innerText = err.message || 'بيانات الدخول غير صحيحة';
-                console.error('Login error:', err);
-            }
-        };
+        // 5. تهيئة الصفحة وتحميل البيانات
+        await initDashboard();
+
+    } catch (err) {
+        errorDiv.innerText = err.message || 'بيانات الدخول غير صحيحة';
+        console.error('Login error:', err);
+    }
+};
 
         document.getElementById('logoutBtnSide').onclick = async () => {
             await supabase.auth.signOut();
@@ -3285,6 +3283,31 @@
         }
 
         checkSession();
+
+        async function initDashboard() {
+    // تأكد من الجلسة قبل أي طلب
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+        showToast('الرجاء تسجيل الدخول مرة أخرى', true);
+        return;
+    }
+
+    // استمر في التحميل
+    fillCategoryDropdowns();
+    await loadProjectsMap();
+    await initEmirateFilter();
+    await initProjectSelects();
+    await loadStats();
+    await loadProjects(1);
+    await loadRegistrations(1);
+    await loadProducts();
+    await loadDeals();
+    await loadContacts();
+    await loadFeedbacks();
+    await loadOrders(1);
+    await loadLicenses(1);
+    await loadSupportTickets(1);
+}
 
         // ============================================================
         // GLOBAL EXPOSURE
