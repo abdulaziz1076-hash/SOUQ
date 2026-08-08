@@ -487,15 +487,35 @@
     }
 
     async function groupByProjectDynamic(cart) {
-        const groups = {};
-        for (const item of cart) {
-            const projectId = item.projectId;
-            if (!groups[projectId]) groups[projectId] = { projectId, projectName: getProjectName(projectId, currentLang), items: [] };
-            const enrichedItem = { ...item, productName: getProductName(item.productId, currentLang), productPrice: item.productPrice || getProductPriceDisplay(item.productId, currentLang) };
-            groups[projectId].items.push(enrichedItem);
-        }
-        return Object.values(groups);
+    // ✅ إذا كانت بيانات المشاريع فارغة، قم بتحميلها
+    if (projectsData.length === 0) {
+        await loadAllProjectsData();
     }
+    
+    const groups = {};
+    for (const item of cart) {
+        const projectId = item.projectId;
+        if (!groups[projectId]) {
+            groups[projectId] = { 
+                projectId, 
+                projectName: getProjectName(projectId, currentLang), 
+                items: [] 
+            };
+        }
+        // ✅ تأكد من وجود اسم المنتج، وإلا استخدم معرفه
+        let productName = getProductName(item.productId, currentLang);
+        if (!productName || productName === '?') {
+            productName = `منتج #${item.productId}`;
+        }
+        const enrichedItem = { 
+            ...item, 
+            productName: productName,
+            productPrice: item.productPrice || getProductPriceDisplay(item.productId, currentLang)
+        };
+        groups[projectId].items.push(enrichedItem);
+    }
+    return Object.values(groups);
+}
     function calcTotal(items) {
         let total = 0;
         for (const it of items) {
