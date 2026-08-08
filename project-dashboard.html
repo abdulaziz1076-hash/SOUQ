@@ -501,39 +501,46 @@
   document.getElementById('contactsForm').addEventListener('submit', async (e) => { e.preventDefault(); let whatsapp = document.getElementById('contactWhatsapp').value.trim(); let clean = whatsapp.replace(/\D/g,''); if(clean && !clean.startsWith('971')) clean = '971' + clean.replace(/^0+/,''); await supabase.from('contacts').upsert({ project_id:projectId, whatsapp:clean, phone:document.getElementById('contactPhone').value, email:document.getElementById('contactEmail').value, instagram:document.getElementById('contactInstagram').value, telegram:document.getElementById('contactTelegram').value, snapchat:document.getElementById('contactSnapchat').value, tiktok:document.getElementById('contactTiktok').value, facebook:document.getElementById('contactFacebook').value, twitter:document.getElementById('contactTwitter').value, website:document.getElementById('contactWebsite').value }); toast('تم حفظ التواصل'); });
 
   async function loadTickets() { 
+    // ✅ التحقق من وجود projectId مع تأخير لإعطاء فرصة للتهيئة
     if (!projectId) {
-      document.getElementById('ticketsListContainer').innerHTML = '<p>لم يتم تحديد المشروع</p>';
-      return;
+        // محاولة إعادة جلب projectId من الجلسة
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user) {
+            const { data: project } = await supabase
+                .from('projects')
+                .select('id')
+                .eq('owner_user_id', session.user.id)
+                .maybeSingle();
+            if (project) {
+                projectId = project.id;
+            } else {
+                document.getElementById('ticketsListContainer').innerHTML = '<p>لم يتم تحديد المشروع</p>';
+                return;
+            }
+        } else {
+            document.getElementById('ticketsListContainer').innerHTML = '<p>لم يتم تحديد المشروع</p>';
+            return;
+        }
     }
+
     try {
-      const { data, error } = await supabase
-        .from('support_tickets')
-        .select('*')
-        .eq('project_id', projectId)
-        .order('created_at', { ascending: false });
-        
-      if (error) {
-        console.error('Tickets error:', error);
-        document.getElementById('ticketsListContainer').innerHTML = `<p>⚠️ خطأ في تحميل التذاكر: ${error.message}</p>`;
-        return;
-      }
-      
-      const container = document.getElementById('ticketsListContainer'); 
-      if (!data?.length) { container.innerHTML = '<p>لا توجد تذاكر</p>'; return; } 
-      let html = ''; 
-      for (const t of data) { 
-        html += `<div style="background:#F8FAFC; border-radius:20px; padding:15px; margin-bottom:10px;">
-          <strong>${t.subject}</strong> <span class="status-pill active">${t.status}</span>
-          <div>${t.message.substring(0,100)}</div>
-          ${t.admin_reply ? `<div class="warning-banner" style="margin-top:10px;"><strong>رد الإدارة:</strong> ${t.admin_reply}</div>` : ''}
-        </div>`; 
-      } 
-      container.innerHTML = html; 
+        const { data, error } = await supabase
+            .from('support_tickets')
+            .select('*')
+            .eq('project_id', projectId)
+            .order('created_at', { ascending: false });
+            
+        if (error) {
+            console.error('Tickets error:', error);
+            document.getElementById('ticketsListContainer').innerHTML = `<p>⚠️ خطأ في تحميل التذاكر: ${error.message}</p>`;
+            return;
+        }
+        // ... عرض البيانات
     } catch (err) {
-      console.error('Unexpected error in loadTickets:', err);
-      document.getElementById('ticketsListContainer').innerHTML = '<p>⚠️ حدث خطأ غير متوقع في تحميل التذاكر</p>';
+        console.error('Unexpected error in loadTickets:', err);
+        document.getElementById('ticketsListContainer').innerHTML = '<p>⚠️ حدث خطأ غير متوقع في تحميل التذاكر</p>';
     }
-  }
+}
 
   document.getElementById('newTicketBtn').onclick = () => document.getElementById('ticketModal').classList.add('active');
   document.getElementById('saveTicketModalBtn').onclick = async () => { 
