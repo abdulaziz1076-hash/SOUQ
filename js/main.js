@@ -153,36 +153,162 @@ async function loadProjectsFromSupabase() {
         showLoader();
         console.log('🔄 Loading data from Supabase...');
 
-        // ✅ تعديل: قبول المشاريع الفعالة والمعلقة معاً
+        // ✅ استعلام محسّن: يعرض المشاريع الفعالة والمعلقة، مع تجاهل شرط التأكيد البريدي مؤقتاً
         const { data: projects, error } = await supabase
-    .from('projects')
-    .select(`*, products (*), deals (*), contacts (*)`)
-    .in('status', ['active', 'pending'])   // ✅ يشمل المعلقة
-    // .eq('is_email_verified', true)     // ✅ علّقها مؤقتاً للاختبار
-    .order('display_order', { ascending: true, nullsFirst: false });
+            .from('projects')
+            .select(`*, products (*), deals (*), contacts (*)`)
+            .in('status', ['active', 'pending'])   // ← التعديل الجوهري
+            // .eq('is_email_verified', true)     // علّق هذا السطر مؤقتاً
+            .order('display_order', { ascending: true, nullsFirst: false });
 
         if (error) {
             console.error('❌ Supabase error:', error);
-            showToast('حدث خطأ في تحميل البيانات');
+            showToast('حدث خطأ في تحميل البيانات: ' + error.message);
             projectsData = [];
             window.projectsData = [];
             hideLoader();
             return;
         }
 
-        // إذا لم توجد مشاريع، أنشئ مشاريع تجريبية (اختياري)
+        // إذا لم توجد مشاريع، نعرض رسالة بدلاً من تعطيل الموقع
         if (!projects || projects.length === 0) {
-            console.warn('⚠️ No projects found. Creating demo projects...');
-            await createDemoProjects();        // دالة جديدة لإنشاء بيانات وهمية
-            return loadProjectsFromSupabase(); // إعادة المحاولة
+            console.warn('⚠️ No projects found. Showing empty state.');
+            projectsData = [];
+            window.projectsData = [];
+            hideLoader();
+            renderEmptyState();  // يمكنك إضافة دالة لعرض رسالة "لا توجد مشاريع"
+            return;
         }
 
-        // ... باقي المعالجة (تحويل البيانات، تعيين المتغيرات) ...
+        // تحويل البيانات إلى الشكل المطلوب (كما هو موجود)
+        projectsData = projects.map(project => ({
+            id: project.id,
+            name: project.name_ar,
+            nameEn: project.name_en,
+            is_paid: project.is_paid,
+            emirate: project.emirate,
+            description: project.description_ar,
+            descriptionEn: project.description_en,
+            longDescription: project.long_description_ar,
+            longDescriptionEn: project.long_description_en,
+            image: project.image,
+            adra_license: project.adra_license ? "نعم" : "لا",
+            coverage: project.coverage,
+            category: project.category_ar,
+            categoryEn: project.category_en,
+            display_order: project.display_order ?? 0,
+            products: (project.products || []).map(p => ({
+                id: p.id,
+                name: p.name_ar,
+                nameEn: p.name_en,
+                description: p.description_ar,
+                descriptionEn: p.description_en,
+                longDescription: p.long_description_ar,
+                longDescriptionEn: p.long_description_en,
+                mainImage: p.main_image,
+                images: p.images || [],
+                details: p.details_ar || [],
+                detailsEn: p.details_en || [],
+                category: p.category_ar,
+                categoryEn: p.category_en,
+                type: p.type_ar,
+                typeEn: p.type_en,
+                price_ar: p.price_ar,
+                price_en: p.price_en,
+                variants: []  // سيتم ملؤها لاحقاً
+            })),
+            deals: (project.deals || []).map(d => ({
+                id: d.id,
+                title: d.title_ar,
+                titleEn: d.title_en,
+                description: d.description_ar,
+                descriptionEn: d.description_en,
+                image: d.image,
+                images: d.images || [],
+                badge: d.badge_ar,
+                badgeEn: d.badge_en,
+                expiry: d.expiry_date
+            })),
+            whatsapp: null,
+            phone: null,
+            email: null,
+            sell_points: []
+        }));
+
+        // جلب بيانات التواصل بشكل منفصل (لتجنب مشاكل RLS)
+        const contactIds = projects.map(p => p.id);
+        if (contactIds.length > 0) {
+            const { data: contacts, error: contactError } = await supabase
+                .from('contacts')
+                .select('*')
+                .in('project_id', contactIds);
+            if (!contactError && contacts) {
+                contactsData = {};
+                contacts.forEach(c => {
+                    const sellPoints = [];
+                    if (c.instagram) sellPoints.push({ type: 'instagram', value: c.instagram });
+                    if (c.telegram) sellPoints.push({ type: 'telegram', value: c.telegram });
+                    if (c.snapchat) sellPoints.push({ type: 'snapchat', value: c.snapchat });
+                    if (c.tiktok) sellPoints.push({ type: 'tiktok', value: c.tiktok });
+                    if (c.facebook) sellPoints.push({ type: 'facebook', value: c.facebook });
+                    if (c.twitter) sellPoints.push({ type: 'twitter', value: c.twitter });
+                    if (c.website) sellPoints.push({ type: 'website', value: c.website });
+
+                    contactsData[c.project_id] = {
+                        whatsapp: c.whatsapp || null,
+                        phone: c.phone || null,
+                        email: c.email || null,
+                        sell_points: sellPoints
+                    };
+                });
+                // ربط بيانات التواصل بالمشاريع
+                projectsData.forEach(p => {
+                    const contact = contactsData[p.id];
+                    if (contact) {
+                        p.whatsapp = contact.whatsapp;
+                        p.phone = contact.phone;
+                        p.email = contact.email;
+                        p.sell_points = contact.sell_points;
+                    }
+                });
+            }
+        }
+
+        // جلب المتغيرات (Variants) إن وجدت
+        const { data: allVariants, error: varError } = await supabase
+            .from('product_variants')
+            .select('*');
+        if (!varError && allVariants) {
+            const variantsByProduct = {};
+            allVariants.forEach(v => {
+                if (!variantsByProduct[v.product_id]) variantsByProduct[v.product_id] = [];
+                variantsByProduct[v.product_id].push(v);
+            });
+            projectsData.forEach(p => {
+                p.products.forEach(prod => {
+                    prod.variants = variantsByProduct[prod.id] || [];
+                });
+            });
+        }
+
+        window.projectsData = projectsData;
+        window.contactsData = contactsData;
+
+        console.log(`✅ Loaded ${projectsData.length} projects`);
+
+        // إعادة عرض الصفحة الحالية
+        if (appState.currentPage === 'families') renderFamilies();
+        else if (appState.currentPage === 'products' && appState.currentFamilyId) 
+            showFamilyProducts(appState.currentFamilyId, false);
+        else if (appState.currentPage === 'product-detail' && appState.currentFamilyId && appState.currentProductId) 
+            showProductDetail(appState.currentFamilyId, appState.currentProductId, false);
+        else if (appState.currentPage === 'offers') renderOffers();
+
     } catch (error) {
         console.error('❌ Fatal error:', error);
         projectsData = [];
         window.projectsData = [];
-        showToast('حدث خطأ في تحميل البيانات، يرجى تحديث الصفحة');
+        showToast('حدث خطأ جاد في تحميل البيانات، يرجى تحديث الصفحة');
     } finally {
         hideLoader();
     }
