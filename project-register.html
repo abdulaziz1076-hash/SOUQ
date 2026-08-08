@@ -237,37 +237,47 @@
         try {
             // 1) إنشاء الحساب
             const { data: authData, error: signUpError } = await supabase.auth.signUp({
-                email, password,
-                options: {
-                    emailRedirectTo: window.location.origin + '/auth/callback.html'
-                }
-            });
+    email, password,
+    options: {
+        emailRedirectTo: window.location.origin + '/auth/callback.html'
+    }
+});
 
-            // 2) التعامل مع أخطاء التسجيل
-            if (signUpError) {
-                const msg = signUpError.message.toLowerCase();
+if (signUpError) {
+    const msg = signUpError.message.toLowerCase();
+    // ✅ معالجة خاصة لحالة الـ rate limit
+    if (msg.includes('rate limit') || msg.includes('over_email_send_rate_limit')) {
+        showToast('⚠️ لا يمكننا تسجيلكم حالياً بسبب الضغط. حاول بعد نصف ساعة.', true);
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+        window._registerLock = false;
+        return;
+    }
+    // ✅ معالجة حالة البريد المسجل مسبقاً
+    if (msg.includes('already registered')) {
+        showToast('البريد الإلكتروني مسجل مسبقاً. يرجى تسجيل الدخول.', true);
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+        window._registerLock = false;
+        return;
+    }
+    throw signUpError;
+}
 
-                // ❌ حالة الـ rate limit: لا ننتقل إلى check-email.html
-                if (msg.includes('rate limit') || msg.includes('over_email_send_rate_limit')) {
-                    showToast('⚠️ لا يمكننا تسجيلكم في الوقت الحالي بسبب الضغط. يرجى المحاولة بعد نصف ساعة.', true);
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalText;
-                    window._registerLock = false;
-                    return; // ⛔ نوقف التنفيذ هنا
-                }
+// ✅ تحقق من وجود المستخدم في pending_projects لمنع التكرار
+const { data: existingPending } = await supabase
+    .from('pending_projects')
+    .select('id')
+    .eq('email', email)
+    .maybeSingle();
 
-                // ❌ حالة فشل حفظ المستخدم (مشكلة في قاعدة البيانات)
-                if (msg.includes('database error') || msg.includes('saving new user')) {
-                    showToast('❌ حدث خطأ في إنشاء الحساب. يرجى المحاولة مرة أخرى.', true);
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalText;
-                    window._registerLock = false;
-                    return;
-                }
-
-                // أي خطأ آخر
-                throw signUpError;
-            }
+if (existingPending) {
+    showToast('طلب تسجيل قيد الانتظار لهذا البريد. تحقق من بريدك.', true);
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalText;
+    window._registerLock = false;
+    return;
+}
 
             // ✅ إذا وصلنا هنا، فهذا يعني أن الحساب أنشئ والرسالة أرسلت
             const userId = authData.user.id;
