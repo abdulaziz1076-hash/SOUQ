@@ -63,6 +63,8 @@ const appState = {
 };
 console.log("main.js is loaded successfully");
 
+
+
 // ========== سلة التسوق ==========
 function getCart() { return JSON.parse(localStorage.getItem('projectCart') || '[]'); }
 function saveCart(cart) { localStorage.setItem('projectCart', JSON.stringify(cart)); updateCartCount(); }
@@ -313,6 +315,24 @@ async function loadProjectsFromSupabase() {
         hideLoader();
     }
 }
+
+// ============================================================
+// Keep-Alive: منع إيقاف المشروع بسبب عدم النشاط
+// ============================================================
+function keepAlive() {
+    // إرسال طلب بسيط لقراءة عدد المشاريع (يُحدث النشاط)
+    supabase.from('projects').select('id', { count: 'exact', head: true })
+        .then(({ count }) => {
+            console.log(`💓 Keep-alive ping: ${count} projects active.`);
+        })
+        .catch(err => console.warn('Keep-alive failed:', err.message));
+}
+
+// تشغيل الـ ping كل 6 ساعات (21600000 مللي)
+setInterval(keepAlive, 6 * 60 * 60 * 1000);
+
+// تنفيذ أول ping بعد 5 دقائق من تحميل الصفحة
+setTimeout(keepAlive, 5 * 60 * 1000);
 
 // ✅ دالة مساعدة لإنشاء مشاريع تجريبية (في حالة عدم وجود بيانات)
 async function createDemoProjects() {
