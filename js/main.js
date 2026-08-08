@@ -155,11 +155,11 @@ async function loadProjectsFromSupabase() {
 
         // ✅ تعديل: قبول المشاريع الفعالة والمعلقة معاً
         const { data: projects, error } = await supabase
-            .from('projects')
-            .select(`*, products (*), deals (*), contacts (*)`)
-            .in('status', ['active', 'pending'])   // ✅ بدلاً من .eq
-            // .eq('is_email_verified', true)     // ❌ تعليق مؤقت للسماح بعرض الكل
-            .order('display_order', { ascending: true, nullsFirst: false });
+    .from('projects')
+    .select(`*, products (*), deals (*), contacts (*)`)
+    .in('status', ['active', 'pending'])   // ✅ يشمل المعلقة
+    // .eq('is_email_verified', true)     // ✅ علّقها مؤقتاً للاختبار
+    .order('display_order', { ascending: true, nullsFirst: false });
 
         if (error) {
             console.error('❌ Supabase error:', error);
